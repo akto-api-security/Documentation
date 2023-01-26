@@ -77,7 +77,7 @@ Akto's users are:
 
 ### I am a developer, can I use Akto? 👨🏽‍💻
 
-YES. Akto is a developer friendly API security platform. If you are a developer, you can use Akto to do the following:
+Yes. Akto is a developer friendly API security platform. If you are a developer, you can use Akto to do the following:
 
 * Get notified when the APIs you deployed are leaking any sensitive data
 * Fix with one click any vulnerability that exploits business logic of your APIs in CI/CD itself
