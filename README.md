@@ -14,11 +14,15 @@ Step 1: Create inventory
 
 <figure><img src=".gitbook/assets/Screenshot 2023-01-26 at 5.07.03 PM.png" alt=""><figcaption></figcaption></figure>
 
-<img src=".gitbook/assets/file.excalidraw.svg" alt="" class="gitbook-drawing">
+{% swagger method="get" path="" baseUrl="" summary="" %}
+{% swagger-description %}
+dfds
+{% endswagger-description %}
+{% endswagger %}
 
 Step 2: Run tests
 
-<figure><img src=".gitbook/assets/Screenshot 2023-01-26 at 5.08.19 PM.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/Screenshot 2023-01-26 at 5.08.19 PM (1).png" alt=""><figcaption></figcaption></figure>
 
 
 
