@@ -10,7 +10,7 @@ You'll need to have Docker installed in order to run the container. Check out [t
 
 ## Step 1: Run install script
 
-Run this script to create Akto at `~/akto` and run the docker containers.&#x20;
+Run this script to create Akto at `~/akto` and run the docker containers.
 
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/akto-api-security/infra/feature/self_hosting/cf-deploy-akto)"
@@ -18,7 +18,7 @@ Run this script to create Akto at `~/akto` and run the docker containers.&#x20;
 
 ## Step 2: Create your account
 
-Akto should automatically open up in your browser at [http://localhost:9090](http://localhost:9090). Click on the Signup button to get started. If you've already signed up, signin to the account.
+Akto should automatically open up in your browser at [http://localhost:9090](http://localhost:9090). Click on the Signup button to get started. If you've already signed up, sign in to the account.
 
 ![](<../../.gitbook/assets/Screen Shot 2023-01-10 at 3.48.28 PM.png>)
 
@@ -28,15 +28,19 @@ On the left nav, go to `Quick Start:`
 
 <figure><img src="../../.gitbook/assets/Frame 11 (1).png" alt=""><figcaption></figcaption></figure>
 
-* To add traffic from burp suite, navigate to `Burpsuite` and follow [integration steps for burp](broken-reference) to add API data from burp.
+* To add traffic from burp suite, navigate to `Burpsuite` and follow [integration steps for burp](broken-reference/) to add API data from burp.
 
-<figure><img src="../../.gitbook/assets/Screen Shot 2023-01-10 at 5.03.56 PM.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Screenshot 2023-01-26 at 3.32.50 PM.png" alt=""><figcaption></figcaption></figure>
 
 * To add traffic from postman, navigate to `postman` and follow [integration steps for postman](../../add-api-data/integrations/postman.md) to add API data from Postman.
 
 <figure><img src="../../.gitbook/assets/Screen Shot 2023-01-10 at 5.12.55 PM.png" alt=""><figcaption></figcaption></figure>
 
-Once API data is added, move to `step 3` below to run test.
+Once API data is added, move to `step 4` below to run test.
+
+{% hint style="warning" %}
+Akto needs API traffic to create automated API inventory. Currently for your local setup, Akto can get inventory from Burp or Postman. We recommend using Burp to get API inventory.
+{% endhint %}
 
 ## Step 4: Run test
 
@@ -61,6 +65,8 @@ Click on `run test`.
 `Select tests` to be run.
 
 <figure><img src="../../.gitbook/assets/Screen Shot 2023-01-10 at 5.26 1.png" alt=""><figcaption></figcaption></figure>
+
+Select `max test run time` and `max concurrent requests`
 
 Click `Run once now`.
 
