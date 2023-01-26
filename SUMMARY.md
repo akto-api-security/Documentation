@@ -25,14 +25,12 @@
 
 ## API Inventory
 
-* [API Collections](api-inventory/api-collections.md)
+* [API Collections](api-inventory/api-collections/README.md)
 * [API inventory](api-inventory/api-inventory/README.md)
   * [Undocumented endpoints](api-inventory/api-inventory/handeling-shadow-apis.md)
-  * [Unauthenticated APIs 🔑](api-inventory/api-inventory/unauthenticated-apis.md)
-  * [Using sample values for testing](api-inventory/api-inventory/using-sample-values-for-testing.md)
-  * [Detecting changes in APIs](api-inventory/api-inventory/detecting-changes-in-apis.md)
+  * [Unauthenticated APIs](api-inventory/api-inventory/unauthenticated-apis.md)
+* [API changes](api-inventory/detecting-changes-in-apis.md)
 * [Auth types](api-inventory/auth-types.md)
-* [API changes](api-inventory/api-changes.md)
 * [Sensitive data](api-inventory/sensitive-data.md)
 * [API documentation](api-inventory/api-documentation.md)
 
