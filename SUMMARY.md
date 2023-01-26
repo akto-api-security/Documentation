@@ -38,7 +38,7 @@
   * [Assessing API security posture 👨🏽‍💻](api-inventory/api-inventory/assessing-api-security-posture.md)
   * [Handeling shadow APIs 👤](api-inventory/api-inventory/handeling-shadow-apis.md)
   * [Handeling Zombie APIs 🧟](api-inventory/api-inventory/handeling-zombie-apis.md)
-  * [Unauthenticated APIs   🔑](api-inventory/api-inventory/unauthenticated-apis.md)
+  * [Unauthenticated APIs 🔑](api-inventory/api-inventory/unauthenticated-apis.md)
   * [Using sample values for testing](api-inventory/api-inventory/using-sample-values-for-testing.md)
   * [Detecting changes in APIs](api-inventory/api-inventory/detecting-changes-in-apis.md)
 * [Auth types](api-inventory/auth-types.md)
@@ -48,9 +48,8 @@
 
 ## TESTING
 
-* [Run test](testing/run-test/README.md)
-  * [Create user config](testing/run-test/create-user-config.md)
-  * [Create test config](testing/run-test/create-test-config.md)
+* [Run test](testing/run-test.md)
+* [Create user config](testing/create-user-config.md)
 * [Test results](testing/test-results.md)
 * [Test library](testing/test-library.md)
 
