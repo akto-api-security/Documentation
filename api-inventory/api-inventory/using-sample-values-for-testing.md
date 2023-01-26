@@ -4,7 +4,7 @@ Akto allows you to check sample values of request and response to test for issue
 
 1. Go to the endpoint you want to review for security issue.
 
-![](<../../.gitbook/assets/Frame 26.png>)
+![](<../../.gitbook/assets/Frame 25 (2).png>)
 
 &#x20; 2\. Click on values tab.
 

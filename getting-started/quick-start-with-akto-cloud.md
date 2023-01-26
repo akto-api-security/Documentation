@@ -26,7 +26,7 @@ Click on `Connect traffic data`
 
 * To add traffic from postman, navigate to `postman` and follow [integration steps for postman](../add-api-data/integrations/postman.md) to add API data from Postman.
 
-<figure><img src="../.gitbook/assets/Screen Shot 2023-01-10 at 5.12.55 PM.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Screen Shot 2023-01-10 at 5.12.55 PM (1).png" alt=""><figcaption></figcaption></figure>
 
 Once API data is added, move to `step 3` below to run test.
 

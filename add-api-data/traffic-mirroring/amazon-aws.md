@@ -32,7 +32,7 @@ Add your API data using [traffic mirroring](https://docs.aws.amazon.com/vpc/late
 
 &#x20;4\. `Click on review policy`.
 
-<figure><img src="../../.gitbook/assets/Frame 18 (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Frame 18 (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 5\. Name the policy `AktoDashboardPolicy`.
 
@@ -50,7 +50,7 @@ Add your API data using [traffic mirroring](https://docs.aws.amazon.com/vpc/late
 
 4\. Click `Apply` to start traffic mirroring.
 
-<figure><img src="../../.gitbook/assets/Frame 14 (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Frame 14 (2).png" alt=""><figcaption></figcaption></figure>
 
 5\. `Wait` for a couple of minutes. Mirroring is being setup on the loadbalancers you selected above.
 

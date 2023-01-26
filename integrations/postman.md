@@ -8,19 +8,19 @@
 
 2\. Generate your postman key in [postman app](https://identity.getpostman.com/login?continue=https%3A%2F%2Fgo.postman.co%2Fsettings%2Fme%2Fapi-keys). Copy your postman key and paste here.
 
-![](<../.gitbook/assets/Frame 70 (1).png>)
+![](<../.gitbook/assets/Frame 70.png>)
 
 3\. You will now see a dropdown of workspace. Select the workspace you want to add collection to.
 
-![](<../.gitbook/assets/Frame 71 (1).png>)
+![](<../.gitbook/assets/Frame 71.png>)
 
 &#x20;4\. Now go to the API inventory and go to the collection you want to document.&#x20;
 
-![](<../.gitbook/assets/Frame 72 (2).png>)
+![](<../.gitbook/assets/Frame 72 (1).png>)
 
 &#x20;5\. Go to download icon and click on export to postman.
 
-![](<../.gitbook/assets/Frame 45 (1).png>)
+![](<../.gitbook/assets/Frame 45.png>)
 
 ![](<../.gitbook/assets/Screen Shot 2022-03-09 at 2.22.26 PM.png>)
 

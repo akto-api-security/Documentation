@@ -4,7 +4,7 @@ Akto enables you with metadata of each API endpoint so that you don't have to as
 
 * **Request and Response:** Click on any endpoint to see the request and response parameters. All the endpoints marked <mark style="color:red;">red</mark> are sensitive endpoints passing sensitive data in parameters while all <mark style="color:green;">green</mark> endpoints are good endpoints with no sensitive params.
 
-![](<../../.gitbook/assets/Frame 25 (2).png>)
+![](<../../.gitbook/assets/Frame 25.png>)
 
 ![](<../../.gitbook/assets/Screen Shot 2022-03-09 at 12.48.53 AM.png>)
 
