@@ -1,7 +1,6 @@
 # Table of contents
 
 * [What is Akto?](README.md)
-* [Recent Updates](https://app.getbeamer.com/akto)
 
 ## Getting Started
 
