@@ -36,14 +36,4 @@ Go to `Testing -> Test results -> Test` to see results of the test you have just
 
 <figure><img src="../../.gitbook/assets/Frame 23 (1).png" alt=""><figcaption></figcaption></figure>
 
-1. Go to Inventory.
-2. Select the API collection you want to run test on.
-3. Select endpoints you want to run test on
-4. Click on run test
-
-## Step 2: Select tests to run
-
-1. Select tests from Akto test library.
-2. Some of the tests you have selected might require you to set user config before you run test. Follow steps to [create user config](create-user-config.md).
-3. Click on run.
-4. All your test results will be visible in Testing >test results.
+<table data-view="cards"><thead><tr><th></th><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td>Test Librar</td><td></td><td></td><td><a href="../test-library.md">test-library.md</a></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr></tbody></table>
