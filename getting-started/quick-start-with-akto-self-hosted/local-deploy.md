@@ -60,10 +60,6 @@ Click on `run test`.
 
 `Select tests` to be run.
 
-<figure><img src="../../.gitbook/assets/Frame 21 (1).png" alt=""><figcaption></figcaption></figure>
-
-`Select tests` to be run.
-
 <figure><img src="../../.gitbook/assets/Screen Shot 2023-01-10 at 5.26 1.png" alt=""><figcaption></figcaption></figure>
 
 Select `max test run time` and `max concurrent requests`
