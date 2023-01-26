@@ -14,12 +14,6 @@ Step 1: Create inventory
 
 <figure><img src=".gitbook/assets/Screenshot 2023-01-26 at 5.07.03 PM.png" alt=""><figcaption></figcaption></figure>
 
-{% swagger method="get" path="" baseUrl="" summary="" %}
-{% swagger-description %}
-dfds
-{% endswagger-description %}
-{% endswagger %}
-
 Step 2: Run tests
 
 <figure><img src=".gitbook/assets/Screenshot 2023-01-26 at 5.08.19 PM (1).png" alt=""><figcaption></figcaption></figure>
@@ -27,3 +21,11 @@ Step 2: Run tests
 
 
 ## How to get Started?
+
+There are two ways:
+
+1. [Self Hosted](getting-started/quick-start-with-akto-self-hosted/)
+   1. [Local Deploy](getting-started/quick-start-with-akto-self-hosted/local-deploy.md)
+   2. [AWS Deploy](getting-started/quick-start-with-akto-self-hosted/aws-deploy.md)
+   3. [GCP Deploy](getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md)
+2. [Cloud ( Akto hosted)](getting-started/quick-start-with-akto-cloud.md)
