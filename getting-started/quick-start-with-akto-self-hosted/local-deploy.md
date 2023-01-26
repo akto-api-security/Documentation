@@ -18,7 +18,7 @@ Run this script to create Akto at `~/akto` and run the docker containers.&#x20;
 
 ## Step 2: Create your account
 
-Akto will automatically open up in your browser at [http://localhost:9090](http://localhost:9090) and signup to get started. If you've already signed up, sign into the account.
+Akto should automatically open up in your browser at [http://localhost:9090](http://localhost:9090). Click on the Signup button to get started. If you've already signed up, signin to the account.
 
 ![](<../../.gitbook/assets/Screen Shot 2023-01-10 at 3.48.28 PM.png>)
 
