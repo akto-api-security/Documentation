@@ -11,3 +11,9 @@ Applications are only as fast and secure as the APIs that power them. Today, fas
 1. [API inventory](broken-reference)
 2. [Run business logic tests in CI/CD](broken-reference)
 3. [Find vulnerabilities in run-time](api-inventory/sensitive-data.md)
+
+## How it works?
+
+
+
+### How to get Started
