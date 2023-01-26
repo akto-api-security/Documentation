@@ -20,7 +20,7 @@ Click on `run test` button.
 
 <figure><img src="../../.gitbook/assets/Frame 22 (1).png" alt=""><figcaption></figcaption></figure>
 
-## Step 2: Select tests
+## Step 2: Select and run tests
 
 `Select tests` to be run from the Akto test library. Some of the tests might require you to set user config before you run test. Follow steps to [create user config](create-user-config.md).
 
@@ -35,5 +35,3 @@ Click `Run once now`.
 Go to `Testing -> Test results -> Test` to see results of the test you have just run.
 
 <figure><img src="../../.gitbook/assets/Frame 23 (1).png" alt=""><figcaption></figcaption></figure>
-
-<table data-view="cards"><thead><tr><th></th><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td>Test Librar</td><td></td><td></td><td><a href="../test-library.md">test-library.md</a></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr></tbody></table>
