@@ -2,7 +2,7 @@
 
 ## **Introduction**
 
-This guide will help you get the Akto modules running as Docker containers using `Docker Compose`. This is the easiest way to set up Akto on your **local environment**.
+This guide will help you get the Akto modules running as Docker containers using `Docker Compose`. This is the easiest way to set up Akto in your **local environment**.
 
 ## Prerequisites
 
