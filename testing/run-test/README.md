@@ -6,17 +6,16 @@ Akto's testing module helps you run 100s of test for your APIs. It's a 2 steps p
 
 ## Step 1: Select endpoints you want to test
 
-Go to `Observe -> Inventory`.
+* Go to `Observe -> Inventory`.
 
 <figure><img src="../../.gitbook/assets/Frame 20 (2).png" alt=""><figcaption></figcaption></figure>
 
-Click on any `collection` you want to run test on.
-
-`Select endpoints` you want to test.
+* Click on any `collection` you want to run test on.
+* `Select endpoints` you want to test.
 
 <figure><img src="../../.gitbook/assets/Frame 21 (1).png" alt=""><figcaption></figcaption></figure>
 
-Click on `run test` button.
+* Click on `run test` button.
 
 <figure><img src="../../.gitbook/assets/Frame 22 (1).png" alt=""><figcaption></figcaption></figure>
 
