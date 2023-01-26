@@ -10,6 +10,16 @@ Akto enables security and engineering teams to secure their APIs by doing three 
 
 ## How it works?
 
+Step 1: Create inventory
+
+<figure><img src=".gitbook/assets/Screenshot 2023-01-26 at 5.07.03 PM.png" alt=""><figcaption></figcaption></figure>
+
+<img src=".gitbook/assets/file.excalidraw.svg" alt="" class="gitbook-drawing">
+
+Step 2: Run tests
+
+<figure><img src=".gitbook/assets/Screenshot 2023-01-26 at 5.08.19 PM.png" alt=""><figcaption></figcaption></figure>
 
 
-### How to get Started
+
+## How to get Started?
