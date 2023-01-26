@@ -1,0 +1,2 @@
+# Public and private endpoints
+
