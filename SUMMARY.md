@@ -25,17 +25,9 @@
 
 ## API Inventory
 
-* [API Collections](api-inventory/api-collections/README.md)
-  * [Maintaining Collections](api-inventory/api-collections/maintaining-collections.md)
+* [API Collections](api-inventory/api-collections.md)
 * [API inventory](api-inventory/api-inventory/README.md)
-  * [Discovering all your APIs](api-inventory/api-inventory/discovering-all-your-apis.md)
-  * [Understanding API metadata](api-inventory/api-inventory/understanding-api-metadata.md)
-  * [API tags](api-inventory/api-inventory/api-tags.md)
-  * [Public and private endpoints](api-inventory/api-inventory/public-and-private-endpoints.md)
-  * [Securing private APIs open to public ⚠️](api-inventory/api-inventory/securing-private-apis-open-to-public.md)
-  * [Assessing API security posture 👨🏽‍💻](api-inventory/api-inventory/assessing-api-security-posture.md)
-  * [Handeling shadow APIs 👤](api-inventory/api-inventory/handeling-shadow-apis.md)
-  * [Handeling Zombie APIs 🧟](api-inventory/api-inventory/handeling-zombie-apis.md)
+  * [Undocumented endpoints](api-inventory/api-inventory/handeling-shadow-apis.md)
   * [Unauthenticated APIs 🔑](api-inventory/api-inventory/unauthenticated-apis.md)
   * [Using sample values for testing](api-inventory/api-inventory/using-sample-values-for-testing.md)
   * [Detecting changes in APIs](api-inventory/api-inventory/detecting-changes-in-apis.md)

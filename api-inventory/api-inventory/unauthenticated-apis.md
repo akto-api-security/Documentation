@@ -2,7 +2,7 @@
 description: API2:2019 Broken User Authentication
 ---
 
-# Unauthenticated APIs   🔑
+# Unauthenticated APIs 🔑
 
 Unauthenticated APIs, specially the ones which are public facing are highly vulnerable to attacks. This is especially true for APIs that handle sensitive user or business information. This could be a big compliance issue for some companies.&#x20;
 
@@ -35,13 +35,3 @@ Unauthenticated APIs, specially the ones which are public facing are highly vuln
 {% hint style="warning" %}
 OWASP lists this as one of the top 10 API vulnerabilities [here](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa2-broken-user-authentication.md)
 {% endhint %}
-
-### Fix unauthenticated APIs
-
-Once you have reviewed all your unauthenticated endpoints, you can now work with your dev team to solve the issues:
-
-1. Create a collection of all your unauthenticated APIs in postman or download csv to share with your dev team. Alternatively you can [invite](../../akto-account/adding-new-users.md) your dev team to Akto dashboard. 🤝
-
-![](<../../.gitbook/assets/Frame 48.png>)
-
-&#x20;2\. The above step will allow your dev team to review all the authentication issues and fix them in code.
