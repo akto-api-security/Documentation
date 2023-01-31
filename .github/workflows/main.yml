@@ -18,3 +18,4 @@ jobs:
           destination-repository: 'dummy'
           commit-email: 'bhavik@akto.io'
           commit-username: 'aktoboy'
+          destination-branch: 'master'
