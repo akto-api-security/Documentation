@@ -8,7 +8,7 @@ jobs:
   Sync-Readme:
     runs-on: ubuntu-latest
     steps:
-      - name: Sync readme
+      - name: Sync readme2
         uses: dmnemec/copy_file_to_another_repo_action@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
