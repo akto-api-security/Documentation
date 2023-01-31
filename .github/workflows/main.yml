@@ -16,5 +16,5 @@ jobs:
           source-files: 'README.md'
           destination-username: 'akto-api-security'
           destination-repository: 'dummy'
-          commit-email: 'ankita@akto.io'
-          commit-username: 'Ankita28g'
+          commit-email: 'bhavik@akto.io'
+          commit-username: 'aktoboy'
