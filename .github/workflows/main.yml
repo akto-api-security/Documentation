@@ -13,7 +13,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source-file: 'README.md'
+          source_file: 'README.md'
           destination_repo: 'akto-api-security/dummy'
           user_email: 'ankush@akto.io'
           user_name: 'Ankush Jain'
