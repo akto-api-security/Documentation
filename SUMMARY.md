@@ -16,7 +16,7 @@
 * [Traffic Mirroring](add-api-data/traffic-mirroring/README.md)
   * [Amazon AWS](add-api-data/traffic-mirroring/amazon-aws.md)
   * [Google cloud (GCP)](add-api-data/traffic-mirroring/google-cloud-gcp.md)
-* [Integrations](add-api-data/integrations/README.md)
+* [Integrations for API inventory](add-api-data/integrations/README.md)
   * [Burp suite](add-api-data/integrations/burp-suite.md)
   * [Postman](add-api-data/integrations/postman.md)
   * [NGINX](add-api-data/integrations/nginx.md)

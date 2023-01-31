@@ -28,7 +28,7 @@ On the left nav, go to `Quick Start:`
 
 <figure><img src="../../.gitbook/assets/Frame 11 (1).png" alt=""><figcaption></figcaption></figure>
 
-* To add traffic from burp suite, navigate to `Burpsuite` and follow [integration steps for burp](broken-reference/) to add API data from burp.
+* To add traffic from burp suite, navigate to `Burpsuite` and follow[ integration steps for burp](../../add-api-data/integrations/burp-suite.md) to add API data from burp.
 
 <figure><img src="../../.gitbook/assets/Screenshot 2023-01-26 at 3.32.50 PM.png" alt=""><figcaption></figcaption></figure>
 
