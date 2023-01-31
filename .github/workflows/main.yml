@@ -3,13 +3,13 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
   push:
     branches:
-      - action2
+      - action3
 jobs:
   Sync-Readme:
     runs-on: ubuntu-latest
     steps:
       - name: Sync readme
-        uses: nkoppel/push-files-to-another-repository@1.1.1
+        uses: nkoppel/push-files-to-another-repository@v1.1.1
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
