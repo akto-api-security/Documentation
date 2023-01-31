@@ -1,19 +1,40 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: 
+name: Copy README.md to destination repository
+
+on:
   push:
     branches:
       - action2
+
+env:
+  DESTINATION_REPO: https://github.com/akto-api-security/dummy.git
+  GIT_EMAIL: 'ankit@akto.io'
+  GIT_USERNAME: 'Ankita Gupta'
+
 jobs:
-  Sync-Readme:
+  copy-readme:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Sync readme
-        uses: nkoppel/push-files-to-another-repository@1.1.1
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source-files: 'README.md'
-          destination-username: 'jarvis'
-          destination-directory: 'akto-api-security/dummy'
-          commit-email: 'jarvis@akto.io'
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Git
+      uses: actions/setup-git@v2
+      with:
+        git_user_email: ${{ env.GIT_EMAIL }}
+        git_user_name: ${{ env.GIT_USERNAME }}
+
+    - name: Copy README.md
+      run: |
+        # Clone destination repository
+        git clone ${{ env.DESTINATION_REPO }}
+        cd destination-repo
+        git checkout master
+        # Copy README.md from current repository
+        cp ../README.md .
+        # Commit and push changes to destination repository
+        git config --global user.email "${{ env.GIT_EMAIL }}"
+        git config --global user.name "${{ env.GIT_USERNAME }}"
+        git add README.md
+        git commit -m "Add README.md"
+        git push origin master
