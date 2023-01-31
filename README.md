@@ -22,14 +22,12 @@ Step 2: Run tests
 
 ## How to get Started?
 
-There are two ways:
+Start with [local deploy](getting-started/quick-start-with-akto-self-hosted/local-deploy.md). Run this script to create Akto at `~/akto` and run the docker containers.
 
-1. [Self Hosted](getting-started/quick-start-with-akto-self-hosted/)
-   1. [Local Deploy](getting-started/quick-start-with-akto-self-hosted/local-deploy.md) (Open Source)
-   2. [AWS Deploy](getting-started/quick-start-with-akto-self-hosted/aws-deploy.md)
-   3. [GCP Deploy](getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md)
-2. [Cloud ( Akto hosted)](getting-started/quick-start-with-akto-cloud.md)
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/akto-api-security/infra/feature/self_hosting/cf-deploy-akto)"
+```
 
-### How to Contribute?
+## How to Contribute?
 
 [Contribution guide](github-contribution-guide.md)
