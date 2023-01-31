@@ -29,3 +29,7 @@ There are two ways:
    2. [AWS Deploy](getting-started/quick-start-with-akto-self-hosted/aws-deploy.md)
    3. [GCP Deploy](getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md)
 2. [Cloud ( Akto hosted)](getting-started/quick-start-with-akto-cloud.md)
+
+### How to Contribute?
+
+[Contribution guide](github-contribution-guide.md)

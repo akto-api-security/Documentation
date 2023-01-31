@@ -1,5 +1,6 @@
 # Table of contents
 
+* [Github Open Source Repo](https://github.com/akto-api-security/community-edition)
 * [What is Akto?](README.md)
 
 ## Getting Started
@@ -46,10 +47,9 @@
 
 * [Postman](integrations/postman.md)
 
-## Akto Account
+***
 
-* [Adding new users 🙋🏼‍♂️](akto-account/adding-new-users.md)
-* [Checking Akto's health](akto-account/checking-aktos-health.md)
+* [Github contribution guide](github-contribution-guide.md)
 
 ## API reference
 
