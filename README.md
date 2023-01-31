@@ -25,7 +25,7 @@ Step 2: Run tests
 There are two ways:
 
 1. [Self Hosted](getting-started/quick-start-with-akto-self-hosted/)
-   1. [Local Deploy](getting-started/quick-start-with-akto-self-hosted/local-deploy.md)
+   1. [Local Deploy](getting-started/quick-start-with-akto-self-hosted/local-deploy.md) (Open Source)
    2. [AWS Deploy](getting-started/quick-start-with-akto-self-hosted/aws-deploy.md)
    3. [GCP Deploy](getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md)
 2. [Cloud ( Akto hosted)](getting-started/quick-start-with-akto-cloud.md)
