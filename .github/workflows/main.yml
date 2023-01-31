@@ -9,11 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sync readme
-        uses: nkoppel/push-files-to-another-repository@1.1.1
+        uses: dmnemec/copy_file_to_another_repo_action@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source-files: 'README.md'
-          destination-username: 'jarvis'
-          destination-directory: 'akto-api-security/dummy'
-          commit-email: 'jarvis@akto.io'
+          source-file: 'README.md'
+          destination_repo: 'akto-api-security/dummy'
+          user_email: 'ankush@akto.io'
+          user_name: 'Ankush Jain'
+          destination_branch: 'master'
+          
