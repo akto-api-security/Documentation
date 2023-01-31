@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sync readme
-        uses: nkoppel/push-files-to-another-repository@1.1.0
+        uses: nkoppel/push-files-to-another-repository@1.1.1
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
