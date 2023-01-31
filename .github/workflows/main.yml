@@ -1,0 +1,19 @@
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: 
+  push:
+    branches:
+      - action
+jobs:
+  Sync-Readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync readme
+        uses: nkoppel/push-files-to-another-repository@1.1.0
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-files: 'README.md'
+          destination-username: 'jarvis'
+          destination-directory: 'akto-api-security/dummy'
+          commit-email: 'jarvis@akto.io'
