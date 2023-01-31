@@ -6,13 +6,13 @@ Akto is a plug-n-play API security platform that takes only 60 secs to get start
 
 Akto enables security and engineering teams to secure their APIs by doing three things:
 
-1. [API inventory](broken-reference/)
-2. [Run business logic tests in CI/CD](broken-reference/)
+1. [API inventory](api-inventory/api-inventory/)
+2. [Run business logic tests in CI/CD](testing/run-test.md)
 3. [Find vulnerabilities in run-time](api-inventory/sensitive-data.md)
 
 ## How it works?
 
-Step 1: Create inventory
+Step 1: Create inventory&#x20;
 
 <figure><img src=".gitbook/assets/Screenshot 2023-01-26 at 5.07.03 PM.png" alt=""><figcaption></figcaption></figure>
 

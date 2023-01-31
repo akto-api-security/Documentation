@@ -43,10 +43,6 @@
 * [Test results](testing/test-results.md)
 * [Test library](testing/test-library.md)
 
-## Integrations
-
-* [Postman](integrations/postman.md)
-
 ***
 
 * [Github contribution guide](github-contribution-guide.md)

@@ -91,7 +91,7 @@ Once Akto detects any sensitive data leak, you can start your review in the sens
 
 Once you have reviewed all your sensitive data leakage, you can now work with your dev team to solve the issues:
 
-1. Create a collection of all your sensitive data in [postman](../integrations/postman.md) or download csv to share with your dev team. Alternatively you can [invite](broken-reference) your dev team to Akto dashboard.&#x20;
+1. Create a collection of all your sensitive data in [postman](broken-reference) or download csv to share with your dev team. Alternatively you can [invite](broken-reference) your dev team to Akto dashboard.&#x20;
 
 ![](<../.gitbook/assets/Frame 45 (1).png>)
 
