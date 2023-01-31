@@ -17,3 +17,4 @@ jobs:
           destination-username: 'akto-api-security'
           destination-repository: 'dummy'
           commit-email: 'ankita@akto.io'
+          commit-username: 'Ankita28g'
