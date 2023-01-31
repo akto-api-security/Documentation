@@ -14,6 +14,6 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           source-files: 'README.md'
-          destination-username: 'jarvis'
+          destination-username: 'Ankita Gupta'
           destination-directory: 'akto-api-security/dummy'
-          commit-email: 'jarvis@akto.io'
+          commit-email: 'ankita@akto.io'
