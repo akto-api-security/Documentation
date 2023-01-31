@@ -24,7 +24,7 @@ jobs:
         git_user_email: ${{ env.GIT_EMAIL }}
         git_user_name: ${{ env.GIT_USERNAME }}
 
-    - name: Copy README.md
+    - name: Copy README.m
       run: |
         # Clone destination repository
         git clone ${{ env.DESTINATION_REPO }}
