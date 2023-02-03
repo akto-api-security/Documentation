@@ -1,6 +1,6 @@
 # What is Akto?
 
-[How it works](./#how-it-works) • [Getting-Started](./#how-to-get-started) • [API Inventory](broken-reference) • [API testing](broken-reference) • [Add Test](testing/test-library.md) • [Join Slack community](https://join.slack.com/t/aktocommunity/shared\_invite/zt-1nqfw3knb-XO\~r7UZyzD9f8\_Ddm4R1lg) •
+[How it works](./#how-it-works) • [Getting-Started](./#how-to-get-started) • [API Inventory](broken-reference) • [API testing](broken-reference) • [Add Test](testing/test-library.md) • [Join Discord community](https://discord.com/invite/Wpc6xVME4s) •
 
 Akto is a plug-n-play API security platform that takes only 60 secs to get started. Akto is used by security teams to maintain a continuous inventory of APIs, test APIs for vulnerabilities and find runtime issues. Akto offers tests for all OWASP top 10 and HackerOne Top 10 categories including BOLA, authentication, SSRF, XSS, security configurations, etc. Akto's powerful testing engine runs variety of business logic tests by reading traffic data to understand API traffic pattern leading to reduced false positives. Akto can integrate with multiple traffic sources - burpsuite, AWS, postman, GCP, gateways, etc.
 
