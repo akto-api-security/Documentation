@@ -1,6 +1,10 @@
 # Burp suite
 
-You can now import API traffic using Akto's burp suite plug-in. Follow these steps:
+You can now import API traffic using Akto's burp suite plug-in.&#x20;
+
+{% embed url="https://www.youtube.com/watch?v=_pHMrvcdiJk" %}
+
+Follow these steps:
 
 1. Go to Q`uickstart > connect traffic data`
 2. Navigate to `burpsuite.`
