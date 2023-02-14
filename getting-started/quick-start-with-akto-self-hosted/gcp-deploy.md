@@ -53,7 +53,7 @@ us-west4-a
 
 9\. Click on the akto-dashboard-instance and find the IP.
 
-10\. Copy and paste this IP in your browser and add port 8080 to it ( http://yourip:8080)
+10\. Copy and paste this IP in your browser and add port 8080 to it ( http://yourIP:8080)
 
 11\. You can signup on Akto dashboard.
 
