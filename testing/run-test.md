@@ -11,7 +11,7 @@ Akto's testing module helps you run 100s of test for your APIs. It's a 2 steps p
 <figure><img src="../../.gitbook/assets/Frame 20 (2).png" alt=""><figcaption></figcaption></figure>
 
 * Click on any `collection` you want to run test on.
-* `Select endpoints` you want to test.
+* To effectively test your endpoints, you have the option to select specific endpoints to test. If you do not select any endpoints, all endpoints will be tested. Additionally, you can use the filter on the `Method` column and select `GET` to only run tests on GET endpoints. You can also apply filters on other columns in the table, such as `Last seen`, `Access Type`, and `Auth Type`, to narrow down the endpoints that you want to test.
 
 <figure><img src="../../.gitbook/assets/Frame 21 (1).png" alt=""><figcaption></figcaption></figure>
 
