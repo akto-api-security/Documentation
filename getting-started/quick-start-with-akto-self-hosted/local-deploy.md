@@ -19,9 +19,9 @@ Run this script to create Akto at `~/akto` and run the docker containers.
 
 ### If you have don't have bash installed (Windows users)
 1. Download the [zip file](https://github.com/akto-api-security/infra/archive/refs/heads/feature/self_hosting.zip)
-2. Unzip the zip file. It will create `infra-feature-self_hosting` folder. Open the folder in CMD.
+2. Unzip the zip file. Go inside the unzipped folder and you will see `docker-compose.yml` file. Open the folder in CMD.
 3. Make sure Docker desktop is running. Can be validated with `docker info`. 
-4. Run `docker-compose up -d` (If docker-compose is not installed use this [guide](https://docs.docker.com/compose/install/))
+4. Run `docker-compose up -d` in the folder containing `docker-compose.yml` file (If docker-compose is not installed use this [guide](https://docs.docker.com/compose/install/))
 5. Wait couple of minutes and open [http://localhost:9090](http://localhost:9090)
 
 ## Step 2: Create your account
