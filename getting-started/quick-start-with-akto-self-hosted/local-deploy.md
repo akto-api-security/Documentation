@@ -6,15 +6,23 @@ This guide will help you get the Akto modules running as Docker containers using
 
 ## Prerequisites
 
-You'll need to have Docker installed in order to run the container. Check out [the Docker documentation](https://docs.docker.com/install/) for instructions.
+You'll need to have Docker installed in order to run the container. Check out [the Docker documentation](https://docs.docker.com/install/) for instructions. To verify installation run `docker info`.
 
 ## Step 1: Run install script
 
+### If you have bash installed (Mac and Linux users)
 Run this script to create Akto at `~/akto` and run the docker containers.
 
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/akto-api-security/infra/feature/self_hosting/cf-deploy-akto)"
 ```
+
+### If you have don't have bash installed (Windows users)
+1. Download the [zip file](https://github.com/akto-api-security/infra/archive/refs/heads/feature/self_hosting.zip)
+2. Unzip the zip file. Go inside the unzipped folder and you will see `docker-compose.yml` file. Open the folder in CMD.
+3. Make sure Docker desktop is running. Can be validated with `docker info`. 
+4. Run `docker-compose up -d` in the folder containing `docker-compose.yml` file (If docker-compose is not installed use this [guide](https://docs.docker.com/compose/install/))
+5. Wait couple of minutes and open [http://localhost:9090](http://localhost:9090)
 
 ## Step 2: Create your account
 
