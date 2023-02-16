@@ -71,5 +71,10 @@ y
 ```
 {% endhint %}
 
+### Troubleshooting Notes
 
+1. Since the instance group requires health check metrics, please ensure that health check IPs for GCP i.e. 130.211.0.0/22, 35.191.0.0/16 are allowed on port TCP port 8000 for the VM instances.
+2. Ensure that internal calls are allowed between created VMs.
+3. Open the ports carrying the mirrored traffic on the VMs in the akto-instance-group. Generally traffic is carried on TCP port 80.
+4. If you're accessing akto-dashboard from a public network, allow http traffic on the it.
 
