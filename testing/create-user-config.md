@@ -8,7 +8,7 @@ Running Specialized tests like BOLA, BUA etc, require an additional attacker aut
 
 * Go to Testing Tab.
 * Click on User Config Section
-* Add your Auth Token in section 1 **Inject hard-coded attacker auth token**
+* Add your Auth Token in section 1 -  **"Inject hard-coded attacker auth token"**. Enter the below 2 values - 
     * Auth Header Key - Enter name of header which contains your auth token.
     * Auth Header Value - Enter value corresponding to the header name you mentioned in Auth Header Key. 
 
