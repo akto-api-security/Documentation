@@ -14,7 +14,7 @@ Akto provides functionality to add your own tests in the form of nuclei template
 
 * You would see an "Add test" button in the Tests library section.
 * On clicking the button, you would have to fill out few details - 
-    * **Raw Url of nuclei template** - For the template you intend on adding, you can very easily get it's raw url from github, by clicking on Raw option in it's source code. A sample raw url might look like - https://raw.githubusercontent.com/akto-api-security/tests-library/master/BOLA/path_traversal/path_traversal_full.yaml
+    * **Raw Url of nuclei template** - For the template you intend on adding, you can very easily get it's raw url from github, by clicking on Raw option in it's source code. A sample raw url might look like - https://raw.githubusercontent.com/akto-api-security/tests-library/master/BOLA/path_traversal/path_traversal_full.yaml. We will soon be launching a feature where you might be able to upload template via a file as well, so watch out for that :) 
     * **Category** - Please select the appropriate category from the range of categories in drop down menu. In case of any confusion in selecting the category, you can check out pre existing nuclei tests.
     * **Subcategory** - Please select the appropriate subCategory from the range of categories in drop down menu. In case of any confusion in selecting the category, you can check out pre existing nuclei tests.
 	* **Severity** - You can also assign severity for your newly added template. By default it's preselected as HIGH. But you can lower it down to MEDIUM/LOW, depending on your use case.
