@@ -1,6 +1,6 @@
 # Test library
 
-Akto provides functionality to add your own tests in the form of nuclei template files. You can run your own tests against your api collections very conveniently.&#x20;
+Akto provides functionality to add your own tests in the form of nuclei template files. You can run your own tests, along with Automated tests built by Akto against your api collections very conveniently.&#x20;
 
 ## Brief Overview
 
