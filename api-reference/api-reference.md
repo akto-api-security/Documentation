@@ -156,7 +156,7 @@ You will need the following inputs for each of the API endpoints:
 		        "url": "<endpointUrl>"
 		    },
 		    "samples": []
-      	},
+		}
 		.....
 	}
 }
