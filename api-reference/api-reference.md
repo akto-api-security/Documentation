@@ -133,3 +133,31 @@ You will need the following inputs for each of the API endpoints:
 	]
 }
 ```
+
+**6. api/fetchSampleData:** This endpoint is to fetch all the sample data entries stored for a particular endpoint. Note that Akto stores only latest 10 samples for any endpoint.
+
+* Query parameters:&#x20;
+  1. <mark style="color:purple;">`Collection_ID`</mark> You can get this by going to a collection and copying the number from url.&#x20;
+  2. <mark style="color:purple;">`Endpoint_Url`</mark> This is endpoint url for which you want to get the traffic. ( example: api/board")
+  3. <mark style="color:purple;">`Method`</mark>  The http method for which you want to get the traffic.
+* Command:  ****  `curl -H "X-API-KEY:`<mark style="color:purple;">`YOUR_API_KEY`</mark>` ``" -d '{"method":`` `<mark style="color:purple;">`Method`</mark>`, "url":`` `<mark style="color:purple;">`Endpoint_Url`</mark>`, "apiCollectionId":`` `<mark style="color:purple;">`Collection_ID`</mark>`}' -H "Content-type: application/json" -X POST "`<mark style="color:purple;">`URL`</mark>`/api/fetchSampleData"`
+* Output: You will get sample request response stored for the queried endpoint
+
+```json
+{
+	"sampleDataList": {
+		{
+			"id": {
+		        "apiCollectionId": "<apiCollectionId>",
+		        "bucketEndEpoch": 0,
+		        "bucketStartEpoch": 0,
+		        "method": "<method>",
+		        "responseCode": -1,
+		        "url": "<endpointUrl>"
+		    },
+		    "samples": []
+		}
+		.....
+	}
+}
+```
