@@ -34,7 +34,7 @@ server {
     location / {
         .....
         js_body_filter main2.to_lower_case;
-		kafka_log kafka:quickstart-events $responseBo;
+		kafka_log kafka:akto.api.logs $responseBo;
     }
 }
 ```
