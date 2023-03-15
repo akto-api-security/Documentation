@@ -41,7 +41,7 @@ server {
 
 6\. Restart NGINX by `nginx -s reload`. This will start logging all the request-response logs to akto.&#x20;
 
-Note: We have benchmarked the an nginx server with and without akto nginx traffic module. The results for the same are as follows: 
+Note: We have benchmarked an nginx server with and without akto nginx traffic module. The results for the same are as follows: 
 
 | metrics           | vanilla nginx | nginx with akto module |
 |-------------------|---------------|------------------------|
