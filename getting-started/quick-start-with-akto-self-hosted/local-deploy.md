@@ -11,6 +11,7 @@ You'll need to have Docker installed in order to run the container. Check out [t
 ## Step 1: Run install script
 
 ### If you have bash installed (Mac and Linux users)
+
 Run this script to create Akto at `~/akto` and run the docker containers.
 
 ```
@@ -18,9 +19,10 @@ Run this script to create Akto at `~/akto` and run the docker containers.
 ```
 
 ### If you have don't have bash installed (Windows users)
-1. Download the [zip file](https://github.com/akto-api-security/infra/archive/refs/heads/feature/self_hosting.zip)
+
+1. Download the [zip file](https://github.com/akto-api-security/infra/archive/refs/heads/feature/self\_hosting.zip)
 2. Unzip the zip file. Go inside the unzipped folder and you will see `docker-compose.yml` file. Open the folder in CMD.
-3. Make sure Docker desktop is running. Can be validated with `docker info`. 
+3. Make sure Docker desktop is running. Can be validated with `docker info`.
 4. Run `docker-compose up -d` in the folder containing `docker-compose.yml` file (If docker-compose is not installed use this [guide](https://docs.docker.com/compose/install/))
 5. Wait couple of minutes and open [http://localhost:9090](http://localhost:9090)
 
@@ -38,11 +40,11 @@ On the left nav, go to `Quick Start:`
 
 * To add traffic from burp suite, navigate to `Burpsuite` and follow[ integration steps for burp](../../add-api-data/integrations/burp-suite.md) to add API data from burp.
 
-<figure><img src="../../.gitbook/assets/Screenshot 2023-01-26 at 3.32.50 PM.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Screenshot 2023-01-26 at 3.32.50 PM (1).png" alt=""><figcaption></figcaption></figure>
 
 * To add traffic from postman, navigate to `postman` and follow [integration steps for postman](../../add-api-data/integrations/postman.md) to add API data from Postman.
 
-<figure><img src="../../.gitbook/assets/Screen Shot 2023-01-10 at 5.12.55 PM.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Screen Shot 2023-01-10 at 5.12.55 PM (1).png" alt=""><figcaption></figcaption></figure>
 
 Once API data is added, move to `step 4` below to run test.
 

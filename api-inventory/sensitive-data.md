@@ -33,7 +33,7 @@ Akto allows you to mark your own custom parameter as sensitive. Here is an examp
 
 1. Go to API changes tab.
 
-![](<../.gitbook/assets/Frame 35 (1).png>)
+![](<../.gitbook/assets/Frame 35 (1) (1).png>)
 
 &#x20;&#x20;
 
@@ -93,7 +93,7 @@ Once you have reviewed all your sensitive data leakage, you can now work with yo
 
 1. Create a collection of all your sensitive data in [postman](broken-reference) or download csv to share with your dev team. Alternatively you can [invite](broken-reference) your dev team to Akto dashboard.&#x20;
 
-![](<../.gitbook/assets/Frame 45 (1).png>)
+![](<../.gitbook/assets/Frame 45.png>)
 
 ![](<../.gitbook/assets/Frame 44.png>)
 
