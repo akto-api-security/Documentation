@@ -37,7 +37,7 @@ This is a bit dirty right now - involves getting the request from your browser's
               --compressed`
 * Add a post deployment hook in your CI/CD tool. Add the above curl command as part of post deployment. For example, Jenkins post deployment hook should look like - 
 <img width="1069" alt="Untitled" src="https://user-images.githubusercontent.com/91221068/226264229-71f8cdd8-63ba-4fd2-a363-01804e923831.png">
-
+* If you have hosted Akto in your VPC, please ensure the CI/CD machine can reach Akto's dashboard. You might have to change Security rules on Akto-Load-Balancer accordingly. 
 * If you want this to become better, please create a GitHub issue [here](https://github.com/akto-api-security/akto/issues). Or even better, contribute! We are open source! 
 
 
