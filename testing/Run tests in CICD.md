@@ -1,4 +1,4 @@
-# Run tests in CI/CD
+# Run tests in CICD
 
 ## Introduction
 
