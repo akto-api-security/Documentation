@@ -24,7 +24,7 @@ You can also create your own collection and upload traffic. Follow the steps bel
 
 ![](<../../.gitbook/assets/Screen Shot 2022-03-09 at 1.40 1.png>)
 
-## **Delet Collection**
+## **Delete Collection**
 
 You can  delete any of the collection you created by clicking on delete collection.&#x20;
 
