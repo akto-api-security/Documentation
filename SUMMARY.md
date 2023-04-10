@@ -35,6 +35,7 @@
 * [Auth types](api-inventory/auth-types.md)
 * [Sensitive data](api-inventory/sensitive-data.md)
 * [API documentation](api-inventory/api-documentation.md)
+* [Data types](api-inventory/data-types.md)
 
 ## TESTING
 
