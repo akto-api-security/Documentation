@@ -11,7 +11,7 @@ The common extension for these files is .har. You can use this method if you qui
 
 3. Browse the website as usual to generate traffic, then right-click anywhere in the network and click on `save as har with content`
 
-<figure><img src="../.gitbook/assets/juiceshop.png" alt=""><figcaption></figcaption></figure>
+   <figure><img src="../.gitbook/assets/juiceshop.png" alt=""><figcaption></figcaption></figure>
 
 
 ## How to upload a HAR file on Akto dashboard
