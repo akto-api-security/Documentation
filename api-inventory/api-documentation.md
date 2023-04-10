@@ -16,4 +16,4 @@ You can create API Documention in form of OpenAPI Spec. You can also export to P
    <figure><img src="../.gitbook/assets/api-docs.png" alt=""><figcaption></figcaption></figure>
 3. Click on **Export to Postman** option.
 4. This is how your API Collection should look in Postman
-   <figure>![image (8)](https://user-images.githubusercontent.com/91221068/230902003-0a4e16cb-65fe-401e-b806-f47d1479cee4.png)</figure>
+   <figure><img src="https://user-images.githubusercontent.com/91221068/230902003-0a4e16cb-65fe-401e-b806-f47d1479cee4.png" alt=""></figure>
