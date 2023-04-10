@@ -11,4 +11,5 @@ Most of the time organizations have different types of authentication types. For
    <figure><img src="../.gitbook/assets/auth-type-2.png" alt=""><figcaption></figcaption></figure>
 
 3. Akto will now start detecting your custom auth types. It appears as `custom` under the Auth Type column for any API Collection.
-   <figure><img src="../.gitbook/assets/auth-types.png" alt=""><figcaption></figcaption></figure>
+
+   <figure><img src="../.gitbook/assets/auth-types.png" alt=""></figure>
