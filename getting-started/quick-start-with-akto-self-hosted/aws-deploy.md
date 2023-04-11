@@ -4,7 +4,7 @@
 
 {% tabs %}
 {% tab title="Akto Setup" %}
-![Deployment Architecture](<../../.gitbook/assets/scale (1)-Page-4.drawio (1) (1) (1) (1) (1) (1).png>)
+![Deployment Architecture](<../../.gitbook/assets/scale (1)-Page-4.drawio (1) (1) (1) (1) (1).png>)
 {% endtab %}
 {% endtabs %}
 
