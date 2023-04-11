@@ -16,7 +16,7 @@ If your application services are hosted in AWS, follow the steps below to instal
 2. `Signup` if you haven't already done that.
 3. Go to AWS section. `Select region` from the dropdown and click on `launch stack.`&#x20;
 
-<figure><img src="../../.gitbook/assets/Frame 1 (8) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Frame 1 (8) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 4\. This will re-direct you to the `AWS screen`.&#x20;
 
