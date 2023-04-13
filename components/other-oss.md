@@ -14,6 +14,10 @@ As part of Akto installation, you would see some OSS docker images being used. H
    - Interaction: All of the data (HTTP req-resp pairs) get pushed to Kafka.
    - Architecture: It runs alongside Traffic-Mirroring module (producer) and Runtime-analyzer module (consumer). Buffers application's traffic data. 
    - Why community edition doesn't need it: Community edition is meant to run on a single laptop with traffic sources being Postman, BurpSuite proxy, Har files etc. The sizes are small compared to traffic received by production application. They are processed synchronously within the dashboard rather than async buffer queue.
-5. **Zookeeper**
+3. **Zookeeper**
+   - Dockerhub version: confluentinc/cp-zookeeper:6.2.1
+   - Used only in enterprise version
+   - Interaction: Kafka can't be deployed without Zookeeper.
+   - Architecture: It runs alongside (single) Kafka.
 
 
