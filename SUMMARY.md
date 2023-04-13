@@ -58,6 +58,7 @@
 
 * [Dashboard](components/dashboard.md)
 * [Testing module](components/testing-module.md)
+* [Traffic mirroring module](components/traffic-mirroring-module.md)
 * [Runtime analyzer](components/runtime-analyzer.md)
 * [Context analyzer](components/context-analyzer.md)
 * [Puppeteer server](components/puppeteer-server.md)
