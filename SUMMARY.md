@@ -53,3 +53,12 @@
 ## API reference
 
 * [API reference](api-reference/api-reference.md)
+
+## Components
+
+* [Dashboard](components/dashboard.md)
+* [Testing module](components/testing-module.md)
+* [Runtime analyzer](components/runtime-analyzer.md)
+* [Context analyzer](components/context-analyzer.md)
+* [Puppeteer server](components/puppeteer-server.md)
+* [Other OSS](components/other-oss.md)
