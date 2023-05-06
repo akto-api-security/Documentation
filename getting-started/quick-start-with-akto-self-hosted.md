@@ -2,7 +2,7 @@
 description: Akto can be self-hosted in just 60 seconds.
 ---
 
-# Quick start with Akto Self Hosted
+# Akto Self Hosted
 
 ## Introduction
 
@@ -15,3 +15,5 @@ Deploy Akto locally or on your own cloud. Choose any of the below options to get
 1. [AWS deploy](aws-deploy.md)
 2. [GCP Deploy](gcp-deploy.md)
 3. [Local Deploy](local-deploy.md)
+4. Azure Deploy
+5. Heroku

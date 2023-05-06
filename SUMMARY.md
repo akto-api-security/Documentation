@@ -7,10 +7,10 @@
 ## Getting Started
 
 * [Akto Cloud](getting-started/quick-start-with-akto-cloud.md)
-* [AWS deploy](getting-started/aws-deploy.md)
-* [Local Deploy](getting-started/local-deploy.md)
-* [GCP Deploy](getting-started/gcp-deploy.md)
 * [Akto Self Hosted](getting-started/quick-start-with-akto-self-hosted.md)
+* [AWS deploy](getting-started/aws-deploy.md)
+* [GCP Deploy](getting-started/gcp-deploy.md)
+* [Local Deploy](getting-started/local-deploy.md)
 * [FAQs on data concerns](getting-started/faqs-on-data-concerns.md)
 
 ## Traffic Connections
