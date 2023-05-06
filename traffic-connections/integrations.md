@@ -1,4 +1,4 @@
-# Integrations
+# Integrations for API inventory
 
 ## Introduction
 
@@ -23,7 +23,7 @@ Head to `Quick Start -> Connect traffic data`
 
 Use any of the sources below to get API traffic
 
-* [AWS mirroring](../traffic-mirroring/)
+* [AWS mirroring](traffic-mirroring.md)
 * [Burp Suite](broken-reference)
 * [Postman](postman.md)
 * [NGINX](nginx.md)

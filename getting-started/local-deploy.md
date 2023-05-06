@@ -30,21 +30,21 @@ Run this script to create Akto at `~/akto` and run the docker containers.
 
 Akto should automatically open up in your browser at [http://localhost:9090](http://localhost:9090). Click on the Signup button to get started. If you've already signed up, sign in to the account.
 
-![](<../../.gitbook/assets/Screen Shot 2023-01-10 at 3.48.28 PM.png>)
+![](<../.gitbook/assets/Screen Shot 2023-01-10 at 3.48.28 PM.png>)
 
 ## Step 3: Add API data
 
 On the left nav, go to `Quick Start:`
 
-<figure><img src="../../.gitbook/assets/Frame 11 (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Frame 11 (1).png" alt=""><figcaption></figcaption></figure>
 
-* To add traffic from burp suite, navigate to `Burpsuite` and follow[ integration steps for burp](../../add-api-data/integrations/burp-suite.md) to add API data from burp.
+* To add traffic from burp suite, navigate to `Burpsuite` and follow[ integration steps for burp](../traffic-connections/burp-suite.md) to add API data from burp.
 
-<figure><img src="../../.gitbook/assets/Screenshot 2023-01-26 at 3.32.50 PM.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Screenshot 2023-01-26 at 3.32.50 PM.png" alt=""><figcaption></figcaption></figure>
 
-* To add traffic from postman, navigate to `postman` and follow [integration steps for postman](../../add-api-data/integrations/postman.md) to add API data from Postman.
+* To add traffic from postman, navigate to `postman` and follow [integration steps for postman](../traffic-connections/postman.md) to add API data from Postman.
 
-<figure><img src="../../.gitbook/assets/Screen Shot 2023-01-10 at 5.12.55 PM.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Screen Shot 2023-01-10 at 5.12.55 PM.png" alt=""><figcaption></figcaption></figure>
 
 Once API data is added, move to `step 4` below to run test.
 
@@ -56,21 +56,21 @@ Akto needs API traffic to create automated API inventory. Currently for your loc
 
 Go to `Observe -> Inventory`.
 
-<figure><img src="../../.gitbook/assets/Frame 20 (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Frame 20 (2).png" alt=""><figcaption></figcaption></figure>
 
 Click on any `collection` you want to run test on.
 
 `Select endpoints` you want to run test on.
 
-<figure><img src="../../.gitbook/assets/Frame 21 (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Frame 21 (1).png" alt=""><figcaption></figcaption></figure>
 
 Click on `run test`.
 
-<figure><img src="../../.gitbook/assets/Frame 22 (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Frame 22 (1).png" alt=""><figcaption></figcaption></figure>
 
 `Select tests` to be run.
 
-<figure><img src="../../.gitbook/assets/Screen Shot 2023-01-10 at 5.26 1.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Screen Shot 2023-01-10 at 5.26 1.png" alt=""><figcaption></figcaption></figure>
 
 Select `max test run time` and `max concurrent requests`
 
@@ -78,4 +78,4 @@ Click `Run once now`.
 
 Go to `Testing -> Test results -> Test` to see results of the test you have just run.
 
-<figure><img src="../../.gitbook/assets/Frame 23 (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Frame 23 (1).png" alt=""><figcaption></figcaption></figure>

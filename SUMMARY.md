@@ -6,25 +6,25 @@
 
 ## Getting Started
 
-* [Quick start with Akto Cloud](getting-started/quick-start-with-akto-cloud.md)
-* [Quick start with Akto Self Hosted](getting-started/quick-start-with-akto-self-hosted/README.md)
-  * [AWS deploy](getting-started/quick-start-with-akto-self-hosted/aws-deploy.md)
-  * [Local Deploy](getting-started/quick-start-with-akto-self-hosted/local-deploy.md)
-  * [GCP Deploy](getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md)
+* [Akto Cloud](getting-started/quick-start-with-akto-cloud.md)
+* [AWS deploy](getting-started/aws-deploy.md)
+* [Local Deploy](getting-started/local-deploy.md)
+* [GCP Deploy](getting-started/gcp-deploy.md)
+* [Akto Self Hosted](getting-started/quick-start-with-akto-self-hosted.md)
 * [FAQs on data concerns](getting-started/faqs-on-data-concerns.md)
 
-## Add API data
+## Traffic Connections
 
-* [Traffic Mirroring](add-api-data/traffic-mirroring/README.md)
-  * [Amazon AWS](add-api-data/traffic-mirroring/amazon-aws.md)
-  * [Google cloud (GCP)](add-api-data/traffic-mirroring/google-cloud-gcp.md)
-* [Integrations for API inventory](add-api-data/integrations/README.md)
-  * [Burp suite](add-api-data/integrations/burp-suite.md)
-  * [Postman](add-api-data/integrations/postman.md)
-  * [NGINX](add-api-data/integrations/nginx.md)
-  * [Akto SDK](add-api-data/integrations/akto-sdk.md)
-  * [Akto java agent](add-api-data/integrations/akto-java-agent.md)
-* [HAR file upload](add-api-data/har-file-upload.md)
+* [Traffic Mirroring](traffic-connections/traffic-mirroring.md)
+* [AWS Mirroring](traffic-connections/amazon-aws.md)
+* [GCP Mirroring](traffic-connections/google-cloud-gcp.md)
+* [Burp suite](traffic-connections/burp-suite.md)
+* [Postman](traffic-connections/postman.md)
+* [NGINX](traffic-connections/nginx.md)
+* [Akto SDK](traffic-connections/akto-sdk.md)
+* [Akto java agent](traffic-connections/akto-java-agent.md)
+* [HAR file upload](traffic-connections/har-file-upload.md)
+* [Integrations for API inventory](traffic-connections/integrations.md)
 
 ## API Inventory
 

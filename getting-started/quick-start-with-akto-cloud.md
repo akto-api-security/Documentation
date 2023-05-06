@@ -1,4 +1,4 @@
-# Quick start with Akto Cloud
+# Akto Cloud
 
 ## Introduction
 
@@ -24,7 +24,7 @@ Click on `Connect traffic data`
 
 <figure><img src="../.gitbook/assets/Screenshot 2023-01-26 at 3.32.50 PM (1).png" alt=""><figcaption></figcaption></figure>
 
-* To add traffic from postman, navigate to `postman` and follow [integration steps for postman](../add-api-data/integrations/postman.md) to add API data from Postman.
+* To add traffic from postman, navigate to `postman` and follow [integration steps for postman](../traffic-connections/postman.md) to add API data from Postman.
 
 <figure><img src="../.gitbook/assets/Screen Shot 2023-01-10 at 5.12.55 PM (1).png" alt=""><figcaption></figcaption></figure>
 
