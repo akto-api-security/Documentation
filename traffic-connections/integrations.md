@@ -28,7 +28,7 @@ Use any of the sources below to get API traffic
 * [Postman](postman.md)
 * [NGINX](nginx.md)
 * [Akto SDK](akto-sdk.md)
-* [Akto java agent](akto-java-agent.md)
+* [Akto java agent](broken-reference)
 {% endtab %}
 
 {% tab title="Local Deploy" %}
