@@ -24,8 +24,8 @@
 * [AWS Fargate](traffic-connections/aws-fargate.md)
 * [AWS EKS](traffic-connections/aws-eks.md)
 * [AWS Beanstalk](traffic-connections/aws-beanstalk.md)
-* [eBPF](traffic-connections/ebpf.md)
 * [Docker](traffic-connections/docker.md)
+* [eBPF](traffic-connections/ebpf.md)
 * [AWS API Gateway](traffic-connections/aws-api-gateway.md)
 * [Kong](traffic-connections/kong.md)
 * [Burp suite](traffic-connections/burp-suite.md)
@@ -33,7 +33,6 @@
 * [NGINX](traffic-connections/nginx.md)
 * [Akto SDK](traffic-connections/akto-sdk.md)
 * [HAR file upload](traffic-connections/har-file-upload.md)
-* [Integrations for API inventory](traffic-connections/integrations.md)
 
 ## API Inventory
 
