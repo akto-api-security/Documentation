@@ -12,6 +12,7 @@
 * [GCP Deploy](getting-started/gcp-deploy.md)
 * [Local Deploy](getting-started/local-deploy.md)
 * [Azure Deploy](getting-started/azure-deploy.md)
+* [Heroku](getting-started/heroku.md)
 * [FAQs on data concerns](getting-started/faqs-on-data-concerns.md)
 
 ## Traffic Connections
