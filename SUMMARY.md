@@ -17,12 +17,14 @@
 
 ## Traffic Connections
 
-* [Traffic Mirroring](traffic-connections/traffic-mirroring.md)
 * [AWS Mirroring](traffic-connections/amazon-aws.md)
 * [GCP Mirroring](traffic-connections/google-cloud-gcp.md)
 * [Kubernetes](traffic-connections/kubernetes.md)
-* [eBPF](traffic-connections/ebpf.md)
 * [TCP Agent](traffic-connections/tcp-agent.md)
+* [AWS Fargate](traffic-connections/aws-fargate.md)
+* [AWS EKS](traffic-connections/aws-eks.md)
+* [AWS Beanstalk](traffic-connections/aws-beanstalk.md)
+* [eBPF](traffic-connections/ebpf.md)
 * [Docker](traffic-connections/docker.md)
 * [AWS API Gateway](traffic-connections/aws-api-gateway.md)
 * [Kong](traffic-connections/kong.md)
