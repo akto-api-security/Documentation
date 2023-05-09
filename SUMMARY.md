@@ -17,23 +17,23 @@
 
 ## Traffic Connections
 
-* [AWS Mirroring](traffic-connections/amazon-aws.md)
 * [GCP Mirroring](traffic-connections/google-cloud-gcp.md)
 * [Kubernetes](traffic-connections/kubernetes.md)
-* [TCP Agent](traffic-connections/tcp-agent.md)
+* [AWS Mirroring](traffic-connections/amazon-aws.md)
 * [AWS Fargate](traffic-connections/aws-fargate.md)
 * [AWS EKS](traffic-connections/aws-eks.md)
 * [AWS Beanstalk](traffic-connections/aws-beanstalk.md)
-* [Docker](traffic-connections/docker.md)
-* [eBPF](traffic-connections/ebpf.md)
 * [AWS API Gateway](traffic-connections/aws-api-gateway.md)
 * [Kong](traffic-connections/kong.md)
-* [Burp suite](traffic-connections/burp-suite.md)
-* [Postman](traffic-connections/postman.md)
 * [NGINX](traffic-connections/nginx.md)
 * [Envoy](traffic-connections/envoy.md)
-* [Akto SDK](traffic-connections/akto-sdk.md)
+* [Docker](traffic-connections/docker.md)
+* [TCP Agent](traffic-connections/tcp-agent.md)
+* [eBPF](traffic-connections/ebpf.md)
+* [Burp suite](traffic-connections/burp-suite.md)
+* [Postman](traffic-connections/postman.md)
 * [HAR file upload](traffic-connections/har-file-upload.md)
+* [Akto SDK](traffic-connections/akto-sdk.md)
 
 ## API Inventory
 

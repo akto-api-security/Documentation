@@ -30,11 +30,11 @@ On the left nav, go to `Quick Start:`
 
 * To add traffic from burp suite, navigate to `Burpsuite` and follow[ integration steps for burp](../traffic-connections/burp-suite.md) to add API data from burp.
 
-<figure><img src="../.gitbook/assets/Screenshot 2023-01-26 at 3.32.50 PM.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Screenshot 2023-01-26 at 3.32.50 PM (1).png" alt=""><figcaption></figcaption></figure>
 
 * To add traffic from postman, navigate to `postman` and follow [integration steps for postman](../traffic-connections/postman.md) to add API data from Postman.
 
-<figure><img src="../.gitbook/assets/Screen Shot 2023-01-10 at 5.12.55 PM.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Screen Shot 2023-01-10 at 5.12.55 PM (1).png" alt=""><figcaption></figcaption></figure>
 
 Once API data is added, move to `step 4` below to run test.
 
