@@ -35,7 +35,7 @@ If you find a bug or have an idea for a new feature, please open an issue on Git
 
 ### License
 
-By contributing to this project, you agree that your contributions will be licensed under the [LICENSE](https://github.com/akto-api-security/community-edition/blob/master/LICENSE) file.
+By contributing to this project, you agree that your contributions will be licensed under the [LICENSE](https://github.com/akto-api-security/community-edition/blob/master/LICENSE.md) file.
 
 ### Contact
 
