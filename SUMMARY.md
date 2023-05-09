@@ -31,6 +31,7 @@
 * [Burp suite](traffic-connections/burp-suite.md)
 * [Postman](traffic-connections/postman.md)
 * [NGINX](traffic-connections/nginx.md)
+* [Envoy](traffic-connections/envoy.md)
 * [Akto SDK](traffic-connections/akto-sdk.md)
 * [HAR file upload](traffic-connections/har-file-upload.md)
 
