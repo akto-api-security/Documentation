@@ -9,6 +9,7 @@
 * [Akto Cloud](getting-started/quick-start-with-akto-cloud.md)
 * [Akto Self Hosted](getting-started/quick-start-with-akto-self-hosted.md)
 * [AWS deploy](getting-started/aws-deploy.md)
+* [AWS multi-VPC deploy](getting-started/aws-multi-vpc-deploy.md)
 * [GCP Deploy](getting-started/gcp-deploy.md)
 * [Local Deploy](getting-started/local-deploy.md)
 * [Azure Deploy](getting-started/azure-deploy.md)
