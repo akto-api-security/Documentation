@@ -9,8 +9,8 @@
     "/api/fetchTestRunResultDetails" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchTestRunResultDetails",
-        "operationId" : "http://localhost:8081/api/fetchTestRunResultDetails-POST",
+        "summary" : "POST request for endpoint /api/fetchTestRunResultDetails",
+        "operationId" : "/api/fetchTestRunResultDetails-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -253,9 +253,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -275,8 +272,8 @@
     "/api/fetchDataTypes" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchDataTypes",
-        "operationId" : "http://localhost:8081/api/fetchDataTypes-POST",
+        "summary" : "POST request for endpoint /api/fetchDataTypes",
+        "operationId" : "/api/fetchDataTypes-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -301,9 +298,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -323,8 +317,8 @@
     "/api/fetchAffectedEndpoints" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchAffectedEndpoints",
-        "operationId" : "http://localhost:8081/api/fetchAffectedEndpoints-POST",
+        "summary" : "POST request for endpoint /api/fetchAffectedEndpoints",
+        "operationId" : "/api/fetchAffectedEndpoints-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -586,88 +580,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/track" : {
-      "description" : "description",
-      "post" : {
-        "summary" : "POST request for endpoint https://api-js.mixpanel.com:443/track/",
-        "operationId" : "https://api-js.mixpanel.com:443/track/-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "NUMBER" : {
-                    "type" : "string",
-                    "example" : "null"
-                  },
-                  "data" : {
-                    "type" : "string",
-                    "example" : "[\n    {\"event\": \"/api/fetchActiveLoaders\",\"properties\": {\"$os\": \"Windows\",\"$browser\": \"Chrome\",\"$referrer\": \"http://localhost:8081/login\",\"$referring_domain\": \"localhost:8081\",\"$current_url\": \"http://localhost:8081/dashboard/quick-start\",\"$browser_version\": 113,\"$screen_height\": 900,\"$screen_width\": 1440,\"mp_lib\": \"web\",\"$lib_version\": \"2.47.0\",\"$insert_id\": \"i7gj0iaw1x31ncev\",\"time\": 1684484767.986,\"distinct_id\": \"ankush@akto.io\",\"$device_id\": \"18832b3449e48-08cc850002a66e-1736307c-13c680-18832b3449e48\",\"$initial_referrer\": \"http://localhost:8081/login\",\"$initial_referring_domain\": \"localhost:8081\",\"$user_id\": \"ankush@akto.io\",\"email\": \"ankush@akto.io\",\"dashboard_mode\": \"ON_PREM\",\"token\": \"c403d0b00353cc31d7e33d68dc778806\",\"mp_sent_by_lib_version\": \"2.47.0\"}},\n    {\"event\": \"/api/fetchActiveLoaders\",\"properties\": {\"$os\": \"Windows\",\"$browser\": \"Chrome\",\"$referrer\": \"http://localhost:8081/login\",\"$referring_domain\": \"localhost:8081\",\"$current_url\": \"http://localhost:8081/dashboard/quick-start\",\"$browser_version\": 113,\"$screen_height\": 900,\"$screen_width\": 1440,\"mp_lib\": \"web\",\"$lib_version\": \"2.47.0\",\"$insert_id\": \"vnjlzo7929xppp1s\",\"time\": 1684484768.974,\"distinct_id\": \"ankush@akto.io\",\"$device_id\": \"18832b3449e48-08cc850002a66e-1736307c-13c680-18832b3449e48\",\"$initial_referrer\": \"http://localhost:8081/login\",\"$initial_referring_domain\": \"localhost:8081\",\"$user_id\": \"ankush@akto.io\",\"email\": \"ankush@akto.io\",\"dashboard_mode\": \"ON_PREM\",\"token\": \"c403d0b00353cc31d7e33d68dc778806\",\"mp_sent_by_lib_version\": \"2.47.0\"}},\n    {\"event\": \"/api/importDataFromPostmanFile\",\"properties\": {\"$os\": \"Windows\",\"$browser\": \"Chrome\",\"$referrer\": \"http://localhost:8081/login\",\"$referring_domain\": \"localhost:8081\",\"$current_url\": \"http://localhost:8081/dashboard/quick-start\",\"$browser_version\": 113,\"$screen_height\": 900,\"$screen_width\": 1440,\"mp_lib\": \"web\",\"$lib_version\": \"2.47.0\",\"$insert_id\": \"qquwo4vg22yj8m7v\",\"time\": 1684484769.781,\"distinct_id\": \"ankush@akto.io\",\"$device_id\": \"18832b3449e48-08cc850002a66e-1736307c-13c680-18832b3449e48\",\"$initial_referrer\": \"http://localhost:8081/login\",\"$initial_referring_domain\": \"localhost:8081\",\"$user_id\": \"ankush@akto.io\",\"email\": \"ankush@akto.io\",\"dashboard_mode\": \"ON_PREM\",\"token\": \"c403d0b00353cc31d7e33d68dc778806\",\"mp_sent_by_lib_version\": \"2.47.0\"}},\n    {\"event\": \"/api/fetchActiveLoaders\",\"properties\": {\"$os\": \"Windows\",\"$browser\": \"Chrome\",\"$referrer\": \"http://localhost:8081/login\",\"$referring_domain\": \"localhost:8081\",\"$current_url\": \"http://localhost:8081/dashboard/quick-start\",\"$browser_version\": 113,\"$screen_height\": 900,\"$screen_width\": 1440,\"mp_lib\": \"web\",\"$lib_version\": \"2.47.0\",\"$insert_id\": \"swqoh7oltyed900n\",\"time\": 1684484770.021,\"distinct_id\": \"ankush@akto.io\",\"$device_id\": \"18832b3449e48-08cc850002a66e-1736307c-13c680-18832b3449e48\",\"$initial_referrer\": \"http://localhost:8081/login\",\"$initial_referring_domain\": \"localhost:8081\",\"$user_id\": \"ankush@akto.io\",\"email\": \"ankush@akto.io\",\"dashboard_mode\": \"ON_PREM\",\"token\": \"c403d0b00353cc31d7e33d68dc778806\",\"mp_sent_by_lib_version\": \"2.47.0\"}},\n    {\"event\": \"/api/fetchActiveLoaders\",\"properties\": {\"$os\": \"Windows\",\"$browser\": \"Chrome\",\"$referrer\": \"http://localhost:8081/login\",\"$referring_domain\": \"localhost:8081\",\"$current_url\": \"http://localhost:8081/dashboard/quick-start\",\"$browser_version\": 113,\"$screen_height\": 900,\"$screen_width\": 1440,\"mp_lib\": \"web\",\"$lib_version\": \"2.47.0\",\"$insert_id\": \"tn1ieqzto7cggqev\",\"time\": 1684484770.981,\"distinct_id\": \"ankush@akto.io\",\"$device_id\": \"18832b3449e48-08cc850002a66e-1736307c-13c680-18832b3449e48\",\"$initial_referrer\": \"http://localhost:8081/login\",\"$initial_referring_domain\": \"localhost:8081\",\"$user_id\": \"ankush@akto.io\",\"email\": \"ankush@akto.io\",\"dashboard_mode\": \"ON_PREM\",\"token\": \"c403d0b00353cc31d7e33d68dc778806\",\"mp_sent_by_lib_version\": \"2.47.0\"}},\n    {\"event\": \"/api/fetchActiveLoaders\",\"properties\": {\"$os\": \"Windows\",\"$browser\": \"Chrome\",\"$referrer\": \"http://localhost:8081/login\",\"$referring_domain\": \"localhost:8081\",\"$current_url\": \"http://localhost:8081/dashboard/quick-start\",\"$browser_version\": 113,\"$screen_height\": 900,\"$screen_width\": 1440,\"mp_lib\": \"web\",\"$lib_version\": \"2.47.0\",\"$insert_id\": \"9i7wu779m1ikc5ov\",\"time\": 1684484772.245,\"distinct_id\": \"ankush@akto.io\",\"$device_id\": \"18832b3449e48-08cc850002a66e-1736307c-13c680-18832b3449e48\",\"$initial_referrer\": \"http://localhost:8081/login\",\"$initial_referring_domain\": \"localhost:8081\",\"$user_id\": \"ankush@akto.io\",\"email\": \"ankush@akto.io\",\"dashboard_mode\": \"ON_PREM\",\"token\": \"c403d0b00353cc31d7e33d68dc778806\",\"mp_sent_by_lib_version\": \"2.47.0\"}}\n]"
-                  },
-                  "ip" : {
-                    "type" : "integer",
-                    "format" : "int32",
-                    "example" : 1
-                  },
-                  "verbose" : {
-                    "type" : "integer",
-                    "format" : "int32",
-                    "example" : 1
-                  }
-                },
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "description",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "error" : {
-                      "type" : "string",
-                      "example" : "null"
-                    },
-                    "status" : {
-                      "type" : "integer",
-                      "format" : "int32",
-                      "example" : 1
-                    }
-                  },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "servers" : [ {
-        "url" : "https://api-js.mixpanel.com:443"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -687,8 +599,8 @@
     "/api/fetchTagConfigs" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchTagConfigs",
-        "operationId" : "http://localhost:8081/api/fetchTagConfigs-POST",
+        "summary" : "POST request for endpoint /api/fetchTagConfigs",
+        "operationId" : "/api/fetchTagConfigs-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -818,9 +730,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -840,8 +749,8 @@
     "/api/loadContent" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/loadContent",
-        "operationId" : "http://localhost:8081/api/loadContent-POST",
+        "summary" : "POST request for endpoint /api/loadContent",
+        "operationId" : "/api/loadContent-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -873,9 +782,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -895,8 +801,8 @@
     "/api/retrieveAllCollectionTests" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/retrieveAllCollectionTests",
-        "operationId" : "http://localhost:8081/api/retrieveAllCollectionTests-POST",
+        "summary" : "POST request for endpoint /api/retrieveAllCollectionTests",
+        "operationId" : "/api/retrieveAllCollectionTests-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -971,8 +877,7 @@
                                 "example" : "HEADER"
                               },
                               "value" : {
-                                "type" : "string",
-                                "example" : "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBa3RvIiwic3ViIjoibG9naW4iLCJzaWduZWRVcCI6InRydWUiLCJ1c2VybmFtZSI6ImFua3VzaEBha3RvLmlvIiwiaWF0IjoxNjc5NDY3MjQxLCJleHAiOjE2Nzk0NjgxNDF9.HAK__lPJUyeGIFCqNPdstCDAYZYzIQTMmJfRLKWTYRKGnZDX6TF2XWs756SflLJYLRl9vE8LONPB5D1ij2LZpokP1rtYGDVe7e2PtgPqlEumoK4xMutucT6i42QStBTaSimVXcU4k9lwr3n4thL-lZt1KNctcsdG4cXvdOoMV6oAClQEJpgAChbO8WAHunIgQQ3vsCUXTOEEqy0atJEeed4UnXut3810g1QuCbJtKGn1I7lqh99MrQnE_T33TNIIpWJ_VeZgunroURFCMTaMJSyc8h2UiM8Bx60SGyDE6G7kwODYBRx_OKWTW-V0jV9GTTzhIYcDNBqkZ3O0uADO1w"
+                                "type" : "string"
                               },
                               "key" : {
                                 "type" : "string",
@@ -1048,9 +953,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -1070,8 +972,8 @@
     "/api/fetchPostmanWorkspaces" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchPostmanWorkspaces",
-        "operationId" : "http://localhost:8081/api/fetchPostmanWorkspaces-POST",
+        "summary" : "POST request for endpoint /api/fetchPostmanWorkspaces",
+        "operationId" : "/api/fetchPostmanWorkspaces-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -1128,9 +1030,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -1150,8 +1049,8 @@
     "/api/fetchQuickStartPageState" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchQuickStartPageState",
-        "operationId" : "http://localhost:8081/api/fetchQuickStartPageState-POST",
+        "summary" : "POST request for endpoint /api/fetchQuickStartPageState",
+        "operationId" : "/api/fetchQuickStartPageState-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -1205,9 +1104,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -1227,8 +1123,8 @@
     "/api/importDataFromPostmanFile" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/importDataFromPostmanFile",
-        "operationId" : "http://localhost:8081/api/importDataFromPostmanFile-POST",
+        "summary" : "POST request for endpoint /api/importDataFromPostmanFile",
+        "operationId" : "/api/importDataFromPostmanFile-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -1273,57 +1169,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/dashboard/testing" : {
-      "description" : "description",
-      "get" : {
-        "summary" : "GET request for endpoint http://localhost:8081/dashboard/testing",
-        "operationId" : "http://localhost:8081/dashboard/testing-GET",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "description",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -1343,8 +1188,8 @@
     "/api/fetchAPICollection" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchAPICollection",
-        "operationId" : "http://localhost:8081/api/fetchAPICollection-POST",
+        "summary" : "POST request for endpoint /api/fetchAPICollection",
+        "operationId" : "/api/fetchAPICollection-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -1406,7 +1251,7 @@
                                   },
                                   "url" : {
                                     "type" : "string",
-                                    "example" : "http://localhost:8081/api/fetchTestRunResultDetails"
+                                    "example" : "/api/fetchTestRunResultDetails"
                                   },
                                   "tags" : {
                                     "type" : "array",
@@ -1465,7 +1310,7 @@
                                   },
                                   "url" : {
                                     "type" : "string",
-                                    "example" : "http://localhost:8081/api/fetchTestRunResultDetails"
+                                    "example" : "/api/fetchTestRunResultDetails"
                                   }
                                 }
                               }
@@ -1482,9 +1327,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -1504,8 +1346,8 @@
     "/api/fetchAllSubCategories" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchAllSubCategories",
-        "operationId" : "http://localhost:8081/api/fetchAllSubCategories-POST",
+        "summary" : "POST request for endpoint /api/fetchAllSubCategories",
+        "operationId" : "/api/fetchAllSubCategories-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -1530,9 +1372,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -1552,8 +1391,8 @@
     "/api/fetchNewParametersTrend" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchNewParametersTrend",
-        "operationId" : "http://localhost:8081/api/fetchNewParametersTrend-POST",
+        "summary" : "POST request for endpoint /api/fetchNewParametersTrend",
+        "operationId" : "/api/fetchNewParametersTrend-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -1614,9 +1453,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -1636,8 +1472,8 @@
     "/api/fetchFilters" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchFilters",
-        "operationId" : "http://localhost:8081/api/fetchFilters-POST",
+        "summary" : "POST request for endpoint /api/fetchFilters",
+        "operationId" : "/api/fetchFilters-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -1711,9 +1547,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -1733,8 +1566,8 @@
     "/api/fetchTestRoles" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchTestRoles",
-        "operationId" : "http://localhost:8081/api/fetchTestRoles-POST",
+        "summary" : "POST request for endpoint /api/fetchTestRoles",
+        "operationId" : "/api/fetchTestRoles-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -1953,9 +1786,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -1975,8 +1805,8 @@
     "/api/fetchSubTypeCountMap" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchSubTypeCountMap",
-        "operationId" : "http://localhost:8081/api/fetchSubTypeCountMap-POST",
+        "summary" : "POST request for endpoint /api/fetchSubTypeCountMap",
+        "operationId" : "/api/fetchSubTypeCountMap-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -2132,9 +1962,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -2154,8 +1981,8 @@
     "/api/fetchIssueFromTestRunResultDetails" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchIssueFromTestRunResultDetails",
-        "operationId" : "http://localhost:8081/api/fetchIssueFromTestRunResultDetails-POST",
+        "summary" : "POST request for endpoint /api/fetchIssueFromTestRunResultDetails",
+        "operationId" : "/api/fetchIssueFromTestRunResultDetails-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -2340,9 +2167,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -2362,8 +2186,8 @@
     "/api/fetchSearchTestResults" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchSearchTestResults",
-        "operationId" : "http://localhost:8081/api/fetchSearchTestResults-POST",
+        "summary" : "POST request for endpoint /api/fetchSearchTestResults",
+        "operationId" : "/api/fetchSearchTestResults-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -2417,8 +2241,7 @@
                             }
                           },
                           "issueImpact" : {
-                            "type" : "string",
-                            "example" : "Successful exploitation can lead to access control bypass, sensitive data leak, or even compromise the application."
+                            "type" : "string"
                           },
                           "superCategory" : {
                             "type" : "object",
@@ -2616,9 +2439,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -2638,8 +2458,8 @@
     "/api/fetchSensitiveSampleData" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchSensitiveSampleData",
-        "operationId" : "http://localhost:8081/api/fetchSensitiveSampleData-POST",
+        "summary" : "POST request for endpoint /api/fetchSensitiveSampleData",
+        "operationId" : "/api/fetchSensitiveSampleData-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -2657,7 +2477,7 @@
                   },
                   "url" : {
                     "type" : "string",
-                    "example" : "http://localhost:8081/api/fetchQuickStartPageState"
+                    "example" : "/api/fetchQuickStartPageState"
                   }
                 },
                 "description" : "Sample description"
@@ -2693,9 +2513,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -2715,8 +2532,8 @@
     "/api/loadParamsOfEndpoint" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/loadParamsOfEndpoint",
-        "operationId" : "http://localhost:8081/api/loadParamsOfEndpoint-POST",
+        "summary" : "POST request for endpoint /api/loadParamsOfEndpoint",
+        "operationId" : "/api/loadParamsOfEndpoint-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -2734,7 +2551,7 @@
                   },
                   "url" : {
                     "type" : "string",
-                    "example" : "http://localhost:8081/api/fetchQuickStartPageState"
+                    "example" : "/api/fetchQuickStartPageState"
                   }
                 },
                 "description" : "Sample description"
@@ -2778,7 +2595,7 @@
                                     "type" : "array",
                                     "items" : {
                                       "type" : "string",
-                                      "example" : "http://localhost:8081"
+                                      "example" : "http://localhost:8080"
                                     }
                                   }
                                 }
@@ -2803,7 +2620,7 @@
                               },
                               "url" : {
                                 "type" : "string",
-                                "example" : "http://localhost:8081/api/fetchQuickStartPageState"
+                                "example" : "/api/fetchQuickStartPageState"
                               },
                               "responseCode" : {
                                 "type" : "integer",
@@ -2897,9 +2714,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -2919,8 +2733,8 @@
     "/api/getAllCollections" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/getAllCollections",
-        "operationId" : "http://localhost:8081/api/getAllCollections-POST",
+        "summary" : "POST request for endpoint /api/getAllCollections",
+        "operationId" : "/api/getAllCollections-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -2992,9 +2806,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -3014,8 +2825,8 @@
     "/api/updateIssueStatus" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/updateIssueStatus",
-        "operationId" : "http://localhost:8081/api/updateIssueStatus-POST",
+        "summary" : "POST request for endpoint /api/updateIssueStatus",
+        "operationId" : "/api/updateIssueStatus-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -3051,7 +2862,7 @@
                           },
                           "url" : {
                             "type" : "string",
-                            "example" : "http://localhost:8080/dist/43.js"
+                            "example" : "http://localhost:8080/api/updateProfile"
                           }
                         }
                       },
@@ -3120,7 +2931,7 @@
                             },
                             "url" : {
                               "type" : "string",
-                              "example" : "http://localhost:8080/dist/43.js"
+                              "example" : "http://localhost:8080/api/updateProfile"
                             }
                           }
                         },
@@ -3206,9 +3017,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -3228,8 +3036,8 @@
     "/api/fetchAktoGptConfig" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchAktoGptConfig",
-        "operationId" : "http://localhost:8081/api/fetchAktoGptConfig-POST",
+        "summary" : "POST request for endpoint /api/fetchAktoGptConfig",
+        "operationId" : "/api/fetchAktoGptConfig-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -3289,9 +3097,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -3311,8 +3116,8 @@
     "/api/fetchDataTypeNames" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchDataTypeNames",
-        "operationId" : "http://localhost:8081/api/fetchDataTypeNames-POST",
+        "summary" : "POST request for endpoint /api/fetchDataTypeNames",
+        "operationId" : "/api/fetchDataTypeNames-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -3376,9 +3181,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -3398,8 +3200,8 @@
     "/api/loadRecentEndpoints" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/loadRecentEndpoints",
-        "operationId" : "http://localhost:8081/api/loadRecentEndpoints-POST",
+        "summary" : "POST request for endpoint /api/loadRecentEndpoints",
+        "operationId" : "/api/loadRecentEndpoints-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -3467,7 +3269,7 @@
                                   },
                                   "url" : {
                                     "type" : "string",
-                                    "example" : "http://fonts.gstatic.com/s/sourcesanspro/v21/6xK3dSBYKcSV-LCoeQqfX1RYOo3qOK7lujVj9w.woff2"
+                                    "example" : "http://localhost:8080/api/updateProfile"
                                   },
                                   "tags" : {
                                     "type" : "array",
@@ -3526,7 +3328,7 @@
                                   },
                                   "url" : {
                                     "type" : "string",
-                                    "example" : "http://localhost:8081/api/fetchTestRunResultDetails"
+                                    "example" : "/api/fetchTestRunResultDetails"
                                   }
                                 }
                               }
@@ -3543,9 +3345,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -3565,8 +3364,8 @@
     "/api/fetchAllIssues" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchAllIssues",
-        "operationId" : "http://localhost:8081/api/fetchAllIssues-POST",
+        "summary" : "POST request for endpoint /api/fetchAllIssues",
+        "operationId" : "/api/fetchAllIssues-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -3716,7 +3515,7 @@
                                   },
                                   "url" : {
                                     "type" : "string",
-                                    "example" : "http://localhost:8080/dist/43.js"
+                                    "example" : "http://localhost:8080/api/updateProfile"
                                   }
                                 }
                               },
@@ -3767,9 +3566,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -3789,8 +3585,8 @@
     "/api/addTestRoles" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/addTestRoles",
-        "operationId" : "http://localhost:8081/api/addTestRoles-POST",
+        "summary" : "POST request for endpoint /api/addTestRoles",
+        "operationId" : "/api/addTestRoles-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -4017,9 +3813,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -4039,8 +3832,8 @@
     "/api/fetchTestingRunResults" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchTestingRunResults",
-        "operationId" : "http://localhost:8081/api/fetchTestingRunResults-POST",
+        "summary" : "POST request for endpoint /api/fetchTestingRunResults",
+        "operationId" : "/api/fetchTestingRunResults-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -4252,9 +4045,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -4274,8 +4064,8 @@
     "/api/fetchAllMarketplaceSubcategories" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchAllMarketplaceSubcategories",
-        "operationId" : "http://localhost:8081/api/fetchAllMarketplaceSubcategories-POST",
+        "summary" : "POST request for endpoint /api/fetchAllMarketplaceSubcategories",
+        "operationId" : "/api/fetchAllMarketplaceSubcategories-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -4300,9 +4090,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -4322,8 +4109,8 @@
     "/api/fetchSensitiveParamsForEndpoints" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchSensitiveParamsForEndpoints",
-        "operationId" : "http://localhost:8081/api/fetchSensitiveParamsForEndpoints-POST",
+        "summary" : "POST request for endpoint /api/fetchSensitiveParamsForEndpoints",
+        "operationId" : "/api/fetchSensitiveParamsForEndpoints-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -4334,7 +4121,7 @@
                     "type" : "array",
                     "items" : {
                       "type" : "string",
-                      "example" : "http://fonts.gstatic.com/s/sourcesanspro/v21/6xK3dSBYKcSV-LCoeQqfX1RYOo3qOK7lujVj9w.woff2"
+                      "example" : "http://localhost:8080/api/updateProfile"
                     }
                   }
                 },
@@ -4486,9 +4273,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -4508,8 +4292,8 @@
     "/api/getPostmanCredential" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/getPostmanCredential",
-        "operationId" : "http://localhost:8081/api/getPostmanCredential-POST",
+        "summary" : "POST request for endpoint /api/getPostmanCredential",
+        "operationId" : "/api/getPostmanCredential-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -4544,9 +4328,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -4566,8 +4347,8 @@
     "/api/importPostmanWorkspace" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/importPostmanWorkspace",
-        "operationId" : "http://localhost:8081/api/importPostmanWorkspace-POST",
+        "summary" : "POST request for endpoint /api/importPostmanWorkspace",
+        "operationId" : "/api/importPostmanWorkspace-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -4616,9 +4397,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -4638,8 +4416,8 @@
     "/api/fetchChanges" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchChanges",
-        "operationId" : "http://localhost:8081/api/fetchChanges-POST",
+        "summary" : "POST request for endpoint /api/fetchChanges",
+        "operationId" : "/api/fetchChanges-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -4830,7 +4608,7 @@
                                         "type" : "array",
                                         "items" : {
                                           "type" : "string",
-                                          "example" : "http://localhost:8080/api/fetchFilters"
+                                          "example" : "http://localhost:8080/api/updateProfile"
                                         }
                                       }
                                     }
@@ -4855,7 +4633,7 @@
                                   },
                                   "url" : {
                                     "type" : "string",
-                                    "example" : "http://localhost:8081/api/fetchEndpointTrafficData"
+                                    "example" : "/api/fetchEndpointTrafficData"
                                   },
                                   "responseCode" : {
                                     "type" : "integer",
@@ -4973,9 +4751,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -4995,8 +4770,8 @@
     "/api/addSensitiveField" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/addSensitiveField",
-        "operationId" : "http://localhost:8081/api/addSensitiveField-POST",
+        "summary" : "POST request for endpoint /api/addSensitiveField",
+        "operationId" : "/api/addSensitiveField-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -5049,7 +4824,7 @@
                   },
                   "url" : {
                     "type" : "string",
-                    "example" : "http://localhost:8081/api/retrieveAllCollectionTests"
+                    "example" : "/api/retrieveAllCollectionTests"
                   },
                   "responseCode" : {
                     "type" : "integer",
@@ -5149,9 +4924,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -5171,8 +4943,8 @@
     "/api/fetchWorkflowTests" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchWorkflowTests",
-        "operationId" : "http://localhost:8081/api/fetchWorkflowTests-POST",
+        "summary" : "POST request for endpoint /api/fetchWorkflowTests",
+        "operationId" : "/api/fetchWorkflowTests-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -5247,9 +5019,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -5269,8 +5038,8 @@
     "/api/updateTestRoles" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/updateTestRoles",
-        "operationId" : "http://localhost:8081/api/updateTestRoles-POST",
+        "summary" : "POST request for endpoint /api/updateTestRoles",
+        "operationId" : "/api/updateTestRoles-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -5369,9 +5138,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -5391,8 +5157,8 @@
     "/api/loadSensitiveParameters" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/loadSensitiveParameters",
-        "operationId" : "http://localhost:8081/api/loadSensitiveParameters-POST",
+        "summary" : "POST request for endpoint /api/loadSensitiveParameters",
+        "operationId" : "/api/loadSensitiveParameters-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -5459,7 +5225,7 @@
                               },
                               "url" : {
                                 "type" : "string",
-                                "example" : "http://localhost:8081/dashboard/testing"
+                                "example" : "/dashboard/testing"
                               },
                               "responseCode" : {
                                 "type" : "integer",
@@ -5553,9 +5319,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -5575,8 +5338,8 @@
     "/api/fetchAuthMechanismData" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchAuthMechanismData",
-        "operationId" : "http://localhost:8081/api/fetchAuthMechanismData-POST",
+        "summary" : "POST request for endpoint /api/fetchAuthMechanismData",
+        "operationId" : "/api/fetchAuthMechanismData-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -5620,8 +5383,7 @@
                                 "example" : "HEADER"
                               },
                               "value" : {
-                                "type" : "string",
-                                "example" : "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBa3RvIiwic3ViIjoibG9naW4iLCJzaWduZWRVcCI6InRydWUiLCJ1c2VybmFtZSI6ImFua3VzaEBha3RvLmlvIiwiaWF0IjoxNjc5NDY3MjQxLCJleHAiOjE2Nzk0NjgxNDF9.HAK__lPJUyeGIFCqNPdstCDAYZYzIQTMmJfRLKWTYRKGnZDX6TF2XWs756SflLJYLRl9vE8LONPB5D1ij2LZpokP1rtYGDVe7e2PtgPqlEumoK4xMutucT6i42QStBTaSimVXcU4k9lwr3n4thL-lZt1KNctcsdG4cXvdOoMV6oAClQEJpgAChbO8WAHunIgQQ3vsCUXTOEEqy0atJEeed4UnXut3810g1QuCbJtKGn1I7lqh99MrQnE_T33TNIIpWJ_VeZgunroURFCMTaMJSyc8h2UiM8Bx60SGyDE6G7kwODYBRx_OKWTW-V0jV9GTTzhIYcDNBqkZ3O0uADO1w"
+                                "type" : "string"
                               },
                               "key" : {
                                 "type" : "string",
@@ -5686,9 +5448,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -5708,8 +5467,8 @@
     "/api/stopAllTests" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/stopAllTests",
-        "operationId" : "http://localhost:8081/api/stopAllTests-POST",
+        "summary" : "POST request for endpoint /api/stopAllTests",
+        "operationId" : "/api/stopAllTests-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -5808,9 +5567,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -5830,8 +5586,8 @@
     "/api/fetchCustomAuthTypes" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchCustomAuthTypes",
-        "operationId" : "http://localhost:8081/api/fetchCustomAuthTypes-POST",
+        "summary" : "POST request for endpoint /api/fetchCustomAuthTypes",
+        "operationId" : "/api/fetchCustomAuthTypes-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -5866,9 +5622,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -5888,8 +5641,8 @@
     "/api/fetchEndpointTrafficData" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchEndpointTrafficData",
-        "operationId" : "http://localhost:8081/api/fetchEndpointTrafficData-POST",
+        "summary" : "POST request for endpoint /api/fetchEndpointTrafficData",
+        "operationId" : "/api/fetchEndpointTrafficData-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -5917,7 +5670,7 @@
                   },
                   "url" : {
                     "type" : "string",
-                    "example" : "http://localhost:8081/api/fetchQuickStartPageState"
+                    "example" : "/api/fetchQuickStartPageState"
                   }
                 },
                 "description" : "Sample description"
@@ -5953,9 +5706,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -5975,8 +5725,8 @@
     "/api/saveAktoDataType" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/saveAktoDataType",
-        "operationId" : "http://localhost:8081/api/saveAktoDataType-POST",
+        "summary" : "POST request for endpoint /api/saveAktoDataType",
+        "operationId" : "/api/saveAktoDataType-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -6087,9 +5837,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -6109,8 +5856,8 @@
     "/api/fetchTestingRunResultSummaries" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchTestingRunResultSummaries",
-        "operationId" : "http://localhost:8081/api/fetchTestingRunResultSummaries-POST",
+        "summary" : "POST request for endpoint /api/fetchTestingRunResultSummaries",
+        "operationId" : "/api/fetchTestingRunResultSummaries-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -6402,9 +6149,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -6424,8 +6168,8 @@
     "/api/fetchSampleData" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchSampleData",
-        "operationId" : "http://localhost:8081/api/fetchSampleData-POST",
+        "summary" : "POST request for endpoint /api/fetchSampleData",
+        "operationId" : "/api/fetchSampleData-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -6443,7 +6187,7 @@
                   },
                   "url" : {
                     "type" : "string",
-                    "example" : "http://localhost:8081/api/fetchQuickStartPageState"
+                    "example" : "/api/fetchQuickStartPageState"
                   }
                 },
                 "description" : "Sample description"
@@ -6492,7 +6236,7 @@
                               },
                               "url" : {
                                 "type" : "string",
-                                "example" : "http://localhost:8081/api/fetchQuickStartPageState"
+                                "example" : "/api/fetchQuickStartPageState"
                               },
                               "responseCode" : {
                                 "type" : "integer",
@@ -6504,8 +6248,7 @@
                           "samples" : {
                             "type" : "array",
                             "items" : {
-                              "type" : "string",
-                              "example" : "{\"method\":\"POST\",\"requestPayload\":\"{}\",\"responsePayload\":\"{\\\"aktoDashboardRoleName\\\":null,\\\"aktoDashboardStackName\\\":null,\\\"aktoMirroringStackName\\\":null,\\\"awsAccountId\\\":null,\\\"awsRegion\\\":null,\\\"configuredItems\\\":[\\\"BURP\\\"]}\",\"ip\":\"null\",\"source\":\"HAR\",\"type\":\"HTTP/1.1\",\"akto_vxlan_id\":\"1684477780\",\"path\":\"http://localhost:8081/api/fetchQuickStartPageState\",\"requestHeaders\":\"{\\\"Origin\\\":\\\"http://localhost:8081\\\",\\\"Cookie\\\":\\\"JSESSIONID=node01kubjccx7iwdt16wuu8yifkvz30.node0; mp_c403d0b00353cc31d7e33d68dc778806_mixpanel=%7B%22distinct_id%22%3A%20%22ankush%40akto.io%22%2C%22%24device_id%22%3A%20%2218832b3449e48-08cc850002a66e-1736307c-13c680-18832b3449e48%22%2C%22%24initial_referrer%22%3A%20%22http%3A%2F%2Flocalhost%3A8081%2Flogin%22%2C%22%24initial_referring_domain%22%3A%20%22localhost%3A8081%22%2C%22__mps%22%3A%20%7B%7D%2C%22__mpso%22%3A%20%7B%7D%2C%22__mpus%22%3A%20%7B%7D%2C%22__mpa%22%3A%20%7B%7D%2C%22__mpu%22%3A%20%7B%7D%2C%22__mpr%22%3A%20%5B%5D%2C%22__mpap%22%3A%20%5B%5D%2C%22%24user_id%22%3A%20%22ankush%40akto.io%22%2C%22email%22%3A%20%22ankush%40akto.io%22%2C%22dashboard_mode%22%3A%20%22ON_PREM%22%7D; intercom-id-xjvl0z2h=ea758d08-04b3-4a6d-aa53-0872b408b031; intercom-session-xjvl0z2h=; intercom-device-id-xjvl0z2h=a6f99fcb-7d56-4ec8-8616-31568bed39e4\\\",\\\"Accept\\\":\\\"application/json, text/plain, */*\\\",\\\"Access-Control-Allow-Origin\\\":\\\"*\\\",\\\"User-Agent\\\":\\\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.5615.50 Safari/537.36\\\",\\\"Referer\\\":\\\"http://localhost:8081/dashboard/quick-start\\\",\\\"Connection\\\":\\\"close\\\",\\\"Sec-Fetch-Site\\\":\\\"same-origin\\\",\\\"Sec-Fetch-Dest\\\":\\\"empty\\\",\\\"Host\\\":\\\"localhost:8081\\\",\\\"access-token\\\":\\\"eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBa3RvIiwic3ViIjoibG9naW4iLCJzaWduZWRVcCI6InRydWUiLCJ1c2VybmFtZSI6ImFua3VzaEBha3RvLmlvIiwiaWF0IjoxNjg0NDc3Nzg5LCJleHAiOjE2ODQ0Nzg2ODl9.bd0BcIEzIDPF66HbiH7e_EFiSXUfaVes5uj4T8Axw88NQYm-4mnOIQjFq6rq2mMCnpfIcaerVgkwfyx3KYgGjcAw-a0D8VPTVHgQr_ULCoG5jXiNk8OL_eQGqhGMKyM38XWJ8yqioyIgh2Dp5tSs4woKnMvZav3L0kllu1waFsQ1I699c6S6bI4HyNrhLupIx2OpavPNvsdhuIRNkQ38grRZFrIabubILnRHTnEwuuNxvoRXax6e50F2SkBRsf3_wQQIrmOWJC7wJDWlPNUM-DfXLb1DU27lySJhh9CiM-6W4BtNXCDxnkVSL68-Hyx4W-uehJnbN6LFLh6NaWz14g\\\",\\\"Accept-Encoding\\\":\\\"gzip, deflate\\\",\\\"Sec-Fetch-Mode\\\":\\\"cors\\\",\\\"sec-ch-ua\\\":\\\"\\\\\\\"Not:A-Brand\\\\\\\";v=\\\\\\\"99\\\\\\\", \\\\\\\"Chromium\\\\\\\";v=\\\\\\\"112\\\\\\\"\\\",\\\"sec-ch-ua-mobile\\\":\\\"?0\\\",\\\"sec-ch-ua-platform\\\":\\\"\\\\\\\"macOS\\\\\\\"\\\",\\\"Accept-Language\\\":\\\"en-GB,en-US;q=0.9,en;q=0.8\\\",\\\"Content-Length\\\":\\\"2\\\",\\\"account\\\":\\\"1000000\\\",\\\"Content-Type\\\":\\\"application/json\\\"}\",\"responseHeaders\":\"{\\\"Cache-Control\\\":\\\"no-cache, no-store, must-revalidate, pre-check=0, post-check=0\\\",\\\"Server\\\":\\\"Jetty(9.4.36.v20210114)\\\",\\\"X-Content-Type-Options\\\":\\\"nosniff\\\",\\\"Content-Security-Policy\\\":\\\"frame-ancestors 'self' akto.io *.akto.io;\\\",\\\"Connection\\\":\\\"close\\\",\\\"Vary\\\":\\\"Accept-Encoding, User-Agent\\\",\\\"X-XSS-Protection\\\":\\\"1\\\",\\\"Content-Length\\\":\\\"154\\\",\\\"Date\\\":\\\"Fri, 19 May 2023 06:31:00 GMT\\\",\\\"Content-Language\\\":\\\"en-GB\\\",\\\"Content-Type\\\":\\\"application/json;charset=utf-8\\\"}\",\"time\":\"0\",\"contentType\":\"application/json;charset=utf-8\",\"akto_account_id\":\"1000000\",\"statusCode\":\"200\",\"status\":\"OK\"}"
+                              "type" : "string"
                             }
                           }
                         }
@@ -6523,9 +6266,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -6545,8 +6285,8 @@
     "/api/fetchTestingSources" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchTestingSources",
-        "operationId" : "http://localhost:8081/api/fetchTestingSources-POST",
+        "summary" : "POST request for endpoint /api/fetchTestingSources",
+        "operationId" : "/api/fetchTestingSources-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -6623,9 +6363,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
@@ -6645,8 +6382,8 @@
     "/api/fetchActiveLoaders" : {
       "description" : "description",
       "post" : {
-        "summary" : "POST request for endpoint http://localhost:8081/api/fetchActiveLoaders",
-        "operationId" : "http://localhost:8081/api/fetchActiveLoaders-POST",
+        "summary" : "POST request for endpoint /api/fetchActiveLoaders",
+        "operationId" : "/api/fetchActiveLoaders-POST",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -6744,9 +6481,6 @@
           }
         }
       },
-      "servers" : [ {
-        "url" : "http://localhost:8081"
-      } ],
       "parameters" : [ {
           "name" : "content-type",
           "in" : "header",
