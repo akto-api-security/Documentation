@@ -22,7 +22,7 @@ Step 1: Create inventory
 
 Step 2: Run tests
 
-<figure><img src=".gitbook/assets/Screenshot 2023-01-26 at 5.08.19 PM (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/Screenshot 2023-01-26 at 5.08.19 PM.png" alt=""><figcaption></figcaption></figure>
 
 ## How to get Started?
 
