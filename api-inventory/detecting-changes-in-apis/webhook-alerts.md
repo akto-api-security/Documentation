@@ -4,7 +4,8 @@ You can receive alerts via Slack or Webhooks about new APIs and new sensitive pa
 
 ## Add a webhook
 
-1. Go to `My accounts` > `Settings` > `Integrations` in Akto dashboard![Open Integrations](https://github.com/akto-api-security/Documentation/assets/91221068/ce9013a1-c148-4fd5-8667-8331ccdb9a46)
+1. Go to `My accounts` > `Settings` > `Integrations` in Akto dashboard
+<figure><img src="https://github-production-user-asset-6210df.s3.amazonaws.com/91221068/240230705-ce9013a1-c148-4fd5-8667-8331ccdb9a46.png" alt=""><figcaption></figcaption></figure>
 2. Select `Webhooks` under `Alerts` category.  ![Select webhooks](https://github.com/akto-api-security/Documentation/assets/91221068/d9626233-b94a-4ff0-a273-72fc46bcde7a)
 3. Click on `Create new webhook` button![Create new webhook](https://github.com/akto-api-security/Documentation/assets/91221068/ba32d792-8229-4c27-8e5d-3e8dcd09c76d)
 
