@@ -4,14 +4,11 @@ You can receive alerts via Slack or Webhooks about new APIs and new sensitive pa
 
 ## Add a webhook
 
-1. Go to `My accounts` > `Settings` > `Integrations` in Akto dashboard
-<figure><img src="https://github-production-user-asset-6210df.s3.amazonaws.com/91221068/240230705-ce9013a1-c148-4fd5-8667-8331ccdb9a46.png" alt=""><figcaption></figcaption></figure>
+1. Go to `My accounts` > `Settings` > `Integrations` in Akto dashboard <figure><img src="https://github-production-user-asset-6210df.s3.amazonaws.com/91221068/240230705-ce9013a1-c148-4fd5-8667-8331ccdb9a46.png" alt=""><figcaption></figcaption></figure>
 
 2. Select `Webhooks` under `Alerts` category. <figure><img src="https://github-production-user-asset-6210df.s3.amazonaws.com/91221068/240230892-d9626233-b94a-4ff0-a273-72fc46bcde7a.png" alt=""><figcaption></figcaption></figure>
 
-3. Click on `Create new webhook` button
-
-<figure><img src="https://github-production-user-asset-6210df.s3.amazonaws.com/91221068/240231569-ba32d792-8229-4c27-8e5d-3e8dcd09c76d.png" alt=""><figcaption></figcaption></figure>
+3. Click on `Create new webhook` button <figure><img src="https://github-production-user-asset-6210df.s3.amazonaws.com/91221068/240231569-ba32d792-8229-4c27-8e5d-3e8dcd09c76d.png" alt=""><figcaption></figcaption></figure>
 
 4. Click on the `edit` icon on the right, enter your webhook name and click on `save` icon to save webhook name. <figure><img src="https://github-production-user-asset-6210df.s3.amazonaws.com/91221068/240231582-40e0aaae-e1c2-4d4c-b09e-82a898d62d56.png" alt=""><figcaption></figcaption></figure>
 
