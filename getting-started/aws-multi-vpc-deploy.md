@@ -50,7 +50,7 @@ Here we will add Type: Custom TCP, Port range: 27017, CIDR block: 10.0.0.0/16 (C
 
 ### Step 4: Setup data processors
 We need to setup data processors in AppServerVPC to send data to AktoMongoInstance deployed in AktoVPC.
-Use the following cloud formation template to setup data processors in AppServerVPC [here](https://akto-setup.s3.amazonaws.com/templates/data_processing_stack.json)
+Use the following cloud formation template to setup data processors in AppServerVPC [here](https://akto-setup.s3.amazonaws.com/templates/data_processing_stack.yml)
 To setup this stack you will need to give the following paramenters:
 * SubnetId: This should be the subnet id where Akto data processor will be deployed.
 * KeyPair: This key pair will be used to login to the data processor for debugging purposes.
