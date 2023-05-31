@@ -6,8 +6,8 @@ You can deploy Akto using the GCP packet mirroring template. Here are the steps 
 2. Go to your console in GCP and type these commands
 
 ```
-chmod +x gcp-mirroring-template.sh
 wget https://raw.githubusercontent.com/akto-api-security/infra/feature/self_hosting/templates/gcp-mirroring-template.sh
+chmod +x gcp-mirroring-template.sh
 ```
 
 This will create a template with name gcp-mirroring-template.sh
