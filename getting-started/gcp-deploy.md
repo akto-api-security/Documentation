@@ -19,7 +19,7 @@ This will create a template with name gcp-mirroring-template.sh
 4\. Create a txt file with name inputs.txt with the following input parameters.&#x20;
 
 ```
-project-name
+project-id
 region
 network
 subnet
@@ -77,7 +77,7 @@ To delete all the resources you created with 'akto' prefix, run the command `./g
 Before running the above command, make sure you create delete.txt with the following inputs:
 
 ```
-<your-project-name>
+<your-project-id>
 <region>
 akto
 <zone>
