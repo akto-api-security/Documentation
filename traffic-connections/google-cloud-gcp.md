@@ -6,8 +6,8 @@ You can deploy Akto using the GCP packet mirroring template. Here are the steps 
 2. Go to your console in GCP and type these commands
 
 ```
-chmod +x gcp-mirroring-template.sh
 wget https://raw.githubusercontent.com/akto-api-security/infra/feature/self_hosting/templates/gcp-mirroring-template.sh
+chmod +x gcp-mirroring-template.sh
 ```
 
 This will create a template with name gcp-mirroring-template.sh
@@ -17,7 +17,7 @@ This will create a template with name gcp-mirroring-template.sh
 4\. Create a txt file with name inputs.txt with the following input parameters.&#x20;
 
 ```
-project-name
+project-id
 region
 network
 subnet
@@ -63,7 +63,7 @@ To delete all the resources you created with 'akto' prefix, run the command `./g
 Before running the above command, make sure you create delete.txt with the following inputs:
 
 ```
-<your-project-name>
+<your-project-id>
 <region>
 akto
 <zone>
