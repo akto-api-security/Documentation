@@ -35,7 +35,7 @@ You can trigger Akto's API Security tests in your CI/CD pipelines too. Generate 
 * You can also use our plugin for Github Actions directly too:
     ```
       - name: Run CI/CD tests
-        uses: akto-api-security/run-scan@v1.0.2
+        uses: akto-api-security/run-scan@v1.0.3
         with:
           AKTO_DASHBOARD_URL: ${{vars.AKTO_DASHBOARD_URL}}
           AKTO_API_KEY: ${{vars.AKTO_API_KEY}}
