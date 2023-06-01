@@ -30,6 +30,21 @@ You can trigger Akto's API Security tests in your CI/CD pipelines too. Generate 
 * Observe the `Test ID` on the testing page for the test you just created.
 <img width="1439" alt="Customise the test as you want to run it your CICD" src="../.gitbook/assets/cicd-5.png">
 
+### GitHub Actions
+
+* You can also use our plugin for Github Actions directly too:
+    ```
+      - name: Run CI/CD tests
+        uses: akto-api-security/run-scan@v1.0.2
+        with:
+          AKTO_DASHBOARD_URL: ${{vars.AKTO_DASHBOARD_URL}}
+          AKTO_API_KEY: ${{vars.AKTO_API_KEY}}
+          AKTO_TEST_ID: ${{vars.AKTO_TEST_ID}}
+          START_TIME_DELAY: 180 # Delay in seconds after which testing run is started, optional, default is 0 
+    ```
+
+### Post deployment hook (works with any CI/CD platform)
+
 * Prepare the following curl command by replacing `akto-dashboard-url`, `akto-api-key` and `akto-test-id`
   ```
   curl "https://<akto-dashboard-url>/api/startTest" \
