@@ -8,7 +8,7 @@ Akto provides functionality to add your own tests in the form of nuclei template
 * You will see lots of pre-existing tests(Automated tests built by Akto, as well as nuclei templates), which cover major OWASP categories.
 * You can also check out source code of any nuclei template test. For ex - Go to "path\_traversal" subCategory inside BOLA category, you will see "Contribute in Github" option below each of the tests. You are more than welcome to contribute to these templates :)
 
-<figure><img src="../.gitbook/assets/Frame 24 (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Frame 24 (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ## Adding your own Test
 

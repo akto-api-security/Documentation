@@ -74,3 +74,4 @@
 * [Context analyzer](components/context-analyzer.md)
 * [Puppeteer server](components/puppeteer-server.md)
 * [Other OSS](components/other-oss.md)
+* [robots.txt](components/robots.txt.md)
