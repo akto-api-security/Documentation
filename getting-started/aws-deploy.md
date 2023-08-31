@@ -54,3 +54,7 @@ Note: Akto can't track anything that you do in AWS.
 <figure><img src="../.gitbook/assets/Frame 4 (4).png" alt=""><figcaption></figcaption></figure>
 
 3\. `Signup` and start using Akto.
+
+#### NOTES
+1. Make sure the VPC where akto is being deployed has a NAT Gateway because it is deployed in a private subnet and downloads docker images from the internet.
+2. Make sure the VPC where akto is being deployed is the same VPC where your target application is deployed. To make a multi-VPC setup refer [here](https://docs.akto.io/getting-started/aws-multi-vpc-deploy).
