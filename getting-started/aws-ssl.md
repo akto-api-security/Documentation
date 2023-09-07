@@ -1,5 +1,5 @@
 
-# Add subdomain to Akto on AWS
+# Custom subdomain on Akto on AWS
 
 [Akto](https://www.akto.io/) creates a load balancer for your akto dashboard. You can put this dashboard behind your organization's subdomain for easier access across teams. Moreover, adding SSL certificate make the dashboard more secure.
 
