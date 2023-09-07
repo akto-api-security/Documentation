@@ -6,29 +6,28 @@ You can trigger Akto's API Security tests in your CI/CD pipelines too. Generate 
 
 ### Generate Akto token
 
-![Go to integerations tab under settings](../.gitbook/assets/cicd-1.png)
+<figure><img alt="Go to integerations tab under settings" src="../.gitbook/assets/cicd-1.png"><figcaption></figcaption></figure>
 
 * Go to `My account > Settings > Integrations`
 * Select `CI/CD Integeration` under `Automation category`
 
-![click on Generate Token](../.gitbook/assets/cicd-2.png)
+<figure><img alt="click on Generate Token" src="../.gitbook/assets/cicd-2.png"><figcaption></figcaption></figure>
 
 * Click on `Generate token` button to generate a fresh token or copy an existing token.
 
 ### Add trigger in your CI/CD tool
 
 * Open the API collection where you want to run the tests.
-*   By default, the API collection view shows all APIs. You can filter the APIs on which you want to run the tests. For example, to run tests only on `GET` endpoints, we can add a filter to show only `GET` endpoints.
+* By default, the API collection view shows all APIs. You can filter the APIs on which you want to run the tests. For example, to run tests only on `GET` endpoints, we can add a filter to show only `GET` endpoints.
+<figure><img alt="Running tests only on GET endpoints" src="../.gitbook/assets/cicd-3.png"><figcaption></figcaption></figure>
 
-    ![Running tests only on GET endpoints](../.gitbook/assets/cicd-3.png)
 * Click on the `Run test` button on the top right.
-*   Select the tests you want to run as part of CI/CD pipeline. Please keep `Select time = Now` and `Run daily` should be unchecked. Feel free to edit the `Name`, `Test run time` and `Max concurrent requests`.
+* Select the tests you want to run as part of CI/CD pipeline. Please keep `Select time = Now` and `Run daily` should be unchecked. Feel free to edit the `Name`, `Test run time` and `Max concurrent requests`.
+<figure><img alt="Customise the test as you want to run it your CICD" src="../.gitbook/assets/cicd-4.png"><figcaption></figcaption></figure>
 
-    ![Customise the test as you want to run it your CICD](../.gitbook/assets/cicd-4.png)
 * Click on `Run once now` (if the button name says anything else, read the previous point 🙄)
-*   Observe the `Test ID` on the testing page for the test you just created.
-
-    ![Customise the test as you want to run it your CICD](../.gitbook/assets/cicd-5.png)
+* Observe the `Test ID` on the testing page for the test you just created.
+<figure><img alt="Customise the test as you want to run it your CICD" src="../.gitbook/assets/cicd-5.png"><figcaption></figcaption></figure>
 
 ### GitHub Actions
 
@@ -46,17 +45,16 @@ You can trigger Akto's API Security tests in your CI/CD pipelines too. Generate 
 
 ### Post deployment hook (works with any CI/CD platform)
 
-*   Prepare the following curl command by replacing `akto-dashboard-url`, `akto-api-key` and `akto-test-id`
+* Prepare the following curl command by replacing `akto-dashboard-url`, `akto-api-key` and `akto-test-id`
+  ```
+  curl "https://<akto-dashboard-url>/api/startTest" \
+              -H 'X-API-KEY: <akto-api-key>' \
+              -H 'content-type: application/json' \
+              -d '{"testingRunHexId": <akto-test-id>, "startTimestamp" : 0,"metadata": {"platform": "Github Actions"}}' \
+              --compressed
+  ```
+* Add a post deployment hook in your CI/CD tool. Add the above curl command as part of post deployment. For example, Jenkins post deployment hook should look like - 
+<figure><img alt="jenkins example" src="../.gitbook/assets/cicd-6.png"><figcaption></figcaption></figure>
 
-    ```
-    curl "https://<akto-dashboard-url>/api/startTest" \
-                -H \'X-API-KEY: <akto-api-key>\' \
-                -H \'content-type: application/json\' \
-                -d \'{"testingRunHexId": <akto-test-id>, "startTimestamp" : 0,"metadata": {"platform": "Github Actions"}}\' \
-                --compressed
-    ```
-*   Add a post deployment hook in your CI/CD tool. Add the above curl command as part of post deployment. For example, Jenkins post deployment hook should look like -
-
-    ![jenkins example](../.gitbook/assets/cicd-6.png)
 * If you have hosted Akto in your VPC, please ensure the CI/CD machine can reach Akto's dashboard. You might have to change Security rules on Akto-Load-Balancer accordingly.
 * If you want this to become better, please create a GitHub issue [here](https://github.com/akto-api-security/akto/issues). Or even better, contribute! We are open source!
