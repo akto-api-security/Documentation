@@ -7,7 +7,7 @@ If you are on Kubernetes or AWS-EKS, you can add a daemonset config to populate 
 
 ## Overview
 
-<figure><img src="../.gitbook/assets/Kubernertes daemonset arch.png" alt=""><figcaption>Kubernetes Deployment</figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Kubernertes daemonset arch.png" alt=""><figcaption>Kubernetes Deployment</figcaption></figure>
 
 Run akto traffic collector on your kubernetes nodes as daemonset and send mirrored traffic to Akto.
 
