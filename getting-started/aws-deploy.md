@@ -54,3 +54,5 @@ Note: Akto can't track anything that you do in AWS.
 <figure><img src="../.gitbook/assets/Frame 4 (4).png" alt=""><figcaption></figcaption></figure>
 
 3\. `Signup` and start using Akto.
+
+Now that you have deployed Akto, let's [add custom subdomain and SSL certificate to your akto deployment on AWS](./aws-ssl.md)
