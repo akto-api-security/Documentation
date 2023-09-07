@@ -55,4 +55,4 @@ Note: Akto can't track anything that you do in AWS.
 
 3\. `Signup` and start using Akto.
 
-Now that you have deployed Akto, let's [add custom subdomain and SSL certificate to your akto deployment on AWS](./aws-ssl.md)
+Now that you have deployed Akto, let's [add custom subdomain and SSL certificate to your akto deployment on AWS](aws-ssl.md)
