@@ -4,6 +4,13 @@
 
 If you are on Kubernetes or AWS-EKS, you can add a daemonset config to populate APIs in Akto.
 
+
+## Overview
+
+<figure><img src="../../../.gitbook/assets/Kubernertes daemonset arch.png" alt=""><figcaption>Kubernetes Deployment</figcaption></figure>
+
+Run akto traffic collector on your kubernetes nodes as daemonset and send mirrored traffic to Akto.
+
 ## Configuring Daemonset
 
 Follow these steps to add daemonset config to your Kubernetes setup -
