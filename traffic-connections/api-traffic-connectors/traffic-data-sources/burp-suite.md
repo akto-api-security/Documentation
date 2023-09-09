@@ -132,17 +132,21 @@ Step 2: Enter Akto Server URL: In your web browser's address bar, enter the same
 
 Step 3: Observe Response: Pay attention to the response from the Akto server. If the server is reachable and responsive, you should see a page or message indicating successful access. If you encounter any errors or the page doesn't load, it suggests a connectivity issue.
 
-**2. I can't see all my APIs in the Burp collection. What should I check? A: If you cannot see data in the Burp collection, ensure the following:**
+**2. I can't see all my APIs in the Burp collection. What should I check?**
 
-The traffic in your Burp API Collection has a 2xx status code because Akto ignores non-2xx API traffic data. Check the response codes for the requests you are monitoring.
+If you cannot see data in the Burp collection, ensure the following: The traffic in your Burp API Collection has a 2xx status code because Akto ignores non-2xx API traffic data. Check the response codes for the requests you are monitoring.
 
 **3. Why are rows highlighted in black within the Akto Burp plugin's table view, and how can I resolve this issue?**
 
-If you notice rows being highlighted in black within the Akto Burp plugin's table view, it signifies an issue with data presentation. This issue is commonly encountered when there is a conflict with another plugin called LoggerPlusPlus. To resolve it, follow these steps:
+If you notice rows being highlighted in black within the Akto Burp plugin's table view, it signifies an issue with data presentation. This issue is commonly encountered when there is a conflict with another plugin called LoggerPlusPlus. To resolve this issue, follow these steps:
 
-Step 1: Remove LoggerPlusPlus Plugin: The black highlighting issue is often caused by conflicts with the LoggerPlusPlus plugin. To resolve this, you should remove the LoggerPlusPlus plugin from your Burp installation for Akto extension to work.
+Step 1: Remove LoggerPlusPlus Plugin:&#x20;
 
-Step 2: Refresh the Table: After removing the LoggerPlusPlus plugin, refresh the table view within the Akto Burp plugin. You may need to close and reopen the Akto Burp plugin or take any necessary steps specified in the plugin's interface to update the view.
+The black highlighting issue is often caused by conflicts with the LoggerPlusPlus plugin. To resolve this, you should remove the LoggerPlusPlus plugin from your Burp installation for Akto extension to work.
+
+Step 2: Refresh the Table:&#x20;
+
+After removing the LoggerPlusPlus plugin, refresh the table view within the Akto Burp plugin. You may need to close and reopen the Akto Burp plugin or take any necessary steps specified in the plugin's interface to update the view.
 
 ### Get Support for your Akto setup
 
@@ -151,4 +155,5 @@ There are multiple ways to request support from Akto. We are 24X7 available on t
 1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
 2. Join our [discord channel](https://www.akto.io/community) for community support.
 3. Contact `help@akto.io` for email support.
+4. Contact us [here](https://www.akto.io/contact-us).
 
