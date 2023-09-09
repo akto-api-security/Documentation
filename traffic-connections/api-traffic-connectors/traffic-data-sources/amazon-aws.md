@@ -1,7 +1,7 @@
 ---
 description: >-
-  Learn about how to send API traffic data using AWS traffic mirroring to Akto
-  from your environment.
+  Learn how to send API traffic data using AWS traffic mirroring to Akto from
+  your environment.
 ---
 
 # Connect Akto with AWS Traffic Mirroring

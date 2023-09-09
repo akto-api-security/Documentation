@@ -1,6 +1,6 @@
 ---
 description: >-
-  Learn about how to send API traffic data from Burp suite to Akto from your
+  Learn how to send API traffic data from Burp suite to Akto from your
   environment.
 ---
 
