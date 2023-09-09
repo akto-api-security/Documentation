@@ -11,7 +11,7 @@ description: >-
 [Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](./). If you don't have access to staging or production environment, you can create API inventory using Burp's traffic.&#x20;
 
 {% hint style="info" %}
-Note that traffic from Burp Suite won't be automated like the native connectors such as AWS and GCP.&#x20;
+Note that traffic from Burp Suite won't be automated like the native cloud connectors.
 {% endhint %}
 
 Burp connector is `recommended` for Akto [Open source](https://github.com/akto-api-security/akto) or [free tier](https://www.akto.io/pricing) only. For an automated inventory, you will want to use other automated traffic connectors.
