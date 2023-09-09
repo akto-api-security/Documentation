@@ -50,7 +50,7 @@ Akto Burp connection Demo
 
 Head to [API Inventory](../../../api-inventory/api-inventory/) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.&#x20;
 
-### Frequently Asked Questions (FAQs)
+## Frequently Asked Questions (FAQs)
 
 #### 1. How can I send data related to only a particular domain - example.com to Akto via Burp?
 
@@ -118,7 +118,7 @@ Step 4: Follow the provided instructions to import ZAP traffic data into Akto.
 
 By utilizing this feature in the Akto plugin, you can seamlessly import ZAP traffic alongside other data sources, enabling comprehensive monitoring and analysis within the Akto platform.
 
-### Troubleshooting Guide
+## Troubleshooting Guide
 
 If you encounter connectivity issues with the Akto server, follow these steps:
 
@@ -148,7 +148,7 @@ Step 2: Refresh the Table:&#x20;
 
 After removing the LoggerPlusPlus plugin, refresh the table view within the Akto Burp plugin. You may need to close and reopen the Akto Burp plugin or take any necessary steps specified in the plugin's interface to update the view.
 
-### Get Support for your Akto setup
+## Get Support for your Akto setup
 
 There are multiple ways to request support from Akto. We are 24X7 available on the following:
 
