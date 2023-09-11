@@ -24,11 +24,11 @@ To start capturing traffic from your staging, production ( or any other environm
 
 1. Navigate to the `Quick Start` page on dashboard.
 
-<figure><img src="../../../.gitbook/assets/Frame 10 (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Frame 10 (1).png" alt="Click on Quickstart"><figcaption><p>Click on Quickstart</p></figcaption></figure>
 
 2\. Click `connect traffic data`.
 
-<figure><img src="../../../.gitbook/assets/Frame 11 (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Frame 11 (1).png" alt="Click on connect traffic data"><figcaption><p>Click on connect traffic data</p></figcaption></figure>
 
 ### Creating AWS Policy
 
@@ -36,25 +36,25 @@ Below steps create a policy with AWS permissions in your account that allows Akt
 
 1. Grab the policy JSON from your Akto dashboard in the first step as shown in the screenshot.  `Click` on the link mentioned in `Step 1`.&#x20;
 
-<figure><img src="../../../.gitbook/assets/Frame 15 (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Frame 15 (4).png" alt="Click on AWS policy link "><figcaption><p>Click on AWS policy link </p></figcaption></figure>
 
 2\. This will take you to the policy page of AWS. Navigate to `JSON` tab.
 
-<figure><img src="../../../.gitbook/assets/Frame 16 (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Frame 16 (5).png" alt="Policy page of AWS"><figcaption><p>Policy page of AWS</p></figcaption></figure>
 
 3\. `Copy the policy` from dashboard and `paste` here.
 
-<figure><img src="../../../.gitbook/assets/Frame 17 (12).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Frame 17 (12).png" alt="Copy policy JSON"><figcaption><p>Copy policy JSON</p></figcaption></figure>
 
 &#x20;4\. `Click on review policy`.
 
-<figure><img src="../../../.gitbook/assets/Frame 18 (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Frame 18 (2).png" alt="Paste in AWS"><figcaption><p>Paste in AWS</p></figcaption></figure>
 
 5\. Name the policy `AktoDashboardPolicy`.
 
 6\. Click `create policy`. Once policy is created, go back to the dashboard.
 
-<figure><img src="../../../.gitbook/assets/Frame 19 (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Frame 19 (4).png" alt="Policy created in AWS"><figcaption><p>Policy created in AWS</p></figcaption></figure>
 
 You have now given Akto the permissions to read loadbalancer names from your AWS account.&#x20;
 
@@ -64,15 +64,15 @@ You have now given Akto the permissions to read loadbalancer names from your AWS
 2. You will be able to see a list of all the `loadbalancers`.
 3. `Select loadbalancers` under my connections section. Select only those loadbalancers from which you want to mirror the traffic to Akto dashboard.&#x20;
 
-<figure><img src="../../../.gitbook/assets/Frame 12 (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Frame 12 (1) (1).png" alt="Select Loadbalancer in Akto"><figcaption><p>Select Loadbalancer in Akto</p></figcaption></figure>
 
 4\. Click `Apply` to start traffic mirroring.
 
-<figure><img src="../../../.gitbook/assets/Frame 14 (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Frame 14 (2).png" alt="Click apply"><figcaption><p>Click apply</p></figcaption></figure>
 
 5\. `Wait` for a couple of minutes. Mirroring is being setup on the loadbalancers you selected above.
 
-<figure><img src="../../../.gitbook/assets/Screen Shot 2023-01-04 at 3.13 1.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Screen Shot 2023-01-04 at 3.13 1.png" alt="Wait for a few mins"><figcaption><p>Wait for a few mins</p></figcaption></figure>
 
 6\. Once mirroring is complete, head to the `API inventory page` and see all the APIs Akto has discovered.
 
