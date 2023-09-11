@@ -52,6 +52,10 @@ The HTTP Archive format, or HAR, is a `JSON-formatted archive file format` for l
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/230879681-9f4c849f-990d-4cec-8786-f216b0529135.png" alt=""><figcaption><p>APIs from HAR file</p></figcaption></figure>
 
+### What's next?
+
+Head to [API Inventory](../../../api-inventory/api-inventory/) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.&#x20;
+
 ## Frequently Asked Questions (FAQs)
 
 **1. What is the limit on the size of HAR file upload?**
@@ -87,3 +91,12 @@ Step 4: Click the `Export` button to save the captured data as a HAR file.
 **I uploaded 100 APIs, but I can only see 85 of them in the dashboard. Where are the missing APIs?**&#x20;
 
 Akto processes and displays only APIs that have received a 2xx series status code in their HTTP responses. If an API request did not receive a 2xx status code (e.g., 3xx, 4xx, or 5xx), it may not appear in the dashboard.
+
+## Get Support for your Akto setup
+
+There are multiple ways to request support from Akto. We are 24X7 available on the following:
+
+1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
+2. Join our [discord channel](https://www.akto.io/community) for community support.
+3. Contact `help@akto.io` for email support.
+4. Contact us [here](https://www.akto.io/contact-us).
