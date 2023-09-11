@@ -51,3 +51,33 @@ The HTTP Archive format, or HAR, is a `JSON-formatted archive file format` for l
 7. You should be able to see APIs imported in your collection from the HAR file.&#x20;
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/230879681-9f4c849f-990d-4cec-8786-f216b0529135.png" alt=""><figcaption><p>APIs from HAR file</p></figcaption></figure>
+
+## Frequently Asked Questions (FAQs)
+
+**1. What is the limit on the size of HAR file upload?**
+
+The maximum size you can upload to Akto is 25 mb.
+
+**2. What is a HAR file, and how can I generate one in Chrome or Firefox?**
+
+HAR stands for HTTP Archive, and it is a format used to capture and store network traffic data during a web browser session. To generate a HAR file in Chrome or Firefox:
+
+Steps for Chrome:&#x20;
+
+Step 1: Open Chrome
+
+Step2: Right-click on the page and select "Inspect" to open Developer Tools.&#x20;
+
+Step 3: Go to the "Network" tab. Perform the actions or interactions you want to capture (e.g., load a webpage).&#x20;
+
+Step 4: Right-click on the network activity list and choose "Save as HAR with Content."&#x20;
+
+Steps for Firefox:&#x20;
+
+Step 1: Open Firefox.&#x20;
+
+Step 2: Click on the `menu` icon (three horizontal lines) and select `Web Developer > Network`&#x20;
+
+Step 3: Perform the actions you want to capture.&#x20;
+
+Step 4: Click the `Export` button to save the captured data as a HAR file.
