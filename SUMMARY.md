@@ -34,7 +34,7 @@
     * [Connect Akto with Docker](traffic-connections/api-traffic-connectors/traffic-data-sources/docker.md)
     * [Connect Akto with TCP Agent](traffic-connections/api-traffic-connectors/traffic-data-sources/tcp-agent.md)
     * [Connect Akto with eBPF](traffic-connections/api-traffic-connectors/traffic-data-sources/ebpf.md)
-    * [Connect Akto with HAR file upload](traffic-connections/api-traffic-connectors/traffic-data-sources/har-file-upload.md)
+    * [Add API traffic to Akto using HAR file upload](traffic-connections/api-traffic-connectors/traffic-data-sources/har-file-upload.md)
     * [Akto SDK](traffic-connections/api-traffic-connectors/traffic-data-sources/akto-sdk.md)
     * [Connect Akto with GCP Mirroring](traffic-connections/api-traffic-connectors/traffic-data-sources/google-cloud-gcp.md)
     * [Connect Akto with Burp suite](traffic-connections/api-traffic-connectors/traffic-data-sources/burp-suite.md)
