@@ -62,7 +62,7 @@ The maximum size you can upload to Akto is 25 mb.
 
 HAR stands for HTTP Archive, and it is a format used to capture and store network traffic data during a web browser session. To generate a HAR file in Chrome or Firefox:
 
-Steps for Chrome:&#x20;
+_Steps for Chrome:_&#x20;
 
 Step 1: Open Chrome
 
@@ -72,7 +72,7 @@ Step 3: Go to the "Network" tab. Perform the actions or interactions you want to
 
 Step 4: Right-click on the network activity list and choose "Save as HAR with Content."&#x20;
 
-Steps for Firefox:&#x20;
+_Steps for Firefox:_&#x20;
 
 Step 1: Open Firefox.&#x20;
 
@@ -81,3 +81,9 @@ Step 2: Click on the `menu` icon (three horizontal lines) and select `Web Develo
 Step 3: Perform the actions you want to capture.&#x20;
 
 Step 4: Click the `Export` button to save the captured data as a HAR file.
+
+## Troubleshooting Guide
+
+**I uploaded 100 APIs, but I can only see 85 of them in the dashboard. Where are the missing APIs?**&#x20;
+
+Akto processes and displays only APIs that have received a 2xx series status code in their HTTP responses. If an API request did not receive a 2xx status code (e.g., 3xx, 4xx, or 5xx), it may not appear in the dashboard.
