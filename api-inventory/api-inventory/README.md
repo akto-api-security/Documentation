@@ -1,6 +1,6 @@
 # API inventory
 
-Akto needs traffic to create API inventory. You can create API inventory by integrating with [Burp](../../traffic-connections/api-traffic-connectors/traffic-data-sources/burp-suite.md), [AWS traffic Mirroring](../../traffic-connections/api-traffic-connectors/traffic-data-sources/amazon-aws.md), HAR file upload, [Postman](../../traffic-connections/api-traffic-connectors/traffic-data-sources/postman.md). Your API inventory will look like below.
+Akto needs traffic to create API inventory. You can create API inventory by integrating with [Burp](../../traffic-connections/traffic-data-sources/burp-suite.md), [AWS traffic Mirroring](../../traffic-connections/traffic-data-sources/amazon-aws.md), HAR file upload, [Postman](../../traffic-connections/traffic-data-sources/postman.md). Your API inventory will look like below.
 
 ![](<../../.gitbook/assets/Frame 25 (2).png>)
 
