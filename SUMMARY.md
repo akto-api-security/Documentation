@@ -33,10 +33,10 @@
   * [Connect Akto with TCP Agent](traffic-connections/traffic-data-sources/tcp-agent.md)
   * [Connect Akto with eBPF](traffic-connections/traffic-data-sources/ebpf.md)
   * [Add API traffic to Akto using HAR file upload](traffic-connections/traffic-data-sources/har-file-upload.md)
-  * [Akto SDK](traffic-connections/traffic-data-sources/akto-sdk.md)
   * [Connect Akto with GCP Packet Mirroring](traffic-connections/traffic-data-sources/google-cloud-gcp.md)
   * [Connect Akto with Burp suite](traffic-connections/traffic-data-sources/burp-suite.md)
   * [Connect Akto with Postman](traffic-connections/traffic-data-sources/postman.md)
+  * [Akto SDK](traffic-connections/traffic-data-sources/akto-sdk.md)
 
 ## API Inventory
 
