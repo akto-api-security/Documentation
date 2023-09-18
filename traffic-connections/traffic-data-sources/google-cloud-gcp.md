@@ -6,16 +6,28 @@ description: >-
 
 # Connect Akto with GCP Packet Mirroring
 
+## Introduction
+
+[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](./). One such source is GCP Packet Mirroring.&#x20;
+
+Packet Mirroring is a GCP feature that clones the traffic of specified instances in your Virtual Private Cloud (VPC) network and forwards it to Akto. Packet Mirroring captures all traffic and packet data, including payloads and headers. The capture can be configured for both egress and ingress traffic, only ingress traffic, or only egress traffic.&#x20;
+
+{% hint style="info" %}
+[Packet mirroring](https://cloud.google.com/vpc/docs/packet-mirroring) is non intrusive and allows you to send traffic to Akto in a completely out-of-band manner.
+{% endhint %}
+
+Packet mirroring is our recommended way to receive data as it is completely non-intrusive. Akto's traffic analyzer analyzes this traffic to create your application's APIs request and response, understand API metadata and find misconfigurations. Akto can work with high traffic scale though you can always configure the amount of traffic you want to send to Akto dashboard. &#x20;
+
 ## Pre-requisites to add data to Akto using Packet Mirroring&#x20;
 
 Make sure, the GCP account in which the resources will be created has provisioned enough compute to be able to deploy [Akto](http://akto.io/) and has sufficient permission levels to create resources.
 
 ## Steps to deploy Akto in GCP
 
-You can deploy Akto using the GCP packet mirroring template. Here are the steps to deploy:
+You can deploy Akto using the `Akto's GCP packet mirroring template`. Here are the steps to deploy:
 
-1. Click on this [link](https://raw.githubusercontent.com/akto-api-security/infra/feature/self\_hosting/templates/gcp-mirroring-template.sh) to see the template.
-2. Go to your console in GCP and type these commands
+1. Click on this [link](https://raw.githubusercontent.com/akto-api-security/infra/feature/self\_hosting/templates/gcp-mirroring-template.sh) to see the template. Using this template, Akto will create resources in your cloud.
+2. Go to your console in GCP and copy paste these commands.
 
 ```
 wget https://raw.githubusercontent.com/akto-api-security/infra/feature/self_hosting/templates/gcp-mirroring-template.sh
@@ -24,9 +36,9 @@ chmod +x gcp-mirroring-template.sh
 
 This will create a template with name gcp-mirroring-template.sh
 
-3\. Make sure you are in the project where you want create resources.
+3\. Make sure you are in the project where you want to create resources.
 
-4\. Create a txt file with name inputs.txt with the following input parameters.
+4\. Create a `.txt file` with name `inputs.txt` with the following input parameters.
 
 ```
 project-id
@@ -36,7 +48,7 @@ subnet
 zone
 ```
 
-Here is an example below:
+Here is an example of the txt file below:
 
 ```
 ankitas-playground 
@@ -67,21 +79,22 @@ us-west4-a
 
 10\. Copy and paste this IP in your browser and add port 8080 to it ( http://yourip:8080)
 
-11\. You can signup on Akto dashboard.
+11\. You can now signup on Akto dashboard.
 
-{% hint style="info" %}
-To delete all the resources you created with 'akto' prefix, run the command `./gcp-mirroring-template.sh delete <delete.txt`
+## Steps to Uninstall and delete Akto resources
 
-Before running the above command, make sure you create delete.txt with the following inputs:
+In case you are done using Akto and want to uninstall, follow these steps:
 
-```
-<your-project-id>
-<region>
-akto
-<zone>
-y
-```
-{% endhint %}
+1.  Create delete.txt with the following inputs:
+
+    ```
+    <your-project-id>
+    <region>
+    akto
+    <zone>
+    y
+    ```
+2. To delete all the resources you created with 'akto' prefix, run the command `./gcp-mirroring-template.sh delete <delete.txt`
 
 ## Frequently Asked Questions (FAQs)
 
