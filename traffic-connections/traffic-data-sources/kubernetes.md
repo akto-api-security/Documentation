@@ -119,3 +119,12 @@ You can reinstall Akto in a diff availability zone or you can go to Template tab
 **I don't see my error on this list here.**
 
 Please send us all details at support@akto.io or reach out via Intercom on your Akto dashboard. We will definitely help you out.
+
+### Get Support for your Akto setup
+
+There are multiple ways to request support from Akto. We are 24X7 available on the following:
+
+1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
+2. Join our [discord channel](https://www.akto.io/community) for community support.
+3. Contact `help@akto.io` for email support.
+4. Contact us [here](https://www.akto.io/contact-us).
