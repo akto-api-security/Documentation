@@ -15,7 +15,12 @@ You can also use the information while creating Test YAML templates if you want 
 
 The instructions here cover the above 3 steps in detail.
 
-### Create application roles
+## Configure application roles
+
+You should create as many roles as are in your application. For example, if you are a B2B Saas app, you might have ADMIN, BILLING, MEMBER, 
+GUEST etc. roles. Role creation is a one-time configuration.
+
+### Create role
 
 1. In the left navigation menu, go to `Testing` and then click on `Roles` tab.
    <img width="1440" alt="Go to Roles tab" src="https://github.com/akto-api-security/Documentation/assets/91221068/5ff6cae1-f4a2-4179-843c-c77cc11da9c8">
@@ -32,9 +37,9 @@ The instructions here cover the above 3 steps in detail.
 5. Select endpoints you'd want to evaluate. You can simply select all. And click on `Save` button.
 <img width="1440" alt="Select endpoints" src="https://github.com/akto-api-security/Documentation/assets/91221068/e16c7d60-55de-404e-8592-c47f0e326e7b">
 
-### Add authentication token for the role
+### Add hard-coded auth token for the role
 
-During API testing, Akto will add these headers to the sample API calls to check if the role has access to the API. You can provide a hardcoded auth header (steps 1,2,3 below) or you can also automate fetching auth token automatically for the role. If you configure automated auth token generation, Akto will run the Login-request sequence before the test starts and fetch the auth token. 
+During API testing, Akto will add these headers to the sample API calls to check if the role has access to the API. You can provide a hardcoded auth header or you can also automate fetching auth token automatically (next section) for the role. 
 
 1. Click on the `Add auth` button to add auth-token for your role. Then click on the `plus` icon to add auth headers for the role
  <img width="1440" alt="Add-auth button" src="https://github.com/akto-api-security/Documentation/assets/91221068/48c733d1-94a7-4f76-97d6-79fb724724e7">
@@ -45,4 +50,12 @@ During API testing, Akto will add these headers to the sample API calls to check
 3. You can add multiple headers too. Click on the `plus` icon to add more headers for this role. Click on `Save` when you are done.
  <img width="1440" alt="Add more headers" src="https://github.com/akto-api-security/Documentation/assets/91221068/b175c895-f03d-4081-9cb6-89e8423ae025">
 
+### Automate auth token for the role
+If you configure automated auth token generation, Akto will run the Login-request sequence before the test starts and fetch the auth token. 
+
+1. If you want to automate auth token generation you can select `Login-request` radio button. And click on `Create` button.
+
+2. You will see a dialog box where you can configure the sequence to fetch auth token automatically. You should know which API (or sequence of APIs) can give you the auth token in the response. For this example, we will configure a Login-request sequence of 2 APIs. The response of the 2nd API contains the auth token.
+
+3. 
 
