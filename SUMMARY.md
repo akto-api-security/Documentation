@@ -73,6 +73,7 @@
 * [Create user config](testing/create-user-config.md)
 * [Test results](testing/test-results.md)
 * [Test library](testing/test-library.md)
+* [Test roles](testing/user-roles.md)
 
 ***
 
