@@ -88,3 +88,17 @@ You should know which API (or sequence of APIs) can give you the auth token in t
 11. If the auth token is supposed to be attached in the request body, you can select `Body` in the step above.
 12. Don't forget to `Save` the automated login sequence in the role. 
 <img width="1439" alt="Save login seq" src="https://github.com/akto-api-security/Documentation/assets/91221068/a4ee8861-68fc-4c92-ad83-e61621856cb9">
+
+### If your sample requests come from diff accounts
+
+Akto will replay the API requests which it recorded in your application server traffic. In your setup, it might be possible that there are multiple accounts being used on your staging app, hence Akto will record API calls from multiple accounts. In these cases, just 1 auth token per role might not suffice. You might want to configure 1 auth token for each account. When Akto tries to replay the recorded sample API call, it can pick up the auth token meant for the same account as the API request to check for role-access. 
+
+1. If account id comes as a simple header field, you can click on the `Analyze` tab to find out possible values of any header that Akto has captured.
+   <img width="1078" alt="Screenshot 2023-09-22 at 11 27 12 PM" src="https://github.com/akto-api-security/Documentation/assets/91221068/ee147220-e4cb-40a1-9bac-ac14efed8ef5">
+
+2. For example, we can find out how many diff values has Akto recorded with `CompanyId` header. We see only 3 "CompanyId" values. Note that the analysis comes from saved requests only. Akto doesn't save all API traffic it processes. It saves only a few requests.
+   <img width="837" alt="Screenshot 2023-09-22 at 8 47 43 PM" src="https://github.com/akto-api-security/Documentation/assets/91221068/f734536d-2d71-4a1c-abe1-c971fcaaba6f">
+
+3. We should configure an "auth" token for each such company. We can use `Api Header conditions` for this. Mention "CompanyId" as header key and "1234567" as header value. Akto will use this token while testing for sample API requests whose CompanyId in the headers equals "1234567". We should configure 2 more auths for remaining 2 companies for complete coverage.
+   <img width="1021" alt="Screenshot 2023-09-22 at 11 50 00 PM" src="https://github.com/akto-api-security/Documentation/assets/91221068/0a8fcc6e-7dc4-42f1-a617-e9e473aaadd4">
+
