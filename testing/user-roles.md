@@ -112,4 +112,55 @@ Once tokens are set up, the next step is to hit all the recorded APIs with token
  
 3. Currently, access-matrix job runs once per hour. You might have to wait for an hour to see the results. You don't have to click on "Create access matrix" button for other roles one-by-one. Akto will create access matrix for all roles together.
    <img width="1430" alt="Screenshot 2023-09-23 at 12 00 21 AM" src="https://github.com/akto-api-security/Documentation/assets/91221068/9798a99a-cff6-47aa-a95c-f53524c2ea1f">
-   In this example of Juiceshop, ADMIN  can access 52 APIs, but MEMBER can access 43. There are 9 APIs exclusive to Admin. 
+   In this example of Juiceshop, ADMIN  can access 52 APIs, but MEMBER can access 43. There are 9 APIs exclusive to Admin.
+
+4. Akto will run this task daily. 
+
+You should periodically review the access matrix. Specially when any associations change.
+
+## Create test template
+
+You can use this information in test YAML templates too. You can filter APIs _exclusive_ to the ADMIN role (9 APIs in this example). You can also get the auth token for any role in the template. 
+
+Say we want to create a custom YAML test that should run on the Admin-exclusive APIs using Member token. If any API returns 2XX response, we will send an alert. 
+
+### Filter Admin-exclusive APIs
+This is a combination of 2 conditions - The API should accessible by ADMIN, and, the API should NOT be accessible by MEMBER. 
+- `include_roles_access` - You can use this filter to include all the APIs accessible by a particular role. eg. here we can use it as -
+```
+    include_roles_access:
+    param: ADMIN
+```
+-   `exclude_roles_access` - You can use this filter to exclude all the APIs accessible by a particular role. eg. here we can use it as -
+```
+    exclude_roles_access:
+    param: MEMBER
+```
+You `api_selection_filters` section can then look like the following - 
+
+```
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  include_roles_access:
+    param: ADMIN
+  exclude_roles_access:
+    param: MEMBER
+```
+
+### Use auth token from the role
+
+You can use the auth token from any role in your test template. In our example, we would want to get the token of the MEMBER role. We can use `modify_header` rule. We can pass `${roles_access_context.MEMBER}: 1` as its value which will obtain an auth token of MEMBER role and replace in the API call while testing. 
+
+Your execute section will then look like - 
+```
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_header:
+        ${roles_access_context.MEMBER}: 1
+```
+
+You can save this test template with name & id as "PRIVILEGE_ESCALATION_TEST" and have it part of your CI/CD pipeline. Now no API goes without being tested for privilege escalation! 
