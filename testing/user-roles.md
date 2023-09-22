@@ -9,9 +9,9 @@ You can also use the information while creating Test YAML templates if you want 
 
 ## Testing for Privilege Escalation using Akto
 
-1. Set up all your application roles in Akto along with the auth token for each role (hardcoded or automated)
-2. For each role, find all the APIs that are accessible by that role
-3. Setup automated test to check if any API exclusive to a higher-privilege role can be accessed by a lower-privilege role
+1. Set up all your application roles in Akto along with the auth token for each role (hardcoded or automated). Explained [here](#configure-application-roles)
+2. For each role, find all the APIs that are accessible by that role. Explained [here](#create-access-matrix)
+3. Setup automated test to check if any API exclusive to a higher-privilege role can be accessed by a lower-privilege role. Explained [here](#create-test-template)
 
 The instructions here cover the above 3 steps in detail.
 
@@ -102,3 +102,14 @@ Akto will replay the API requests which it recorded in your application server t
 3. We should configure an "auth" token for each such company. We can use `Api Header conditions` for this. Mention "CompanyId" as header key and "1234567" as header value. Akto will use this token while testing for sample API requests whose CompanyId in the headers equals "1234567". We should configure 2 more auths for remaining 2 companies for complete coverage.
    <img width="1021" alt="Screenshot 2023-09-22 at 11 50 00 PM" src="https://github.com/akto-api-security/Documentation/assets/91221068/0a8fcc6e-7dc4-42f1-a617-e9e473aaadd4">
 
+## Create access matrix
+Once tokens are set up, the next step is to hit all the recorded APIs with tokens from each role. This way, Akto maintains a table for each role for each API - if the role can access that API. We call this `Access matrix`. 
+
+1. Click on the `Access` tab
+   <img width="1371" alt="Screenshot 2023-09-22 at 11 59 03 PM" src="https://github.com/akto-api-security/Documentation/assets/91221068/1813f7dc-c5d2-45ca-acac-8ff12c1bd2c3">
+
+2. Click on `Create access matrix` button
+ 
+3. Currently, access-matrix job runs once per hour. You might have to wait for an hour to see the results. You don't have to click on "Create access matrix" button for other roles one-by-one. Akto will create access matrix for all roles together.
+   <img width="1430" alt="Screenshot 2023-09-23 at 12 00 21 AM" src="https://github.com/akto-api-security/Documentation/assets/91221068/9798a99a-cff6-47aa-a95c-f53524c2ea1f">
+   In this example of Juiceshop, ADMIN  can access 52 APIs, but MEMBER can access 43. There are 9 APIs exclusive to Admin. 
