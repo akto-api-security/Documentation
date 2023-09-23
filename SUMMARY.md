@@ -54,7 +54,8 @@
 ## Test Editor
 
 * [Overview](test-editor/overview.md)
-* [Test Library](test-editor/test-library.md)
+* [Test Library](test-editor/test-library/README.md)
+  * [Local File Inclusion with Akto](test-editor/test-library/local-file-inclusion-with-akto.md)
 * [Test YAML Syntax (One pager)](test-editor/test-yaml-syntax-one-pager.md)
 * [Test YAML Syntax (Detailed)](test-editor/test-yaml-syntax-detailed/README.md)
   * [ID](test-editor/test-yaml-syntax-detailed/id.md)
