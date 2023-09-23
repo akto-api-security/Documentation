@@ -6,21 +6,21 @@ description: >-
 
 # Local File Inclusion with Akto
 
-### **What is LFI?**
+## **What is Local file inclusion?**
 
 Local File Inclusion (LFI) is a vulnerability that allows an attacker to include files, usually residing on the server, within the output of a given application. LFI attacks can lead to full server compromise if configured with improper permissions. Such vulnerabilities are typically found in applications that do not properly validate user-supplied input for file inclusion functionalities.
 
-### **The Importance of LFI Testing**
+## **The Importance of Local file inclusion Testing**
 
 For organizations, LFI vulnerabilities can lead to sensitive information exposure, unauthorized system access, and even potential server compromises. Therefore, conducting LFI tests as part of a regular security audit is crucial to ensure the safety and integrity of web applications.
 
-### **LFI Test Examples in Akto**
+## **Local file inclusion Test Examples in Akto**
 
 Akto offers an array of pre-configured LFI tests designed for comprehensive coverage against potential vulnerabilities.
 
-#### **Pre-configured LFI Tests:**
+### **Pre-configured Local File Inclusion Tests:**
 
-1. **LFI in Parameter:** You can try this test in the Akto’s API Security playground.
+1. **Local File Inclusion in Parameter:** You can try this test in the Akto’s API Security playground.
 
 ```yaml
 id: LFI_IN_PARAMETER
@@ -106,7 +106,7 @@ validate:
     regex: "root:.*:0:0:"
 ```
 
-1. **LFI by adding new parameter:** You can try this test in the Akto’s API Security playground
+2. **Local File Inclusion by adding new parameter:** You can try this test in the Akto’s API Security playground
 
 ```yaml
 id: FILE_INCLUSION_NEW_PARAM
@@ -206,7 +206,7 @@ validate:
     regex: "root:.*:0:0:"
 ```
 
-1. **LFI in path.yaml:** You can try this test in the Akto’s API Security playground
+3. **Local File Inclusion in path.yaml:** You can try this test in the Akto’s API Security playground
 
 ```yaml
 id: FILE_INCLUSION_NEW_PARAM
@@ -306,7 +306,7 @@ validate:
     regex: "root:.*:0:0:"
 ```
 
-### **3. How to Write Your Own LFI Test in Akto**
+**3. How to Write Your Own LFI Test in Akto**
 
 Creating a custom LFI test in Akto not only allows for tailored security checks but also ensures that specific behaviors of your application are evaluated. Here's a detailed guide with an example:
 
@@ -342,7 +342,7 @@ validate: YOUR_VALIDATION_METHOD_HERE
 
 Step 3: Customizing the Base Template
 
-#### **Example: LFI Using Backup Files**
+### **Example: Local File Inclusion Using Backup Files**
 
 We'll create a test that detects if backup files are accessible, a common oversight leading to LFI:
 
