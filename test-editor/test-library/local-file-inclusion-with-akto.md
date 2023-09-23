@@ -20,7 +20,7 @@ Akto offers an array of pre-configured LFI tests designed for comprehensive cove
 
 ### **Pre-configured Local File Inclusion Tests:**
 
-1. **Local File Inclusion in Parameter:** You can try this test in the Akto’s API Security playground.
+1. **Local File Inclusion in Parameter:** You can try this test in [Akto’s API Security playground](https://www.akto.io/test/lfi-in-parameter).
 
 ```yaml
 id: LFI_IN_PARAMETER
@@ -106,7 +106,7 @@ validate:
     regex: "root:.*:0:0:"
 ```
 
-2. **Local File Inclusion by adding new parameter:** You can try this test in the Akto’s API Security playground
+2. **Local File Inclusion by adding new parameter:** You can try this test in [Akto’s API Security playground](https://www.akto.io/test/lfi-by-adding-new-parameter).
 
 ```yaml
 id: FILE_INCLUSION_NEW_PARAM
@@ -206,7 +206,7 @@ validate:
     regex: "root:.*:0:0:"
 ```
 
-3. **Local File Inclusion in path.yaml:** You can try this test in the Akto’s API Security playground
+3. **Local File Inclusion in path.yaml:** You can try this test in the [Akto’s API Security playground](https://www.akto.io/test/lfi-in-path).
 
 ```yaml
 id: FILE_INCLUSION_NEW_PARAM
