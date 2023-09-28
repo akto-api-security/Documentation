@@ -3,8 +3,10 @@
 You can also run Akto testing module on your CLI.
 
 ### When to use 
-You can use the CLI if you want to run Akto tests locally on any API Collection. The results from the CLI are NOT saved in Akto dashboard. 
-It is best used when developers want to run tests locally before committing to their branch. Note that the application host is chosen as in the API Collection by default. You choose to override the application host url to localhost or a different staging URL. 
+- You can use the CLI if you want to run Akto tests locally on any API Collection.
+- The results from the CLI are NOT saved in Akto dashboard.
+- It is best used when developers want to run tests locally before committing to their branch. Note that the application host is chosen as in the API Collection by default.
+- You choose to override the application host url to localhost or a different staging URL. 
 
 ### How to use
 Prepare the following environment vars - 
