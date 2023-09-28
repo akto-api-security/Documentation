@@ -70,6 +70,7 @@
 ## TESTING
 
 * [Run tests in CICD](testing/run-tests-in-cicd.md)
+* [Run tests in CLI using Akto](testing/run-tests-in-cli-using-akto.md)
 * [Run test](testing/run-test.md)
 * [Create user config](testing/create-user-config.md)
 * [Test results](testing/test-results.md)
