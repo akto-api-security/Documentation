@@ -68,7 +68,9 @@ This will process your API traffic data and populate APIs on the dashboard. This
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/236832394-4a3dabc6-60f2-4112-b1cb-127c4a129c6d.png" alt="Copy the configuration"><figcaption><p>Copy the configuration</p></figcaption></figure>
 You can also copy from here - 
-```apiVersion: apps/v1
+
+```
+apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: akto-k8s
@@ -98,7 +100,8 @@ spec:
           - name: AKTO_KAFKA_BROKER_MAL
             value: "<AKTO_NLB_IP>:9092"
           - name: AKTO_MONGO_CONN
-            value: "<AKTO_MONGO_CONN>"```
+            value: "<AKTO_MONGO_CONN>"
+```
       
 
 2. Replace `{NAMESPACE}` with your app namespace and `{APP_NAME}` with the name of your app.
