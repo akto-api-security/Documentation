@@ -19,10 +19,19 @@ Prepare the following environment vars -
 
 Example CLI - 
 
+```
+docker run   -e AKTO_DASHBOARD_URL=https://flash.staging.akto.io -e TEST_IDS=JWT_NONE_ALGO -e API_COLLECTION_ID=1689063104 -e AKTO_API_KEY=OAzudPuzo8kh1234jCHtL3Vf0lTFzvDYZQMaKh4w  aktosecurity/akto-api-testing-cli:latest
+```
+
 ### Results
 1. A short summary (API, Vulnerability, Severity) is printed on command line itself
 2. A file `output.txt` contains details of each test per API
 3. If you see version mismatch error, consider matching release version of your dashboard vs testing-cli
+
+Sample results - 
+<img width="558" alt="image" src="https://github.com/akto-api-security/Documentation/assets/91221068/d6685ffe-463a-49ea-85c8-0fc670714c49">
+
+
 
 ### Limitations
 1. Results are not saved in Akto dashboard.
