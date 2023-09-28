@@ -22,9 +22,11 @@ Prepare the following environment vars -
 
 Example CLI -
 
+{% code overflow="wrap" %}
 ```
 docker run   -e AKTO_DASHBOARD_URL=https://flash.staging.akto.io -e TEST_IDS=JWT_NONE_ALGO -e API_COLLECTION_ID=1689063104 -e AKTO_API_KEY=OAzudPuzo8kh1234jCHtL3Vf0lTFzvDYZQMaKh4w  aktosecurity/akto-api-testing-cli:latest
 ```
+{% endcode %}
 
 ### Results
 
