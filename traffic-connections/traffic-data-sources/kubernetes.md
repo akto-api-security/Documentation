@@ -67,8 +67,53 @@ This will process your API traffic data and populate APIs on the dashboard. This
 1. Once complete, you should now see a daemonset config. `Copy the config` and paste in a `text editor`.
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/236832394-4a3dabc6-60f2-4112-b1cb-127c4a129c6d.png" alt="Copy the configuration"><figcaption><p>Copy the configuration</p></figcaption></figure>
+You can also copy from here - 
+```apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: akto-k8s
+  namespace: {NAMESPACE}
+  labels:
+    app: {APP_NAME}
+spec:
+  selector:
+    matchLabels:
+      app: {APP_NAME}
+  template:
+    metadata:
+      labels:
+        app: {APP_NAME}
+    spec:
+      hostNetwork: true
+      containers:
+      - name: mirror-api-logging
+        image: aktosecurity/mirror-api-logging:k8s_agent
+        env: 
+          - name: AKTO_TRAFFIC_BATCH_TIME_SECS
+            value: "10"
+          - name: AKTO_TRAFFIC_BATCH_SIZE
+            value: "100"
+          - name: AKTO_INFRA_MIRRORING_MODE
+            value: "gcp"
+          - name: AKTO_KAFKA_BROKER_MAL
+            value: "<AKTO_NLB_IP>:9092"
+          - name: AKTO_MONGO_CONN
+            value: "<AKTO_MONGO_CONN>"```
+      
 
-2. Replace `{NAMESPACE}` with your app namespace and `{APP_NAME}` with the name of your app
+2. Replace `{NAMESPACE}` with your app namespace and `{APP_NAME}` with the name of your app.
+If you have installed on *AWS* - 
+ - Go to EC2 > Instances > Search for `Akto Mongo Instance` > Copy private IP.
+ - Replace `AKTO_MONGO_CONN` with `mongodb://10.0.1.3:27017/admini` where 10.0.1.3 is the private ip (example)
+ - Go to EC2 > Load balancers > Search for `AktoNLB` > Copy its DNS.
+ - Replace `AKTO_NLB_IP` with the DNS name. eg `AktoNLB-ca5f9567a891b910.elb.ap-south-1.amazonaws.com`
+
+If you have installed on *GCP*, *Kubernetes* or *OpenShift* - 
+ - Get Mongo Service's DNS name from Akto cluster
+ - Replace `AKTO_MONGO_CONN` with `mongodb://mongo.p03.svc.cluster.local:27017/admini` (where mongo.p03.svc.cluster.local is Mongo service)
+ - Get Runtime Service's DNS name from Akto cluster
+ - Replace `AKTO_NLB_IP` with the DNS name. eg. `akto-api-security-runtime.p03.svc.cluster.local` 
+
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/236832427-2506df70-2040-440d-9347-c81152b110d4.png" alt="Replace namespace in text editor"><figcaption><p>Replace namespace in text editor</p></figcaption></figure>
 
