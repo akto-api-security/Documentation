@@ -23,7 +23,7 @@ Prepare the following environment vars -
 Example CLI -
 
 ```bash
-docker run -v ./:/out  \ 
+docker run -v ./:/out \
    -e AKTO_DASHBOARD_URL=https://flash.staging.akto.io \
    -e TEST_IDS=JWT_NONE_ALGO \
    -e API_COLLECTION_ID=1689063104 \
