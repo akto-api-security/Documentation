@@ -15,10 +15,11 @@ Prepare the following environment vars -
 
 1. `AKTO_API_KEY` - Go to My accounts > Settings > Integrations > Akto API > Generate token. Copy the token generated.
 2. `AKTO_DASHBOARD_URL` - URL of your dashboard. Please ensure you can access dashboard
-3. `TEST_IDS` - Space-separated list of test IDs which you want to run eg. `JWT_NONE_ALGO REMOVE_TOKENS`
-4. `API_COLLECTION_ID` - API collection id (integer) you want to run tests eg. 29623412
-5. `TEST_APIS` - Space-separated list of APIs you want to test. If absent, all APIs are selected
-6. `OVERRIDE_APP_URL` - change the staging application host. Akto will test APIs on this host
+3. `TEST_IDS` - Space-separated list of test IDs which you want to run eg. `JWT_NONE_ALGO REMOVE_TOKENS` . You can also set it as `ALL` to run all tests.
+4. `API_COLLECTION_NAME` - API collection name on which you want to run tests eg. juice_shop_demo.
+5. `API_COLLECTION_ID` - API collection id (integer) you want to run tests eg. 29623412. Only one of `API_COLLECTION_NAME` and `API_COLLECTION_ID` is required.
+6. `TEST_APIS` - Space-separated list of APIs you want to test. If absent, all APIs are selected
+7. `OVERRIDE_APP_URL` - change the staging application host. Akto will test APIs on this host
 
 Example CLI -
 
