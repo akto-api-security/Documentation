@@ -20,6 +20,11 @@ Prepare the following environment vars -
 5. `API_COLLECTION_ID` - API collection id (integer) you want to run tests eg. 29623412. Only one of `API_COLLECTION_NAME` and `API_COLLECTION_ID` is required.
 6. `TEST_APIS` - Space-separated list of APIs you want to test. If absent, all APIs are selected
 7. `OVERRIDE_APP_URL` - change the staging application host. Akto will test APIs on this host
+8. `OUTPUT_LEVEL` - Output level of the result file. We have 4 output levels:
+    1. `NONE` - No output file is generated.
+    2. `SUMMARY` - [Default] The output file contains the tests executed and a list of all vulnerable APIs.
+    3. `DETAILED` - The output file contains the `SUMMARY` as well as description and impact of the executed tests. 
+    4. `DEBUG` - The output file contains `DETAILED` output along with the original and attempt request and response for all the API tests.
 
 Example CLI -
 (If you are not on Linux, please provide absolute path to your current directory instead of ${PWD})
@@ -29,14 +34,15 @@ docker run -v ${PWD}:/out \
    -e AKTO_DASHBOARD_URL=https://flash.staging.akto.io \
    -e TEST_IDS=JWT_NONE_ALGO \
    -e API_COLLECTION_ID=1689063104 \
-   -e AKTO_API_KEY=OAzudPuzo8kh1234jCHtL3Vf0lTFzvDYZQMaKh4w  \
+   -e AKTO_API_KEY=OAzudPuzo8kh1234jCHtL3Vf0lTFzvDYZQMaKh4w \
+   -e OUTPUT_LEVEL=DETAILED \
    aktosecurity/akto-api-testing-cli:latest
 ```
 
 ### Results
 
 1. A short summary (API, Vulnerability, Severity) is printed on command line itself
-2. A file `output.txt` contains details of each test per API
+2. A file `output.txt` contains details of the test, based on the output level given.
 3. If you see version mismatch error, consider matching release version of your dashboard vs testing-cli
 
 Sample results -&#x20;
