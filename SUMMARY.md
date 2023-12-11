@@ -37,6 +37,7 @@
   * [Connect Akto with GCP Packet Mirroring](traffic-connections/traffic-data-sources/google-cloud-gcp.md)
   * [Connect Akto with Burp suite](traffic-connections/traffic-data-sources/burp-suite.md)
   * [Connect Akto with Postman](traffic-connections/traffic-data-sources/postman.md)
+  * [Connect Akto with OpenAPI](traffic-connections/traffic-data-sources/openapi.md)
   * [Akto SDK](traffic-connections/traffic-data-sources/akto-sdk.md)
 
 ## API Inventory
