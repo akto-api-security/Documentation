@@ -17,11 +17,11 @@ Please ensure you have the following -
 
 Here are the steps to install Akto via Helm charts -
 
-1. Prepare Mongo Connection string
+1. Prepare Mongo Connection string - You can create a fresh new Mongo or use existing Mongo if you have Akto installed previously in your cloud.
 2. Install Akto via Helm
 3. Verify Installation and harden security
 
-### Create Mongo instance
+### Prepare Mongo Connection string
 
 Akto Helm setup needs a Mongo connection string as input. It can come from either of the following -
 
@@ -51,7 +51,30 @@ Akto Helm setup needs a Mongo connection string as input. It can come from eithe
 
     <figure><img src="https://github.com/akto-api-security/Documentation/assets/91221068/4ce4d84d-6e8a-4d4d-bc0b-e5d03e3f824a" alt=""><figcaption></figcaption></figure>
 
+4. **Existing Akto setup** If you have previously installed Akto via CloudFormation template, and you want to move to Helm, please execute the following steps. This guide should be used only if you are NOT using AWS Traffic Mirroring. If you are indeed using AWS Traffic Mirroring, please contact us at support@akto.io. 
+
+    1. Go to AWS > EC2 > Auto Scaling Groups and search for `Akto`.
+    2. Edit all autoscaling groups and set min/max/desired to 0.
+    3. This shuts down all existing Akto infra and just leaves Akto-Mongo running.
+    4. __[Optional - If you want to delete CloudFormation Stacks once migration completes]__ - We have to "clone" this Akto Mongo Instance. You can create an AMI and launch a new instance with the same AMI. Alternatively, you can also - 
+       - Go to AWS > EC2 > Instances > Search for "Akto Mongo instance". Launch a new instance using this template.
+       - SSH on new Mongo and run `sudo su -` and then `docker stop mongo`. 
+       - Run `rm -rf /akto/infra/data/` on new Mongo.
+       - Copy `/akto/infra/data/` from old Mongo instance to this new Mongo instance at the same directory location of `/akto/infra/data/` using SCP
+       - Run `docker start mongo`
+    6. If you have installed Akto's K8s agent in your K8s cluster in the previous CloudFormation setup, please run `kubectl delete -f akto-daemonset-config.yml` to halt the traffic processing too.
+    8. Use the private ip of this Mongo instance while installing helm chart (refer [Install Akto via Helm](./helm-deploy#install-akto-via-helm) section)
+    9. Once you setup Akto via Helm chart, try logging in with your previous credentials and check the data. All your data must be retained.
+    10. Change the `AKTO_NLB` to the output of `kubectl get services/flash-akto-runtime -n staging -o jsonpath="{.spec.clusterIP}"`
+    11. Run `kubectl apply -f akto-daemonset-config.yml`
+    12. Confirm Akto dashboard has started receiving new data.
+    13. Please **Do Not Delete** AWS CloudFormation Stacks. This will delete the Mongo Instance too and you'll lose the data. If you want to delete AWS CloudFormation stacks, please setup new a duplicate Mongo Instance from step (4). Use private IP of this new instance for step (6).
+
+5. **Mongo on K8s with Persistent volume** You can setup a Mongo on K8s cluster itself with a Persistent volume. A sample template is provided [here](https://github.com/akto-api-security/infra/blob/kubernetes/mongo.yml). Use the IP of this service as Mongo private IP in [Install Akto via Helm](./helm-deploy#install-akto-via-helm) section. If you are migrating from previous Akto installation, you have to bootstrap the persistent volume with original Mongo Instance's data before you start Mongo service. 
+   
+
 Note: Please ensure your K8S cluster has connectivity to Mongo.
+
 
 ### Install Akto via Helm
 
@@ -66,3 +89,6 @@ Note: Please ensure your K8S cluster has connectivity to Mongo.
 1. Run the following to get Akto dashboard url `kubectl get services/akto-dashboard -n dev | awk -F " " '{print $4;}'`
 2. Open Akto dashboard on port 8080. eg `http://a54b36c1f4asdaasdfbd06a259de2-acf687643f6fe4eb.elb.ap-south-1.amazonaws.com:8080/`
 3. For good security measures, you should enable HTTPS by adding a certificate and put it behind a VPN. If you are on AWS, follow the guide [here](https://docs.akto.io/getting-started/aws-ssl).
+
+
+
