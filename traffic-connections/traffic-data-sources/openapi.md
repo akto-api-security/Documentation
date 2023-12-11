@@ -14,12 +14,7 @@ Note that traffic from OpenAPI spec won't be automated like the native cloud con
 
 OpenAPI connector is `recommended` for Akto [Open source](https://github.com/akto-api-security/akto) or [free tier](https://www.akto.io/pricing) only. For an automated inventory, you should use other automated traffic connectors.
 
-### Pre-requisites for Akto OpenAPI connection
-
-* You must have an `active Akto account`. If you don't have one, sign up for an account on the Akto platform.
-  * [Self Hosted signup](https://stairway.akto.io/)
-  * [Cloud Signup](https://app.akto.io/)
-* Prepare the OpenAPI specification you wish to upload to Akto. Make sure these collections are organized and contain the API requests you want to work with.
+Coming soon. If you have an immediate use case for this, please email us at help@akto.io
 
 ## Get Support for your Akto setup
 
