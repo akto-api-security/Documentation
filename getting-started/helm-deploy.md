@@ -63,14 +63,14 @@ Akto Helm setup needs a Mongo connection string as input. It can come from eithe
        - Copy `/akto/infra/data/` from old Mongo instance to this new Mongo instance at the same directory location of `/akto/infra/data/` using SCP
        - Run `docker start mongo`
     6. If you have installed Akto's K8s agent in your K8s cluster in the previous CloudFormation setup, please run `kubectl delete -f akto-daemonset-config.yml` to halt the traffic processing too.
-    8. Use the private ip of this Mongo instance while installing helm chart (refer [Install Akto via Helm](./helm-deploy#install-akto-via-helm) section)
+    8. Use the private ip of this Mongo instance while installing helm chart (refer [Install Akto via Helm](https://docs.akto.io/getting-started/helm-deploy#install-akto-via-helm) section)
     9. Once you setup Akto via Helm chart, try logging in with your previous credentials and check the data. All your data must be retained.
     10. Change the `AKTO_NLB` to the output of `kubectl get services/flash-akto-runtime -n staging -o jsonpath="{.spec.clusterIP}"`
     11. Run `kubectl apply -f akto-daemonset-config.yml`
     12. Confirm Akto dashboard has started receiving new data.
     13. Please **Do Not Delete** AWS CloudFormation Stacks. This will delete the Mongo Instance too and you'll lose the data. If you want to delete AWS CloudFormation stacks, please setup new a duplicate Mongo Instance from step (4). Use private IP of this new instance for step (6).
 
-5. **Mongo on K8s with Persistent volume** You can setup a Mongo on K8s cluster itself with a Persistent volume. A sample template is provided [here](https://github.com/akto-api-security/infra/blob/kubernetes/mongo.yml). Use the IP of this service as Mongo private IP in [Install Akto via Helm](./helm-deploy#install-akto-via-helm) section. If you are migrating from previous Akto installation, you have to bootstrap the persistent volume with original Mongo Instance's data before you start Mongo service. 
+5. **Mongo on K8s with Persistent volume** You can setup a Mongo on K8s cluster itself with a Persistent volume. A sample template is provided [here](https://github.com/akto-api-security/infra/blob/kubernetes/mongo.yml). Use the IP of this service as Mongo private IP in [Install Akto via Helm](https://docs.akto.io/getting-started/helm-deploy#install-akto-via-helm) section. If you are migrating from previous Akto installation, you have to bootstrap the persistent volume with original Mongo Instance's data before you start Mongo service. 
    
 
 Note: Please ensure your K8S cluster has connectivity to Mongo.
