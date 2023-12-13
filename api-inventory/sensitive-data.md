@@ -81,9 +81,9 @@ Once Akto detects any sensitive data leak, you can start your review in the sens
 
 ![](<../.gitbook/assets/Frame 43.png>)
 
-&#x20; 5\. It's a problem is sensitive data is not necessary to be passed for the functionality of the endpoint. If that's the case, you can mark it as an issue for the developer to fix it.&#x20;
+&#x20; 4\. It's a problem is sensitive data is not necessary to be passed for the functionality of the endpoint. If that's the case, you can mark it as an issue for the developer to fix it.&#x20;
 
-&#x20; 6\. You can also click on values tab and see the sample value of that sensitive parameter.&#x20;
+&#x20; 5\. You can also click on values tab and see the sample value of that sensitive parameter.&#x20;
 
 ![](<../.gitbook/assets/Frame 47.png>)
 
