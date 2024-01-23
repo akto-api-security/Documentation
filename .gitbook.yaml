@@ -1,4 +1,4 @@
 root: ./
 
 redirects:
-  help: getting-started/quick-start-with-akto-cloud
+  help: getting-started/quick-start-with-akto-cloud.md
