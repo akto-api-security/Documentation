@@ -42,10 +42,6 @@
 
 ## API Inventory
 
-* [Quickstart](api-inventory/quickstart/README.md)
-  * [Postman](api-inventory/quickstart/postman.md)
-  * [HAR File](api-inventory/quickstart/har-file.md)
-  * [Burp Suite](api-inventory/quickstart/burp-suite.md)
 * [Concepts](api-inventory/concepts/README.md)
   * [API Endpoints](api-inventory/concepts/api-endpoints.md)
   * [Meta Properties of API Endpoint](api-inventory/concepts/meta-properties-of-api-endpoint.md)
