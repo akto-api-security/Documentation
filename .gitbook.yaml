@@ -2,8 +2,8 @@ root: ./
 
 redirects:
   help: getting-started/quick-start-with-akto-cloud.md
-  api-inventory: api-inventory/concepts/api-endpoint.md
-  api-inventory/api-inventory: api-inventory/concepts/api-endpoint.md
+  api-inventory: api-inventory/concepts/api-endpoints.md
+  api-inventory/api-inventory: api-inventory/concepts/api-endpoints.md
   api-inventory/api-collections: api-inventory/concepts/api-collection.md
   api-inventory/handeling-shadow-apis: api-inventory/concepts/meta-properties-of-api-endpoint.md
   api-inventory/unauthenticated-apis: api-inventory/concepts/meta-properties-of-api-endpoint.md
