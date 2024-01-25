@@ -8,7 +8,7 @@ Akto enables security and engineering teams to secure their APIs by doing three 
 
 1. [API inventory](api-inventory/api-inventory.md)
 2. [Run business logic tests in CI/CD](testing/run-test.md)
-3. [Find vulnerabilities in run-time](api-inventory/sensitive-data.md)
+3. [Find vulnerabilities in run-time](broken-reference)
 
 {% embed url="https://www.youtube.com/watch?v=nImmFA4cp9c" %}
 Akto Demo

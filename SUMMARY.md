@@ -66,7 +66,6 @@
   * [De-activate a data type](api-inventory/how-to/de-activate-a-data-type.md)
   * [Configure alerts on API changes](api-inventory/how-to/configure-alerts-on-api-changes.md)
 * [API inventory](api-inventory/api-inventory.md)
-* [Sensitive data](api-inventory/sensitive-data.md)
 
 ## Test Editor
 
