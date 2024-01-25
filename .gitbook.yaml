@@ -8,7 +8,7 @@ redirects:
   api-inventory/handeling-shadow-apis: api-inventory/concepts/meta-properties-of-api-endpoint.md
   api-inventory/unauthenticated-apis: api-inventory/concepts/meta-properties-of-api-endpoint.md
   api-inventory/detecting-changes-in-apis: api-inventory/concepts/api-changes.md
-  api-inventory/detecting-changes-in-apis/webhook-alerts: api-inventory/concepts/alert.md
+  api-inventory/detecting-changes-in-apis/webhook-alerts: api-inventory/concepts/alerts.md
   api-inventory/auth-types: api-inventory/concepts/auth-types.md
   api-inventory/sensitive-data: api-inventory/concepts/sensitive-data.md
   api-inventory/api-documentation: api-inventory/how-to/create-swagger-file-using-akto.md
