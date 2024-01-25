@@ -89,7 +89,7 @@ Akto is [Open Source](https://www.akto.io/blog/introducing-akto-open-source) and
 
 ### What's next?
 
-You can now go to your API Inventory to see all the API traffic Akto has captured. Head to [API Inventory](broken-reference) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.&#x20;
+You can now go to your API Inventory to see all the API traffic Akto has captured. Head to [API Inventory](../../api-inventory/concepts/api-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.&#x20;
 
 ## Frequently Asked Questions (FAQs)
 
