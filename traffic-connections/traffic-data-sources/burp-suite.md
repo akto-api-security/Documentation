@@ -27,12 +27,12 @@ Follow these steps:
 
 1. Navigate to `Quickstart > connect traffic data`
 
-<figure><img src="../../../.gitbook/assets/Screenshot 2023-09-09 at 4.46.39 PM.png" alt="Akto Quick start page"><figcaption><p>Akto Quick start page</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Screenshot 2023-09-09 at 4.46.39 PM.png" alt="Akto Quick start page"><figcaption><p>Akto Quick start page</p></figcaption></figure>
 
 2. Navigate to `Burpsuite`.
 3. Download Akto's Burp extension `jar file`.
 
-<figure><img src="../../../.gitbook/assets/Screenshot 2023-01-31 at 8.27.09 PM.png" alt="Akto Burp extenstion instructions"><figcaption><p>Akto Burp extenstion instructions</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Screenshot 2023-01-31 at 8.27.09 PM.png" alt="Akto Burp extenstion instructions"><figcaption><p>Akto Burp extenstion instructions</p></figcaption></figure>
 
 4. Open your Burp Suite community or pro version.
 5. Add the downloaded jar file in `extensions` tab of Burp Suite.
@@ -48,7 +48,7 @@ Akto Burp connection Demo
 
 ### What's next?
 
-Head to [API Inventory](../../../api-inventory/api-inventory/) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.&#x20;
+Head to [API Inventory](../../api-inventory/api-inventory.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.&#x20;
 
 ## Frequently Asked Questions (FAQs)
 
@@ -56,19 +56,19 @@ Head to [API Inventory](../../../api-inventory/api-inventory/) to learn more. On
 
 Step 1: In Burp Suite, open `Target` tab, click on `Scope settings`
 
-<figure><img src="../../../.gitbook/assets/Scope settings page.png" alt="Scope settings in burp"><figcaption><p>Scope settings in burp</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Scope settings page.png" alt="Scope settings in burp"><figcaption><p>Scope settings in burp</p></figcaption></figure>
 
 Step 2: Inside the `Scope settings` popup, click on `Add` button inside the `Target scope` section and add the prefix of the url i.e. https://example.com.
 
-<figure><img src="../../../.gitbook/assets/Target scope.png" alt="Add target scope"><figcaption><p>Add target scope</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Target scope.png" alt="Add target scope"><figcaption><p>Add target scope</p></figcaption></figure>
 
-<figure><img src="../../../.gitbook/assets/Add url to scope.png" alt="Add prefix"><figcaption><p>Add prefix</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Add url to scope.png" alt="Add prefix"><figcaption><p>Add prefix</p></figcaption></figure>
 
-<figure><img src="../../../.gitbook/assets/Url added to scope.png" alt="Add scope"><figcaption><p>Add scope</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Url added to scope.png" alt="Add scope"><figcaption><p>Add scope</p></figcaption></figure>
 
 Step 3: Now scroll down to `Out-of-scope request handling` section and select the `Drop all out of scope requests` checkbox. Note: this option will not allow the proxy browser to access any other urls and hence data related to no other urls will be sent to Akto.
 
-<figure><img src="../../../.gitbook/assets/Click drop all out-of-scope checkbox.png" alt="Drop all out of scope requests"><figcaption><p>Drop all out of scope requests</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Click drop all out-of-scope checkbox.png" alt="Drop all out of scope requests"><figcaption><p>Drop all out of scope requests</p></figcaption></figure>
 
 #### 2. What should I do if my API key has expired or is invalid?
 

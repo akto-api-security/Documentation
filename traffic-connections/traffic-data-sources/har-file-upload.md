@@ -29,17 +29,17 @@ The HTTP Archive format, or HAR, is a `JSON-formatted archive file format` for l
 2. Open the developer tools in Chrome and switch to the network tab.
 3.  Browse the website or your application to generate traffic, then right-click anywhere in the network and click on `save as har with content.`
 
-    <figure><img src="../../../.gitbook/assets/juiceshop.png" alt="Download HAR file"><figcaption><p>Download HAR file</p></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/juiceshop.png" alt="Download HAR file"><figcaption><p>Download HAR file</p></figcaption></figure>
 
 ## Steps to upload HAR file in Akto dashboard
 
 1. Create a new collection in API Inventory screen.
 
-<figure><img src="../../../.gitbook/assets/Screenshot 2023-09-11 at 12.48.21 PM.png" alt="Create new API Collection in Akto"><figcaption><p>Create API Collection</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Screenshot 2023-09-11 at 12.48.21 PM.png" alt="Create new API Collection in Akto"><figcaption><p>Create API Collection</p></figcaption></figure>
 
 2. Name the collection.
 
-<figure><img src="../../../.gitbook/assets/Screenshot 2023-09-11 at 12.50.40 PM.png" alt="Name API Collection"><figcaption><p>Name API Collection</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Screenshot 2023-09-11 at 12.50.40 PM.png" alt="Name API Collection"><figcaption><p>Name API Collection</p></figcaption></figure>
 
 3. Open the newly created API Collection.
 4. Click on the **Upload Har file** button on the top right.&#x20;
@@ -60,7 +60,7 @@ The HTTP Archive format, or HAR, is a `JSON-formatted archive file format` for l
 
 ### What's next?
 
-Head to [API Inventory](../../../api-inventory/api-inventory/) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.&#x20;
+Head to [API Inventory](../../api-inventory/api-inventory.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.&#x20;
 
 ## Frequently Asked Questions (FAQs)
 
