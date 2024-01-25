@@ -60,7 +60,7 @@ The HTTP Archive format, or HAR, is a `JSON-formatted archive file format` for l
 
 ### What's next?
 
-Head to [API Inventory](../../api-inventory/api-inventory.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.&#x20;
+Head to [API Inventory](broken-reference) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.&#x20;
 
 ## Frequently Asked Questions (FAQs)
 

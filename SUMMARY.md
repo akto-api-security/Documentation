@@ -65,7 +65,6 @@
   * [Set Sensitivity of a Data Type](api-inventory/how-to/set-sensitivity-of-a-data-type.md)
   * [De-activate a data type](api-inventory/how-to/de-activate-a-data-type.md)
   * [Configure alerts on API changes](api-inventory/how-to/configure-alerts-on-api-changes.md)
-* [API inventory](api-inventory/api-inventory.md)
 
 ## Test Editor
 
