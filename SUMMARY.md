@@ -30,6 +30,7 @@
   * [Connect Akto with Kong](traffic-connections/traffic-data-sources/kong.md)
   * [Connect Akto with NGINX](traffic-connections/traffic-data-sources/nginx.md)
   * [Connect Akto with Envoy](traffic-connections/traffic-data-sources/envoy.md)
+  * [Connect Akto with Istio](traffic-connections/traffic-data-sources/envoy-1.md)
   * [Connect Akto with Docker](traffic-connections/traffic-data-sources/docker.md)
   * [Connect Akto with TCP Agent](traffic-connections/traffic-data-sources/tcp-agent.md)
   * [Connect Akto with eBPF](traffic-connections/traffic-data-sources/ebpf.md)
