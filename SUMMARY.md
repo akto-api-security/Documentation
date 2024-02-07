@@ -51,6 +51,7 @@
   * [API Changes](api-inventory/concepts/api-changes.md)
   * [Sensitive Data](api-inventory/concepts/sensitive-data.md)
   * [Alerts](api-inventory/concepts/alerts.md)
+  * [Risk Score](api-inventory/concepts/risk-score.md)
   * [Auth types](api-inventory/concepts/auth-types.md)
 * [How-To](api-inventory/how-to/README.md)
   * [Export an API Collection to Postman](api-inventory/how-to/export-an-api-collection-to-postman.md)

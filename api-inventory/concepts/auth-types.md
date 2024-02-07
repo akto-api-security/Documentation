@@ -1,13 +1,5 @@
 # Auth types
 
-Most of the time organizations have different types of authentication types. For example, some organization may use a pair of two keys, say `AUTH-KEY` and `AUTH-KEY-2` in headers as authentication mechanism. Simillarly some other organization may use a single key in the payload as an authentication mechanism. Akto allows you to define custom auth mechanism based on where you send the auth key. We support auth key detection in header, payload and even cookies.
+Akto is designed to automatically detect standard authentication methods like JWT and Bearer authorization headers. This helps in identifying and addressing potential security threats. However, not all APIs follow standard practices. Hence, Akto also supports custom authentication methods.
 
-1.  To add a custom auth type, go to `Auth types` under settings and click on plus icon.
-
-    <figure><img src="../../.gitbook/assets/auth-type-1.png" alt=""><figcaption></figcaption></figure>
-2.  Add details for your auth type and click on save.
-
-    <figure><img src="../../.gitbook/assets/auth-type-2.png" alt=""><figcaption></figcaption></figure>
-3.  Akto will now start detecting your custom auth types. It appears as `custom` under the Auth Type column for any API Collection.
-
-    <figure><img src="../../.gitbook/assets/auth-types.png" alt=""><figcaption></figcaption></figure>
+For example, if your API uses a non-standard authentication method, such as sending the auth token under a non-standard header, Akto provides the flexibility to set this up as a [custom auth type](https://www.notion.so/Custom-Auth-Type-f5434461df934c3cafaab1de91d775e4#7e37f8080dc34ecd954860d5b0308d9b). This means you can customize Akto to suit the unique requirements of your API. Even if your authentication method doesn't align with standard practices, Akto can still analyze and secure it properly.

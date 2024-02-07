@@ -4,13 +4,9 @@ description: Explore the sensitive data and its parameters.
 
 # Sensitive Data
 
-## What is Sensitive Parameter?
+Akto comes with over 40 built-in data types and some of them belong to the sensitive data types category, for example, Email, Phone Number, JWT, Bearer token, etc. Akto allows you to identify which sensitive data an API is sharing. This is particularly useful in managing and securing your APIs
 
-Sensitive parameters are all types of **`PII`** (Personally identifiable information) data within a system or application that, if exposed or leaked, could lead to severe consequences such as compliance violations, damage to the brand's reputation, loss of users, and more.
-
-Sensitive parameters often include information that is critical for the security and privacy of the data being transmitted.
-
-## Examples of Sensitive Parameter
+## Examples of Sensitive Data
 
 * Email 📧
 * Phone Number ☎️
@@ -21,12 +17,22 @@ Sensitive parameters often include information that is critical for the security
 * PAN Card 💵
 * JWT, Bearer token 🔑
 
-## Detect Sensitive Parameter
+## Detect Sensitive Data
 
-The demonstration below explains how you can navigate to one of your existing API collections in the inventory and detect the sensitive parameters.
+In the demonstration below, let's identify all the endpoints of the **"Juice\_shop\_demo"** collection that share sensitive data.
 
-Go to API **Inventory> API Collection**. Select any API Collection and click on the **Sensitive** tab to detect all the sensitive parameters within that collection.
+Go to **API Inventory> API Collection**. Select any API Collection and click on the **Sensitive** tab to populate all the sensitive endpoints within that collection. You can also filter the sensitive endpoints based on specific or multiple sensitive params like Email.
 
 {% embed url="https://demo.arcade.software/pPBmsI7APjiKlXElCukg?embed=" %}
-Detect new sensitive parameters
+Detect sensitive parameters
 {% endembed %}
+
+In the above demonstration, we identified 6 endpoints that share sensitive data like **Email** and **JWT** tokens.
+
+You can also click on any of the identified sensitive endpoints to view the sensitive parameters it contains. In the demonstration below, we clicked on one of the sensitive **EMAIL** endpoints to view its sensitive parameters in both the **Request** and **Response**.
+
+{% embed url="https://demo.arcade.software/fJSTlSm12iOt67lQk8A2?embed=" %}
+Detect Sensitive Params
+{% endembed %}
+
+In the above demonstration, we found that the endpoint has sensitive data like **EMAIL  ID, Password,** and **Authentication token**.

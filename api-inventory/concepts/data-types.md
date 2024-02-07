@@ -16,6 +16,6 @@ description: View data types such as EMAIL, IP_ADDRESS, JWT, SSN, and many more.
 
 ## Customize Data Type
 
-* Custom data types let you match the format to your specific needs, ensuring your data is a perfect fit. For example, you can design a data type like **`Order`** or **`Customer`** to match the unique structure of your application's data.
-* Custom data types enhance communication between different parts of your system by defining exactly what kind of information is expected, reducing the chance of errors or misinterpretation.
-* By creating custom data types, you have the flexibility to adapt your API to evolving business requirements. This ensures that your application can efficiently handle new types of data without compromising existing functionality.
+Akto comes with over 40 built-in data types by default. However, some businesses might have unique data types, such as a transaction ID prefixed with "TXN\_ID". These are specific to your business. If you want Akto to recognize these data types, you can configure them in the application.
+
+If you have a highly sensitive, non-standard data type, you can define the pattern in Akto. Afterward, Akto will inform you about which API is sharing this data. For more information on creating custom data type, please refer to this documentation-[ Create a Custom Data Type](https://docs.akto.io/api-inventory/how-to/create-a-custom-data-type)

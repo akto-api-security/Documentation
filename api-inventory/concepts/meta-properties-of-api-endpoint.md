@@ -6,13 +6,13 @@ description: View meta properties of an API endpoint in Akto.
 
 ## Authentication Type of Each API
 
-Unauthenticated APIs (also known as public APIs or open APIs) do not require authentication or authorization to access their resources. These APIs are usually designed to provide public information or services that do not require user-specific credentials. These APIs are used for sharing publicly available data with a broad audience.&#x20;
+Akto is designed to automatically detect standard authentication methods like JWT and Bearer authorization headers. This helps in identifying and addressing potential security threats. However, not all APIs follow standard practices. Hence, Akto also supports custom authentication methods.
 
-Authenticated APIs, on the other hand, are meant for registered users only. Users typically will have to sign in successfully to get an authentication token. This token serves as the identity of the user to the application.&#x20;
+For example, if your API uses a non-standard authentication method, such as sending the auth token under a non-standard header, Akto provides the flexibility to set this up as a custom auth type. This means you can customize Akto to suit the unique requirements of your API. Even if your authentication method doesn't align with standard practices, Akto can still analyze and secure it properly.&#x20;
 
 ## Access Type
 
-You can easily detect Public APIs in any of your API collections in Akto by selecting the access type as public. This will allow you to view all the endpoints that grant access to external services and functionalities. Once you are aware of the public APIs in your collection, you can understand where your data is going, start monitoring the discovered APIs, and run security tests on top of them.
+Akto provides visibility into your APIs, regardless of whether they're accessed from a public network or internally via microservices. This feature enables you to monitor and ensure that internal APIs aren't exposed to the public network, thus enhancing your security measures.
 
 ### What is Public API?
 
@@ -22,10 +22,12 @@ As these APIs are open to everyone, developers can use them to make new apps, im
 
 ### Detect Public API
 
-In the demonstration below, the steps are illustrated to detect public APIs.
+In the demonstration below, let's check out all the public APIs present in the **`juices-ALBTa-ME7JZNNWLKCF`** collection.
 
 Go to the **API Inventory > API Collection**. Select an **API Collection** and check the Access type to **Public**.
 
 {% embed url="https://demo.arcade.software/gw1onqsZpRzx5eCuqwio?embed=" %}
 Detect new public API
 {% endembed %}
+
+In the above demonstration, we discovered the presence of 53 public APIs in the **`juices-ALBTa-ME7JZNNWLKCF`** collection and viewed the details of one of the endpoint, which is **`js/{param_STRING}`**
