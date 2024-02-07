@@ -31,3 +31,5 @@ Sort an API collection
 {% endembed %}
 
 In the above demonstration, we have sorted the API collection according to the **"More”** and **“Endpoints"** parameters. All the API collections are now ordered by the number of endpoints they contain.
+
+You can also delete an API collection. This is useful when you need to delete old or unused collections, for testing, development, or compliance purposes. For more, refer to this [link](https://docs.akto.io/api-inventory/how-to/delete-an-api-collection).

@@ -16,7 +16,7 @@ Postman connector is `recommended` for Akto [Open source](https://github.com/akt
 
 ## What is Akto postman connector?
 
-Akto gives you ability to add API data through postman integration. If you have a postman API collection, follow the steps below to add API data to Akto:
+Akto gives you ability to add API data through Postman integration. If you have a Postman API collection, follow the steps below to add API data to Akto:
 
 ### Pre-requisites for Akto Postman connection
 
@@ -27,28 +27,32 @@ Akto gives you ability to add API data through postman integration. If you have 
 * `Connectivity to your URLs:` If samples responses are not saved in your Postman collection, Akto might need to hit those URLs for sample responses. Please ensure the URLs in your Postman collection are reachable from your machine.
 * Prepare the Postman collections you wish to sync or upload to Akto. Make sure these collections are organized and contain the API requests you want to work with.
 
-### Step 1: Integrating Postman
+## Integrating Postman
 
-1. Go to My accounts -> Settings -> Integrations
+In the demonstration below, we have first bridged the connection between our Akto account and Postman account before we can start populating the API traffic in our API inventory. This integration involves entering the **`Postman API key`** in the relevant field while also selecting the **`Postman workspace`** we wish to import.
 
-<figure><img src="../../.gitbook/assets/Screenshot 2023-09-12 at 11.34.35 AM.png" alt="Postman integration in Akto"><figcaption><p>Postman integration in Akto</p></figcaption></figure>
+{% embed url="https://demo.arcade.software/VJ0dXwP5l3dqjUMulHWX?embed=" %}
 
-2. Click on API management -> Postman
-3. Add your Postman API key and select Postman workspace.&#x20;
+After connecting your Postman Account to Akto, you will be provided with the following two options to import the API Traffic data from Postman:
 
-<figure><img src="../../.gitbook/assets/Screenshot 2023-09-12 at 11.35.26 AM.png" alt="Add Postman API key"><figcaption><p>Add Postman API key</p></figcaption></figure>
+* Using Postman API Key
+* Using Postman Collection File
 
-4. Click save.
+## Using Postman API Key
 
-### Step 2: Importing Postman data
+In the demonstration below, we have generated our **`Postman API key`** and pasted the value in the configuration setup to fetch and select the Postman workspace (containing API traffic) to import to Akto.
 
-1. Go to Quick Start -> Connect traffic data.
-2.  Navigate to Postman.
+{% embed url="https://demo.arcade.software/ElYfx4hSzNHRmcaJgIZq?embed=" %}
+Import using Postman API key
+{% endembed %}
 
-    <figure><img src="../../.gitbook/assets/Screenshot 2023-09-12 at 11.37.38 AM.png" alt=""><figcaption></figcaption></figure>
-3. Follow the instructions under Postman tab.
-4. Click import.
-5. Go to API inventory. You will see all your postman API collections now in Akto.
+## Using Postman Collection File
+
+In the demonstration below, we have imported the API traffic data to our Akto account from one of our workspaces in Postman. By simply exporting the API collection from our Postman workspace, we have uploaded the same **`JSON file`** to Akto and populated the API traffic in the inventory.
+
+{% embed url="https://demo.arcade.software/88Gx1Vbyaboau35nLD5y?embed=" %}
+Import Postman collection file
+{% endembed %}
 
 ### What's next?
 

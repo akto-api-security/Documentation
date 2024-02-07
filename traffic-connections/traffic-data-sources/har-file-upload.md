@@ -23,40 +23,17 @@ The HTTP Archive format, or HAR, is a `JSON-formatted archive file format` for l
 * You should have an active [Akto](https://app.akto.io/) account.
 * Make sure you have HAR files generated from Chrome or Firefox available for upload. The maximum file size for upload is 25 MB.
 
-## Steps to capture traffic in a .har file to upload in Akto
+## Steps to capture traffic in a HAR File
 
-1. Go to any website or application that you want to use to Discover APIs or test . Let's use https://juiceshop.akto.io for a demo.
-2. Open the developer tools in Chrome and switch to the network tab.
-3.  Browse the website or your application to generate traffic, then right-click anywhere in the network and click on `save as har with content.`
+Launch your Chrome browser and navigate to the web page for which you want to capture the traffic. For demonstration purposes, we will capture the traffic from [https://juiceshop.akto.io](https://juiceshop.akto.io)
 
-    <figure><img src="../../.gitbook/assets/juiceshop.png" alt="Download HAR file"><figcaption><p>Download HAR file</p></figcaption></figure>
+{% embed url="https://demo.arcade.software/BH0MqjSjw2zLqbfBaIw6?embed=" %}
 
 ## Steps to upload HAR file in Akto dashboard
 
-1. Create a new collection in API Inventory screen.
+Add the generated HAR file to your API collection by following the steps demonstrated below.
 
-<figure><img src="../../.gitbook/assets/Screenshot 2023-09-11 at 12.48.21 PM.png" alt="Create new API Collection in Akto"><figcaption><p>Create API Collection</p></figcaption></figure>
-
-2. Name the collection.
-
-<figure><img src="../../.gitbook/assets/Screenshot 2023-09-11 at 12.50.40 PM.png" alt="Name API Collection"><figcaption><p>Name API Collection</p></figcaption></figure>
-
-3. Open the newly created API Collection.
-4. Click on the **Upload Har file** button on the top right.&#x20;
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/230879325-93d93bf8-715a-4ea0-a8a7-207a554c5f6e.png" alt="Click on Upload HAR"><figcaption><p>Har file upload in Akto</p></figcaption></figure>
-
-5. Select the HAR file from the file browser.&#x20;
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/230879518-4d92d2f3-ab17-40d1-9db7-445087792cc8.png" alt="Select HAR file"><figcaption><p>Select downloaded HAR</p></figcaption></figure>
-
-6. Click on the `Refresh` icon on the top right.&#x20;
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/230879588-261e9813-625b-4855-995c-4c78035a8909.png" alt="Refresh dashboard"><figcaption><p>Click Refresh</p></figcaption></figure>
-
-7. You should be able to see APIs imported in your collection from the HAR file.&#x20;
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/230879681-9f4c849f-990d-4cec-8786-f216b0529135.png" alt="APIs are populated"><figcaption><p>APIs from HAR file</p></figcaption></figure>
+{% embed url="https://demo.arcade.software/wNY4kML6ooabUp9ppCcC?embed" %}
 
 ### What's next?
 
@@ -76,7 +53,7 @@ _Steps for Chrome:_&#x20;
 
 Step 1: Open Chrome
 
-Step2: Right-click on the page and select "Inspect" to open Developer Tools.&#x20;
+Step 2: Right-click on the page and select "Inspect" to open Developer Tools.&#x20;
 
 Step 3: Go to the "Network" tab. Perform the actions or interactions you want to capture (e.g., load a webpage).&#x20;
 

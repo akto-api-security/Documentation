@@ -23,3 +23,5 @@ View an Endpoint
 {% endembed %}
 
 In the above demonstration, we observed that there are 14 request headers and 9 response headers which gives us a deep understanding of the interaction between the client and the server. By viewing the sample values of these headers, we see how data changes during API calls.
+
+You can also copy your API endpoint data for troubleshooting, debugging, version control, etc. For more information, refer to this [link](https://docs.akto.io/api-inventory/how-to/copy-api-endpoints-data).

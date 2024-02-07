@@ -31,3 +31,5 @@ Detect new public API
 {% endembed %}
 
 In the above demonstration, we discovered the presence of 53 public APIs in the **`juices-ALBTa-ME7JZNNWLKCF`** collection and viewed the details of one of the endpoint, which is **`js/{param_STRING}`**
+
+You can also set the sensitivity of a data type, allowing you to choose specific locations where the data type should be treated as sensitive or not. For more, refer to this [link](https://docs.akto.io/api-inventory/how-to/set-sensitivity-of-a-data-type).

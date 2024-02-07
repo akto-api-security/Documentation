@@ -23,28 +23,15 @@ Burp connector is `recommended` for Akto [Open source](https://github.com/akto-a
 
 ## Configuring Burp extension in Akto Dashboard
 
-Follow these steps:
+In the demonstration below, we have first bridged the connection between our Akto account and the Burp Suite account before we can start populating the API traffic in our API inventory. This integration begins by downloading the executable **`“Jar file”`** provided in the Akto account. Later on, this file is uploaded to the Burp Suite account to initiate the installation of the Akto extension.
 
-1. Navigate to `Quickstart > connect traffic data`
+Once the extension was successfully installed in the Burp Suite account, we navigated back to Akto to copy the **`AKTO ID`** & **`AKTO TOKEN`** and paste the values in the relevant fields provided under the Akto extension tab in Burp Suite.
 
-<figure><img src="../../.gitbook/assets/Screenshot 2023-09-09 at 4.46.39 PM.png" alt="Akto Quick start page"><figcaption><p>Akto Quick start page</p></figcaption></figure>
-
-2. Navigate to `Burpsuite`.
-3. Download Akto's Burp extension `jar file`.
-
-<figure><img src="../../.gitbook/assets/Screenshot 2023-01-31 at 8.27.09 PM.png" alt="Akto Burp extenstion instructions"><figcaption><p>Akto Burp extenstion instructions</p></figcaption></figure>
-
-4. Open your Burp Suite community or pro version.
-5. Add the downloaded jar file in `extensions` tab of Burp Suite.
-6. You should be able to see Akto tab in your Burp Suite.
+{% embed url="https://demo.arcade.software/pLLHW37gsty3JRikqQA6?embed=" %}
 
 {% embed url="https://www.youtube.com/watch?v=_pHMrvcdiJk" %}
 Akto Burp connection Demo
 {% endembed %}
-
-7. Start Burp proxy and browse your application to generate traffic.
-8. You will see all your APIs in the `burp collection` in API inventory.&#x20;
-9. Every time you browse your application, all the API calls will populate in the `Akto dashboard> API inventory>burp collection`.
 
 ### What's next?
 

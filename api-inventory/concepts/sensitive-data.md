@@ -36,3 +36,5 @@ Detect Sensitive Params
 {% endembed %}
 
 In the above demonstration, we found that the endpoint has sensitive data like **EMAIL  ID, Password,** and **Authentication token**.
+
+You can also set the sensitivity of a data type, allowing you to choose specific locations where the data type should be treated as sensitive or not. For more, refer to this [link](https://docs.akto.io/api-inventory/how-to/set-sensitivity-of-a-data-type).
