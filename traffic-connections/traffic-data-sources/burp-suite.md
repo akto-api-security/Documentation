@@ -135,6 +135,11 @@ Step 2: Refresh the Table:&#x20;
 
 After removing the LoggerPlusPlus plugin, refresh the table view within the Akto Burp plugin. You may need to close and reopen the Akto Burp plugin or take any necessary steps specified in the plugin's interface to update the view.
 
+**4. Akto extension unable to send data after I reinstalled it in burp for a different akto account**
+1. Load the Akto extension in burp suite and open `Akto` tab, click on `Options` and then click on `Reset All Settings`.
+2. Now click on `Extensions` and reload the akto extension by unchecking and then checking the checkbox. Note: This should load the new settings for the akto extension.
+
+
 ## Get Support for your Akto setup
 
 There are multiple ways to request support from Akto. We are 24X7 available on the following:
