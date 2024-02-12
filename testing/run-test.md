@@ -32,3 +32,5 @@ Akto's testing module helps you run 100s of test for your APIs. It's a 2 steps p
 * Go to `Testing -> Test results -> Test` to see results of the test you have just run.
 
 <figure><img src="../.gitbook/assets/Frame 23 (1).png" alt=""><figcaption></figcaption></figure>
+
+Note: You can schedule daily tests by clicking on select time in the run test dialog. The test will be scheduled to run everyday on the specified time.

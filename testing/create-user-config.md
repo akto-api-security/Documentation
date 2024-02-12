@@ -17,3 +17,15 @@ Running specialized tests like **Broken Object Level Authorization**, **Broken U
 ```
 Documentation coming soon....
 ```
+
+## Adding rate limit
+
+* You can add a rate limit for testing your APIs using akto. E.g. Specifying a rate limit of 200 requests per min would mean that akto will only hit up to 200 api requests per minute during testing.
+
+* To setup rate limit click on Testing > Rate limit.
+
+<figure><img src="../.gitbook/assets/rate-limit-1.png" alt=""><figcaption></figcaption></figure>
+
+* Then click on the dropdown menu and just select your proffered rate limit.
+
+<figure><img src="../.gitbook/assets/rate-limit-2.png" alt=""><figcaption></figcaption></figure>
