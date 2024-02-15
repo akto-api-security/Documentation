@@ -14,11 +14,11 @@ Akto Cloud is the preferred choice when getting started. Akto Cloud is a hosted 
 
 On the left nav, go to `Quick Start:`
 
-<figure><img src="../.gitbook/assets/Frame 10 (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Multivpc1.png" alt=""><figcaption></figcaption></figure>
 
 Click on `Connect traffic data`
 
-<figure><img src="../.gitbook/assets/Frame 11 (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Multivpc2.png" alt=""><figcaption></figcaption></figure>
 
 * To add traffic from burp suite, navigate to `Burpsuite` and follow [integration steps for burp](broken-reference) to add API data from burp.
 
