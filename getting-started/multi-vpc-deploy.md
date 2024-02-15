@@ -14,23 +14,23 @@
 
 * Go to Aws Console and search for target groups. Click on create target group
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/tg1.png" alt=""><figcaption></figcaption></figure>
 
 * In the Basic Configuration section, select IP addresses option. 
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/tg2.png" alt=""><figcaption></figcaption></figure>
 
 * Add a target group name of your choice, and select TCP protocol and add port 27017. Post that, select         Application VPC, and click on next.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/tg3.png" alt=""><figcaption></figcaption></figure>
 
 * On the next screen, choose “Other private IP address” under Network section. Select the availability zone under Availability zone section
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/tg4.png" alt=""><figcaption></figcaption></figure>
 
 * Enter the private ip of mongo instance present in region 1. Modify the port value to 27017 and click on include as pending below.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/tg5.png" alt=""><figcaption></figcaption></figure>
 
 * Click on Create target group at the bottom to create the target group
 
@@ -38,27 +38,27 @@
 
 * Go to Aws Console and search for load balancer. Click on create load balancer.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/nlb1.png" alt=""><figcaption></figcaption></figure>
 
 * On the next page, select Network Load Balancer.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/nlb2.png" alt=""><figcaption></figcaption></figure>
 
 * Add a lb name of your choice, and mark it as Internal in the Scheme section.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/nlb3.png" alt=""><figcaption></figcaption></figure>
 
 * In the VPC section, select Application VPC and select the appropriate availability zones.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/nlb4.png" alt=""><figcaption></figcaption></figure>
 
 * Create a new security group with the below inbound rule
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/nlb5.png" alt=""><figcaption></figcaption></figure>
 
 * In the listener section, select the target group created in the above step and add the correct port
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/nlb6.png" alt=""><figcaption></figcaption></figure>
 
 * Click on Create Load Balancer at the bottom to create the load balancer.
 
@@ -143,22 +143,22 @@ Refer to Case 2
 
 * Go to Aws Console and search for target groups. Click on create target group
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/tg1.png" alt=""><figcaption></figcaption></figure>
 
 * In the Basic Configuration section, select IP addresses option. 
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/tg2.png" alt=""><figcaption></figcaption></figure>
 
 * Add a target group name of your choice, and select TCP protocol and add port 27017. Post that, select the vpc which was used for peering connection in region 2, and click on next.
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/tg3.png" alt=""><figcaption></figcaption></figure>
 
 * On the next screen, choose “Other private IP address” under Network section. Select the availability zone under Availability zone section
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/tg4.png" alt=""><figcaption></figcaption></figure>
 
 * Enter the private ip of mongo instance present in region 1. Modify the port value to 27017 and click on include as pending below.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/tg5.png" alt=""><figcaption></figcaption></figure>
 
 * Click on Create target group at the bottom to create the target group
 
@@ -166,27 +166,27 @@ Refer to Case 2
 
 * Go to Aws Console and search for load balancer. Click on create load balancer.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/nlb1.png" alt=""><figcaption></figcaption></figure>
 
 * On the next page, select Network Load Balancer.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/nlb2.png" alt=""><figcaption></figcaption></figure>
 
 * Add a lb name of your choice, and mark it as Internal in the Scheme section.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/nlb3.png" alt=""><figcaption></figcaption></figure>
 
 * In the VPC section, select Relay VPC and select the appropriate availability zones.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/nlb4.png" alt=""><figcaption></figcaption></figure>
 
 * Create a new security group with the below inbound rule
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/nlb5.png" alt=""><figcaption></figcaption></figure>
 
 * In the listener section, select the target group created in the above step and add the correct port
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/nlb6.png" alt=""><figcaption></figcaption></figure>
 
 * Click on Create Load Balancer at the bottom to create the load balancer.
 
