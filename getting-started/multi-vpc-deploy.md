@@ -8,7 +8,7 @@
 
 ## Case 1 - Account and region both are same
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Multivpc1.png" alt=""><figcaption></figcaption></figure>
 
 ### Step 1: Creating a Target Group For Mongo Instance present in Central VPC
 
@@ -133,7 +133,7 @@ Refer to Case 2
 
 * Create/reuse a separate VPC in a different region in the same account as step 1. We’ll call this Relay VPC.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Multivpc2.png" alt=""><figcaption></figcaption></figure>
 
 ### Step 1:
 
