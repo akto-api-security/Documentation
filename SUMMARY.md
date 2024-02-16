@@ -117,3 +117,7 @@
 * [Puppeteer server](components/puppeteer-server.md)
 * [Other OSS](components/other-oss.md)
 * [robots.txt](components/robots.txt.md)
+
+*** 
+
+* [Support](support.md)
