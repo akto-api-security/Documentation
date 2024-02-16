@@ -8,7 +8,7 @@
 
 ## Case 1 - Account and region both are same
 
-<figure><img src="../.gitbook/assets/Multivpc1.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/MultiVpc1.png" alt=""><figcaption></figcaption></figure>
 
 ### Step 1: Creating a Target Group For Mongo Instance present in Central VPC
 
@@ -67,41 +67,41 @@
 
 * Go to Aws Console and search for endpoint service. Click on create endpoint service.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="todo" alt="../.gitbook/assets/ep1.png"><figcaption></figcaption></figure>
 
 * Add a name for your endpoint service and select “Network” Load balancer type. In the available load balancers section below select the load balancer created in previous step.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="todo" alt="../.gitbook/assets/ep2.png"><figcaption></figcaption></figure>
 
 * Click on create at the bottom.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="todo" alt="../.gitbook/assets/ep3.png"><figcaption></figcaption></figure>
 
 * Go to Allow Principals tab and add the below principal value.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="todo" alt="../.gitbook/assets/ep4.png"><figcaption></figcaption></figure>
 
 ### Step 4: Setting Up Endpoint
 
 * Go to Aws console and search for endpoints. Click on create endpoint
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="todo" alt="../.gitbook/assets/eps1.png"><figcaption></figcaption></figure>
 
 * Add a name for your endpoint and select other endpoint services in the service category. Also mention the service name in the Service Settings section by copying it as mentioned in step 3.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="todo" alt="../.gitbook/assets/eps2.png"><figcaption></figcaption></figure>
 
 * Copy the service name from the endpoint service created earlier. 
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="todo" alt="../.gitbook/assets/eps3.png"><figcaption></figcaption></figure>
 
 * Select Application VPC and select appropriate subnets
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="todo" alt="../.gitbook/assets/eps4.png"><figcaption></figcaption></figure>
 
 * Create a security group and add cidr blocks of Application VPC
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="todo" alt="../.gitbook/assets/eps5.png"><figcaption></figcaption></figure>
 
 * Click on Create Endpoint.
 
@@ -109,7 +109,7 @@
 
 * Copy endpoint url from the above created Endpoint. Append /admini at the end of this url.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="todo" alt="../.gitbook/assets/epcopy.png"><figcaption></figcaption></figure>
 
 * While setting up runtime for your application, use this url as Mongo_IP.
 
@@ -133,7 +133,7 @@ Refer to Case 2
 
 * Create/reuse a separate VPC in a different region in the same account as step 1. We’ll call this Relay VPC.
 
-<figure><img src="../.gitbook/assets/Multivpc2.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/MultiVpc2.png" alt=""><figcaption></figcaption></figure>
 
 ### Step 1:
 
@@ -194,41 +194,41 @@ Refer to Case 2
 
 * Go to Aws Console and search for endpoint service. Click on create endpoint service.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/ep1.png" alt=""><figcaption></figcaption></figure>
 
 * Add a name for your endpoint service and select “Network” Load balancer type. In the available load balancers section below select the load balancer created in previous step.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/ep2.png" alt=""><figcaption></figcaption></figure>
 
 * Click on create at the bottom.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/ep3.png" alt=""><figcaption></figcaption></figure>
 
 * Go to Allow Principals tab and add the below principal value.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/ep4.png" alt=""><figcaption></figcaption></figure>
 
 ### Step 4: Setting Up Endpoint
 
 * Go to Aws console and search for endpoints. Click on create endpoint
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/eps1.png" alt=""><figcaption></figcaption></figure>
 
 * Add a name for your endpoint and select other endpoint services in the service category. Also mention the service name in the Service Settings section by copying it as mentioned in step 3.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/eps2.png" alt=""><figcaption></figcaption></figure>
 
 * Copy the service name from the endpoint service created earlier. 
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/eps3.png" alt=""><figcaption></figcaption></figure>
 
 * Select Application VPC and select appropriate subnets
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/eps4.png" alt=""><figcaption></figcaption></figure>
 
 * Create a security group and add cidr blocks of Relay Vpc and Application VPC
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/eps5.png" alt=""><figcaption></figcaption></figure>
 
 * Click on Create Endpoint.
 
@@ -236,7 +236,7 @@ Refer to Case 2
 
 * Copy endpoint url from the above created Endpoint. Append /admini at the end of this url.
 
-<figure><img src="todo" alt=""><figcaption></figcaption></figure>
+<figure><img src="todo" alt="../.gitbook/assets/epcopy.png"><figcaption></figcaption></figure>
 
 * While setting up runtime for your application, use this url as Mongo_IP.
 
