@@ -165,6 +165,13 @@ This is a known AWS common error. Follow the steps [here](https://docs.aws.amazo
 
 You can reinstall Akto in a diff availability zone or you can go to Template tab and save the cloudformation template in a file. Search for "InstanceType" and replace all the occurrences with a type that is available in your availability zone. You can then go to AWS > Cloudformation > Create stack and use this new template to setup Traffic mirroring.
 
+**I am seeing kafka related errors in the daemonset logs**
+
+If you get an error like "unable to reach host" or "unable to push data to kafka", then do the following steps:
+1. Grab the ip of the akto-runtime instance by running "kubectl get service -n {NAMESPACE}"
+2. Make sure the ip reflects in the `LISTENER_DOCKER_EXTERNAL_DIFFHOST` value of the akto-runtime container for the kafka pod.
+3. Put the same ip against the `AKTO_KAFKA_BROKER_MAL` in the daemonset config and reapply the daemonset config.
+
 **I don't see my error on this list here.**
 
 Please send us all details at support@akto.io or reach out via Intercom on your Akto dashboard. We will definitely help you out.
