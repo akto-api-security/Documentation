@@ -169,8 +169,8 @@ You can reinstall Akto in a diff availability zone or you can go to Template tab
 
 If you get an error like "unable to reach host" or "unable to push data to kafka", then do the following steps:
 1. Grab the ip of the akto-runtime instance by running "kubectl get service -n {NAMESPACE}"
-2. Make sure the ip reflects in the `LISTENER_DOCKER_EXTERNAL_DIFFHOST` value of the akto-runtime container for the kafka pod.
-3. Put the same ip against the `AKTO_KAFKA_BROKER_MAL` in the daemonset config and reapply the daemonset config.
+2. Use helm upgrade to update the value of `kafkaAdvertisedListeners` key to `LISTENER_DOCKER_EXTERNAL_LOCALHOST://localhost:29092,LISTENER_DOCKER_EXTERNAL_DIFFHOST://{IP_FROM_STEP_1}:9092`
+3. Put the same ip against the `AKTO_KAFKA_BROKER_MAL` as `{IP_FROM_STEP_1:9092}` in the daemonset config and reapply the daemonset config.
 
 **I don't see my error on this list here.**
 
