@@ -1,5 +1,3 @@
 # Azure Deploy
 
-Coming soon
-
-if you have an immediate usecase for this. please email us at help@akto.io
+You can use helm to install Akto in Azure Kubernetes Service(AKS). For detailed steps follow [this](./helm-deploy.md).
