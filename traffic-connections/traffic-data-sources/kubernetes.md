@@ -87,6 +87,7 @@ spec:
         app: {APP_NAME}
     spec:
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: mirror-api-logging
         image: aktosecurity/mirror-api-logging:k8s_agent
