@@ -87,6 +87,7 @@ spec:
         app: {APP_NAME}
     spec:
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: mirror-api-logging
         image: aktosecurity/mirror-api-logging:k8s_agent
@@ -163,6 +164,13 @@ This is a known AWS common error. Follow the steps [here](https://docs.aws.amazo
 **The Cloudformation template failed with "We currently do not have sufficient capacity in the Availability Zone you requested... Launching EC2 instance failed."**
 
 You can reinstall Akto in a diff availability zone or you can go to Template tab and save the cloudformation template in a file. Search for "InstanceType" and replace all the occurrences with a type that is available in your availability zone. You can then go to AWS > Cloudformation > Create stack and use this new template to setup Traffic mirroring.
+
+**I am seeing kafka related errors in the daemonset logs**
+
+If you get an error like "unable to reach host" or "unable to push data to kafka", then do the following steps:
+1. Grab the ip of the akto-runtime instance by running "kubectl get service -n {NAMESPACE}"
+2. Use helm upgrade to update the value of `kafkaAdvertisedListeners` key to `LISTENER_DOCKER_EXTERNAL_LOCALHOST://localhost:29092,LISTENER_DOCKER_EXTERNAL_DIFFHOST://{IP_FROM_STEP_1}:9092`
+3. Put the same ip against the `AKTO_KAFKA_BROKER_MAL` as `{IP_FROM_STEP_1:9092}` in the daemonset config and reapply the daemonset config.
 
 **I don't see my error on this list here.**
 
