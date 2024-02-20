@@ -1,4 +1,4 @@
-# AWS multi-VPC deploy
+# AWS Cross-Region Cross-VPC deploy
 
 ## Prerequisites
 
