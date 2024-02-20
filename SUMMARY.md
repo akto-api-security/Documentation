@@ -10,6 +10,7 @@
 * [Akto Self Hosted](getting-started/quick-start-with-akto-self-hosted.md)
 * [AWS deploy](getting-started/aws-deploy.md)
 * [AWS multi-VPC deploy](getting-started/aws-multi-vpc-deploy.md)
+* [AWS Cross-Region Cross-VPC deploy](getting-started/aws-cross-region-vpc-deploy.md)
 * [Custom subdomain on Akto on AWS](getting-started/aws-ssl.md)
 * [GCP Deploy](getting-started/gcp-deploy.md)
 * [Local Deploy](getting-started/local-deploy.md)
