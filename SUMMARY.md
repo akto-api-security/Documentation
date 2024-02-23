@@ -122,4 +122,7 @@
 ## Troubleshooting
 
 * [How to get logs](troubleshooting/logs.md)
+
+***
+
 * [Support](support.md)
