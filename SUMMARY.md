@@ -119,6 +119,10 @@
 * [Other OSS](components/other-oss.md)
 * [robots.txt](components/robots.txt.md)
 
-*** 
+## Troubleshooting
+
+* [How to get logs](troubleshooting/logs.md)
+
+***
 
 * [Support](support.md)
