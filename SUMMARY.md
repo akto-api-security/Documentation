@@ -59,10 +59,15 @@
   * [Export an API Collection to Burp](api-inventory/how-to/export-an-api-collection-to-burp.md)
   * [Create Swagger File Using Akto](api-inventory/how-to/create-swagger-file-using-akto.md)
   * [Copy API Endpoints Data](api-inventory/how-to/copy-api-endpoints-data.md)
+  * [Add an API Collection](api-inventory/how-to/add-an-api-collection.md)
   * [Delete an API Collection](api-inventory/how-to/delete-an-api-collection.md)
   * [Create a Custom Data Type](api-inventory/how-to/create-a-custom-data-type.md)
   * [Set Sensitivity of a Data Type](api-inventory/how-to/set-sensitivity-of-a-data-type.md)
   * [De-activate a data type](api-inventory/how-to/de-activate-a-data-type.md)
+  * [Add a Custom Auth Type](api-inventory/how-to/add-a-custom-auth-type.md)
+  * [Reset an Auth Type](api-inventory/how-to/reset-an-auth-type.md)
+  * [View New API Endpoint](api-inventory/how-to/view-new-api-endpoint.md)
+  * [View New Parameters](api-inventory/how-to/view-new-parameters.md)
   * [Configure alerts on API changes](api-inventory/how-to/configure-alerts-on-api-changes.md)
   * [Create a custom collection](api-inventory/how-to/how-to-create-a-custom-collection.md)
 
@@ -85,8 +90,8 @@
 ## TESTING
 
 * [Run tests in CICD](testing/run-tests-in-cicd.md)
-* [GitHub integration for CICD test reporting](testing/github_integration_testing/README.md)
-  * [Github App creation and integration in Akto](testing/github_integration_testing/github_app_integration.md)
+* [GitHub integration for CICD test reporting](testing/github\_integration\_testing/README.md)
+  * [Github App creation and integration in Akto](testing/github\_integration\_testing/github\_app\_integration.md)
 * [Run tests in CLI using Akto](testing/run-tests-in-cli-using-akto.md)
 * [Run test](testing/run-test.md)
 * [Create user config](testing/create-user-config.md)
