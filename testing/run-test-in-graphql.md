@@ -8,7 +8,7 @@ You can use Akto to help you secure your GraphQL APIs in CI/CD pipeline
  - [Sensitive data exposure](#sensitive-data-exposure)
  - [Run test](#run-owasp-top-10-tests) for OWASP API top 10 vulnerabilities
  - Write your own [custom tests for GraphQL APIs](#custom-graphql-security-tests)
- - [Run tests in CI/CD](#run-tests-in-ci/cd)
+ - [Run tests in CI/CD](#run-tests-in-cicd)
 
 ## API Inventory
 
