@@ -92,6 +92,7 @@
 * [Run tests in CICD](testing/run-tests-in-cicd.md)
 * [GitHub integration for CICD test reporting](testing/github\_integration\_testing/README.md)
   * [Github App creation and integration in Akto](testing/github\_integration\_testing/github\_app\_integration.md)
+* [Using Akto for GraphQL APIs](testing/run-test-in-graphql.md)
 * [Run tests in CLI using Akto](testing/run-tests-in-cli-using-akto.md)
 * [Run test](testing/run-test.md)
 * [Create user config](testing/create-user-config.md)
