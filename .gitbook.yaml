@@ -13,5 +13,18 @@ redirects:
   api-inventory/sensitive-data: api-inventory/concepts/sensitive-data.md
   api-inventory/api-documentation: api-inventory/how-to/create-swagger-file-using-akto.md
   api-inventory/data-types: api-inventory/concepts/data-type.md
-  
+  test-editor/overview: test-editor/concepts/overview.md
+  test-editor/test-library: test-editor/concepts/test-library.md
+  test-editor/test-library/local-file-inclusion-with-akto: test-editor/concepts/test-library/local-file-inclusion-with-akto.md
+  test-editor/test-yaml-syntax-one-pager: test-editor/concepts/test-yaml.md
+  test-editor/test-yaml-syntax-detailed: test-editor/concepts/test-yaml-syntax-detailed.md
+  test-editor/test-yaml-syntax-detailed/id: test-editor/concepts/test-yaml-syntax-detailed/id.md
+  test-editor/test-yaml-syntax-detailed/info: test-editor/concepts/test-yaml-syntax-detailed/info.md
+  test-editor/test-yaml-syntax-detailed/api-selection-filters: test-editor/concepts/test-yaml-syntax-detailed/api-selection-filters.md
+  test-editor/test-yaml-syntax-detailed/execute: test-editor/concepts/test-yaml-syntax-detailed/execute.md
+  test-editor/test-yaml-syntax-detailed/auth: test-editor/concepts/test-yaml-syntax-detailed/auth.md
+  test-editor/test-yaml-syntax-detailed/validation: test-editor/concepts/test-yaml-syntax-detailed/validation.md
+  test-editor/editing-built-in-test: test-editor/how-to/edit-test.md
+  test-editor/writing-custom-tests: test-editor/how-to/create-a-custom-test.md
+
   
