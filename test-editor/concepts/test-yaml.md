@@ -1,4 +1,12 @@
-# Test YAML Syntax (One pager)
+# Test YAML
+
+YAML tests are a powerful tool to identify security vulnerabilities in your APIs. Using Akto YAML format, you can define tests with metadata, API filters, execution details, and validation checks. These tests can be customized to target specific vulnerabilities and run against your APIs to ensure they are secure. Akto Test Editor provides a user-friendly interface to create and edit these tests, making it easy to integrate them into your security workflow.
+
+### What is YAML Test?
+
+A YAML test in Akto is a configuration file written in YAML (YAML Ain't Markup Language) that defines a set of instructions for testing APIs to find security vulnerabilities. It includes details about the test, how to select which APIs to test, how to execute the test, and how to validate the results. The test is executed against APIs, and the results are used to identify any issues with the API's security.
+
+You can create and run tests to detect vulnerabilities in your APIs. Tests are written in Akto's YAML format, which includes sections for metadata, selection filters, execution details, and validation checks.
 
 ## 6 Blocks of Test Editor
 
@@ -8,7 +16,7 @@
 
 ### Block 2: Info
 
-<table><thead><tr><th width="176.5">Name</th><th>Desciption</th></tr></thead><tbody><tr><td><code>info</code></td><td>Name, Description, Details, Impact, Category, SubCategory, Severity, Tags</td></tr></tbody></table>
+<table><thead><tr><th width="176.5">Name</th><th>Desciption</th></tr></thead><tbody><tr><td><code>info</code></td><td><mark style="color:red;"><code>Name</code></mark>, <mark style="color:red;"><code>Description</code></mark>, <mark style="color:red;"><code>Details</code></mark>, <mark style="color:red;"><code>Impact</code></mark>, <mark style="color:red;"><code>Category</code></mark>, <mark style="color:red;"><code>SubCategory</code></mark>, <mark style="color:red;"><code>Severity</code></mark>, <mark style="color:red;"><code>Tags</code></mark>, <mark style="color:red;"><code>Reference</code></mark> </td></tr></tbody></table>
 
 ### Block 3: API Selection Filters
 
@@ -18,7 +26,7 @@
 
 <table><thead><tr><th width="228.5">Name</th><th>Desciption</th></tr></thead><tbody><tr><td>execute</td><td><p><mark style="color:red;"><code>add_body_param</code></mark>, <mark style="color:red;"><code>modify_body_param</code></mark>, <mark style="color:red;"><code>delete_body_param</code></mark>, <mark style="color:red;"><code>add_query_param</code></mark>, <mark style="color:red;"><code>modify_query_param</code></mark>, <mark style="color:red;"><code>delete_query_param</code></mark></p><p><mark style="color:red;"><code>modify_url</code></mark>,</p><p> <mark style="color:red;"><code>modify_method</code></mark>,</p><p><mark style="color:red;"><code>replace_body</code></mark>,</p><p><mark style="color:red;"><code>add_header</code></mark>, <mark style="color:red;"><code>modify_header</code></mark>, <mark style="color:red;"><code>delete_header</code></mark>, <mark style="color:red;"><code>remove_auth_header</code></mark>,</p><p><mark style="color:red;"><code>follow_redirect</code></mark></p></td></tr><tr><td>Combining Conditions using Boolean Operators</td><td><mark style="color:red;"><code>or</code></mark>, <mark style="color:red;"><code>and</code></mark></td></tr></tbody></table>
 
-### Block 5: Auth \[ Optional block]
+### Block 5: Auth \[Optional block]
 
 <table><thead><tr><th width="201.5">Name </th><th>Desciption</th></tr></thead><tbody><tr><td><code>auth</code></td><td>This section describes the conditions that serve as validation criteria for determining whether a particular endpoint is vulnerable to a given test.</td></tr></tbody></table>
 
@@ -165,6 +173,20 @@ validate:
 {% endcode %}
 
 ### Explanation of the above yaml
+
+#### Info
+
+The Info section contains metadata about the test:
+
+* <mark style="color:red;">`Name`</mark>: The name or title of the test.
+* <mark style="color:red;">`Description`</mark>: A detailed explanation of the test, including objectives, methodologies, and scope.
+* <mark style="color:red;">`Details`</mark>: Additional context about the test.
+* <mark style="color:red;">`Impact`</mark>: The potential risks or consequences associated with the identified vulnerabilities.
+* <mark style="color:red;">`Category`</mark>: The category or domain the test falls into.
+* <mark style="color:red;">`SubCategory`</mark>: Further categorization of the test.
+* <mark style="color:red;">`Severity`</mark>: The severity level assigned to the identified vulnerabilities.
+* <mark style="color:red;">`Tags`</mark>: Descriptive labels or keywords associated with the test.
+* <mark style="color:red;">`Reference:`</mark> A list of relevant resources, documentation, or external links related to the test.
 
 #### API Selection Filters
 

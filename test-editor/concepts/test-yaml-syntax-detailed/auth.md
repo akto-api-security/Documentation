@@ -6,4 +6,4 @@ Auth section is used for specifying that the endpoint selected for running the t
 
 Key Defined in User Config Section is picked as authentication header.
 
-<figure><img src="../../.gitbook/assets/Untitled.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Untitled.png" alt=""><figcaption></figcaption></figure>

@@ -73,19 +73,25 @@
 
 ## Test Editor
 
-* [Overview](test-editor/overview.md)
-* [Test Library](test-editor/test-library/README.md)
-  * [Local File Inclusion with Akto](test-editor/test-library/local-file-inclusion-with-akto.md)
-* [Test YAML Syntax (One pager)](test-editor/test-yaml-syntax-one-pager.md)
-* [Test YAML Syntax (Detailed)](test-editor/test-yaml-syntax-detailed/README.md)
-  * [ID](test-editor/test-yaml-syntax-detailed/id.md)
-  * [Info](test-editor/test-yaml-syntax-detailed/info.md)
-  * [API Selection Filters](test-editor/test-yaml-syntax-detailed/api-selection-filters.md)
-  * [Execute](test-editor/test-yaml-syntax-detailed/execute.md)
-  * [Auth](test-editor/test-yaml-syntax-detailed/auth.md)
-  * [Validation](test-editor/test-yaml-syntax-detailed/validation.md)
-* [Editing built in test](test-editor/editing-built-in-test.md)
-* [Writing Custom Tests](test-editor/writing-custom-tests.md)
+* [Concepts](test-editor/concepts/README.md)
+  * [Overview](test-editor/concepts/overview.md)
+  * [Test YAML](test-editor/concepts/test-yaml.md)
+  * [Test Library](test-editor/concepts/test-library/README.md)
+    * [Local File Inclusion with Akto](test-editor/concepts/test-library/local-file-inclusion-with-akto.md)
+  * [Custom Test](test-editor/concepts/custom-test.md)
+  * [Test YAML Syntax (Detailed)](test-editor/concepts/test-yaml-syntax-detailed/README.md)
+    * [ID](test-editor/concepts/test-yaml-syntax-detailed/id.md)
+    * [Info](test-editor/concepts/test-yaml-syntax-detailed/info.md)
+    * [API Selection Filters](test-editor/concepts/test-yaml-syntax-detailed/api-selection-filters.md)
+    * [Execute](test-editor/concepts/test-yaml-syntax-detailed/execute.md)
+    * [Auth](test-editor/concepts/test-yaml-syntax-detailed/auth.md)
+    * [Validation](test-editor/concepts/test-yaml-syntax-detailed/validation.md)
+* [How To](test-editor/how-to/README.md)
+  * [Edit Test](test-editor/how-to/edit-test.md)
+  * [Create a Custom Test](test-editor/how-to/create-a-custom-test.md)
+  * [Deactivate Test](test-editor/how-to/deactivate-test.md)
+  * [Play in Test Editor Background](test-editor/how-to/play-in-test-editor-background.md)
+  * [Contribute to Test Library](test-editor/how-to/contribute-to-test-library.md)
 
 ## TESTING
 
