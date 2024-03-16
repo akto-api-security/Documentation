@@ -6,4 +6,4 @@ You can write tests in YAML to check various aspects of your APIs, such as behav
 
 The Test Editor in Akto includes a test library with over 200 built-in tests, a YAML-based editor for creating custom tests, and a feature to run tests on a sample API. This streamlines the testing process and makes writing and running effective tests for your APIs easier for you.
 
-For more information on creating custom tests, please refer to this documentation- [Create a Custom Test](https://app.gitbook.com/o/QWO4hfRT95Qy4dcO6fin/s/Rc4KTKGprZI2sPWKoaLe/\~/changes/430/test-editor-1/how-to/create-a-custom-test).
+For more information on creating custom tests, please refer to this documentation- [Create a Custom Test](../how-to/create-a-custom-test.md).
