@@ -26,5 +26,15 @@ redirects:
   test-editor/test-yaml-syntax-detailed/validation: test-editor/concepts/test-yaml-syntax-detailed/validation.md
   test-editor/editing-built-in-test: test-editor/how-to/edit-test.md
   test-editor/writing-custom-tests: test-editor/how-to/create-a-custom-test.md
-
+  testing/run-tests-in-cicd: api-security-testing/how-to/run-tests-in-cicd.md
+  testing/github_integration_testing: api-security-testing/how-to/setup-github-integration-for-ci-cd.md
+  testing/github_integration_testing/github_app_integration: api-security-testing/how-to/setup-github-integration-for-ci-cd/create-github-app.md
+  testing/run-test: api-security-testing/how-to/run-test.md
+  testing/create-user-config: api-security-testing/concepts/user-config.md
+  testing/run-tests-in-cli-using-akto: api-security-testing/how-to/run-tests-in-cli-using-akto.md
+  testing/test-results: api-security-testing/concepts/test-result.md
+  testing/test-library: test-editor/concepts/test-library.md
+  testing/user-roles: api-security-testing/concepts/test-role.md
+  testing/run-test-in-graphql: api-security-testing/how-to/secure-graphql-apis-using-akto.md
+  
   
