@@ -93,18 +93,27 @@
   * [Play in Test Editor Background](test-editor/how-to/play-in-test-editor-background.md)
   * [Contribute to Test Library](test-editor/how-to/contribute-to-test-library.md)
 
-## TESTING
+## API Security Testing
 
-* [Run tests in CICD](testing/run-tests-in-cicd.md)
-* [GitHub integration for CICD test reporting](testing/github\_integration\_testing/README.md)
-  * [Github App creation and integration in Akto](testing/github\_integration\_testing/github\_app\_integration.md)
-* [Using Akto for GraphQL APIs](testing/run-test-in-graphql.md)
-* [Run tests in CLI using Akto](testing/run-tests-in-cli-using-akto.md)
-* [Run test](testing/run-test.md)
-* [Create user config](testing/create-user-config.md)
-* [Test results](testing/test-results.md)
-* [Test library](testing/test-library.md)
-* [Test roles](testing/user-roles.md)
+* [Concepts](api-security-testing/concepts/README.md)
+  * [Test](api-security-testing/concepts/test.md)
+  * [Test Role](api-security-testing/concepts/test-role.md)
+  * [User Config](api-security-testing/concepts/user-config.md)
+  * [Test Result](api-security-testing/concepts/test-result.md)
+* [How To](api-security-testing/how-to/README.md)
+  * [Setup GitHub Integration for CI/CD](api-security-testing/how-to/setup-github-integration-for-ci-cd/README.md)
+    * [Create GitHub App](api-security-testing/how-to/setup-github-integration-for-ci-cd/create-github-app.md)
+  * [Run Test](api-security-testing/how-to/run-test.md)
+  * [Run tests in CI/CD](api-security-testing/how-to/run-tests-in-cicd.md)
+  * [Run Tests by Category](api-security-testing/how-to/run-tests-by-category.md)
+  * [Test Multiple APIs](api-security-testing/how-to/test-multiple-apis.md)
+  * [Schedule Tests](api-security-testing/how-to/schedule-tests.md)
+  * [Stop Tests](api-security-testing/how-to/stop-tests.md)
+  * [Create a Test Role](api-security-testing/how-to/create-a-test-role.md)
+  * [Play in Test Editor Playground](api-security-testing/how-to/play-in-test-editor-playground.md)
+  * [Conduct Role-Based Testing](api-security-testing/how-to/conduct-role-based-testing.md)
+  * [Run tests in CLI using Akto](api-security-testing/how-to/run-tests-in-cli-using-akto.md)
+  * [Secure GraphQL APIs using Akto](api-security-testing/how-to/secure-graphql-apis-using-akto.md)
 
 ## SSO
 

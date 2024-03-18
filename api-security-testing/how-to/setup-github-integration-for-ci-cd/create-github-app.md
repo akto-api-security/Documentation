@@ -1,0 +1,51 @@
+---
+description: Add Akto app in your GitHub organizat
+---
+
+# Create GitHub App
+
+## **Steps to integrate Github App**
+
+* Create a new Github App from developer settings
+* Install created Github App to your repositories
+* Integrate the Github App to Akto dashboard
+
+### **Create new Github App**
+
+* Go to `Settings > Developer Settings > Github Apps` on your github dashboard and click `New Github App`
+
+<figure><img src="../../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+
+* While creating new Github App, use name as `Akto Github App` with following permissions
+  * Read permissions : **Administration**, **code**, **member**, **metadata**
+  * Read and write permissions : **checks**, **issues**, **pull requests**
+
+<figure><img src="../../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+
+### **Install created Github App**
+
+* After app creation, install github app to your repositories
+
+<figure><img src="../../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+
+* Once setup is done you will need **Github App Id** and **Private key** as `.pem` file.
+
+<figure><img src="../../../.gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
+
+* Download private key as `.pem` file
+
+<figure><img src="../../../.gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
+
+### **Integrate the Github App to Akto dashboard**
+
+* In Akto dashboard go to `Settings > Integrations > Reporting > Github App` and click `Configure`
+
+<figure><img src="../../../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+
+* Add Github App Id and upload secret key `.pem` file.
+
+<figure><img src="../../../.gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
+
+* Final screen after integrating Github App.
+
+<figure><img src="../../../.gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
