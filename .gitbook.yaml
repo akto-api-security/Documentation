@@ -36,5 +36,6 @@ redirects:
   testing/test-library: test-editor/concepts/test-library.md
   testing/user-roles: api-security-testing/concepts/test-role.md
   testing/run-test-in-graphql: api-security-testing/how-to/secure-graphql-apis-using-akto.md
+  add-api-data/integrations: traffic-connections/traffic-data-sources.md
   
   
