@@ -64,3 +64,105 @@ validate:
         regex: https?:.*
 ```
 {% endcode %}
+
+There 2 extra instructions in the validation block -&#x20;
+
+### <mark style="color:red;">`percentage_match`</mark>
+
+Percentage Match operator is used for applying conditions on how similar sample response and test response are. Let’s explore this more through the below example
+
+{% code title="Example of percentage_match" %}
+```yaml
+#Example 1
+response_payload:
+	percentage_match:
+		gt: 90
+
+# Here we want to apply a condition, where we want to check that test response payload should be highly similar to sample response payload(i.e by more than 90%)
+# We use percentage_match operator, and combine it with data operator(gt), where we specify percentage_match to be higher than 90
+ 
+```
+{% endcode %}
+
+```
+// 100% match
+Original request - 
+{
+   "name" : "Jane",
+   "dob" : "01/28/1989",
+   "position" : "Attorney General"
+}
+
+Attempt request - 
+{
+   "name" : "Jane",
+   "dob" : "01/28/1989",
+   "position" : "Attorney General"
+}
+```
+
+```
+// 0% match
+Original request - 
+{
+   "name" : "Jane",
+   "dob" : "01/28/1989",
+   "position" : "Attorney General"
+}
+
+Attempt request - 
+{
+   "name" : "John",
+   "state" : "California",
+   "year" : "2023"
+}
+```
+
+### <mark style="color:red;">`percentage_match_schema`</mark>
+
+This operator is used for applying conditions on how structurally similar sample response and test response are. Here we look at keys of the json payloads. Values are ignored.&#x20;
+
+{% code title="Example of percentage_match" %}
+```yaml
+#Example 1
+response_payload:
+	percentage_match_schema:
+		gt: 90
+
+# Here we want to apply a condition, where we want to check that test response payload should be structurally similar to sample response payload(i.e by more than 90%)
+# We use percentage_match_schema operator, and combine it with data operator(gt), where we specify percentage_match of the schema to be higher than 90
+ 
+```
+{% endcode %}
+
+```
+// 100% match
+Original request - 
+{
+   "name" : "Jane",
+   "position" : "Attorney General"
+}
+
+Attempt request - 
+{
+   "name" : "John",
+   "position" : "Partner"
+}
+```
+
+```
+// 20% match ("name" is same across 5 keys - name, city, position, state & year)
+Original request - 
+{
+   "name" : "Jane",
+   "city" : "San Francisco",
+   "position" : "Attorney General"
+}
+
+Attempt request - 
+{
+   "name" : "John",
+   "state" : "California",
+   "year" : "2023"
+}
+```

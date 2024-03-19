@@ -453,25 +453,6 @@ response_payload:
 ```
 {% endcode %}
 
-
-
-### <mark style="color:red;">`percentage_match`</mark>
-
-Percentage Match operator is used for applying conditions on how similar sample response and test response are. Let’s explore this more through the below example
-
-{% code title="Example of percentage_match" %}
-```yaml
-#Example 1
-response_payload:
-	percentage_match:
-		gt: 90
-
-# Here we want to apply a condition, where we want to check that test response payload should be highly similar to sample response payload(i.e by more than 90%)
-# We use percentage_match operator, and combine it with data operator(gt), where we specify percentage_match to be higher than 90
- 
-```
-{% endcode %}
-
 ## Extract Operators
 
 These operators can be used to save parent entity’s value into a variable at any point during the api\_selection\_filters phase, which can be used later on in the test template yaml. Let’s see it in action in the below example -
