@@ -87,6 +87,7 @@
     * [Execute](test-editor/concepts/test-yaml-syntax-detailed/execute.md)
     * [Auth](test-editor/concepts/test-yaml-syntax-detailed/auth.md)
     * [Validation](test-editor/concepts/test-yaml-syntax-detailed/validation.md)
+    * [Contexts](test-editor/concepts/test-yaml-syntax-detailed/contexts.md)
 * [How To](test-editor/how-to/README.md)
   * [Edit Test](test-editor/how-to/edit-test.md)
   * [Create a Custom Test](test-editor/how-to/create-a-custom-test.md)
