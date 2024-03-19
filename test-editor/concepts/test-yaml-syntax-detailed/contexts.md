@@ -132,3 +132,5 @@ execute:
 This will exclude /api/v1/product/9 and filter only cart and order APIs - /api/v1/cart/123, /api/v1/order/78.&#x20;
 
 By default, all variables are considered to be private. Only with more data (from multiple users across several sessions), Akto will start marking some variables as private.&#x20;
+
+You can also associate other operators such as `regex: ".*user.*"`  - to filter only those vars that contain the string `user`.&#x20;

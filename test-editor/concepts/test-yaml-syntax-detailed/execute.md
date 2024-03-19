@@ -406,7 +406,7 @@ http://xyz.com?user=1
 
 Used for modifying url to desired value. Supports `entire` url replacement, as well as replacing just a `substring`.
 
-**Example 1 for replacing entire url**
+#### **Replace entire url**
 
 `original` url of the endpoint you are trying to test:
 
@@ -430,7 +430,7 @@ execute:
 				- modify_url: http://xyz.evil.com/api/v2/users
 ```
 
-**Example 2 for replacing part of the url**
+#### **Replace based on regex**
 
 `original` url of the endpoint you are trying to test:
 
@@ -459,6 +459,32 @@ execute:
 
 ```jsx
 http://xyz.com/api/v1/user
+```
+
+#### Insert token in url
+
+You can use `token_insert` to insert a token (Eg `123`) in the url.&#x20;
+
+eg. if you want to convert /api/v1/user/orders to /api/v1/user/123/orders, you can do:
+
+```
+  - modify_url:
+      token_insert:
+        location: 4
+        replace_with: 123
+```
+
+#### Replace token in url
+
+You can use `token_replace` to insert a token (Eg `123`) in the url.&#x20;
+
+eg. if you want to convert /api/v1/user/456/orders to /api/v1/user/123/orders, you can do:
+
+```
+  - modify_url:
+      token_replace:
+        location: 4
+        replace_with: 123
 ```
 
 ### modify\_method
