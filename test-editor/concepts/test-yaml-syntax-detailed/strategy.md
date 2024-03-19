@@ -10,7 +10,7 @@ By default, the test will be executed for each API. You might have scenarios whe
 
 You can set this flag to `true` if you want to run the test once per API collection.&#x20;
 
-```
+```yaml
 execute:
   requests:
     req: 
