@@ -16,13 +16,14 @@ Every Akto test is written in Akto’s YAML format. This page details the keywor
    6. SubCategory
    7. Severity
    8. Tags
-3. [API Selection Filter](api-selection-filters.md)
+3. [Wordlists](wordlists.md)
+4. [API Selection Filter](api-selection-filters.md)
    1. Parent Operators
    2. Data Operators
    3. Collection Operators
    4. Combining Conditions using Boolean Operators
-4. [Execute](execute.md)
+5. [Execute](execute.md)
    1. Operators
    2. Combining multiple conditions
-5. [Auth](auth.md)
-6. [Validation](validation.md)
+6. [Auth](auth.md)
+7. [Validation](validation.md)

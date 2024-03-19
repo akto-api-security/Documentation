@@ -82,6 +82,7 @@
   * [Test YAML Syntax (Detailed)](test-editor/concepts/test-yaml-syntax-detailed/README.md)
     * [ID](test-editor/concepts/test-yaml-syntax-detailed/id.md)
     * [Info](test-editor/concepts/test-yaml-syntax-detailed/info.md)
+    * [Wordlists](test-editor/concepts/test-yaml-syntax-detailed/wordlists.md)
     * [API Selection Filters](test-editor/concepts/test-yaml-syntax-detailed/api-selection-filters.md)
     * [Execute](test-editor/concepts/test-yaml-syntax-detailed/execute.md)
     * [Auth](test-editor/concepts/test-yaml-syntax-detailed/auth.md)
