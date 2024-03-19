@@ -20,22 +20,25 @@ After determining that an endpoint is eligible for a YAML Test, it is forwarded 
 
 Execute operators can be of the following types -
 
-| Operator             | Description                                                                                                                                                    |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| add\_body\_param     | Add a new key/value pair in the request payload at the root                                                                                                    |
-| modify\_body\_param  | Modify value of an existing key in the request payload at any position. If the key is missing, executor engine ignores the step and moves on to next operation |
-| delete\_body\_param  | Delete an existing key in the request payload at any position. If the key is missing, executor engine ignores the step and moves on to next operation          |
-| replace\_body        | Replace the entire request body with the supplied input                                                                                                        |
-| add\_header          | Add a new key/value pair in the request headers                                                                                                                |
-| modify\_header       | Modify value of an existing header key in the request headers. If the header key is missing, executor engine ignores the step and moves on to next operation   |
-| delete\_header       | Delete an existing header key in the request headers. If the header key is missing, executor engine ignores the step and moves on to next operation            |
-| add\_query\_param    | Add a new key/value pair in the query params                                                                                                                   |
-| modify\_query\_param | Modify value of an existing key in the query params. If the key is missing, executor engine ignores the step and moves on to next operation                    |
-| delete\_query\_param | Delete an existing key in the query params. If the key is missing, executor engine ignores the step and moves on to next operation                             |
-| modify\_url          | Modify url to desired value. Supports entire url replacement, as well as replacing just a substring                                                            |
-| modify\_method       | Modify http method to desired method value                                                                                                                     |
-| remove\_auth\_header | Remove Auth Headers in the request headers. If auth headers are missing, this operation throws an error and aborts the test for the endpoint                   |
-| follow\_redirect     | Specify whether the test attempt should follow redirect or not. By default follow redirect is set to $true$                                                    |
+| Operator              | Description                                                                                                                                                    |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| add\_body\_param      | Add a new key/value pair in the request payload at the root                                                                                                    |
+| modify\_body\_param   | Modify value of an existing key in the request payload at any position. If the key is missing, executor engine ignores the step and moves on to next operation |
+| delete\_body\_param   | Delete an existing key in the request payload at any position. If the key is missing, executor engine ignores the step and moves on to next operation          |
+| replace\_body         | Replace the entire request body with the supplied input                                                                                                        |
+| add\_header           | Add a new key/value pair in the request headers                                                                                                                |
+| modify\_header        | Modify value of an existing header key in the request headers. If the header key is missing, executor engine ignores the step and moves on to next operation   |
+| delete\_header        | Delete an existing header key in the request headers. If the header key is missing, executor engine ignores the step and moves on to next operation            |
+| add\_query\_param     | Add a new key/value pair in the query params                                                                                                                   |
+| modify\_query\_param  | Modify value of an existing key in the query params. If the key is missing, executor engine ignores the step and moves on to next operation                    |
+| delete\_query\_param  | Delete an existing key in the query params. If the key is missing, executor engine ignores the step and moves on to next operation                             |
+| modify\_url           | Modify url to desired value. Supports entire url replacement, as well as replacing just a substring                                                            |
+| modify\_method        | Modify http method to desired method value                                                                                                                     |
+| remove\_auth\_header  | Remove Auth Headers in the request headers. If auth headers are missing, this operation throws an error and aborts the test for the endpoint                   |
+| replace\_auth\_header | Replace the auth header by headers in `User config` section. If you are using JWT tokens, you can replace them too using JWT-specific instructions             |
+| follow\_redirect      | Specify whether the test attempt should follow redirect or not. By default follow redirect is set to $true$                                                    |
+| attach\_file          | Replaces the request body by the contents of the file                                                                                                          |
+| jwt\_replace\_body    | Replace JWT body with given content                                                                                                                            |
 
 ### add\_body\_param
 
@@ -519,6 +522,56 @@ execute:
 Content-Type: application/json
 ```
 
+### replace\_auth\_header
+
+Used in many tests where we need to replace the auth header and inject a malicous auth header instead. This flag removes **all** the auth headers (including custom auth types) before adding malicious auth headers.&#x20;
+
+#### Example 1 - replace auth token by attacker's token
+
+This assumes you have set attacker credentials in `User config` section.&#x20;
+
+Sample YAML to replace headers by attacker's tokens
+
+```yaml
+execute:
+  type: single
+  requests:
+    - req:
+	- replace_auth_header : true
+```
+
+modified headers will now look like:
+
+```
+Authorization: Bearer attacker.token.here
+```
+
+#### Example 2 - modify JWT auth token&#x20;
+
+Used in Broken Authentication tests to exploit JWT-related vulnerabilities. For example, invalidating signature, setting algo to `None` etc. Possible values are&#x20;
+
+* `${auth_context.none_algo_token}` - modify JWT token and set algo=NONE
+* `${auth_context.invalid_signature_token}` - modify JWT token and make signature invalid (by appending extra characters to signature)
+* `${auth_context.jku_added_token}` - modify JWT token by adding a JKU parameter in headers
+* `${auth_context.jwk_added_token}` - modify JWT token by adding JWK-related parameters in headers
+* `${auth_context.kid_added_token}` - modify JWT token by adding kid parameter in headers
+
+Sample YAML to use the above instructions -
+
+```yaml
+execute:
+  type: single
+  requests:
+    - req:
+	- replace_auth_header : ${auth_context.invalid_signature_token}
+```
+
+Modifies the headers by invalidating signature
+
+```
+Authorization: Bearer eyJewqafsd.eafsdzcx.some_invalid_signature_here
+```
+
 ### f**ollow\_redirect**
 
 Used for specifying whether the test attempt should `follow redirect or not`, in case the response received if of redirect type. By default follow redirect is set to true. This takes a single boolean argument(true/false)
@@ -530,10 +583,45 @@ execute:
   type: single
   requests:
     - req:
-				- follow_redirect: false
+	- follow_redirect: false
 ```
 
-#### **Combining multiple conditions in Execute**
+### attach\_file
+
+Used to replace the request body by the contents of the file. This is useful for APIs that take file an input. Users can test such APIs by passing files with malicious content.&#x20;
+
+Sample Yaml for attach\_file
+
+```yaml
+execute:
+  type: single
+  requests:
+    - req:
+        - attach_file: https://some.url.here/file.pdf
+```
+
+### jwt\_replace\_body
+
+Used to replace the jwt body. This just replaces the payload. It keeps headers and signature the same as original JWT token
+
+Sample yaml
+
+```
+execute:
+  type: single
+  requests:
+  - req:
+    - jwt_replace_body: ey.new_body.new_signature
+
+```
+
+Modified token looks like -&#x20;
+
+```
+Authorization: ey.new_body.old_signature
+```
+
+## **Combining multiple conditions in Execute**
 
 Let’s see a few examples on how we can combine multiple execution operations into a test -
 
@@ -552,10 +640,10 @@ execute:
 	type: single
   requests:
     - req:
-				- add_body_param:
-						status: admin
-				- modify_method: POST
-				- delete_query_param: userId
+      - add_body_param:
+      	  status: admin
+      - modify_method: POST
+      - delete_query_param: userId
 ```
 
 **Example 2**
