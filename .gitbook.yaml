@@ -33,7 +33,7 @@ redirects:
   testing/create-user-config: api-security-testing/concepts/user-config.md
   testing/run-tests-in-cli-using-akto: api-security-testing/how-to/run-tests-in-cli-using-akto.md
   testing/test-results: api-security-testing/concepts/test-result.md
-  testing/test-library: test-editor/concepts/test-library.md
+  testing/test-library: test-editor/concepts/test-library
   testing/user-roles: api-security-testing/concepts/test-role.md
   testing/run-test-in-graphql: api-security-testing/how-to/secure-graphql-apis-using-akto.md
   add-api-data/integrations: traffic-connections/traffic-data-sources.md
