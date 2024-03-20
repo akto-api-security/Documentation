@@ -15,7 +15,8 @@ redirects:
   api-inventory/data-types: api-inventory/concepts/data-type.md
   test-editor/overview: test-editor/concepts/overview.md
   test-editor/test-library: test-editor/concepts/test-library.md
-  test-editor/test-library/local-file-inclusion-with-akto: test-editor/concepts/test-library/local-file-inclusion-with-akto.md
+  test-editor/test-library/local-file-inclusion-with-akto: test-editor/concepts/template-yamls/local-file-inclusion-with-akto.md
+  test-editor/concepts/test-library/local-file-inclusion-with-akto: test-editor/concepts/template-yamls/local-file-inclusion-with-akto.md
   test-editor/test-yaml-syntax-one-pager: test-editor/concepts/test-yaml.md
   test-editor/test-yaml-syntax-detailed: test-editor/concepts/test-yaml-syntax-detailed.md
   test-editor/test-yaml-syntax-detailed/id: test-editor/concepts/test-yaml-syntax-detailed/id.md
@@ -33,7 +34,7 @@ redirects:
   testing/create-user-config: api-security-testing/concepts/user-config.md
   testing/run-tests-in-cli-using-akto: api-security-testing/how-to/run-tests-in-cli-using-akto.md
   testing/test-results: api-security-testing/concepts/test-result.md
-  testing/test-library: test-editor/concepts/test-library/
+  testing/test-library: test-editor/concepts/test-library.md
   testing/user-roles: api-security-testing/concepts/test-role.md
   testing/run-test-in-graphql: api-security-testing/how-to/secure-graphql-apis-using-akto.md
   add-api-data/integrations: traffic-connections/traffic-data-sources.md
