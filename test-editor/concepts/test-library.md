@@ -52,4 +52,4 @@ Today we have the following test categories in our library, each one having mult
 **Our methodology of building the test library:** We are building the test library keeping in mind the needs of our users. Our users care about covering OWASP Top 10 APIs and all the new critical vulnerabilities. Additionally, if we see our users creating custom tests that are also valuable for other members, we add those tests to our test library and make them available to everyone.
 {% endhint %}
 
-For more information on how to contribute to the test library, please refer to this documentation- [Contribute to Test Library](../../how-to/contribute-to-test-library.md).
+For more information on how to contribute to the test library, please refer to this documentation- [Contribute to Test Library](../how-to/contribute-to-test-library.md).
