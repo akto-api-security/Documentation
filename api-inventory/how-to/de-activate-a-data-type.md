@@ -11,7 +11,7 @@ In the demonstration below, let's deactivate the **`"TOKEN"`** data type.
 Go to **API Inventory> Sensitive data**. Click on "**…"** of the Data Type and select **Edit** to De-activate the data type.
 
 {% embed url="https://demo.arcade.software/UkuVsnZkwX2M5BGC4ZIk?embed=" %}
-Activate a data type
+Activate data type
 {% endembed %}
 
 In the above demonstration, we deactivated a data type. For example, here we deactivate the **`"TOKEN"`** data type. Now Akto will no longer process or recognize a particular data type that has been deactivated. This means that any requests containing this data type will not receive a response from Akto until the data type is reactivated
