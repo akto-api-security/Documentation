@@ -82,7 +82,9 @@ spec:
             path : /
 ```
 
-3. You can add and configure the env variables below to control the daemonset.
+3. You can add and configure the env variables below to control the daemonset. Here's a diagram of how the module processes traffic: 
+
+<figure><img src="../../.gitbook/assets/ebpf-diagram.png" alt="Traffic processing"><figcaption><p>eBPF Traffic Processing</p></figcaption></figure>
 
 ```yaml
 # This helps in filtering traffic sent to akto, based on certain headers. Here is an example for sending traffic only for 'bookinfo' namespace in an istio setup.
