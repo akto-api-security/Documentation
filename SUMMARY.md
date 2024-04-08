@@ -75,6 +75,7 @@
   * [View New Parameters](api-inventory/how-to/view-new-parameters.md)
   * [Configure alerts on API changes](api-inventory/how-to/configure-alerts-on-api-changes.md)
   * [Create a custom collection](api-inventory/how-to/how-to-create-a-custom-collection.md)
+  * [Redact sensitive data](api-inventory/how-to/redact-sensitive-data.md)
 
 ## Test Editor
 
