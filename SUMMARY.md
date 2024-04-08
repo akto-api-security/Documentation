@@ -53,6 +53,7 @@
   * [API Changes](api-inventory/concepts/api-changes.md)
   * [Sensitive Data](api-inventory/concepts/sensitive-data.md)
   * [Alerts](api-inventory/concepts/alerts.md)
+  * [Shadow APIs](api-inventory/concepts/shadow-apis.md)
   * [Risk Score](api-inventory/concepts/risk-score.md)
   * [Auth types](api-inventory/concepts/auth-types.md)
   * [Access Type](api-inventory/concepts/access-type.md)
