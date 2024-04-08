@@ -62,6 +62,7 @@
   * [Create Swagger File Using Akto](api-inventory/how-to/create-swagger-file-using-akto.md)
   * [Copy API Endpoints Data](api-inventory/how-to/copy-api-endpoints-data.md)
   * [Add an API Collection](api-inventory/how-to/add-an-api-collection.md)
+  * [Set environment type](api-inventory/how-to/set-environment-type.md)
   * [Delete an API Collection](api-inventory/how-to/delete-an-api-collection.md)
   * [Create a Custom Data Type](api-inventory/how-to/create-a-custom-data-type.md)
   * [Set Sensitivity of a Data Type](api-inventory/how-to/set-sensitivity-of-a-data-type.md)
