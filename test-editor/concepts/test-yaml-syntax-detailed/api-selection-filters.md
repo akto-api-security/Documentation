@@ -455,7 +455,9 @@ response_payload:
 
 ## Extract Operators
 
-These operators can be used to save parent entity’s value into a variable at any point during the api\_selection\_filters phase, which can be used later on in the test template yaml. Let’s see it in action in the below example -
+### <mark style="color:red;">`extract`</mark>
+
+These operators can be used to save parent entity’s value into a variable at any point during the api\_selection\_filters phase, which can be used later on in the test template yaml using `${}` notation. Let’s see it in action in the below example -
 
 {% code title="Example of extract" %}
 ```yaml
@@ -469,6 +471,7 @@ url:
 #Example 2
 method:
   extract: methodVar
+  
 
 # Here we have defined an extract operator, which will copy the http method values into a new variable named methodVar
 ```
@@ -513,6 +516,51 @@ request_payload:
 # Here we have defined an extract operator, which will copy the key("userStatus") into a new variable named keyVar, since ("userStatus") satisfies the contains_either operand.
 # We also defined a second extract operator inside value operand, which will copy the value associated with the matching key("userStatus") into the variable, i.e. ("admin").
 # In other words - keyVar = userStatus, valVar = admin  
+```
+{% endcode %}
+
+**How to use extracted variables in YAML**
+
+You can use `${<VAR_NAME>}` to refer the extracted value. Eg. you can use extracted `urlVar` do the following -&#x20;
+
+```yaml
+#Here we append /debug/vars to the URL to check if debug variables are exposed. 
+
+api_selection_filters:
+  url:
+    extract: urlVar
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: ${urlVar}/debug/vars
+
+validate:
+  ...
+```
+
+### <mark style="color:red;">`extractMultiple`</mark>
+
+This is similar to [`extract`](api-selection-filters.md#extract), except it can extract a list of values. For example, if you need a list of all keys in the API request JSON, you can use `extractMultiple` operator. Using `extract` will just extract the first key. #Example 1
+
+{% code title="" %}
+```yaml
+#Example of extractMultiple
+
+api_selection_filters:
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extractMultiple: payloadKeys # Here we extract list of all keys in the payload
+
+execute:
+  type: single
+  requests:
+  - req:
+    - add_body_param:
+      ${payloadKeys}: '\0' #Here we replace all values by null terminated string
 ```
 {% endcode %}
 
