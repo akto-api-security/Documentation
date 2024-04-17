@@ -35,6 +35,7 @@
   * [Connect Akto with Docker](traffic-connections/traffic-data-sources/docker.md)
   * [Connect Akto with TCP Agent](traffic-connections/traffic-data-sources/tcp-agent.md)
   * [Connect Akto with eBPF](traffic-connections/traffic-data-sources/ebpf.md)
+  * [Connect Akto with eBPF on mTLS](traffic-connections/traffic-data-sources/ebpf-mtls.md)
   * [Setup Akto traffic processors](traffic-connections/traffic-data-sources/data-processor.md)
   * [Add API traffic to Akto using HAR file upload](traffic-connections/traffic-data-sources/har-file-upload.md)
   * [Connect Akto with GCP Packet Mirroring](traffic-connections/traffic-data-sources/google-cloud-gcp.md)

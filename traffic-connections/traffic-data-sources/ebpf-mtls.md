@@ -1,8 +1,14 @@
-# Connect Akto with eBPF
+# Connect Akto with eBPF on mTLS setup
 
 ## Introduction
 
-Connecting with Akto's eBPF traffic collector is recommended for mTLS systems.
+If your kubernetes system, has mTLS ( say using istio proxy or similar setup ) and SSL termination happens at the proxy/service, [this other setup](./ebpf.md) is recommended, please check it out. 
+
+If your proxy/service acts as a passthrough and the SSL termination happens at the end application itself, then please continue with the current setup. 
+
+Please note, both these setups have `different docker images`. In case of any queries, please reach out to us at `help@akto.io` .
+
+Connecting with Akto's eBPF traffic collector is recommended mTLS systems where TLS termination occurs at application ( a system where your services are just passing the traffic directly to the application ). 
 
 For a better understanding, here's an architecture diagram of the setup. 
 <figure><img src="../../.gitbook/assets/ebpf.png" alt="Deployment for Akto Daemonset"><figcaption><p>ebpf Deployment</p></figcaption></figure>
@@ -35,7 +41,7 @@ spec:
       hostPID: true
       containers:
       - name: mirror-api-logging
-        image: aktosecurity/mirror-api-logging:k8s_ebpf
+        image: aktosecurity/mirror-api-logging:k8s_ebpf_e2e
         resources:
           limits:
             cpu: 500m
@@ -52,6 +58,8 @@ spec:
             value: "<AKTO_NLB_IP>:9092"
           - name: AKTO_MONGO_CONN
             value: "<AKTO_MONGO_CONN>"
+          - name: CAPTURE_SSL
+            value: "true"
         securityContext:
           capabilities:
             add:
@@ -67,6 +75,7 @@ spec:
           - name: sys-kernel
             mountPath: /sys/kernel
             readOnly: true
+          # needed to trace SSL user libraries
           - name: host
             mountPath: /host
             readOnly: true
@@ -114,9 +123,18 @@ spec:
 # The interval poll ( in seconds ) in which data is sent to Akto data processor.
 - name: KAFKA_POLL_INTERVAL
   value: "0.5"
+# The interval poll ( in minutes ) in which the akto module scans the current running processes, to check for new SSL related processes to probe.
+- name: UPROBE_POLL_INTERVAL
+  value: 5
 ```
 
 4. You can check your `API inventory` on Akto dashboard to see endpoints being discovered.
+
+## Notes:
+
+1. If you're running the daemonset outside of the kubernetes system, set the env `PROBE_ALL_PID` as `true`.
+
+2. Set `CAPTURE_SSL` env variable to `true` is recommended, if the TLS termination happens at the application. If the TLS termination happens at the service, we recommended to set it to `false`.
 
 ## Frequently Asked Questions (FAQs)
 
