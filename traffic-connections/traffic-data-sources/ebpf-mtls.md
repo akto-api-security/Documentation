@@ -2,11 +2,22 @@
 
 ## Introduction
 
-Connecting with Akto's eBPF traffic collector is recommended mTLS systems where TLS termination occurs at application ( a system where your services are just passing the traffic directly to the application ). To get a better overview of how the akto traffic collector module works and install akto data processor, check [this](./ebpf.md) out.
+If your kubernetes system, has mTLS ( say using istio proxy or similar setup ) and SSL termination happens at the proxy/service, [this other setup](./ebpf.md) is recommended, please check it out. 
+
+If your proxy/service acts as a passthrough and the SSL termination happens at the end application itself, then please continue with the current setup. 
+
+Please note, both these setups have `different docker images`. In case of any queries, please reach out to us at `help@akto.io` .
+
+Connecting with Akto's eBPF traffic collector is recommended mTLS systems where TLS termination occurs at application ( a system where your services are just passing the traffic directly to the application ). 
+
+For a better understanding, here's an architecture diagram of the setup. 
+<figure><img src="../../.gitbook/assets/ebpf.png" alt="Deployment for Akto Daemonset"><figcaption><p>ebpf Deployment</p></figcaption></figure>
 
 ## Adding Akto traffic collector
 
-1. Here's the daemonset configuration for the akto traffic collector. 
+1. Setup Akto data processor using the guide [here](./data-processor.md)
+
+2. Apply the daemonset configuration given below using `kubectl apply -f akto-daemonset-config.yaml -n <NAMESPACE>`. You will find `AKTO_NLB_IP` and `AKTO_MONGO_CONN` after setting up Akto data processor, as mentioned above.
 
 ```yaml
 apiVersion: apps/v1
@@ -79,6 +90,45 @@ spec:
           hostPath:
             path : /
 ```
+
+3. You can add and configure the env variables below to control the daemonset. Here's a diagram of how the module processes traffic: 
+
+<figure><img src="../../.gitbook/assets/ebpf-diagram.png" alt="Traffic processing"><figcaption><p>eBPF Traffic Processing</p></figcaption></figure>
+
+```yaml
+# This helps in filtering traffic sent to akto, based on certain headers. Here is an example for sending traffic only for 'bookinfo' namespace in an istio setup.
+- name: AKTO_MODULE_DISCOVERY_CONFIG
+  value: '[{"key":{"eq":"x-forwarded-client-cert","ifAbsent":"reject"},"value":{"regex":".*bookinfo.*"}}]'
+# Time limit ( in seconds ) after which, a traffic stream is processed and marked inactive. The same stream, is not processed again.
+- name: TRAFFIC_INACTIVITY_THRESHOLD
+  value: "30"
+# Max traffic connections kept in memory 
+- name: TRAFFIC_MAX_ACTIVE_CONN
+  value: "4096"
+# Make this flag true to disable egress traffic. It is recommended to keep this false.
+- name: TRAFFIC_DISABLE_EGRESS
+  value: "false"
+# Max mem usage after which the pod restarts ( in MB )
+- name: AKTO_MEM_THRESH_RESTART
+  value: "800"
+# Max limit of traffic buffer kept in memory ( in MB )
+- name: TRAFFIC_BUFFER_THRESHOLD
+  value: "600"
+# Ignore traffic coming from unresolved IPs, i.e. requests with host header of the format <a.b.c.d>
+- name: AKTO_IGNORE_IP_TRAFFIC
+  value: "false"
+# Ignore traffic coming from AWS cloud metadata IP
+- name: AKTO_IGNORE_CLOUD_METADATA_CALLS
+  value: "false"
+# The interval poll ( in seconds ) in which data is sent to Akto data processor.
+- name: KAFKA_POLL_INTERVAL
+  value: "0.5"
+# The interval poll ( in minutes ) in which the akto module scans the current running processes, to check for new SSL related processes to probe.
+- name: UPROBE_POLL_INTERVAL
+  value: 5
+```
+
+4. You can check your `API inventory` on Akto dashboard to see endpoints being discovered.
 
 ## Notes:
 
