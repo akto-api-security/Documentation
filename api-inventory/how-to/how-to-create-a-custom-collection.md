@@ -27,3 +27,5 @@ Go to **API Inventory > API Collection**. Go to any collection whose APIs you wa
 {% embed url="https://demo.arcade.software/1pjwS1gRqCyek97X5mJr?embed=" %}
 Create custom collection from another collection
 {% endembed %}
+
+**NOTE:** Adding APIs to a custom collection creates a reference to the original APIs in the custom collection. It does not duplicate them. Thus any changes to the original APIs are automatically reflected in the custom collections.
