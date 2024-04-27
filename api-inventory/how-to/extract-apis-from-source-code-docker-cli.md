@@ -13,19 +13,41 @@ Prepare the following variables:
 6. `GITHUB_BRANCH` - The branch of the Github repository to be used for source location links.
 
 
-To extract 
-```yaml
-- name: Akto code analysis
-  uses: akto-api-security/code-analysis-action@v1
-  with:
-    AKTO_DASHBOARD_URL: "<AKTO_DASHBOARD_URL>"
-    AKTO_API_KEY: ${{ secrets.AKTO_API_KEY }}
-    API_COLLECTION_NAME: juice_shop_demo
+To extract APIs from a local code repository, run the following docker run command in a terminal:
+```bash
+docker run -it --rm -v "$(pwd)":/usr/source_code \
+  aktosecurity/akto-puppeteer-replay:latest cli extract \
+    --IS_DOCKER="true"
+```
+Explaination:
+1. `-it` -  enables interactive terminal input, allowing command line interaction.
+2. `--rm` -  automatically removes container after it exits.
+3. `-v "$(pwd)":/usr/source_code` - mounts current directory to /usr/source_code in the container.
+
+To import the extracted APIs into an API collection in Akto dashboard, run the following docker run command in a terminal:
+```bash
+docker run -it --rm -v "$(pwd)":/usr/source_code \
+  aktosecurity/akto-puppeteer-replay:latest cli extract \
+  		--IS_DOCKER="true" \
+			--AKTO_SYNC="true" \
+			--AKTO_DASHBOARD_URL="AKTO_DASHBOARD_URL" \
+			--AKTO_API_KEY="AKTO_API_KEY" \
+			--API_COLLECTION_NAME="juice_shop_demo"
+```
+
+To add source code links to the extracted APIs, run the following docker run command in a terminal:
+```bash
+docker run -it --rm -v "$(pwd)":/usr/source_code \
+  aktosecurity/akto-puppeteer-replay:latest cli extract \
+  		--IS_DOCKER="true" \
+			--AKTO_SYNC="true" \
+			--AKTO_DASHBOARD_URL="AKTO_DASHBOARD_URL" \
+			--AKTO_API_KEY="AKTO_API_KEY" \
+			--API_COLLECTION_NAME="juice_shop_demo" \
+      --GITHUB_REPOSITORY="akto-api-security/juice-shop" \
+      --GITHUB_BRANCH="master"
 ```
 
 ### Results
 
-1. A summary of all the extracted APIs should be avaialbe in the Github workflow run summary. The summary includes a list of the new APIs that were added in the present commit. 
-2. The API collection as specified by the `API_COLLECTION_NAME` variable can be viewed in the Akto dashboard to review the APIs extracted from source code.
-
-<figure><img src="../../.gitbook/assets/code_analysis_github_actions_summary.png" alt=""><figcaption><p>Github workflow summary</p></figcaption></figure>
+1. The API collection as specified by the `API_COLLECTION_NAME` variable can be viewed in the Akto dashboard to review the APIs extracted from source code.
