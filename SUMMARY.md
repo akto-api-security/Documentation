@@ -78,7 +78,7 @@
   * [Create a custom collection](api-inventory/how-to/how-to-create-a-custom-collection.md)
   * [Redact sensitive data](api-inventory/how-to/redact-sensitive-data.md)
   * [Extract APIs from source code using Github Action](api-inventory/how-to/extract-apis-from-source-code-gha.md)
-
+  * [Extract APIs from source code using Docker based CLI](api-inventory/how-to/extract-apis-from-source-code-docker-cli.md)
 
 ## Test Editor
 
