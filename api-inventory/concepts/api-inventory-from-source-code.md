@@ -1,6 +1,6 @@
 # API inventory from source code
 
-Akto supports creating API inventory from source code, enabling API discovery at the source code level. The source code API inventory integrates seamlessly with the traffic API inventory. 
+Akto supports creating API inventory from source code with the help of our code analysis tool. Simply run our code analysis tool on your source code repositories to discover APIs, including shadow API detection. This source code-based API inventory integrates seamlessly with the traffic-based API inventory.
 
 ### Why create API inventory from source code?
 
