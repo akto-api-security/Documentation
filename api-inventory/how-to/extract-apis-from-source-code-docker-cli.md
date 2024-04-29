@@ -7,7 +7,7 @@ You can extract APIs from your code repositories using our Docker based CLI.
 Prepare the following variables:
 1. `AKTO_SYNC` - Set this to `TRUE` if you want the CLI to import the extracted APIs into the Akto dashboard
 2. `AKTO_API_KEY` - Go to My accounts > Settings > Integrations > Akto API > Generate token. Copy the token generated.
-3. `AKTO_DASHBOARD_URL` - URL of your Akto dashboard. Please ensure the github action runner can access the Akto dashboard,
+3. `AKTO_DASHBOARD_URL` - URL of your Akto dashboard. Please ensure the docker container can access the Akto dashboard,
 4. `API_COLLECTION_NAME` - The API collection name into which you want to import the extracted APIs. Ensure that this collection exists.
 5. `GITHUB_REPOSITORY` - The name of the Github repository to be used for source location links.
 6. `GITHUB_BRANCH` - The branch of the Github repository to be used for source location links.
@@ -19,7 +19,7 @@ docker run -it --rm -v "$(pwd)":/usr/source_code \
   aktosecurity/akto-puppeteer-replay:latest cli extract \
     --IS_DOCKER="true"
 ```
-Explaination:
+Explanation:
 1. `-it` -  enables interactive terminal input, allowing command line interaction.
 2. `--rm` -  automatically removes container after it exits.
 3. `-v "$(pwd)":/usr/source_code` - mounts current directory to /usr/source_code in the container.
