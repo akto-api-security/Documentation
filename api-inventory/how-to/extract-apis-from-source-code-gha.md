@@ -1,4 +1,4 @@
-# Extract APIs from source code using Github Action
+# Extract APIs from github hosted source code using our Github Action
 
 You can extract APIs from your github code repositories using our [Github action](https://github.com/akto-api-security/code-analysis-action).
 

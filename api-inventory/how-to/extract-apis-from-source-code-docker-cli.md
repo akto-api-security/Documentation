@@ -1,4 +1,4 @@
-# Extract APIs from source code using Docker based CLI
+# Extract APIs from source code using our Docker based CLI
 
 You can extract APIs from your code repositories using our Docker based CLI.
 

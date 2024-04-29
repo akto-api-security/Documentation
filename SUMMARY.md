@@ -58,6 +58,7 @@
   * [Risk Score](api-inventory/concepts/risk-score.md)
   * [Auth types](api-inventory/concepts/auth-types.md)
   * [Access Type](api-inventory/concepts/access-type.md)
+  * [API inventory from source code](api-inventory/concepts/api-inventory-from-source-code.md)
 * [How-To](api-inventory/how-to/README.md)
   * [Export an API Collection to Postman](api-inventory/how-to/export-an-api-collection-to-postman.md)
   * [Export an API Collection to Burp](api-inventory/how-to/export-an-api-collection-to-burp.md)
@@ -77,8 +78,8 @@
   * [Configure alerts on API changes](api-inventory/how-to/configure-alerts-on-api-changes.md)
   * [Create a custom collection](api-inventory/how-to/how-to-create-a-custom-collection.md)
   * [Redact sensitive data](api-inventory/how-to/redact-sensitive-data.md)
-  * [Extract APIs from source code using Github Action](api-inventory/how-to/extract-apis-from-source-code-gha.md)
-  * [Extract APIs from source code using Docker based CLI](api-inventory/how-to/extract-apis-from-source-code-docker-cli.md)
+  * [Extract APIs from github hosted source code using our Github Action](api-inventory/how-to/extract-apis-from-source-code-gha.md)
+  * [Extract APIs from source code using our Docker based CLI](api-inventory/how-to/extract-apis-from-source-code-docker-cli.md)
 
 ## Test Editor
 
