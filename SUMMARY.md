@@ -43,6 +43,7 @@
   * [Connect Akto with Postman](traffic-connections/traffic-data-sources/postman.md)
   * [Connect Akto with OpenAPI](traffic-connections/traffic-data-sources/openapi.md)
   * [Akto SDK](traffic-connections/traffic-data-sources/akto-sdk.md)
+  * [Connect Akto with Hybrid SaaS](traffic-connections/traffic-data-sources/hybrid-saas.md)
 
 ## API Inventory
 
