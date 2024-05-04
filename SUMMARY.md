@@ -81,6 +81,7 @@
   * [Redact sensitive data](api-inventory/how-to/redact-sensitive-data.md)
   * [Extract APIs from github hosted source code using our Github Action](api-inventory/how-to/extract-apis-from-source-code-gha.md)
   * [Extract APIs from source code using our Docker based CLI](api-inventory/how-to/extract-apis-from-source-code-docker-cli.md)
+  * [Remove Bad Endpoints](api-inventory/how-to/remove-bad-endpoints.md)
 
 ## Test Editor
 
