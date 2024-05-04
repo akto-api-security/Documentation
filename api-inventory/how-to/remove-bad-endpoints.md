@@ -30,7 +30,7 @@ You can also remove some default types we ignore.
 
 <div align="center">
 
-<figure><img src="../../.gitbook/assets/file-type-2.png" height="350" alt="Select file type" ><figcaption>Options present</figcaption></figure>
+<figure><img src="../../.gitbook/assets/file-type-2.png" width="400" alt="Select file type" ><figcaption>Options present</figcaption></figure>
 
 </div>
 
