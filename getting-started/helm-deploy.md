@@ -123,7 +123,7 @@ spec:
         name: mongo-volume
       spec:
         accessModes: ["ReadWriteOnce"]
-        storageClassName: demo-storage
+        storageClassName: mongo-storage
         resources:
           requests:
             storage: 1Gi
