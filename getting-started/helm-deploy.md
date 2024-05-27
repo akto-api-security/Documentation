@@ -17,7 +17,7 @@ Please ensure you have the following -
 
 Here are the steps to install Akto via Helm charts -
 
-1. Prepare Mongo Connection string - You can set up a fresh mongo cluster using [this](mongo-cluster-setup.md). For best experience we strongly recommend a mongo cluster. You can also use an existing mongo.
+1. Prepare Mongo Connection string - You can create a fresh new Mongo or use existing Mongo if you have Akto installed previously in your cloud.
 2. Install Akto via Helm
 3. Verify Installation and harden security
 
@@ -25,19 +25,129 @@ Here are the steps to install Akto via Helm charts -
 
 Akto Helm setup needs a Mongo connection string as input. It can come from either of the following -
 
-1.  **Your own Mongo** Ensure your machine where you setup Mongo is NOT exposed to public internet. It shouldn't have a public IP. You can setup Mongo by running the following commands.
+1.  **Your own Mongo** Ensure your machine where you setup Mongo is NOT exposed to public internet. It shouldn't have a public IP. You can setup a Mongo cluster as follows: <br>
+    Create the following file: mongo-cluster-setup.yaml
+```yaml
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: mongo-storage
+provisioner: efs.csi.aws.com
+parameters:
+  provisioningMode: efs-ap
+  fileSystemId: fs-0a64ff88e3f61684d # mention your fs id
+  directoryPerms: "700"
+  gidRangeStart: "1000"
+  gidRangeEnd: "2000"
+  basePath: "/akto1"
+  # optional: specify access point
+  # accessPointId: <your-access-point-id>
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  clusterIP: None
+  selector:
+    app: mongo
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo
+spec:
+  selector:
+    matchLabels:
+      app: mongo
+  serviceName: "mongo"
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:6.0.1
+          args: ["--dbpath", "/data/db"]
+          startupProbe:
+            exec:
+              command:
+                - mongosh
+                - --eval
+                - "db.adminCommand('ping')"
+            initialDelaySeconds: 1
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 2
+          livenessProbe:
+            exec:
+              command:
+                - mongosh
+                - --eval
+                - "db.adminCommand('ping')"
+            initialDelaySeconds: 1
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 2
+          readinessProbe:
+            exec:
+              command:
+                - mongosh
+                - --eval
+                - "db.adminCommand('ping')"
+            initialDelaySeconds: 1
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 2
+          command:
+            - mongod
+            - "--bind_ip_all"
+            - "--replSet"
+            - rs0
+          volumeMounts:
+            - name: mongo-volume
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-volume
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: demo-storage
+        resources:
+          requests:
+            storage: 1Gi
+```
+Now execute the following command:
+```kubectl apply -f mongo-cluster-setup.yaml -n {namespace}```
+    
+Wait for a couple of mins till you see 3 mongo pods with name: mongo-0, mongo-1 and mongo-2 are in running state
+Once the pods are in running state, execute the following commands to initialize the cluster:
+```
+kubectl exec -it mongo-0 mongosh -n {{namespace}}
 
-    ```
-    sudo yum update -y
-    sudo yum install -y docker
-    sudo dockerd&
-    docker run --name mongo --restart always -v ./data:/data/db -p 27017:27017 mongo
-    sudo systemctl enable /usr/lib/systemd/system/docker.service
-    ```
+# execute the next command from within mongo shell
+rs.initiate({
+    _id: "rs0",
+    members: [
+        {_id: 0, host:"mongo-0.mongo.default.svc.cluster.local:27017"},
+        {_id: 1, host:"mongo-1.mongo.default.svc.cluster.local:27017"},
+        {_id: 2, host:"mongo-2.mongo.default.svc.cluster.local:27017"}
+    ]
+})
+```
+The connection string would then be `mongodb://mongo-0.mongo.default.svc.cluster.local:27017,mongo-1.mongo.default.svc.cluster.local:27017,mongo-2.mongo.default.svc.cluster.local:27017/admini`
 
-    The connection string would then be `mongodb://<YOUR_INSTANCE_PRIVATE_IP>:27017/admini`
-
-    <figure><img src="https://github.com/akto-api-security/Documentation/assets/91221068/0b6b87e8-9797-4729-ab01-fd48f99efbd3" alt=""><figcaption></figcaption></figure>
 2. **Mongo Atlas** You can use Mongo Atlas connection as well
    1. Go to `Database Deployments` page for your project
    2. Click on `Connect` button
@@ -65,9 +175,17 @@ Akto Helm setup needs a Mongo connection string as input. It can come from eithe
    9. Run `kubectl apply -f akto-daemonset-config.yml`
    10. Confirm Akto dashboard has started receiving new data.
    11. Please **Do Not Delete** AWS CloudFormation Stacks. This will delete the Mongo Instance too and you'll lose the data. If you want to delete AWS CloudFormation stacks, please setup new a duplicate Mongo Instance from step (4). Use private IP of this new instance for step (6).
-5. **Mongo on K8s with Persistent volume** You can setup a Mongo on K8s cluster itself with a Persistent volume. A sample template is provided [here](https://github.com/akto-api-security/infra/blob/kubernetes/mongo.yml). Use the IP of this service as Mongo private IP in [Install Akto via Helm](helm-deploy/#install-akto-via-helm) section. If you are migrating from previous Akto installation, you have to bootstrap the persistent volume with original Mongo Instance's data before you start Mongo service.
+5. **Mongo on K8s with Persistent volume** You can setup a Mongo on K8s cluster itself with a Persistent volume. A sample template is provided [here](https://github.com/akto-api-security/infra/blob/kubernetes/mongo.yml). Use the IP of this service as Mongo private IP in [Install Akto via Helm](#install-akto-via-helm) section. If you are migrating from previous Akto installation, you have to bootstrap the persistent volume with original Mongo Instance's data before you start Mongo service.
+6. **Mongo cluster setup via cfn template**
+   Use the following cloud formation template [link](https://github.com/akto-api-security/infra/blob/feature/quick-setup/templates/mongo-cluster-template.yml)
 
-Note: Please ensure your K8S cluster has connectivity to Mongo.
+   This cfn template requires 2 inputs:
+   1. PrivateSubnetId: Select the private subnet in which you want the cluster to be created. Make sure this subnet has a route to a Nat Gateway connectivity.
+   2. KeyPair: This keypair will be used to ssh into the instance
+
+   The default instance type in the template is m6a.large. You can change it as per your requirement in the template. We recommend not to use `t3/t4` type of instances for running a cluster.
+   Once this template is executed successfully you will see 3 EC2 instances created. You can access the connection url from the output section once the cfn execution completes <br>
+   Note: Please ensure your K8S cluster has connectivity to Mongo.
 
 ### Install Akto via Helm
 
