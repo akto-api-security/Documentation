@@ -17,7 +17,7 @@ Please ensure you have the following -
 
 Here are the steps to install Akto via Helm charts -
 
-1. Prepare Mongo Connection string - You can create a fresh new Mongo or use existing Mongo if you have Akto installed previously in your cloud.
+1. Prepare Mongo Connection string - You can set up a fresh mongo cluster using [this](mongo-cluster-setup.md). For best experience we strongly recommend a mongo cluster. You can also use an existing mongo.
 2. Install Akto via Helm
 3. Verify Installation and harden security
 
