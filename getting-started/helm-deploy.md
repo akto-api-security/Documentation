@@ -203,7 +203,7 @@ The connection string would then be `mongodb://mongo-0.mongo.default.svc.cluster
 
 
 
-### Setting up daemonset in a different Kubernetes cluster
+### If Akto Cluster is Deployed in a Separate Kubernetes Cluster
 
 If you encounter the error `Can't connect to Kafka` in your daemonset and you have exposed the Akto runtime service via a route that doesn't resemble `*.svc.cluster.local`, you'll need to update the `KAFKA_ADVERTISED_LISTENERS` environment variable in the akto-runtime deployment.
 Follow these steps:
