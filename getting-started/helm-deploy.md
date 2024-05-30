@@ -200,3 +200,18 @@ The connection string would then be `mongodb://mongo-0.mongo.default.svc.cluster
 1. Run the following to get Akto dashboard url `kubectl get services/akto-dashboard -n dev | awk -F " " '{print $4;}'`
 2. Open Akto dashboard on port 8080. eg `http://a54b36c1f4asdaasdfbd06a259de2-acf687643f6fe4eb.elb.ap-south-1.amazonaws.com:8080/`
 3. For good security measures, you should enable HTTPS by adding a certificate and put it behind a VPN. If you are on AWS, follow the guide [here](https://docs.akto.io/getting-started/aws-ssl).
+
+
+
+### If Akto Cluster is Deployed in a Separate Kubernetes Cluster
+
+If you encounter the error `Can't connect to Kafka` in your daemonset and you have exposed the Akto runtime service via a route that doesn't resemble `*.svc.cluster.local`, you'll need to update the `KAFKA_ADVERTISED_LISTENERS` environment variable in the akto-runtime deployment.
+Follow these steps:
+
+1. Change the KAFKA_ADVERTISED_LISTENERS environment variable to match your route using the following command:
+`kubectl set env deployment/{deployment-name} KAFKA_ADVERTISED_LISTENERS="LISTENER_DOCKER_EXTERNAL_LOCALHOST://localhost:29092, LISTENER_DOCKER_EXTERNAL_DIFFHOST://{Service_Endpoint}:9092" -n {namespace}`
+
+2. Verify the change with this command:
+`kubectl get deployment {deployment-name} -o jsonpath="{.spec.template.spec.containers[?(@.name=='kafka1')].env[?(@.name=='KAFKA_ADVERTISED_LISTENERS')].value}" -n {namespace}`
+
+Replace {deployment-name}, {Service_Endpoint}, and {namespace} with your actual deployment name, service DNS, and namespace respectively.
