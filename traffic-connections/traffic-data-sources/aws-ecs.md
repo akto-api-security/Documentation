@@ -9,7 +9,7 @@ AWS ECS can have multiple configurations, please follow the guide according to y
 
 1. Setup Akto data processor using the guide [here](./data-processor.md)
 
-2. When ECS task is running with launch type AWS FARGATE ( network mode is awsvpc for the task definition ) <figure><img src="../../.gitbook/assets/ecs-2.png" alt="ECS FARGATE launch type"><figcaption><p>ECS FARGATE launch type</p></figcaption></figure>
+2. When ECS task is running with launch type AWS FARGATE ( network mode is awsvpc for the task definition ). If your cluster is an EC2 instance and not a FARGATE cluster, then skip this step and go to the next step. <figure><img src="../../.gitbook/assets/ecs-2.png" alt="ECS FARGATE launch type"><figcaption><p>ECS FARGATE launch type</p></figcaption></figure>
 
     i. We need to add a container to the task definition of the task, from which we want to monitor. Add a container with the configuration defined below:
 
@@ -59,7 +59,7 @@ AWS ECS can have multiple configurations, please follow the guide according to y
     
     <figure><img src="../../.gitbook/assets/ecs-4.png" alt="Updated service"><figcaption><p>Updated service</p></figcaption></figure>
 
-3. When the ECS cluster is a EC2 instance cluster, we will create a task definition for the mirror-api-logging container and run the task as a daemonset. <figure><img src="../../.gitbook/assets/ecs-ec2-1.png" alt="Cluster configuration"><figcaption><p>Cluster configuration</p></figcaption></figure>
+3. When the ECS cluster is a EC2 instance cluster, we will create a task definition for the mirror-api-logging container and run the task as a daemonset. If you have done the previous step, skip this one. <figure><img src="../../.gitbook/assets/ecs-ec2-1.png" alt="Cluster configuration"><figcaption><p>Cluster configuration</p></figcaption></figure>
 
     i. We will create a new task definition with launch type as EC2 instances, network mode host and the container details as follows. You can directly create a new task definition using the JSON given below. You can also refer the screenshots attached.
 
