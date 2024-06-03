@@ -26,6 +26,7 @@
   * [Connect Akto with AWS Traffic Mirroring](traffic-connections/traffic-data-sources/amazon-aws.md)
   * [Connect Akto with AWS EKS](traffic-connections/traffic-data-sources/aws-eks.md)
   * [Connect Akto with AWS Fargate](traffic-connections/traffic-data-sources/aws-fargate.md)
+  * [Connect Akto with AWS ECS](traffic-connections/traffic-data-sources/aws-ecs.md)
   * [Connect Akto with AWS Beanstalk](traffic-connections/traffic-data-sources/aws-beanstalk.md)
   * [Connect Akto with Kubernetes in AWS](traffic-connections/traffic-data-sources/kubernetes.md)
   * [Connect Akto with AWS API Gateway](traffic-connections/traffic-data-sources/aws-api-gateway.md)
