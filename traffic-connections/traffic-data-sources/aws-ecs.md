@@ -11,9 +11,9 @@ Depending on your ECS infrastructure type refer to these respective sections:
 
 When the ECS cluster is running on AWS FARGATE infrastructure, we will add a container to the task definition of the task, from which we want to monitor. Refer the below image to check your cluster type. <figure><img src="../../.gitbook/assets/ecs-2.png" alt="ECS FARGATE infrastructure type"><figcaption><p>ECS FARGATE infrastructure type</p></figcaption></figure>
 
-1. Setup Akto data processor using the guide [here](./data-processor.md). Keep the values `AKTO_MONGO_IP` and `AKTO_KAFKA_IP` handy, as we will need them later.
+1. Setup Akto data processor using the guide [here](./data-processor.md). Keep the values `AKTO_MONGO_IP` and `AKTO_NLB_IP` handy, as we will need them later.
 
-2. Add a container with the configuration defined below. Please replace the `AKTO_MONGO_IP` and `AKTO_KAFKA_IP` variables, as obtained from [step 1](#adding-akto-traffic-collector-to-ecs-fargate-cluster).
+2. Add a container with the configuration defined below. Please replace the `AKTO_MONGO_IP` and `AKTO_NLB_IP` variables, as obtained from [step 1](#adding-akto-traffic-collector-to-ecs-fargate-cluster).
 
     ```bash
     {
@@ -42,7 +42,7 @@ When the ECS cluster is running on AWS FARGATE infrastructure, we will add a con
             },
             {
                 "name": "AKTO_KAFKA_BROKER_MAL",
-                "value": "<AKTO_KAFKA_IP>:9092"
+                "value": "<AKTO_NLB_IP>:9092"
             }
         ],
         "environmentFiles": [],
@@ -61,9 +61,9 @@ When the ECS cluster is running on AWS FARGATE infrastructure, we will add a con
 
 When the ECS cluster is a EC2 instances cluster, we will create a task definition for the mirror-api-logging container and run the task as a daemonset. <figure><img src="../../.gitbook/assets/ecs-ec2-1.png" alt="Cluster configuration"><figcaption><p>Cluster configuration</p></figcaption></figure>
 
-1. Setup Akto data processor using the guide [here](./data-processor.md). Keep the values `AKTO_MONGO_IP` and `AKTO_KAFKA_IP` handy, as we will need them later.
+1. Setup Akto data processor using the guide [here](./data-processor.md). Keep the values `AKTO_MONGO_IP` and `AKTO_NLB_IP` handy, as we will need them later.
 
-2. We will create a new task definition with launch type as EC2 instances, network mode host and the container details as follows. You can directly create a new task definition using the JSON given below. You can also refer the screenshots attached. Please replace the `AKTO_MONGO_IP` and `AKTO_KAFKA_IP` variables, as obtained from [step 1](#adding-akto-traffic-collector-to-ecs-ec2-instances-cluster).
+2. We will create a new task definition with launch type as EC2 instances, network mode host and the container details as follows. You can directly create a new task definition using the JSON given below. You can also refer the screenshots attached. Please replace the `AKTO_MONGO_IP` and `AKTO_NLB_IP` variables, as obtained from [step 1](#adding-akto-traffic-collector-to-ecs-ec2-instances-cluster).
 
     ```bash
     {
@@ -95,7 +95,7 @@ When the ECS cluster is a EC2 instances cluster, we will create a task definitio
                     },
                     {
                         "name": "AKTO_KAFKA_BROKER_MAL",
-                        "value": "<AKTO_KAFKA_IP>:9092"
+                        "value": "<AKTO_NLB_IP>:9092"
                     }
                 ],
                 "environmentFiles": [],
