@@ -7,7 +7,7 @@ Learn about how to send API traffic data from AWS ECS setup to Akto from your en
 ## Adding Akto traffic collector
 AWS ECS can have multiple configurations, please follow the guide according to your setup type.
 
-1. Setup Akto data processor using the guide [here](./data-processor.md)
+1. Setup Akto data processor using the guide [here](./data-processor.md). Keep the values `AKTO_MONGO_IP` and `AKTO_KAFKA_IP` handy, as we will need them later.
 
 2. Setup Akto traffic collector according to your ECS infrastructure type.
 
@@ -15,7 +15,7 @@ AWS ECS can have multiple configurations, please follow the guide according to y
     
     When the ECS cluster is running on AWS FARGATE infrastructure. **If your cluster is an EC2 instances type infrastructure and not a FARGATE cluster, then go to [EC2 instances section](#ec2-instances-infrastructure)** <figure><img src="../../.gitbook/assets/ecs-2.png" alt="ECS FARGATE launch type"><figcaption><p>ECS FARGATE launch type</p></figcaption></figure>
 
-    1. We need to add a container to the task definition of the task, from which we want to monitor. Add a container with the configuration defined below:
+    1. We need to add a container to the task definition of the task, from which we want to monitor.  Add a container with the configuration defined below. Please replace the `AKTO_MONGO_IP` and `AKTO_KAFKA_IP` variables, as obtained from [step 1](#adding-akto-traffic-collector).
 
         ```bash
         {
@@ -63,7 +63,7 @@ AWS ECS can have multiple configurations, please follow the guide according to y
 
     When the ECS cluster is a EC2 instances cluster, we will create a task definition for the mirror-api-logging container and run the task as a daemonset. **If you have done the previous step, skip this one.** <figure><img src="../../.gitbook/assets/ecs-ec2-1.png" alt="Cluster configuration"><figcaption><p>Cluster configuration</p></figcaption></figure>
 
-    1. We will create a new task definition with launch type as EC2 instances, network mode host and the container details as follows. You can directly create a new task definition using the JSON given below. You can also refer the screenshots attached.
+    1. We will create a new task definition with launch type as EC2 instances, network mode host and the container details as follows. You can directly create a new task definition using the JSON given below. You can also refer the screenshots attached. Please replace the `AKTO_MONGO_IP` and `AKTO_KAFKA_IP` variables, as obtained from [step 1](#adding-akto-traffic-collector).
 
         ```bash
         {
