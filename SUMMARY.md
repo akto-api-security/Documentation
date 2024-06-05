@@ -19,6 +19,7 @@
 * [Heroku](getting-started/heroku.md)
 * [Setting up proxy](getting-started/proxy-setup.md)
 * [FAQs on data concerns](getting-started/faqs-on-data-concerns.md)
+* [Move From Self Hosted Setup To SaaS](getting-started/move-self-hosted-to-saas.md)
 
 ## Traffic Connections
 
