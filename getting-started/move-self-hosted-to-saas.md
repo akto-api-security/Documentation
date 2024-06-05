@@ -45,7 +45,9 @@ mv ~/copy-1000000 ~/akto_data_folder
 	https://github.com/akto-api-security/helm-charts/tree/master/charts/mini-runtime
 6. Run the command copied in step no. 4
 7. Setup New DaemonSet Pods with 
-	```bash AKTO_NLB_IP = aktoruntime-mini-runtime.dev.svc.cluster.local:9092 ```
+```bash
+AKTO_NLB_IP = aktoruntime-mini-runtime.dev.svc.cluster.local:9092
+```
 8. Go to app.akto.io and check if traffic data is getting populated in your account.
 
 ## Step 3: Removing Old Akto Helm Setup
