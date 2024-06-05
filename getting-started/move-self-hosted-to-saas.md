@@ -1,4 +1,4 @@
-# Move From Self Hosted Setup To SaaS
+# Migrate From Self Hosted Setup To SaaS
 
 ## **Introduction**
 
