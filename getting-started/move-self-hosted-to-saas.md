@@ -1,4 +1,4 @@
-# Steps to move from Self Hosted to SaaS
+# Move from Self Hosted to SaaS
 
 ## **Introduction**
 
