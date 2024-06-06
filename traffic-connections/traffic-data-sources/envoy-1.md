@@ -50,15 +50,15 @@ If your API calls are being routed through Istio service mesh, you can use Akto'
 2. Create your own Docker image of `istio-proxy` by running following commands:
 
 ```bash
-docker build . -t <your-docker-account-id>:istio-proxy
-docker push <your-docker-account-id>:istio-proxy
+docker build . -t <your-docker-account-id>/istio-proxy:latest
+docker push <your-docker-account-id>/istio-proxy:latest
 ```
 
 {% hint style="info" %}
 Please make sure you are building docker image on the same platform as your app server.&#x20;
 {% endhint %}
 
-3. Add this custom istio-proxy image to containers you want to collect traffic from. You can get the value of `AKTO_NLB_IP` from the dashboard itself.&#x20;
+3. Add this custom istio-proxy image to containers you want to collect traffic from, as a sidecar. You can get the value of `AKTO_NLB_IP` from the dashboard itself.&#x20;
 
 ```yaml
       - name: istio-proxy
