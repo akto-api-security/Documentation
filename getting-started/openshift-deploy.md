@@ -12,7 +12,9 @@ Steps to get Akto running on your Openshift cluster -&#x20;
 2. [Add service account](openshift-deploy.md#service-account-manifest) to get permissions for traffic connector.
 3. You can use [Kubernetes Daemonset connector](../traffic-connections/traffic-data-sources/kubernetes.md) or [eBPF on mTLS](../traffic-connections/traffic-data-sources/ebpf-mtls.md) as your traffic connector.&#x20;
 
-Add the following to the Daemonset connector -         &#x20;
+Add the following to the Daemonset connector -&#x20;
+
+> They listen to `any` interface by default - which might NOT be allowed in some Openshift clusters. If that's the case, contact support@akto.io - we can help listen traffic on `br-ex` interface.
 
 ```yaml
      containers:
@@ -69,4 +71,3 @@ users:
 oc adm policy add-scc-to-user akto-daemonset-scc -z akto-daemonset-serviceaccount
 ```
 
-\
