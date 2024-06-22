@@ -15,5 +15,6 @@ Deploy Akto locally or on your own cloud. Choose any of the below options to get
 1. [AWS deploy](aws-deploy.md)
 2. [GCP Deploy](gcp-deploy.md)
 3. [Local Deploy](local-deploy.md)
-4. [Azure Deploy](azure-deploy.md)
-5. [Heroku](heroku.md)
+4. [Openshift Deploy](openshift-deploy.md)
+5. [Azure Deploy](azure-deploy.md)
+6. [Heroku](heroku.md)

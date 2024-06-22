@@ -16,6 +16,7 @@
 * [Local Deploy](getting-started/local-deploy.md)
 * [Azure Deploy](getting-started/azure-deploy.md)
 * [Helm Deploy](getting-started/helm-deploy.md)
+* [Openshift Deploy](getting-started/openshift-deploy.md)
 * [Heroku](getting-started/heroku.md)
 * [Setting up proxy](getting-started/proxy-setup.md)
 * [FAQs on data concerns](getting-started/faqs-on-data-concerns.md)
