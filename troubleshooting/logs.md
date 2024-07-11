@@ -1,4 +1,4 @@
-# How to get logs from Akto
+# How to get logs
 
 You can deploy Akto on multiple platforms like AWS, k8s etc. Please follow the below guide to find logs on your respective platform.
 
@@ -8,7 +8,7 @@ You can deploy Akto on multiple platforms like AWS, k8s etc. Please follow the b
 
 <figure><img src="../.gitbook/assets/aws-logs-1.png" alt=""><figcaption></figcaption></figure>
 
-2. Go to `Auto scaling group` and find the `akto-dashboard` auto scaling group.
+2. If you have to get `dashboard` logs, then go to `Auto scaling group` and find the `AktoDashboardAutoScalingGroup` auto scaling group. For `runtime` logs, go to `Auto scaling group` and find the `AktoAutoScalingGroup` auto scaling group.
 
 <figure><img src="../.gitbook/assets/aws-logs-2.png" alt=""><figcaption></figcaption></figure>
 
@@ -16,18 +16,17 @@ You can deploy Akto on multiple platforms like AWS, k8s etc. Please follow the b
 
 <figure><img src="../.gitbook/assets/aws-logs-3.png" alt=""><figcaption></figcaption></figure>
 
-4. Login as the root user using `sudo su -` and run `docker ps` to find the running containers.
+4. Login as the root user using `sudo su -` and run `docker ps` to find the running containers. For `dashboard` logs, look for `akto-api-security-dashboard` container. For `runtime` logs, check for the container with `runtime` word it. &#x20;
 
 <figure><img src="../.gitbook/assets/aws-logs-4.png" alt=""><figcaption></figcaption></figure>
 
-5. You can find the logs for any container using the following command `docker logs <container-id> --tail 100` . Since there can be many logs, we are using `--tail 100` , you can increase this number for older logs or add `-f` flag for running logs.
+5. You can find the logs for any container using the following command `docker logs <container-id> --tail 10000` . Since there can be many logs, we are using `--tail 10000` , you can increase this number for older logs or add `-f` flag for running logs.
 
 <figure><img src="../.gitbook/assets/aws-logs-5.png" alt=""><figcaption></figcaption></figure>
 
 ## Using helm charts in kubernetes
 
-1. Connect to your kubernetes cluster 
-
+1. Connect to your kubernetes cluster
 2. Check your deployments for an `akto` deployment using `kubectl get deployments -n <namespace>`. Make sure the namespace is correct.
 
 <figure><img src="../.gitbook/assets/k8s-logs-1.png" alt=""><figcaption></figcaption></figure>
