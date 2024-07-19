@@ -139,8 +139,6 @@ spec:
 
 1. If you're running the daemonset outside of the kubernetes system, set the env `PROBE_ALL_PID` as `true`.
 
-2. Set `CAPTURE_SSL` env variable to `true` is recommended, if the TLS termination happens at the application. If the TLS termination happens at the service, we recommended to set it to `false`.
-
 ## Frequently Asked Questions (FAQs)
 
 **The traffic will contain a lot of sensitive data - does it leave my VPC?**
