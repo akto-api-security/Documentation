@@ -114,6 +114,9 @@ spec:
 # The interval poll ( in seconds ) in which data is sent to Akto data processor.
 - name: KAFKA_POLL_INTERVAL
   value: "0.5"
+# If you only want to trace traffic for which SSL termination happens at proxy/service.
+- name: CAPTURE_ALL
+  value: "false"
 ```
 
 4. You can check your `API inventory` on Akto dashboard to see endpoints being discovered.
