@@ -41,7 +41,7 @@ spec:
       hostPID: true
       containers:
       - name: mirror-api-logging
-        image: aktosecurity/mirror-api-logging:k8s_ebpf_e2e
+        image: aktosecurity/mirror-api-logging:k8s_ebpf
         resources:
           limits:
             cpu: 500m
@@ -58,8 +58,6 @@ spec:
             value: "<AKTO_NLB_IP>:9092"
           - name: AKTO_MONGO_CONN
             value: "<AKTO_MONGO_CONN>"
-          - name: CAPTURE_SSL
-            value: "true"
         securityContext:
           capabilities:
             add:
@@ -126,6 +124,13 @@ spec:
 # The interval poll ( in minutes ) in which the akto module scans the current running processes, to check for new SSL related processes to probe.
 - name: UPROBE_POLL_INTERVAL
   value: 5
+# If you only want to trace traffic for which SSL termination happens at proxy/service.
+- name: CAPTURE_ALL
+  value: "false"
+# If you only want to trace traffic for which SSL termination happens at application. 
+# Note: when CAPTURE_ALL is false and CAPTURE_SSL is true, only application traffic is captured.
+- name: CAPTURE_SSL
+  value: "true"
 ```
 
 4. You can check your `API inventory` on Akto dashboard to see endpoints being discovered.
