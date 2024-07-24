@@ -1,9 +1,8 @@
 ---
-description: >-
-  Learn how to send API traffic data to Akto SaaS from your cloud setup.
+description: Learn how to send API traffic data to Akto SaaS from your cloud setup.
 ---
 
-# Connect Akto with Hybrid Saas
+# Connect Akto with Hybrid SaaS
 
 1\. Go to [app.akto.io](https://app.akto.io)
 
@@ -17,13 +16,30 @@ description: >-
 
 <figure><img src="../../.gitbook/assets/HybridSaaSConnector.png" alt=""><figcaption></figcaption></figure>
 
-5\. Copy the provided helm install command by clicking on copy command button.
+### Installing Traffic connector
+
+You can use either a CloudFormation template or a helm chart to install Traffic aggregator in your env.&#x20;
+
+#### CloudFormation template
+
+1. To install using CloudFormation, run the Cloudformation template [here](https://raw.githubusercontent.com/akto-api-security/infra/feature/quick-setup/templates/mini-runtime.yml).&#x20;
+
+&#x20;     i) Please make sure you install it in a private subnet from your application VPC.&#x20;
+
+&#x20;     ii) This private subnet should also have network connectivity (typically via NAT).&#x20;
+
+2. You can use `https://cyborg.akto.io` as `DatabaseAbstractorUrl` . For `DatabaseAbstractorToken` you can copy it from the helm install command in the above screenshot.&#x20;
+3. Once complete, go to the output section of CloudFormation Stack and copy the URL. You can use this URL as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `http://akto-N-.....amazonaws.com:9092`)
+
+#### Helm chart
+
+1. If you have K8s clusters, you can use helm chart to install Traffic aggregator. Copy helm install command by clicking on copy command button.
 
 <figure><img src="../../.gitbook/assets/Mini-Runtime-Helm.png" alt=""><figcaption></figcaption></figure>
 
-6\. Run this command in your k8s cluster, which will deploy a new Akto mini-runtime service. 
+2\. Run this command in your k8s cluster, which will deploy a new Akto Traffic aggregator service.
 
-7\. Run the below command and copy the `CLUSTER-IP` and `PORT` value for mini-runtime service. In the below example it will be `172.20.169.203:9092`
+3\. Run the below command and copy the `CLUSTER-IP` and `PORT` value for Traffic aggregator  service. In the below example it will be `172.20.169.203:9092`
 
 ```bash
 kubectl get svc -n <namespace>
@@ -31,16 +47,15 @@ kubectl get svc -n <namespace>
 
 <figure><img src="../../.gitbook/assets/Mini-Runtime-Ip1.png" alt=""><figcaption></figcaption></figure>
 
-8\. Modify the above copied `IP:PORT` value in the env. variable (`AKTO_KAFKA_BROKER_MAL`) while deploying your traffic connector. 
+4\. Modify the above copied `IP:PORT` value in the env. variable (`AKTO_KAFKA_BROKER_MAL`) while deploying your traffic connector.
 
 <figure><img src="../../.gitbook/assets/Mini-Runtime-Ip2.png" alt=""><figcaption></figcaption></figure>
 
-## Notes: 
+## Notes:
 
-1. Ensure internet connectivity in Mini-Runtime service.
-2. In case of closed network, please whitelist (https://aquaman.akto.io)
-3. Ensure that traffic connector is able to connect to Mini-Runtime service
-
+1. Ensure internet connectivity in Traffic aggregator  service.
+2. In case of closed network, please whitelist (https://cyborg.akto.io)
+3. Ensure that traffic connector is able to connect to Traffic aggregator service
 
 ## Get Support for your Akto setup
 
