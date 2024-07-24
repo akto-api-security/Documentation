@@ -29,7 +29,10 @@ You can use either a CloudFormation template or a helm chart to install Traffic 
 &#x20;     ii) This private subnet should also have network connectivity (typically via NAT).&#x20;
 
 2. You can use `https://cyborg.akto.io` as `DatabaseAbstractorUrl` . For `DatabaseAbstractorToken` you can copy it from the helm install command in the above screenshot.&#x20;
-3. Once complete, go to the output section of CloudFormation Stack and copy the URL. You can use this URL as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `http://akto-N-.....amazonaws.com:9092`)
+3. Once complete, go to the **Output** section of CloudFormation Stack and copy `AktoNLBIP`.&#x20;
+4. The next step is to install a traffic connector.&#x20;
+   1. You can use the above copied `AktoNLBIP` as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `akto-N-.....amazonaws.com:9092`)
+   2. For `AKTO_MONGO_CONN` , you can use `mongodb://0.0.0.0:27017/admini`.&#x20;
 
 #### Helm chart
 
@@ -47,7 +50,10 @@ kubectl get svc -n <namespace>
 
 <figure><img src="../../.gitbook/assets/Mini-Runtime-Ip1.png" alt=""><figcaption></figcaption></figure>
 
-4\. Modify the above copied `IP:PORT` value in the env. variable (`AKTO_KAFKA_BROKER_MAL`) while deploying your traffic connector.
+4\. The next step is to install a traffic connector.&#x20;
+
+1. You can use the above copied `IP:PORT` value as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `172.20.169.203:9092`)
+2. For `AKTO_MONGO_CONN` , you can use `mongodb://0.0.0.0:27017/admini`.&#x20;
 
 <figure><img src="../../.gitbook/assets/Mini-Runtime-Ip2.png" alt=""><figcaption></figcaption></figure>
 
