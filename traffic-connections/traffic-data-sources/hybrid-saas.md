@@ -18,7 +18,18 @@ description: Learn how to send API traffic data to Akto SaaS from your cloud set
 
 ### Installing Traffic connector
 
-You can use either a CloudFormation template or a helm chart to install Traffic aggregator in your env.&#x20;
+You can use either a CloudFormation template, Terraform template or a Helm chart to install Traffic aggregator in your env.&#x20;
+
+#### Terraform
+
+1. To install using Terraform, use the Terraform script [here](https://github.com/akto-api-security/infra/blob/mini\_runtime\_tf\_script/templates/mini-runtime.tf).
+   1. Please make sure you install it in a private subnet from your application VPC.&#x20;
+   2. This private subnet should also have network connectivity (typically via NAT).&#x20;
+2. You can use `https://cyborg.akto.io` as `DatabaseAbstractorUrl` . For `DatabaseAbstractorToken` you can copy it from the helm install command in the above screenshot.&#x20;
+3. Once complete, copy `akto_nlb_dns` from the output.&#x20;
+4. The next step is to install a traffic connector.&#x20;
+   1. You can use the above copied `AktoNLBIP` as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `akto-N-.....amazonaws.com:9092`)
+   2. For `AKTO_MONGO_CONN` , you can use `mongodb://0.0.0.0:27017/admini`.&#x20;
 
 #### CloudFormation template
 
