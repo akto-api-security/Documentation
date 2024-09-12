@@ -21,7 +21,6 @@ Akto gives you ability to add API data through Postman integration. If you have 
 ### Pre-requisites for Akto Postman connection
 
 * You must have an `active Akto account`. If you don't have one, sign up for an account on the Akto platform.
-  * [Self Hosted signup](https://stairway.akto.io/)
   * [Cloud Signup](https://app.akto.io/)
 * Ensure you have a Postman account or have a Postman desktop app. If you have a Postman account, the integration requires access to your Postman collections through an API key. If you are using Postman desktop app, then you will have to export Postman collection to a file that you can upload to Akto.
 * `Connectivity to your URLs:` If samples responses are not saved in your Postman collection, Akto might need to hit those URLs for sample responses. Please ensure the URLs in your Postman collection are reachable from your machine.

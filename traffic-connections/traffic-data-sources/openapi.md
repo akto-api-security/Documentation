@@ -17,7 +17,6 @@ OpenAPI connector is `recommended` for Akto [Open source](https://github.com/akt
 ### Pre-requisites for Akto OpenAPI connection
 
 * You must have an `active Akto account`. If you don't have one, sign up for an account on the Akto platform.
-  * [Self Hosted signup](https://stairway.akto.io/)
   * [Cloud Signup](https://app.akto.io/)
 * Prepare the OpenAPI specification you wish to upload to Akto. Make sure these collections are organized and contain the API requests you want to work with. You can also add your authentication mechanism in the specification file itself, to unlock advanced capabilities of the AKTO testing module.
 
