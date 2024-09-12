@@ -10,27 +10,17 @@
 
 If your application services are hosted in AWS, follow the steps below to install Akto in your AWS cloud.
 
-### Step 1: Create Account
+### Step 1: Fetch the AWS CFT
 
-1. Go to [Akto self hosted](https://stairway.akto.io/).
-2. `Signup` if you haven't already done that.
-3. Go to AWS section. `Select region` from the dropdown and click on `launch stack.`&#x20;
-
-<figure><img src="../.gitbook/assets/Frame 9 (6).png" alt=""><figcaption></figcaption></figure>
-
-4\. This will re-direct you to the `AWS screen`.&#x20;
+1. Sign up on [Akto](https://app.akto.io) and download the [AWS CFT](https://github.com/akto-api-security/infra/blob/feature/quick-setup/templates/akto-quick-setup.yaml).
 
 ### Step 2: Create stack in AWS
 
-1. Sign into your `AWS account` if you are not logged-in.&#x20;
-
-{% hint style="info" %}
-Note: Akto can't track anything that you do in AWS.
-{% endhint %}
+1. Sign into your `AWS account` if you are not logged-in. Go to `Cloudformation` and upload the template we just downloaded, then click next.
 
 ![](<../.gitbook/assets/Screen Shot 2023-01-03 at 3.38 2.png>)
 
-2\. This will take you to a pre-filled `quick create stack` like below. If you don't see the below screen, click on `launch stack` again.
+2\. This will take you to a pre-filled `quick create stack` like below.
 
 <figure><img src="../.gitbook/assets/Screen Shot 2023-01-03 at 3.52 3.png" alt=""><figcaption></figcaption></figure>
 

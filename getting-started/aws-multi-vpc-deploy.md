@@ -2,7 +2,7 @@
 
 ## Steps to setup Akto in AWS multi-VPC environment
 
-### Step 1: Log on to [stairway](https://stairway.akto.io) and deploy Akto dashboard and mongo
+### Step 1: Deploy Akto dashboard and mongo using [helm charts](./helm-deploy.md) or our [cloud formation templates](./aws-deploy.md).
 
 ### Step 2: Setup VPC peering
 
