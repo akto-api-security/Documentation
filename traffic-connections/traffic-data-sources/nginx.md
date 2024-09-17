@@ -84,7 +84,7 @@ kafka_log_kafka_buffer_max_messages 100000;
 server {
     location / {
         .....
-        js_body_filter main2.to_lower_case;
+        js_body_filter main2.to_lower_case buffer_type=buffer;
 		kafka_log kafka:akto.api.logs $responseBo;
     }
 }
@@ -186,7 +186,7 @@ kafka_log_kafka_buffer_max_messages 100000;
 
 ```
 location / {
-    js_body_filter main2.to_lower_case;
+    js_body_filter main2.to_lower_case buffer_type=buffer;
     kafka_log kafka:akto.api.logs $responseBo;
     ......
 }
@@ -298,7 +298,7 @@ kafka_log_kafka_buffer_max_messages 100000;
 
 ```
 location / {
-    js_body_filter main2.to_lower_case;
+    js_body_filter main2.to_lower_case buffer_type=buffer;
     kafka_log kafka:akto.api.logs $responseBo;
     ......
 }
