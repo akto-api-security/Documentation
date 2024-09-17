@@ -47,4 +47,7 @@ redirects:
   getting-started/gcp-deploy: getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md
   getting-started/azure-deploy: getting-started/quick-start-with-akto-self-hosted/azure-deploy.md
   getting-started/aws-ssl: getting-started/quick-start-with-akto-self-hosted/aws-ssl.md
+  sso/azuread-saml: account/sso/azuread-saml.md
+  sso/okta-oidc: account/sso/okta-oidc.md
+  sso/github-oidc: account/sso/github-oidc.md
   
