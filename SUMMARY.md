@@ -163,6 +163,10 @@
   * [Change role of a User](account/invite-user/change-role-of-a-user.md)
 * [Create a New Account](account/create-a-new-account.md)
 * [Understanding Role Permissions](account/understanding-role-permissions.md)
+* [SSO](account/sso/README.md)
+  * [Azure AD SAML](account/sso/azuread-saml.md)
+  * [Okta OIDC](account/sso/okta-oidc.md)
+  * [Github OIDC](account/sso/github-oidc.md)
 
 ## Pricing
 
@@ -172,19 +176,13 @@
   * [Downgrade Your Plan](pricing/how-to/downgrade-your-plan.md)
   * [Sync Usage Data](pricing/how-to/sync-usage-data.md)
 
-## SSO
+## API reference
 
-* [Azure AD SAML](sso/azureAd-saml.md)
-* [Okta OIDC](sso/okta-oidc.md)
-* [Github OIDC](sso/github-oidc.md)
+* [API reference](api-reference/api-reference.md)
 
 ***
 
 * [Github contribution guide](github-contribution-guide.md)
-
-## API reference
-
-* [API reference](api-reference/api-reference.md)
 
 ## Components
 

@@ -8,11 +8,11 @@ description: >-
 
 If you have Azure AD configured, you can enable SSO on Akto. and you should be an Admin on Akto dashboard.
 
-1. [Ensure that all pre-requisites are met](azureAd-saml.md#pre-requisites)
-2. [Create new Oauth application](azureAd-saml.md#create-new-application)
-3. [Assign users and groups to your Oauth application](azureAd-saml.md#assign-users-and-groups)
-4. [Set up SAML settings for Oauth application](azureAd-saml.md#set-up-saml-settings)
-5. [Test your integration](azureAd-saml.md#import-azure-federation-metadata-into-akto-dashboard)
+1. [Ensure that all pre-requisites are met](azuread-saml.md#pre-requisites)
+2. [Create new Oauth application](azuread-saml.md#create-new-application)
+3. [Assign users and groups to your Oauth application](azuread-saml.md#assign-users-and-groups)
+4. [Set up SAML settings for Oauth application](azuread-saml.md#set-up-saml-settings)
+5. [Test your integration](azuread-saml.md#import-azure-federation-metadata-into-akto-dashboard)
 
 Follow these steps to configure SAML SSO using Azure Active Directory.
 
@@ -35,7 +35,7 @@ To enable users to access Akto using Azure Active Directory Single Sign-On (SSO)
 
 <div align="center">
 
-<figure><img src="../.gitbook/assets/Azure-saml-1.png" alt="Navigate to enterprise application" height="300"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Azure-saml-1.png" alt="Navigate to enterprise application" height="300"><figcaption></figcaption></figure>
 
 </div>
 
@@ -46,7 +46,7 @@ To enable users to access Akto using Azure Active Directory Single Sign-On (SSO)
 
 <div align="center">
 
-<figure><img src="../.gitbook/assets/Azure-saml-2.png" alt="Create new application" height="300"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Azure-saml-2.png" alt="Create new application" height="300"><figcaption></figcaption></figure>
 
 </div>
 
@@ -55,7 +55,7 @@ To enable users to access Akto using Azure Active Directory Single Sign-On (SSO)
 
 <div align="center">
 
-<figure><img src="../.gitbook/assets/Azure-saml-3.png" alt="Create your own application" height="300"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Azure-saml-3.png" alt="Create your own application" height="300"><figcaption></figcaption></figure>
 
 </div>
 
@@ -64,7 +64,7 @@ To enable users to access Akto using Azure Active Directory Single Sign-On (SSO)
 
 <div align="center">
 
-<figure><img src="../.gitbook/assets/Azure-saml-7.png" alt="Fill &#x27;Akto" height="300"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Azure-saml-7.png" alt="Fill &#x27;Akto" height="300"><figcaption></figcaption></figure>
 
 </div>
 
@@ -75,7 +75,7 @@ To enable users to access Akto using Azure Active Directory Single Sign-On (SSO)
 
 <div align="center">
 
-<figure><img src="../.gitbook/assets/Azure-saml-8.png" alt="Assign roles" height="300"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Azure-saml-8.png" alt="Assign roles" height="300"><figcaption></figcaption></figure>
 
 </div>
 
@@ -92,7 +92,7 @@ In the Azure Active Directory admin center, select the 'Akto' Enterprise applica
 
 <div align="center">
 
-<figure><img src="../.gitbook/assets/Azure-saml-9.png" alt="Download certificate" height="300"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Azure-saml-9.png" alt="Download certificate" height="300"><figcaption></figcaption></figure>
 
 </div>
 
@@ -109,7 +109,7 @@ In the Azure Active Directory admin center, select the 'Akto' Enterprise applica
 
 <div align="center">
 
-<figure><img src="../.gitbook/assets/Azure-saml-10.png" alt="SAML configs"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Azure-saml-10.png" alt="SAML configs"><figcaption></figcaption></figure>
 
 </div>
 
@@ -125,7 +125,7 @@ In the Azure Active Directory admin center, select the 'Akto' Enterprise applica
 
 <div align="center">
 
-<figure><img src="../.gitbook/assets/Azure-saml-4.png" alt="Download certificate" height="300"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Azure-saml-4.png" alt="Download certificate" height="300"><figcaption></figcaption></figure>
 
 </div>
 
@@ -138,7 +138,7 @@ In the Azure Active Directory admin center, select the 'Akto' Enterprise applica
 
     <div align="center">
 
-    <figure><img src="../.gitbook/assets/Azure-saml-6.png" alt="Upload file"><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/Azure-saml-6.png" alt="Upload file"><figcaption></figcaption></figure>
 
     </div>
 
