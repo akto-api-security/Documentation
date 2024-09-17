@@ -38,5 +38,13 @@ redirects:
   testing/user-roles: api-security-testing/concepts/test-role.md
   testing/run-test-in-graphql: api-security-testing/how-to/secure-graphql-apis-using-akto.md
   add-api-data/integrations: traffic-connections/traffic-data-sources.md
-  
+  getting-started/aws-deploy: getting-started/quick-start-with-akto-self-hosted/aws-deploy.md
+  getting-started/aws-multi-vpc-deploy: getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-multi-vpc-deploy.md
+  getting-started/aws-cross-region-vpc-deploy: getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-cross-region-vpc-deploy.md
+  getting-started/helm-deploy: getting-started/quick-start-with-akto-self-hosted/helm-deploy.md
+  getting-started/heroku: getting-started/quick-start-with-akto-self-hosted/heroku.md
+  getting-started/openshift-deploy: getting-started/quick-start-with-akto-self-hosted/openshift-deploy.md
+  getting-started/gcp-deploy: getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md
+  getting-started/azure-deploy: getting-started/quick-start-with-akto-self-hosted/azure-deploy.md
+  getting-started/aws-ssl: getting-started/quick-start-with-akto-self-hosted/aws-ssl.md
   
