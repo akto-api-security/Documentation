@@ -8,6 +8,12 @@ Akto automatically detects standard authentication methods JWT and Bearer author
 
 By periodically resetting authentication types, you can prevent unauthorized access and ensure that only authorized individuals or applications have access to their accounts or APIs.
 
+### When to Reset
+
+* To start fresh after multiple changes
+* When experiencing unexpected authentication detection
+* When adopting a new standardized auth approach
+
 _**Note: Please mark the auth types you wish to reset as inactive, before resetting.**_
 
 In the demonstration below, let's reset all the custom auth types.&#x20;

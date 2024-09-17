@@ -2,63 +2,45 @@
 
 ## Introduction
 
-Akto Cloud is the preferred choice when getting started. Akto Cloud is a hosted service with added features for reliability and security. If you're looking for the least friction between trying out Akto and moving into production, follow this guide and `get started for free`.
+Akto Cloud is the quickest way to start securing your APIs. As a hosted service, it offers enhanced reliability and security features without the need for complex setup.
 
 ## Step 1: Create your account
 
-`Navigate` to [https://app.akto.io/](https://app.akto.io/) and signup to get started. If you've already signed up, sign into the account.
+* Navigate to [https://app.akto.io](https://app.akto.io)
+* Sign up for a new account or log in if you already have one
 
-![](<../.gitbook/assets/Screen Shot 2023-01-10 at 3.48.28 PM.png>)
+<figure><img src="../.gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
 
 ## Step 2: Add API data
 
-On the left nav, go to `Quick Start:`
+To analyze and secure your APIs, Akto needs to access your API traffic. You can add this using any of our supported traffic connectors.
 
-<figure><img src="../.gitbook/assets/Frame 10 (1).png" alt=""><figcaption></figcaption></figure>
+1. In the dashboard, look for the `Quick start`
 
-Click on `Connect traffic data`
+<figure><img src="../.gitbook/assets/image (17).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../.gitbook/assets/Frame 11 (1).png" alt=""><figcaption></figcaption></figure>
+2. Choose your preferred traffic connector from the available options
+3. Follow the specific instructions for your chosen connector to start feeding API traffic into Akto
 
-* To add traffic from burp suite, navigate to `Burpsuite` and follow [integration steps for burp](broken-reference) to add API data from burp.
+<figure><img src="../.gitbook/assets/image (18).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../.gitbook/assets/Screenshot 2023-01-26 at 3.32.50 PM.png" alt=""><figcaption></figcaption></figure>
-
-* To add traffic from postman, navigate to `postman` and follow [integration steps for postman](../traffic-connections/traffic-data-sources/postman.md) to add API data from Postman.
-
-<figure><img src="../.gitbook/assets/Screen Shot 2023-01-10 at 5.12.55 PM (1).png" alt=""><figcaption></figcaption></figure>
-
-Once API data is added, move to `step 4` below to run test.
-
-{% hint style="warning" %}
-Akto needs API traffic to create automated API inventory. Currently for your local setup, Akto can get inventory from Burp or Postman. We recommend using Burp to get API inventory.
-{% endhint %}
+For a full list of supported traffic connectors and detailed integration instructions, visit our [Traffic Data Sources](https://docs.akto.io/traffic-connections/traffic-data-sources) page.
 
 ## Step 3: Run test
 
-Go to `Observe -> Inventory`.
+Once you've added your API traffic, you can start running security tests:
 
-<figure><img src="../.gitbook/assets/Frame 20 (2).png" alt=""><figcaption></figcaption></figure>
+1. In the dashboard, click on the "Run Test" button and a modal will pop up, allowing you to select the Tests categories and type of tests you want to test on your collection.
+2. Once you select the above, click the "Run once now" button in the modal.
 
-Click on any `collection` you want to run test on.
+<figure><img src="../.gitbook/assets/image (20).png" alt=""><figcaption></figcaption></figure>
 
-`Select endpoints` you want to run test on.
+2. You'll be re-directed to the  Test Results page – you can view all the test results, including any potential vulnerabilities or issues detected in your APIs
 
-<figure><img src="../.gitbook/assets/Frame 21 (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (19).png" alt=""><figcaption></figcaption></figure>
 
-Click on `run test`.
+### Need Help?
 
-<figure><img src="../.gitbook/assets/Frame 22 (1).png" alt=""><figcaption></figcaption></figure>
+Our support team is ready to assist you in maximizing your API security with Akto Cloud.
 
-`Select tests` to be run.
-
-<figure><img src="../.gitbook/assets/Screen Shot 2023-01-10 at 5.26 1.png" alt=""><figcaption></figcaption></figure>
-
-Select `max test run time` and `max concurrent requests`
-
-Click `Run once now`.
-
-Go to `Testing -> Test results -> Test` to see results of the test you have just run.
-
-<figure><img src="../.gitbook/assets/Frame 23 (1).png" alt=""><figcaption></figcaption></figure>
-
+[Contact Support](mailto:support@akto.io)

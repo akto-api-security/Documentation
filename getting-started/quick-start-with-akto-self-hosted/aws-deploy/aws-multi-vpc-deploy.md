@@ -2,7 +2,7 @@
 
 ## Steps to setup Akto in AWS multi-VPC environment
 
-### Step 1: Deploy Akto dashboard and mongo using [helm charts](./helm-deploy.md) or our [cloud formation templates](./aws-deploy.md).
+### Step 1: Deploy Akto dashboard and mongo using [helm charts](../helm-deploy.md) or our [cloud formation templates](./).
 
 ### Step 2: Setup VPC peering
 
@@ -12,25 +12,25 @@ We need to connect the VPC where Akto is deployed (AktoVPC) and the VPC where Ap
 
 Initiate VPC peering connection from AppServerVPC to AktoVPC
 
-<figure><img src="../.gitbook/assets/Create peering connection.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Create peering connection.png" alt=""><figcaption></figcaption></figure>
 
 Once a peering connection request has been initiated, you will see a screen like this
 
-<figure><img src="../.gitbook/assets/VPC Peering connection successful.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/VPC Peering connection successful.png" alt=""><figcaption></figcaption></figure>
 
 #### Step 2.b: Accept VPC peering between AppServerVPC and AktoVPC
 
 Log on to AktoVPC and navigate to VPC > Peering connections. Click on `Accept request` to accept the peering connection request.
 
-<figure><img src="../.gitbook/assets/VPC Peering connection accept 1.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/VPC Peering connection accept 1.png" alt=""><figcaption></figcaption></figure>
 
 Clicking on `Accept request` will open up this pop-up where you can confirm the peering connection request.
 
-<figure><img src="../.gitbook/assets/VPC Peering connection accept 2.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/VPC Peering connection accept 2.png" alt=""><figcaption></figcaption></figure>
 
 After a few seconds the connection status will change to `Active` and you will see a screen like this
 
-<figure><img src="../.gitbook/assets/VPC peering connections final page.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/VPC peering connections final page.png" alt=""><figcaption></figcaption></figure>
 
 #### Step 2.c: Update route tables
 
@@ -42,7 +42,7 @@ Log on to AppServerVPC and navigate to VPC > Route tables.
 
 Click on `Edit routes` and add a route to AktoVPC CIDR block with the peering connection as the target.
 
-<figure><img src="../.gitbook/assets/Update RT 2.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Update RT 2.png" alt=""><figcaption></figcaption></figure>
 
 **Step 2.c.2: Update route table of AktoVPC**
 
@@ -50,13 +50,13 @@ Log on to AktoVPC and navigate to VPC > Route tables.
 
 Click on `Edit routes` and add a route to AppServerVPC CIDR block with the peering connection as the target.
 
-<figure><img src="../.gitbook/assets/Update RT 1.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Update RT 1.png" alt=""><figcaption></figcaption></figure>
 
 ### Step 3: Update security groups to allow traffic between VPCs
 
 Update security group for AktoMongoInstance in AktoVPC to allow the data processors to send data to Mongo. Once data processors are up and running (to be setup in step #4), they will start sending data to AktoMongoInstance deployed in AktoVPC. But to make sure that the data reaches mongo instance, we need to update AktoMongoInstance’s security group as follows:
 
-<figure><img src="../.gitbook/assets/Update SG.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Update SG.png" alt=""><figcaption></figcaption></figure>
 
 Here we will add Type: Custom TCP, Port range: 27017, CIDR block: 10.0.0.0/16 (Cidr block of the AppServerVPC)
 

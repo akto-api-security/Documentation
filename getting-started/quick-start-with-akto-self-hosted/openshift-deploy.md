@@ -10,7 +10,7 @@ Steps to get Akto running on your Openshift cluster -&#x20;
 
 1. You can use same steps as [Helm Deploy](helm-deploy.md) to deploy Akto.&#x20;
 2. [Add service account](openshift-deploy.md#service-account-manifest) to get permissions for traffic connector.
-3. You can use [Kubernetes Daemonset connector](../traffic-connections/traffic-data-sources/kubernetes.md) or [eBPF on mTLS](../traffic-connections/traffic-data-sources/ebpf-mtls.md) as your traffic connector.&#x20;
+3. You can use [Kubernetes Daemonset connector](../../traffic-connections/traffic-data-sources/kubernetes.md) or [eBPF on mTLS](../../traffic-connections/traffic-data-sources/ebpf-mtls.md) as your traffic connector.&#x20;
 
 Add the following to the Daemonset connector -&#x20;
 
@@ -70,4 +70,3 @@ users:
 ```bash
 oc adm policy add-scc-to-user akto-daemonset-scc -z akto-daemonset-serviceaccount
 ```
-

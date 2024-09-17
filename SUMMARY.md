@@ -7,24 +7,25 @@
 ## Getting Started
 
 * [Akto Cloud](getting-started/quick-start-with-akto-cloud.md)
-* [Akto Self Hosted](getting-started/quick-start-with-akto-self-hosted.md)
-* [AWS deploy](getting-started/aws-deploy.md)
-* [AWS multi-VPC deploy](getting-started/aws-multi-vpc-deploy.md)
-* [AWS Cross-Region Cross-VPC deploy](getting-started/aws-cross-region-vpc-deploy.md)
-* [Custom subdomain on Akto on AWS](getting-started/aws-ssl.md)
-* [GCP Deploy](getting-started/gcp-deploy.md)
+* [Akto Self Hosted](getting-started/quick-start-with-akto-self-hosted/README.md)
+  * [Helm Deploy](getting-started/quick-start-with-akto-self-hosted/helm-deploy.md)
+  * [AWS deploy](getting-started/quick-start-with-akto-self-hosted/aws-deploy/README.md)
+    * [AWS multi-VPC deploy](getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-multi-vpc-deploy.md)
+    * [AWS Cross-Region Cross-VPC deploy](getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-cross-region-vpc-deploy.md)
+  * [GCP Deploy](getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md)
+  * [Azure Deploy](getting-started/quick-start-with-akto-self-hosted/azure-deploy.md)
+  * [Openshift Deploy](getting-started/quick-start-with-akto-self-hosted/openshift-deploy.md)
+  * [Heroku](getting-started/quick-start-with-akto-self-hosted/heroku.md)
+  * [Custom subdomain on Akto on AWS](getting-started/quick-start-with-akto-self-hosted/aws-ssl.md)
 * [Local Deploy](getting-started/local-deploy.md)
-* [Azure Deploy](getting-started/azure-deploy.md)
-* [Helm Deploy](getting-started/helm-deploy.md)
-* [Openshift Deploy](getting-started/openshift-deploy.md)
-* [Heroku](getting-started/heroku.md)
 * [Setting up proxy](getting-started/proxy-setup.md)
-* [FAQs on data concerns](getting-started/faqs-on-data-concerns.md)
 * [Migrate From Self Hosted Setup To SaaS](getting-started/move-self-hosted-to-saas.md)
+* [FAQs on data concerns](getting-started/faqs-on-data-concerns.md)
 
 ## Traffic Connections
 
 * [API Traffic data connectors](traffic-connections/traffic-data-sources/README.md)
+  * [Connect Akto with Hybrid SaaS](traffic-connections/traffic-data-sources/hybrid-saas.md)
   * [Connect Akto with AWS Traffic Mirroring](traffic-connections/traffic-data-sources/amazon-aws.md)
   * [Connect Akto with AWS EKS](traffic-connections/traffic-data-sources/aws-eks.md)
   * [Connect Akto with AWS Fargate](traffic-connections/traffic-data-sources/aws-fargate.md)
@@ -47,7 +48,6 @@
   * [Connect Akto with Postman](traffic-connections/traffic-data-sources/postman.md)
   * [Connect Akto with OpenAPI](traffic-connections/traffic-data-sources/openapi.md)
   * [Akto SDK](traffic-connections/traffic-data-sources/akto-sdk.md)
-  * [Connect Akto with Hybrid SaaS](traffic-connections/traffic-data-sources/hybrid-saas.md)
 
 ## API Inventory
 
@@ -55,8 +55,10 @@
   * [API Endpoints](api-inventory/concepts/api-endpoints.md)
   * [Meta Properties of API Endpoint](api-inventory/concepts/meta-properties-of-api-endpoint.md)
   * [API Collection](api-inventory/concepts/api-collection.md)
+  * [Explore mode](api-inventory/concepts/explore-mode.md)
   * [Data Types](api-inventory/concepts/data-types.md)
   * [API Changes](api-inventory/concepts/api-changes.md)
+  * [Tags](api-inventory/concepts/tags.md)
   * [Sensitive Data](api-inventory/concepts/sensitive-data.md)
   * [Alerts](api-inventory/concepts/alerts.md)
   * [Shadow APIs](api-inventory/concepts/shadow-apis.md)
@@ -64,7 +66,9 @@
   * [Auth types](api-inventory/concepts/auth-types.md)
   * [Access Type](api-inventory/concepts/access-type.md)
   * [API inventory from source code](api-inventory/concepts/api-inventory-from-source-code.md)
+  * [Advanced Filter Option](api-inventory/concepts/advanced-filter-option.md)
 * [How-To](api-inventory/how-to/README.md)
+  * [Enable Tree view for API collections](api-inventory/how-to/enable-tree-view-for-api-collections.md)
   * [Export an API Collection to Postman](api-inventory/how-to/export-an-api-collection-to-postman.md)
   * [Export an API Collection to Burp](api-inventory/how-to/export-an-api-collection-to-burp.md)
   * [Create Swagger File Using Akto](api-inventory/how-to/create-swagger-file-using-akto.md)
@@ -79,6 +83,7 @@
   * [Reset an Auth Type](api-inventory/how-to/reset-an-auth-type.md)
   * [Configure Access Types](api-inventory/how-to/configure-access-types.md)
   * [View New API Endpoint](api-inventory/how-to/view-new-api-endpoint.md)
+  * [Add Private CIDRs list](api-inventory/how-to/add-private-cidrs-list.md)
   * [View New Parameters](api-inventory/how-to/view-new-parameters.md)
   * [Configure alerts on API changes](api-inventory/how-to/configure-alerts-on-api-changes.md)
   * [Create a custom collection](api-inventory/how-to/how-to-create-a-custom-collection.md)
@@ -86,6 +91,8 @@
   * [Extract APIs from github hosted source code using our Github Action](api-inventory/how-to/extract-apis-from-source-code-gha.md)
   * [Extract APIs from source code using our Docker based CLI](api-inventory/how-to/extract-apis-from-source-code-docker-cli.md)
   * [Remove Bad Endpoints](api-inventory/how-to/remove-bad-endpoints.md)
+  * [Create New Tags](api-inventory/how-to/create-new-tags.md)
+  * [Edit Tags](api-inventory/how-to/edit-tags.md)
 
 ## Test Editor
 
@@ -112,6 +119,9 @@
   * [Create a Custom Test](test-editor/how-to/create-a-custom-test.md)
   * [Deactivate Test](test-editor/how-to/deactivate-test.md)
   * [Play in Test Editor Background](test-editor/how-to/play-in-test-editor-background.md)
+  * [Copy Test Content](test-editor/how-to/copy-test-content.md)
+  * [Opening Endpoint in Test Editor](test-editor/how-to/opening-endpoint-in-test-editor.md)
+  * [Add a New Test Library](test-editor/how-to/add-a-new-test-library.md)
   * [Contribute to Test Library](test-editor/how-to/contribute-to-test-library.md)
 
 ## API Security Testing
@@ -130,11 +140,37 @@
   * [Test Multiple APIs](api-security-testing/how-to/test-multiple-apis.md)
   * [Schedule Tests](api-security-testing/how-to/schedule-tests.md)
   * [Stop Tests](api-security-testing/how-to/stop-tests.md)
+  * [Run Test on Any One Endpoint](api-security-testing/how-to/run-test-on-any-one-endpoint.md)
+  * [Configure global rate limit](api-security-testing/how-to/configure-global-rate-limit.md)
+  * [Configure Pre-request Script](api-security-testing/how-to/configure-pre-request-script.md)
   * [Create a Test Role](api-security-testing/how-to/create-a-test-role.md)
   * [Play in Test Editor Playground](api-security-testing/how-to/play-in-test-editor-playground.md)
   * [Conduct Role-Based Testing](api-security-testing/how-to/conduct-role-based-testing.md)
   * [Run tests in CLI using Akto](api-security-testing/how-to/run-tests-in-cli-using-akto.md)
   * [Secure GraphQL APIs using Akto](api-security-testing/how-to/secure-graphql-apis-using-akto.md)
+  * [Create and Edit Auth Types](api-security-testing/how-to/create-and-edit-auth-types.md)
+
+## Issues
+
+* [How To](issues/how-to/README.md)
+  * [Jira Integration](issues/how-to/jira-integration.md)
+  * [Triage Issues](issues/how-to/triage-issues.md)
+  * [Export Vulnerability Report](issues/how-to/export-vulnerability-report.md)
+
+## Account
+
+* [Invite User](account/invite-user/README.md)
+  * [Change role of a User](account/invite-user/change-role-of-a-user.md)
+* [Create a New Account](account/create-a-new-account.md)
+* [Understanding Role Permissions](account/understanding-role-permissions.md)
+
+## Pricing
+
+* [Pricing Plans](pricing/pricing-plans.md)
+* [How To](pricing/how-to/README.md)
+  * [Upgrade Your Plan](pricing/how-to/upgrade-your-plan.md)
+  * [Downgrade Your Plan](pricing/how-to/downgrade-your-plan.md)
+  * [Sync Usage Data](pricing/how-to/sync-usage-data.md)
 
 ## SSO
 
