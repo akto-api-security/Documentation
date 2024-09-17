@@ -43,10 +43,9 @@ redirects:
   getting-started/aws-cross-region-vpc-deploy: getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-cross-region-vpc-deploy.md
   getting-started/helm-deploy: getting-started/quick-start-with-akto-self-hosted/helm-deploy.md
   getting-started/heroku: getting-started/quick-start-with-akto-self-hosted/heroku.md
+  getting-started/openshift-deploy: getting-started/quick-start-with-akto-self-hosted/openshift-deploy.md
+  getting-started/gcp-deploy: getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md
+  getting-started/azure-deploy: getting-started/quick-start-with-akto-self-hosted/azure-deploy.md
+  getting-started/aws-ssl: getting-started/quick-start-with-akto-self-hosted/aws-ssl.md
 
 
-  
-  getting-started/openshift-deploy:getting-started/quick-start-with-akto-self-hosted/openshift-deploy.md
-  getting-started/gcp-deploy:getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md
-  getting-started/azure-deploy:getting-started/quick-start-with-akto-self-hosted/azure-deploy.md
-  getting-started/aws-ssl:getting-started/quick-start-with-akto-self-hosted/aws-ssl.md
