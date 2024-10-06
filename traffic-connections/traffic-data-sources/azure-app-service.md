@@ -1,4 +1,4 @@
-# Connect Akto with AWS ECS
+# Connect Akto with Azure App Services
 
 ## Introduction
 
