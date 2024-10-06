@@ -2,57 +2,44 @@
 
 ## Introduction
 
-Learn about how to send API traffic data from AWS ECS setup to Akto from your environment. 
-Depending on your ECS infrastructure type refer to these respective sections:
-1. [FARGATE infrastructure](#adding-akto-traffic-collector-to-ecs-fargate-cluster) 
-2. [EC2 instances infrastructure](#adding-akto-traffic-collector-to-ecs-ec2-instances-cluster)
+Learn about how to send API traffic data from Azure App Services Web App to Akto.
 
-## Adding Akto traffic collector to ECS FARGATE cluster
+## Prerequisites
 
-When the ECS cluster is running on AWS FARGATE infrastructure, we will add a container to the task definition of the task, from which we want to monitor. Refer the below image to check your cluster type. <figure><img src="../../.gitbook/assets/ecs-2.png" alt="ECS FARGATE infrastructure type"><figcaption><p>ECS FARGATE infrastructure type</p></figcaption></figure>
+1. Your Web App should have sidecar support enabled at the time of creation. <figure><img src="../../.gitbook/assets/SidecarEnabled.png" alt="Sidecar Enabled"><figcaption></figcaption></figure>
 
-1. Setup Akto data processor using the guide [here](./data-processor.md). Keep the values `AKTO_MONGO_IP` and `AKTO_NLB_IP` handy, as we will need them later.
 
-2. Add a container with the configuration defined below. Please replace the `AKTO_MONGO_IP` and `AKTO_NLB_IP` variables, as obtained from [step 1](#adding-akto-traffic-collector-to-ecs-fargate-cluster).
+## Adding Akto traffic collector to Azure App Services Web App
 
-    ```bash
-    {
-        "name": "mirror-api-logging",
-        "image": "aktosecurity/mirror-api-logging:k8s_agent",
-        "cpu": 1024,
-        "memory": 1024,
-        "portMappings": [],
-        "essential": false,
-        "environment": [
-            {
-                "name": "AKTO_TRAFFIC_BATCH_TIME_SECS",
-                "value": "10"
-            },
-            {
-                "name": "AKTO_MONGO_CONN",
-                "value": "mongodb://<AKTO_MONGO_IP>:27017/admini"
-            },
-            {
-                "name": "AKTO_TRAFFIC_BATCH_SIZE",
-                "value": "10"
-            },
-            {
-                "name": "AKTO_INFRA_MIRRORING_MODE",
-                "value": "gcp"
-            },
-            {
-                "name": "AKTO_KAFKA_BROKER_MAL",
-                "value": "<AKTO_NLB_IP>:9092"
-            }
-        ],
-        "environmentFiles": [],
-        "mountPoints": [],
-        "volumesFrom": [],
-        "systemControls": []
-    }
-    ```
-    <figure><img src="../../.gitbook/assets/ecs-1.png" alt="ECS task definition"><figcaption><p>ECS task definition</p></figcaption></figure>
+1. Open Azure Portal and click on App Services in the left navbar. <figure><img src="../../.gitbook/assets/app-services.png" alt="App Services"><figcaption></figcaption></figure>
 
-3. After adding this definition to the task, update the task revision in the service. <figure><img src="../../.gitbook/assets/ecs-3.png" alt="Update ECS service"><figcaption><p>Update ECS service</p></figcaption></figure>
-    
-4. The containers for the task should show both your primary container and mirror-api-logging container. <figure><img src="../../.gitbook/assets/ecs-4.png" alt="Updated service"><figcaption><p>Updated service</p></figcaption></figure>
+2. Click on the web app for which you want to setup traffic mirroring. 
+
+3. Click on Environment Variables under the Settings tab in left navbar. <figure><img src="../../.gitbook/assets/env-variables.png" alt="Environment Variables"><figcaption></figcaption></figure>
+
+4. Add the following env variables.
+```bash
+AKTO_INFRA_MIRRORING_MODE=gcp
+AKTO_KAFKA_BROKER_MAL=<Akto_Runtime_Load_Balancer_DNS> // modify this value with Akto Runtime Load Balancer DNS
+AKTO_MONGO_CONN=mongodb://0.0.0.0:27017
+AKTO_TRAFFIC_BATCH_SIZE=100
+AKTO_TRAFFIC_BATCH_TIME_SECS=10
+```
+Click on Apply for the changes to be reflected.
+
+5. Go to your web app, and click on Deployment Center under the Deployment tab in left navbar. <figure><img src="../../.gitbook/assets/deployment-center.png" alt="Deployment Center"><figcaption></figcaption></figure>
+
+6. Click on Add button, and add the akto traffic mirroring sidecar. <figure><img src="../../.gitbook/assets/add-container.png" alt="Add Container"><figcaption></figcaption></figure>
+
+7. Enter the following values to spawn a new Akto mirroring container
+```bash
+Name -> mirroring
+Image source -> Docker Hub or other registeries
+Image Type -> Public
+Registry server URL -> index.docker.io
+Image and tag -> aktosecurity/mirror-api-logging:k8s_agent
+Port -> 90
+```
+<figure><img src="../../.gitbook/assets/mirroring-container.png" alt="Mirroring Container"><figcaption></figcaption></figure>
+
+8. Click on Apply, and traffic should start population in a couple of minutes.
