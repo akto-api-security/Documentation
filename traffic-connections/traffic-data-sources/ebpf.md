@@ -11,7 +11,7 @@ For a better understanding, here's an architecture diagram of the setup.
 
 1. Setup Akto data processor using the guide [here](./data-processor.md)
 
-2. Apply the daemonset configuration given below using `kubectl apply -f akto-daemonset-config.yaml -n <NAMESPACE>`. You will find `AKTO_NLB_IP` and `AKTO_MONGO_CONN` after setting up Akto data processor, as mentioned above.
+2. Apply the Daemonset configuration given below using `kubectl apply -f auto-daemon set-config.yaml -n <NAMESPACE>`. You will find `AKTO_NLB_IP` and `AKTO_MONGO_CONN` after setting up Akto data processor, as mentioned above.
 
 ```yaml
 apiVersion: apps/v1
