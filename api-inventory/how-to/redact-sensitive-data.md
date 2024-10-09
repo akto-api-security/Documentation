@@ -18,7 +18,7 @@ Once redact is on, Akto processes API calls, but doesn't store the values. You c
 
 ### Redact for a data type
 
-Go to **API Inventory** > **Sensitive data**. Select the data type and click on `Edit`. Scroll down and set the **Redact this data type** to either `True` or `False`.
+Go to **API Discovery** > **Sensitive data**. Select the data type and click on `Edit`. Scroll down and set the **Redact this data type** to either `True` or `False`.
 
 {% embed url="https://demo.arcade.software/SqSssV6nI66CIeDU4pyv" %}
 

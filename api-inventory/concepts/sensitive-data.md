@@ -21,7 +21,7 @@ Akto comes with over 40 built-in data types and some of them belong to the sensi
 
 In the demonstration below, let's identify all the endpoints of the **"Juice\_shop\_demo"** collection that share sensitive data.
 
-Go to **API Inventory> API Collection**. Select any API Collection and click on the **Sensitive** tab to populate all the sensitive endpoints within that collection. You can also filter the sensitive endpoints based on specific or multiple sensitive params like Email.
+Go to **API Discovery> API Collection**. Select any API Collection and click on the **Sensitive** tab to populate all the sensitive endpoints within that collection. You can also filter the sensitive endpoints based on specific or multiple sensitive params like Email.
 
 {% embed url="https://demo.arcade.software/pPBmsI7APjiKlXElCukg?embed=" %}
 Detect sensitive parameters

@@ -12,7 +12,7 @@ By scheduling tests to run at predetermined intervals, you can continuously moni
 
 In the demonstration below, let’s [run a test](broken-reference) and schedule it for the **“rest/products/search”** endpoint within the collection name **"demo\_collection."**
 
-Go to **API Inventory >API Collection.** Select the **API Collection** and click on the **Run Test.** Select the **Test Categories** and **Tests** that you want to test. **Select Time** to trigger your test, then click on **Run Test** to schedule the test.
+Go to **API Discovery >API Collection.** Select the **API Collection** and click on the **Run Test.** Select the **Test Categories** and **Tests** that you want to test. **Select Time** to trigger your test, then click on **Run Test** to schedule the test.
 
 {% embed url="https://app.arcade.software/share/hK8GaU6w1YYkeRZtrBwr" %}
 

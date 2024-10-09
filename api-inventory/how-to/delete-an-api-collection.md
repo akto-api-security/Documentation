@@ -10,7 +10,7 @@ If you no longer need an API collection or wish to remove it, you can delete the
 
 In the demonstration below, let’s delete the **`"Postman API Documentation #reference"`** API collection from our API collections list.
 
-Go to the **API Inventory > API Collection**. Check the API collection that you want to delete and click on the **Remove Collections** button.
+Go to the **API Discovery > API Collection**. Check the API collection that you want to delete and click on the **Remove Collections** button.
 
 {% embed url="https://demo.arcade.software/jpeOH5wWCojdlqUnUSIX?embed=" %}
 Delete an API collection

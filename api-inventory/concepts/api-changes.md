@@ -8,7 +8,7 @@ If you want to check all the API endpoints and Parameters that have been newly a
 
 In the demonstration below, we'll review the changes in the API over the past two months.
 
-Go to the **API Inventory > API Changes**. All new APIs are listed here. Click on any new **API endpoint** to view its details.&#x20;
+Go to the **API Discovery > API Changes**. All new APIs are listed here. Click on any new **API endpoint** to view its details.&#x20;
 
 {% embed url="https://demo.arcade.software/Iwb4cLDXkjVsiDeEH39u?embed=" %}
 View an API change

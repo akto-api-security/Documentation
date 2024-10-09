@@ -17,7 +17,7 @@ You can also automate attacker auth token generation by clicking on the `Automat
 
 #### 2. **Run BOLA tests**
 
-Go to **API Inventory > API Collection**. Select the **API collection** for which you want to run the test and sort authenticated API endpoints based on your requirements. Click on the **Run test** button. Select the **Test Categories (BOLA)**, then click on the **Run Test**.
+Go to **API Discovery > API Collection**. Select the **API collection** for which you want to run the test and sort authenticated API endpoints based on your requirements. Click on the **Run test** button. Select the **Test Categories (BOLA)**, then click on the **Run Test**.
 
 {% embed url="https://demo.arcade.software/2hQpW31GPsc9JTlY5F18?embed=" %}
 Conduct Authenticated Testing

@@ -14,7 +14,7 @@ You can also [set environment type](../how-to/set-environment-type.md) for an AP
 
 In the demonstration below, let's check out and view details for the API collection viz.- **New Burp**.&#x20;
 
-Go to the **API Inventory > API Collection** and click on any **API Collection** to view its Endpoints (**New Burp** in this case).
+Go to the **API Discovery > API Collection** and click on any **API Collection** to view its Endpoints (**New Burp** in this case).
 
 {% embed url="https://demo.arcade.software/O0Ye3U1iQE7ZAagqYpAw?embed=" %}
 View an API collection
@@ -26,7 +26,7 @@ In the above demonstration, you can see all 32 endpoints in the collection. Clic
 
 In the demonstration below, we have sorted the API collections using two parameters viz.- **"More”** and **“Endpoints"**. Using these two parameters together makes it easy to access API collections having more endpoints
 
-Go to **API Inventory > API Collection**. Click on the **Sort** icon to sort the API Collections.
+Go to **API Discovery > API Collection**. Click on the **Sort** icon to sort the API Collections.
 
 {% embed url="https://demo.arcade.software/7kVYpBGCOmijEIZoQ0Qu?embed=" %}
 Sort an API collection

@@ -44,7 +44,7 @@ Partner APIs refer to the specific API endpoints that can be used by IPs outside
 
 In the demonstration below, let's check out all the public APIs present in the **`juices-ALBTa-ME7JZNNWLKCF`** collection.
 
-Go to the **API Inventory > API Collection**. Select an **API Collection** and check the Access type to **Public**.
+Go to the **API Discovery > API Collection**. Select an **API Collection** and check the Access type to **Public**.
 
 {% embed url="https://demo.arcade.software/gw1onqsZpRzx5eCuqwio?embed=" %}
 Detect new public API

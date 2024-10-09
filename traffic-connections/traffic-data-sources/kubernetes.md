@@ -133,9 +133,9 @@ If you have installed on *GCP*, *Kubernetes* or *OpenShift* -
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/236832493-35b27843-dce9-482a-803a-033999c55aef.png" alt="Run the command"><figcaption><p>Run the command</p></figcaption></figure>
 
-6. Go to `API Inventory` on Akto dashboard to see your new APIs
+6. Go to `API Discovery` on Akto dashboard to see your new APIs
 
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832509-8e8c84ff-633e-4ffe-b11b-344d02ca6e74.png" alt="Check API Inventory"><figcaption><p>Check API Inventory</p></figcaption></figure>
+<figure><img src="https://user-images.githubusercontent.com/91221068/236832509-8e8c84ff-633e-4ffe-b11b-344d02ca6e74.png" alt="Check API Discovery"><figcaption><p>Check API Discovery</p></figcaption></figure>
 
 ## Frequently Asked Questions (FAQs)
 
