@@ -10,7 +10,7 @@ If you have a highly sensitive, non-standard data type, you can define the patte
 
 In the demonstration below, let's create a custom data type named **TXN\_ID** specifically for handling sensitive information found only in API responses.\
 \
-Go to **API Inventory > Sensitive data**. Click on the **Create Custom Data Type** and enter the data type details and conditions.
+Go to **API Discovery > Sensitive data**. Click on the **Create Custom Data Type** and enter the data type details and conditions.
 
 {% embed url="https://demo.arcade.software/p9oqszsEUzWcnFV3ou6h?embed=" %}
 Add custom data type
@@ -52,7 +52,7 @@ AktoGPT is a powerful AI tool integrated into the Akto platform that greatly sim
 
 In the demonstration below, we have generated a regex pattern for a **`credit card number`** and added it to Akto.
 
-Go to **API Inventory > Sensitive data**. Click on the **AktoGPT** and select the prompt to generate a Regix pattern.
+Go to **API Discovery > Sensitive data**. Click on the **AktoGPT** and select the prompt to generate a Regix pattern.
 
 {% embed url="https://demo.arcade.software/RekxtkzRue4w3v3Yl0J9?embed=" %}
 Add Regix using AktoGPT

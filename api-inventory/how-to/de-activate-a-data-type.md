@@ -8,7 +8,7 @@ When the data type is no longer relevant or needs to be updated, you can deactiv
 
 In the demonstration below, let's deactivate the **`"TOKEN"`** data type.
 
-Go to **API Inventory> Sensitive data**. Click on "**…"** of the Data Type and select **Edit** to De-activate the data type.
+Go to **API Discovery> Sensitive data**. Click on "**…"** of the Data Type and select **Edit** to De-activate the data type.
 
 {% embed url="https://demo.arcade.software/UkuVsnZkwX2M5BGC4ZIk?embed=" %}
 

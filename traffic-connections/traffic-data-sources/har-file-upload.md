@@ -37,7 +37,7 @@ Add the generated HAR file to your API collection by following the steps demonst
 
 ### What's next?
 
-Head to [API Inventory](../../api-inventory/concepts/api-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.&#x20;
+Head to [API Discovery](../../api-inventory/concepts/api-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.&#x20;
 
 ## Frequently Asked Questions (FAQs)
 

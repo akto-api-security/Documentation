@@ -16,7 +16,7 @@ This includes details of **`header & response`** data and **`payloads`**, which 
 
 In the demonstration below, we are viewing the details of the **`api/quantity/`** endpoint within the **“New Burp”** collection.
 
-Go to the **API Inventory > API Collection.** Select the **"New Burp"** collection, and click on **`api/quantity/`** Endpoint to view its details.
+Go to the **API Discovery > API Collection.** Select the **"New Burp"** collection, and click on **`api/quantity/`** Endpoint to view its details.
 
 {% embed url="https://demo.arcade.software/boBiQNlJHTbRmmfE6nZR?embed=" %}
 View an Endpoint

@@ -76,7 +76,7 @@ Follow these steps to add daemonset config to your Kubernetes setup -
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/236832493-35b27843-dce9-482a-803a-033999c55aef.png" alt=""><figcaption></figcaption></figure>
 
-7\. Go to `API Inventory` on Akto dashboard to see your new APIs
+7\. Go to `API Discovery` on Akto dashboard to see your new APIs
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/236832509-8e8c84ff-633e-4ffe-b11b-344d02ca6e74.png" alt=""><figcaption></figcaption></figure>
 
@@ -86,7 +86,7 @@ Akto is [Open Source](https://www.akto.io/blog/introducing-akto-open-source) and
 
 ### What's next?
 
-You can now go to your API Inventory to see all the API traffic Akto has captured. Head to [API Inventory](../../api-inventory/concepts/api-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.&#x20;
+You can now go to your API Inventory to see all the API traffic Akto has captured. Head to [API Discovery](../../api-inventory/concepts/api-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.&#x20;
 
 ### Get Support for your Akto setup
 

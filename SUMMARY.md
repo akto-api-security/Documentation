@@ -50,7 +50,7 @@
   * [Connect Akto with OpenAPI](traffic-connections/traffic-data-sources/openapi.md)
   * [Akto SDK](traffic-connections/traffic-data-sources/akto-sdk.md)
 
-## API Inventory
+## API Discovery
 
 * [Concepts](api-inventory/concepts/README.md)
   * [API Endpoints](api-inventory/concepts/api-endpoints.md)
@@ -66,7 +66,7 @@
   * [Risk Score](api-inventory/concepts/risk-score.md)
   * [Auth types](api-inventory/concepts/auth-types.md)
   * [Access Type](api-inventory/concepts/access-type.md)
-  * [API inventory from source code](api-inventory/concepts/api-inventory-from-source-code.md)
+  * [API discovery from source code](api-inventory/concepts/api-inventory-from-source-code.md)
   * [Advanced Filter Option](api-inventory/concepts/advanced-filter-option.md)
 * [How-To](api-inventory/how-to/README.md)
   * [Enable Tree view for API collections](api-inventory/how-to/enable-tree-view-for-api-collections.md)
@@ -168,6 +168,16 @@
   * [Azure AD SAML](account/sso/azuread-saml.md)
   * [Okta OIDC](account/sso/okta-oidc.md)
   * [Github OIDC](account/sso/github-oidc.md)
+
+## Runtime protection
+
+* [Concepts](runtime-protection/concepts/README.md)
+  * [Overview](runtime-protection/concepts/overview.md)
+
+## API security posture
+
+* [Concepts](api-security-posture/concepts/README.md)
+  * [Overview](api-security-posture/concepts/overview.md)
 
 ## Pricing
 

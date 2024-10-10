@@ -8,7 +8,7 @@ You can copy any API Endpoint in `curl` format or `Burp` format. You can now rep
 
 In the demonstration below, we have copied the request and response sample values of the **`api/quantity/`** endpoint which is located within the **`New Burp`** Collection.
 
-Go to **API Inventory> API Collection**. Click on the **API Collection** and select the **API Endpoint** to copy the API Endpoint Data.
+Go to **API Discovery> API Collection**. Click on the **API Collection** and select the **API Endpoint** to copy the API Endpoint Data.
 
 {% embed url="https://demo.arcade.software/2rHBQrnIocOnmGC2FpHb?embed=" %}
 Copy API endpoint data

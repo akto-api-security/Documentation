@@ -9,7 +9,7 @@ You can add your API collection to Akto to centralize and organize your APIs. It
 
 In the demonstration below, we have illustrated the steps to create a New collection.
 
-Go to the **API Inventory > API Collection**. Click on the **Create New API Collection** button. Enter a name for your new collection and click on the **Create** button.
+Go to the **API Discovery > API Collection**. Click on the **Create New API Collection** button. Enter a name for your new collection and click on the **Create** button.
 
 {% embed url="https://demo.arcade.software/2eqG8XuT3CvB0Ow5BgSt?embed=" %}
 Create a New API Collection

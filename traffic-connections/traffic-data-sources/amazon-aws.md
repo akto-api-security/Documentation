@@ -81,7 +81,7 @@ You have now given Akto the permissions to read loadbalancer names from your AWS
 
 <figure><img src="../../.gitbook/assets/Screen Shot 2023-01-04 at 3.13 1.png" alt="Wait for a few mins"><figcaption><p>Wait for a few mins</p></figcaption></figure>
 
-6\. Once mirroring is complete, head to the `API inventory page` and see all the APIs Akto has discovered.
+6\. Once mirroring is complete, head to the `API discovery page` and see all the APIs Akto has discovered.
 
 {% hint style="info" %}
 Akto is [Open Source](https://www.akto.io/blog/introducing-akto-open-source) and if you find any issues or [traffic connectors](https://www.akto.io/connectors) you don't see in the list, you can create an issue in our open source repo [here](https://github.com/akto-api-security/akto).
@@ -89,7 +89,7 @@ Akto is [Open Source](https://www.akto.io/blog/introducing-akto-open-source) and
 
 ### What's next?
 
-You can now go to your API Inventory to see all the API traffic Akto has captured. Head to [API Inventory](../../api-inventory/concepts/api-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.&#x20;
+You can now go to your API Inventory to see all the API traffic Akto has captured. Head to [API Discovery](../../api-inventory/concepts/api-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.&#x20;
 
 ## Frequently Asked Questions (FAQs)
 

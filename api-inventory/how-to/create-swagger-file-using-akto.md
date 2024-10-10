@@ -10,7 +10,7 @@ Once Akto captures all the APIs, you can export the entire list of APIs or colle
 
 In the demonstration below, we generated a Swagger file for the **`juice_shop_demo`** API collection.
 
-Go to **API Inventory > API Collection.** Select the **API Collection** you want to create a swagger file. Click on **Export > OpenAPI spec** to generate the swagger file.
+Go to **API Discovery > API Collection.** Select the **API Collection** you want to create a swagger file. Click on **Export > OpenAPI spec** to generate the swagger file.
 
 {% embed url="https://demo.arcade.software/BGFO9K4dcHR2j1klpNLv?embed=" %}
 Create Open API schema

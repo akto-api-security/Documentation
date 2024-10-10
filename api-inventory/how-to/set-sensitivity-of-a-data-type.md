@@ -10,7 +10,7 @@ For example, if you want to flag tokens as sensitive whenever they appear in API
 
 In the demonstration below, let's set the **`"TOKEN"`** data type to be as sensitive only in API response.
 
-Go to **API Inventory> Sensitive data**. Click on **"…"** of the Data Type and select **Edit** to set the sensitivity of the data type.
+Go to **API Discovery> Sensitive data**. Click on **"…"** of the Data Type and select **Edit** to set the sensitivity of the data type.
 
 {% embed url="https://demo.arcade.software/a56KiVd6fD0GIthN15PG?embed=" %}
 Set sensitivity of a data type
