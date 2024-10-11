@@ -47,7 +47,7 @@ You can use either a CloudFormation template, Terraform template or a Helm chart
 
 #### Helm chart
 
-1. If you have K8s clusters, you can use helm chart to install Traffic aggregator. 
+1\. If you have K8s clusters, you can use helm chart to install Traffic aggregator. 
 
 2\. Add akto helm repository.
 
