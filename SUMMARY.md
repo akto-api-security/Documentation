@@ -50,7 +50,7 @@
   * [Connect Akto with OpenAPI](traffic-connections/traffic-data-sources/openapi.md)
   * [Akto SDK](traffic-connections/traffic-data-sources/akto-sdk.md)
 
-## API Discovery
+## API Inventory
 
 * [Concepts](api-inventory/concepts/README.md)
   * [API Endpoints](api-inventory/concepts/api-endpoints.md)
