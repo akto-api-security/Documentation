@@ -47,26 +47,40 @@ You can use either a CloudFormation template, Terraform template or a Helm chart
 
 #### Helm chart
 
-1. If you have K8s clusters, you can use helm chart to install Traffic aggregator. Copy helm install command by clicking on copy command button.
+1. If you have K8s clusters, you can use helm chart to install Traffic aggregator. 
 
-<figure><img src="../../.gitbook/assets/Mini-Runtime-Helm.png" alt=""><figcaption></figcaption></figure>
+2\. Add akto helm repository.
 
-2\. Run this command in your k8s cluster, which will deploy a new Akto Traffic aggregator service.
+```bash
+helm repo add akto https://akto-api-security.github.io/helm-charts/
+```
 
-3\. Run the below command and copy the `CLUSTER-IP` and `PORT` value for Traffic aggregator  service. In the below example it will be `172.20.169.203:9092`
+<figure><img src="../../.gitbook/assets/helm-repo-add.png" alt=""><figcaption></figcaption></figure>
+
+3\. Install akto-mini-runtime helm chart in your kubernetes cluster.
+
+```bash
+helm install akto-mini-runtime akto/akto-mini-runtime -n <your-namespace> --set mini_runtime.aktoApiSecurityRuntime.env.databaseAbstractorToken="<your-database-abstractor-token>"
+```
+<figure><img src="../../.gitbook/assets/helm-repo-install.png" alt=""><figcaption></figcaption></figure>
+
+
+4\. Running the above commands in your k8s cluster will deploy a new Akto Traffic aggregator service.
+
+5\. Run the below command and copy the `CLUSTER-IP` and `PORT` value for Traffic aggregator  service. In the below example it will be `10.0.23.145:9092`. You can also use the kubernetes service ip, which in this case will be `akto-mini-runtime-mini-runtime.dev.svc.cluster.local:9092`
 
 ```bash
 kubectl get svc -n <namespace>
 ```
 
-<figure><img src="../../.gitbook/assets/Mini-Runtime-Ip1.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/mini-runtime-ip-1.png" alt=""><figcaption></figcaption></figure>
 
-4\. The next step is to install a traffic connector.&#x20;
+6\. The next step is to install a traffic connector.&#x20;
 
-1. You can use the above copied `IP:PORT` value as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `172.20.169.203:9092`)
+1. You can use the above copied `IP:PORT` value as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `10.0.23.145:9092` , `akto-mini-runtime-mini-runtime.dev.svc.cluster.local:9092`)
 2. For `AKTO_MONGO_CONN` , you can use `mongodb://0.0.0.0:27017/admini`.&#x20;
 
-<figure><img src="../../.gitbook/assets/Mini-Runtime-Ip2.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/mini-runtime-ip-2.png" alt=""><figcaption></figcaption></figure>
 
 ## Notes:
 
