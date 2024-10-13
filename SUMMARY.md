@@ -136,6 +136,7 @@
   * [Setup GitHub Integration for CI/CD](api-security-testing/how-to/setup-github-integration-for-ci-cd/README.md)
     * [Create GitHub App](api-security-testing/how-to/setup-github-integration-for-ci-cd/create-github-app.md)
   * [Run Test](api-security-testing/how-to/run-test.md)
+  * [Install testing module in your Cloud](api-security-testing/how-to/install-testing-module-in-your-cloud.md)
   * [Run tests in CI/CD](api-security-testing/how-to/run-tests-in-cicd.md)
   * [Run Tests by Category](api-security-testing/how-to/run-tests-by-category.md)
   * [Test Multiple APIs](api-security-testing/how-to/test-multiple-apis.md)
