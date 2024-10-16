@@ -56,7 +56,7 @@ You can now use a Helm-chart to install Akto Security Testing module in your clo
         environment:
           RUNTIME_MODE: hybrid
           DATABASE_ABSTRACTOR_SERVICE_TOKEN: <Paste_token_here>
-          PUPPETEER_REPLAY_SERVICE_URL: http://akto-puppeteer-replay:3000
+          PUPPETEER_REPLAY_SERVICE_URL: "http://akto-puppeteer-replay:3000"
         restart: always
 
       akto-api-security-puppeteer-replay:
