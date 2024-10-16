@@ -115,6 +115,7 @@
     * [Conditional flows](test-editor/concepts/test-yaml-syntax-detailed/conditional-flows.md)
   * [Template YAMLs](test-editor/concepts/template-yamls/README.md)
     * [Local File Inclusion with Akto](test-editor/concepts/template-yamls/local-file-inclusion-with-akto.md)
+  * [Dynamic severity](test-editor/concepts/dynamic-severity.md)
 * [How To](test-editor/how-to/README.md)
   * [Edit Test](test-editor/how-to/edit-test.md)
   * [Create a Custom Test](test-editor/how-to/create-a-custom-test.md)
