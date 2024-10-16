@@ -54,9 +54,9 @@ You can now use a Helm-chart to install Akto Security Testing module in your clo
       akto-api-security-testing:
         image: public.ecr.aws/aktosecurity/akto-api-security-mini-testing:latest
         environment:
-          - RUNTIME_MODE=hybrid
-          - DATABASE_ABSTRACTOR_SERVICE_TOKEN=**<Paste_token_here>**
-          - PUPPETEER_REPLAY_SERVICE_URL=http://akto-puppeteer-replay:3000
+          RUNTIME_MODE: hybrid
+          DATABASE_ABSTRACTOR_SERVICE_TOKEN: <Paste_token_here>
+          PUPPETEER_REPLAY_SERVICE_URL: http://akto-puppeteer-replay:3000
         restart: always
 
       akto-api-security-puppeteer-replay:
@@ -64,7 +64,7 @@ You can now use a Helm-chart to install Akto Security Testing module in your clo
         ports:
           - "3000:3000"
         environment:
-          - NODE_ENV=production
+          NODE_ENV: production
         restart: always
 
       watchtower:
@@ -73,8 +73,8 @@ You can now use a Helm-chart to install Akto Security Testing module in your clo
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock
         environment:
-          - WATCHTOWER_CLEANUP=true
-          - WATCHTOWER_POLL_INTERVAL=1800
+          WATCHTOWER_CLEANUP: true
+          WATCHTOWER_POLL_INTERVAL: 1800
         labels:
           com.centurylinklabs.watchtower.enable: "false"
     ```
