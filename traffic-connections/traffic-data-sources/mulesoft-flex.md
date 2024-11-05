@@ -34,7 +34,7 @@ wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/featur
 
 8\. Run `docker-compose -f docker-compose-data-ingestion-runtime.yml -d`
 
-9\. Save the following url - `instance_ip:9091/api/ingestData`. This will be used while applying the policy. Make sure this instance is reachable from the instances where your api's are hosted, on which policy will be applied
+9\. Make sure this instance is reachable from the instances where your api's are hosted, on which policy will be applied
 
 
 # Connect Akto with Mulesoft Flex Gateway
@@ -50,7 +50,11 @@ wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/featur
 
 4\. Copy content of gcl.yaml, lib.rs, Corgo.toml files, and paste these files in your project at respective locations.
 
-5\. Compile the project by running `make build`
+5\. Compile the project by running 
+```
+make build
+cargo build
+```
 
 6\. Publish the policy to mulesoft exchange by running `make publish`
 
