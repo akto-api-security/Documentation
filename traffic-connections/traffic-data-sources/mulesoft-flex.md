@@ -52,8 +52,8 @@ wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/featur
 
 5\. Compile the project by running 
 ```
-make build
 cargo build
+make build
 ```
 
 6\. Publish the policy to mulesoft exchange by running `make publish`
