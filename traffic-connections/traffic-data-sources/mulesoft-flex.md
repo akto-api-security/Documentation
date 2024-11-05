@@ -10,7 +10,7 @@ description: >-
 
 Follow these steps to add setup Akto Runtime and Data Ingestion Service -
 
-1\. Ssh into the instance where you want to deploy the above Akto services
+1\. SSH into the instance where you want to deploy the above Akto services
 
 2\. Run the following commands to download docker compose and env files
 ```
@@ -29,16 +29,17 @@ wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/featur
 6\. Search for Hybrid SaaS Connector and click connect.
 <figure><img src="../../.gitbook/assets/HybridSaaSConnector.png" alt=""><figcaption></figcaption></figure>
 
-7\. Copy the token value under `Runtime Service Command` section. Replace it with <token> in docker-mini-runtime.env file.
+7\. Copy the token value under `Runtime Service Command` section. Replace the \<token\> string with the earlier copied value in docker-mini-runtime.env file.
+<figure><img src="../../.gitbook/assets/TokenReplace.png" alt=""><figcaption></figcaption></figure>
 
-8\. Run docker-compose -f docker-compose-data-ingestion-runtime.yml -d
+8\. Run `docker-compose -f docker-compose-data-ingestion-runtime.yml -d`
 
 9\. Save the following url - `instance_ip:9091/api/ingestData`. This will be used while applying the policy. Make sure this instance is reachable from the instances where your api's are hosted, on which policy will be applied
 
 
 # Connect Akto with Mulesoft Flex Gateway
 
-## SEtup Flex Policy
+## Setup Flex Policy
 
 1\. Follow PDK Prerequisites on the Mulesoft documentation site, and setup the basic requirements
 
@@ -55,4 +56,8 @@ wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/featur
 
 7\. Select your api's on which you want to apply Akto Policy.
 
-8\. Enter the url from step 9 in the `Setup Akto Runtime and Data Ingestion Service` section as the input param for appplying the policy
+8\. Copy the instance ip where Akto Runtime was deployed, and replace \<url\> in the below string and use it as input param `ingestionUrl` to the policy
+
+```https://<url>:9091/api/ingestData```
+
+<figure><img src="../../.gitbook/assets/IngestionUrl.png" alt=""><figcaption></figcaption></figure>
