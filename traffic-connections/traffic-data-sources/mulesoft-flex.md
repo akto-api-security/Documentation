@@ -52,6 +52,7 @@ wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/featur
 
 5\. Compile the project by running 
 ```
+make build-asset-files
 cargo build
 make build
 ```
