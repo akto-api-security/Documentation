@@ -49,6 +49,7 @@
   * [Connect Akto with Postman](traffic-connections/traffic-data-sources/postman.md)
   * [Connect Akto with OpenAPI](traffic-connections/traffic-data-sources/openapi.md)
   * [Akto SDK](traffic-connections/traffic-data-sources/akto-sdk.md)
+  * [Connect Akto with Mulesoft Flex Gateway](traffic-connections/traffic-data-sources/mulesoft-flex.md)
 
 ## API Inventory
 
