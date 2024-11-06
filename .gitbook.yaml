@@ -50,4 +50,35 @@ redirects:
   sso/azuread-saml: account/sso/azuread-saml.md
   sso/okta-oidc: account/sso/okta-oidc.md
   sso/github-oidc: account/sso/github-oidc.md
-  
+  traffic-connections/traffic-data-sources/hybrid-saas: getting-started/traffic-processor/hybrid-saas.md
+  traffic-connections/traffic-data-sources/amazon-aws: traffic-connector/mirroring/amazon-aws.md
+  traffic-connections/traffic-data-sources/aws-eks: traffic-connector/aws-services/aws-eks.md
+  traffic-connections/traffic-data-sources/aws-fargate: traffic-connector/aws-services/aws-fargate.md
+  traffic-connections/traffic-data-sources/aws-ecs: traffic-connector/aws-services/aws-ecs.md
+  traffic-connections/traffic-data-sources/aws-beanstalk: traffic-connector/aws-services/aws-beanstalk.md
+  traffic-connections/traffic-data-sources/kubernetes: traffic-connector/kubernetes/kubernetes.md
+  traffic-connections/traffic-data-sources/aws-api-gateway: traffic-connector/aws-services/aws-api-gateway.md
+  traffic-connections/traffic-data-sources/kong: traffic-connector/api-gateways/kong.md
+  traffic-connections/traffic-data-sources/nginx: traffic-connector/api-gateways/nginx.md
+  traffic-connections/traffic-data-sources/envoy: traffic-connector/api-gateways/envoy.md
+  traffic-connections/traffic-data-sources/envoy-1: traffic-connector/api-gateways/envoy-1.md
+  traffic-connections/traffic-data-sources/docker: traffic-connector/virtual-machines/docker.md
+  traffic-connections/traffic-data-sources/tcp-agent: traffic-connector/virtual-machines/tcp-agent.md
+  traffic-connections/traffic-data-sources/ebpf: traffic-connector/ebpf/ebpf.md
+  traffic-connections/traffic-data-sources/ebpf-mtls: traffic-connector/ebpf/ebpf-mtls.md
+  traffic-connections/traffic-data-sources/data-processor: getting-started/traffic-processor.md
+  traffic-connections/traffic-data-sources/har-file-upload: traffic-connector/manual/har-file-upload.md
+  traffic-connections/traffic-data-sources/google-cloud-gcp: traffic-connector/mirroring/google-cloud-gcp.md
+  traffic-connections/traffic-data-sources/burp-suite: traffic-connector/manual/burp-suite.md
+  traffic-connections/traffic-data-sources/postman: traffic-connector/manual/postman.md
+  traffic-connections/traffic-data-sources/openapi: traffic-connector/manual/openapi.md
+  traffic-connections/traffic-data-sources/akto-sdk: traffic-connector/akto-sdk.md
+  getting-started/quick-start-with-akto-self-hosted/helm-deploy: getting-started/traffic-processor/helm-deploy.md
+  getting-started/quick-start-with-akto-self-hosted/gcp-deploy: getting-started/traffic-processor/gcp-deploy.md
+  getting-started/quick-start-with-akto-self-hosted/azure-deploy: getting-started/traffic-processor/azure-deploy.md
+  getting-started/quick-start-with-akto-self-hosted/openshift-deploy: getting-started/traffic-processor/openshift-deploy.md
+  getting-started/quick-start-with-akto-self-hosted/heroku: getting-started/traffic-processor/heroku.md
+  getting-started/quick-start-with-akto-self-hosted/aws-ssl: getting-started/akto-self-hosted/aws-ssl.md
+  getting-started/proxy-setup: getting-started/advanced-topics/proxy-setup.md
+  getting-started/move-self-hosted-to-saas: getting-started/advanced-topics/move-self-hosted-to-saas.md
+
