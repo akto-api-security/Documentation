@@ -16,6 +16,8 @@ Akto automatically detects and categorizes issues across your API inventory, all
 
 This includes details of severity levels, affected endpoints, and issue categories, which show how vulnerabilities may affect your API's security. You can also identify sensitive information exposure, potential attack vectors, and other security concerns, ensuring they are addressed promptly.
 
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
 The Issues page provides a list of detected vulnerabilities. Each issue entry typically includes:
 
 * Issue name and description

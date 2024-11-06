@@ -42,6 +42,17 @@
   * [Connect Akto with Envoy](traffic-connector/api-gateways/envoy.md)
   * [Connect Akto with NGINX](traffic-connector/api-gateways/nginx.md)
   * [Connect Akto with Istio](traffic-connector/api-gateways/envoy-1.md)
+  * [Connect Akto with HAProxy](traffic-connector/api-gateways/connect-akto-with-haproxy.md)
+  * [Connect Akto with Azure API Management](traffic-connector/api-gateways/connect-akto-with-azure-api-management.md)
+  * [Connect Akto with F5](traffic-connector/api-gateways/connect-akto-with-f5.md)
+  * [Connect Akto with 3Scale](traffic-connector/api-gateways/connect-akto-with-3scale.md)
+  * [Connect Akto with Layer7 API Gateway](traffic-connector/api-gateways/connect-akto-with-layer7-api-gateway.md)
+  * [Connect Akto with Citrix](traffic-connector/api-gateways/connect-akto-with-citrix.md)
+  * [Connect Akto with Kong](traffic-connector/api-gateways/connect-akto-with-kong.md)
+  * [Connect Akto with Kong Mesh](traffic-connector/api-gateways/connect-akto-with-kong-mesh.md)
+  * [Connect Akto with Cloudflare](traffic-connector/api-gateways/connect-akto-with-cloudflare.md)
+  * [Connect Akto with IBM Connect](traffic-connector/api-gateways/connect-akto-with-ibm-connect.md)
+  * [Connect Akto with Apigee](traffic-connector/api-gateways/connect-akto-with-apigee.md)
 * [Mirroring](traffic-connector/mirroring/README.md)
   * [Connect Akto with AWS Traffic Mirroring](traffic-connector/mirroring/amazon-aws.md)
   * [Connect Akto with GCP Packet Mirroring](traffic-connector/mirroring/google-cloud-gcp.md)
@@ -57,11 +68,14 @@
   * [Connect Akto with OpenAPI](traffic-connector/manual/openapi.md)
   * [Add API traffic to Akto using HAR file upload](traffic-connector/manual/har-file-upload.md)
 * [Akto SDK](traffic-connector/akto-sdk.md)
+* [Source Code](traffic-connector/source-code/README.md)
+  * [GitHub](traffic-connector/source-code/github.md)
+  * [Bitbucket](traffic-connector/source-code/bitbucket.md)
+  * [GitLab](traffic-connector/source-code/gitlab.md)
+  * [API inventory from source code](traffic-connector/source-code/api-inventory-from-source-code.md)
 * [Virtual Machines](traffic-connector/virtual-machines/README.md)
   * [Connect Akto with Docker](traffic-connector/virtual-machines/docker.md)
   * [Connect Akto with TCP Agent](traffic-connector/virtual-machines/tcp-agent.md)
-
-## API Inventory
 
 ## API Inventory
 
@@ -73,7 +87,9 @@
   * [Data Types](api-inventory-1/concepts/data-types.md)
   * [API Groups](api-inventory-1/concepts/api-groups.md)
   * [Environment Type](api-inventory-1/concepts/environment-type.md)
+  * [Protocol Support in Akto](api-inventory/concepts/protocol-support-in-akto.md)
   * [API Changes](api-inventory-1/concepts/api-changes.md)
+  * [Third Party APIs](api-inventory/concepts/third-party-apis.md)
   * [Tags](api-inventory-1/concepts/tags.md)
   * [Sensitive Data](api-inventory-1/concepts/sensitive-data.md)
   * [Alerts](api-inventory-1/concepts/alerts.md)
@@ -113,6 +129,8 @@
   * [Remove Bad Endpoints](api-inventory-1/how-to/remove-bad-endpoints.md)
   * [Create New Tags](api-inventory-1/how-to/create-new-tags.md)
   * [Edit Tags](api-inventory-1/how-to/edit-tags.md)
+
+## API Inventory
 
 ## Test Editor
 
