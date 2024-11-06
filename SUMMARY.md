@@ -91,6 +91,7 @@
   * [API Changes](api-inventory-1/concepts/api-changes.md)
   * [Third Party APIs](api-inventory/concepts/third-party-apis.md)
   * [Tags](api-inventory-1/concepts/tags.md)
+  * [API Dependency Graph](api-inventory/concepts/api-dependency-graph.md)
   * [Sensitive Data](api-inventory-1/concepts/sensitive-data.md)
   * [Alerts](api-inventory-1/concepts/alerts.md)
   * [Shadow APIs](api-inventory-1/concepts/shadow-apis.md)
