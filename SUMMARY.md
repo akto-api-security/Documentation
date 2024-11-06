@@ -29,7 +29,6 @@
 ## Traffic Connector
 
 * [API Traffic data connectors](traffic-connector/traffic-data-sources/README.md)
-  * [Connect Akto with Azure App Services](traffic-connector/traffic-data-sources/azure-app-service.md)
   * [Setup Akto traffic processors](traffic-connector/traffic-data-sources/data-processor.md)
 * [eBPF](traffic-connector/ebpf/README.md)
   * [Connect Akto with eBPF](traffic-connector/ebpf/ebpf.md)
@@ -61,6 +60,9 @@
   * [Connect Akto with AWS Fargate](traffic-connector/aws-services/aws-fargate.md)
   * [Connect Akto with AWS EKS](traffic-connector/aws-services/aws-eks.md)
   * [Connect Akto with AWS ECS](traffic-connector/aws-services/aws-ecs.md)
+* [Azure Services](traffic-connector/azure-services/README.md)
+  * [Connect Akto with Azure App Services](traffic-connector/azure-services/azure-app-service.md)
+  * [Connect Akto with Azure API Management](traffic-connector/azure-services/connect-akto-with-azure-api-management.md)
 * [Manual](traffic-connector/manual/README.md)
   * [Connect Akto with Burp suite](traffic-connector/manual/burp-suite.md)
   * [Connect Akto with Postman](traffic-connector/manual/postman.md)
