@@ -1,14 +1,14 @@
 # What is Akto?
 
-[How it works](./#how-it-works) • [Getting-Started](./#how-to-get-started) • [API Discovery](api-inventory/concepts/api-collection.md) • [API testing](broken-reference) • [Add Test](broken-reference) • [Join Discord community](https://discord.com/invite/Wpc6xVME4s) •
+[How it works](./#how-it-works) • [Getting-Started](./#how-to-get-started) • [API Discovery](api-inventory-1/concepts/api-collection.md) • [API testing](broken-reference/) • [Add Test](broken-reference/) • [Join Discord community](https://discord.com/invite/Wpc6xVME4s) •
 
 Akto is an open source, instant API security platform that takes only 60 secs to get started. Akto is used by security teams to maintain a continuous inventory of APIs, test APIs for vulnerabilities and find runtime issues. Akto offers tests for all OWASP top 10 and HackerOne Top 10 categories including BOLA, authentication, SSRF, XSS, security configurations, etc. Akto's powerful testing engine runs variety of business logic tests by reading traffic data to understand API traffic pattern leading to reduced false positives. Akto can integrate with multiple traffic sources - Burpsuite, AWS, postman, GCP, gateways, etc.
 
 Akto enables security and engineering teams to secure their APIs by doing three things:
 
-1. [API discovery](api-inventory/concepts/api-collection.md)
-2. [Run business logic tests in CI/CD](broken-reference)
-3. [Find vulnerabilities in run-time](broken-reference)
+1. [API discovery](api-inventory-1/concepts/api-collection.md)
+2. [Run business logic tests in CI/CD](broken-reference/)
+3. [Find vulnerabilities in run-time](broken-reference/)
 
 {% embed url="https://www.youtube.com/watch?v=nImmFA4cp9c" %}
 Akto Demo

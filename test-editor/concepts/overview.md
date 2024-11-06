@@ -10,6 +10,6 @@ Test Editor consists of three blocks:
 
 1. [Test Library](test-library.md) consisting of 100+ built-in tests.
 2. [YAML test](test-yaml.md) editor.
-3. Sample [API](../../api-inventory/concepts/api-endpoints.md) request and response to test.
+3. Sample [API](broken-reference) request and response to test.
 
 <figure><img src="../../.gitbook/assets/Test Editor.png" alt=""><figcaption></figcaption></figure>

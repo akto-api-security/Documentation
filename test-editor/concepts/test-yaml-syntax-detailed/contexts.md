@@ -111,7 +111,7 @@ You can use this context to find out if a particular value is being used by exac
 Akto can differentiate between the usage behavior of cart\_id and product\_id. Akto will classify `cart_id` as **private** and `product_id` as **public**.&#x20;
 
 {% hint style="info" %}
-Note that private vs public variable depends a lot on traffic. These work very well if you are using [automated traffic connectors](../../../traffic-connections/traffic-data-sources/#fully-automated-connectors-for-self-hosted-plan). If you connect your staging or prod server, Akto will receive traffic from multiple users across several sessions that really improves this private vs public classification. If you are using BurpSuite, Postman etc., it is very likely that they contain only 1 user's data. The result in that case aren't good.&#x20;
+Note that private vs public variable depends a lot on traffic. These work very well if you are using [automated traffic connectors](../../../traffic-connector/traffic-data-sources/#fully-automated-connectors-for-self-hosted-plan). If you connect your staging or prod server, Akto will receive traffic from multiple users across several sessions that really improves this private vs public classification. If you are using BurpSuite, Postman etc., it is very likely that they contain only 1 user's data. The result in that case aren't good.&#x20;
 {% endhint %}
 
 Say, you want to test APIs that use private variables (eg /api/v1/cart/123, /api/v1/order/78 etc.) for BOLA vulnerability. Simply replace the auth header by an attacker token (note that running the same test on /api/v1/product/9 will give a false positive and should NOT be tested for BOLA)
