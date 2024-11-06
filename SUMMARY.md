@@ -31,14 +31,12 @@
 * [API Traffic data connectors](traffic-connector/traffic-data-sources/README.md)
   * [Connect Akto with Azure App Services](traffic-connector/traffic-data-sources/azure-app-service.md)
   * [Setup Akto traffic processors](traffic-connector/traffic-data-sources/data-processor.md)
-  * [Connect Akto with Mulesoft Flex Gateway](traffic-connector/traffic-data-sources/mulesoft-flex.md)
 * [eBPF](traffic-connector/ebpf/README.md)
   * [Connect Akto with eBPF](traffic-connector/ebpf/ebpf.md)
   * [Connect Akto with eBPF on mTLS](traffic-connector/ebpf/ebpf-mtls.md)
 * [Kubernetes](traffic-connector/kubernetes/README.md)
   * [Connect Akto with Kubernetes in AWS](traffic-connector/kubernetes/kubernetes.md)
 * [API Gateways](traffic-connector/api-gateways/README.md)
-  * [Connect Akto with Kong](traffic-connector/api-gateways/kong.md)
   * [Connect Akto with Envoy](traffic-connector/api-gateways/envoy.md)
   * [Connect Akto with NGINX](traffic-connector/api-gateways/nginx.md)
   * [Connect Akto with Istio](traffic-connector/api-gateways/envoy-1.md)
@@ -52,6 +50,7 @@
   * [Connect Akto with Kong Mesh](traffic-connector/api-gateways/connect-akto-with-kong-mesh.md)
   * [Connect Akto with Cloudflare](traffic-connector/api-gateways/connect-akto-with-cloudflare.md)
   * [Connect Akto with IBM Connect](traffic-connector/api-gateways/connect-akto-with-ibm-connect.md)
+  * [Connect Akto with Mulesoft Flex Gateway](traffic-connector/api-gateways/mulesoft-flex.md)
   * [Connect Akto with Apigee](traffic-connector/api-gateways/connect-akto-with-apigee.md)
 * [Mirroring](traffic-connector/mirroring/README.md)
   * [Connect Akto with AWS Traffic Mirroring](traffic-connector/mirroring/amazon-aws.md)
@@ -130,8 +129,6 @@
   * [Remove Bad Endpoints](api-inventory-1/how-to/remove-bad-endpoints.md)
   * [Create New Tags](api-inventory-1/how-to/create-new-tags.md)
   * [Edit Tags](api-inventory-1/how-to/edit-tags.md)
-
-## API Inventory
 
 ## Test Editor
 
