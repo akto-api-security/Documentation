@@ -1,6 +1,6 @@
 # Configure Access Types
 
-You can configure [Access Types](broken-reference) on Akto dashboard. Access Types are based on the IPs in the `X-Forwarded-For` header. [Read more](broken-reference) on how it works.&#x20;
+You can configure [Access Types](configure-access-types.md) on Akto dashboard. Access Types are based on the IPs in the `X-Forwarded-For` header.
 
 You should configure the Private IP list and Partner IP list to get an accurate view of how your APIs are exposed to the world. A `Private` microservice should NOT be hit from the `Public` domain.&#x20;
 

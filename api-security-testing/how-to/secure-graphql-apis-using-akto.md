@@ -18,7 +18,7 @@ Click on the API to see the schema for the query.
 
 ## Sensitive data exposure
 
-Go to [Sensitive Data](broken-reference) to check if your APIs are sending sensitive or PII data in the API response. You can also [configure Slack/Webhook alerts](../../api-inventory-1/concepts/alerts.md) for the same.
+Go to [Sensitive Data](../../api-inventory-1/concepts/sensitive-data.md) to check if your APIs are sending sensitive or PII data in the API response. You can also [configure Slack/Webhook alerts](../../api-inventory-1/concepts/alerts.md) for the same.
 
 ## Run OWASP Top 10 tests
 
