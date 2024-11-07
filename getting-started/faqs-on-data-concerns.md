@@ -29,5 +29,3 @@ Akto setup is done is a private subnet which should have internet connectivity (
 1. Download setup-related files from GitHub & images from DockerHub
 2. Send Slack & email (Sendgrid) alerts for new endpoints and security test failures
 3. Use AktoGPT. Read [here](https://docs.akto.io/aktogpt#data-concerns) about data concerns
-
-###
