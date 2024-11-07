@@ -12,4 +12,4 @@ For example, if your API uses a non-standard authentication method, such as send
 
 ## Access Type
 
-Akto provides visibility into your APIs, regardless of whether they're accessed from a public network or internally via microservices. This feature enables you to monitor and ensure that internal APIs aren't exposed to the public network, thus enhancing your security measures. [Read more here](broken-reference).
+Akto provides visibility into your APIs, regardless of whether they're accessed from a public network or internally via microservices. This feature enables you to monitor and ensure that internal APIs aren't exposed to the public network, thus enhancing your security measures. [Read more here](access-type.md).

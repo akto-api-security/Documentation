@@ -71,4 +71,4 @@ You can connect Akto with **`eBPF`** for automated API detection as it offers an
 
 #### **GCP Packet Mirroring**
 
-Packet Mirroring is a GCP feature that clones the traffic of specified instances in your Virtual Private Cloud (VPC) network and forwards it to Akto. Packet Mirroring captures all traffic and packet data, including payloads and headers. The capture can be configured for both egress and ingress traffic, only ingress traffic, or only egress traffic. For detailed information, [click here](https://docs.akto.io/traffic-connections/traffic-data-sources/google-cloud-gcp).\
+Packet Mirroring is a GCP feature that clones the traffic of specified instances in your Virtual Private Cloud (VPC) network and forwards it to Akto. Packet Mirroring captures all traffic and packet data, including payloads and headers. The capture can be configured for both egress and ingress traffic, only ingress traffic, or only egress traffic. For detailed information, [click here](https://docs.akto.io/traffic-connections/traffic-data-sources/google-cloud-gcp).
