@@ -26,7 +26,7 @@ Click on the **Run Test** button to start testing your APIs for all OWASP Top 10
 
 ## Custom GraphQL security tests
 
-Using Akto's unique test editor, you can also write your own security tests for GraphQL APIs. See instructions for custom tests [here](broken-reference). There are a few GraphQL-specific instructions that you can use -
+Using Akto's unique test editor, you can also write your own security tests for GraphQL APIs. See instructions for custom tests [here](../../test-editor/concepts/custom-test.md). There are a few GraphQL-specific instructions that you can use -
 
 * add-
 * delete-
