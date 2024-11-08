@@ -7,29 +7,25 @@
 ## Getting Started
 
 * [Deployment Types](getting-started/deployment-types.md)
-* [Akto Cloud](getting-started/quick-start-with-akto-cloud.md)
+* [Akto Cloud](getting-started/quick-start-with-akto-cloud/README.md)
+  * [Connect Akto with Hybrid SaaS](getting-started/quick-start-with-akto-cloud/hybrid-saas.md)
+  * [Migrate From Self Hosted Setup To SaaS](getting-started/quick-start-with-akto-cloud/move-self-hosted-to-saas.md)
+  * [Setting up proxy](getting-started/quick-start-with-akto-cloud/proxy-setup.md)
 * [Akto Self Hosted](getting-started/quick-start-with-akto-self-hosted/README.md)
   * [AWS deploy](getting-started/quick-start-with-akto-self-hosted/aws-deploy/README.md)
     * [AWS multi-VPC deploy](getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-multi-vpc-deploy.md)
     * [AWS Cross-Region Cross-VPC deploy](getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-cross-region-vpc-deploy.md)
+    * [Custom subdomain on Akto on AWS](getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-ssl.md)
+  * [Helm Deploy](getting-started/quick-start-with-akto-self-hosted/helm-deploy.md)
+  * [Azure Deploy](getting-started/quick-start-with-akto-self-hosted/azure-deploy.md)
+  * [Openshift Deploy](getting-started/quick-start-with-akto-self-hosted/openshift-deploy.md)
+  * [Heroku](getting-started/quick-start-with-akto-self-hosted/heroku.md)
+  * [GCP Deploy](getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md)
 * [Local Deploy](getting-started/local-deploy.md)
-* [Traffic Processor](getting-started/traffic-processor/README.md)
-  * [Connect Akto with Hybrid SaaS](getting-started/traffic-processor/hybrid-saas.md)
-  * [Helm Deploy](getting-started/traffic-processor/helm-deploy.md)
-  * [Azure Deploy](getting-started/traffic-processor/azure-deploy.md)
-  * [Openshift Deploy](getting-started/traffic-processor/openshift-deploy.md)
-  * [Heroku](getting-started/traffic-processor/heroku.md)
-  * [GCP Deploy](getting-started/traffic-processor/gcp-deploy.md)
-  * [Custom subdomain on Akto on AWS](getting-started/traffic-processor/aws-ssl.md)
-* [Advanced Topics](getting-started/advanced-topics/README.md)
-  * [Migrate From Self Hosted Setup To SaaS](getting-started/advanced-topics/move-self-hosted-to-saas.md)
-  * [Setting up proxy](getting-started/advanced-topics/proxy-setup.md)
 * [FAQs on data concerns](getting-started/faqs-on-data-concerns.md)
 
 ## Traffic Connector
 
-* [API Traffic data connectors](traffic-connector/traffic-data-sources/README.md)
-  * [Setup Akto traffic processors](traffic-connector/traffic-data-sources/data-processor.md)
 * [eBPF](traffic-connector/ebpf/README.md)
   * [Connect Akto with eBPF](traffic-connector/ebpf/ebpf.md)
   * [Connect Akto with eBPF on mTLS](traffic-connector/ebpf/ebpf-mtls.md)
@@ -182,6 +178,7 @@
   * [Schedule Tests](api-security-testing/how-to/schedule-tests.md)
   * [Stop Tests](api-security-testing/how-to/stop-tests.md)
   * [Run Test on Any One Endpoint](api-security-testing/how-to/run-test-on-any-one-endpoint.md)
+  * [Add test to CI/CD Pipeline](api-security-testing/how-to/add-test-to-ci-cd-pipeline.md)
   * [Configure global rate limit](api-security-testing/how-to/configure-global-rate-limit.md)
   * [Configure Pre-request Script](api-security-testing/how-to/configure-pre-request-script.md)
   * [Create a Test Role](api-security-testing/how-to/create-a-test-role.md)
@@ -208,10 +205,12 @@
   * [Change role of a User](account/invite-user/change-role-of-a-user.md)
 * [Create a New Account](account/create-a-new-account.md)
 * [Understanding Role Permissions](account/understanding-role-permissions.md)
+* [Audit Logs](account/audit-logs.md)
 * [SSO](account/sso/README.md)
   * [Azure AD SAML](account/sso/azuread-saml.md)
   * [Okta OIDC](account/sso/okta-oidc.md)
   * [Github OIDC](account/sso/github-oidc.md)
+  * [Google Workspace SSO](account/sso/google-workspace-sso.md)
 
 ## Runtime protection
 
@@ -222,6 +221,11 @@
 
 * [Concepts](api-security-posture/concepts/README.md)
   * [Overview](api-security-posture/concepts/overview.md)
+
+## Alerts
+
+* [Slack Webhook](alerts/slack-webhook.md)
+* [Microsoft Teams Webhook](alerts/microsoft-teams-webhook.md)
 
 ## Pricing
 

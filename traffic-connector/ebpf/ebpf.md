@@ -10,7 +10,7 @@ For a better understanding, here's an architecture diagram of the setup.
 
 ## Adding Akto traffic collector
 
-1. Setup Akto data processor using the guide [here](../traffic-data-sources/data-processor.md)
+1. Setup Akto data processor using the guide [here](broken-reference)
 2. Apply the Daemonset configuration given below using `kubectl apply -f auto-daemon set-config.yaml -n <NAMESPACE>`. You will find `AKTO_NLB_IP` and `AKTO_MONGO_CONN` after setting up Akto data processor, as mentioned above.
 
 ```yaml

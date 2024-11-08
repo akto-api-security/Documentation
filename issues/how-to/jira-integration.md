@@ -4,6 +4,8 @@ Integrate Akto with Jira to streamline your API security workflow by creating ti
 
 ### Quick Setup Steps
 
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
 1. **Access Integrations**
    * Go to Settings > Integrations
    * Find and click "Configure" next to Jira

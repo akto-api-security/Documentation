@@ -8,7 +8,7 @@ description: >-
 
 ## Introduction
 
-[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](../traffic-data-sources/). If you don't have access to staging or production environment, you can create API inventory using Burp's traffic.
+[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](broken-reference). If you don't have access to staging or production environment, you can create API inventory using Burp's traffic.
 
 {% hint style="info" %}
 Note that traffic from Burp Suite won't be automated like the native cloud connectors.

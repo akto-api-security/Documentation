@@ -6,7 +6,7 @@ description: Learn how to uplaod API traffic data from HAR file to Akto
 
 ## Introduction
 
-[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](../traffic-data-sources/). If you don't have access to staging or production environment, you can create API inventory using HAR file upload.
+[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](broken-reference). If you don't have access to staging or production environment, you can create API inventory using HAR file upload.
 
 {% hint style="info" %}
 Note that traffic from HAR File upload won't be automated like the native cloud connectors.

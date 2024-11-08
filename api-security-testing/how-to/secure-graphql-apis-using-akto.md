@@ -12,7 +12,7 @@ You can use Akto to help you secure your GraphQL APIs in CI/CD pipeline
 
 ## API Inventory
 
-Akto can automatically prepare an API Inventory for GraphQL APIs. Use one of our [traffic connectors](../../traffic-connector/traffic-data-sources/). Akto will right away start populating APIs in the dashboard. You will see a separate entry for each `Query`, `Mutation` etc. You can see an example here.
+Akto can automatically prepare an API Inventory for GraphQL APIs. Use one of our [traffic connectors](broken-reference). Akto will right away start populating APIs in the dashboard. You will see a separate entry for each `Query`, `Mutation` etc. You can see an example here.
 
 Click on the API to see the schema for the query.
 

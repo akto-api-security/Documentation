@@ -13,11 +13,11 @@
 Before proceeding with the deployment steps, consider the following options to choose the most suitable deployment method for your environment:
 
 1. **Standard AWS Deployment**: If you have a single VPC and are not using Kubernetes, continue with the steps below.
-2. **Kubernetes Users**: If you're using Kubernetes, consider deploying using Helm. Learn more about [Helm deployment](../../traffic-processor/helm-deploy.md).
+2. **Kubernetes Users**: If you're using Kubernetes, consider deploying using Helm. Learn more about [Helm deployment](../helm-deploy.md).
 3. **Multiple VPCs**:
    * For multi-VPC deployment, refer to our [AWS multi-VPC deploy guide](aws-multi-vpc-deploy.md).
    * For cross-region, cross-VPC deployment, check out our [AWS Cross-Region Cross-VPC deploy guide](aws-cross-region-vpc-deploy.md).
-4. **Custom Subdomain**: For custom subdomain setup on AWS, see our [Custom subdomain on Akto on AWS guide](../../traffic-processor/aws-ssl.md).
+4. **Custom Subdomain**: For custom subdomain setup on AWS, see our [Custom subdomain on Akto on AWS guide](aws-ssl.md).
 
 Choose the option that best fits your infrastructure needs. If you're proceeding with the standard AWS deployment, continue with the steps below.
 
@@ -69,5 +69,5 @@ Need help? [Contact](mailto:support@akto.io) our support team for assistance.
 
 ### Optional -
 
-1. [Add custom subdomain and SSL certificate to your akto deployment on AWS](../../traffic-processor/aws-ssl.md)
+1. [Add custom subdomain and SSL certificate to your akto deployment on AWS](aws-ssl.md)
 2. [Take periodic snapshot of Akto data](../../aws-snapshot-policy.md)

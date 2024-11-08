@@ -8,7 +8,7 @@ The fastest and easiest way to get started with Akto. Ideal for organizations lo
 
 Steps:
 
-1. [Set up Traffic Processor](traffic-processor/)
+1. [Set up Traffic Processor](broken-reference)
 2. [Configure Traffic Connector](broken-reference)
 
 ### 2. Self-Hosted Deployment

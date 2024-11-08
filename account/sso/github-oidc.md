@@ -1,5 +1,5 @@
-# Github-OIDC
+# Github OIDC
 
-Coming soon
+GitHub SSO integration with Akto enables seamless authentication for development teams already using GitHub. This integration is particularly valuable for organizations that manage their codebase and team access through GitHub, allowing developers to use their existing GitHub credentials to access Akto's API security platform.
 
-if you have an immediate usecase for this. please email us at help@akto.io
+<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
