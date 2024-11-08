@@ -81,4 +81,13 @@ redirects:
   getting-started/quick-start-with-akto-self-hosted/aws-ssl: getting-started/akto-self-hosted/aws-ssl.md
   getting-started/proxy-setup: getting-started/advanced-topics/proxy-setup.md
   getting-started/move-self-hosted-to-saas: getting-started/advanced-topics/move-self-hosted-to-saas.md
+  getting-started/traffic-processor/hybrid-saas: getting-started/quick-start-with-akto-cloud/hybrid-saas.md
+  getting-started/traffic-processor/helm-deploy: getting-started/quick-start-with-akto-self-hosted/helm-deploy.md
+  getting-started/traffic-processor/azure-deploy: getting-started/quick-start-with-akto-self-hosted/azure-deploy.md
+  getting-started/traffic-processor/openshift-deploy: getting-started/quick-start-with-akto-self-hosted/openshift-deploy.md
+  getting-started/traffic-processor/heroku: getting-started/quick-start-with-akto-self-hosted/heroku.md
+  getting-started/traffic-processor/gcp-deploy: getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md
+  getting-started/traffic-processor/aws-ssl: getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-ssl.md
+  getting-started/advanced-topics/move-self-hosted-to-saas: getting-started/quick-start-with-akto-cloud/move-self-hosted-to-saas.md
+  getting-started/advanced-topics/proxy-setup: getting-started/quick-start-with-akto-cloud/proxy-setup.md
 
