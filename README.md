@@ -1,6 +1,6 @@
 # What is Akto?
 
-[How it works](./#how-it-works) • [Getting-Started](./#how-to-get-started) • [API Discovery](api-inventory-1/concepts/api-endpoints.md) • [API testing](api-security-testing/concepts/test.md) • [Add Test](test-editor/concepts/test-library.md) • [Join Discord community](https://discord.com/invite/Wpc6xVME4s)&#x20;
+[Getting-Started](broken-reference) • [API Discovery](api-inventory-1/concepts/api-endpoints.md) • [API testing](api-security-testing/concepts/test.md) • [Add Test](test-editor/concepts/test-library.md) • [Join Discord community](https://discord.com/invite/Wpc6xVME4s)&#x20;
 
 Akto is an open source, instant API security platform that takes only 60 secs to get started. Akto is used by security teams to maintain a continuous inventory of APIs, test APIs for vulnerabilities and find runtime issues. Akto offers tests for all OWASP top 10 and HackerOne Top 10 categories including BOLA, authentication, SSRF, XSS, security configurations, etc. Akto's powerful testing engine runs variety of business logic tests by reading traffic data to understand API traffic pattern leading to reduced false positives. Akto can integrate with multiple traffic sources - Burpsuite, AWS, postman, GCP, gateways, etc.
 
@@ -12,23 +12,48 @@ Akto enables security and engineering teams to secure their APIs by doing three 
 
 {% embed url="https://www.youtube.com/watch?v=XVpcX78IeFI" %}
 
-## How it works?
+## Getting Started
 
-Step 1: Create inventory
+Get started with Akto Cloud in 5 simple steps:
+
+### 1. Sign Up
+
+* Visit [app.akto.io](https://app.akto.io)
+* Create account with your work email
+
+<figure><img src=".gitbook/assets/image (46).png" alt=""><figcaption></figcaption></figure>
+
+### 2. Create API Inventory
+
+* Go to API Collections → Create new collection
+* Name your collection
+* Connect your [traffic source](broken-reference) (Burp Suite/AWS/Postman) from Quick Start.
 
 <figure><img src=".gitbook/assets/image (6) (1).png" alt=""><figcaption></figcaption></figure>
 
-Step 2: Run tests
+### 3. Set Authentication
+
+* Go to Settings → Authentication
+* Create auth type (Bearer/API Key/Basic)
+
+<figure><img src=".gitbook/assets/image (47).png" alt=""><figcaption></figcaption></figure>
+
+### 4. Configure Attacker Token
+
+* Go to User Configuration
+* Set ATTACKER\_TOKEN\_ALL
+
+<figure><img src=".gitbook/assets/image (50).png" alt=""><figcaption></figcaption></figure>
+
+### 5. Run Tests
+
+* Select your collection
+* Click Run Test
+* Choose tests you want to run
+* Select Test role
+* Click "Run once now"
 
 <figure><img src=".gitbook/assets/image (7) (1).png" alt=""><figcaption></figcaption></figure>
-
-## How to get Started?
-
-Start with [local deploy](getting-started/local-deploy.md). Run this script to create Akto at `~/akto` and run the docker containers.
-
-```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/akto-api-security/infra/feature/self_hosting/cf-deploy-akto)"
-```
 
 ## How to Contribute?
 
