@@ -6,6 +6,49 @@ Risk score is calculated based on the amount of sensitive information the API sh
 
 Using the risk score provided by Akto, you can prioritize which API endpoints require additional security measures. Endpoints with higher risk scores may necessitate stricter security controls, such as stronger authentication, rate limiting, or increased monitoring.
 
+### How We Calculate Risk?
+
+Your API's risk score is the sum of these four factors (capped at 5):
+
+#### 1. Security Issue Severity
+
+Based on the highest severity issue found:
+
+* High severity issues: 2 points
+* Medium severity issues: 1 point
+* Low severity issues: 0.5 points
+* No issues: 0 points
+
+#### 2. Recent Discovery
+
+Time-based scoring:
+
+* Discovered in the last 30 days: +1 point
+* Older discoveries: 0 points
+
+#### 3. Sensitive Data Exposure
+
+Response data analysis:
+
+* Contains sensitive data: +1 point
+* No sensitive data: 0 points
+
+#### 4. Public Accessibility
+
+API exposure level:
+
+* Publicly accessible: +1 point
+* Internal/private: 0 points
+
+### Example
+
+An API endpoint could score 5 points if it:
+
+* Has a high-severity issue (2 points)
+* Was discovered last week (+1 point)
+* Contains sensitive data (+1 point)
+* Is publicly accessible (+1 point)
+
 ## Risk scores on Akto dashboard
 
 In the demonstration below, we have examined the risk score of the API collection-**`juice_shop_demo`** and its underlying endpoints to understand the security implications and potential vulnerabilities. This API collection has a risk score of “3” and its underlying endpoints have risk score values ranging from “0 to 3”.
