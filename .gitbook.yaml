@@ -50,6 +50,7 @@ redirects:
   sso/azuread-saml: account/sso/azuread-saml.md
   sso/okta-oidc: account/sso/okta-oidc.md
   sso/github-oidc: account/sso/github-oidc.md
+  traffic-connections/traffic-data-sources: traffic-connector/traffic-data-sources.md
   traffic-connections/traffic-data-sources/hybrid-saas: getting-started/traffic-processor/hybrid-saas.md
   traffic-connections/traffic-data-sources/amazon-aws: traffic-connector/mirroring/amazon-aws.md
   traffic-connections/traffic-data-sources/aws-eks: traffic-connector/aws-services/aws-eks.md
