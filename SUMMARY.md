@@ -26,6 +26,7 @@
 
 ## Traffic Connector
 
+* [Traffic Data Sources](traffic-connector/traffic-data-sources.md)
 * [eBPF](traffic-connector/ebpf/README.md)
   * [Connect Akto with eBPF](traffic-connector/ebpf/ebpf.md)
   * [Connect Akto with eBPF on mTLS](traffic-connector/ebpf/ebpf-mtls.md)
