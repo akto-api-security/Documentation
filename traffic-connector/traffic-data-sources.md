@@ -1,346 +1,36 @@
 # Traffic Data Sources
 
-<table data-view="cards"><thead><tr><th></th><th></th><th></th><th data-hidden data-card-cover data-type="files"></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Kubernetes Daemonset</strong></td><td></td><td>You can deploy Akto in Kubernetes and collect traffic through a daemonset on your Kubernetes configuration.</td><td><a href="../.gitbook/assets/image (50).png">image (50).png</a></td><td></td></tr><tr><td></td><td><strong>OpenShift</strong></td><td><p></p><p>You can deploy Akto in Kubernetes and collect traffic through a daemonset on your Kubernetes configuration.</p></td><td><a href="../.gitbook/assets/kubernetes (1).svg">kubernetes (1).svg</a></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
-
-
-
 ### Kubernetes
 
-![](https://app.akto.io/public/kubernetes.svg) **Kubernetes Daemonset**
-
-You can deploy Akto in Kubernetes and collect traffic through a daemonset on your Kubernetes configuration.
-
-
-
-![](https://app.akto.io/public/openshift.svg) **OpenShift**
-
-OpenShift should be used as a traffic connector if you are deploying and managing containerized applications using OpenShift.
-
-
-
-![](https://app.akto.io/public/ebpf.svg) **eBPF**
-
-Akto-eBPF setup is recommended for mTLS systems when TLS termination happens at a proxy.
-
-
-
-![](https://app.akto.io/public/ebpf.svg) **eBPF on mTLS**
-
-Akto-eBPF-mTLS setup is recommended for mTLS systems where TLS termination occurs at the application.
-
-
+<table data-view="cards"><thead><tr><th></th><th></th><th></th><th data-hidden data-card-cover data-type="files"></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Kubernetes Daemonset</strong></td><td>You can deploy Akto in Kubernetes and collect traffic through a daemonset on your Kubernetes configuration.</td><td></td><td></td><td></td></tr><tr><td><strong>OpenShift</strong></td><td>OpenShift should be used as a traffic connector if you are deploying and managing containerized applications using OpenShift.</td><td></td><td></td><td></td></tr><tr><td><strong>eBPF</strong></td><td>Akto-eBPF setup is recommended for mTLS systems when TLS termination happens at a proxy.</td><td></td><td></td><td></td></tr><tr><td><strong>eBPF on mTLS</strong></td><td>Akto-eBPF-mTLS setup is recommended for mTLS systems where TLS termination occurs at the application.</td><td></td><td></td><td></td></tr></tbody></table>
 
 ### API Gateways
 
-***
-
-![](https://app.akto.io/public/apigee.svg) **Apigee**
-
-Apigee setup is recommended if you are using Google's Apigee API Management platform to design, secure, and scale your APIs.
-
-
-
-![](https://app.akto.io/public/azure.svg) **Azure API Gateway**
-
-Azure API Gateway setup is recommended if you are using Azure's API Management service to manage, secure, and analyze your APIs.
-
-
-
-![](https://app.akto.io/public/cloudflare.svg) **Cloudflare**
-
-You should use Cloudflare as a traffic connector if you are leveraging Cloudflare's CDN and security features to manage and optimize your API traffic.
-
-
-
-![](https://app.akto.io/public/f5.svg) **F5**
-
-F5 setup is recommended if you are using F5's BIG-IP as an API gateway or load balancer to manage and control your API traffic.
-
-
-
-![](https://app.akto.io/public/kongmesh.svg)
-
-**Kong Mesh**
-
-Use this set-up if you are utilizing Kong's service mesh capabilities to manage and secure your microservices and APIs.
-
-
-
-![](https://app.akto.io/public/layer7.svg)
-
-**Layer 7**
-
-Layer7 is recommended if you are using CA Technologies' Layer7 API Management for securing and managing your APIs.
-
-
-
-![](https://app.akto.io/public/threescale.svg)
-
-**3Scale**
-
-This setup is recommended if your APIs are managed by 3scale.
-
-
-
-![](https://app.akto.io/public/Nginx.svg)
-
-**NGINX**
-
-This setup is recommended if your APIs are routed by NGINX.
-
-
-
-![](https://app.akto.io/public/haproxy.svg)
-
-**HA Proxy**
-
-HA Proxy should be used as a traffic connector if you are leveraging HA Proxy for load balancing, high availability, and proxying HTTP and TCP-based applications.
-
-
-
-![](https://app.akto.io/public/envoy.svg)
-
-**Envoy**
-
-Akto-Envoy setup is recommended if your APIs are routed by Envoy.
-
-
-
-![](https://app.akto.io/public/istio.svg)
-
-**Istio**
-
-Akto-Istio setup is recommended if your APIs are routed by Istio.
-
-
-
-![](https://app.akto.io/public/kong.svg)
-
-**Kong**
-
-Kong Gateway is an open source API gateway, built for multi-cloud and hybrid, and optimized for microservices and distributed architectures.
-
-
-
-![](https://app.akto.io/public/ibmapiconnect.svg)
-
-**IBM API Connect**
-
-This setup is recommended if your APIs are managed by IBM API Connect
-
-
-
-![](https://app.akto.io/public/citrix.svg)
-
-**Citrix**
-
-Citrix setup is recommended if you are using ADC (NetScaler) to manage, secure, and optimize your API traffic.
-
-
-
-![](https://app.akto.io/public/azureappservice.svg)
-
-**Azure App Services**
-
-Azure App Services setup is recommended if you are using Microsoft's web app service with sidecar containers to collect and analyze your API traffic.
-
-
-
-![](https://app.akto.io/public/mulesoft.svg)
-
-**MuleSoft**
-
-Mulesoft setup is recommended if you are using API management and ESB capabilities to manage, secure, and analyze your APIs.
-
-
+<table data-view="cards"><thead><tr><th></th><th></th><th></th></tr></thead><tbody><tr><td><strong>Apigee</strong></td><td>Apigee setup is recommended if you are using Google's Apigee API Management platform to design, secure, and scale your APIs.</td><td></td></tr><tr><td><strong>Azure API Gateway</strong></td><td>Azure API Gateway setup is recommended if you are using Azure's API Management service to manage, secure, and analyze your APIs.</td><td></td></tr><tr><td><strong>Cloudflare</strong></td><td>You should use Cloudflare as a traffic connector if you are leveraging Cloudflare's CDN and security features to manage and optimize your API traffic.</td><td></td></tr><tr><td><strong>F5</strong></td><td>F5 setup is recommended if you are using F5's BIG-IP as an API gateway or load balancer to manage and control your API traffic.</td><td></td></tr><tr><td><strong>Kong Mesh</strong></td><td>Use this set-up if you are utilizing Kong's service mesh capabilities to manage and secure your microservices and APIs.</td><td></td></tr><tr><td><strong>Layer 7</strong></td><td>Layer7 is recommended if you are using CA Technologies' Layer7 API Management for securing and managing your APIs.</td><td></td></tr><tr><td><strong>3Scale</strong></td><td>This setup is recommended if your APIs are managed by 3scale.</td><td></td></tr><tr><td><strong>NGINX</strong></td><td>This setup is recommended if your APIs are routed by NGINX.</td><td></td></tr><tr><td><strong>HA Proxy</strong></td><td>HA Proxy should be used as a traffic connector if you are leveraging HA Proxy for load balancing, high availability, and proxying HTTP and TCP-based applications.</td><td></td></tr><tr><td><strong>Envoy</strong></td><td>Akto-Envoy setup is recommended if your APIs are routed by Envoy.</td><td></td></tr><tr><td><strong>Istio</strong></td><td>Akto-Istio setup is recommended if your APIs are routed by Istio.</td><td></td></tr><tr><td><strong>Kong</strong></td><td>Kong Gateway is an open source API gateway, built for multi-cloud and hybrid, and optimized for microservices and distributed architectures.</td><td></td></tr><tr><td><strong>IBM API Connect</strong></td><td>This setup is recommended if your APIs are managed by IBM API Connect</td><td></td></tr><tr><td><strong>Citrix</strong></td><td>Citrix setup is recommended if you are using ADC (NetScaler) to manage, secure, and optimize your API traffic.</td><td></td></tr><tr><td><strong>Azure App Services</strong></td><td>Azure App Services setup is recommended if you are using Microsoft's web app service with sidecar containers to collect and analyze your API traffic.</td><td></td></tr><tr><td><strong>MuleSoft</strong></td><td>Mulesoft setup is recommended if you are using API management and ESB capabilities to manage, secure, and analyze your APIs.</td><td></td></tr></tbody></table>
 
 ### Mirroring
 
-***
-
-![](https://app.akto.io/public/aws.svg)
-
-**AWS Mirroring**
-
-You can deploy Akto in AWS and collect traffic through traffic mirroring.
-
-
-
-![](https://app.akto.io/public/gcp.svg)
-
-**GCP Mirroring**
-
-This setup only takes ten minutes. Once you connect GCP, Akto will process GCP traffic to create an API Inventory in real time.
+<table data-view="cards"><thead><tr><th></th><th></th><th></th></tr></thead><tbody><tr><td><strong>AWS Mirroring</strong></td><td>You can deploy Akto in AWS and collect traffic through traffic mirroring.</td><td></td></tr><tr><td><strong>GCP Mirroring</strong></td><td>This setup only takes ten minutes. Once you connect GCP, Akto will process GCP traffic to create an API Inventory in real time.</td><td></td></tr><tr><td></td><td></td><td></td></tr></tbody></table>
 
 
 
 ### AWS Services
 
-***
-
-![](https://app.akto.io/public/aws\_api\_gateway.svg)
-
-**AWS API Gateway**
-
-Akto-AWS-API-Gateway setup is recommended if you are using AWS API Gateway.
-
-
-
-![](https://app.akto.io/public/eks.svg)
-
-**AWS EKS**
-
-You can deploy Akto in AWS and collect traffic through a daemonset on your AWS EKS configuration.
-
-
-
-![](https://app.akto.io/public/fargate.svg)
-
-**AWS Fargate**
-
-AWS Fargate allows you to use Amazon ECS to run containers without having to manage servers or clusters of Amazon EC2 instances.
-
-
-
-![](https://app.akto.io/public/beanstalk.svg)
-
-**AWS Beanstalk**
-
-You can deploy Akto in AWS and collect traffic through mirroring on your AWS Beanstalk setup.
-
-
-
-![](https://app.akto.io/public/ecs.svg)
-
-**AWS ECS**
-
-You can deploy Akto in AWS and collect traffic through containers on your AWS ECS cluster.
-
-
+<table data-view="cards"><thead><tr><th></th><th></th><th></th></tr></thead><tbody><tr><td><strong>AWS API Gateway</strong></td><td>Akto-AWS-API-Gateway setup is recommended if you are using AWS API Gateway.</td><td></td></tr><tr><td><strong>AWS EKS</strong></td><td>You can deploy Akto in AWS and collect traffic through a daemonset on your AWS EKS configuration.</td><td></td></tr><tr><td><strong>AWS Fargate</strong></td><td>AWS Fargate allows you to use Amazon ECS to run containers without having to manage servers or clusters of Amazon EC2 instances.</td><td></td></tr><tr><td><strong>AWS Beanstalk</strong></td><td>You can deploy Akto in AWS and collect traffic through mirroring on your AWS Beanstalk setup.</td><td></td></tr><tr><td><strong>AWS ECS</strong></td><td>You can deploy Akto in AWS and collect traffic through containers on your AWS ECS cluster.</td><td></td></tr></tbody></table>
 
 ### Manual
 
-***
-
-![](https://app.akto.io/public/burp.svg)
-
-**Burp Suite**
-
-You can deploy Akto on your machine and download Akto's Burp extension to collect API traffic.
-
-
-
-![](https://app.akto.io/public/postman.svg)
-
-**Postman**
-
-This setup is recommended if you have updated API collections maintained in Postman.
-
-
-
-![](https://app.akto.io/public/HAR.svg)
-
-**Har File Upload**
-
-For a very quick view of your inventory, you can upload a HAR file that contains traffic to Akto.
-
-
-
-![](https://app.akto.io/public/openApi.svg)
-
-**OpenAPI**
-
-Upload Open API/Swagger specification file to Akto to create an API inventory.
-
-
+<table data-view="cards"><thead><tr><th></th><th></th><th></th></tr></thead><tbody><tr><td><strong>Burp Suite</strong></td><td>You can deploy Akto on your machine and download Akto's Burp extension to collect API traffic.</td><td></td></tr><tr><td><strong>Postman</strong></td><td>This setup is recommended if you have updated API collections maintained in Postman.</td><td></td></tr><tr><td><strong>Har File Upload</strong></td><td>For a very quick view of your inventory, you can upload a HAR file that contains traffic to Akto.</td><td></td></tr><tr><td><strong>OpenAPI</strong></td><td>Upload Open API/Swagger specification file to Akto to create an API inventory.</td><td></td></tr></tbody></table>
 
 ### Akto SDK
 
-***
-
-![](https://app.akto.io/public/go.svg)
-
-**Go**
-
-Use where Go-based services are deployed.
-
-
-
-![](https://app.akto.io/public/java.svg)
-
-**Java**
-
-You can use Akto's Java agent to capture API traffic directly from your Java applications.
-
-
-
-![](https://app.akto.io/public/nodejs.svg)
-
-**NodeJS**
-
-This setup is ideal for environments where NodeJS-based services are deployed, ensuring seamless integration and real-time traffic monitoring.
-
-
-
-![](https://app.akto.io/public/python.svg)
-
-**Python**
-
-Use where Python-based services are deployed.
-
-
+<table data-view="cards"><thead><tr><th></th><th></th><th></th></tr></thead><tbody><tr><td><strong>Go</strong></td><td>Use where Go-based services are deployed.</td><td></td></tr><tr><td><strong>Java</strong></td><td>You can use Akto's Java agent to capture API traffic directly from your Java applications.</td><td></td></tr><tr><td><strong>NodeJS</strong></td><td>This setup is ideal for environments where NodeJS-based services are deployed, ensuring seamless integration and real-time traffic monitoring.</td><td></td></tr><tr><td><strong>Python</strong></td><td>Use where Python-based services are deployed.</td><td></td></tr></tbody></table>
 
 ### Virtual Machines
 
-***
-
-![](https://app.akto.io/public/docker.svg)
-
-**Docker**
-
-This setup is recommended only if other setups for AWS or GCP don't work.
-
-
-
-![](https://app.akto.io/public/TCP.svg)
-
-**TCP Agent**
-
-This setup is recommended only if other setups for AWS or GCP do not work.
-
-
+<table data-view="cards"><thead><tr><th></th><th></th><th></th></tr></thead><tbody><tr><td><strong>Docker</strong></td><td>This setup is recommended only if other setups for AWS or GCP don't work.</td><td></td></tr><tr><td><strong>TCP Agent</strong></td><td>This setup is recommended only if other setups for AWS or GCP do not work.</td><td></td></tr><tr><td></td><td></td><td></td></tr></tbody></table>
 
 ### Source Code
 
-***
-
-![](https://app.akto.io/public/favicon.svg)
-
-**API inventory from source code**
-
-Create API inventory from your source code using our code analysis tool.
-
-
-
-![](https://app.akto.io/public/github.svg)
-
-**GitHub**
-
-We recommend setting up GitHub if you want to connect and retrieve APIs directly from your source code hosted on GitHub.
-
-
-
-![](https://app.akto.io/public/gitlab.svg)
-
-**GitLab**
-
-We recommend setting up GitLab if you want to connect and retrieve APIs directly from your source code hosted on GitLab.
-
-
-
-![](https://app.akto.io/public/bitbucket.svg)
-
-**Bitbucket**
-
-We recommend setting up Bitbucket if you want to connect and retrieve APIs directly from your source code hosted on Bitbucket.
+<table data-view="cards"><thead><tr><th></th><th></th><th></th></tr></thead><tbody><tr><td><strong>API inventory from source code</strong></td><td>Create API inventory from your source code using our code analysis tool.</td><td></td></tr><tr><td><strong>GitHub</strong></td><td>We recommend setting up GitHub if you want to connect and retrieve APIs directly from your source code hosted on GitHub.</td><td></td></tr><tr><td><strong>GitLab</strong></td><td>We recommend setting up GitLab if you want to connect and retrieve APIs directly from your source code hosted on GitLab.</td><td></td></tr><tr><td><strong>Bitbucket</strong></td><td>We recommend setting up Bitbucket if you want to connect and retrieve APIs directly from your source code hosted on Bitbucket.</td><td></td></tr></tbody></table>
 
