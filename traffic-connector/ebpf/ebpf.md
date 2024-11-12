@@ -6,7 +6,7 @@ Connecting with Akto's eBPF traffic collector is recommended for mTLS systems.
 
 For a better understanding, here's an architecture diagram of the setup.
 
-<figure><img src="../../.gitbook/assets/ebpf.png" alt="Deployment for Akto Daemonset"><figcaption><p>ebpf Deployment</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/ebpf (1).png" alt="Deployment for Akto Daemonset"><figcaption><p>ebpf Deployment</p></figcaption></figure>
 
 ## Adding Akto traffic collector
 
