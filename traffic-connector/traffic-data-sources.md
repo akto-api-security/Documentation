@@ -10,7 +10,7 @@
 
 ### Mirroring
 
-<table data-view="cards"><thead><tr><th></th><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th><th data-hidden data-card-cover data-type="files"></th></tr></thead><tbody><tr><td><strong>AWS Mirroring</strong></td><td>You can deploy Akto in AWS and collect traffic through traffic mirroring.</td><td></td><td><a href="mirroring/amazon-aws.md">amazon-aws.md</a></td><td><a href="../.gitbook/assets/awssssss.png">awssssss.png</a></td></tr><tr><td><strong>GCP Mirroring</strong></td><td>This setup only takes ten minutes. Once you connect GCP, Akto will process GCP traffic to create an API Inventory in real time.</td><td></td><td><a href="mirroring/google-cloud-gcp.md">google-cloud-gcp.md</a></td><td><a href="../.gitbook/assets/gcppppp.png">gcppppp.png</a></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th></th><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th><th data-hidden data-card-cover data-type="files"></th></tr></thead><tbody><tr><td><strong>AWS Mirroring</strong></td><td>You can deploy Akto in AWS and collect traffic through traffic mirroring.</td><td></td><td><a href="mirroring/amazon-aws.md">amazon-aws.md</a></td><td><a href="../.gitbook/assets/awssssss.png">awssssss.png</a></td></tr><tr><td><strong>GCP Mirroring</strong></td><td>This setup only takes ten minutes. Once you connect GCP, Akto will process GCP traffic to create an API Inventory in real time.</td><td></td><td><a href="mirroring/google-cloud-gcp.md">google-cloud-gcp.md</a></td><td><a href="../.gitbook/assets/gcppppp.png">gcppppp.png</a></td></tr></tbody></table>
 
 
 
@@ -28,7 +28,7 @@
 
 ### Virtual Machines
 
-<table data-view="cards"><thead><tr><th></th><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th><th data-hidden data-card-cover data-type="files"></th></tr></thead><tbody><tr><td><strong>Docker</strong></td><td>This setup is recommended only if other setups for AWS or GCP don't work.</td><td></td><td><a href="virtual-machines/docker.md">docker.md</a></td><td><a href="../.gitbook/assets/Docker traffic connector.png">Docker traffic connector.png</a></td></tr><tr><td><strong>TCP Agent</strong></td><td>This setup is recommended only if other setups for AWS or GCP do not work.</td><td></td><td><a href="virtual-machines/tcp-agent.md">tcp-agent.md</a></td><td><a href="../.gitbook/assets/TCP Agent.png">TCP Agent.png</a></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th></th><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th><th data-hidden data-card-cover data-type="files"></th></tr></thead><tbody><tr><td><strong>Docker</strong></td><td>This setup is recommended only if other setups for AWS or GCP don't work.</td><td></td><td><a href="virtual-machines/docker.md">docker.md</a></td><td><a href="../.gitbook/assets/Docker traffic connector.png">Docker traffic connector.png</a></td></tr><tr><td><strong>TCP Agent</strong></td><td>This setup is recommended only if other setups for AWS or GCP do not work.</td><td></td><td><a href="virtual-machines/tcp-agent.md">tcp-agent.md</a></td><td><a href="../.gitbook/assets/TCP Agent.png">TCP Agent.png</a></td></tr></tbody></table>
 
 ### Source Code
 
