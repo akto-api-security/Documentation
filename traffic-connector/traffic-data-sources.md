@@ -359,3 +359,4 @@ Bitbucket
 </strong></td><td></td><td>
 We recommend setting up Bitbucket if you want to connect and retrieve APIs directly from your source code hosted on Bitbucket.</td></tr>
 
+</tbody></table>
