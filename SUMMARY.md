@@ -207,6 +207,7 @@
 * [Invite User](account/invite-user/README.md)
   * [Change role of a User](account/invite-user/change-role-of-a-user.md)
 * [Create a New Account](account/create-a-new-account.md)
+* [How to Switch Between Accounts in Akto](account/how-to-switch-between-accounts-in-akto.md)
 * [Understanding Role Permissions](account/understanding-role-permissions.md)
 * [Audit Logs](account/audit-logs.md)
 * [SSO](account/sso/README.md)

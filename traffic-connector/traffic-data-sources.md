@@ -1,5 +1,9 @@
 # Traffic Data Sources
 
+<table data-view="cards"><thead><tr><th></th><th></th><th></th><th data-hidden data-card-cover data-type="files"></th></tr></thead><tbody><tr><td><strong>Kubernetes Daemonset</strong></td><td></td><td>You can deploy Akto in Kubernetes and collect traffic through a daemonset on your Kubernetes configuration.</td><td><a href="../.gitbook/assets/image (50).png">image (50).png</a></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr></tbody></table>
+
+
+
 ### Kubernetes
 
 ![](https://app.akto.io/public/kubernetes.svg) **Kubernetes Daemonset**
