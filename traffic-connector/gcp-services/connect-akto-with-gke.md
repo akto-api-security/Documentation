@@ -2,6 +2,8 @@
 
 GKE is the industry's first fully managed Kubernetes service with full Kubernetes API, release channels, and multi-cluster support.
 
+<figure><img src="../../.gitbook/assets/image (61).png" alt=""><figcaption></figcaption></figure>
+
 ## Setting up Akto Daemonset pod on your K8s cluster
 
 1. Once complete, you should now see a daemonset config. `Copy the config` and paste in a `text editor`.

@@ -1,5 +1,7 @@
 # Connect Akto with Azure Container App
 
+<figure><img src="../../.gitbook/assets/image (53).png" alt=""><figcaption></figcaption></figure>
+
 1. Use the following env vars to configure the sidecar
 
 ```

@@ -2,6 +2,8 @@
 
 AKS offers the quickest way to start developing and deploying cloud-native apps in Azure, datacenters, or at the edge, with built-in code-to-cloud pipelines and guardrails.
 
+<figure><img src="../../.gitbook/assets/image (51).png" alt=""><figcaption></figcaption></figure>
+
 ## Setting up Akto Daemonset pod on your K8s cluster
 
 1. Once complete, you should now see a daemonset config. `Copy the config` and paste in a `text editor`.

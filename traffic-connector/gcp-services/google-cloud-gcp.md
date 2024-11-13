@@ -18,6 +18,8 @@ Packet Mirroring is a GCP feature that clones the traffic of specified instances
 
 Packet mirroring is our recommended way to receive data as it is completely non-intrusive. Akto's traffic analyzer analyzes this traffic to create your application's APIs request and response, understand API metadata and find misconfigurations. Akto can work with high traffic scale though you can always configure the amount of traffic you want to send to Akto dashboard.
 
+<figure><img src="../../.gitbook/assets/image (56).png" alt=""><figcaption></figcaption></figure>
+
 ## Pre-requisites to add data to Akto using Packet Mirroring
 
 Make sure, the GCP account in which the resources will be created has provisioned enough compute to be able to deploy [Akto](http://akto.io/) and has sufficient permission levels to create resources.

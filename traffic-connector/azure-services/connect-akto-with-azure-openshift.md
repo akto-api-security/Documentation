@@ -1,6 +1,8 @@
 # Connect Akto with Azure OpenShift
 
-Azure Red Hat OpenShift provides highly available, fully managed OpenShift clusters on demand, monitored and operated jointly by Microsoft and Red Hat/
+Azure Red Hat OpenShift provides highly available, fully managed OpenShift clusters on demand, monitored and operated jointly by Microsoft and Red Hat.
+
+<figure><img src="../../.gitbook/assets/image (52).png" alt=""><figcaption></figcaption></figure>
 
 1. [Add service account](connect-akto-with-azure-openshift.md#service-account-manifest) to get permissions for traffic connector.
 2. You can use [Kubernetes Daemonset connector](../kubernetes/kubernetes.md) or [eBPF on mTLS](../ebpf/ebpf-mtls.md) as your traffic connector.&#x20;
