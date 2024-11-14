@@ -11,7 +11,7 @@ F5 is a leading application security and delivery platform that provides advance
 3. Search for Hybrid SaaS Connector and click connect
 4. Copy the token as specified under `Runtime Service Command` heading. This will be later used in setting up Akto Traffic Processor
 
-<figure><img src="../../.gitbook/assets/image (63).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (64).png" alt=""><figcaption></figcaption></figure>
 
 ## Setting Up Akto Traffic Collector
 
