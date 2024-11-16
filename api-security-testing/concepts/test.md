@@ -8,7 +8,7 @@ Akto comes with over 800+ pre-built tests to find vulnerabilities like Broken Au
 
 You can also schedule your test to run at times that best fit your workflow, ensuring that your API security is checked regularly without disrupting your normal operations.
 
-For more information on how to schedule the test, please refer to the documentation- [**Schedule Test**](../how-to/schedule-tests.md). You can also [create your custom tests](../../test-editor/concepts/custom-test.md) and [run tests in CI/CD](../how-to/run-tests-in-cicd.md) for continuous testing.&#x20;
+For more information on how to schedule the test, please refer to the documentation- [**Schedule Test**](../how-to/schedule-tests.md). You can also [create your custom tests](../../test-editor/concepts/custom-test.md) and [run tests in CI/CD](../../ci-cd/how-to/run-tests-in-cicd.md) for continuous testing.&#x20;
 
 ### Akto's Approach
 

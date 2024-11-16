@@ -180,17 +180,13 @@
   * [Test Result](api-security-testing/concepts/test-result.md)
   * [JSON Recording for Automated Auth Tokens](api-security-testing/concepts/json-recording-for-automated-auth-tokens.md)
 * [How To](api-security-testing/how-to/README.md)
-  * [Setup GitHub Integration for CI/CD](api-security-testing/how-to/setup-github-integration-for-ci-cd/README.md)
-    * [Create GitHub App](api-security-testing/how-to/setup-github-integration-for-ci-cd/create-github-app.md)
   * [Run Test](api-security-testing/how-to/run-test.md)
   * [Install testing module in your Cloud](api-security-testing/how-to/install-testing-module-in-your-cloud.md)
-  * [Run tests in CI/CD](api-security-testing/how-to/run-tests-in-cicd.md)
   * [Run Tests by Category](api-security-testing/how-to/run-tests-by-category.md)
   * [Test Multiple APIs](api-security-testing/how-to/test-multiple-apis.md)
   * [Schedule Tests](api-security-testing/how-to/schedule-tests.md)
   * [Stop Tests](api-security-testing/how-to/stop-tests.md)
   * [Run Test on Any One Endpoint](api-security-testing/how-to/run-test-on-any-one-endpoint.md)
-  * [Add test to CI/CD Pipeline](api-security-testing/how-to/add-test-to-ci-cd-pipeline.md)
   * [Configure global rate limit](api-security-testing/how-to/configure-global-rate-limit.md)
   * [Configure Pre-request Script](api-security-testing/how-to/configure-pre-request-script.md)
   * [Set Up JSON Recording for Auth Tokens](api-security-testing/how-to/set-up-json-recording-for-auth-tokens.md)
@@ -211,6 +207,19 @@
   * [Jira Integration](issues/how-to/jira-integration.md)
   * [Triage Issues](issues/how-to/triage-issues.md)
   * [Export Vulnerability Report](issues/how-to/export-vulnerability-report.md)
+
+## CI/CD
+
+* [GitHub Actions](ci-cd/github-actions/README.md)
+  * [Create GitHub App](ci-cd/github-actions/create-github-app.md)
+* [Jenkins](ci-cd/jenkins.md)
+* [Azure DevOps](ci-cd/azure-devops.md)
+* [GitLab](ci-cd/gitlab.md)
+* [How To](ci-cd/how-to/README.md)
+  * [Run tests in CI/CD](ci-cd/how-to/run-tests-in-cicd.md)
+  * [Add test to CI/CD Pipeline](ci-cd/how-to/add-test-to-ci-cd-pipeline.md)
+  * [Get API Credentials](ci-cd/how-to/get-api-credentials.md)
+  * [Test ID from Akto test](ci-cd/how-to/test-id-from-akto-test.md)
 
 ## Account
 
