@@ -76,6 +76,7 @@
   * [Bitbucket](traffic-connector/source-code/bitbucket.md)
   * [GitLab](traffic-connector/source-code/gitlab.md)
   * [API inventory from source code](traffic-connector/source-code/api-inventory-from-source-code.md)
+  * [Source code installation](traffic-connector/source-code/source-code-installation.md)
 * [Virtual Machines](traffic-connector/virtual-machines/README.md)
   * [Connect Akto with Docker](traffic-connector/virtual-machines/docker.md)
   * [Connect Akto with TCP Agent](traffic-connector/virtual-machines/tcp-agent.md)
