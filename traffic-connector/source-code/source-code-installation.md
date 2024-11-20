@@ -51,8 +51,7 @@ The code analysis module requires access to Akto's database abstractor:
     - `database_abstractor_token`: This was generated in the previous step
     - `github_token` generated above
     - `namespace`: where you would like to install Akto code analysis module
-
- `helm install akto-source-code-analyser akto/akto-source-code-analyser  --set source_code_analyser.aktoSourceCodeAnalyser.env.githubAccessToken="<github_token>" --set source_code_analyser.aktoSourceCodeAnalyser.env.databaseAbstractorUrl="<database_abstractor_url>" --set source_code_analyser.aktoSourceCodeAnalyser.env.databaseAbstractorToken="<database_abstractor_token>" --set source_code_analyser.codeAnalysisLspService.env.startJavaLsp="true" --set source_code_analyser.aktoSourceCodeAnalyser.env.runtimeMode="HYBRID" -n <namespace>`
+    `helm install akto-source-code-analyser akto/akto-source-code-analyser  --set source_code_analyser.aktoSourceCodeAnalyser.env.githubAccessToken="<github_token>" --set source_code_analyser.aktoSourceCodeAnalyser.env.databaseAbstractorUrl="<database_abstractor_url>" --set source_code_analyser.aktoSourceCodeAnalyser.env.databaseAbstractorToken="<database_abstractor_token>" --set source_code_analyser.codeAnalysisLspService.env.startJavaLsp="true" --set source_code_analyser.aktoSourceCodeAnalyser.env.runtimeMode="HYBRID" -n <namespace>`
 3. Verify if all pods are running: 
 `kubectl get pods -n <namespace`. 
 Expected output: One pod with four running containers
