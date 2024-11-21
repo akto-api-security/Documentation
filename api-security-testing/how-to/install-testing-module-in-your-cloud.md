@@ -20,6 +20,15 @@ There could be multiple reasons why you'd want to install testing module within 
 
 You can now use a Helm-chart to install Akto Security Testing module in your cloud or install manually
 
+### Terraform
+
+1. To install using Terraform, use the Terraform script [here](https://github.com/akto-api-security/infra/blob/feature/quick-setup/templates/mini-testing.tf).
+  1. Please make sure you install it in a private subnet from your application VPC.
+  2. This private subnet should also have network connectivity (typically via NAT).
+2. For `Database Abstractor Service Token` input in the terraform script specify the JWT token copied in the earlier step.
+3. Once the terraform script has finished running, you should be able to see a new autoscaling group created with 1 Akto Testing EC2 instance running.
+
+
 ### Helm-chart
 
 1. Download/clone our helm chart https://github.com/akto-api-security/helm-charts/tree/mini\_testing&#x20;
