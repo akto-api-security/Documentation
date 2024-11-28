@@ -117,6 +117,7 @@
   * [Remove API(s) from API group](api-inventory-1/how-to/remove-api-s-from-api-group.md)
   * [Deactivate an API Collection](api-inventory-1/how-to/deactivate-an-api-collection.md)
   * [Add collection using Explore Mode](api-inventory-1/how-to/add-collection-using-explore-mode.md)
+  * [De-merge API](api-inventory/how-to/de-merge-api.md)
   * [Create Swagger File Using Akto](api-inventory-1/how-to/create-swagger-file-using-akto.md)
   * [Copy API Endpoints Data](api-inventory-1/how-to/copy-api-endpoints-data.md)
   * [Add an API Collection](api-inventory-1/how-to/add-an-api-collection.md)
