@@ -18,6 +18,10 @@ Integrate Akto with Jira to streamline your API security workflow by creating ti
    * Click "Test Integration" to verify connection
    * If successful, click "Save" to finalize
 
+{% hint style="info" %}
+**Note:** Mandatory fields set in Jira are not currently supported in this integration. Ensure that all required fields are included and configured appropriately in Jira for a smooth ticket creation process.
+{% endhint %}
+
 ### Benefits
 
 * Instantly create Jira tickets for API vulnerabilities
