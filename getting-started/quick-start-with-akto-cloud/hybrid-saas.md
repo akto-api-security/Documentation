@@ -82,6 +82,40 @@ kubectl get svc -n <namespace>
 
 <figure><img src="../../.gitbook/assets/mini-runtime-ip-2.png" alt=""><figcaption></figcaption></figure>
 
+### Linux VM
+
+1. Create a new instance with the following requirements
+   1. Platform
+      1. Amazon Linux 2023
+   2. Spec
+      1. 2 vCPU
+      2. 4GB RAM
+      3. 20GB Hard disk
+      4. Don’t use burstable instances
+   3. Network
+      1. Private subnet
+      2. connectivity to internet (typically via NAT)
+      3. connectivity to your staging service
+   4. Security groups
+      1. Inbound - Open ports 22, 9092
+      2. Outbound - Open all
+2. SSH into this new instance in your Cloud
+3. Run `sudo su -`
+4. Install [docker](https://github.com/akto-api-security/infra/blob/feature/quick-setup/get-docker.sh) and [docker-compose](https://github.com/akto-api-security/infra/blob/feature/quick-setup/get-docker-compose.sh).
+5.  Run the following commands to download setup files - 
+   
+   ```
+      wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-compose-mini-runtime.yml
+      wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/watchtower.env
+      wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-mini-runtime.env
+   ```
+6. Modify ${AKTO_KAFKA_IP} in the `docker-compose-mini-runtime.yml` with the ip of your instance on which runtime will be deployed
+7. Replace the value of `DATABASE_ABSTRACTOR_SERVICE_TOKEN` in `docker-mini-runtime.yml` with the token value copied from Akto's Hybrid Saas Connector in the quick start menu.
+
+8. Run `docker-compose -f docker-compose-mini-runtime.yml up -d`
+9. Run `systemctl enable /usr/lib/systemd/system/docker.service` to ensure Docker starts up in case of instance restarts
+
+
 ## Notes:
 
 1. Ensure internet connectivity in Traffic aggregator  service.
