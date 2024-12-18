@@ -1,4 +1,4 @@
-# How to update helm deployments
+# How to update container images in helm deployments
 
 1. Check the image pull policy for the deployment. To check the image pull policy run the following commands.
 

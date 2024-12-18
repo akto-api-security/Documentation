@@ -283,7 +283,7 @@
 
 * [How to get logs](troubleshooting/logs.md)
 * [How to disable logging](troubleshooting/disable-logging.md)
-* [How to update helm deployments](troubleshooting/updates.md)
+* [How to update container images in helm deployments](troubleshooting/updates.md)
 
 ***
 
