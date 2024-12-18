@@ -1,4 +1,34 @@
-# How to update container images in helm deployments
+# How to update helm deployments
+
+You can either upgrade the entire helm chart or choose to update individual container images based on your preference.
+
+## Upgrading helm chart version
+
+1. Update the helm repo
+
+    ```bash
+    helm repo update
+    ```
+
+<figure><img src="../.gitbook/assets/updates-6.png" alt=""><figcaption></figcaption></figure>
+
+2. Check the latest version for your deployment.
+
+    ```bash
+    helm show chart akto/akto-mini-runtime
+    ```
+
+<figure><img src="../.gitbook/assets/updates-7.png" alt=""><figcaption></figcaption></figure>
+
+3. Upgrade the helm chart to the latest version for your deployment in your namespace.
+
+    ```bash
+    helm upgrade akto-mini-runtime akto/akto-mini-runtime -n <namespace> --version 0.1.6
+    ```
+
+<figure><img src="../.gitbook/assets/updates-8.png" alt=""><figcaption></figcaption></figure>
+
+## Directly updating container images
 
 1. Check the image pull policy for the deployment. To check the image pull policy run the following commands.
 
