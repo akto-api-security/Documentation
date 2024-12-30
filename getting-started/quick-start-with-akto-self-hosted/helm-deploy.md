@@ -171,7 +171,7 @@ The connection string would then be `mongodb://mongo-0.mongo.default.svc.cluster
       * Copy `/akto/infra/data/` from old Mongo instance to this new Mongo instance at the same directory location of `/akto/infra/data/` using SCP
       * Run `docker start mongo`
    5. If you have installed Akto's K8s agent in your K8s cluster in the previous CloudFormation setup, please run `kubectl delete -f akto-daemonset-config.yml` to halt the traffic processing too.
-   6. Use the private ip of this Mongo instance while installing helm chart (refer [Install Akto via Helm](../helm-deploy/#install-akto-via-helm) section)
+   6. Use the private ip of this Mongo instance while installing helm chart (refer [Install Akto via Helm](helm-deploy.md#install-akto-via-helm) section)
    7. Once you setup Akto via Helm chart, try logging in with your previous credentials and check the data. All your data must be retained.
    8. Change the `AKTO_NLB` to the output of `kubectl get services/flash-akto-runtime -n staging -o jsonpath="{.spec.clusterIP}"`
    9. Run `kubectl apply -f akto-daemonset-config.yml`

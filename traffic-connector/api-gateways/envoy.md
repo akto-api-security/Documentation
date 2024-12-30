@@ -57,7 +57,7 @@ RUN apt-get install librdkafka-dev luarocks -y
 RUN luarocks install lua-cjson
 ```
 
-3. Add the following lines to the envoy.yaml fie under the filters section. For more reference check [this](https://github.com/envoyproxy/envoy/blob/main/examples/lua/envoy.yaml)
+3. Add the following lines to the envoy.yaml fie under the filters section.
 
 ```
 http_filters:
