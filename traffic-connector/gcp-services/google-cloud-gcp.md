@@ -22,13 +22,13 @@ Packet mirroring is our recommended way to receive data as it is completely non-
 
 ## Pre-requisites to add data to Akto using Packet Mirroring
 
-Make sure, the GCP account in which the resources will be created has provisioned enough compute to be able to deploy [Akto](http://akto.io/) and has sufficient permission levels to create resources.
+Make sure, the GCP account in which the resources will be created has provisioned enough compute to be able to deploy [Akto](https://www.akto.io) and has sufficient permission levels to create resources.
 
 ## Steps to deploy Akto in GCP
 
 You can deploy Akto using the `Akto's GCP packet mirroring template`. Here are the steps to deploy:
 
-1. Open GCP Cloud Shell from your GCP Account. You can find the setup script for Akto [here](https://raw.githubusercontent.com/akto-api-security/infra/feature/self\_hosting/templates/gcp-mirroring-template.sh). Download it on your shell from the command
+1. Open GCP Cloud Shell from your GCP Account. You can find the setup script for Akto [here](https://raw.githubusercontent.com/akto-api-security/infra/feature/self_hosting/templates/gcp-mirroring-template.sh). Download it on your shell from the command
 
 {% code overflow="wrap" %}
 ```

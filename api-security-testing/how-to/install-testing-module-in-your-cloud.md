@@ -2,9 +2,9 @@
 
 ## Introduction
 
-API Security testing involves sending malicious API requests to your (staging) server. By default, these malicious testing requests are sent from the Testing module installed within  Akto Cloud.&#x20;
+API Security testing involves sending malicious API requests to your (staging) server. By default, these malicious testing requests are sent from the Testing module installed within Akto Cloud.
 
-There could be multiple reasons why you'd want to install testing module within your Cloud.&#x20;
+There could be multiple reasons why you'd want to install testing module within your Cloud.
 
 1. Whitelisting Akto's IP in Security Group or WAF isn't an option
 2. The staging server isn't reachable from public domain
@@ -14,7 +14,7 @@ There could be multiple reasons why you'd want to install testing module within 
 
 ## Testing from Customer Cloud
 
-1. Login to Akto dashboard at [app.akto.io](http://app.akto.io)
+1. Login to Akto dashboard at [app.akto.io](https://app.akto.io)
 2. Go to Quick Start > Hybrid Saas > Click on “Connect” button
 3. Copy the JWT token (marked in red)
 
@@ -25,14 +25,13 @@ You can now use a Helm-chart to install Akto Security Testing module in your clo
 1. To install using Terraform, use the Terraform script [here](https://github.com/akto-api-security/infra/blob/feature/quick-setup/templates/mini-testing.tf).
    1. Please make sure you install it in a private subnet from your application VPC.
    2. This private subnet should also have network connectivity (typically via NAT).
-3. For `Database Abstractor Service Token` input in the terraform script specify the JWT token copied in the earlier step.
-4. Once the terraform script has finished running, you should be able to see a new autoscaling group created with 1 Akto Testing EC2 instance running.
-
+2. For `Database Abstractor Service Token` input in the terraform script specify the JWT token copied in the earlier step.
+3. Once the terraform script has finished running, you should be able to see a new autoscaling group created with 1 Akto Testing EC2 instance running.
 
 ### Helm-chart
 
-1. Download/clone our helm chart https://github.com/akto-api-security/helm-charts/tree/mini\_testing&#x20;
-2. Open your terminal, and go to the location where you have downloaded the helm charts&#x20;
+1. Download/clone our helm chart https://github.com/akto-api-security/helm-charts/tree/mini\_testing
+2. Open your terminal, and go to the location where you have downloaded the helm charts
 3. Run `helm install aktotesting hybrid-redact -n akto --set tokens.env.databaseAbstractorToken={{paste_token_here}}`
 
 ### Linux VM

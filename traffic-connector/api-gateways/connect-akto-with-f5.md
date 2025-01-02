@@ -6,7 +6,7 @@ F5 is a leading application security and delivery platform that provides advance
 
 ## **Prerequisites**
 
-1. Go to [app.akto.io](http://app.akto.io). Login/Signup into your account.
+1. Go to [app.akto.io](https://app.akto.io). Login/Signup into your account.
 2. Click on Quick Start tab in left nav
 3. Search for Hybrid SaaS Connector and click connect
 4. Copy the token as specified under `Runtime Service Command` heading. This will be later used in setting up Akto Traffic Processor
