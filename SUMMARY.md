@@ -236,6 +236,7 @@
   * [Okta OIDC](account/sso/okta-oidc.md)
   * [Github OIDC](account/sso/github-oidc.md)
   * [Google Workspace SSO](account/sso/google-workspace-sso.md)
+  * [Add Members From SSO](account/sso/add-members-from-sso.md)
 
 ## Runtime protection
 
