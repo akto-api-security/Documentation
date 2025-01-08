@@ -114,6 +114,7 @@
   * [Export an API Collection to Postman](api-inventory-1/how-to/export-an-api-collection-to-postman.md)
   * [Export an API Collection to Burp](api-inventory-1/how-to/export-an-api-collection-to-burp.md)
   * [Create API group](api-inventory-1/how-to/create-api-group.md)
+  * [Collection-Based RBAC](api-inventory/how-to/collection-based-rbac.md)
   * [Remove API(s) from API group](api-inventory-1/how-to/remove-api-s-from-api-group.md)
   * [Deactivate an API Collection](api-inventory-1/how-to/deactivate-an-api-collection.md)
   * [Add collection using Explore Mode](api-inventory-1/how-to/add-collection-using-explore-mode.md)
@@ -183,7 +184,9 @@
   * [JSON Recording for Automated Auth Tokens](api-security-testing/concepts/json-recording-for-automated-auth-tokens.md)
 * [How To](api-security-testing/how-to/README.md)
   * [Run Test](api-security-testing/how-to/run-test.md)
+  * [Edit Test Settings](api-security-testing/how-to/edit-test-settings.md)
   * [Install testing module in your Cloud](api-security-testing/how-to/install-testing-module-in-your-cloud.md)
+  * [Recalculate Issue Counts](api-security-testing/how-to/recalculate-issue-counts.md)
   * [Run Tests by Category](api-security-testing/how-to/run-tests-by-category.md)
   * [Test Multiple APIs](api-security-testing/how-to/test-multiple-apis.md)
   * [Schedule Tests](api-security-testing/how-to/schedule-tests.md)
@@ -193,6 +196,7 @@
   * [Configure Pre-request Script](api-security-testing/how-to/configure-pre-request-script.md)
   * [Set Up JSON Recording for Auth Tokens](api-security-testing/how-to/set-up-json-recording-for-auth-tokens.md)
   * [Create a Test Role](api-security-testing/how-to/create-a-test-role.md)
+  * [Edit Auth Flow in Test Roles](api-security-testing/how-to/edit-auth-flow-in-test-roles.md)
   * [Play in Test Editor Playground](api-security-testing/how-to/play-in-test-editor-playground.md)
   * [Conduct Role-Based Testing](api-security-testing/how-to/conduct-role-based-testing.md)
   * [Run tests in CLI using Akto](api-security-testing/how-to/run-tests-in-cli-using-akto.md)
@@ -208,6 +212,7 @@
 * [How To](issues/how-to/README.md)
   * [Jira Integration](issues/how-to/jira-integration.md)
   * [Triage Issues](issues/how-to/triage-issues.md)
+  * [Export Selected Issues to Reports](issues/how-to/export-selected-issues-to-reports.md)
   * [Export Vulnerability Report](issues/how-to/export-vulnerability-report.md)
 
 ## CI/CD
