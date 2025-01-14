@@ -190,6 +190,7 @@
   * [Run Tests by Category](api-security-testing/how-to/run-tests-by-category.md)
   * [Test Multiple APIs](api-security-testing/how-to/test-multiple-apis.md)
   * [Schedule Tests](api-security-testing/how-to/schedule-tests.md)
+  * [Export Results](api-security-testing/how-to/export-results.md)
   * [Stop Tests](api-security-testing/how-to/stop-tests.md)
   * [Run Test on Any One Endpoint](api-security-testing/how-to/run-test-on-any-one-endpoint.md)
   * [Configure global rate limit](api-security-testing/how-to/configure-global-rate-limit.md)

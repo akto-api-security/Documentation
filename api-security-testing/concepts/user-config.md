@@ -1,19 +1,19 @@
 # User Config
 
-With Akto, you can automate the process of generating attacker tokens required for  **Broken Object Level Authorization (BOLA)** . These tokens are required to simulate the actions of malicious actors and help identify BOLA-related vulnerabilities in your API's authorization mechanisms.
+With Akto, you can automate the process of generating attacker tokens required for **Broken Object Level Authorization (BOLA)** . These tokens are required to simulate the actions of malicious actors and help identify BOLA-related vulnerabilities in your API's authorization mechanisms.
 
-In the demonstration below, let’s run a test by selecting an authenticated API endpoint from the  **`juice_shop_demo`** collection.
+In the demonstration below, let’s run a test by selecting an authenticated API endpoint from the **`juice_shop_demo`** collection.
 
 #### 1. Configure attacker token
 
 In the demonstration below, we have added an **Auth header key** and **Auth header value** to facilitate authentication when making requests to the API.\
 Go to the **Testing > User Config**. Enter the **Auth Header Key** and **Auth Header Value**. Click on the **Save Change**.
 
-{% embed url="https://app.arcade.software/share/pingeeeBhQTpRhzO1vA4" %}
+{% @arcade/embed flowId="pingeeeBhQTpRhzO1vA4" url="https://app.arcade.software/share/pingeeeBhQTpRhzO1vA4" %}
 
 In the above demonstration, we have added an Auth token. Now let's check the test results.
 
-You can also automate attacker auth token generation by clicking on the `Automated` button and follow the steps [here](../how-to/create-a-test-role.md#automated-auth-token-generation).&#x20;
+You can also automate attacker auth token generation by clicking on the `Automated` button and follow the steps [here](../how-to/create-a-test-role.md#automated-auth-token-generation).
 
 #### 2. **Run BOLA tests**
 
@@ -27,7 +27,7 @@ In the above demonstration, we have run tests for **Broken Object Level Authoriz
 
 #### 3. Verify results
 
-{% embed url="https://app.arcade.software/share/dsxE1pJ91oF6jpT170JB" %}
+{% @arcade/embed flowId="dsxE1pJ91oF6jpT170JB" url="https://app.arcade.software/share/dsxE1pJ91oF6jpT170JB" %}
 
 In the above demonstration, we will see both the original authentication token of the API and the modified authentication code. The observation from the test indicates that the authentication system could be easily altered or manipulated.\
 \
