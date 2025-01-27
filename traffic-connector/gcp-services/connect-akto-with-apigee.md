@@ -1,14 +1,39 @@
-# Connect Akto with Apigee
+## Connect Akto with Apigee
 
-Apigee is Google Cloud's full-lifecycle API management platform that helps enterprises design, secure, and scale APIs. Integrating Apigee with Akto will enable automatic discovery and security testing of all APIs managed through your Apigee gateway, providing comprehensive visibility and continuous security assessment of your API infrastructure.
+Before setting up the APIgee connector, you need to deploy the Akto Data-Ingestion Service. Follow these steps:
 
-To connect Akto with Apigee, follow these steps -
+1.  **Download the required Docker Compose and environment files**  
+    SSH into the instance where you want to deploy the data-ingestion service and run the following commands to download the necessary files:
+    
+    ```bash
+    wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-compose-data-ingestion-runtime.yml
+    wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/data-ingestion-docker.env
+    wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-mini-runtime.env
+    
+    ```
+    
+2.  **Retrieve the `DATABASE_ABSTRACTOR_SERVICE_TOKEN`**
+    
+    -   Go to [Akto Dashboard](https://app.akto.io/) and log in to your account.
+    -   Navigate to the **Quick Start** tab in the left navigation panel. <figure><img src="../../.gitbook/assets/Quick-Start.png" alt=""><figcaption></figcaption></figure>
+    -   Select the **Hybrid SaaS Connector** and copy the token provided in the **Runtime Service Command** section <figure><img src="../../.gitbook/assets/HybridSaaSConnector.png" alt=""><figcaption></figcaption></figure>
+3.  **Update the `docker-mini-runtime.env` file**
+    
+    -   Open the `docker-mini-runtime.env` file and replace the `<token>` placeholder with the `DATABASE_ABSTRACTOR_SERVICE_TOKEN` obtained from the Akto dashboard. <figure><img src="../../.gitbook/assets/TokenReplace.png" alt=""><figcaption></figcaption></figure>
+4.  **Deploy the Data-Ingestion Service**
+    
+    -   Run the following command to start the data-ingestion service:
+        
+        ```bash
+        docker-compose -f docker-compose-data-ingestion-runtime.yml up -d
+        
+        ```
+        
+5.  **Get the IP Address of the Data-Ingestion Service**
+    
+    -   Ensure the instance is accessible from the instances where APIgee is hosted.
+    -   Note down the IP address of this instance as it will be required by the APIgee connector to send traffic data.
 
-1. Set up and configure Akto Traffic Processor. The steps are mentioned [here](https://docs.akto.io/getting-started/traffic-processor/hybrid-saas).
-2. Add Apigee connector
-   1. Go to **Quick Start** in Akto Dashboard
-   2. Scroll to **Apigee** block and click on the **Connect** button to get instructions
-
-<figure><img src="../../.gitbook/assets/image (4) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+----------
 
 To enable this premium connector for your account, please reach out to our team at [help@akto.io](mailto:help@akto.io) for pricing and setup information.
