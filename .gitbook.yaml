@@ -94,4 +94,5 @@ redirects:
   api-security-testing/how-to/setup-github-integration-for-ci-cd/create-github-app: ci-cd/github-actions/create-github-app.md
   api-security-testing/how-to/add-test-to-ci-cd-pipeline: ci-cd/how-to/add-test-to-ci-cd-pipeline.md
   api-security-testing/how-to/run-tests-in-cicd: ci-cd/how-to/run-tests-in-cicd.md
+  getting-started/aws-deploy: getting-started/quick-start-with-akto-self-hosted/aws-deploy.md
 
