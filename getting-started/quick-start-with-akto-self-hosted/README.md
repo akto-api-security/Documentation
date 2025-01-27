@@ -12,7 +12,7 @@ If you're like us, you probably have a lot of data that is only accessible from 
 
 Deploy Akto locally or on your own cloud. Choose any of the below options to get started:
 
-1. [AWS deploy](https://docs.akto.io/getting-started/aws-deploy)
+1. [AWS deploy](aws-deploy/)
 2. [GCP Deploy](https://docs.akto.io/getting-started/gcp-deploy)
 3. [Local Deploy](https://docs.akto.io/getting-started/local-deploy)
 4. [Openshift Deploy](https://docs.akto.io/getting-started/openshift-deploy)
