@@ -29,8 +29,10 @@ wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/featur
 6\. Search for Hybrid SaaS Connector and click connect.
 <figure><img src="../../.gitbook/assets/HybridSaaSConnector.png" alt=""><figcaption></figcaption></figure>
 
-7\. Copy the token value under `Runtime Service Command` section. Replace the \<token\> string with the earlier copied value in docker-mini-runtime.env file.
-<figure><img src="../../.gitbook/assets/TokenReplace.png" alt=""><figcaption></figcaption></figure>
+7\. Copy the token value under `Runtime Service Command` section. Replace the token string with the earlier copied value in docker-mini-runtime.env file.
+```plaintext
+DATABASE_ABSTRACTOR_SERVICE_TOKEN=token
+```
 
 8\. Run `docker-compose -f docker-compose-data-ingestion-runtime.yml -d`
 
