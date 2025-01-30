@@ -11,8 +11,8 @@ You can add akto-traffic-collector service to your docker-compose file. Your API
 ## Adding Akto docker service
 
 1. Create a file `docker-akto-collector.env` with the following content. 
-  1. Replace `<AKTO_NLB>` with the mini-runtime/runtime service URL saved earlier.
-  2. Replace `<AKTO_MONGO_IP>` with `mongodb://0.0.0.0:27017`, if you're on hybrid setup or with your mongodb IP if it's accessible and you're on on-premise deployment.
+    1. Replace `<AKTO_NLB>` with the mini-runtime/runtime service URL saved earlier.
+    2. Replace `<AKTO_MONGO_IP>` with `mongodb://0.0.0.0:27017`, if you're on hybrid setup or with your mongodb IP if it's accessible and you're on on-premise deployment.
 
 ```bash
 AKTO_TRAFFIC_BATCH_TIME_SECS=10

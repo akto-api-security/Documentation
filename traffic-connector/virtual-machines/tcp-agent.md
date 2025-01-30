@@ -10,11 +10,11 @@ You can use Akto traffic collectors to collect and send traffic to Akto. Your AP
 
 ## Adding Akto traffic collector container
 
-1\. Start a docker service `aktosecurity/mirror-api-logging:k8s_agent` to any instance you want to collect traffic&#x20;
+1. Start a docker service `aktosecurity/mirror-api-logging:k8s_agent` to any instance you want to collect traffic&#x20;
 
-2\. Set the following env variables. 
-  1. Replace `<AKTO_NLB>` with the mini-runtime/runtime service URL saved earlier.
-  2. Replace `<AKTO_MONGO_IP>` with `mongodb://0.0.0.0:27017`, if you're on hybrid setup or with your mongodb IP if it's accessible and you're on on-premise deployment.
+2. Set the following env variables. 
+    1. Replace `<AKTO_NLB>` with the mini-runtime/runtime service URL saved earlier.
+    2. Replace `<AKTO_MONGO_IP>` with `mongodb://0.0.0.0:27017`, if you're on hybrid setup or with your mongodb IP if it's accessible and you're on on-premise deployment.
 
 ```
 export AKTO_TRAFFIC_BATCH_TIME_SECS=10
