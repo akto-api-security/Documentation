@@ -237,6 +237,7 @@
 * [Create a New Account](account/create-a-new-account.md)
 * [How to Switch Between Accounts in Akto](account/how-to-switch-between-accounts-in-akto.md)
 * [Understanding Role Permissions](account/understanding-role-permissions.md)
+* [Custom roles](account/custom-roles.md)
 * [Audit Logs](account/audit-logs.md)
 * [SSO](account/sso/README.md)
   * [Azure AD SAML](account/sso/azuread-saml.md)
