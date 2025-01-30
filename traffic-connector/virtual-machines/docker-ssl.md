@@ -1,4 +1,4 @@
-# Connect Akto with docker on TLS service
+# Connect Akto on TLS service
 
 You can connect your services, even if they're on TLS using akto-traffic-collector service. Your APIs from this traffic will show up in Akto dashboard.
 
@@ -26,6 +26,11 @@ docker run -d \
   -e AKTO_TRAFFIC_BATCH_SIZE=100 \
   -e AKTO_KAFKA_BROKER_MAL="<kafka_ip>" \
   aktosecurity/mirror-api-logging:k8s_ebpf
+```
+
+In case you face an issue with the spaces in the command...
+```bash
+docker run -d --name akto-api-security-traffic-collector --restart always --network host --privileged --cap-add SYS_PTRACE --cap-add SYS_ADMIN -v /lib/modules:/lib/modules -v /sys/kernel:/sys/kernel -v /usr/src:/usr/src -v /:/host -e AKTO_TRAFFIC_BATCH_TIME_SECS=10 -e AKTO_TRAFFIC_BATCH_SIZE=100 -e AKTO_KAFKA_BROKER_MAL="<kafka_ip>" aktosecurity/mirror-api-logging:k8s_ebpf
 ```
 
 ## Get Support for your Akto setup
