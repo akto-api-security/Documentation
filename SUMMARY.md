@@ -79,6 +79,7 @@
   * [Source code installation](traffic-connector/source-code/source-code-installation.md)
 * [Virtual Machines](traffic-connector/virtual-machines/README.md)
   * [Connect Akto with Docker](traffic-connector/virtual-machines/docker.md)
+  * [Connect Akto on TLS service](traffic-connector/virtual-machines/docker-ssl.md)
   * [Connect Akto with TCP Agent](traffic-connector/virtual-machines/tcp-agent.md)
 * [Manual](traffic-connector/manual/README.md)
   * [Connect Akto with Burp suite](traffic-connector/manual/burp-suite.md)
