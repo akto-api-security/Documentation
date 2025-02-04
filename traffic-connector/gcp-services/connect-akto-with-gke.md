@@ -1,5 +1,7 @@
 # Connect Akto with GKE
 
+<figure><img src="../../.gitbook/assets/image (22).png" alt=""><figcaption></figcaption></figure>
+
 GKE is the industry's first fully managed Kubernetes service with full Kubernetes API, release channels, and multi-cluster support.
 
 <figure><img src="../../.gitbook/assets/image (61).png" alt=""><figcaption></figcaption></figure>

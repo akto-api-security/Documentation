@@ -1,5 +1,7 @@
 # Connect Akto with AWS ECS
 
+<figure><img src="../../.gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
+
 ## Introduction
 
 Learn about how to send API traffic data from AWS ECS setup to Akto from your environment. Depending on your ECS infrastructure type refer to these respective sections:

@@ -2,6 +2,8 @@
 
 If your API calls are being routed through ENVOY, you can use Akto's ENVOY module to send traffic to Akto dashboard. This module can also be used with Istio service mesh, because it is based on ENVOY proxy. Below guide will help you do this:
 
+<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+
 ## Creating AWS Policy
 
 1\. Go to Quick Start on your Akto dashboard and expand the `Connect traffic data` section.

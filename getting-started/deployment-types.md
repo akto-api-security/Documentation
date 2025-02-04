@@ -8,7 +8,7 @@ The fastest and easiest way to get started with Akto. Ideal for organizations lo
 
 Steps:
 
-1. [Set up Traffic Processor](broken-reference)
+1. [Set up Traffic Processor](../traffic-connector/traffic-data-sources.md)
 2. [Configure Traffic Connector](broken-reference)
 
 ### 2. Self-Hosted Deployment
@@ -27,6 +27,6 @@ Perfect for development teams, security researchers, or evaluation purposes.
 
 Steps:
 
-1. [Configure Traffic Connector](https://www.notion.so/Deployment-Types-1089f7c64e4680138566fe758faa759b?pvs=21)
+1. [Configure Traffic Connector](broken-reference)
 
 Choose your preferred deployment option to start building a robust API Security program with Akto.

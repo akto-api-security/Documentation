@@ -2,6 +2,8 @@
 
 Kong is an API gateway that helps organizations manage and orchestrate API traffic across microservices and legacy systems. Connecting Kong with Akto will enable automatic API discovery and security testing of all APIs flowing through your Kong gateway, providing comprehensive visibility into your API landscape without any manual configuration.
 
+<figure><img src="../../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+
 To connect Akto with Kong, follow these steps -
 
 1. Set up and configure Akto Traffic Processor. The steps are mentioned [here](https://docs.akto.io/getting-started/traffic-processor/hybrid-saas).

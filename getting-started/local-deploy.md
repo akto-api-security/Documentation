@@ -34,7 +34,7 @@ docker-compose up -d
 
 Akto should automatically open up in your browser at [http://localhost:9090](http://localhost:9090). Click on the Signup button to get started. If you've already signed up, sign in to the account.
 
-<figure><img src="../.gitbook/assets/image (22).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (22) (1).png" alt=""><figcaption></figcaption></figure>
 
 ## Step 3: Add API data
 
@@ -42,12 +42,12 @@ To analyze and secure your APIs, Akto needs to access your API traffic. You can 
 
 1. In the dashboard, look for the `Quick start`
 
-<figure><img src="../.gitbook/assets/image (24).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (24) (1).png" alt=""><figcaption></figcaption></figure>
 
 2. Choose your preferred traffic connector from the available options
 3. Follow the specific instructions for your chosen connector to start feeding API traffic into Akto
 
-<figure><img src="../.gitbook/assets/image (25).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (25) (1).png" alt=""><figcaption></figcaption></figure>
 
 For a full list of supported traffic connectors and detailed integration instructions, visit our [Traffic Data Sources](https://docs.akto.io/traffic-connections/traffic-data-sources) page.
 
@@ -58,11 +58,11 @@ Once you've added your API traffic, you can start running security tests:
 1. In the dashboard, click on the "Run Test" button and a modal will pop up, allowing you to select the Tests categories and type of tests you want to test on your collection.
 2. Once you select the above, click the "Run once now" button in the modal.
 
-<figure><img src="../.gitbook/assets/image (26).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (26) (1).png" alt=""><figcaption></figcaption></figure>
 
 2. You'll be re-directed to the  Test Results page – you can view all the test results, including any potential vulnerabilities or issues detected in your APIs
 
-<figure><img src="../.gitbook/assets/image (19).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (19) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Need Help?
 

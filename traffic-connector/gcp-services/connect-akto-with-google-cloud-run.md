@@ -2,6 +2,8 @@
 
 Cloud Run is a fully-managed container runtime that automatically scales your code, in a container, from zero to as many instances as needed to handle all incoming requests. Cloud Run sidecars allow you to start independent sidecar containers that run alongside the main container serving web requests.
 
+<figure><img src="../../.gitbook/assets/image (21).png" alt=""><figcaption></figcaption></figure>
+
 \
 To connect Akto with Google Cloud Run, follow these steps -
 

@@ -1,5 +1,9 @@
 # Connect Akto with NGINX
 
+
+
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
 If your API calls are being routed through NGINX, you can use Akto's NGINX module to send traffic to Akto dashboard. Below guide will help you do this:
 
 ## Creating AWS Policy
@@ -53,13 +57,12 @@ This methods is recommended when you have end to end TLS and SSL termination hap
 The Akto nginx module uses the dynamic module functionality supported by nginx. This requires nginx to be build from source for which the exact steps can be slightly varied depending on the linux flavour, the core process though, remains the same.
 
 <details>
-<summary>
-Ubuntu / Debian based
-</summary>
+
+<summary>Ubuntu / Debian based</summary>
 
 1. Record all API calls using `nginx-module-njs`. (njs is a standard NGINX module built and shipped in every release of NGINX). You can install it by running <mark style="color:purple;">`apt install nginx-module-njs`</mark>
 2. The data is sent to Akto installed in your VPC using [nginx-kafka-log-module](https://github.com/kaltura/nginx-kafka-log-module). You can install it by using nginx dynamic modules functionality as described [here](https://www.nginx.com/blog/compiling-dynamic-modules-nginx-plus/)
-3. Download the [js file](https://raw.githubusercontent.com/akto-api-security/nginx-middleware/master/api\_log.js) and save as `/etc/nginx/njs/api_log.js`
+3. Download the [js file](https://raw.githubusercontent.com/akto-api-security/nginx-middleware/master/api_log.js) and save as `/etc/nginx/njs/api_log.js`
 4. In your NGINX conf file - `/etc/nginx/nginx.conf` , add the following:
 
 ```lua
@@ -95,13 +98,11 @@ server {
 </details>
 
 <details>
-<summary>
-Amazon linux 2
-</summary>
+
+<summary>Amazon linux 2</summary>
 
 1. sudo su -
-
-2. To set up the yum repository for Amazon Linux 2 for nginx, create the file named `/etc/yum.repos.d/nginx.repo` with the following content. This is needed to install `nginx` (if not present) and `nginx-module-njs`.
+2.  To set up the yum repository for Amazon Linux 2 for nginx, create the file named `/etc/yum.repos.d/nginx.repo` with the following content. This is needed to install `nginx` (if not present) and `nginx-module-njs`.
 
     ```bash
     [nginx-stable]
@@ -122,10 +123,8 @@ Amazon linux 2
     module_hotfixes=true
     priority=9
     ```
-
 3. If nginx is not present install it using `yum install nginx` else you can skip this step.
-
-3. Check your nginx version using `nginx -v` and download/extract the source for the same using the following commands.
+4. Check your nginx version using `nginx -v` and download/extract the source for the same using the following commands.
 
 ```bash
 wget http://nginx.org/download/nginx-{version}.tar.gz
@@ -138,10 +137,8 @@ tar -zxvf nginx-1.26.0.tar.gz
 ```
 
 4. Install nginx-module-njs using `yum install nginx-module-njs` ( In case of any problem, please refer to the [official nginx docs to install nginx-module-njs](https://nginx.org/en/docs/njs/install.html) )
-
-7. We will send data to Akto traffic processor using [nginx-kafka-log-module](https://github.com/kaltura/nginx-kafka-log-module). To clone it run: `git clone https://github.com/kaltura/nginx-kafka-log-module.git`
-
-8. We can install nginx-kafka-log-module using the steps below. For the official nginx docs to install nginx dynamic modules refer [this](https://www.nginx.com/blog/compiling-dynamic-modules-nginx-plus/).
+5. We will send data to Akto traffic processor using [nginx-kafka-log-module](https://github.com/kaltura/nginx-kafka-log-module). To clone it run: `git clone https://github.com/kaltura/nginx-kafka-log-module.git`
+6. We can install nginx-kafka-log-module using the steps below. For the official nginx docs to install nginx dynamic modules refer [this](https://www.nginx.com/blog/compiling-dynamic-modules-nginx-plus/).
 
 ```bash
 # Enable EPEL repository if not already enabled
@@ -182,7 +179,7 @@ kafka_log_kafka_brokers "<AKTO_NLB_IP>:9092";
 kafka_log_kafka_buffer_max_messages 100000;
 ```
 
-12. Add this to .conf [ You can get the path of this file in the include section of /etc/nginx/nginx.conf file ]. Make sure that the traffic here is being proxied/sent to your actual application.
+12. Add this to .conf \[ You can get the path of this file in the include section of /etc/nginx/nginx.conf file ]. Make sure that the traffic here is being proxied/sent to your actual application.
 
 ```
 location / {
@@ -192,18 +189,16 @@ location / {
 }
 ```
 
-13. nginx -s reload [ Use this command if nginx is already running, else use : systemctl start nginx ]
+13. nginx -s reload \[ Use this command if nginx is already running, else use : systemctl start nginx ]
 
 </details>
 
 <details>
-<summary>
-Amazon linux 2023
-</summary>
+
+<summary>Amazon linux 2023</summary>
 
 1. sudo su -
-
-2. To set up the yum repository for Amazon Linux 2023 for nginx, create the file named `/etc/yum.repos.d/nginx.repo` with the following content. This is needed to install `nginx` (if not present) and `nginx-module-njs`.
+2.  To set up the yum repository for Amazon Linux 2023 for nginx, create the file named `/etc/yum.repos.d/nginx.repo` with the following content. This is needed to install `nginx` (if not present) and `nginx-module-njs`.
 
     ```bash
     [nginx-stable]
@@ -224,10 +219,8 @@ Amazon linux 2023
     module_hotfixes=true
     priority=9
     ```
-
 3. If nginx is not present install it using `yum install nginx -y` else you can skip this step.
-
-3. Check your nginx version using `nginx -v` and download/extract the source for the same using the following commands.
+4. Check your nginx version using `nginx -v` and download/extract the source for the same using the following commands.
 
 ```bash
 wget http://nginx.org/download/nginx-{version}.tar.gz
@@ -240,10 +233,8 @@ tar -zxvf nginx-1.26.0.tar.gz
 ```
 
 4. Install nginx-module-njs using `yum install nginx-module-njs` ( In case of any problem, please refer to the [official nginx docs to install nginx-module-njs](https://nginx.org/en/docs/njs/install.html) )
-
 5. We will send data to Akto traffic processor using [nginx-kafka-log-module](https://github.com/kaltura/nginx-kafka-log-module). To clone it run: `git clone https://github.com/kaltura/nginx-kafka-log-module.git`
-
-8. We can install nginx-kafka-log-module using the steps below. For the official nginx docs to install nginx dynamic modules refer [this](https://www.nginx.com/blog/compiling-dynamic-modules-nginx-plus/).
+6.  We can install nginx-kafka-log-module using the steps below. For the official nginx docs to install nginx dynamic modules refer [this](https://www.nginx.com/blog/compiling-dynamic-modules-nginx-plus/).
 
     i. To set up the yum repository for Amazon Linux 2023 for confluent, create the file named `/etc/yum.repos.d/confluent.repo` with the following content.
 
@@ -268,8 +259,7 @@ tar -zxvf nginx-1.26.0.tar.gz
     make modules
     cp objs/ngx_http_kafka_log_module.so /etc/nginx/modules/
     ```
-
-9. Add the Akto njs code to nginx njs directory using the following commands.
+7. Add the Akto njs code to nginx njs directory using the following commands.
 
 ```bash
 mkdir /etc/nginx/njs
@@ -294,7 +284,7 @@ kafka_log_kafka_brokers "<AKTO_NLB_IP>:9092";
 kafka_log_kafka_buffer_max_messages 100000;
 ```
 
-12. Add this to .conf [ You can get the path of this file in the include section of /etc/nginx/nginx.conf file ]. Make sure that the traffic here is being proxied/sent to your actual application.
+12. Add this to .conf \[ You can get the path of this file in the include section of /etc/nginx/nginx.conf file ]. Make sure that the traffic here is being proxied/sent to your actual application.
 
 ```
 location / {
@@ -304,7 +294,7 @@ location / {
 }
 ```
 
-13. nginx -s reload [ Use this command if nginx is already running, else use : systemctl start nginx ]
+13. nginx -s reload \[ Use this command if nginx is already running, else use : systemctl start nginx ]
 
 </details>
 

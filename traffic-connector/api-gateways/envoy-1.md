@@ -2,6 +2,8 @@
 
 If your API calls are being routed through Istio service mesh, you can use Akto's Istio filter to send traffic to Akto dashboard. Below guide will help you do this:
 
+<figure><img src="../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+
 ## Creating AWS Policy
 
 1\. Go to Quick Start on your Akto dashboard and expand the `Connect traffic data` section.
