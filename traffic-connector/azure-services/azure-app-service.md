@@ -1,5 +1,7 @@
 # Connect Akto with Azure App Services
 
+<figure><img src="../../.gitbook/assets/image (83).png" alt=""><figcaption></figcaption></figure>
+
 ## Introduction
 
 Learn about how to send API traffic data from Azure App Services Web App to Akto.
