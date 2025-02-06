@@ -54,6 +54,7 @@
 * [AWS Services](traffic-connector/aws-services/README.md)
   * [Connect Akto with AWS Beanstalk](traffic-connector/aws-services/aws-beanstalk.md)
   * [Connect Akto with AWS API Gateway](traffic-connector/aws-services/aws-api-gateway.md)
+  * [Connect Akto with AWS API Gateway with service account](traffic-connector/aws-services/aws-api-gateway-with-service-account.md)
   * [Connect Akto with AWS Fargate](traffic-connector/aws-services/aws-fargate.md)
   * [Connect Akto with AWS EKS](traffic-connector/aws-services/aws-eks.md)
   * [Connect Akto with AWS ECS](traffic-connector/aws-services/aws-ecs.md)
