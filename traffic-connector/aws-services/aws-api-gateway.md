@@ -25,48 +25,48 @@ To connect Akto with AWS API Gateway, follow these steps -
        2. For `AKTO_KAFKA_BROKER_MAL`, use the value of the `mini-runtime` service we deployed in step 1.
        3. For `AWS_ACCESS_KEY_ID` , `AWS_SECRET_ACCESS_KEY` and `AWS_SESSION_TOKEN`, create AWS CLI keys, which have permissions to read from the cloudwatch log group which we've mentioned above.
 
-    ```yaml
-    apiVersion: apps/v1
-    kind: Deployment
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway-logging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+        app: api-gateway-logging 
+  template:
     metadata:
-    name: api-gateway-logging
+        labels:
+          app: api-gateway-logging 
     spec:
-    replicas: 1
-    selector:
-       matchLabels:
-          app: api-gateway-logging 
-    template:
-       metadata:
-          labels:
-          app: api-gateway-logging 
-       spec:
-          containers:
-          - image: aktosecurity/mirror-api-logging:api-gateway-logging
-             name: api-gateway-logging 
-             imagePullPolicy: Always
-             resources: {}
-             env: 
-                - name: AKTO_BYTES_IN_THRESHOLD
-                value: "100"
-                - name: AKTO_TRAFFIC_BATCH_TIME_SECS
-                value: "10"
-                - name: AKTO_TRAFFIC_BATCH_SIZE
-                value: "100"
-                - name: AKTO_KAFKA_BROKER_MAL
-                value: ""
-                - name: AWS_ACCESS_KEY_ID
-                value: ""
-                - name: AWS_SECRET_ACCESS_KEY
-                value: ""
-                - name: AWS_SESSION_TOKEN
-                value: ""
-                - name: CLOUDWATCH_READ_BATCH_SIZE
-                value: "5"
-                - name: LOG_GROUP_NAME
-                value: ""
-                - name: AWS_REGION
-                value: ""
-    ```
+      containers:
+      - image: aktosecurity/mirror-api-logging:api-gateway-logging
+        name: api-gateway-logging 
+        imagePullPolicy: Always
+        resources: {}
+        env:
+          - name: AKTO_BYTES_IN_THRESHOLD
+            value: "100"
+          - name: AKTO_TRAFFIC_BATCH_TIME_SECS
+            value: "10"
+          - name: AKTO_TRAFFIC_BATCH_SIZE
+            value: "100"
+          - name: AKTO_KAFKA_BROKER_MAL
+            value: ""
+          - name: AWS_ACCESS_KEY_ID
+            value: ""
+          - name: AWS_SECRET_ACCESS_KEY
+            value: ""
+          - name: AWS_SESSION_TOKEN
+            value: ""
+          - name: CLOUDWATCH_READ_BATCH_SIZE
+            value: "5"
+          - name: LOG_GROUP_NAME
+            value: ""
+          - name: AWS_REGION
+            value: ""
+```
 
 Notes:
 
