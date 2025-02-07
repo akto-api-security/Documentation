@@ -127,6 +127,7 @@
   * [Set environment type](api-inventory-1/how-to/set-environment-type.md)
   * [Delete an API Collection](api-inventory-1/how-to/delete-an-api-collection.md)
   * [Create a Custom Data Type](api-inventory-1/how-to/create-a-custom-data-type.md)
+  * [Reset Data Types in Akto](api-inventory/how-to/reset-data-types-in-akto.md)
   * [Set Sensitivity of a Data Type](api-inventory-1/how-to/set-sensitivity-of-a-data-type.md)
   * [De-activate a data type](api-inventory-1/how-to/de-activate-a-data-type.md)
   * [Add a Custom Auth Type](api-inventory-1/how-to/add-a-custom-auth-type.md)
