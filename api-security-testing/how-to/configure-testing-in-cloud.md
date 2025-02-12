@@ -41,7 +41,7 @@ helm repo update "<akto-repo-name>"
 2. Using the dashboard abstractor token saved in the above steps, deploy the helm chart below.
 
 ```bash
-helm install akto-mini-testing akto/akto-mini-testing-kafka -n <your-namespace> --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<your-database-abstractor-token>"
+helm install akto-mini-testing akto/akto-mini-testing -n <your-namespace> --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<your-database-abstractor-token>"
 ```
 
 ## Get Support for your Akto setup
