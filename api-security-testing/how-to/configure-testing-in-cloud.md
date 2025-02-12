@@ -17,7 +17,7 @@ description: Learn how to run tests in your Akto SaaS account from your cloud se
 
 <figure><img src="../../.gitbook/assets/HybridSaaSConnector.png" alt=""><figcaption></figcaption></figure>
 
-5. Get the database abstractor value from
+5. Get the database abstractor value from the command as shown in the image below.
 
 <figure><img src="../../.gitbook/assets/helm-repo-install.png" alt=""><figcaption></figcaption></figure>
 
