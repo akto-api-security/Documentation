@@ -198,6 +198,7 @@
   * [Run Test on Any One Endpoint](api-security-testing/how-to/run-test-on-any-one-endpoint.md)
   * [Configure global rate limit](api-security-testing/how-to/configure-global-rate-limit.md)
   * [Configure Pre-request Script](api-security-testing/how-to/configure-pre-request-script.md)
+  * [Configure Akto Hybrid-testing in your cloud](api-security-testing/how-to/configure-testing-in-cloud.md)
   * [Set Up JSON Recording for Auth Tokens](api-security-testing/how-to/set-up-json-recording-for-auth-tokens.md)
   * [Create a Test Role](api-security-testing/how-to/create-a-test-role.md)
   * [Edit Auth Flow in Test Roles](api-security-testing/how-to/edit-auth-flow-in-test-roles.md)
