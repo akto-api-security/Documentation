@@ -29,7 +29,7 @@ description: Learn how to run tests in your Akto SaaS account from your cloud se
 helm repo add akto https://akto-api-security.github.io/helm-charts/
 ```
 
-#### Note: If you've already added akto helm repository, update the helm repository using.
+##### Note: If you've already added akto helm repository, update the helm repository using:
 
 ```bash
 helm repo update "<akto-repo-name>"
