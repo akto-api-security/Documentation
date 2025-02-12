@@ -57,11 +57,21 @@ helm repo add akto https://akto-api-security.github.io/helm-charts/
 
 <figure><img src="../../.gitbook/assets/helm-repo-add.png" alt=""><figcaption></figcaption></figure>
 
-3\. Install akto-mini-runtime helm chart in your kubernetes cluster.
+3. Install akto-mini-runtime helm chart in your kubernetes cluster.
 
-```bash
-helm install akto-mini-runtime akto/akto-mini-runtime -n <your-namespace> --set mini_runtime.aktoApiSecurityRuntime.env.databaseAbstractorToken="<your-database-abstractor-token>"
-```
+      1. Directly using database abstractor token
+
+         ```bash
+         helm install akto-mini-runtime akto/akto-mini-runtime -n <your-namespace> --set mini_runtime.aktoApiSecurityRuntime.env.databaseAbstractorToken="<your-database-abstractor-token>"
+         ```
+
+      2. Storing the database abstractor token in a secret
+
+         ```bash
+         helm install akto-mini-runtime akto/akto-mini-runtime -n <your-namespace> --set mini_runtime.aktoApiSecurityRuntime.env.useSecretsForDatabaseAbstractorToken=true --set mini_runtime.aktoApiSecurityRuntime.env.databaseAbstractorTokenSecrets.token="<your-database-abstractor-token>"
+         ```
+
+
 <figure><img src="../../.gitbook/assets/helm-repo-install.png" alt=""><figcaption></figcaption></figure>
 
 
