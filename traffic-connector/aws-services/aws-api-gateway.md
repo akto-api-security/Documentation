@@ -21,7 +21,7 @@ To connect Akto with AWS API Gateway, follow these steps -
         <figure><img src="../../.gitbook/assets/aws-api-gateway-3.png" alt=""><figcaption></figcaption></figure>
     5. Find out the `cloudwatch log group` for your API gateway for the stage which has the above logs enabled and save it. We'll need it later.
     6. Deploy the kubernetes deployment below.
-       1. For `LOG_GROUP_NAME` and `AWS_REGION`, use the log group we saved earlier and the aws region it is deployed in.
+       1. For `LOG_GROUP_NAME` and `AWS_REGION`, use the log group arn we saved earlier and the aws region it is deployed in.
        2. For `AKTO_KAFKA_BROKER_MAL`, use the value of the `mini-runtime` service we deployed in step 1.
        3. For `AWS_ACCESS_KEY_ID` , `AWS_SECRET_ACCESS_KEY` and `AWS_SESSION_TOKEN`, create AWS CLI keys, which have permissions to read from the cloudwatch log group which we've mentioned above.
 
