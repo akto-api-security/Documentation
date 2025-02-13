@@ -32,6 +32,11 @@ Follow the steps mentioned [here](https://docs.akto.io/getting-started/traffic-p
 
 > **Note:** Follow the OAM step only if you have an EKS cluster in one account and a CloudWatch log group in another account. Otherwise, you can skip this step.
 
+### Why Use CloudWatch OAM?
+CloudWatch OAM allows you to monitor and manage metrics and logs across multiple AWS accounts and regions, providing centralized visibility and simplified access management.
+
+For more details, refer to the official AWS documentation: [AWS OAM API Reference](https://docs.aws.amazon.com/OAM/latest/APIReference/Welcome.html)
+
 ### 2.1: Configure the Monitoring Account
 1. Open the **CloudWatch console** in the monitoring account (where your EKS cluster is located).
 2. In the left navigation bar, go to **Settings**.
