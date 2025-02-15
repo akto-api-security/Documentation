@@ -89,6 +89,28 @@ spec:
             path : /
 ```
 
+If you are on VMs or EC2s instead of a K8s cluster, you can use the following docker command to run the agent -
+
+```
+docker run --rm -d \
+  --name mirror-api-logging \
+  --network host \
+  --pid host \
+  --privileged \
+  --cap-add SYS_PTRACE \
+  --cap-add SYS_ADMIN \
+  -e AKTO_TRAFFIC_BATCH_TIME_SECS="10" \
+  -e AKTO_TRAFFIC_BATCH_SIZE="100" \
+  -e AKTO_KAFKA_BROKER_MAL="<AKTO_NLB_IP>:9092" \
+  -e AKTO_MONGO_CONN="mongodb://0.0.0.0:27017/admini" \
+  -v /lib/modules:/lib/modules:ro \
+  -v /sys/kernel:/sys/kernel:ro \
+  -v /:/host:ro \
+  aktosecurity/mirror-api-logging:k8s_ebpf
+```
+
+For `AKTO_NLB_IP` ,  Use the service IP or load balancer name of Traffic Processor from step (1)
+
 3. You can add and configure the env variables below to control the daemonset. Here's a diagram of how the module processes traffic:
 
 <figure><img src="../../.gitbook/assets/ebpf-diagram.png" alt="Traffic processing"><figcaption><p>eBPF Traffic Processing</p></figcaption></figure>
