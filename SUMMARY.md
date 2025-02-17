@@ -179,6 +179,7 @@
 ## API Security Testing
 
 * [Concepts](api-security-testing/concepts/README.md)
+  * [Severity Levels](api-security-testing/concepts/severity-levels.md)
   * [Test](api-security-testing/concepts/test.md)
   * [Result types](api-security-testing/concepts/result-types.md)
   * [Test Role](api-security-testing/concepts/test-role.md)
@@ -214,6 +215,7 @@
   * [Overview](issues/concepts/overview.md)
   * [Values](issues/concepts/values.md)
   * [Vulnerability Report](issues/concepts/vulnerability-report.md)
+  * [Remediation](issues/concepts/remediation.md)
 * [How To](issues/how-to/README.md)
   * [Jira Integration](issues/how-to/jira-integration.md)
   * [Triage Issues](issues/how-to/triage-issues.md)
@@ -301,4 +303,5 @@
 
 ***
 
+* [Stay Updated on New ReleasesPage](stay-updated-on-new-releasespage.md)
 * [Support](support.md)

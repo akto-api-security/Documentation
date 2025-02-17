@@ -9,4 +9,4 @@ To connect Akto with AWS Beanstalk, follow these steps -
    1. Go to **Quick Start** in Akto Dashboard
    2. Scroll to **AWS Beanstalk** block and click on the **Connect** button to get instructions
 
-<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
