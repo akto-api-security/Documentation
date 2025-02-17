@@ -303,5 +303,5 @@
 
 ***
 
-* [Stay Updated on New ReleasesPage](stay-updated-on-new-releasespage.md)
+* [Stay Updated on New Releases](stay-updated-on-new-releases.md)
 * [Support](support.md)
