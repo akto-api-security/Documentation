@@ -218,7 +218,7 @@ spec:
 - Replace `<AWS_REGION>` with the AWS region where your EKS cluster is located.
 ----------
 
-With this setup, Akto can fetch CloudWatch logs from API Gateway across AWS accounts using temporary credentials, eliminating the need for CloudWatch OAM.
+With this setup, Akto can fetch CloudWatch logs from API Gateway across AWS accounts using temporary credentials.
 
 ----------
 

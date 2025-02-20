@@ -5,7 +5,7 @@ AWS API Gateway is a fully managed service from AWS that helps developers create
 
 <figure><img src="../../.gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
 
-To connect Akto with AWS API Gateway using **Service Accounts (IRSA)**, follow these steps:
+To connect Akto with AWS API Gateway using **CloudWatch OAM**, follow these steps:
 
 ----------
 
