@@ -20,17 +20,15 @@ Advanced filters allow you to:
 
 {% @arcade/embed flowId="CTMTUrQxSuYh1Zkftd2F" url="https://app.arcade.software/share/CTMTUrQxSuYh1Zkftd2F" %}
 
-### Use Cases
+### Default Blocking Filter
 
-#### Case 1: Default Blocking Filter
+Akto comes with a pre-configured default filter that automatically focuses your analysis on the most relevant API traffic by excluding common noise.
 
-By default, Akto ignores the following APIs:
+Ignores the following APIs:
 
 1. APIs with response code greater than or equal to 400
 2. APIs which are of HTML type
 3. APIs which are from your localhost server
-
-**When to use:** As a starting point to filter out error responses, HTML content, and local development traffic.
 
 ```yaml
 id: DEFAULT_BLOCK_FILTER
@@ -54,7 +52,11 @@ filter:
             regex: .*localhost.*
 ```
 
-#### Case 2: Selective Host Content Filtering
+### Use Cases
+
+Here are some use cases that demonstrate how you can customize the Advanced Filter Options:
+
+#### Case 1: Selective Host Content Filtering
 
 Ignore APIs from specific hosts that have content-type text or HTML.
 
@@ -82,7 +84,7 @@ filter:
               - text
 ```
 
-#### Case 3: API Version and Method Filtering
+#### Case 2: API Version and Method Filtering
 
 Only allow APIs with specific version path (api/v1) and restrict to certain HTTP methods.
 
@@ -102,7 +104,7 @@ filter:
       regex: '.*api\/v1.*'
 ```
 
-#### Case 4: Host Merging
+#### Case 3: Host Merging
 
 Merge traffic from multiple development environments into a single Akto collection.
 
