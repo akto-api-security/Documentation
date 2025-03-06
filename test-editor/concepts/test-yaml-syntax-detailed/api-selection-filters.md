@@ -26,6 +26,8 @@ api_selection_filters:
     gte: 200
     lt: 300
   url:
+    belongs_to_collections:
+      - juiceshop.akto.io
     contains_either:
       - login
       - signin
@@ -54,23 +56,36 @@ api_selection_filters:
 3. Collection Operators
 4. Combining Conditions using Boolean Operators
 
-
-
 ## **Parent Operators**
 
 Each `condition` block begins with a parent operator. Parent Operators indicate the `property of the API` you are testing. All the conditions will apply to these parent operators. Parent Operators can have the following values:
 
 <table><thead><tr><th width="212.5">Parent Operator</th><th>Description</th></tr></thead><tbody><tr><td>response_code</td><td>This denotes that the conditions will be applied on response code of the api</td></tr><tr><td>method</td><td>This denotes that the conditions will be applied on http method of the api</td></tr><tr><td>url</td><td>This denotes that the conditions will be applied on http url of the api</td></tr><tr><td>request_payload</td><td>This denotes that the conditions will be applied on request payload of the api</td></tr><tr><td>response_payload</td><td>This denotes that the conditions will be applied on response payload of the api</td></tr><tr><td>request_headers</td><td>This denotes that the condition will be applied on request headers of the api</td></tr><tr><td>response_headers</td><td>This denotes that the condition will be applied on response headers of the api</td></tr><tr><td>query_param</td><td>This denotes that the condition will be applied on query params of the api</td></tr></tbody></table>
 
-###
-
 ## Data Operators
 
 Each Parent Operator should contain one or more `Data Operators` that describe the exact condition to be applied to the Parent Property. Data Operators can have the following values:
 
-<table><thead><tr><th width="199">Data Operator</th><th width="183">Expected Arguments</th><th>Description</th></tr></thead><tbody><tr><td>contains_either</td><td>List/Non List</td><td>Checks whether the parent property contains the specified input. If input is an array, any one of the input element should satisfy this condition.</td></tr><tr><td>contains_all</td><td>List/Non List</td><td>Checks whether the parent property contains the specified input. If input is an array, all of the input element should satisfy this condition.</td></tr><tr><td>regex</td><td>List/Non List</td><td>Checks whether the parent property contains a match for the regex specified in the specified input. If input is an array, one of the regex input should have a match</td></tr><tr><td>eq</td><td>Non List</td><td>Checks whether the parent property is equal to the specified input.</td></tr><tr><td>neq</td><td>Non List</td><td>Checks whether the parent property is not equal equal to the specified input.</td></tr><tr><td>gt</td><td>Non List</td><td>Checks whether the parent property is greater than to the specified input.</td></tr><tr><td>gte</td><td>Non List</td><td>Checks whether the parent property is greater than equal to the specified input.</td></tr><tr><td>lt</td><td>Non List</td><td>Checks whether the parent property is lesser than the specified input.</td></tr><tr><td>lte</td><td>Non List</td><td>Checks whether the parent property is lesser than equal to to the specified input.</td></tr><tr><td>not_contains</td><td>List/Non List</td><td>Checks whether the parent property does not contain the specified input. If input is an array, all of the input element should satisfy this condition.</td></tr><tr><td>not_contains_either</td><td>List/Non List</td><td>Checks whether the parent property does not contain the specified input. If input is an array, any one of the input element should satisfy this condition.</td></tr><tr><td>contains_jwt</td><td>boolean</td><td>Checks whether the parent property contains/not contains a jwt token</td></tr><tr><td>cookie_expire_filter</td><td>boolean</td><td>Checks if the cookie expires in next 30 days</td></tr></tbody></table>
+<table><thead><tr><th width="199">Data Operator</th><th width="183">Expected Arguments</th><th>Description</th></tr></thead><tbody><tr><td>belongs_to_collections</td><td>List</td><td>Checks whether the parent property belongs to one of the specified collections in the list. The API must be part of at least one of the collections specified to satisfy this condition.</td></tr><tr><td>contains_either</td><td>List/Non List</td><td>Checks whether the parent property contains the specified input. If input is an array, any one of the input element should satisfy this condition.</td></tr><tr><td>contains_all</td><td>List/Non List</td><td>Checks whether the parent property contains the specified input. If input is an array, all of the input element should satisfy this condition.</td></tr><tr><td>regex</td><td>List/Non List</td><td>Checks whether the parent property contains a match for the regex specified in the specified input. If input is an array, one of the regex input should have a match</td></tr><tr><td>eq</td><td>Non List</td><td>Checks whether the parent property is equal to the specified input.</td></tr><tr><td>neq</td><td>Non List</td><td>Checks whether the parent property is not equal equal to the specified input.</td></tr><tr><td>gt</td><td>Non List</td><td>Checks whether the parent property is greater than to the specified input.</td></tr><tr><td>gte</td><td>Non List</td><td>Checks whether the parent property is greater than equal to the specified input.</td></tr><tr><td>lt</td><td>Non List</td><td>Checks whether the parent property is lesser than the specified input.</td></tr><tr><td>lte</td><td>Non List</td><td>Checks whether the parent property is lesser than equal to to the specified input.</td></tr><tr><td>not_contains</td><td>List/Non List</td><td>Checks whether the parent property does not contain the specified input. If input is an array, all of the input element should satisfy this condition.</td></tr><tr><td>not_contains_either</td><td>List/Non List</td><td>Checks whether the parent property does not contain the specified input. If input is an array, any one of the input element should satisfy this condition.</td></tr><tr><td>contains_jwt</td><td>boolean</td><td>Checks whether the parent property contains/not contains a jwt token</td></tr><tr><td>cookie_expire_filter</td><td>boolean</td><td>Checks if the cookie expires in next 30 days</td></tr></tbody></table>
 
+### <mark style="color:red;">`belongs_to_collections`</mark>&#x20;
 
+Checks whether the parent property belongs to one of the specified collections in the list. The API must be part of at least one of the collections specified to satisfy this condition.
+
+**Example 1**
+
+{% code title="Example of belongs_to_collections" fullWidth="true" %}
+```yaml
+url:
+  belongs_to_collections:
+    - payment
+    - checkout
+
+# APIs that belong to either the payment or checkout collection would match the above condition.
+# Match Example - An API categorized as part of the payment collection
+# Invalid Example - An API that belongs only to the auth collection
+```
+{% endcode %}
 
 ### <mark style="color:red;">`contains_either`</mark>
 
@@ -164,8 +179,6 @@ request_payload:
 ```
 {% endcode %}
 
-####
-
 ### <mark style="color:red;">`eq`</mark>
 
 Checks whether the parent property is equal to the specified input.
@@ -181,8 +194,6 @@ method:
 # Invalid Example - GET https://xyz.com/getById
 ```
 {% endcode %}
-
-
 
 ### <mark style="color:red;">`gt`</mark>
 
@@ -216,8 +227,6 @@ response_code:
 ```
 {% endcode %}
 
-
-
 ### <mark style="color:red;">`lt`</mark>
 
 Checks whether the parent property is lesser than the specified input.
@@ -234,8 +243,6 @@ response_code:
 ```
 {% endcode %}
 
-
-
 ### <mark style="color:red;">`lte`</mark>
 
 Checks whether the parent property is lesser than or equal to the specified input.
@@ -251,8 +258,6 @@ response_code:
 # Invalid Example - Response codes like 205, 302
 ```
 {% endcode %}
-
-
 
 ### <mark style="color:red;">`not_contains`</mark>
 
@@ -290,8 +295,6 @@ Invalid Example for above
 3. {"id": 100, "userdata": {"name": "xyz", "status": "normal_user", "identifier": "new"}}
 ```
 
-
-
 ### <mark style="color:red;">`not_contains_either`</mark>
 
 Checks whether the parent property does not contain the specified input. If input is an array, any one of the input element should satisfy this condition.
@@ -320,8 +323,6 @@ response_payload:
 ```
 {% endcode %}
 
-
-
 ### <mark style="color:red;">`contains_jwt`</mark>
 
 Checks whether the parent property contains/not contains a JWT token.
@@ -347,13 +348,9 @@ request_headers:
 ```
 {% endcode %}
 
-###
-
 ## **Collection Operators**
 
 These operators are useful for queries that involve individual keys and values in payloads and headers, rather than applying the condition to the entire payload as a string. To achieve the desired result, they must be combined with a data operator.
-
-
 
 ### <mark style="color:red;">`for_one`</mark>
 
@@ -381,8 +378,6 @@ api_selection_filters:
 {% hint style="info" %}
 👉🏻 In simple language: The above yaml syntax is filtering APIs with any key of the request payload containing the keyword ‘name’
 {% endhint %}
-
-
 
 **Example 2**
 
@@ -421,13 +416,9 @@ api_selection_filters:
 2. {”id”: 123, ”status”: “normal”, “createdAt”: 1688364964}
 3. {”id”: 123, ”access”: “admin”, “status”: “active”} `Here key is named status, and a value matches regex .*admin*., but there is no single key value pair which satisfies both conditions.`
 
-
-
 ## **Body Operators**
 
 These operators are useful for applying conditions specifically on request payload, response payload strings. To achieve the desired result, they must be combined with a data operator. Currently there are 2 types of body operators -
-
-
 
 ### <mark style="color:red;">`length`</mark>
 
@@ -649,4 +640,3 @@ api_selection_filters:
             eq: origin 
 ```
 {% endcode %}
-
