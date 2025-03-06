@@ -2,36 +2,149 @@
 
 By using these Advanced Filter Options, you can tailor Akto's analysis to focus on the specific aspects of your API traffic that are most relevant to your current needs.
 
-### Use Case
+### Overview
 
-Filter for successful POST and GET requests (status codes 200-299).
+Advanced filters allow you to:
+
+* Include or exclude specific API endpoints based on criteria
+* Focus analysis on particular HTTP methods, response codes, or content types
+* Target specific hosts or domains for monitoring
+* Create complex filtering rules using logical operators (AND, OR)
 
 ### Steps to Configure
 
+* Go to Settings > Advanced traffic filters.
+* Click "Add new" to create a filter.
+* Enter the YAML configuration based on your requirements.
+* Click "Save" to apply the filter.
+
 {% @arcade/embed flowId="CTMTUrQxSuYh1Zkftd2F" url="https://app.arcade.software/share/CTMTUrQxSuYh1Zkftd2F" %}
 
-1. Go to Settings > Advanced traffic filters.
-2. Click "Add new" to create a filter.
-3. Enter the following YAML configuration:
+### Use Cases
+
+#### Case 1: Default Blocking Filter
+
+By default, Akto ignores the following APIs:
+
+1. APIs with response code greater than or equal to 400
+2. APIs which are of HTML type
+3. APIs which are from your localhost server
+
+**When to use:** As a starting point to filter out error responses, HTML content, and local development traffic.
+
+```yaml
+id: DEFAULT_BLOCK_FILTER
+filter:
+  or:
+    - response_code:
+        gte: 400
+    - response_headers:
+        for_one:
+          key:
+            eq: content-type
+          value:
+            contains_either:
+              - html
+              - text/html
+    - request_headers:
+        for_one:
+          key:
+            eq: host
+          value:
+            regex: .*localhost.*
+```
+
+#### Case 2: Selective Host Content Filtering
+
+Ignore APIs from specific hosts that have content-type text or HTML.
+
+**When to use:** When you want to exclude HTML/text content from specific domains but continue monitoring other content types.
+
+```yaml
+id: DEFAULT_BLOCK_FILTER
+filter:
+  and:
+    - request_headers:
+        for_one:
+          key:
+            eq: host
+          value:
+            contains_either:
+              - app.akto.io
+              - juiceshop.akto.io
+    - response_headers:
+        for_one:
+          key:
+            eq: content-type
+          value:
+            contains_either:
+              - html
+              - text
+```
+
+#### Case 3: API Version and Method Filtering
+
+Only allow APIs with specific version path (api/v1) and restrict to certain HTTP methods.
+
+**When to use:** When you want to focus on a specific API version and limit the HTTP methods being analyzed.
 
 ```yaml
 id: DEFAULT_ALLOW_FILTER
 filter:
-  response_code:
-    gte: 200
-    lt: 300
-  method:
-    eq: POST
-  method:
-    eq: GET
+  and:
+    method:
+      contains_either:
+        - GET
+        - POST
+        - PUT
+        - DELETE
+    url:
+      regex: '.*api\/v1.*'
 ```
 
-4. Click "Save" to apply the filter.
+#### Case 4: Host Merging
 
-### Explanation
+Merge traffic from multiple development environments into a single Akto collection.
 
-* `id`: Unique identifier for the filter
-* `response_code`: Filters status codes 200-299
-* `method`: Includes both POST and GET requests
+**When to use:** When different ports are opened for the same host or you have different hosts that should be treated as one collection.
+
+```yaml
+id: MODIFY_CLAIMED_SITE_HOST_AUDITS
+filter:
+  request_headers:
+    for_one:
+      key:
+        eq: host
+      value:
+        regex: '^akto-dev-\d+\.in
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_header:
+          host: akto-dev-NUMBER.in
+```
+
+### Explanation of Key Concepts
+
+* **id**: Unique identifier for the filter
+* **filter**: The main block containing filtering conditions
+* **response\_code**: Filters based on HTTP status codes
+* **method**: Filters based on HTTP methods (GET, POST, PUT, DELETE, etc.)
+* **url**: Filters based on the request URL pattern
+* **request\_headers/response\_headers**: Filters based on HTTP headers
+* **and/or**: Logical operators to combine multiple conditions
+* **contains\_either**: Matches if any of the listed values are present
+* **regex**: Uses regular expressions for pattern matching
+* **for\_one**: Applies conditions to at least one of the headers
 
 This filter will only allow traffic that meets all specified conditions. For more details on advanced filtering options, visit [API Selection Filters](../../test-editor/concepts/test-yaml-syntax-detailed/api-selection-filters.md).
+
+### Best Practices
+
+* Start with broader filters and narrow down as needed
+* Test filters on a small subset of traffic before applying widely
+* Use the `regex` pattern carefully; overly complex patterns may impact performance
+* When using multiple conditions, understand how `and` and `or` operators affect your filter logic
+* Regularly review and update your filters as your API landscape evolves
