@@ -27,6 +27,8 @@ api_selection_filters:
     lt: 300
   url:
     belongs_to_collections:
+      - payment
+      - checkout
       - juiceshop.akto.io
     contains_either:
       - login
