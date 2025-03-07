@@ -99,10 +99,10 @@ docker run --rm -d \
   --privileged \
   --cap-add SYS_PTRACE \
   --cap-add SYS_ADMIN \
-  -e AKTO_TRAFFIC_BATCH_TIME_SECS="10" \
-  -e AKTO_TRAFFIC_BATCH_SIZE="100" \
+  -e AKTO_TRAFFIC_BATCH_TIME_SECS=10 \
+  -e AKTO_TRAFFIC_BATCH_SIZE=100 \
   -e AKTO_KAFKA_BROKER_MAL="<AKTO_NLB_IP>:9092" \
-  -e AKTO_MONGO_CONN="mongodb://0.0.0.0:27017/admini" \
+  -v /usr/src:/usr/src:ro \
   -v /lib/modules:/lib/modules:ro \
   -v /sys/kernel:/sys/kernel:ro \
   -v /:/host:ro \
