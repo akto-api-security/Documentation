@@ -230,7 +230,7 @@
 * [Jenkins](ci-cd/jenkins.md)
 * [Azure DevOps](ci-cd/azure-devops.md)
 * [GitLab](ci-cd/gitlab.md)
-* [Docker](ci-cd/docker.md)
+* [Generic CI/CD](ci-cd/docker.md)
 * [How To](ci-cd/how-to/README.md)
   * [Run tests in CI/CD](ci-cd/how-to/run-tests-in-cicd.md)
   * [Add test to CI/CD Pipeline](ci-cd/how-to/add-test-to-ci-cd-pipeline.md)
