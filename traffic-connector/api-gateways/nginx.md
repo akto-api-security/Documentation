@@ -6,55 +6,19 @@
 
 If your API calls are being routed through NGINX, you can use Akto's NGINX module to send traffic to Akto dashboard. Below guide will help you do this:
 
-## Creating AWS Policy
+## Step 1: Configure Akto Traffic Processor
 
-1\. Go to Quick Start on your Akto dashboard and expand the `Connect traffic data` section.
+Set up and configure Akto Traffic Processor. The steps are mentioned [here](https://docs.akto.io/getting-started/traffic-processor/hybrid-saas).
 
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832212-603647ca-fceb-46fc-baf7-150c2e6b7ec0.png" alt=""><figcaption></figcaption></figure>
-
-2\. Scroll down to `Data processors setup` section.
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/237100095-67164c73-2a0b-4505-8268-c932df4a1d27.png" alt=""><figcaption></figcaption></figure>
-
-3\. Copy the `policy json` and click on the Akto Dashboard role link.
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/237100542-c3df31bc-9f7d-4be0-a626-038a31d33ce8.png" alt=""><figcaption></figcaption></figure>
-
-4\. `Click` on the `JSON` tab and `paste the policy`
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832279-70340e39-3ccb-4118-9ee9-039711c7e22d.png" alt=""><figcaption></figcaption></figure>
-
-5\. Click on `Review policy` button.
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832289-afe2931b-c11a-44b8-a946-79cf0e106dfa.png" alt=""><figcaption></figcaption></figure>
-
-6\. Enter _`AktoDashboardPolicy`_ as the policy name and `click` on `Create Policy` button
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832299-996d635d-5c0d-43d3-8ee3-eb53f7de952d.png" alt=""><figcaption></figcaption></figure>
-
-8\. Once the policy is created, go back to the `dashboard`.
-
-## Setting up Data processors
-
-1\. Click on `Setup traffic processors` button.
-
-<figure><img src="https://github.com/akto-api-security/Documentation/assets/91221068/c3e08f08-ec81-4c47-b3b0-fbc1eacc4fe0" alt=""><figcaption></figcaption></figure>
-
-2\. This will bring up infra that will process your traffic.
-
-<figure><img src="https://github.com/akto-api-security/Documentation/assets/91221068/7d7d437d-1370-4628-aa10-908b33b907b0" alt=""><figcaption></figcaption></figure>
-
-3\. Check that you have `AKTO_NLB` and `AKTO_MONGO_IP` vars once setup is complete.
-
-<figure><img src="https://github.com/akto-api-security/Documentation/assets/91221068/7c79c400-7a0a-4421-96ed-fbb063e025f5" alt=""><figcaption></figcaption></figure>
-
-## Add NGINX module
+## Step 2: Add NGINX module
 
 {% hint style="info" %}
 This methods is recommended when you have end to end TLS and SSL termination happens at NGINX.
 {% endhint %}
 
 The Akto nginx module uses the dynamic module functionality supported by nginx. This requires nginx to be build from source for which the exact steps can be slightly varied depending on the linux flavour, the core process though, remains the same.
+
+<mark style="background-color:purple;">Note: For</mark> <mark style="background-color:purple;"></mark><mark style="background-color:purple;">`AKTO_NLB_IP`</mark> <mark style="background-color:purple;"></mark><mark style="background-color:purple;">in below configurations, use the value of the</mark> <mark style="background-color:purple;"></mark><mark style="background-color:purple;">`mini-runtime`</mark> <mark style="background-color:purple;"></mark><mark style="background-color:purple;">service we deployed in step 1.</mark>
 
 <details>
 
