@@ -33,7 +33,7 @@ Launch your Chrome browser and navigate to the web page for which you want to ca
 
 Add the generated HAR file to your API collection by following the steps demonstrated below.
 
-{% embed url="https://demo.arcade.software/wNY4kML6ooabUp9ppCcC?embed" %}
+{% @arcade/embed flowId="tErOE27G2Zw8UI8DLqlD" url="https://app.arcade.software/share/tErOE27G2Zw8UI8DLqlD" %}
 
 ### What's next?
 
