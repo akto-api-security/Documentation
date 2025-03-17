@@ -27,7 +27,7 @@ The HTTP Archive format, or HAR, is a `JSON-formatted archive file format` for l
 
 Launch your Chrome browser and navigate to the web page for which you want to capture the traffic. For demonstration purposes, we will capture the traffic from [https://juiceshop.akto.io](https://juiceshop.akto.io)
 
-{% embed url="https://demo.arcade.software/BH0MqjSjw2zLqbfBaIw6?embed=" %}
+{% @arcade/embed flowId="0rereawiRT0wuVKtM9wS" url="https://app.arcade.software/share/0rereawiRT0wuVKtM9wS" %}
 
 ## Steps to upload HAR file in Akto dashboard
 
