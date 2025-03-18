@@ -216,6 +216,15 @@ spec:
 - For `<LOG_GROUP_ARN>`, enter the value obtained in Step 1.2.5.  
 - For `<SESSION_NAME>`, use any name you want for the session.  
 - Replace `<AWS_REGION>` with the AWS region where your EKS cluster is located.
+
+## Note:
+
+To use multiple Log group ARNs, use the image `aktosecurity/mirror-api-logging:api-gateway-logging-temp-cred-multiple-arn` in the template provided above and fill the environment variable `<LOG_GROUP_ARN>` as the show in the example here 
+
+```bash
+LOG_GROUP_ARN=arn:aws:logs:ap-south-1:021978053257:log-group:API-Gateway-Execution-Logs_juroiydk3c/Dev:*,arn:aws:logs:ap-south-1:021978053257:log-group:API-Gateway-Execution-Logs_juroiydk3c/Dev2:*,arn:aws:logs:ap-south-1:021978053257:log-group:API-Gateway-Execution-Logs_juroiydk3c/Dev3:*
+```
+
 ----------
 
 With this setup, Akto can fetch CloudWatch logs from API Gateway across AWS accounts using temporary credentials.
