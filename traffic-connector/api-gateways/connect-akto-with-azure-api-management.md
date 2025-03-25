@@ -143,31 +143,39 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
                 ? friendlyHttpStatus[context.Response.StatusCode] 
                 : "Unknown Status";
         }" />
-        <send-one-way-request>
-            <set-url>https://<YOUR_AKTO_INGESTION_SERVICE_URL>/api/ingestData</set-url>
-            <set-method>POST</set-method>
-            <set-header name="Content-Type" exists-action="override">
-                <value>application/json</value>
-            </set-header>
-            <set-body>@{
-                return "{ \"batchData\": [" +
-                    "{ \"path\": \"" + context.Variables["reqUrl"] + "\", " +
-                    "\"requestHeaders\": " + context.Variables["reqHeaders"] + ", " +
-                    "\"responseHeaders\": " + context.Variables["respHeaders"] + ", " +
-                    "\"method\": \"" + context.Variables["reqMethod"] + "\", " +
-                    "\"requestPayload\": " + context.Variables["reqBody"] + ", " +
-                    "\"responsePayload\": " + context.Variables["respBody"] + ", " +
-                    "\"ip\": \"" + context.Variables["clientIp"] + "\", " +
-                    "\"time\": \"" + context.Variables["unixTimestamp"] + "\", " +
-                    "\"statusCode\": \"" + context.Variables["respStatus"] + "\", " +
-                    "\"type\": \"HTTP/1.1\", " +
-                    "\"status\": \"" + context.Variables["statusMessage"] + "\", " +
-                    "\"akto_account_id\": \"1000000\", " +
-                    "\"akto_vxlan_id\": \"0\", " +
-                    "\"is_pending\": \"false\", " +
-                    "\"source\": \"MIRRORING\" } ] }";
-            }</set-body>
-        </send-one-way-request>
+        <set-variable name="regexList" value="" />
+        <choose>
+            <when condition="@{
+                var regexList = context.Variables.GetValueOrDefault<string>("regexList","").Split(';').Where(r => !string.IsNullOrWhiteSpace(r)).ToArray();
+                return regexList.Length == 0 || !regexList.Any(r => System.Text.RegularExpressions.Regex.IsMatch(context.Request.Url.Path, r.Trim()));
+            }">
+                <send-one-way-request>
+                    <set-url>https://<YOUR_AKTO_INGESTION_SERVICE_URL>/api/ingestData</set-url>
+                    <set-method>POST</set-method>
+                    <set-header name="Content-Type" exists-action="override">
+                        <value>application/json</value>
+                    </set-header>
+                    <set-body>@{
+                        return "{ \"batchData\": [" +
+                            "{ \"path\": \"" + context.Variables["reqUrl"] + "\", " +
+                            "\"requestHeaders\": " + context.Variables["reqHeaders"] + ", " +
+                            "\"responseHeaders\": " + context.Variables["respHeaders"] + ", " +
+                            "\"method\": \"" + context.Variables["reqMethod"] + "\", " +
+                            "\"requestPayload\": " + context.Variables["reqBody"] + ", " +
+                            "\"responsePayload\": " + context.Variables["respBody"] + ", " +
+                            "\"ip\": \"" + context.Variables["clientIp"] + "\", " +
+                            "\"time\": \"" + context.Variables["unixTimestamp"] + "\", " +
+                            "\"statusCode\": \"" + context.Variables["respStatus"] + "\", " +
+                            "\"type\": \"HTTP/1.1\", " +
+                            "\"status\": \"" + context.Variables["statusMessage"] + "\", " +
+                            "\"akto_account_id\": \"1000000\", " +
+                            "\"akto_vxlan_id\": \"0\", " +
+                            "\"is_pending\": \"false\", " +
+                            "\"source\": \"MIRRORING\" } ] }";
+                    }</set-body>
+                </send-one-way-request>
+            </when>
+        </choose>
     </outbound>
     <on-error>
         <base />
@@ -175,8 +183,9 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
 </policies>
 ```
 
-4. Replace `YOUR_AKTO_INGESTION_SERVICE_URL` with the URL of your Akto Data-Ingestion Service (Step 1.5).
-5. Click **Save** to apply the policy.
+4. Add the regex patterns for the paths you want to ignore in the `regexList` variable value in the outbound policy, separated by `;` (e.g., `"api\/v1\/.*;\/api\/fake.*"`).
+5. Replace `YOUR_AKTO_INGESTION_SERVICE_URL` with the URL of your Akto Data-Ingestion Service (Step 1.5).
+6. Click **Save** to apply the policy.
 
 ## Step 5: Verify the Integration
 1. Send test requests to the configured API endpoint.
