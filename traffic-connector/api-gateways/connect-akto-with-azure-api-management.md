@@ -183,7 +183,7 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
 </policies>
 ```
 
-4. Add the regex patterns for the paths you want to ignore in the `regexList` variable value in the outbound policy, separated by `;` (e.g., `"api\/v1\/.*;\/api\/fake.*"`).
+4. Add the regex patterns for the paths you want to ignore in the `regexList` variable value in the outbound policy, ensuring that the **entire regex is properly escaped**. Separate multiple patterns using `;` (e.g., `"api\/v1\/.*;\/api\/fake.*"`).
 5. Replace `YOUR_AKTO_INGESTION_SERVICE_URL` with the URL of your Akto Data-Ingestion Service (Step 1.5).
 6. Click **Save** to apply the policy.
 
