@@ -90,7 +90,7 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
         <choose>
             <when condition="@{
                 var regexList = context.Variables.GetValueOrDefault<string>("regexList","").Split(';').Where(r => !string.IsNullOrWhiteSpace(r)).ToArray();
-                return regexList.Length == 0 || !regexList.Any(r => System.Text.RegularExpressions.Regex.IsMatch(context.Request.Url.Path, r.Trim()));
+                return regexList.Length == 0 || regexList.Any(r => System.Text.RegularExpressions.Regex.IsMatch(context.Request.Url.Path, r.Trim()));
             }">
                 <set-variable name="reqMethod" value="@(context.Request.Method)" />
                 <set-variable name="reqUrl" value="@(context.Request.Url.ToString())" />
@@ -118,7 +118,7 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
         <choose>
             <when condition="@{
                 var regexList = context.Variables.GetValueOrDefault<string>("regexList","").Split(';').Where(r => !string.IsNullOrWhiteSpace(r)).ToArray();
-                return regexList.Length == 0 || !regexList.Any(r => System.Text.RegularExpressions.Regex.IsMatch(context.Request.Url.Path, r.Trim()));
+                return regexList.Length == 0 || regexList.Any(r => System.Text.RegularExpressions.Regex.IsMatch(context.Request.Url.Path, r.Trim()));
             }">
                 <set-variable name="respStatus" value="@(context.Response.StatusCode)" />
                 <set-variable name="respHeaders" value="@{
@@ -190,7 +190,7 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
 </policies>
 ```
 
-4. Add the regex patterns for the paths you want to ignore in the `regexList` variable value in the inbound policy, ensuring that the **entire regex is properly escaped**. Separate multiple patterns using `;` (e.g., `"api\/v1\/.*;\/api\/fake.*"`).
+4. Add the regex patterns for the paths you want to **include** in the `regexList` variable value in the inbound policy, ensuring that the **entire regex is properly escaped**. Separate multiple patterns using `;` (e.g., `"api\/v1\/.*;\/api\/getUsers.*"`).
 5. Replace `YOUR_AKTO_INGESTION_SERVICE_URL` with the URL of your Akto Data-Ingestion Service (Step 1.5).
 6. Click **Save** to apply the policy.
 
