@@ -191,6 +191,7 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
 ```
 
 4. Add the regex patterns for the paths you want to **include** in the `regexList` variable value in the inbound policy, ensuring that the **entire regex is properly escaped**. Separate multiple patterns using `;` (e.g., `"api\/v1\/.*;\/api\/getUsers.*"`).
+    - If you leave the `regexList` variable value empty, all APIs will be processed.
 5. Replace `YOUR_AKTO_INGESTION_SERVICE_URL` with the URL of your Akto Data-Ingestion Service (Step 1.5).
 6. Click **Save** to apply the policy.
 
