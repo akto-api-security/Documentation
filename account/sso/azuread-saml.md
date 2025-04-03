@@ -104,12 +104,12 @@ In the Azure Active Directory admin center, select the 'Akto' Enterprise applica
 | -------- | ----------------  |
 | Identifier (Entity ID)     | { hostname } |
 | Reply URL (Assertion Consumer Service URL)    | { hostname }/signup-azure-saml    |
-| Sign on URL    | { hostname }/signup-azure-request       |
+| Relay State    | { Organization domain }       |
 ```
 
 <div align="center">
 
-<figure><img src="../../.gitbook/assets/Azure-saml-10.png" alt="SAML configs"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/azure_sso_conf.png" alt="SAML configs"><figcaption></figcaption></figure>
 
 </div>
 
