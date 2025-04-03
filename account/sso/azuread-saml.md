@@ -104,7 +104,7 @@ In the Azure Active Directory admin center, select the 'Akto' Enterprise applica
 | -------- | ----------------  |
 | Identifier (Entity ID)     | { hostname } |
 | Reply URL (Assertion Consumer Service URL)    | { hostname }/signup-azure-saml    |
-| Relay State    | Organization domain       |
+| Relay State    | { Organization domain }       |
 ```
 
 <div align="center">
