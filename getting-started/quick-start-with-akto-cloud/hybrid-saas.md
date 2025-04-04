@@ -131,6 +131,9 @@ kubectl get svc -n <namespace>
 1. Ensure internet connectivity in Traffic aggregator  service.
 2. In case of closed network, please whitelist (https://cyborg.akto.io)
 3. Ensure that traffic connector is able to connect to Traffic aggregator service
+4. Log levels for Akto services can be configured by setting the environment variable `AKTO_LOG_LEVEL`
+   - Supported values include `TRACE`, `DEBUG`, `INFO`, `WARN`, `ERROR` and `OFF`.
+   - Default log level is set to `WARN`.
 
 ## Get Support for your Akto setup
 
