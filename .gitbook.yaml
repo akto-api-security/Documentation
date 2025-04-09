@@ -94,4 +94,4 @@ redirects:
   api-security-testing/how-to/setup-github-integration-for-ci-cd/create-github-app: ci-cd/github-actions/create-github-app.md
   api-security-testing/how-to/add-test-to-ci-cd-pipeline: ci-cd/how-to/add-test-to-ci-cd-pipeline.md
   api-security-testing/how-to/run-tests-in-cicd: ci-cd/how-to/run-tests-in-cicd.md
-
+  api-security-testing/how-to/configure-testing-in-cloud: api-security-testing/how-to/install-testing-module-in-your-cloud.md
