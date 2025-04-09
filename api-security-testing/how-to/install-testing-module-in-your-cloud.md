@@ -42,7 +42,7 @@ helm repo update akto
 ```bash
 helm install akto-mini-testing akto/akto-mini-testing -n <your-namespace> --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<your-database-abstractor-token>"
 ```
-##### Note: If you want to modify the helm chart according to your needs, you can clone the same from https://github.com/akto-api-security/helm-charts/tree/master/charts/mini-testing:
+##### Note: If you want to modify the helm chart according to your needs, you can clone the same from [mini-testing-helm-chart](https://github.com/akto-api-security/helm-charts/tree/master/charts/mini-testing)
 
 ### Linux VM
 
