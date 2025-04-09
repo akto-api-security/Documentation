@@ -16,7 +16,7 @@ There could be multiple reasons why you'd want to install testing module within 
 
 1. Login to Akto dashboard at [app.akto.io](https://app.akto.io)
 2. Go to Quick Start > Hybrid Saas > Click on “Connect” button
-3. Copy the JWT token (marked in red)
+3. Copy the JWT token (marked in red) [ Also referred as `Database Abstractor Token` later]
 
 You can now use a Helm-chart to install Akto Security Testing module in your cloud or install manually
 
@@ -30,9 +30,19 @@ You can now use a Helm-chart to install Akto Security Testing module in your clo
 
 ### Helm-chart
 
-1. Download/clone our helm chart https://github.com/akto-api-security/helm-charts/tree/mini\_testing
-2. Open your terminal, and go to the location where you have downloaded the helm charts
-3. Run `helm install aktotesting hybrid-redact -n akto --set tokens.env.databaseAbstractorToken={{paste_token_here}}`
+1. Add akto helm repository.
+```bash
+helm repo add akto https://akto-api-security.github.io/helm-charts/
+```
+##### Note: If you've already added akto helm repository, update the helm repository using:
+```bash
+helm repo update akto
+```
+2. Using the dashboard abstractor token saved in the above steps, deploy the helm chart below.
+```bash
+helm install akto-mini-testing akto/akto-mini-testing -n <your-namespace> --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<your-database-abstractor-token>"
+```
+##### Note: If you want to modify the helm chart according to your needs, you can clone the same from [mini-testing-helm-chart](https://github.com/akto-api-security/helm-charts/tree/master/charts/mini-testing)
 
 ### Linux VM
 
@@ -88,3 +98,12 @@ You can now use a Helm-chart to install Akto Security Testing module in your clo
     ```
 6. Run `docker-compose -f docker-compose-testing.yml up -d`
 7. Run `systemctl enable /usr/lib/systemd/system/docker.service` to ensure Docker starts up in case of instance restarts
+
+## Get Support for your Akto setup
+
+There are multiple ways to request support from Akto. We are 24X7 available on the following:
+
+1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
+2. Join our [discord channel](https://www.akto.io/community) for community support.
+3. Contact `help@akto.io` for email support.
+4. Contact us [here](https://www.akto.io/contact-us).
