@@ -48,7 +48,7 @@ You can use Akto traffic collectors to collect and send traffic to Akto. Your AP
 
 <figure><img src="https://github.com/akto-api-security/Documentation/assets/91221068/7d7d437d-1370-4628-aa10-908b33b907b0" alt=""><figcaption></figcaption></figure>
 
-3\. Check that you have `AKTO_NLB` vars once setup is complete.&#x20;
+3\. Check that you have `AKTO_NLB` var once setup is complete.&#x20;
 
 <figure><img src="https://github.com/akto-api-security/Documentation/assets/91221068/7c79c400-7a0a-4421-96ed-fbb063e025f5" alt=""><figcaption></figcaption></figure>
 
@@ -87,7 +87,7 @@ You can use Akto traffic collectors to collect and send traffic to Akto. Your AP
 
 ```
 
-2. Replace `<AKTO_NLB>` by the values shown on the dashboard.
+2. Replace `<AKTO_NLB>` by the value shown on the dashboard.
 3.  Create a container in your Fargate setup with the above config.
 
     <figure><img src="https://github.com/akto-api-security/Documentation/assets/91221068/f402ee3c-3a77-4b65-850d-3cb97afa4feb" alt=""><figcaption></figcaption></figure>

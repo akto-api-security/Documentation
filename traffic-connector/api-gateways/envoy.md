@@ -42,7 +42,7 @@ If your API calls are being routed through ENVOY, you can use Akto's ENVOY modul
 
 <figure><img src="https://github.com/akto-api-security/Documentation/assets/91221068/7d7d437d-1370-4628-aa10-908b33b907b0" alt=""><figcaption></figcaption></figure>
 
-3\. Check that you have `AKTO_NLB` vars once setup is complete.&#x20;
+3\. Check that you have `AKTO_NLB` var once setup is complete.&#x20;
 
 <figure><img src="https://github.com/akto-api-security/Documentation/assets/91221068/7c79c400-7a0a-4421-96ed-fbb063e025f5" alt=""><figcaption></figcaption></figure>
 
