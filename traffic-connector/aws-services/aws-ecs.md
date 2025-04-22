@@ -15,8 +15,8 @@ When the ECS cluster is running on AWS FARGATE infrastructure, we will add a con
 
 <figure><img src="../../.gitbook/assets/ecs-2.png" alt="ECS FARGATE infrastructure type"><figcaption><p>ECS FARGATE infrastructure type</p></figcaption></figure>
 
-1. Setup Akto data processor using the guide [here](broken-reference). Keep the values `AKTO_MONGO_IP` and `AKTO_NLB_IP` handy, as we will need them later.
-2.  Add a container with the configuration defined below. Please replace the `AKTO_MONGO_IP` and `AKTO_NLB_IP` variables, as obtained from [step 1](aws-ecs.md#adding-akto-traffic-collector-to-ecs-fargate-cluster).
+1. Setup Akto data processor using the guide [here](broken-reference). Keep the value `AKTO_NLB_IP` handy, as we will need them later.
+2.  Add a container with the configuration defined below. Please replace the `AKTO_NLB_IP` variable, as obtained from [step 1](aws-ecs.md#adding-akto-traffic-collector-to-ecs-fargate-cluster).
 
     ```bash
     {
@@ -33,7 +33,7 @@ When the ECS cluster is running on AWS FARGATE infrastructure, we will add a con
             },
             {
                 "name": "AKTO_MONGO_CONN",
-                "value": "mongodb://<AKTO_MONGO_IP>:27017/admini"
+                "value": "mongodb://0.0.0.0:27017/admini"
             },
             {
                 "name": "AKTO_TRAFFIC_BATCH_SIZE",
@@ -69,8 +69,8 @@ When the ECS cluster is a EC2 instances cluster, we will create a task definitio
 
 <figure><img src="../../.gitbook/assets/ecs-ec2-1.png" alt="Cluster configuration"><figcaption><p>Cluster configuration</p></figcaption></figure>
 
-1. Setup Akto data processor using the guide [here](broken-reference). Keep the values `AKTO_MONGO_IP` and `AKTO_NLB_IP` handy, as we will need them later.
-2.  We will create a new task definition with launch type as EC2 instances, network mode host and the container details as follows. You can directly create a new task definition using the JSON given below. You can also refer the screenshots attached. Please replace the `AKTO_MONGO_IP` and `AKTO_NLB_IP` variables, as obtained from [step 1](aws-ecs.md#adding-akto-traffic-collector-to-ecs-ec2-instances-cluster).
+1. Setup Akto data processor using the guide [here](broken-reference). Keep the value `AKTO_NLB_IP` handy, as we will need them later.
+2.  We will create a new task definition with launch type as EC2 instances, network mode host and the container details as follows. You can directly create a new task definition using the JSON given below. You can also refer the screenshots attached. Please replace the `AKTO_NLB_IP` variable, as obtained from [step 1](aws-ecs.md#adding-akto-traffic-collector-to-ecs-ec2-instances-cluster).
 
     ```bash
     {
@@ -90,7 +90,7 @@ When the ECS cluster is a EC2 instances cluster, we will create a task definitio
                     },
                     {
                         "name": "AKTO_MONGO_CONN",
-                        "value": "mongodb://<AKTO_MONGO_IP>:27017/admini"
+                        "value": "mongodb://0.0.0.0:27017/admini"
                     },
                     {
                         "name": "AKTO_TRAFFIC_BATCH_SIZE",

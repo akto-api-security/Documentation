@@ -17,7 +17,7 @@ For a better understanding, here's an architecture diagram of the setup.
 ## Adding Akto traffic collector
 
 1. Setup Akto data processor using the guide [here](broken-reference)
-2. Apply the daemonset configuration given below using `kubectl apply -f akto-daemonset-config.yaml -n <NAMESPACE>`. You will find `AKTO_NLB_IP` and `AKTO_MONGO_CONN` after setting up Akto data processor, as mentioned above.
+2. Apply the daemonset configuration given below using `kubectl apply -f akto-daemonset-config.yaml -n <NAMESPACE>`. You will find `AKTO_NLB_IP` after setting up Akto data processor, as mentioned above.
 
 ```yaml
 apiVersion: apps/v1
@@ -56,8 +56,6 @@ spec:
             value: "100"
           - name: AKTO_KAFKA_BROKER_MAL
             value: "<AKTO_NLB_IP>:9092"
-          - name: AKTO_MONGO_CONN
-            value: "<AKTO_MONGO_CONN>"
         securityContext:
           capabilities:
             add:
