@@ -29,7 +29,6 @@ You can use either a CloudFormation template, Terraform template or a Helm chart
 3. Once complete, copy `akto_nlb_dns` from the output.&#x20;
 4. The next step is to install a traffic connector.&#x20;
    1. You can use the above copied `AktoNLBIP` as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `akto-N-.....amazonaws.com:9092`)
-   2. For `AKTO_MONGO_CONN` , you can use `mongodb://0.0.0.0:27017/admini`.&#x20;
 
 #### CloudFormation template
 
@@ -43,7 +42,6 @@ You can use either a CloudFormation template, Terraform template or a Helm chart
 3. Once complete, go to the **Output** section of CloudFormation Stack and copy `AktoNLBIP`.&#x20;
 4. The next step is to install a traffic connector.&#x20;
    1. You can use the above copied `AktoNLBIP` as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `akto-N-.....amazonaws.com:9092`)
-   2. For `AKTO_MONGO_CONN` , you can use `mongodb://0.0.0.0:27017/admini`.&#x20;
 
 #### Helm chart
 
@@ -88,7 +86,6 @@ kubectl get svc -n <namespace>
 6\. The next step is to install a traffic connector.&#x20;
 
 1. You can use the above copied `IP:PORT` value as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `10.0.23.145:9092` , `akto-mini-runtime-mini-runtime.dev.svc.cluster.local:9092`)
-2. For `AKTO_MONGO_CONN` , you can use `mongodb://0.0.0.0:27017/admini`.&#x20;
 
 <figure><img src="../../.gitbook/assets/mini-runtime-ip-2.png" alt=""><figcaption></figcaption></figure>
 

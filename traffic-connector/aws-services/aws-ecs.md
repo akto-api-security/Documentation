@@ -33,7 +33,7 @@ When the ECS cluster is running on AWS FARGATE infrastructure, we will add a con
             },
             {
                 "name": "AKTO_MONGO_CONN",
-                "value": "mongodb://<AKTO_MONGO_IP>:27017/admini"
+                "value": "mongodb://0.0.0.0:27017/admini"
             },
             {
                 "name": "AKTO_TRAFFIC_BATCH_SIZE",
@@ -90,7 +90,7 @@ When the ECS cluster is a EC2 instances cluster, we will create a task definitio
                     },
                     {
                         "name": "AKTO_MONGO_CONN",
-                        "value": "mongodb://<AKTO_MONGO_IP>:27017/admini"
+                        "value": "mongodb://0.0.0.0:27017/admini"
                     },
                     {
                         "name": "AKTO_TRAFFIC_BATCH_SIZE",

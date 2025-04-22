@@ -80,7 +80,7 @@ You can use Akto traffic collectors to collect and send traffic to Akto. Your AP
                 },
                 {
                     "name": "AKTO_MONGO_CONN",
-                    "value": "<AKTO_MONGO_IP>"
+                    "value": "mongodb://0.0.0.0:27017"
                 }
             ]
         }

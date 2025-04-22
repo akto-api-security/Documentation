@@ -42,20 +42,18 @@ spec:
           - name: AKTO_KAFKA_BROKER_MAL
             value: "<AKTO_NLB_IP>:9092"
           - name: AKTO_MONGO_CONN
-            value: "<AKTO_MONGO_CONN>"
+            value: "mongodb://0.0.0.0:27017"
 ```
 
 2. Replace `{NAMESPACE}` with your app namespace and `{APP_NAME}` with the name of your app. If you have installed on _AWS_ -
 
 * Go to EC2 > Instances > Search for `Akto Mongo Instance` > Copy private IP.
-* Replace `AKTO_MONGO_CONN` with `mongodb://10.0.1.3:27017/admini` where 10.0.1.3 is the private ip (example)
 * Go to EC2 > Load balancers > Search for `AktoNLB` > Copy its DNS.
 * Replace `AKTO_NLB_IP` with the DNS name. eg `AktoNLB-ca5f9567a891b910.elb.ap-south-1.amazonaws.com`
 
 If you have installed on _GCP_, _Kubernetes_ or _OpenShift_ -
 
 * Get Mongo Service's DNS name from Akto cluster
-* Replace `AKTO_MONGO_CONN` with `mongodb://mongo.p03.svc.cluster.local:27017/admini` (where mongo.p03.svc.cluster.local is Mongo service)
 * Get Runtime Service's DNS name from Akto cluster
 * Replace `AKTO_NLB_IP` with the DNS name. eg. `akto-api-security-runtime.p03.svc.cluster.local`
 
