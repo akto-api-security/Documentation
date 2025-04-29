@@ -2,7 +2,7 @@
 
 AWS Lambda is Amazon’s serverless compute service that lets you run code without provisioning or managing servers. Integrating AWS Lambda with Akto via the Golang Runtime API Proxy Extension enables automatic discovery of all API traffic processed by your Lambda functions.
 
-<figure><img src="../../.gitbook/assets/aws-lambda-runtime-extension.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/aws-lambda-runtime-extension.png" alt=""><figcaption>Image source: <a target="_blank" href="https://aws.amazon.com/blogs/compute/enhancing-runtime-security-and-governance-with-the-aws-lambda-runtime-api-proxy-extension/">Amazon Web Services Documentation</a></figcaption></figure>
 
 To connect Akto with AWS Lambda functions, please follow these steps:
 

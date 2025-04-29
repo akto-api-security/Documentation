@@ -38,7 +38,6 @@
   * [Connect Akto with Istio](traffic-connector/api-gateways/envoy-1.md)
   * [Connect Akto with HAProxy](traffic-connector/api-gateways/connect-akto-with-haproxy.md)
   * [Connect Akto with Azure API Management](traffic-connector/api-gateways/connect-akto-with-azure-api-management.md)
-  * [Connect Akto with AWS Lambda](traffic-connector/api-gateways/connect-akto-with-aws-lambda.md)
   * [Connect Akto with F5](traffic-connector/api-gateways/connect-akto-with-f5.md)
   * [Connect Akto with 3Scale](traffic-connector/api-gateways/connect-akto-with-3scale.md)
   * [Connect Akto with Layer7 API Gateway](traffic-connector/api-gateways/connect-akto-with-layer7-api-gateway.md)
