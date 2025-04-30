@@ -48,15 +48,27 @@ You can trigger Akto's API Security tests in your CI/CD pipelines too. Generate 
 
 ### Post deployment hook (works with any CI/CD platform)
 
-* Add a post deployment hook in your CI/CD tool to trigger Akto tests after deployment. For example, Jenkins post deployment hook should look like:
+To run add the following docker command to your CI/CD pipeline
 
+```bash
+docker run \
+-e AKTO_DASHBOARD_URL='https://app.akto.io' \
+-e AKTO_API_KEY='<AKTO_API_KEY>' \
+-e AKTO_TEST_ID='<AKTO_TEST_ID>' \
+-e GITHUB_SERVER_URL="<GIT_SERVER_URL>" \
+-e GITHUB_REPOSITORY="<GIT_REPOSITORY>" \
+-e GITHUB_REF_NAME="<GIT_BRANCH>" \
+-e GITHUB_REF="<PULL_REQUEST_ID>" \
+-e GITHUB_SHA="<PULL_REQUEST_SHA>" \
+-e WAIT_TIME_FOR_RESULT=0 \
+-e CICD_PLATFORM="<CICD_PLATFORM>" \
+aktosecurity/akto-testing-scan:latest
 ```
-stage('Trigger Akto Test Run') {
-    steps {
-        echo "Trigger Akto Test"
-        echo "${GIT_COMMIT_ID}"
-    }
-}
+
+In case you face an issue with the spaces in the command...
+
+```bash
+docker run -e AKTO_DASHBOARD_URL='https://app.akto.io' -e AKTO_API_KEY='<AKTO_API_KEY>' -e AKTO_TEST_ID='<AKTO_TEST_ID>' -e GITHUB_SERVER_URL="<GIT_SERVER_URL>" -e GITHUB_REPOSITORY="<GIT_REPOSITORY>" -e GITHUB_REF_NAME="<GIT_BRANCH>" -e GITHUB_REF="<PULL_REQUEST_ID>" -e GITHUB_SHA="<PULL_REQUEST_SHA>" -e WAIT_TIME_FOR_RESULT=0 -e CICD_PLATFORM="<CICD_PLATFORM>" aktosecurity/akto-testing-scan:latest
 ```
 
 * If you have hosted Akto in your VPC, please ensure the CI/CD machine can reach Akto's dashboard. You might have to change Security rules on Akto-Load-Balancer accordingly.
