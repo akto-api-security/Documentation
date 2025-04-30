@@ -48,18 +48,16 @@ You can trigger Akto's API Security tests in your CI/CD pipelines too. Generate 
 
 ### Post deployment hook (works with any CI/CD platform)
 
-*   Prepare the following curl command by replacing `akto-dashboard-url`, `akto-api-key` and `akto-test-id`
+* Add a post deployment hook in your CI/CD tool to trigger Akto tests after deployment. For example, Jenkins post deployment hook should look like:
 
-    ```
-    curl "https://<akto-dashboard-url>/api/startTest" \
-                -H 'X-API-KEY: <akto-api-key>' \
-                -H 'content-type: application/json' \
-                -d '{"testingRunHexId": <akto-test-id>, "startTimestamp" : 0,"metadata": {"platform": "Github Actions"}}' \
-                --compressed
-    ```
-* Add a post deployment hook in your CI/CD tool. Add the above curl command as part of post deployment. For example, Jenkins post deployment hook should look like -
-
-<figure><img src="../../.gitbook/assets/cicd-6.png" alt="jenkins example"><figcaption></figcaption></figure>
+```
+stage('Trigger Akto Test Run') {
+    steps {
+        echo "Trigger Akto Test"
+        echo "${GIT_COMMIT_ID}"
+    }
+}
+```
 
 * If you have hosted Akto in your VPC, please ensure the CI/CD machine can reach Akto's dashboard. You might have to change Security rules on Akto-Load-Balancer accordingly.
 * If you want this to become better, please create a GitHub issue [here](https://github.com/akto-api-security/akto/issues). Or even better, contribute! We are open source!
