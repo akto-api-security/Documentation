@@ -106,7 +106,7 @@ You can add TLS authentication configuration to any role using the following ste
 4. Click on `Save`
     <figure><img src="../../.gitbook/assets/tls-auth-5.png" alt=""><figcaption></figcaption></figure>
 
-Notes:
+##### Notes:
 
 1. Please enter the keys only in the format shown in the images. Do not enter any additional details.
 2. If you have a `P12` type key you can convert it to a `PEM` key using the commands given below. Here `client.p12` is your original key, `client.crt` is the client certificate and `client.key` is the client private key. While running these commands, you may be asked for an `Import Password`. You can leave that blank.
