@@ -36,52 +36,52 @@ kubectl create secret generic kafka-certs \
 
 4. Configure producers to use TLS.
 
-    1. Traffic connectors which are generally deployed as daemonsets need to be configured to use TLS to send data to the kafka broker. Here is the updated configuration for the [kubernetes connector](../traffic-connector/kubernetes/kubernetes.md#setting-up-akto-daemonset-pod-on-your-k8s-cluster). Here, we've mounted the `ca.crt` file on the file system for the daemonset.
+    1. Traffic connectors which are generally deployed as daemonsets need to be configured to use TLS to send data to the kafka broker. Here is the updated configuration for the [kubernetes connector](./kubernetes/kubernetes.md#setting-up-akto-daemonset-pod-on-your-k8s-cluster). Here, we've mounted the `ca.crt` file on the file system for the daemonset.
 
     ```bash
     apiVersion: apps/v1
     kind: DaemonSet
     metadata:
-    name: akto-k8s
-    namespace: {NAMESPACE}
-    labels:
-        app: akto-collector
+      name: akto-k8s
+      namespace: {NAMESPACE}
+      labels:
+        app: {APP_NAME}
     spec:
-    selector:
+      selector:
         matchLabels:
-        app: akto-collector
-    template:
+          app: {APP_NAME}
+      template:
         metadata:
-        labels:
-            app: akto-collector
+          labels:
+            app: {APP_NAME}
         spec:
-        hostNetwork: true
-        dnsPolicy: ClusterFirstWithHostNet
-        containers:
-        - name: mirror-api-logging
+          hostNetwork: true
+          dnsPolicy: ClusterFirstWithHostNet
+          containers:
+          - name: mirror-api-logging
             image: aktosecurity/mirror-api-logging:k8s_agent
             env: 
-            - name: AKTO_TRAFFIC_BATCH_TIME_SECS
+              - name: AKTO_TRAFFIC_BATCH_TIME_SECS
                 value: "10"
-            - name: AKTO_TRAFFIC_BATCH_SIZE
+              - name: AKTO_TRAFFIC_BATCH_SIZE
                 value: "100"
-            - name: AKTO_INFRA_MIRRORING_MODE
+              - name: AKTO_INFRA_MIRRORING_MODE
                 value: "gcp"
-            - name: AKTO_KAFKA_BROKER_MAL
+              - name: AKTO_KAFKA_BROKER_MAL
                 value: "<AKTO_NLB_IP>:9093"
-            - name: AKTO_MONGO_CONN
+              - name: AKTO_MONGO_CONN
                 value: "mongodb://0.0.0.0:27017"
             # additional configuration
-            - name: USE_TLS
+              - name: USE_TLS
                 value: "true"
-            - name: TLS_CA_CERT_PATH
+              - name: TLS_CA_CERT_PATH
                 value: "/app/certs/ca.crt"
-          volumeMounts: 
+            volumeMounts:
+              - name: kafka-certs
+                mountPath: /app/certs
+          volumes:
             - name: kafka-certs
-              mountPath: /app/certs
-        volumes:
-            - name: kafka-certs
-            secret:
+              secret:
                 secretName: kafka-certs
     ```
 
