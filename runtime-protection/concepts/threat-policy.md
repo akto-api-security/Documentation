@@ -16,6 +16,6 @@ Threat policies are customizable filters that monitor and analyze your network t
 - Restrict access to your services based on user location or IP address.  
 - Enhance security by combining multiple filtering criteria.
 
-To configure threat policies, navigate to the [Policy Settings] section in your dashboard and follow the setup wizard for step-by-step guidance.
+To configure threat policies, navigate to the Threat Policy section under API Protection in left nav bar on your Akto Dashboard.
 
 <figure><img src="../../.gitbook/assets/threat-policy.png" alt=""><figcaption></figcaption></figure>

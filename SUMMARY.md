@@ -147,6 +147,11 @@
   * [Create New Tags](api-inventory-1/how-to/create-new-tags.md)
   * [Edit Tags](api-inventory-1/how-to/edit-tags.md)
 
+## Runtime protection
+* [Overview](runtime-protection/concepts/overview.md)
+* [Concepts](runtime-protection/concepts/README.md)
+  * [Threat Policy](runtime-protection/concepts/threat-policy.md)
+
 ## Test Editor
 
 * [Concepts](test-editor/concepts/README.md)
@@ -253,10 +258,7 @@
   * [Google Workspace SSO](account/sso/google-workspace-sso.md)
   * [Add Members From SSO](account/sso/add-members-from-sso.md)
 
-## Runtime protection
 
-* [Concepts](runtime-protection/concepts/README.md)
-  * [Overview](runtime-protection/concepts/overview.md)
 
 ## API security posture
 

@@ -9,3 +9,11 @@ Akto's runtime protection identifies and monitors malicious requests in real-tim
 
 #### Dashboard
 <figure><img src="../../.gitbook/assets/threat-protection.png" alt=""><figcaption></figcaption></figure>
+
+
+### Getting Started
+
+To enable Akto Runtime Protection, simply set the following environment variable in your deployment configuration: `AKTO_THREAT_ENABLED=true`
+
+
+For detailed installation and deployment instructions, refer to the [Akto Installation Guide](https://docs.akto.io/~/revisions/eqYVJ1sHpYidDKSYAxzJ/getting-started/deployment-types).
