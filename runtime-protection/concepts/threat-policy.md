@@ -10,12 +10,6 @@ Threat policies are customizable filters that monitor and analyze your network t
 - **Geofencing**: Restrict access based on geographic locations.  
 - **IP-Based Blocking**: Block or allow traffic from specific IP addresses or CIDR ranges.
 
-### Use Cases
-
-- Protect web applications from common vulnerabilities.  
-- Restrict access to your services based on user location or IP address.  
-- Enhance security by combining multiple filtering criteria.
-
 To configure threat policies, navigate to the Threat Policy section under API Protection in left nav bar on your Akto Dashboard.
 
 <figure><img src="../../.gitbook/assets/threat-policy.png" alt=""><figcaption></figcaption></figure>
