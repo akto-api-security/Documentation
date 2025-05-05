@@ -13,7 +13,7 @@ To enable Akto API Protection, set the following environment variable in your Ak
 Supported Akto traffic connectors for Akto API protection module are
 - [eBPF Traffic Connector](../../traffic-connector/ebpf/README.md)
 - [Kubernetes Traffic Connector](../../traffic-connector/kubernetes/kubernetes.md)
-- [Virtual Machines](../../traffic-connector/virtual-machines/README.md)
+- [Virtual Machines Traffic Connector](../../traffic-connector/virtual-machines/README.md)
 
 ### Key Features
 
