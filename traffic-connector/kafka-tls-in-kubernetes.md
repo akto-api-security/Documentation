@@ -146,7 +146,7 @@ kubectl create secret generic kafka-certs \
 
 ### Note:
 
-1. You can also disable hostname verification as well by adding `INSECURE_SKIP_VERIFY` environment variable in the traffic connector and setting its value as `true`.
+1. You can disable hostname verification as well by adding `INSECURE_SKIP_VERIFY` environment variable in the traffic connector and setting its value as `true`.
 2. You might need to change the value of `DNS.1` based on your deployment in step 4. In that case, recreate the certificates after deploying the helm chart and use them.
 3. To customize the helm chart you may take reference from [helm-charts](https://github.com/akto-api-security/helm-charts/tree/master/charts/mini-runtime).
 
