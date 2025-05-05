@@ -89,6 +89,7 @@
   * [Connect Akto with Postman](traffic-connector/manual/postman.md)
   * [Connect Akto with OpenAPI](traffic-connector/manual/openapi.md)
   * [Add API traffic to Akto using HAR file upload](traffic-connector/manual/har-file-upload.md)
+* [Configure TLS on kafka](traffic-connector/kafka-tls-in-kubernetes.md)
 
 ## API Inventory
 
