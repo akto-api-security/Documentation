@@ -17,10 +17,10 @@ Supported Akto traffic connectors for Akto API protection module are
 
 ### Key Features
 
-- **Real-Time Threat Detection**: Identify and respond to security threats as they occur.  
-- **OWASP Core Rule Set Support**: Detect common attack patterns, such as XSS and SQL Injection.  
-- **Geofencing**: Restrict access based on geographic locations.  
-- **IP-Based Blocking**: Block or allow traffic from specific IP addresses or CIDR ranges.
+- **Real-Time Threat Detection**: Identify and respond to API security threats as they occur.  
+- **OWASP Core Rule Set Support**: Detect common attack patterns in APIs such as XSS and SQL Injection.  
+- **Geofencing**: Restrict API access based on geographic locations.  
+- **IP-Based Blocking**: Block or allow API traffic from specific IP addresses or CIDR ranges.
 
 #### Dashboard
 <figure><img src="../../.gitbook/assets/threat-protection.png" alt=""><figcaption></figcaption></figure>
