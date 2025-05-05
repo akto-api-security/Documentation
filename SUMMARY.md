@@ -148,6 +148,7 @@
   * [Edit Tags](api-inventory-1/how-to/edit-tags.md)
 
 ## API Protection
+
 * [Overview](api-protection/concepts/overview.md)
 * [Concepts](api-protection/concepts/README.md)
   * [Threat Policy](api-protection/concepts/threat-policy.md)
@@ -213,6 +214,8 @@
   * [Conduct Role-Based Testing](api-security-testing/how-to/conduct-role-based-testing.md)
   * [Run tests in CLI using Akto](api-security-testing/how-to/run-tests-in-cli-using-akto.md)
   * [Secure GraphQL APIs using Akto](api-security-testing/how-to/secure-graphql-apis-using-akto.md)
+  * [Secure REST APIs using Akto](api-security-testing/how-to/secure-rest-apis-using-akto.md)
+  * [Secure SOAP APIs using Akto](api-security-testing/how-to/secure-soap-apis-using-akto.md)
   * [Create and Edit Auth Types](api-security-testing/how-to/create-and-edit-auth-types.md)
 
 ## Issues
@@ -257,8 +260,6 @@
   * [Github OIDC](account/sso/github-oidc.md)
   * [Google Workspace SSO](account/sso/google-workspace-sso.md)
   * [Add Members From SSO](account/sso/add-members-from-sso.md)
-
-
 
 ## API security posture
 
