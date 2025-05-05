@@ -147,7 +147,7 @@
   * [Create New Tags](api-inventory-1/how-to/create-new-tags.md)
   * [Edit Tags](api-inventory-1/how-to/edit-tags.md)
 
-## Runtime protection
+## API Protection
 * [Overview](api-protection/concepts/overview.md)
 * [Concepts](api-protection/concepts/README.md)
   * [Threat Policy](api-protection/concepts/threat-policy.md)
