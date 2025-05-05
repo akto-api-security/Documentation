@@ -14,13 +14,15 @@ To enable Akto Runtime Protection, simply set the following environment variable
 
 For detailed installation and deployment instructions, refer to the [Akto Installation Guide](https://docs.akto.io/~/revisions/eqYVJ1sHpYidDKSYAxzJ/getting-started/deployment-types).
 
-#### Dashboard
-<figure><img src="../../.gitbook/assets/threat-protection.png" alt=""><figcaption></figcaption></figure>
-
-
 ### Key Features
 
 - **Real-Time Threat Detection**: Identify and respond to security threats as they occur.  
 - **OWASP Core Rule Set Support**: Detect common attack patterns, such as XSS and SQL Injection.  
 - **Geofencing**: Restrict access based on geographic locations.  
 - **IP-Based Blocking**: Block or allow traffic from specific IP addresses or CIDR ranges.
+
+#### Dashboard
+<figure><img src="../../.gitbook/assets/threat-protection.png" alt=""><figcaption></figcaption></figure>
+
+
+
