@@ -227,7 +227,8 @@
   * [Remediation](issues/concepts/remediation.md)
 * [How To](issues/how-to/README.md)
   * [Jira Integration](issues/how-to/jira-integration.md)
-  * [Triage Issues](issues/how-to/triage-issues.md)
+  * [Triage Issues](issues/how-to/triage-issues/README.md)
+    * [Review Issues Marked as False Positives](issues/how-to/triage-issues/review-issues-marked-as-false-positives.md)
   * [Export Selected Issues to Reports](issues/how-to/export-selected-issues-to-reports.md)
   * [Export Vulnerability Report](issues/how-to/export-vulnerability-report.md)
 

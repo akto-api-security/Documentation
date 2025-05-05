@@ -14,7 +14,7 @@ description: Add Akto app in your GitHub organization
 
 * Go to `Settings > Developer Settings > Github Apps` on your github dashboard and click `New Github App`
 
-<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 * While creating new Github App, use name as `Akto Github App` with following permissions
   * Read permissions : **Administration**, **code**, **member**, **metadata**
