@@ -93,7 +93,7 @@ kubectl create secret generic kafka-certs \
 
 4. Configure producers to use TLS.
 
-    1. Traffic connectors which are generally deployed as daemonsets need to be configured to use TLS to send data to the kafka broker. Here is the updated configuration for the [kubernetes connector](./kubernetes/kubernetes.md#setting-up-akto-daemonset-pod-on-your-k8s-cluster). Here, we've mounted the `ca.crt` file on the file system for the daemonset.
+    1. Traffic connectors which are generally deployed as daemonsets need to be configured to use TLS to send data to the kafka broker. Here is the updated configuration for the [kubernetes connector](./kubernetes/kubernetes.md#setting-up-akto-daemonset-pod-on-your-k8s-cluster). Here, we've mounted the `ca-cert.pem` file on the file system for the daemonset.
 
     ```bash
     apiVersion: apps/v1
