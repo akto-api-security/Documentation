@@ -45,15 +45,15 @@ kubectl create secret generic kafka-certs \
       name: akto-k8s
       namespace: {NAMESPACE}
       labels:
-        app: {APP_NAME}
+        app: akto-collector
     spec:
       selector:
         matchLabels:
-          app: {APP_NAME}
+          app: akto-collector
       template:
         metadata:
           labels:
-            app: {APP_NAME}
+            app: akto-collector
         spec:
           hostNetwork: true
           dnsPolicy: ClusterFirstWithHostNet
