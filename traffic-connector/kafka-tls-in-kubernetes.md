@@ -4,31 +4,88 @@ We can configure kafka which is deployed as part of the hybrid runtime setup to 
 
 Steps:
 
-1. Create certificates stores and certificate authority. The script below will create `ca.crt`, `kafka.server.keystore.jks` and `kafka.server.truststore.jks`.
+1. Create `openssl-san.cnf` file with the content below. This file configures the SAN for the certificates we will create in the next step.
 
 ```bash
-openssl req -x509 -new -nodes -days 365 -newkey rsa:2048 -keyout ca.key -out ca.crt -subj "/CN=MyKafkaCA"
+[ req ]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+prompt = no
 
-keytool -keystore kafka.server.keystore.jks -alias kafka-server -validity 365 -genkey -storepass password -keypass password -dname "CN=kafka-broker"
-keytool -keystore kafka.server.keystore.jks -alias kafka-server -certreq -file kafka.server.csr -storepass password
+[ req_distinguished_name ]
+CN = kafka-broker
 
-openssl x509 -req -CA ca.crt -CAkey ca.key -in kafka.server.csr -out kafka.server.crt -days 365 -CAcreateserial
-keytool -keystore kafka.server.keystore.jks -alias CARoot -import -file ca.crt -storepass password -noprompt
-keytool -keystore kafka.server.keystore.jks -alias kafka-server -import -file kafka.server.crt -storepass password -noprompt
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
 
-keytool -keystore kafka.server.truststore.jks -alias CARoot -import -file ca.crt -storepass password -noprompt
+[ alt_names ]
+DNS.1 = akto-mini-runtime-mini-runtime.default.svc.cluster.local
 ```
 
-2. Crete secret in kubernetes cluster to store these certificates.
+2. Create certificates stores and certificate authority. The script below will create `ca-cert.pem`, `server.keystore.jks` and `server.truststore.jks`.
+
+```bash
+#!/bin/bash
+
+# Create the CA key
+openssl genrsa -out ca-key.pem 4096
+
+# Create the CA cert
+openssl req -x509 -new -key ca-key.pem -out ca-cert.pem -days 365 \
+  -subj "/CN=MyKafkaCA"
+
+keytool -genkeypair -alias kafka-server \
+  -keyalg RSA -keysize 2048 \
+  -keystore server.keystore.jks \
+  -storetype PKCS12 \
+  -dname "CN=kafka-broker" \
+  -validity 365 \
+  -storepass password -keypass password
+
+keytool -certreq -alias kafka-server \
+  -keystore server.keystore.jks \
+  -file kafka-server.csr \
+  -storepass password
+
+openssl x509 -req \
+  -in kafka-server.csr \
+  -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial \
+  -out kafka-server-signed.crt \
+  -days 365 \
+  -extensions v3_req \
+  -extfile openssl-san.cnf
+
+# Import CA
+keytool -keystore server.keystore.jks \
+  -alias CARoot \
+  -import -file ca-cert.pem \
+  -storepass password -noprompt
+
+# Import signed cert
+keytool -keystore server.keystore.jks \
+  -alias kafka-server \
+  -import -file kafka-server-signed.crt \
+  -storepass password
+
+keytool -keystore server.truststore.jks \
+  -alias CARoot \
+  -import -file ca-cert.pem \
+  -storepass password -noprompt
+```
+
+3. Crete secret in kubernetes cluster to store these certificates.
 
 ```bash
 kubectl create secret generic kafka-certs \
-  --from-file=kafka.server.keystore.jks \
-  --from-file=kafka.server.truststore.jks \
-  --from-file=ca.crt
+  --from-file=server.keystore.jks \
+  --from-file=server.truststore.jks \
+  --from-file=ca-cert.pem
 ```
 
-3. Install the helm chart for [hybrid-saas](../getting-started/quick-start-with-akto-cloud/hybrid-saas.md#helm-chart) and add the following attribute at the end of the helm install command. This will configure kafka to use TLS on port `9093`
+4. Install the helm chart for [hybrid-saas](../getting-started/quick-start-with-akto-cloud/hybrid-saas.md#helm-chart) and add the following attribute at the end of the helm install command. This will configure kafka to use TLS on port `9093`.
 
 ```bash
 --set mini_runtime.kafka1.useTls=true
@@ -75,7 +132,7 @@ kubectl create secret generic kafka-certs \
               - name: USE_TLS
                 value: "true"
               - name: TLS_CA_CERT_PATH
-                value: "/app/certs/ca.crt"
+                value: "/app/certs/ca-cert.pem"
             volumeMounts:
               - name: kafka-certs
                 mountPath: /app/certs
@@ -89,7 +146,9 @@ kubectl create secret generic kafka-certs \
 
 ### Note:
 
-1. You can also enable hostname verification for added security.
+1. You can also disable hostname verification as well by adding `INSECURE_SKIP_VERIFY` environment variable in the traffic connector and setting its value as `true`.
+2. You might need to change the value of `DNS.1` based on your deployment in step 4. In that case, recreate the certificates after deploying the helm chart and use them.
+3. To customize the helm chart you may take reference from [helm-charts](https://github.com/akto-api-security/helm-charts/tree/master/charts/mini-runtime).
 
 ### Get Support for your Akto setup
 
