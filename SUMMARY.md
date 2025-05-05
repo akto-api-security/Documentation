@@ -148,9 +148,9 @@
   * [Edit Tags](api-inventory-1/how-to/edit-tags.md)
 
 ## Runtime protection
-* [Overview](runtime-protection/concepts/overview.md)
-* [Concepts](runtime-protection/concepts/README.md)
-  * [Threat Policy](runtime-protection/concepts/threat-policy.md)
+* [Overview](api-protection/concepts/overview.md)
+* [Concepts](api-protection/concepts/README.md)
+  * [Threat Policy](api-protection/concepts/threat-policy.md)
 
 ## Test Editor
 
