@@ -4,7 +4,7 @@ description: A quick overview of Akto's Real Time API Threat Protection
 
 # Overview
 
-Akto API Protection is a powerful new module designed to detect and block threats in real time as they occur in your APIs. With customizable filters, you can tailor the monitoring to meet your specific security needs.
+Akto API Protection is a powerful new module designed to detect and block threats in real time as they occur in your APIs. With customizable policies you can tailor the detection rules to meet your specific security needs.
 
 #### Getting Started
 
