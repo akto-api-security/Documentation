@@ -16,7 +16,7 @@ For a better understanding, here's an architecture diagram of the setup.
 
 ## Adding Akto traffic collector
 
-1. Setup Akto data processor using the guide [here](broken-reference)
+1. Setup Akto data processor using the guide [here](../../getting-started/quick-start-with-akto-cloud/hybrid-saas.md)
 2. Apply the daemonset configuration given below using `kubectl apply -f akto-daemonset-config.yaml -n <NAMESPACE>`. You will find `AKTO_NLB_IP` after setting up Akto data processor, as mentioned above.
 
 ```yaml
@@ -107,7 +107,7 @@ docker run --rm -d \
   aktosecurity/mirror-api-logging:k8s_ebpf
 ```
 
-For `AKTO_NLB_IP` ,  Use the service IP or load balancer name of Traffic Processor from step (1)
+For `AKTO_NLB_IP` , Use the service IP or load balancer name of Traffic Processor from step (1)
 
 3. You can add and configure the env variables below to control the daemonset. Here's a diagram of how the module processes traffic:
 

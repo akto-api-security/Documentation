@@ -22,11 +22,11 @@ You can refer to the following articles of Git and GitHub basics. In case you ar
 * [Forking a Repo](https://help.github.com/en/github/getting-started-with-github/fork-a-repo)
 * [Cloning a Repo](https://help.github.com/en/desktop/contributing-to-projects/creating-an-issue-or-pull-request)
 * [How to create a Pull Request](https://opensource.com/article/19/7/create-pull-request-github)
-* [Getting started with Git and GitHub](https://towardsdatascience.com/getting-started-with-git-and-github-6fcd0f2d4ac6)
+* [Getting started with Git and GitHub](https://docs.github.com/en/get-started/git-basics)
 
 ### Code of Conduct
 
-We have a Code of Conduct that we expect all contributors to follow. Please read [CODE\_OF\_CONDUCT.md](https://github.com/akto-api-security/community-edition/blob/master/CODE\_OF\_CONDUCT.md) before contributing.
+We have a Code of Conduct that we expect all contributors to follow. Please read [CODE\_OF\_CONDUCT.md](https://github.com/akto-api-security/community-edition/blob/master/CODE_OF_CONDUCT.md) before contributing.
 
 ### Reporting Issues
 
