@@ -116,6 +116,8 @@ openssl pkcs12 -in ./client.p12 -out client.crt -clcerts -nokeys
 openssl pkcs12 -in ./client.p12 -out client.key -nocerts -nodes
 ```
 
+> 📌 **Note**: You can now limit visibility of a Test Role using RBAC. Use the **"Scope Role"** dropdown while creating or editing a Test Role. For details, see [Restrict Access to a Test Role Using RBAC](restrict-test-role-rbac).
+
 ## Get Support for your Akto setup
 
 There are multiple ways to request support from Akto. We are 24X7 available on the following:
