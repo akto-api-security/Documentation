@@ -1,10 +1,17 @@
 # How to Switch Between Accounts in Akto
 
-Multiple accounts in Akto allow you to manage different API environments or projects separately. Each new account starts fresh, enabling you to tailor its setup to your specific needs. Below are the quick steps to switch accounts:
+If you have access to multiple accounts or workspaces in Akto, you can easily switch between them directly from the dashboard without logging out.
 
-1. Navigate to the top-right corner of the Akto dashboard
-2. Click on your current account name to open the account dropdown menu
-3. Select the desired account from the list of available accounts
+***
 
-{% @arcade/embed flowId="dJiqlLmftiFUVvm7VJyW" url="https://app.arcade.software/share/dJiqlLmftiFUVvm7VJyW" %}
+### Steps to Switch Accounts
+
+1. In the Akto dashboard, locate the **account selector** in the left sidebar (above the navigation menu).
+2. Click the **dropdown** showing your current account name.
+3. A list of available accounts will appear.
+4. Select the account you want to switch to.
+
+✅ The dashboard will refresh and load data for the selected account, including API collections, tests, and reports.
+
+<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
