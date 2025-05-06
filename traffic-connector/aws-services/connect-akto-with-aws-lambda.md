@@ -19,6 +19,7 @@ SSH into the instance where you want to deploy the data-ingestion service and ru
 wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-compose-data-ingestion-runtime.yml
 wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/data-ingestion-docker.env
 wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-mini-runtime.env
+wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/watchtower.env
 ```
 
 ### 1.2 Retrieve the `DATABASE_ABSTRACTOR_SERVICE_TOKEN`
