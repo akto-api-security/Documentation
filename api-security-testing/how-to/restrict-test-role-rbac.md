@@ -1,6 +1,6 @@
 # 🔐 Restrict Access to a Test Role Using RBAC
 
-> 📖 If you're new to Test Roles, start with [Create a Test Role](https://docs.akto.io/api-security-testing/how-to/create-a-test-role).
+> 📖 If you're new to Test Roles, start with [Create a Test Role](../create-a-test-role.md).
 
 You can now **restrict access to test roles** based on user roles (RBAC). This gives you fine-grained control over who can view or use a particular test role.
 
@@ -10,7 +10,7 @@ This is especially useful in collaborative environments where different teams (e
 
 ## 📘 Prerequisite
 
-Make sure you’ve already created [Custom Roles](https://docs.akto.io/account/custom-roles) for your team members.
+Make sure you’ve already created [Custom Roles](../../account/custom-roles.md) for your team members.
 
 ---
 
@@ -49,5 +49,5 @@ Make sure you’ve already created [Custom Roles](https://docs.akto.io/account/c
 
 ## 📎 Related Documentation
 
-- [Create a Test Role](https://docs.akto.io/api-security-testing/how-to/create-a-test-role)
-- [Custom Roles](https://docs.akto.io/account/custom-roles)
+- [Create a Test Role](../create-a-test-role.md)
+- [Custom Roles](../../account/custom-roles.md)

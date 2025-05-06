@@ -214,6 +214,7 @@
   * [Set Up JSON Recording for Auth Tokens](api-security-testing/how-to/set-up-json-recording-for-auth-tokens.md)
   * [Create a Test Role](api-security-testing/how-to/create-a-test-role.md)
   * [Edit Auth Flow in Test Roles](api-security-testing/how-to/edit-auth-flow-in-test-roles.md)
+  * [Restrict Access to a Test Role Using RBAC](api-security-testing/how-to/restrict-test-role-rbac.md)
   * [Play in Test Editor Playground](api-security-testing/how-to/play-in-test-editor-playground.md)
   * [Conduct Role-Based Testing](api-security-testing/how-to/conduct-role-based-testing.md)
   * [Run tests in CLI using Akto](api-security-testing/how-to/run-tests-in-cli-using-akto.md)
