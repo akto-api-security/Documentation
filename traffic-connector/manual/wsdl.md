@@ -2,7 +2,7 @@
 
 You can import SOAP APIs into Akto by uploading a **WSDL (Web Services Description Language)** file. This allows Akto to automatically generate an API inventory for your SOAP APIs and start testing them.
 
-<figure><img src="../../.gitbook/assets/image (95).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
 ***
 
