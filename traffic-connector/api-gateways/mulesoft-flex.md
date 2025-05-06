@@ -6,7 +6,7 @@ description: >-
 
 # Connect Akto with Mulesoft Flex Gateway
 
-<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ## Connect Akto with Mulesoft Flex Gateway
 

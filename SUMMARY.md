@@ -201,6 +201,7 @@
   * [Edit Test Settings](api-security-testing/how-to/edit-test-settings.md)
   * [Install testing module in your Cloud](api-security-testing/how-to/install-testing-module-in-your-cloud.md)
   * [Recalculate Issue Counts](api-security-testing/how-to/recalculate-issue-counts.md)
+  * [Testing Module Selector in Akto](api-security-testing/how-to/testing-module-selector-in-akto.md)
   * [Run Tests by Category](api-security-testing/how-to/run-tests-by-category.md)
   * [Export Vulnerability Report from Test Results](api-security-testing/how-to/export-test-results.md)
   * [Test Multiple APIs](api-security-testing/how-to/test-multiple-apis.md)
