@@ -29,7 +29,7 @@ Get started with Akto Cloud in 5 simple steps:
 * Name your collection
 * Connect your [traffic source](broken-reference) (Burp Suite/AWS/Postman) from Quick Start.
 
-<figure><img src=".gitbook/assets/image (6) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (6) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### 3. Set Authentication
 

@@ -2,7 +2,7 @@
 
 HAProxy is a high-performance, open-source load balancer and proxy server for TCP and HTTP-based applications. By connecting HAProxy with Akto, you can automatically discover and test the security of all APIs passing through your HAProxy instances, providing comprehensive visibility into your API traffic and ensuring consistent security across your load-balanced infrastructure.
 
-<figure><img src="../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
 
 To connect Akto with HAProxy, follow these steps -&#x20;
 

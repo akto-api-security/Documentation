@@ -16,4 +16,4 @@ In addition to the default Production and Staging environments, you can set cust
 
 This flexibility allows you to better organize and manage your API collections according to your specific deployment stages, testing requirements, or organizational needs. For example, you might want to create environment types like 'Development', 'QA', or 'Pre-Production' to match your workflow.
 
-<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
