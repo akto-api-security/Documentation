@@ -18,7 +18,7 @@ Here’s what you can do:
 4. **Check the box** next to the issue(s).
 5. Click **Rerun tests** to rescan the selected issue(s).
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Akto will automatically rerun the tests for the selected API endpoints and update the issue status.
 

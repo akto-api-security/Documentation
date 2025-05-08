@@ -1,6 +1,6 @@
 # Testing module
 
-<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (96).png" alt=""><figcaption></figcaption></figure>
 
 The Testing module is responsible to do API Security testing.
 
