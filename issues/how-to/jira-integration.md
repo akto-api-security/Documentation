@@ -39,14 +39,25 @@ You can configure **one or multiple Jira projects**. For each project:
 
 ### What Happens When You Enable/Disable Bi-Directional Integration?
 
-* **Enabling Bi-Directional Integration:**
-  * Once enabled for a project, Akto will **start listening to status changes** from Jira immediately.
-  * **Existing issues** will **retain their current status** in Akto unless they are updated in Jira.
-  * As soon as a status change is detected in Jira (for linked tickets), Akto will sync the new status to match the mapping you configured.
-* **Disabling Bi-Directional Integration:**
-  * When disabled, Akto will **stop syncing** status updates from Jira for that project.
-  * **Existing issues** in Akto will **remain unchanged** and retain their last synced status at the time of disabling.
-  * Manual status updates in Akto will **no longer reflect back in Jira**, and vice versa.
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+#### Enabling Bi-Directional Integration:
+
+* Once enabled for a project, Akto will **start syncing statuses every 1 hour**.
+* Any status change that occurs in Jira during that hour will be **detected in the next sync cycle** and updated in Akto according to your configured mapping.
+* **Existing issues** will **retain their current status** in Akto unless they are updated in Jira.
+* As soon as a status change is detected in Jira (for linked tickets), Akto will **sync the new status to match the mapping you configured**.
+
+#### Disabling Bi-Directional Integration:
+
+* When disabled, Akto will **stop syncing status updates** from Jira for that project.
+* **Existing issues** in Akto will remain unchanged and **retain their last synced status** at the time of disabling.
+* **Manual status updates** in Akto will no longer reflect back in Jira, and vice versa.
+* ✅ **If Bi-Directional Integration is turned ON again**, Akto will **resume syncing all issue statuses that changed after the last successful sync (before turning OFF)**, ensuring no updates are missed.
+
+{% hint style="info" %}
+This feature assumes that **no separate custom workflows** are created in your Jira app. If there are any, the syncing process **might be affected** and could lead to unexpected behavior. Please review your Jira workflows to ensure compatibility.
+{% endhint %}
 
 ***
 
