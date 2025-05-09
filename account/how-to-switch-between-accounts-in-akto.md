@@ -13,5 +13,5 @@ If you have access to multiple accounts or workspaces in Akto, you can easily sw
 
 ✅ The dashboard will refresh and load data for the selected account, including API collections, tests, and reports.
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 

@@ -1,6 +1,6 @@
 # Runtime analyzer
 
-<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 This module processes all the traffic given to Akto. From the traffic, it finds out endpoints, auth policies, changes in APIs and populates them in the database. It can process API calls upto the speed of 1M calls/min.
 
