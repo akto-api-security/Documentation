@@ -155,6 +155,12 @@
 * [Concepts](api-protection/concepts/README.md)
   * [Threat Policy](api-protection/concepts/threat-policy.md)
 
+***
+
+* [WAF](waf/README.md)
+  * [AWS WAF](waf/aws-waf.md)
+  * [Cloudflare WAF](waf/cloudflare-waf.md)
+
 ## Test Editor
 
 * [Concepts](test-editor/concepts/README.md)
@@ -232,6 +238,7 @@
   * [Remediation](issues/concepts/remediation.md)
 * [How To](issues/how-to/README.md)
   * [Jira Integration](issues/how-to/jira-integration.md)
+  * [Azure DevOps Boards Integration](issues/how-to/azure-devops-boards-integration.md)
   * [Triage Issues](issues/how-to/triage-issues/README.md)
     * [Review Issues Marked as False Positives](issues/how-to/triage-issues/review-issues-marked-as-false-positives.md)
   * [Export Selected Issues to Reports](issues/how-to/export-selected-issues-to-reports.md)
@@ -315,3 +322,7 @@
 
 * [Stay Updated on New Releases](stay-updated-on-new-releases.md)
 * [Support](support.md)
+
+## Group 1
+
+* [Page 1](group-1/page-1.md)
