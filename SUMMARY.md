@@ -121,6 +121,7 @@
   * [Export an API Collection to Burp](api-inventory-1/how-to/export-an-api-collection-to-burp.md)
   * [Create API group](api-inventory-1/how-to/create-api-group.md)
   * [Collection-Based RBAC](api-inventory/how-to/collection-based-rbac.md)
+  * [Descriptions for API Collections & Endpoints](api-inventory/how-to/descriptions-for-api-collections-and-endpoints.md)
   * [Remove API(s) from API group](api-inventory-1/how-to/remove-api-s-from-api-group.md)
   * [Deactivate an API Collection](api-inventory-1/how-to/deactivate-an-api-collection.md)
   * [Add collection using Explore Mode](api-inventory-1/how-to/add-collection-using-explore-mode.md)
