@@ -136,6 +136,8 @@ This will:
 make updateFunctionConfiguration FUNCTION_NAME=my-production-lambda AKTO_MIRRORING_URL=https://1.2.3.4/api/ingestData
 ```
 
+> **Note:** Before running this command, make sure **jq** is installed on your system. You can install it using your package manager, e.g., `sudo apt install jq` on Debian-based systems, `brew install jq` on macOS, or `winget install jqlang.jq` on Windows.
+
 ---
 
 ## Step 3: Verify the Setup
