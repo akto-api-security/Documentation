@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Github contribution guide
 
 ## Contribution Guidelines

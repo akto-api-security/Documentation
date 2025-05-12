@@ -327,7 +327,3 @@
 
 * [Stay Updated on New Releases](stay-updated-on-new-releases.md)
 * [Support](support.md)
-
-## Group 1
-
-* [Page 1](group-1/page-1.md)
