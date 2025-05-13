@@ -119,6 +119,130 @@ spec:
 
 4. You can check your `API inventory` on Akto dashboard to see endpoints being discovered.
 
+
+### Kubernetes Pod Labels Tagging
+
+Akto traffic collector can be configured to capture Kubernetes Pod labels with each API request. It operates within the Akto eBPF DaemonSet and leverages the [Kubernetes Informer](https://pkg.go.dev/k8s.io/client-go/informers#pkg-overview) to maintain a local in-memory cache of pods running on each node.
+
+#### Considerations
+- Akto traffic collector needs to be run with a kubernetes serviceAccount that has access to Kubernetes API server.
+
+#### Env Variables
+```sh
+# This will start capturing the pod labels from all namespaces except
+# kube-system, kube-public and kube-node-lease
+- name: AKTO_K8_METADATA_CAPTURE
+  value: "true"
+# Use this if you want to capture pod labels from a specific namespace only.
+- name: AKTO_K8_METADATA_CAPTURE_NAMESPACE
+  value: {NAMESPACE}
+```
+#### Daemonset Deployment File
+```yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pod-watcher
+  namespace: default
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pod-watcher-role
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: pod-watcher-role-binding
+subjects:
+- kind: ServiceAccount
+  name: pod-watcher
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: pod-watcher-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: akto-k8s
+  namespace: {NAMESPACE}
+  labels:
+    app: akto-collector
+spec:
+  selector:
+    matchLabels:
+      app: akto-collector
+  template:
+    metadata:
+      labels:
+        app: akto-collector
+    spec:
+      hostNetwork: true
+      serviceAccountName: pod-watcher
+      dnsPolicy: ClusterFirstWithHostNet
+      hostPID: true
+      containers:
+      - name: mirror-api-logging
+        image: aktosecurity/mirror-api-logging:k8s_ebpf
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+          requests:
+            cpu: 50m
+            memory: 50Mi
+        env: 
+          - name: AKTO_TRAFFIC_BATCH_TIME_SECS
+            value: "10"
+          - name: AKTO_TRAFFIC_BATCH_SIZE
+            value: "100"
+          - name: AKTO_KAFKA_BROKER_MAL
+            value: "<AKTO_NLB_IP>:9092"
+          - name: AKTO_K8_METADATA_CAPTURE
+            value: "true"
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+        securityContext:
+          capabilities:
+            add:
+            - SYS_PTRACE
+            - SYS_ADMIN
+          privileged: true
+        volumeMounts:
+          # needed to load kernel headers
+          - name: lib-modules
+            mountPath: /lib/modules
+            readOnly: true
+          # needed to trace kernel events
+          - name: sys-kernel
+            mountPath: /sys/kernel
+            readOnly: true
+          - name: host
+            mountPath: /host
+            readOnly: true
+      volumes:
+        - name: sys-kernel
+          hostPath:
+            path: /sys/kernel
+        - name: lib-modules
+          hostPath:
+            path: /lib/modules
+        - name: host
+          hostPath:
+            path : /
+```
+
 ## Frequently Asked Questions (FAQs)
 
 **The traffic will contain a lot of sensitive data - does it leave my VPC?**
