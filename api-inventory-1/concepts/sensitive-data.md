@@ -4,7 +4,7 @@ description: Explore the sensitive data and its parameters.
 
 # Sensitive Data
 
-Akto comes with over 40 built-in data types and some of them belong to the sensitive data types category, for example, Email, Phone Number, JWT, Bearer token, etc. Akto allows you to identify which sensitive data an API is sharing. This is particularly useful in managing and securing your APIs
+Akto comes with over 100+ built-in data types and some of them belong to the sensitive data types category, for example, Email, Phone Number, JWT, Bearer token, etc. Akto allows you to identify which sensitive data an API is sharing. This is particularly useful in managing and securing your APIs
 
 ## Examples of Sensitive Data
 
@@ -35,6 +35,6 @@ You can also click on any of the identified sensitive endpoints to view the sens
 Detect Sensitive Params
 {% endembed %}
 
-In the above demonstration, we found that the endpoint has sensitive data like **EMAIL  ID, Password,** and **Authentication token**.
+In the above demonstration, we found that the endpoint has sensitive data like **EMAIL ID, Password,** and **Authentication token**.
 
 You can also set the sensitivity of a data type, allowing you to choose specific locations where the data type should be treated as sensitive or not. For more, refer to this [link](https://docs.akto.io/api-inventory/how-to/set-sensitivity-of-a-data-type).

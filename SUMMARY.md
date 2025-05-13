@@ -280,6 +280,11 @@
   * [Google Workspace SSO](account/sso/google-workspace-sso.md)
   * [Add Members From SSO](account/sso/add-members-from-sso.md)
 
+## Compliance
+
+* [Concepts](compliance/concepts/README.md)
+  * [Overview](compliance/concepts/overview.md)
+
 ## API security posture
 
 * [Concepts](api-security-posture/concepts/README.md)
