@@ -110,6 +110,7 @@
   * [Sensitive Data](api-inventory-1/concepts/sensitive-data.md)
   * [Alerts](api-inventory-1/concepts/alerts.md)
   * [Shadow APIs](api-inventory-1/concepts/shadow-apis.md)
+  * [Zombie APIs](api-inventory/concepts/zombie-apis.md)
   * [Risk Score](api-inventory-1/concepts/risk-score.md)
   * [Auth types](api-inventory-1/concepts/auth-types.md)
   * [Access Type](api-inventory-1/concepts/access-type.md)
