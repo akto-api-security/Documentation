@@ -54,7 +54,3 @@ Get started with Akto Cloud in 5 simple steps:
 * Click "Run once now"
 
 <figure><img src=".gitbook/assets/image (7) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
-
-## How to Contribute?
-
-[Contribution guide](github-contribution-guide.md)
