@@ -144,7 +144,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: pod-watcher
-  namespace: default
+  namespace: {NAMESPACE} 
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -164,7 +164,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: pod-watcher
-  namespace: default
+  namespace: {NAMESPACE}
 roleRef:
   kind: ClusterRole
   name: pod-watcher-role
