@@ -290,6 +290,10 @@
 * [Concepts](api-security-posture/concepts/README.md)
   * [Overview](api-security-posture/concepts/overview.md)
 
+## SIEM Integration
+
+* [Splunk](siem-integration/splunk.md)
+
 ## Alerts
 
 * [Slack Webhook](alerts/slack-webhook.md)
