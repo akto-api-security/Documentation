@@ -4,7 +4,7 @@
 
 The Model Context Protocol (MCP) is a standardized protocol that enables AI models to interact with external tools and services. In the context of Akto, the MCP server acts as a bridge between AI-powered tools (like Claude, Cursor, etc.) and Akto's API security platform, allowing these tools to access and analyze your API security data.
 
-{% embed url="https://youtu.be/JX004hd_NzA" %}
+{% embed url="https://youtu.be/QXdGqadpos4" %}
 
 ### **Prerequisites**
 
