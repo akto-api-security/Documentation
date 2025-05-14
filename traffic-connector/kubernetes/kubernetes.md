@@ -18,57 +18,10 @@ You can add Akto DaemonSet to your Kubernetes cluster. It is very lightweight an
 
 This is how your run Akto's traffic collector on your Kubernetes nodes as DaemonSet and send mirrored traffic to Akto.
 
-## Pre-requisites to add data to Akto AWS from Kubernetes cluster
-
-1. You have permissions to create and assign roles to InstanceProfiles
-2. You should have installed Akto dashboard in the same VPC as your application server EC2 instances
-3. Your application should be receiving unencrypted traffic. SSL, if any, should be terminated before it reaches your application server EC2 instance. Usually, SSL termination happens at API Gateway or Load balancer
-4. You should have permissions to add a DaemonSet to your k8s setup
-
-## Configuring Akto traffic processing stack and creating AWS policy
-
-Follow these steps to add DaemonSet config to your Kubernetes setup -
-
-1. Navigate to Quick Start on your Akto dashboard and expand the `Connect traffic data` section.
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832212-603647ca-fceb-46fc-baf7-150c2e6b7ec0.png" alt="Navigate to quick start"><figcaption></figcaption></figure>
-
-2. Scroll down to `Kubernetes Daemonset` section.
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832259-cac91fd0-c6a1-4ab2-ab2b-2b9f3d4244b3.png" alt="Scroll to Kubernetes"><figcaption><p>Kubernetes DaemonSet</p></figcaption></figure>
-
-3. Copy the `policy json` and click on the Akto Dashboard role link.
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832267-1e22802b-caa9-4af6-8cf9-06a8b0cacc5d.png" alt="Copy AWS policy"><figcaption></figcaption></figure>
-
-4. `Click` on the `JSON` tab and `paste the policy`
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832279-70340e39-3ccb-4118-9ee9-039711c7e22d.png" alt="paste policy in AWS"><figcaption><p>Paste policy in AWS</p></figcaption></figure>
-
-5. Click on `Review policy` button.
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832289-afe2931b-c11a-44b8-a946-79cf0e106dfa.png" alt="Click on review policy"><figcaption><p>Click on review policy</p></figcaption></figure>
-
-6. Enter _`AktoDashboardPolicy`_ as the policy name and `click` on `Create Policy` button
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832299-996d635d-5c0d-43d3-8ee3-eb53f7de952d.png" alt="Enter Akto Dashboard policy"><figcaption><p>Enter name of the policy</p></figcaption></figure>
-
-7. Once the policy is created, go back to the `dashboard`.
-8. You should now see a `Setup DaemonSet stack` button. `Click` on this button to setup a traffic processing stack.
-
-{% hint style="info" %}
-This will process your API traffic data and populate APIs on the dashboard. This might take a few minutes to complete.
-{% endhint %}
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832351-220ee84e-5d34-4a82-8819-a11bdeeefb5b.png" alt="Setup akto DaemonSet stack"><figcaption><p>Setup DaemonSet stack</p></figcaption></figure>
-
 ## Setting up Akto Daemonset pod on your K8s cluster
 
-1. Once complete, you should now see a daemonset config. `Copy the config` and paste in a `text editor`.
-
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832394-4a3dabc6-60f2-4112-b1cb-127c4a129c6d.png" alt="Copy the configuration"><figcaption><p>Copy the configuration</p></figcaption></figure>
-
-You can also copy from here -
+1. Setup Akto data processor using the guide [here](../../getting-started/quick-start-with-akto-cloud/hybrid-saas.md)
+2. Apply the Daemonset configuration given below using `kubectl apply -f auto-daemon set-config.yaml -n <NAMESPACE>`. You will find `AKTO_NLB_IP` after setting up Akto data processor, as mentioned above.
 
 ```
 apiVersion: apps/v1
