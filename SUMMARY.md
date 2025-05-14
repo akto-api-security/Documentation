@@ -281,6 +281,10 @@
   * [Google Workspace SSO](account/sso/google-workspace-sso.md)
   * [Add Members From SSO](account/sso/add-members-from-sso.md)
 
+## AGENTIC AI
+
+* [Akto MCP Server](agentic-ai/akto-mcp-server.md)
+
 ## Compliance
 
 * [Concepts](compliance/concepts/README.md)
