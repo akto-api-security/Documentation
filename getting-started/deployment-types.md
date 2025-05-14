@@ -8,7 +8,7 @@ The fastest and easiest way to get started with Akto. Ideal for organizations lo
 
 Steps:
 
-1. [Set up Traffic Processor](../traffic-connector/traffic-data-sources.md)
+1. [Set up Traffic Processor](quick-start-with-akto-self-hosted/helm-deploy.md)
 2. [Configure Traffic Connector](broken-reference)
 
 ### 2. Self-Hosted Deployment
@@ -18,8 +18,8 @@ For organizations requiring complete control over their security infrastructure 
 Steps:
 
 1. [Choose Self-Hosted Configuration](quick-start-with-akto-self-hosted/)
-2. [Set up Traffic Processor](https://www.notion.so/Deployment-Types-1089f7c64e4680138566fe758faa759b?pvs=21)
-3. [Configure Traffic Connector](https://www.notion.so/Deployment-Types-1089f7c64e4680138566fe758faa759b?pvs=21)
+2. [Set up Traffic Processor](quick-start-with-akto-self-hosted/helm-deploy.md#install-akto-via-helm)
+3. [Configure Traffic Connector](../traffic-connector/traffic-data-sources.md)
 
 ### 3. Local Deployment
 
