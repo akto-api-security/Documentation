@@ -4,6 +4,10 @@
 * [What is Akto?](README.md)
 * [AktoGPT](aktogpt.md)
 
+## AGENTIC AI
+
+* [Akto MCP Server](agentic-ai/akto-mcp-server.md)
+
 ## Getting Started
 
 * [Deployment Types](getting-started/deployment-types.md)
@@ -280,10 +284,6 @@
   * [Github OIDC](account/sso/github-oidc.md)
   * [Google Workspace SSO](account/sso/google-workspace-sso.md)
   * [Add Members From SSO](account/sso/add-members-from-sso.md)
-
-## AGENTIC AI
-
-* [Akto MCP Server](agentic-ai/akto-mcp-server.md)
 
 ## Compliance
 
