@@ -14,6 +14,37 @@ For a better understanding, here's an architecture diagram of the setup.
 2. Apply the Daemonset configuration given below using `kubectl apply -f auto-daemon set-config.yaml -n <NAMESPACE>`. You will find `AKTO_NLB_IP` after setting up Akto data processor, as mentioned above.
 
 ```yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pod-watcher
+  namespace: {NAMESPACE} 
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pod-watcher-role
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: pod-watcher-role-binding
+subjects:
+- kind: ServiceAccount
+  name: pod-watcher
+  namespace: {NAMESPACE}
+roleRef:
+  kind: ClusterRole
+  name: pod-watcher-role
+  apiGroup: rbac.authorization.k8s.io
+---
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -31,6 +62,7 @@ spec:
         app: akto-collector
     spec:
       hostNetwork: true
+      serviceAccountName: pod-watcher
       dnsPolicy: ClusterFirstWithHostNet
       hostPID: true
       containers:
@@ -50,6 +82,12 @@ spec:
             value: "100"
           - name: AKTO_KAFKA_BROKER_MAL
             value: "<AKTO_NLB_IP>:9092"
+          - name: AKTO_K8_METADATA_CAPTURE
+            value: "true"
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
         securityContext:
           capabilities:
             add:
@@ -118,6 +156,22 @@ spec:
 ```
 
 4. You can check your `API inventory` on Akto dashboard to see endpoints being discovered.
+
+
+### Kubernetes Pod Labels Tagging
+
+Akto traffic collector can be configured to capture Kubernetes Pod labels with each API request. It operates within the Akto eBPF DaemonSet and leverages the [Kubernetes Informer](https://pkg.go.dev/k8s.io/client-go/informers#pkg-overview) to maintain a local in-memory cache of pods running on each node. This cache is used to identify the labels of pod.
+
+#### Env Variables
+```sh
+# This will start capturing the pod labels from all namespaces except
+# kube-system, kube-public and kube-node-lease
+- name: AKTO_K8_METADATA_CAPTURE
+  value: "true"
+# Use this if you want to capture pod labels from a specific namespace only.
+- name: AKTO_K8_METADATA_CAPTURE_NAMESPACE
+  value: {NAMESPACE}
+```
 
 ## Frequently Asked Questions (FAQs)
 

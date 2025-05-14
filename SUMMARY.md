@@ -32,6 +32,7 @@
   * [Connect Akto with eBPF on mTLS](traffic-connector/ebpf/ebpf-mtls.md)
 * [Kubernetes](traffic-connector/kubernetes/README.md)
   * [Connect Akto with Kubernetes in AWS](traffic-connector/kubernetes/kubernetes.md)
+  * [Connect Akto eBPF with Kubernetes](traffic-connector/kubernetes/epbf.md)
 * [API Gateways](traffic-connector/api-gateways/README.md)
   * [Connect Akto with Envoy](traffic-connector/api-gateways/envoy.md)
   * [Connect Akto with NGINX](traffic-connector/api-gateways/nginx.md)
