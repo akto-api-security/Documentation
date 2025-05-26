@@ -160,6 +160,7 @@
 
 * [Overview](api-protection/concepts/overview.md)
 * [Concepts](api-protection/concepts/README.md)
+  * [Threat Actors](api-protection/concepts/threat-actors.md)
   * [Threat Policy](api-protection/concepts/threat-policy.md)
 
 ***
