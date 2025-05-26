@@ -20,7 +20,7 @@ Threat actors are individuals, groups, or entities responsible for carrying out 
 
 By default Akto's Threat Protection module uses the client's IP address to identify a threat actor.   
 
-To configure threat actors, navigate to the Settings -> Threat Threat Policy section under API Protection in left nav bar on your Akto Dashboard.
+To configure threat actors, navigate to the Settings -> Threat Configuration section in left nav bar.
 
 ##### Example Configuration
 - **Type**: `hostname`
