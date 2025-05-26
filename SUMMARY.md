@@ -161,6 +161,7 @@
 ## API Protection
 
 * [Overview](api-protection/concepts/overview.md)
+* [External API Runtime Threat Notifications](api-protection/external-api-runtime-threat-notifications.md)
 * [Concepts](api-protection/concepts/README.md)
   * [Threat Actors](api-protection/concepts/threat-actors.md)
   * [Threat Policy](api-protection/concepts/threat-policy.md)

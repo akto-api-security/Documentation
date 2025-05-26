@@ -1,0 +1,74 @@
+# External API Runtime Threat Notifications
+
+To notify external systems (e.g., SIEM tools, alerting systems, incident management platforms) about **API runtime threats** detected by Akto, including high-frequency 4XX errors, SSRF, broken auth logic, and more.
+
+### Setup in Akto
+
+When setting up your webhook in Akto:
+
+1. Go to **Settings → Integrations → Webhooks → Create Custom Webhook**
+2. Fill in:
+   * **Name**: e.g., `External Threat Monitor`
+   * **URL**: Your receiving API endpoint
+   * **Headers**: `{ "content-type": "application/json" }`
+3. Select **Traffic option** → `New API runtime threats`
+4.  Configure:
+
+    * **Run every**: 15 min / 1 hour (as per need)
+    * **Batch size**: e.g., `20 payloads`
+    * **Alert frequency**: `Periodic` or `Instant`
+
+    <figure><img src="../.gitbook/assets/image (110).png" alt=""><figcaption></figcaption></figure>
+5. Click **Save**
+
+### 📤 Webhook Payload Format (JSON)
+
+````json
+
+{
+  "maliciousEvents": [
+      {
+          "actor": "14.143.179.162",
+          "apiCollectionId": 0,
+          "country": "IN",
+          "eventType": "AGGREGATED",
+          "filterId": "4XX_FILTER",
+          "id": "fc493d8a-3c0a-454a-a4ab-d616b3559481",
+          "ip": "14.143.179.162",
+          "method": "POST",
+          "refId": "3fe86f71-5e90-4464-872a-99c26bddf67f",
+          "subCategory": "API_LEVEL_RATE_LIMITING",
+          "timestamp": 1747162308,
+          "type": "Rule-Based",
+          "url": "v1\/api\/test\/orders",
+          "maliciousPayloadsResponses": [
+            {
+                "orig": "{}",
+                "ts": 1747161046
+            }
+        ]
+      }
+  ],
+  "overview": {
+    "description": "The High4XXAlertFilter vulnerability in API threat protection at runtime occurs when security systems generate excessive alerts for 4XX response codes, potentially leading to alert fatigue and missed critical threats. Attackers can exploit this by flooding APIs with benign 4XX errors, masking real attacks in the noise. Proper rate limiting, anomaly detection, and intelligent alert filtering can help mitigate this risk.",
+    "details": "The High4XXAlertFilter vulnerability affects API threat protection by overwhelming monitoring systems with excessive 4XX errors, making it harder to detect real threats. Attackers can abuse this by triggering numerous client-side errors (e.g., 401, 403, 404) to drown out malicious activity. Effective mitigation involves adaptive alerting, contextual analysis, and filtering noise from genuine security incidents.",
+    "impact": "The High4XXAlertFilter vulnerability can lead to alert fatigue, causing security teams to overlook real threats hidden within a flood of 4XX errors. This increases the risk of undetected attacks, such as credential stuffing, API enumeration, or token abuse. It can also degrade API performance and overwhelm logging systems, impacting overall security visibility."
+  },
+  "remediation": {
+    "title": "# Remediation for 2FA_BROKEN_LOGIC_AUTH_TOKEN_TEST",
+    "steps": [
+      {
+        "title": "Validate Auth token API",
+        "text": "Ensure that your API thoroughly validates the auth token before deciding whether a request is authenticated or not. A proper validation should include checking for the matching user id and validity of the auth token. Here is an example in Python
+          ```python
+          def validate_auth_token(user_id, auth_token):
+              user = User.query.filter_by(id=user_id).first()
+              if user is None or not user.check_auth_token(auth_token):
+                  return False
+              return True
+          ```"
+      }
+    ]
+  }
+}
+````
