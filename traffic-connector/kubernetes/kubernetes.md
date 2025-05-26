@@ -6,7 +6,7 @@ description: Learn how to send API traffic data from your Kubernetes cluster to 
 
 ## Introduction
 
-[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](broken-reference). One such source is your Kubernetes cluster.
+[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](../traffic-data-sources.md). One such source is your Kubernetes cluster.
 
 `Kubernetes` is an open-source container orchestration system for automating software deployment, scaling, and management.
 
