@@ -1,10 +1,8 @@
 # API Call Stats
 
-The **API Call Stats** tab provides detailed insights into the usage patterns of a specific API endpoint, allowing you to monitor traffic volume and detect anomalies effectively.
+The **API Call Stats** tab provides a detailed view of how an API endpoint is being used over time. It helps identify traffic patterns, detect anomalies, and understand user behavior.
 
 <figure><img src="../../.gitbook/assets/image (109).png" alt=""><figcaption></figcaption></figure>
-
-The **API Call Stats** tab provides a detailed view of how an API endpoint is being used over time. It helps identify traffic patterns, detect anomalies, and understand user behavior.
 
 ### **How to Access:**
 
