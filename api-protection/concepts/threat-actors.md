@@ -1,5 +1,4 @@
-
-#### Understanding Threat Actors 
+# Understanding Threat Actors 
 
 Threat actors are individuals, groups, or entities responsible for carrying out malicious activities that can harm systems, networks, or data. They are often motivated by financial gain, espionage, ideology, or disruption. Threat actors can range from lone hackers to organized crime groups, nation-states, or insider threats.
 
