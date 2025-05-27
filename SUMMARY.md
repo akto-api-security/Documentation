@@ -131,7 +131,7 @@
   * [Collection-Based RBAC](api-inventory/how-to/collection-based-rbac.md)
   * [Descriptions for API Collections & Endpoints](api-inventory/how-to/descriptions-for-api-collections-and-endpoints.md)
   * [Remove API(s) from API group](api-inventory-1/how-to/remove-api-s-from-api-group.md)
-  * [Deactivate an API Collection](api-inventory-1/how-to/deactivate-an-api-collection.md)
+  * [Deactivating and Reactivating API Collections in Akto](api-inventory-1/how-to/deactivate-an-api-collection.md)
   * [Add collection using Explore Mode](api-inventory-1/how-to/add-collection-using-explore-mode.md)
   * [De-merge API](api-inventory/how-to/de-merge-api.md)
   * [Create Swagger File Using Akto](api-inventory-1/how-to/create-swagger-file-using-akto.md)

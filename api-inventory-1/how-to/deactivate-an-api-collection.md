@@ -1,11 +1,33 @@
-# Deactivate an API Collection
+# Deactivating and Reactivating API Collections in Akto
 
-This feature allows users to manage their API inventory effectively by temporarily or permanently disabling monitoring for certain API groups.
+Managing your API collections effectively helps ensure optimal performance and control within Akto. Below is a step-by-step guide on how to deactivate and reactivate collections.
 
-{% @arcade/embed flowId="wQoNNZcO4TQjBc2kYtm8" url="https://app.arcade.software/share/wQoNNZcO4TQjBc2kYtm8" %}
+### 🔻 Deactivating an API Collection
 
-* Go to API Collections page
-* Select the target collection
-* Click "Deactivate collection"
-* Confirm in the dialog
-* Verify collection moves to "Deactivated" tab
+Deactivating a collection halts data ingestion and testing for that specific collection.
+
+#### Steps:
+
+1. Navigate to **API Collections** in the sidebar under **API Discovery**.
+2. Select the checkbox next to the collection you wish to deactivate.
+3. Click on **Deactivate collection** at the bottom panel.
+4. Confirm the action in the pop-up dialog.
+
+{% hint style="info" %}
+Once a collection is deactivated, **all associated APIs will be removed after 1 hour**.
+{% endhint %}
+
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+### 🔁 Reactivating an API Collection
+
+To resume ingestion and testing, you can reactivate a previously deactivated collection.
+
+#### Steps:
+
+1. Go to the **Deactivated** tab in the **API Collections** view.
+2. Select the collection(s) you want to reactivate.
+3. Click **Reactivate collection** from the bottom panel.
+4. Confirm the action in the pop-up dialog.
+
+<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>

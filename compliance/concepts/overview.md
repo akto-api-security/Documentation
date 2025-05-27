@@ -11,7 +11,7 @@ This dashboard offers actionable insights, visual summaries, and exportable repo
 3. Use the dropdown at the top to select a compliance standard (e.g., SOC 2, HIPAA).
 4. View mapped issues, visual summaries, and export reports as needed.
 
-<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ***
 
