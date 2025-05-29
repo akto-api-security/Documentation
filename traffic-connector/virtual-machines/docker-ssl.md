@@ -1,14 +1,35 @@
 # Connect Akto on TLS service
 
-You can connect your services, even if they're on TLS using akto-traffic-collector service. Your APIs from this traffic will show up in Akto dashboard.
+Akto can automatically detect and analyze your API traffic—even if it's encrypted using TLS. This is achieved using **Akto Traffic Collector**, which leverages **eBPF** to passively observe kernel-level network activity.
 
-To connect follow the following steps: 
+You can deploy this collector on **any Linux-based system** (VM, bare metal, or cloud instance) to forward traffic insights to Akto. Here's how:
 
-1. Set up and configure Akto Traffic Processor and save the mini-runtime service URL. The steps are mentioned [here](https://docs.akto.io/getting-started/traffic-processor/hybrid-saas). Alternatively, if you're on on-premise deployment, save the runtime service URL.
-2. Run the following docker command to create a container which will collect your traffic.
-    1. The kafka_ip here is the mini-runtime/runtime service URL we saved in the previous step.
-    2. Ensure that the VM has `linux kernel headers` installed. They are needed for the eBPF docker container.
-    3. Ensure that the docker container can connect to the mini-runtime/runtime service.
+#### Step 1: Set Up Akto Traffic Processor (Mini-Runtime)
+
+First, set up and configure the **Akto Traffic Processor (Mini-Runtime)**.
+
+* You’ll get a **runtime service URL** or **Kafka IP** once setup is complete.
+* If you're using **on-prem Akto**, this will be your internal runtime URL.
+
+📘 [Follow this setup guide](https://docs.akto.io/getting-started/traffic-processor/hybrid-saas) for instructions.
+
+
+
+#### Step 2: Deploy Traffic Collector (Supports TLS via eBPF)
+
+This Docker container uses **eBPF** to mirror all API traffic at the kernel level—including **TLS-encrypted** traffic—without needing to decrypt it manually or modify applications.
+
+**⚠ Prerequisites:**
+
+* **Linux VM** or system with **kernel headers installed** (required for eBPF)
+* Docker daemon installed and running
+* Access to your Akto runtime (Kafka IP)
+
+
+
+#### Run the Traffic Collector
+
+The kafka\_ip here is the mini-runtime/runtime service URL we saved in the previous step.
 
 ```bash
 docker run -d \
@@ -28,10 +49,17 @@ docker run -d \
   aktosecurity/mirror-api-logging:k8s_ebpf
 ```
 
-In case you face an issue with the spaces in the command...
+In case you face an issue with the spaces in the command above
+
 ```bash
 docker run -d --name akto-api-security-traffic-collector --restart always --network host --privileged --cap-add SYS_PTRACE --cap-add SYS_ADMIN -v /lib/modules:/lib/modules -v /sys/kernel:/sys/kernel -v /usr/src:/usr/src -v /:/host -e AKTO_TRAFFIC_BATCH_TIME_SECS=10 -e AKTO_TRAFFIC_BATCH_SIZE=100 -e AKTO_KAFKA_BROKER_MAL="<kafka_ip>" aktosecurity/mirror-api-logging:k8s_ebpf
 ```
+
+#### What’s Happening Behind the Scenes?
+
+* **eBPF hooks into your Linux kernel** to capture real-time traffic—even if it’s encrypted (TLS).
+* No code changes, no traffic proxying, no SSL termination.
+* The collector forwards API traces to Akto for real-time inventory and security analysis.
 
 ## Get Support for your Akto setup
 
