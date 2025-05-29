@@ -171,6 +171,7 @@
 * [WAF](waf/README.md)
   * [AWS WAF](waf/aws-waf.md)
   * [Cloudflare WAF](waf/cloudflare-waf.md)
+* [Bot Policy](bot-policy.md)
 
 ## Test Editor
 
