@@ -69,7 +69,7 @@ When the ECS cluster is a EC2 instances cluster, we will create a task definitio
 
 <figure><img src="../../.gitbook/assets/ecs-ec2-1.png" alt="Cluster configuration"><figcaption><p>Cluster configuration</p></figcaption></figure>
 
-1. Setup Akto data processor using the guide [here](broken-reference/). Keep the value `AKTO_NLB_IP` handy, as we will need them later.
+1. Setup Akto data processor using the guide [here](../../getting-started/quick-start-with-akto-self-hosted/helm-deploy.md). Keep the value `AKTO_NLB_IP` handy, as we will need them later.
 2.  We will create a new task definition with launch type as EC2 instances, network mode host and the container details as follows. You can directly create a new task definition using the JSON given below. You can also refer the screenshots attached. Please replace the `AKTO_NLB_IP` variable, as obtained from [step 1](aws-ecs.md#adding-akto-traffic-collector-to-ecs-ec2-instances-cluster).
 
     ```bash
