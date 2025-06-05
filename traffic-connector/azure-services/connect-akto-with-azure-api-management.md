@@ -151,7 +151,7 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
                     return false;
                 }
             }">
-                <set-variable name="respStatus" value="@(context.Response.StatusCode)" />
+                <set-variable name="respStatus" value="@((context.Response.StatusCode).ToString())" />
                 <set-variable name="respHeaders" value="@{
                     try {
                         return Newtonsoft.Json.JsonConvert.SerializeObject(
@@ -199,6 +199,28 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
                         return "Unknown Status";
                     }
                 }" />
+                <set-variable name="missingKeys" value="@{
+                    var missing = new List<string>();
+                    var keys = new[] {
+                        "reqUrl", "reqHeaders", "respHeaders", "reqMethod", "reqBody",
+                        "respBody", "clientIp", "unixTimestamp", "respStatus", "statusMessage"
+                    };
+                    foreach (var key in keys)
+                    {
+                        if (!context.Variables.ContainsKey(key))
+                        {
+                            missing.Add(key);
+                        }
+                    }
+                    return string.Join(",", missing);
+                }" />
+                <choose>
+                    <when condition="@(!string.IsNullOrEmpty(context.Variables.GetValueOrDefault<string>("missingKeys", "")))">
+                        <trace source="akto-apim-debug" severity="verbose">
+                            <message>@((string)context.Variables["missingKeys"])</message>
+                        </trace>
+                    </when>
+                </choose>
                 <send-one-way-request>
                     <set-url>https://<YOUR_AKTO_INGESTION_SERVICE_URL>/api/ingestData</set-url>
                     <set-method>POST</set-method>
@@ -208,17 +230,17 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
                     <set-body>@{
                         try {
                             return "{ \"batchData\": [" +
-                                "{ \"path\": \"" + context.Variables["reqUrl"] + "\", " +
-                                "\"requestHeaders\": " + context.Variables["reqHeaders"] + ", " +
-                                "\"responseHeaders\": " + context.Variables["respHeaders"] + ", " +
-                                "\"method\": \"" + context.Variables["reqMethod"] + "\", " +
-                                "\"requestPayload\": " + context.Variables["reqBody"] + ", " +
-                                "\"responsePayload\": " + context.Variables["respBody"] + ", " +
-                                "\"ip\": \"" + context.Variables["clientIp"] + "\", " +
-                                "\"time\": \"" + context.Variables["unixTimestamp"] + "\", " +
-                                "\"statusCode\": \"" + context.Variables["respStatus"] + "\", " +
+                                "{ \"path\": \"" + context.Variables.GetValueOrDefault<string>("reqUrl", "") + "\", " +
+                                "\"requestHeaders\": " + context.Variables.GetValueOrDefault<string>("reqHeaders", "\"\"") + ", " +
+                                "\"responseHeaders\": " + context.Variables.GetValueOrDefault<string>("respHeaders", "\"\"") + ", " +
+                                "\"method\": \"" + context.Variables.GetValueOrDefault<string>("reqMethod", "") + "\", " +
+                                "\"requestPayload\": " + context.Variables.GetValueOrDefault<string>("reqBody", "\"\"") + ", " +
+                                "\"responsePayload\": " + context.Variables.GetValueOrDefault<string>("respBody", "\"\"") + ", " +
+                                "\"ip\": \"" + context.Variables.GetValueOrDefault<string>("clientIp", "") + "\", " +
+                                "\"time\": \"" + context.Variables.GetValueOrDefault<string>("unixTimestamp", "") + "\", " +
+                                "\"statusCode\": \"" + context.Variables.GetValueOrDefault<string>("respStatus", "") + "\", " +
                                 "\"type\": \"HTTP/1.1\", " +
-                                "\"status\": \"" + context.Variables["statusMessage"] + "\", " +
+                                "\"status\": \"" + context.Variables.GetValueOrDefault<string>("statusMessage", "") + "\", " +
                                 "\"akto_account_id\": \"1000000\", " +
                                 "\"akto_vxlan_id\": \"0\", " +
                                 "\"is_pending\": \"false\", " +
