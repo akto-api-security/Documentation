@@ -1,6 +1,6 @@
 # Run Test
 
-Running security tests in Akto involves assessing specific parts of your API endpoints to assess their security posture. With Akto, you have the flexibility to run the tests instantly or schedule a single test run for a later time. This feature is particularly useful for planning future testing sessions or implementing regular tests. The Akto testing module contains 200+ templates that you can use just out of the box.
+Running security tests in Akto involves assessing specific parts of your API endpoints to assess their security posture. With Akto, you have the flexibility to run the tests instantly or schedule a single test run for a later time. This feature is particularly useful for planning future testing sessions or implementing regular tests. The Akto testing module contains 1000+ templates that you can use just out of the box.
 
 In the demonstration below, let's run tests on <mark style="color:red;">`/rest/product/search`</mark> endpoint within **demo\_collection**.
 
