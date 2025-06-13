@@ -119,7 +119,7 @@ For `AKTO_NLB_IP` , Use the service IP or load balancer name of Traffic Processo
   value: '[{"key":{"eq":"x-forwarded-client-cert","ifAbsent":"reject"},"value":{"regex":".*bookinfo.*"}}]'
 # Time limit ( in seconds ) after which, a traffic stream is processed and marked inactive. The same stream, is not processed again.
 - name: TRAFFIC_INACTIVITY_THRESHOLD
-  value: "30"
+  value: "3"
 # Max traffic connections kept in memory 
 - name: TRAFFIC_MAX_ACTIVE_CONN
   value: "4096"
@@ -128,25 +128,22 @@ For `AKTO_NLB_IP` , Use the service IP or load balancer name of Traffic Processo
   value: "false"
 # Max mem usage after which the pod restarts ( in MB )
 - name: AKTO_MEM_THRESH_RESTART
-  value: "800"
+  value: "500"
 # Max limit of traffic buffer kept in memory ( in MB )
 - name: TRAFFIC_BUFFER_THRESHOLD
-  value: "600"
+  value: "400"
 # Ignore traffic coming from unresolved IPs, i.e. requests with host header of the format <a.b.c.d>
 - name: AKTO_IGNORE_IP_TRAFFIC
   value: "false"
 # Ignore traffic coming from AWS cloud metadata IP
 - name: AKTO_IGNORE_CLOUD_METADATA_CALLS
   value: "false"
-# The interval poll ( in seconds ) in which data is sent to Akto data processor.
-- name: KAFKA_POLL_INTERVAL
-  value: "0.5"
 # The interval poll ( in minutes ) in which the akto module scans the current running processes, to check for new SSL related processes to probe.
 - name: UPROBE_POLL_INTERVAL
-  value: 5
+  value: 20
 # If you only want to trace traffic for which SSL termination happens at proxy/service.
 - name: CAPTURE_ALL
-  value: "false"
+  value: "true"
 # If you only want to trace traffic for which SSL termination happens at application. 
 # Note: when CAPTURE_ALL is false and CAPTURE_SSL is true, only application traffic is captured.
 - name: CAPTURE_SSL
