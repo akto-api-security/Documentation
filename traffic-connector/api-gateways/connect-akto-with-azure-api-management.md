@@ -97,26 +97,13 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
                         .Where(r => !string.IsNullOrWhiteSpace(r))
                         .ToArray();
                     return regexList.Length == 0 || regexList.Any(r =>
-                        System.Text.RegularExpressions.Regex.IsMatch(context.Request.Url.Path, r.Trim()));
+                        System.Text.RegularExpressions.Regex.IsMatch(context.Request.OriginalUrl.Path, r.Trim()));
                 }
                 catch
                 {
                     return false;
                 }
             }">
-                <set-variable name="reqMethod" value="@(context.Request.Method)" />
-                <set-variable name="reqUrl" value="@(context.Request.Url.ToString())" />
-                <set-variable name="reqHeaders" value="@{
-                    try {
-                        return Newtonsoft.Json.JsonConvert.SerializeObject(
-                            Newtonsoft.Json.JsonConvert.SerializeObject(
-                                context.Request.Headers.ToDictionary(k => k.Key, v => string.Join(", ", v.Value))
-                            )
-                        );
-                    } catch {
-                        return "\"\"";
-                    }
-                }" />
                 <set-variable name="reqBody" value="@{
                     try {
                         var body = context.Request.Body?.As<string>(preserveContent: true);
@@ -126,7 +113,6 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
                     }
                 }" />
                 <set-variable name="requestTime" value="@(DateTime.UtcNow.ToString("o"))" />
-                <set-variable name="clientIp" value="@(context.Request.IpAddress)" />
             </when>
         </choose>
     </inbound>
@@ -144,13 +130,28 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
                         .Where(r => !string.IsNullOrWhiteSpace(r))
                         .ToArray();
                     return regexList.Length == 0 || regexList.Any(r =>
-                        System.Text.RegularExpressions.Regex.IsMatch(context.Request.Url.Path, r.Trim()));
+                        System.Text.RegularExpressions.Regex.IsMatch(context.Request.OriginalUrl.Path, r.Trim()));
                 }
                 catch
                 {
                     return false;
                 }
             }">
+                <set-variable name="reqMethod" value="@(context.Request.Method)" />
+                <set-variable name="reqUrl" value="@(context.Request.OriginalUrl.Path)" />
+                <set-variable name="reqHeaders" value="@{
+                    try {
+                        return Newtonsoft.Json.JsonConvert.SerializeObject(
+                            Newtonsoft.Json.JsonConvert.SerializeObject(
+                                context.Request.Headers.ToDictionary(k => k.Key, v => string.Join(", ", v.Value))
+                            )
+                        );
+                    } catch {
+                        return "\"\"";
+                    }
+                }" />
+                <set-variable name="requestTime" value="@(DateTime.UtcNow.ToString("o"))" />
+                <set-variable name="clientIp" value="@(context.Request.IpAddress)" />
                 <set-variable name="respStatus" value="@((context.Response.StatusCode).ToString())" />
                 <set-variable name="respHeaders" value="@{
                     try {
