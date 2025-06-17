@@ -214,8 +214,7 @@ export function request(ctx) {
 
 ```
 
-> 📝 **Note:** Ensure `akto_data` includes the necessary context Akto requires.  
-> _(This section will be filled manually)_
+> 📝 **Note:** Ensure `akto_data` includes the necessary context Akto requires.
 
 ----------
 
