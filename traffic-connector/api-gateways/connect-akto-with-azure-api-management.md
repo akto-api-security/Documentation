@@ -260,10 +260,12 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
 </policies>
 ```
 
-4. Add the regex patterns for the paths you want to **include** in the `regexList` variable value in the inbound policy, ensuring that the **entire regex is properly escaped**. Separate multiple patterns using `;` (e.g., `"api\/v1\/.*;\/api\/getUsers.*"`).
+4. **Important Note**:
+   If you remove the `<base />` element from the policy configuration at the API scope, **only** the policies defined at the API scope will be applied. Policies configured at **product**, **global**, or other broader scopes will **not** be inherited or executed. Always include `<base />` in the appropriate sections (`<inbound>`, `<backend>`, `<outbound>`, and `<on-error>`) unless you explicitly intend to override all inherited behavior. (For more info [click here](https://learn.microsoft.com/en-us/azure/api-management/api-management-howto-policies).)
+5. Add the regex patterns for the paths you want to **include** in the `regexList` variable value in the inbound policy, ensuring that the **entire regex is properly escaped**. Separate multiple patterns using `;` (e.g., `"api\/v1\/.*;\/api\/getUsers.*"`).
     - If you leave the `regexList` variable value empty, all APIs will be processed.
-5. Replace `YOUR_AKTO_INGESTION_SERVICE_URL` with the URL of your Akto Data-Ingestion Service (Step 1.5).
-6. Click **Save** to apply the policy.
+6. Replace `YOUR_AKTO_INGESTION_SERVICE_URL` with the URL of your Akto Data-Ingestion Service (Step 1.5).
+7. Click **Save** to apply the policy.
 
 ## Step 5: Verify the Integration
 1. Send test requests to the configured API endpoint.
