@@ -2,7 +2,7 @@
 
 The AWS WAF (Web Application Firewall) integration with Akto enables you to bolster your web application security effortlessly. This integration allows you to detect vulnerabilities, monitor web traffic, and implement protection rules to safeguard your digital assets.
 
-<figure><img src="../.gitbook/assets/image (100).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (111).png" alt=""><figcaption></figcaption></figure>
 
 ### Prerequisites
 
@@ -27,7 +27,10 @@ The AWS WAF (Web Application Firewall) integration with Akto enables you to bols
 5. **Add WAF Rule Set Info**
    * **WAF Rule Set ID:** Provide the Rule Set ID.
    * **WAF Rule Set Name:** Input the name of the Rule Set as per your AWS WAF configuration.
-6. **Save the Configuration**
+6. **Select Severity Levels to Block**
+   * Choose which levels of issues (Critical, High, Medium, Low) you want to **automatically block using your WAF**.
+   * This helps prioritize response and mitigation based on issue severity.
+7. **Save the Configuration**
    * After completing all fields, click `Save` to establish the integration.
 
 ### Validation
@@ -36,6 +39,7 @@ Once you save, Akto will attempt to connect to AWS and validate the credentials 
 
 * IAM permissions for your Access Key.
 * Correctness of Region, Rule Set ID, and Rule Set Name.
+* Ensure at least one severity level is selected, if you intend to block threats using AWS WAF rules.
 
 ## Get Support for your Akto setup
 
