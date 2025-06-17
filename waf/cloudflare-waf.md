@@ -25,7 +25,10 @@ The Cloudflare WAF (Web Application Firewall) integration with Akto allows you t
    * Use the dropdown to choose your integration type. The available option is `accounts`.
 5. **Enter Account ID**
    * Input your Cloudflare Account ID. You can find this in your Cloudflare dashboard under the account settings.
-6. **Save the Configuration**
+6. **Select Severity Levels to Block**
+   * Choose which levels of issues (**Critical**, **High**, **Medium**, **Low**) you want to automatically block using your Cloudflare WAF.
+   * This helps prioritize response and mitigation based on issue severity.
+7. **Save the Configuration**
    * Once all fields are filled, click the `Save` button to complete the integration.
 
 ### Validation
@@ -34,6 +37,7 @@ After saving, Akto will validate the provided credentials and establish the inte
 
 * The correctness of your API key and email.
 * That your API key has the necessary permissions.
+* Ensure at least one severity level is selected, if you intend to block threats using Cloudflare WAF rules.
 
 ## Get Support for your Akto setup
 
