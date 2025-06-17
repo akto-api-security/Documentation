@@ -60,7 +60,7 @@
   * [Connect Akto with AWS Beanstalk](traffic-connector/aws-services/aws-beanstalk.md)
   * [Connect Akto with AWS API Gateway](traffic-connector/aws-services/aws-api-gateway.md)
   * [Connect Akto with AWS Lambda](traffic-connector/aws-services/connect-akto-with-aws-lambda.md)
-  * [Connect Akto with AWS Lambda](traffic-connector/aws-services/aws-appsync-graphql-with-lamda.md)
+  * [Connect Akto with AWS AppSync using Lambda Data Source](traffic-connector/aws-services/aws-appsync-graphql-with-lamda.md)
   * [Connect Akto with AWS API Gateway with CloudWatch OAM](traffic-connector/aws-services/aws-api-gateway-with-cloudwatch-oam.md)
   * [Connect Akto with AWS API Gateway with service account (Temporary Credentials)](traffic-connector/aws-services/aws-api-gateway-with-temp-creds.md)
   * [Connect Akto with AWS Fargate](traffic-connector/aws-services/aws-fargate.md)
