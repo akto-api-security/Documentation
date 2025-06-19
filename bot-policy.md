@@ -1,7 +1,3 @@
----
-hidden: true
----
-
 # Bot Policy
 
 Bot detection happens using a combination of abnormal request patterns. You can write your own patterns - including rate limiting, the sequence of APIs and schema conformance.
