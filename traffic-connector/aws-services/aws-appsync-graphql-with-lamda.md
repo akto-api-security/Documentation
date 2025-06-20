@@ -1,10 +1,10 @@
-# Connect Akto with AWS AppSync using Lambda Data Source and Runtime API Proxy Extension
+# Connect Akto with AWS AppSync using Lambda Data Source
 
 AWS AppSync is a fully managed GraphQL service from AWS. It allows you to build scalable applications by connecting to data sources like Lambda functions. By integrating AppSync with Akto using the Golang Runtime API Proxy Extension on AWS Lambda, you can automatically capture and monitor API traffic flowing through your GraphQL operations.
 
 To connect Akto with AWS AppSync through Lambda functions, follow the steps below:
 
-----------
+***
 
 ## Step 1: Deploy the Akto Data-Ingestion Service
 
@@ -24,16 +24,13 @@ wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/featur
 
 ### 1.2 Retrieve the `DATABASE_ABSTRACTOR_SERVICE_TOKEN`
 
--   Log in to the [Akto Dashboard](https://app.akto.io/).
-    
--   Navigate to the **Quick Start** tab from the left panel.
-    
-    <figure><img src="../../.gitbook/assets/Quick-Start.png" alt=""><figcaption></figcaption></figure>
+* Log in to the [Akto Dashboard](https://app.akto.io/).
+*   Navigate to the **Quick Start** tab from the left panel.
 
--   Select **Hybrid SaaS Connector** and copy the token from the **Runtime Service Command** section.
+    <figure><img src="../../.gitbook/assets/Quick-Start.png" alt=""><figcaption></figcaption></figure>
+*   Select **Hybrid SaaS Connector** and copy the token from the **Runtime Service Command** section.
 
     <figure><img src="../../.gitbook/assets/HybridSaaSConnector.png" alt=""><figcaption></figcaption></figure>
-    
 
 ### 1.3 Update the `docker-mini-runtime.env` File
 
@@ -57,7 +54,7 @@ docker-compose -f docker-compose-data-ingestion-runtime.yml up -d
 
 Ensure this instance is reachable from your Lambda environment. Note its public IP address or DNS name.
 
-----------
+***
 
 ## Step 2: Setup Lambda Extension for AppSync Resolver Integration
 
@@ -71,13 +68,13 @@ cd golang-lambda-runtime-api-proxy-extension
 
 ```
 
-----------
+***
 
 ### 2.2 Modify the `Makefile`
 
 Update these values in the `Makefile`:
 
-```Makefile
+```makefile
 BASENAME := $(shell basename $(CURDIR))
 ARTIFACTS_DIR ?= out
 targetArch := amd64
@@ -87,12 +84,10 @@ LAYER_NAME := $(extensionName)-layer
 
 ```
 
--   Replace `<your-lambda-function-name>` with your actual Lambda name.
-    
--   You'll update the ingestion URL during function configuration.
-    
+* Replace `<your-lambda-function-name>` with your actual Lambda name.
+* You'll update the ingestion URL during function configuration.
 
-----------
+***
 
 ### 2.3 Build the Extension
 
@@ -103,7 +98,7 @@ make all
 
 This packages the Lambda Runtime API Proxy Extension for deployment.
 
-----------
+***
 
 ### 2.4 Publish as a Lambda Layer
 
@@ -114,7 +109,7 @@ make publishLayerVersion
 
 Copy the output **Layer ARN**.
 
-----------
+***
 
 ### 2.5 Attach Extension Layer and Configure the Lambda Function
 
@@ -127,33 +122,30 @@ make updateFunctionConfiguration FUNCTION_NAME=<your-lambda-name> AKTO_MIRRORING
 
 This will:
 
--   Attach the layer
-    
--   Set required environment variables:
-    
-    -   `AWS_LAMBDA_EXEC_WRAPPER=/opt/wrapper-script.sh`
-        
-    -   `AKTO_MIRRORING_URL=https://<your-ingestion-service-address>/api/ingestData`
-        
+* Attach the layer
+* Set required environment variables:
+  * `AWS_LAMBDA_EXEC_WRAPPER=/opt/wrapper-script.sh`
+  * `AKTO_MIRRORING_URL=https://<your-ingestion-service-address>/api/ingestData`
 
-----------
+### 2.6 API Inventory with Source Location
+
+Once your Lambda traffic is connected, Akto automatically tags API Collection with the source, like `service=lambda`. This helps you easily track and filter API Collection based on their origin. You can view this under **API Discovery > API Collections**.
+
+<figure><img src="../../.gitbook/assets/image (115).png" alt=""><figcaption></figcaption></figure>
+
+***
 
 ## Step 3: Add Lambda as a Data Source in AppSync
 
 Now that your Lambda function is ready:
 
-1.  Go to the [AWS AppSync console](https://console.aws.amazon.com/appsync/).
-    
-2.  Open your GraphQL API.
-    
-3.  Navigate to **Data Sources**.
-    
-4.  Choose **New** and add your Lambda function as a data source.
-    
-5.  Name it appropriately and attach the IAM role if required.
-    
+1. Go to the [AWS AppSync console](https://console.aws.amazon.com/appsync/).
+2. Open your GraphQL API.
+3. Navigate to **Data Sources**.
+4. Choose **New** and add your Lambda function as a data source.
+5. Name it appropriately and attach the IAM role if required.
 
-----------
+***
 
 ## Step 4: Modify Your Resolver to Include Akto Payload
 
@@ -216,27 +208,21 @@ export function request(ctx) {
 
 > 📝 **Note:** Ensure `akto_data` includes the necessary context Akto requires.
 
-----------
+***
 
 ## Step 5: Verify the Setup
 
-1.  Trigger a GraphQL query or mutation in your AppSync API.
-    
-2.  Observe your Lambda logs to ensure Akto extension starts correctly.
-    
-3.  Log in to [Akto Dashboard](https://app.akto.io/) and check if API traffic is captured under the associated collection.
-    
+1. Trigger a GraphQL query or mutation in your AppSync API.
+2. Observe your Lambda logs to ensure Akto extension starts correctly.
+3. Log in to [Akto Dashboard](https://app.akto.io/) and check if API traffic is captured under the associated collection.
 
-----------
+***
 
 ### Need Help?
 
 If you run into any issues or want help with customizing your integration:
 
-1.  Reach out via in-app `intercom` on the Akto Dashboard.
-    
-2.  Join our [Discord community](https://www.akto.io/community).
-    
-3.  Email us at [help@akto.io](mailto:help@akto.io).
-    
-4.  Visit [akto.io/contact-us](https://www.akto.io/contact-us) for further assistance.
+1. Reach out via in-app `intercom` on the Akto Dashboard.
+2. Join our [Discord community](https://www.akto.io/community).
+3. Email us at [help@akto.io](mailto:help@akto.io).
+4. Visit [akto.io/contact-us](https://www.akto.io/contact-us) for further assistance.
