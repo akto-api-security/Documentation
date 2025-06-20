@@ -140,7 +140,7 @@ make updateFunctionConfiguration FUNCTION_NAME=my-production-lambda AKTO_MIRRORI
 
 ### 2.6 API Inventory with Source Location
 
-Once your Lambda traffic is connected, Akto automatically tags API Collection with the source, like `service=lambda`. This helps you easily track and filter API Collection based on their origin. You can view this under **API Discovery > API Collections**.
+Once your Lambda extension is connected, Akto automatically tags API Collection with the source, like `service=lambda`. This helps you easily track and filter API Collection based on their origin. You can view this under **API Discovery > API Collections**.
 
 <figure><img src="../../.gitbook/assets/image (116).png" alt=""><figcaption></figcaption></figure>
 
