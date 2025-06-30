@@ -7,6 +7,6 @@ Akto provides comprehensive support for modern API architectures, ensuring you c
 * **SOAP/XML**: Support for traditional SOAP web services
 * **gRPC**: Testing for high-performance RPC frameworks
 
-<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Whether you're working with modern microservices or maintaining legacy systems, Akto ensures comprehensive security coverage across all your API communications.

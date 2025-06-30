@@ -14,7 +14,7 @@ gRPC APIs typically use `POST` requests and are structured as `/ServiceName/Meth
 
 Here’s an example request captured by Akto:
 
-<figure><img src="../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Despite being transmitted over HTTP/2 and often encrypted, Akto decodes the full gRPC request, including method names, headers, and payloads, to support deep inspection and automated testing.
 

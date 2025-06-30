@@ -14,4 +14,4 @@ In the demonstration above, we performed tests on the <mark style="color:red;">`
 
 Easily add, modify, or remove headers like “x-forwarded-for” or “x-no-alarm” directly from the test configuration, without editing YAML files.
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
