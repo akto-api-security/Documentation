@@ -310,6 +310,7 @@
 
 ## Alerts
 
+* [Gmail Webhook](alerts/gmail-webhook.md)
 * [Slack Webhook](alerts/slack-webhook.md)
 * [Microsoft Teams Webhook](alerts/microsoft-teams-webhook.md)
 * [Setup alerts for Akto test run results](alerts/alerts-testing-results.md)

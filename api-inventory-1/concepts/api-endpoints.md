@@ -25,3 +25,9 @@ View an Endpoint
 In the above demonstration, we observed that there are 14 request headers and 9 response headers which gives us a deep understanding of the interaction between the client and the server. By viewing the sample values of these headers, we see how data changes during API calls.
 
 You can also copy your API endpoint data for troubleshooting, debugging, version control, etc. For more information, refer to this [link](https://docs.akto.io/api-inventory/how-to/copy-api-endpoints-data).
+
+### Tech Stack Detection with Akto-AI
+
+Akto automatically identifies the **underlying technologies** used by your APIs through intelligent traffic analysis powered by **Akto-AI**. For each endpoint, Akto displays detected stacks such as **AWS**, **Azure**, **MongoDB**, **Stripe**, and more—based on observed request headers, payload patterns, and infrastructure clues. This gives teams better visibility into their API environment and helps prioritize tests or security policies based on tech stack relevance.
+
+<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>

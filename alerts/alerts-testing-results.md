@@ -14,7 +14,7 @@ You can setup alerts for Akto test run results by following the steps given belo
 
 Akto also supports **reminder alerts** to help you stay prepared for upcoming scheduled tests. By enabling the **Pending tests alerts** option in the Webhook settings, you will receive a notification **one hour before** any scheduled test is set to run. This ensures your team is aware and can take any necessary preparatory actions before the security test begins.
 
-<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ## Get Support for your Akto setup
 

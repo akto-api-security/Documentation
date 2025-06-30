@@ -70,3 +70,9 @@ This will create a wordlist dynamically from your traffic data. It will resolve 
 * 3e00c415-1a0c-4026-9863-43627416e5d1&#x20;
 * 3700ad8c-a517-4c14-8c7b-489214ee8b50&#x20;
 * 22d0d22f-17f5-440f-a2fe-03a919e348c4
+
+### Using Multiple Wordlists Together
+
+You can **combine multiple wordlists** in the same test to build richer, more exhaustive scenarios. This is useful when your API parameters depend on combinations of values—for instance, names with roles, paths with tokens, or header values with payloads.
+
+<figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
