@@ -19,7 +19,7 @@ The Model Context Protocol (MCP) is a standardized protocol that enables AI mode
 
 For detailed information about generating and managing API keys, refer to the [Akto API Reference Documentation](../api-reference/api-reference.md).
 
-<figure><img src="../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 #### **Step 2: Configuring MCP Clients**
 

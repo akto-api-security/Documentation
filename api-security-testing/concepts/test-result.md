@@ -6,6 +6,6 @@ In the demonstration below, we have viewed the test result of the selected API e
 
 Go to **Testing > Results**. Click on the test that you have chosen from the test categories.
 
-{% embed url="https://app.arcade.software/share/Qc3ooTCl1AmYj9yk6rFD" %}
+{% @arcade/embed flowId="Qc3ooTCl1AmYj9yk6rFD" url="https://app.arcade.software/share/Qc3ooTCl1AmYj9yk6rFD" %}
 
 In the above demonstration, Akto ran **`BOLA by changing auth token`** tests on the **`rest/products/INTEGER/reviews`** endpoint. The results show high vulnerability when testing **"BOLA changing the auth token"** through a custom test.

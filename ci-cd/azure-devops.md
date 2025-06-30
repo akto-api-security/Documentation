@@ -6,7 +6,7 @@ Akto's integration with Azure DevOps allows you to maintain API security through
 * Generate tests from live functional traffic for targeted security testing
 * Insert security seamlessly into existing functional tests with complete automation
 
-<figure><img src="../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Prerequisites
 

@@ -20,3 +20,6 @@ Utilizing Akto's approach of using real traffic data for API scanning has numero
 
 3\. Detection of Shadow APIs: Our approach reveals several APIs that aren't documented in the Swagger file, highlighting the presence of Shadow APIs.
 
+### Protocol and Event Stream Support
+
+Akto supports a wide variety of API protocols out-of-the-box, ensuring your tests can be run across modern architectures. This includes **REST, GraphQL, gRPC, JSON-RPC**, and **Event-stream** based APIs. Whether your system uses synchronous request/response APIs or real-time event-driven streams, Akto’s testing engine can effectively scan and validate them for vulnerabilities using real traffic data or simulated inputs.

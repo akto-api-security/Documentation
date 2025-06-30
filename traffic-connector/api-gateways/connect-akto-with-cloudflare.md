@@ -8,18 +8,24 @@ To connect Akto with Cloudflare, follow these steps -
 
 ## Step 1: Deploy the Akto Data-Ingestion Service
 
-Before configuring the Cloudflare Worker Traffic Connector, you need to deploy the Akto Data-Ingestion Service. Ensure that the service is running and accessible via a publicly available URL.
-Set up and configure Akto Traffic Processor. The steps are mentioned [here](https://docs.akto.io/getting-started/traffic-processor/hybrid-saas).
+Before configuring the Cloudflare Worker Traffic Connector, you need to deploy the Akto Data-Ingestion Service. Ensure that the service is running and accessible via a publicly available URL.\
+Set up and configure Akto Traffic Processor. The steps are mentioned [here](https://docs.akto.io/getting-started/traffic-processor/hybrid-saas).\
 Ensure this instance is publicly accessible, as it will receive traffic logs from your Cloudflare Worker.
 
----
+***
 
 ## Step 2: Set Up Your Cloudflare Worker Script
 
 1. Navigate to the [Cloudflare Dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Workers & Pages**. <figure><img src="../../.gitbook/assets/cloudflare_workers_pages.png" alt=""><figcaption></figcaption></figure>
-3. Click **Create** and choose **Worker**. <figure><img src="../../.gitbook/assets/cloudflare-hello-world-worker.png" alt=""><figcaption></figcaption></figure>
-4. Click the **Hello World** button and deploy it. <figure><img src="../../.gitbook/assets/cloudflare-hello-world-worker-deploy.png" alt=""><figcaption></figcaption></figure>
+2.  Go to **Workers & Pages**.
+
+    <figure><img src="../../.gitbook/assets/cloudflare_workers_pages.png" alt=""><figcaption></figcaption></figure>
+3.  Click **Create** and choose **Worker**.
+
+    <figure><img src="../../.gitbook/assets/cloudflare-hello-world-worker.png" alt=""><figcaption></figcaption></figure>
+4.  Click the **Hello World** button and deploy it.
+
+    <figure><img src="../../.gitbook/assets/cloudflare-hello-world-worker-deploy.png" alt=""><figcaption></figcaption></figure>
 5. Click **Edit code** and replace the default script with the following example:
 
 ```javascript
@@ -88,37 +94,35 @@ function generateLog(req, requestBody, res, responseBody) {
 }
 ```
 
----
+***
 
 ## Step 3: Configure Worker Routing
 
 If you'd like to route specific domains or paths through this Worker:
 
-1. In the Cloudflare Dashboard, go to **Workers & Pages**.  
-2. Under **Overview**, select your Worker.  
-3. Navigate to **Settings** > **Domains & Routes**.  
-4. Click **Add Route**.  
-5. Select the appropriate zone (domain), and enter a route pattern such as:
+1. In the Cloudflare Dashboard, go to **Workers & Pages**.
+2. Under **Overview**, select your Worker.
+3. Navigate to **Settings** > **Domains & Routes**.
+4. Click **Add Route**.
+5.  Select the appropriate zone (domain), and enter a route pattern such as:
 
-   ```
-   *.yourdomain.com/*
-   ```
+    ```
+    *.yourdomain.com/*
+    ```
 
 This ensures all traffic matching the route is intercepted and mirrored to Akto.
 
----
-
+***
 
 ## Step 4: Verify the Setup
 
 1. Confirm that API traffic data (requests and responses) are captured on the Akto dashboard under the respective api collection.
 2. Check logs of your Lambda function for any initialization messages from the extension.
+3. Go back to the [Akto Dashboard](https://app.akto.io/).
+4. Navigate to **Api Collections** > **Hostname**.
+5. You should start seeing the traffic from your Cloudflare Worker.
 
-1. Go back to the [Akto Dashboard](https://app.akto.io/).
-2. Navigate to **Api Collections** > **Hostname**.
-3. You should start seeing the traffic from your Cloudflare Worker.
-
----
+***
 
 ### Get Support for your Akto setup
 

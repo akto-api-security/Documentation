@@ -7,8 +7,8 @@ Azure API Management is Microsoft's fully managed service for securing, publishi
 To connect Akto with Azure API Management, please follow these steps -
 
 ## Step 1: Deploy the Akto Data-Ingestion Service
-Before configuring the Azure API Management (APIM) Traffic Connector, you need to deploy the Akto Data-Ingestion Service. Ensure that the service is running and accessible via a publicly available URL.
 
+Before configuring the Azure API Management (APIM) Traffic Connector, you need to deploy the Akto Data-Ingestion Service. Ensure that the service is running and accessible via a publicly available URL.
 
 ### 1.1 Download the Required Files
 
@@ -55,32 +55,38 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
 ***
 
 ## Step 2: Create an API Management Service in Azure Portal
-1. Go to the [Azure Portal](https://portal.azure.com/) and navigate to "API Management Services."
-   <figure><img src="../../.gitbook/assets/Screenshot 2025-03-05 at 12.19.23 AM.png" alt=""><figcaption></figcaption></figure>
+
+1.  Go to the [Azure Portal](https://portal.azure.com/) and navigate to "API Management Services."
+
+    <figure><img src="../../.gitbook/assets/Screenshot 2025-03-05 at 12.19.23 AM.png" alt=""><figcaption></figcaption></figure>
 2. Click on the **Create** button.
 3. Fill in the required details:
-   - **Subscription**: Select your Azure subscription.
-   - **Resource Group**: Choose an existing resource group or create a new one.
-   - **Instance Details**:
-     - **Region**: Select the region for your API Management service.
-     - **Resource Name**: Provide a unique name for the service.
-     - **Organization Name**: Enter your organization’s name.
-     - **Administrator Email**: Provide an administrator email.
-   - **Pricing Tier**: Select the appropriate pricing tier.
-   - **Units**: Define the number of units as per your requirement.
-4. Click **Review + Create** and then **Create** to deploy the API Management service.
-   <figure><img src="../../.gitbook/assets/Screenshot 2025-03-05 at 12.21.45 AM.png" alt=""><figcaption></figcaption></figure>
+   * **Subscription**: Select your Azure subscription.
+   * **Resource Group**: Choose an existing resource group or create a new one.
+   * **Instance Details**:
+     * **Region**: Select the region for your API Management service.
+     * **Resource Name**: Provide a unique name for the service.
+     * **Organization Name**: Enter your organization’s name.
+     * **Administrator Email**: Provide an administrator email.
+   * **Pricing Tier**: Select the appropriate pricing tier.
+   * **Units**: Define the number of units as per your requirement.
+4.  Click **Review + Create** and then **Create** to deploy the API Management service.
+
+    <figure><img src="../../.gitbook/assets/Screenshot 2025-03-05 at 12.21.45 AM.png" alt=""><figcaption></figcaption></figure>
 
 ## Step 3: Import/Create APIs in API Management
+
 1. Once the APIM service is created, navigate to the service in the Azure Portal.
 2. Go to the **APIs** section.
 3. Either import an existing API or create a new API.
 4. Select the API where you want to add the policy for the traffic connector.
 
 ## Step 4: Configure the Traffic Connector Policy
+
 1. Navigate to the **Inbound Policies** section of the selected API operation.
-2. Click on the **Edit Policy** button.
-   <figure><img src="../../.gitbook/assets/Screenshot 2025-03-05 at 12.24.53 AM.png" alt=""><figcaption></figcaption></figure>
+2.  Click on the **Edit Policy** button.
+
+    <figure><img src="../../.gitbook/assets/Screenshot 2025-03-05 at 12.24.53 AM.png" alt=""><figcaption></figcaption></figure>
 3. Paste the following policy configuration:
 
 ```xml
@@ -260,17 +266,17 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
 </policies>
 ```
 
-4. **Important Note**:
+4. **Important Note**:\
    If you remove the `<base />` element from the policy configuration at the API scope, **only** the policies defined at the API scope will be applied. Policies configured at **product**, **global**, or other broader scopes will **not** be inherited or executed. Always include `<base />` in the appropriate sections (`<inbound>`, `<backend>`, `<outbound>`, and `<on-error>`) unless you explicitly intend to override all inherited behavior. (For more info [click here](https://learn.microsoft.com/en-us/azure/api-management/api-management-howto-policies).)
 5. Add the regex patterns for the paths you want to **include** in the `regexList` variable value in the inbound policy, ensuring that the **entire regex is properly escaped**. Separate multiple patterns using `;` (e.g., `"api\/v1\/.*;\/api\/getUsers.*"`).
-    - If you leave the `regexList` variable value empty, all APIs will be processed.
+   * If you leave the `regexList` variable value empty, all APIs will be processed.
 6. Replace `YOUR_AKTO_INGESTION_SERVICE_URL` with the URL of your Akto Data-Ingestion Service (Step 1.5).
 7. Click **Save** to apply the policy.
 
 ## Step 5: Verify the Integration
+
 1. Send test requests to the configured API endpoint.
 2. Check the Akto Data-Ingestion Service logs to verify that the traffic data is being ingested correctly.
-
 
 ### Get Support for your Akto setup
 

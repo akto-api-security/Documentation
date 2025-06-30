@@ -164,6 +164,7 @@
 * [Overview](api-protection/concepts/overview.md)
 * [External API Runtime Threat Notifications](api-protection/external-api-runtime-threat-notifications.md)
 * [Concepts](api-protection/concepts/README.md)
+  * [Schema Conformance](api-protection/concepts/schema-conformance.md)
   * [Threat Actors](api-protection/concepts/threat-actors.md)
   * [Threat Policy](api-protection/concepts/threat-policy.md)
 
@@ -214,6 +215,7 @@
   * [Test Role](api-security-testing/concepts/test-role.md)
   * [User Config](api-security-testing/concepts/user-config.md)
   * [Test Result](api-security-testing/concepts/test-result.md)
+  * [Magic Operator](api-security-testing/concepts/magic-operator.md)
   * [JSON Recording for Automated Auth Tokens](api-security-testing/concepts/json-recording-for-automated-auth-tokens.md)
 * [How To](api-security-testing/how-to/README.md)
   * [Run Test](api-security-testing/how-to/run-test.md)
@@ -233,6 +235,7 @@
   * [Run Test on Any One Endpoint](api-security-testing/how-to/run-test-on-any-one-endpoint.md)
   * [Configure global rate limit](api-security-testing/how-to/configure-global-rate-limit.md)
   * [Rescan Specific Issues Resolved](api-security-testing/how-to/rescan-specific-issues-resolved.md)
+  * [Global Test Template Configuration](api-security-testing/how-to/global-test-template-configuration.md)
   * [Configure Pre-request Script](api-security-testing/how-to/configure-pre-request-script.md)
   * [Set Up JSON Recording for Auth Tokens](api-security-testing/how-to/set-up-json-recording-for-auth-tokens.md)
   * [Create a Test Role](api-security-testing/how-to/create-a-test-role.md)

@@ -20,17 +20,16 @@ Go to **Testing > Test Roles**. Click on the **Create New Test Role** button. En
 Create a Test Role
 {% endembed %}
 
-In the above demonstration, we created a test role with the condition that it **“Belongs to”** the **"juice\_shop\_demo"** API collection. We chose to apply this role to the endpoints **`rest/basket/6`** and **`rest/languages`**. This setup allows us to simulate and verify the behavior of these endpoints under the defined role's permissions.\
-
+In the above demonstration, we created a test role with the condition that it **“Belongs to”** the **"juice\_shop\_demo"** API collection. We chose to apply this role to the endpoints **`rest/basket/6`** and **`rest/languages`**. This setup allows us to simulate and verify the behavior of these endpoints under the defined role's permissions.\\
 
 ### Adding Auth token for Role
 
-You can [add a hard-coded token](create-a-test-role.md#hard-coded-auth-token) for quickly executing a test. However, for daily tests or setting up tests in CI/CD, we highly recommend that you use [Automated Auth setup](create-a-test-role.md#automated-auth-token-generation).
+You can [add a hard-coded token](create-a-test-role.md#hard-coded-auth-token) for quickly executing a test. However, for daily tests or setting up tests in CI/CD, we highly recommend that you use [Automated Auth setup](create-a-test-role.md#automated-auth-token-generation).\
 If you have a TLS based authentication, you can configure that using [TLS Authentication](create-a-test-role.md#tls-authentication)
 
 #### Hard-coded Auth token
 
-You can add a hard-coded auth token using the following steps -&#x20;
+You can add a hard-coded auth token using the following steps -
 
 1.  Go to **Test Roles** and click on the `...` at the end of the row
 
@@ -46,7 +45,7 @@ You can add a hard-coded auth token using the following steps -&#x20;
     <figure><img src="../../.gitbook/assets/Screenshot 2024-03-18 at 11.59.21 AM (1).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="info" %}
-If you want to use the auth token only for a specific account, you can add `API Header condition`. For example, `X-Account-Id: 10000` would mean the the auth token will be used only if the API request has `X-Account-Id: 10000` in its headers.&#x20;
+If you want to use the auth token only for a specific account, you can add `API Header condition`. For example, `X-Account-Id: 10000` would mean the the auth token will be used only if the API request has `X-Account-Id: 10000` in its headers.
 {% endhint %}
 
 #### Automated Auth token generation
@@ -55,9 +54,9 @@ For one-time testing or a quick tryout, you might need to manually add an auth t
 
 To add an auth token automatically while performing API testing, you need to follow these steps:
 
-1. **Configure API Call Details**&#x20;
+1. **Configure API Call Details**
 
-Configuring API call details ensures that the server knows how to process the request and can generate and return a new auth token. This is key for keeping tests current and valid, as it allows the system to automatically get a fresh token before each test run. &#x20;
+Configuring API call details ensures that the server knows how to process the request and can generate and return a new auth token. This is key for keeping tests current and valid, as it allows the system to automatically get a fresh token before each test run.
 
 In the demonstration, we're setting up the details for an API call, including the URL, method, headers, and body, to ensure the request is correctly configured and can successfully obtain the token.
 
@@ -87,26 +86,30 @@ Akto will now execute this entire API sequence before running a test to fetch a 
 
 You can add TLS authentication configuration to any role using the following steps:
 
-1. Create a [test role](create-a-test-role.md#create-a-test-role). Click on the test role and click on `Add auth`.
+1.  Create a [test role](create-a-test-role.md#create-a-test-role). Click on the test role and click on `Add auth`.
 
     <figure><img src="../../.gitbook/assets/add-auth.png" alt=""><figcaption></figcaption></figure>
-
-2. Click on `TLS Authentication` to reveal the configuration inputs.
+2.  Click on `TLS Authentication` to reveal the configuration inputs.
 
     <figure><img src="../../.gitbook/assets/tls-auth-1.png" alt=""><figcaption></figcaption></figure>
+3.  For `PEM` certificate type:
 
-3. For `PEM` certificate type:
     1. Input the client certificate
-    <figure><img src="../../.gitbook/assets/tls-auth-2.png" alt=""><figcaption></figcaption></figure>
-    2. Input the client private key
-    <figure><img src="../../.gitbook/assets/tls-auth-4.png" alt=""><figcaption></figcaption></figure>
-    3. Input the certificate authority certificate (optional, leave the input blank if you do not have one) 
-    <figure><img src="../../.gitbook/assets/tls-auth-3.png" alt=""><figcaption></figcaption></figure>
 
-4. Click on `Save`
+    <figure><img src="../../.gitbook/assets/tls-auth-2.png" alt=""><figcaption></figcaption></figure>
+
+    2\. Input the client private key
+
+    <figure><img src="../../.gitbook/assets/tls-auth-4.png" alt=""><figcaption></figcaption></figure>
+
+    3\. Input the certificate authority certificate (optional, leave the input blank if you do not have one)
+
+    <figure><img src="../../.gitbook/assets/tls-auth-3.png" alt=""><figcaption></figcaption></figure>
+4.  Click on `Save`
+
     <figure><img src="../../.gitbook/assets/tls-auth-5.png" alt=""><figcaption></figcaption></figure>
 
-##### Notes:
+**Notes:**
 
 1. Please enter the keys only in the format shown in the images. Do not enter any additional details.
 2. If you have a `P12` type key you can convert it to a `PEM` key using the commands given below. Here `client.p12` is your original key, `client.crt` is the client certificate and `client.key` is the client private key. While running these commands, you may be asked for an `Import Password`. You can leave that blank.
