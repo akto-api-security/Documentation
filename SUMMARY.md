@@ -15,6 +15,7 @@
   * [Connect Akto with Hybrid SaaS](getting-started/quick-start-with-akto-cloud/hybrid-saas.md)
   * [Migrate From Self Hosted Setup To SaaS](getting-started/quick-start-with-akto-cloud/move-self-hosted-to-saas.md)
   * [Setting up proxy](getting-started/quick-start-with-akto-cloud/proxy-setup.md)
+  * [Akto Direct connect](getting-started/quick-start-with-akto-cloud/akto-direct-connect.md)
 * [Akto Self Hosted](getting-started/quick-start-with-akto-self-hosted/README.md)
   * [AWS deploy](getting-started/quick-start-with-akto-self-hosted/aws-deploy/README.md)
     * [AWS multi-VPC deploy](getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-multi-vpc-deploy.md)
