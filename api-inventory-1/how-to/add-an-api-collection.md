@@ -47,7 +47,7 @@ You can connect Akto with **`AWS API Gateway`** for automated API detection, as 
 
 #### **Kong**
 
-You can connect Akto with **`Kong`** for automated API detection which enhances the platform's agility, accelerates API integration, improves API management, and ensures a more secure and efficient ecosystem for developers and users leveraging APIs within the Akto environment. [Click here](https://docs.akto.io/traffic-connections/traffic-data-sources/kong) for detailed steps.
+You can connect Akto with **`Kong`** for automated API detection which enhances the platform's agility, accelerates API integration, improves API management, and ensures a more secure and efficient ecosystem for developers and users leveraging APIs within the Akto environment. [Click here](../../traffic-connector/api-gateways/connect-akto-with-kong.md) for detailed steps.
 
 #### **NGINX**
 
