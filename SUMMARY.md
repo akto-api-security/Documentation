@@ -8,6 +8,10 @@
 
 * [Akto MCP Server](agentic-ai/akto-mcp-server.md)
 
+***
+
+* [MCP Security](mcp-security.md)
+
 ## Getting Started
 
 * [Deployment Types](getting-started/deployment-types.md)

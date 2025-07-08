@@ -1,17 +1,3 @@
----
-layout:
-  title:
-    visible: true
-  description:
-    visible: true
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
----
-
 # Execute
 
 After determining that an endpoint is eligible for a YAML Test, it is forwarded to the execution step. This section is used to describe actions/modifications to achieve the desired test request body.

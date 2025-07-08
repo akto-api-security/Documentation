@@ -1,17 +1,3 @@
----
-layout:
-  title:
-    visible: true
-  description:
-    visible: true
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
----
-
 # API Selection Filters
 
 This section describes the `conditions` that act as selection criteria for choosing APIs that are eligible for a particular test. It also filters out APIs that are not eligible.
