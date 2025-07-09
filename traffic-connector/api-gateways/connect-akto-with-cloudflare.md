@@ -108,7 +108,8 @@ function generateLog(req, requestBody, res, responseBody) {
     akto_account_id: "1000000",
     akto_vxlan_id: "0",
     is_pending: "false",
-    source: "MIRRORING"
+    source: "MIRRORING",
+    tag: "{\n  \"service\": \"cloudflare\"\n}"
   };
 
   return JSON.stringify({"batchData": [value]});
