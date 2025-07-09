@@ -35,19 +35,40 @@ export default {
     const backendResponse = await fetch(request);
 
     try {
-      const requestBody = await requestClone.text();
-      
-      const responseClone = backendResponse.clone();
-      const responseBody = await responseClone.text();
-      
-      ctx.waitUntil(sendToAkto(request, requestBody, backendResponse, responseBody, env));
+      const contentType = (request.headers.get("content-type") || "").toLowerCase();
+      const shouldCapture = isAllowedContentType(contentType) && isValidStatus(backendResponse.status);
+
+      if (shouldCapture) {
+        const requestBody = await requestClone.text();
+        const responseClone = backendResponse.clone();
+        const responseBody = await responseClone.text();
+
+        ctx.waitUntil(sendToAkto(request, requestBody, backendResponse, responseBody, env));
+      }
     } catch (error) {
-      console.error("Error while processing original request or response: ", error)
+      console.error("Error while processing original request or response: ", error);
     }
 
     return backendResponse;
   },
 };
+
+function isAllowedContentType(contentType) {
+  const allowedTypes = [
+    "application/json",
+    "application/xml",
+    "text/xml",
+    "application/grpc",
+    "application/x-www-form-urlencoded",
+    "application/soap+xml"
+  ];
+
+  return allowedTypes.some(type => contentType.includes(type));
+}
+
+function isValidStatus(status) {
+  return (status >= 200 && status < 300) || [301, 302, 304].includes(status);
+}
 
 async function sendToAkto(request, requestBody, response, responseBody, env) {
   const aktoAPI = "https://<your-ingestion-service-address>/api/ingestData"; // Replace with your deployed ingestion endpoint
@@ -87,7 +108,8 @@ function generateLog(req, requestBody, res, responseBody) {
     akto_account_id: "1000000",
     akto_vxlan_id: "0",
     is_pending: "false",
-    source: "MIRRORING"
+    source: "MIRRORING",
+    tag: "{\n  \"service\": \"cloudflare\"\n}"
   };
 
   return JSON.stringify({"batchData": [value]});
