@@ -4,7 +4,7 @@ With the rise of large language models (LLMs), securing the APIs behind LLMs and
 
 ***
 
-### **1. API Discovery**
+### **1. LLM API Discovery**
 
 The first step in securing your APIs is knowing what you have. Akto continuously scans your environments to discover all active and shadow APIs, including those interacting with LLMs. It maps endpoints, classifies sensitive data, and maintains an up-to-date inventory. This visibility is essential to managing risk in dynamic AI environments where APIs frequently evolve.
 
@@ -16,7 +16,7 @@ The first step in securing your APIs is knowing what you have. Akto continuously
 
 ***
 
-### **2. API Security Testing**
+### **2. LLM Security Testing**
 
 Akto enables proactive security by running automated tests to uncover vulnerabilities in APIs behind LLMs and chatbots. With over 1000 test templates modeled on OWASP’s Top 10 for LLM applications, Akto detects issues like prompt injection, system prompt leakage, vector embedding weaknesses, and data poisoning.
 
@@ -28,7 +28,7 @@ Akto enables proactive security by running automated tests to uncover vulnerabil
 
 ***
 
-### **3. Threat Protection**
+### **3. LLM Threat Protection**
 
 With APIs behind LLMs facing unique threats such as misinformation, unbounded consumption, and improper output handling, Akto provides real-time protection against these and more. It monitors for anomalies specific to AI workloads, blocks malicious traffic, and flags abuses like repeated prompt probing or excessive API usage.
 
@@ -39,7 +39,7 @@ With APIs behind LLMs facing unique threats such as misinformation, unbounded co
 
 ***
 
-### **4. API Security Posture**
+### **4. LLM Security Posture**
 
 API Security Posture serves as a unified overview of all the above pillars—Discovery, Testing, and Threat Protection. It helps security teams understand the overall security health of LLM-integrated APIs. Akto provides visibility into risks, trends, severities and coverage gaps, and enforces security policies aligned with OWASP GenAI Security standards.
 
