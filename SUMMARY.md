@@ -11,6 +11,7 @@
 ***
 
 * [MCP Security](mcp-security.md)
+* [AI Security](ai-security.md)
 
 ## Getting Started
 
