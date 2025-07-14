@@ -80,7 +80,9 @@ spec:
             path : /
 ```
 
-3. You can add and configure the env variables below to control the daemonset. Here's a diagram of how the module processes traffic:
+3. For example, if you've deployed `akto-mini-runtime` using akto's helm charts in `akto` namespace, the `AKTO_NLB_IP` would be `akto-mini-runtime-mini-runtime.akto.svc.cluster.local` .
+
+4. You can add and configure the env variables below to control the daemonset. Here's a diagram of how the module processes traffic:
 
 <figure><img src="../../.gitbook/assets/ebpf-diagram.png" alt="Traffic processing"><figcaption><p>eBPF Traffic Processing</p></figcaption></figure>
 
@@ -114,7 +116,7 @@ spec:
   value: "true"
 ```
 
-4. You can check your `API inventory` on Akto dashboard to see endpoints being discovered.
+5. You can check your `API inventory` on Akto dashboard to see endpoints being discovered.
 
 ## Frequently Asked Questions (FAQs)
 
