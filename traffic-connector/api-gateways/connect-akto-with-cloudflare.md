@@ -1,6 +1,4 @@
-# Connect Akto with Cloudflare Container
-
-(Traffic Connector Worker on CloudFlare sending traffic data to IngestData API in CloudFlare Container to enable API discovery)
+# Connect Akto with Cloudflare
 
 Cloudflare is a global network security platform that provides CDN, DDoS protection, and API security services. Integrating Cloudflare with Akto will enable automatic discovery of all APIs passing through your Cloudflare infrastructure, helping you maintain continuous visibility and protection of your edge-distributed APIs.
 
@@ -8,9 +6,9 @@ Cloudflare is a global network security platform that provides CDN, DDoS protect
 
 To connect Akto with Cloudflare, follow these steps -
 
-## Step 1: Deploy the Akto Mini-Runtime-Service
+## Step 1: Deploy the Akto Data-Ingestion Service
 
-Before configuring the Cloudflare Worker Traffic Connector, you need to deploy the Akto Mini-Runtime Service. Ensure that the service is running and accessible via a publicly available URL.\
+Before configuring the Cloudflare Worker Traffic Connector, you need to deploy the Akto Data-Ingestion Service. Ensure that the service is running and accessible via a publicly available URL.\
 Set up and configure Akto Traffic Processor. The steps are mentioned [here](https://docs.akto.io/getting-started/traffic-processor/hybrid-saas).\
 Ensure this instance is publicly accessible, as it will receive traffic logs from your Cloudflare Worker.
 
