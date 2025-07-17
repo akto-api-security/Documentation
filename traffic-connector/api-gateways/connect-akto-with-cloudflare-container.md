@@ -4,104 +4,82 @@
 
 Cloudflare is a global network security platform that provides CDN, DDoS protection, and API security services. Integrating Cloudflare with Akto will enable automatic discovery of all APIs passing through your Cloudflare infrastructure, helping you maintain continuous visibility and protection of your edge-distributed APIs.
 
-<figure><img src="../../.gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (72) (1).png" alt=""><figcaption></figcaption></figure>
 
 To connect Akto with Cloudflare, follow these steps -
 
 ## Step 1: Deploy the Akto Mini-Runtime-Service as Cloudflare Container
 
-Before configuring the Cloudflare Worker Traffic Connector, you need to deploy the Akto Mini-Runtime Service. 
+Before configuring the Cloudflare Worker Traffic Connector, you need to deploy the Akto Mini-Runtime Service.
 
 1. The **Akto-Mini-Runtime-Service** is a container that runs on Cloudflare and is responsible for receiving traffic logs from the Cloudflare Worker.
-2. Docker-image for the Akto Mini-Runtime Service will be available to be configured.
+2. Configure image name of Akto Mini-Runtime Service.
 
-
-Deploying Docker Image as Container on Cloudflare :
+#### Pre-requisites
 
 1. Make Cloudflare Account . Buy **Workers Paid Plan** to deploy containers through worker.
-
 2. Go to terminal of your system and configure to access cloud flare account by exporting cloud flare API token.
+3. You need to create Account API Token by visiting `https://dash.cloudflare.com/<ID>/api-tokens`
+4. **Create token with below permissions** : Containers:Edit, Queues:Edit, Workers R2 Storage:Edit, Workers Tail:Read, Workers KV Storage:Edit, Workers Scripts:Edit, Workers Scripts:Read, Account Settings:Read
 
-You need to create Account API Token by visiting https://dash.cloudflare.com/53a10bdb35f546522193c9670ad3e7e5/api-tokens
+### Container deployment
 
-**Create token with below permissions** :
-Containers:Edit, Queues:Edit, Workers R2 Storage:Edit, Workers Tail:Read, Workers KV Storage:Edit, Workers Scripts:Edit,
- Workers Scripts:Read, Account Settings:Read
+1. Create `wrangler.jsonc` file with these contents -&#x20;
 
-Add below command in terminal :
-export CLOUDFLARE_API_TOKEN=<Your-Cloudflare-API-Token>
-
-
-3. Create first project through terminal with below command :
-
-npm create cloudflare@latest -- --template=cloudflare/templates/containers-template
-
-This will create a new folder with the name of your project. Inside this folder, you will find multiple files, including:
-
-* Wrangler.json - Details of cloudflare account where container is to be deployed and docker image details are present.
-* src/index.ts - This is the the startup file and we configure our api endpoint in this file which is inside docker image and needs to be called.
-
-4. Push the existing mini-runtime-service image on cloudflare registry
-
-docker pull --platform linux/amd64 aktosecurity/mini-runtime-service:latest   - Pull latest image from docker hub
-docker tag aktosecurity/mini-runtime-service:latest mrs:testing      - Tag with any name apart from ‘latest’
-
-For wranglers containers push command to work, make a folder with a file wrangler.jsonc and add the below details, then run the push command.
-
-```javascript
+```
 {
-"name": "akto-mini-runtime-1",
-"account_id": "53a10bdb35f546522193c9670ad3e7e5",
-"compatibility_date": "2025-07-11",
-"container": {
-"image": "mrs:testing"
-}
+    "name": "akto-mini-runtime-1",
+    "account_id": "your id",
+    "compatibility_date": "2025-07-11",
+    "container": {
+        "image": "mrs:testing"
+    }
 }
 
 ```
 
-*** 
+2. Push Akto container to your registry (steps mentioned on[ Cloudflare docs](https://developers.cloudflare.com/containers/image-management/#using-pre-built-container-images))
+
+```
+docker pull --platform linux/amd64 aktosecurity/mini-runtime-service:latest
+docker tag aktosecurity/mini-runtime-service:latest mrs:testing
+wrangler containers push mrs:testing
+```
+
+3. Confirm the image on cloudflare registry. You will see similar below output :
+
+Login Succeeded The push refers to repository \[registry.cloudflare.com/\<ID>/akto-mini-runtime]
+
+This is the path of image to be configured in wrangler.jsonc - registry.cloudflare.com/\<ID>/akto-mini-runtime:latest
 
 
-**wrangler containers push mrs:testing      - Command to push it in cloudflare registry**
 
-You will see similar below output :
+### Deploy Akto Traffic Collector (worker)
 
-Login Succeeded
-The push refers to repository [registry.cloudflare.com/53a10bdb35f546522193c9670ad3e7e5/akto-mini-runtime]
-
-
-This is the path of image to be configured in wrangler.jsonc - registry.cloudflare.com/53a10bdb35f546522193c9670ad3e7e5/akto-mini-runtime:latest
-
-
-
-5. Now in the initial project made of cloud flare do the below change in wrangler.jsonc
-       image - docker image of the mini-runtime-service that we pushed in cloudflare registry
+1. Create a new Cloudflare project.&#x20;
+2. In `wrangler.jsonc` file of the workder, add the docker image address
 
 ```javascript
 
      "containers": [
                 {
                         "class_name": "MyContainer",
-                        "image": "registry.cloudflare.com/53a10bdb35f546522193c9670ad3e7e5/mrs:testing",
+                        "image": "registry.cloudflare.com/<ID>/mrs:testing",
                         "max_instances": 10,
-                        "instance_type": "standard",
+                        "instance_type": "standard", // you might need bigger instances here
                         "name": "hello-containers"
                 }
         ]
         
 ```
 
-***        
-
-
-6. Below changes in src/index.ts to connect the Akto Mini-Runtime Service with Cloudflare Worker and to call the API endpoint in the docker image.
+2. Below changes in src/index.ts to connect the Akto Mini-Runtime Service with Cloudflare Worker and to call the API endpoint in the docker image.
 
 ```javascript
 import { Container, loadBalance, getContainer, getRandom } from "@cloudflare/containers";
 import { Hono } from "hono";
 
-const INSTANCE_COUNT = 3;
+const INSTANCE_COUNT = 1;
 
 export class MyContainer extends Container {
   // Port the container listens on (default: 8080)
@@ -193,21 +171,14 @@ export default app;
 
 ***
 
+`/api/ingestData` - Is the endpoint in our docker image to be called from container in cloud flare
 
+3. Now deploy container to cloud flare with command - **wrangler deploy**
 
-
-/api/ingestData - Is the endpoint in our docker image to be called from container in cloud flare
-
-
-7. Now deploy container to cloud flare with command - **wrangler deploy**
-
-   ```bash
-   After successful deployment, you will see the URL of your deployed container in the terminal output. It will look something like this:
-
-   ```
-   https://super-resonance-827f.billing-53a.workers.dev
-   
-
+```bash
+After successful deployment, you will see the URL of your deployed container in the terminal output. It will look something like this:
+https://super-resonance-827f.billing-53a.workers.dev
+```
 
 ***
 
@@ -328,13 +299,12 @@ function generateLog(req, requestBody, res, responseBody) {
 
 ## Step 3: Configure Worker Routing
 
-As the traffic connector worker & mini-runtime-service container are in the same Cloudflare account ie. same zone, the global_fetch_strictly_public compatibility flag is enabled.
-This ensures that the Worker can make requests to the Akto Mini-Runtime Service Container without any issues.
+As the traffic connector worker & mini-runtime-service container are in the same Cloudflare account ie. same zone, the global\_fetch\_strictly\_public compatibility flag is enabled. This ensures that the Worker can make requests to the Akto Mini-Runtime Service Container without any issues.
 
 1. In the Cloudflare Dashboard, go to **Workers & Pages**.
 2. Under **Overview**, select your Worker.
 3. Navigate to **Settings** > **Runtime**.
-4. Edit **Compatibility Flags** and add `global_fetch_strictly_public` to the list of flags.'
+4.  Edit **Compatibility Flags** and add `global_fetch_strictly_public` to the list of flags.'
 
     <figure><img src="../../.gitbook/assets/cloudflare-compatibility-flags.png" alt=""><figcaption></figcaption></figure>
 
@@ -344,7 +314,7 @@ If you'd like to route specific domains or paths through this Worker:
 6. Under **Overview**, select your Worker.
 7. Navigate to **Settings** > **Domains & Routes**.
 8. Click **Add Route**.
-9. Select the appropriate zone (domain), and enter a route pattern such as:
+9.  Select the appropriate zone (domain), and enter a route pattern such as:
 
     ```
     *.yourdomain.com/*
@@ -353,7 +323,6 @@ If you'd like to route specific domains or paths through this Worker:
 This ensures all traffic matching the route is intercepted and mirrored to Akto.
 
 ***
-
 
 ## Step 4: Verify the Setup
 
