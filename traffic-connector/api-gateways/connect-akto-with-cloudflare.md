@@ -1,6 +1,6 @@
 # Connect Akto with Cloudflare
 
-Cloudflare is a global network security platform that provides CDN, DDoS protection, and API security services. Integrating Cloudflare with Akto will enable automatic discovery and security testing of all APIs passing through your Cloudflare infrastructure, helping you maintain continuous visibility and protection of your edge-distributed APIs.
+Cloudflare is a global network security platform that provides CDN, DDoS protection, and API security services. Integrating Cloudflare with Akto will enable automatic discovery of all APIs passing through your Cloudflare infrastructure, helping you maintain continuous visibility and protection of your edge-distributed APIs.
 
 <figure><img src="../../.gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
 

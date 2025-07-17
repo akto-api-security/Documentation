@@ -56,6 +56,7 @@
   * [Connect Akto with Kong](traffic-connector/api-gateways/connect-akto-with-kong.md)
   * [Connect Akto with Kong Mesh](traffic-connector/api-gateways/connect-akto-with-kong-mesh.md)
   * [Connect Akto with Cloudflare](traffic-connector/api-gateways/connect-akto-with-cloudflare.md)
+  * [Connect Akto with Cloudflare Container](traffic-connector/api-gateways/connect-akto-with-cloudflare-container.md)
   * [Connect Akto with IBM Connect](traffic-connector/api-gateways/connect-akto-with-ibm-connect.md)
   * [Connect Akto with Mulesoft Flex Gateway](traffic-connector/api-gateways/mulesoft-flex.md)
   * [Connect Akto with Apigee](traffic-connector/api-gateways/connect-akto-with-apigee.md)
