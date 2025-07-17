@@ -12,46 +12,43 @@ To connect Akto with Cloudflare, follow these steps -
 
 Before configuring the Cloudflare Worker Traffic Connector, you need to deploy the Akto Mini-Runtime Service. 
 
-1. The Akto-Mini-Runtime-Service is a container that runs on Cloudflare and is responsible for receiving traffic logs from the Cloudflare Worker.
+1. The **Akto-Mini-Runtime-Service** is a container that runs on Cloudflare and is responsible for receiving traffic logs from the Cloudflare Worker.
 2. Docker-image for the Akto Mini-Runtime Service will be available to be configured.
 
 
 Deploying Docker Image as Container on Cloudflare :
 
-1. Make Cloudflare Account . Buy Workers Paid Plan to deploy containers through worker.
+1. Make Cloudflare Account . Buy **Workers Paid Plan** to deploy containers through worker.
 
 2. Go to terminal of your system and configure to access cloud flare account by exporting cloud flare API token.
 
 You need to create Account API Token by visiting https://dash.cloudflare.com/53a10bdb35f546522193c9670ad3e7e5/api-tokens
 
-Create token with below permissions :
+**Create token with below permissions** :
 Containers:Edit, Queues:Edit, Workers R2 Storage:Edit, Workers Tail:Read, Workers KV Storage:Edit, Workers Scripts:Edit,
  Workers Scripts:Read, Account Settings:Read
 
 Add below command in terminal :
 export CLOUDFLARE_API_TOKEN=<Your-Cloudflare-API-Token>
 
-wrangler whoami  - Command to check locally the account you are pointing to.
 
 3. Create first project through terminal with below command :
 
 npm create cloudflare@latest -- --template=cloudflare/templates/containers-template
 
-The template will create a folder with below file content :
+This will create a new folder with the name of your project. Inside this folder, you will find multiple files, including:
 
-Dockerfile			container_src			package-lock.json		src				worker-configuration.d.ts
-README.md			node_modules			package.json			tsconfig.json			wrangler.jsonc
-
-* Wrangler.json - is the imp file where details of our account where container is to be deployed and docker image details are present.
+* Wrangler.json - Details of cloudflare account where container is to be deployed and docker image details are present.
 * src/index.ts - This is the the startup file and we configure our api endpoint in this file which is inside docker image and needs to be called.
 
 4. Push the existing mini-runtime-service image on cloudflare registry
 
-docker pull --platform linux/amd64 aktosecurity/mini-runtime-service:mrs   - Pull from docker hub
-docker tag aktosecurity/mini-runtime-service:mrs mrs:testing      - Tag with any name apart from ‘latest’
+docker pull --platform linux/amd64 aktosecurity/mini-runtime-service:latest   - Pull latest image from docker hub
+docker tag aktosecurity/mini-runtime-service:latest mrs:testing      - Tag with any name apart from ‘latest’
 
 For wranglers containers push command to work, make a folder with a file wrangler.jsonc and add the below details, then run the push command.
 
+```javascript
 {
 "name": "akto-mini-runtime-1",
 "account_id": "53a10bdb35f546522193c9670ad3e7e5",
@@ -61,10 +58,14 @@ For wranglers containers push command to work, make a folder with a file wrangle
 }
 }
 
+```
 
-wrangler containers push mrs:testing      - push it in cloudflare registry
+*** 
 
-You will see below output :
+
+**wrangler containers push mrs:testing      - Command to push it in cloudflare registry**
+
+You will see similar below output :
 
 Login Succeeded
 The push refers to repository [registry.cloudflare.com/53a10bdb35f546522193c9670ad3e7e5/akto-mini-runtime]
@@ -75,7 +76,9 @@ This is the path of image to be configured in wrangler.jsonc - registry.cloudfla
 
 
 5. Now in the initial project made of cloud flare do the below change in wrangler.jsonc
+       image - docker image of the mini-runtime-service that we pushed in cloudflare registry
 
+```javascript
 
      "containers": [
                 {
@@ -86,99 +89,119 @@ This is the path of image to be configured in wrangler.jsonc - registry.cloudfla
                         "name": "hello-containers"
                 }
         ]
+        
+```
+
+***        
 
 
-6. Below changes in src/index.ts
+6. Below changes in src/index.ts to connect the Akto Mini-Runtime Service with Cloudflare Worker and to call the API endpoint in the docker image.
 
-import { Container, loadBalance, getContainer } from "@cloudflare/containers";
+```javascript
+import { Container, loadBalance, getContainer, getRandom } from "@cloudflare/containers";
 import { Hono } from "hono";
 
+const INSTANCE_COUNT = 3;
+
 export class MyContainer extends Container {
-// Port the container listens on (default: 8080)
-defaultPort = 8080;
-// Time before container sleeps due to inactivity (default: 30s)
-sleepAfter = "2h";
-// Environment variables passed to the container
-envVars = {
-MESSAGE: "I was passed in via the container class!",
-AKTO_LOG_LEVEL: "DEBUG",
-DATABASE_ABSTRACTOR_SERVICE_TOKEN: "<your-database-abstractor-service-token>",
-AKTO_INACTIVE_QUEUE_PROCESSING_TIME: "5000",
-AKTO_TRAFFIC_PROCESSING_JOB_INTERVAL: "10",
-AKTO_CONFIG_NAME: "STAGING",
-RUNTIME_MODE: "HYBRID"
-};
+  // Port the container listens on (default: 8080)
+  defaultPort = 8080;
+  // Time before container sleeps due to inactivity (default: 30s)
+  sleepAfter = "2h";
+  // Environment variables passed to the container
+  envVars = {
+    MESSAGE: "I was passed in via the container class!",
+    AKTO_LOG_LEVEL: "DEBUG",
+    DATABASE_ABSTRACTOR_SERVICE_TOKEN: "<your-database-abstractor-service-token>",
+    AKTO_TRAFFIC_QUEUE_THRESHOLD: "100",
+    AKTO_INACTIVE_QUEUE_PROCESSING_TIME: "5000",
+    AKTO_TRAFFIC_PROCESSING_JOB_INTERVAL: "10",
+    AKTO_CONFIG_NAME: "STAGING",
+    RUNTIME_MODE: "HYBRID"
+  };
 
-// Optional lifecycle hooks
-override onStart() {
-console.log("Container successfully started");
-}
+  
 
-override onStop() {
-console.log("Container successfully shut down");
-}
+  // Optional lifecycle hooks
+  override onStart() {
+    console.log("Container successfully started");
+  }
 
-override onError(error: unknown) {
-console.log("Container error:", error);
-}
+  override onStop() {
+    console.log("Container successfully shut down");
+  }
+
+  override onError(error: unknown) {
+    console.log("Container error:", error);
+  }
 
 }
 
 // Create Hono app with proper typing for Cloudflare Workers
 const app = new Hono<{
-Bindings: { MY_CONTAINER: DurableObjectNamespace<MyContainer> };
+  Bindings: { MY_CONTAINER: DurableObjectNamespace<MyContainer> };
 }>();
 
 // Home route with available endpoints
 app.get("/", (c) => {
-return c.text(
-"Available endpoints:\n" +
-"GET /container/<ID> - Start a container for each ID with a 2m timeout\n" +
-"GET /lb - Load balance requests over multiple containers\n" +
-"GET /error - Start a container that errors (demonstrates error handling)\n" +
-"GET /singleton - Get a single specific container instance",
-);
+  return c.text(
+    "Available endpoints:\n" +
+      "GET /container/<ID> - Start a container for each ID with a 2m timeout\n" +
+      "GET /lb - Load balance requests over multiple containers\n" +
+      "GET /error - Start a container that errors (demonstrates error handling)\n" +
+      "GET /singleton - Get a single specific container instance",
+  );
 });
 
 // Route requests to a specific container using the container ID
 app.get("/container/:id", async (c) => {
-const id = c.req.param("id");
-const containerId = c.env.MY_CONTAINER.idFromName(`/container/${id}`);
-const container = c.env.MY_CONTAINER.get(containerId);
-return await container.fetch(c.req.raw);
+  const id = c.req.param("id");
+  const containerId = c.env.MY_CONTAINER.idFromName(`/container/${id}`);
+  const container = c.env.MY_CONTAINER.get(containerId);
+  return await container.fetch(c.req.raw);
 });
 
 // Demonstrate error handling - this route forces a panic in the container
 app.get("/error", async (c) => {
-const container = getContainer(c.env.MY_CONTAINER, "error-test");
-return await container.fetch(c.req.raw);
+  const container = getContainer(c.env.MY_CONTAINER, "error-test");
+  return await container.fetch(c.req.raw);
 });
 
 // Load balance requests across multiple containers
 app.get("/lb", async (c) => {
-const container = await loadBalance(c.env.MY_CONTAINER, 3);
-return await container.fetch(c.req.raw);
+  const container = await loadBalance(c.env.MY_CONTAINER, 3);
+  return await container.fetch(c.req.raw);
 });
 
 // Get a single container instance (singleton pattern)
 app.post("/api/ingestData", async (c) => {
 
-const id = 1;
-const containerId = c.env.MY_CONTAINER.idFromName(`/container/${id}`);
-const container = c.env.MY_CONTAINER.get(containerId);
-return await container.fetch(c.req.raw);
+  //const id = 1;
+  const containerInstance = getRandom(c.env.MY_CONTAINER, INSTANCE_COUNT);
+  const containerId = c.env.MY_CONTAINER.idFromName(`/container/${containerInstance}`);
+  const container = c.env.MY_CONTAINER.get(containerId);
+
+  
+  return await container.fetch(c.req.raw);
 
 });
 
 
 export default app;
 
+```
+
+***
+
+
 
 
 /api/ingestData - Is the endpoint in our docker image to be called from container in cloud flare
 
 
-7. Now deploy container to cloud flare - wrangler deploy
+7. Now deploy container to cloud flare with command - **wrangler deploy**
+
+   ```bash
    After successful deployment, you will see the URL of your deployed container in the terminal output. It will look something like this:
 
    ```
