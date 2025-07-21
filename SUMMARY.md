@@ -34,6 +34,10 @@
 * [Local Deploy](getting-started/local-deploy.md)
 * [FAQs on data concerns](getting-started/faqs-on-data-concerns.md)
 
+## DAST
+
+* [Akto DAST](dast/akto-dast.md)
+
 ## Traffic Connector
 
 * [Traffic Data Sources](traffic-connector/traffic-data-sources.md)
