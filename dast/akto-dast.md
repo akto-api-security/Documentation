@@ -10,6 +10,28 @@ Akto DAST (Dynamic Application Security Testing) allows you to automatically sca
 
 **✅ Pre-requisite**
 
+* **Start Akto DAST Module**:
+  Ensure the DAST module (`aktojax`) is running using the following Docker Compose file:
+
+  ```yaml
+  version: '3.3'
+
+  services:
+    aktojax:
+      image: tangobeeakto/aktojax:latest
+      ports:
+        - "8088:8088"
+      restart: always
+  ```
+
+  After running the above Docker Compose setup, set the environment variable on the machine where your Akto dashboard is running:
+
+  ```bash
+  export AKTOJAX_SERVICE_URL=http://<IP_ADDRESS_OF_DAST>:8088
+  ```
+
+  Replace `<IP_ADDRESS_OF_DAST>` with the actual IP address of the machine running the Docker container.
+
 * **Akto X-API-Key**: Generate this from your Akto dashboard under **Settings > Integrations > Akto API.**
 
 **Steps to Start:**
