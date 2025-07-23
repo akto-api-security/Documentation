@@ -11,6 +11,7 @@
 ***
 
 * [MCP Security](mcp-security.md)
+* [MCP Import](mcp-import.md)
 * [AI Security](ai-security.md)
 
 ## Getting Started
@@ -37,10 +38,6 @@
 ## DAST
 
 * [Akto DAST](dast/akto-dast.md)
-
-## MCP Security 
-
-* [MCP Import](/mcp-import.md)
 
 ## Traffic Connector
 
