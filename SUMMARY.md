@@ -38,6 +38,10 @@
 
 * [Akto DAST](dast/akto-dast.md)
 
+## MCP Security 
+
+* [MCP Import](/mcp-import.md)
+
 ## Traffic Connector
 
 * [Traffic Data Sources](traffic-connector/traffic-data-sources.md)
