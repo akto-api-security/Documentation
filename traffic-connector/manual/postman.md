@@ -12,8 +12,6 @@ description: Learn how to send API traffic data from Postman to Akto.
 Note that traffic from Postman won't be automated like the native cloud connectors.
 {% endhint %}
 
-Postman connector is `recommended` for Akto [Open source](https://github.com/akto-api-security/akto) or [free tier](https://www.akto.io/pricing) only. For an automated inventory, you should use other automated traffic connectors.
-
 ## What is Akto postman connector?
 
 Akto gives you ability to add API data through Postman integration. If you have a Postman API collection, follow the steps below to add API data to Akto:

@@ -12,8 +12,6 @@ description: Learn how to send API traffic data from OpenAPI spec to Akto.
 Note that traffic from OpenAPI spec won't be automated like the native cloud connectors.
 {% endhint %}
 
-OpenAPI connector is `recommended` for Akto [Open source](https://github.com/akto-api-security/akto) or [free tier](https://www.akto.io/pricing) only. For an automated inventory, you should use other automated traffic connectors.
-
 ### Pre-requisites for Akto OpenAPI connection
 
 * You must have an `active Akto account`. If you don't have one, sign up for an account on the Akto platform.

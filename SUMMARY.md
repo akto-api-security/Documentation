@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Github Open Source Repo](https://github.com/akto-api-security/community-edition)
+* [GitHub repository](https://github.com/akto-api-security/community-edition)
 * [What is Akto?](README.md)
 * [AktoGPT](aktogpt.md)
 

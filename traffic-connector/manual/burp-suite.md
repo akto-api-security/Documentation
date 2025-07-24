@@ -14,8 +14,6 @@ description: >-
 Note that traffic from Burp Suite won't be automated like the native cloud connectors.
 {% endhint %}
 
-Burp connector is `recommended` for Akto [Open source](https://github.com/akto-api-security/akto) or [free tier](https://www.akto.io/pricing) only. For an automated inventory, you will want to use other automated traffic connectors.
-
 ## Pre-requisites for Akto Burp connection
 
 1. Make sure you have Burp Suite Community edition or professional installed on your system.

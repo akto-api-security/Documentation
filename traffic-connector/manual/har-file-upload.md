@@ -12,8 +12,6 @@ description: Learn how to uplaod API traffic data from HAR file to Akto
 Note that traffic from HAR File upload won't be automated like the native cloud connectors.
 {% endhint %}
 
-HAR File Upload is `recommended` for Akto [Open source](https://github.com/akto-api-security/akto) or [free tier](https://www.akto.io/pricing) only. For an automated inventory, you will want to use other automated traffic connectors.
-
 #### What is HAR file?
 
 The HTTP Archive format, or HAR, is a `JSON-formatted archive file format` for logging of a web browser's interaction with a site. The common extension for these files is `.har`. You can use this method if you quickly want to try out Akto. Akto can process HAR (Http Archive) files and populate inventory from them.

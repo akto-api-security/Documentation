@@ -78,10 +78,6 @@ This will process your API traffic data and populate APIs on the dashboard. This
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/236832509-8e8c84ff-633e-4ffe-b11b-344d02ca6e74.png" alt=""><figcaption></figcaption></figure>
 
-{% hint style="info" %}
-Akto is [Open Source](https://www.akto.io/blog/introducing-akto-open-source) and if you find any issues or [traffic connectors](https://www.akto.io/connectors) you don't see in the list, you can create an issue in our open source repo [here](https://github.com/akto-api-security/akto).
-{% endhint %}
-
 ### What's next?
 
 You can now go to your API Inventory to see all the API traffic Akto has captured. Head to [API Discovery](../../api-inventory-1/concepts/api-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.
