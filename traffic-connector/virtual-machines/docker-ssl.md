@@ -13,8 +13,6 @@ First, set up and configure the **Akto Traffic Processor (Mini-Runtime)**.
 
 📘 [Follow this setup guide](https://docs.akto.io/getting-started/traffic-processor/hybrid-saas) for instructions.
 
-
-
 #### Step 2: Deploy Traffic Collector (Supports TLS via eBPF)
 
 This Docker container uses **eBPF** to mirror all API traffic at the kernel level—including **TLS-encrypted** traffic—without needing to decrypt it manually or modify applications.
@@ -24,8 +22,6 @@ This Docker container uses **eBPF** to mirror all API traffic at the kernel leve
 * **Linux VM** or system with **kernel headers installed** (required for eBPF)
 * Docker daemon installed and running
 * Access to your Akto runtime (Kafka IP)
-
-
 
 #### Run the Traffic Collector
 
@@ -37,6 +33,7 @@ docker run -d \
   --restart always \
   --network host \
   --privileged \
+  --pid=host \
   --cap-add SYS_PTRACE \
   --cap-add SYS_ADMIN \
   -v /lib/modules:/lib/modules \
@@ -45,14 +42,15 @@ docker run -d \
   -v /:/host \
   -e AKTO_TRAFFIC_BATCH_TIME_SECS=10 \
   -e AKTO_TRAFFIC_BATCH_SIZE=100 \
-  -e AKTO_KAFKA_BROKER_MAL="<kafka_ip>" \
+  -e AKTO_KAFKA_BROKER_MAL=<kafka-ip> \
+  -e PROBE_ALL_PID=true \
   aktosecurity/mirror-api-logging:k8s_ebpf
 ```
 
 In case you face an issue with the spaces in the command above
 
 ```bash
-docker run -d --name akto-api-security-traffic-collector --restart always --network host --privileged --cap-add SYS_PTRACE --cap-add SYS_ADMIN -v /lib/modules:/lib/modules -v /sys/kernel:/sys/kernel -v /usr/src:/usr/src -v /:/host -e AKTO_TRAFFIC_BATCH_TIME_SECS=10 -e AKTO_TRAFFIC_BATCH_SIZE=100 -e AKTO_KAFKA_BROKER_MAL="<kafka_ip>" aktosecurity/mirror-api-logging:k8s_ebpf
+docker run -d --name akto-api-security-traffic-collector --restart always --network host --pid=host --privileged --cap-add SYS_PTRACE --cap-add SYS_ADMIN -v /lib/modules:/lib/modules -v /sys/kernel:/sys/kernel -v /usr/src:/usr/src -v /:/host -e AKTO_TRAFFIC_BATCH_TIME_SECS=10 -e AKTO_TRAFFIC_BATCH_SIZE=100 -e AKTO_KAFKA_BROKER_MAL=<kafka_ip> -e PROBE_ALL_PID=true aktosecurity/mirror-api-logging:k8s_ebpf
 ```
 
 #### What’s Happening Behind the Scenes?
