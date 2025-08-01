@@ -18,7 +18,7 @@ Akto DAST (Dynamic Application Security Testing) allows you to automatically sca
 
   services:
     aktojax:
-      image: tangobeeakto/aktojax:latest
+      image: aktosecurity/aktojax:latest
       ports:
         - "8088:8088"
       restart: always
