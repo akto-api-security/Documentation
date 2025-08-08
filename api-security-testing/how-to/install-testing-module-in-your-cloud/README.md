@@ -40,7 +40,7 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 helm repo update prometheus-community
     
 helm install prometheus prometheus-community/kube-prometheus-stack \
-	--namespace <NAMESPACE> \
+	--namespace <your-namespace> \
 	--create-namespace
 ```
 2. Install `keda`
@@ -49,14 +49,14 @@ helm repo add kedacore https://kedacore.github.io/charts
 helm repo update kedacore
 
 helm install keda kedacore/keda \
-  --namespace <NAMESPACE> \
+  --namespace <your-namespace> \
   --create-namespace
 ```
 3. Upgrade `keda` to set `watchNamespace`
 ```bash
 helm upgrade keda kedacore/keda \
-  --namespace <NAMESPACE> \
-  --set watchNamespace=<NAMESPACE>
+  --namespace <your-namespace> \
+  --set watchNamespace=<your-namespace>
 ```
 - This restricts keda to watch/control only specific namespace(s)
 - Its fine if you get this error - `Error: UPGRADE FAILED: no RoleBinding with the name "keda-operator" found`
