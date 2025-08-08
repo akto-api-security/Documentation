@@ -30,6 +30,44 @@ You can now use a Helm-chart to install Akto Security Testing module in your clo
 
 ### Helm-chart
 
+#### Pre-requisites / Dependencies
+If you don't need auto-scaling, skip this section.
+
+Otherwise, if auto-scaling needs to be enabled to allow parallel test runs via multiple k8s pods, we need to install few dependencies via helm charts.
+1. Install `kube-prometheus-stack`
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update prometheus-community
+    
+helm install prometheus prometheus-community/kube-prometheus-stack \
+	--namespace <NAMESPACE> \
+	--create-namespace
+```
+2. Install `keda`
+```bash
+helm repo add kedacore https://kedacore.github.io/charts  
+helm repo update kedacore
+
+helm install keda kedacore/keda \
+  --namespace <NAMESPACE> \
+  --create-namespace
+```
+3. Upgrade `keda` to set `watchNamespace`
+```bash
+helm upgrade keda kedacore/keda \
+  --namespace <NAMESPACE> \
+  --set watchNamespace=<NAMESPACE>
+```
+- This restricts keda to watch/control only specific namespace(s)
+- Its fine if you get this error - `Error: UPGRADE FAILED: no RoleBinding with the name "keda-operator" found`
+- As a fix, re-run the helm upgrade command mentioned above, as the first run would create the `keda-operator` deployment in k8s.
+
+4. While installing / upgrading Akto's helm chart (covered in later sections) additionally set the following flag
+```
+--set testing.autoScaling.enabled=true
+```
+
+#### Akto's helm chart installation
 1. Add akto helm repository.
 ```bash
 helm repo add akto https://akto-api-security.github.io/helm-charts/
