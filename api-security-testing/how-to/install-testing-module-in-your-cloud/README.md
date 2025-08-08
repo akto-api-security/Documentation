@@ -53,15 +53,14 @@ helm install keda kedacore/keda \
   --create-namespace
 ```
 3. Upgrade `keda` to set `watchNamespace`
+   1. This restricts keda to watch/control only specific namespace(s)
+   2. Its fine if you get this error - `Error: UPGRADE FAILED: no RoleBinding with the name "keda-operator" found`
+   3. As a fix, re-run the helm upgrade command mentioned below, as the first run would create the `keda-operator` deployment in k8s.
 ```bash
 helm upgrade keda kedacore/keda \
   --namespace <your-namespace> \
   --set watchNamespace=<your-namespace>
 ```
-   1. This restricts keda to watch/control only specific namespace(s)
-   2. Its fine if you get this error - `Error: UPGRADE FAILED: no RoleBinding with the name "keda-operator" found`
-   3. As a fix, re-run the helm upgrade command mentioned above, as the first run would create the `keda-operator` deployment in k8s.
-
 4. While installing / upgrading Akto's helm chart (covered in later sections) additionally set the following flag
 ```
 --set testing.autoScaling.enabled=true
