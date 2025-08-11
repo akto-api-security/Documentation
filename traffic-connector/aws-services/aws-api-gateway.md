@@ -17,8 +17,22 @@ To connect Akto with AWS API Gateway, follow these steps -
 
         <figure><img src="../../.gitbook/assets/aws-api-gateway-2.png" alt=""><figcaption></figcaption></figure>
     4.  Select `Error and info logs` and `Data tracing` and save these settings.
-
-        <figure><img src="../../.gitbook/assets/aws-api-gateway-3.png" alt=""><figcaption></figcaption></figure>
+        ```
+        {
+            "requestId": "$context.requestId",
+            "extendedRequestId": "$context.extendedRequestId",
+            "ip": "$context.identity.sourceIp",
+            "caller": "$context.identity.caller",
+            "user": "$context.identity.user",
+            "requestTime": "$context.requestTime",
+            "httpMethod": "$context.httpMethod",
+            "resourcePath": "$context.resourcePath",
+            "status": "$context.status",
+            "protocol": "$context.protocol",
+            "responseLength": "$context.responseLength"
+        }
+        ```
+      <figure><img src="../../.gitbook/assets/aws-api-gateway-3.png" alt=""><figcaption></figcaption></figure>
     5. Find out the `cloudwatch log group` for your API gateway for the stage which has the above logs enabled and save it. We'll need it later.
     6. Deploy the kubernetes deployment below.
        1. For `LOG_GROUP_NAME` and `AWS_REGION`, use the log group arn we saved earlier and the aws region it is deployed in.

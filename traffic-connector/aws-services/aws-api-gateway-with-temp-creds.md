@@ -22,7 +22,22 @@ Follow the steps mentioned [here](https://docs.akto.io/getting-started/traffic-p
 3.  Scroll down to the `Logs and tracing` section and click on `Edit`.
     <figure><img src="../../.gitbook/assets/aws-api-gateway-2.png" alt=""><figcaption></figcaption></figure>
 4.  Select `Error and info logs` and `Data tracing` and save these settings.
-    <figure><img src="../../.gitbook/assets/aws-api-gateway-3.png" alt=""><figcaption></figcaption></figure>
+    ```
+    {
+        "requestId": "$context.requestId",
+        "extendedRequestId": "$context.extendedRequestId",
+        "ip": "$context.identity.sourceIp",
+        "caller": "$context.identity.caller",
+        "user": "$context.identity.user",
+        "requestTime": "$context.requestTime",
+        "httpMethod": "$context.httpMethod",
+        "resourcePath": "$context.resourcePath",
+        "status": "$context.status",
+        "protocol": "$context.protocol",
+        "responseLength": "$context.responseLength"
+    }
+    ```
+  <figure><img src="../../.gitbook/assets/aws-api-gateway-3.png" alt=""><figcaption></figcaption></figure>
 5.  Find out the `CloudWatch log group` for your API Gateway for the stage which has the above logs enabled and save its ARN. You'll need it later.
 
 ----------
