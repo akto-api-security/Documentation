@@ -1,4 +1,4 @@
-# What is Akto?
+# What is Akto ?
 
 [Getting-Started](./#getting-started) • [API Discovery](api-inventory-1/concepts/api-endpoints.md) • [API testing](api-security-testing/concepts/test.md) • [Add Test](test-editor/concepts/test-library.md) • [Join Discord community](https://discord.com/invite/Wpc6xVME4s)&#x20;
 
