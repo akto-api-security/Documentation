@@ -23,19 +23,7 @@ Follow the steps mentioned [here](https://docs.akto.io/getting-started/traffic-p
     <figure><img src="../../.gitbook/assets/aws-api-gateway-2.png" alt=""><figcaption></figcaption></figure>
 4.  Select `Error and info logs` and `Data tracing` and save these settings.
     ```
-    {
-        "requestId": "$context.requestId",
-        "extendedRequestId": "$context.extendedRequestId",
-        "ip": "$context.identity.sourceIp",
-        "caller": "$context.identity.caller",
-        "user": "$context.identity.user",
-        "requestTime": "$context.requestTime",
-        "httpMethod": "$context.httpMethod",
-        "resourcePath": "$context.resourcePath",
-        "status": "$context.status",
-        "protocol": "$context.protocol",
-        "responseLength": "$context.responseLength"
-    }
+    { "requestId":"$context.requestId", "extendedRequestId":"$context.extendedRequestId","ip": "$context.identity.sourceIp", "caller":"$context.identity.caller", "user":"$context.identity.user", "requestTime":"$context.requestTime", "httpMethod":"$context.httpMethod", "resourcePath":"$context.resourcePath", "status":"$context.status", "protocol":"$context.protocol", "responseLength":"$context.responseLength" }
     ```
   <figure><img src="../../.gitbook/assets/aws-api-gateway-3.png" alt=""><figcaption></figcaption></figure>
 5.  Find out the `CloudWatch log group` for your API Gateway for the stage which has the above logs enabled and save its ARN. You'll need it later.
@@ -66,13 +54,13 @@ If your EKS cluster and CloudWatch log groups are in different AWS accounts, fol
             "logs:GetLogEvents",
             "logs:FilterLogEvents"
           ],
-          "Resource": "arn:aws:logs:<region>:<cloudwatch-account-id>:log-group:<log-group-name>:*"
+          "Resource": "arn:aws:logs:<region>:<cloudwatch-account-id>:log-group:*"
         }
       ]
     }
     ```
 
-6.  Replace `<region>`, `<cloudwatch-account-id>`, and `<log-group-name>` with actual values.
+6.  Replace `<region>` and `<cloudwatch-account-id>` with actual values.
 7.  Click **Next**, name the role (e.g., `CrossAccountCloudWatchRole`), and create the role.
 
 ### 2.2 Update Trust Policy
@@ -218,6 +206,8 @@ spec:
             value: "5"
           - name: LOG_GROUP_ARN
             value: ""
+          - name: LOG_GROUP_AWS_ACCOUNT_ID
+            value: ""
           - name: CROSS_ACCOUNT_ROLE_ARN
             value: ""
           - name: SESSION_NAME
@@ -228,16 +218,18 @@ spec:
 
 - Replace `<namespace>` with the Kubernetes namespace used in Steps 3.3 and 4.  
 - For `AKTO_KAFKA_BROKER_MAL`, use the value of the `mini-runtime` service deployed in Step 1.1.  
-- For `<LOG_GROUP_ARN>`, enter the value obtained in Step 1.2.5.  
+- For `<LOG_GROUP_ARN>`, enter the value obtained in Step 1.2.5. (This is optional if you want to use multiple CloudWatch log groups)
+- For `<LOG_GROUP_AWS_ACCOUNT_ID>`, enter the AWS account id where your cloudwatch logs are located.  
 - For `<SESSION_NAME>`, use any name you want for the session.  
 - Replace `<AWS_REGION>` with the AWS region where your EKS cluster is located.
 
 ## Note:
 
-To use multiple Log group ARNs, use the image `aktosecurity/mirror-api-logging:api-gateway-logging-temp-cred-multiple-arn` in the template provided above and fill the environment variable `<LOG_GROUP_ARN>` as the show in the example here 
+To use multiple Log group ARNs, use the image `aktosecurity/mirror-api-logging:api-gateway-logging-temp-cred-multiple-arn` in the template provided above and fill the environment variable `<LOG_GROUP_AWS_ACCOUNT_ID>` as the show in the example here 
 
 ```bash
-LOG_GROUP_ARN=arn:aws:logs:ap-south-1:021978053257:log-group:API-Gateway-Execution-Logs_juroiydk3c/Dev:*,arn:aws:logs:ap-south-1:021978053257:log-group:API-Gateway-Execution-Logs_juroiydk3c/Dev2:*,arn:aws:logs:ap-south-1:021978053257:log-group:API-Gateway-Execution-Logs_juroiydk3c/Dev3:*
+- name: LOG_GROUP_AWS_ACCOUNT_ID
+  value: "1234567890"
 ```
 
 ----------
