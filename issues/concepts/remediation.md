@@ -6,4 +6,4 @@ Each guide includes step-by-step instructions, code snippets in relevant program
 
 This helps development teams understand not just what to fix, but how to implement the fix correctly using industry best practices and secure coding patterns.
 
-<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>

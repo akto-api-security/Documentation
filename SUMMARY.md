@@ -179,6 +179,7 @@
   * [Schema Conformance](api-protection/concepts/schema-conformance.md)
   * [Threat Actors](api-protection/concepts/threat-actors.md)
   * [Threat Policy](api-protection/concepts/threat-policy.md)
+  * [Remediation Steps for API Protection Issues](api-protection/concepts/remediation-steps-for-api-protection-issues.md)
 
 ***
 
@@ -227,6 +228,7 @@
   * [Test Role](api-security-testing/concepts/test-role.md)
   * [User Config](api-security-testing/concepts/user-config.md)
   * [Test Result](api-security-testing/concepts/test-result.md)
+  * [Remediation Steps for Testing Issues](api-security-testing/concepts/remediation-steps-for-testing-issues.md)
   * [Magic Operator](api-security-testing/concepts/magic-operator.md)
   * [JSON Recording for Automated Auth Tokens](api-security-testing/concepts/json-recording-for-automated-auth-tokens.md)
 * [How To](api-security-testing/how-to/README.md)
