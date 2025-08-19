@@ -8,7 +8,7 @@ Akto Test Editor is the test playground for security teams and developers to wri
 
 Test Editor consists of three blocks:
 
-1. [Test Library](test-library.md) consisting of 100+ built-in tests.
+1. [Test Library](test-library.md) consisting of 1000+ built-in tests.
 2. [YAML test](test-yaml.md) editor.
 3. Sample API request and response to test.
 
