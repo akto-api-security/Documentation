@@ -6,7 +6,7 @@ description: Learn how to send API traffic data from OpenAPI spec to Akto.
 
 ## Introduction
 
-[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](broken-reference). If you don't have access to staging or production environment, you can create API inventory using OpenAPI spec.
+[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](../traffic-data-sources.md). If you don't have access to staging or production environment, you can create API inventory using OpenAPI spec.
 
 {% hint style="info" %}
 Note that traffic from OpenAPI spec won't be automated like the native cloud connectors.
