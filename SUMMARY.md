@@ -125,6 +125,7 @@
   * [API Collection](api-inventory-1/concepts/api-collection.md)
   * [API Call Stats](api-inventory/concepts/api-call-stats.md)
   * [Explore mode](api-inventory-1/concepts/explore-mode.md)
+  * [API Sequence](api-inventory/concepts/api-sequence.md)
   * [gRPC API Coverage with Akto](api-inventory/concepts/grpc-api-coverage-with-akto.md)
   * [Data Types](api-inventory-1/concepts/data-types.md)
   * [API Groups](api-inventory-1/concepts/api-groups.md)
