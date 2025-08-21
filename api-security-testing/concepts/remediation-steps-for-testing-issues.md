@@ -11,7 +11,7 @@ After running a test:
 3. Select any issue under the Vulnerable tab
 4. Open the Remediation tab in the issue details panel
 
-<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Understanding the Remediation Tab
 

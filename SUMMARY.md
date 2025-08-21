@@ -156,6 +156,7 @@
   * [Deactivating and Reactivating API Collections in Akto](api-inventory-1/how-to/deactivate-an-api-collection.md)
   * [Add collection using Explore Mode](api-inventory-1/how-to/add-collection-using-explore-mode.md)
   * [De-merge API](api-inventory/how-to/de-merge-api.md)
+  * [Mark a Collection Out of Testing Scope](api-inventory/how-to/mark-a-collection-out-of-testing-scope.md)
   * [Create Swagger File Using Akto](api-inventory-1/how-to/create-swagger-file-using-akto.md)
   * [Copy API Endpoints Data](api-inventory-1/how-to/copy-api-endpoints-data.md)
   * [Add an API Collection](api-inventory-1/how-to/add-an-api-collection.md)
