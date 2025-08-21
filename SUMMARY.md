@@ -236,6 +236,7 @@
   * [Test Role](api-security-testing/concepts/test-role.md)
   * [User Config](api-security-testing/concepts/user-config.md)
   * [Test Result](api-security-testing/concepts/test-result.md)
+  * [Export Summary Report](api-security-testing/concepts/export-summary-report.md)
   * [Remediation Steps for Testing Issues](api-security-testing/concepts/remediation-steps-for-testing-issues.md)
   * [Magic Operator](api-security-testing/concepts/magic-operator.md)
   * [JSON Recording for Automated Auth Tokens](api-security-testing/concepts/json-recording-for-automated-auth-tokens.md)
