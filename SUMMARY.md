@@ -327,6 +327,7 @@
 
 * [Concepts](api-security-posture/concepts/README.md)
   * [Overview](api-security-posture/concepts/overview.md)
+  * [Analysis](api-security-posture/concepts/analysis.md)
 
 ## SIEM Integration
 
