@@ -120,7 +120,7 @@ kubectl get svc -n <namespace>
       wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-mini-runtime.env
    ```
 6. Modify ${AKTO_KAFKA_IP} in the `docker-compose-mini-runtime.yml` with the ip of your instance on which runtime will be deployed
-7. Replace the value of `DATABASE_ABSTRACTOR_SERVICE_TOKEN` in `docker-mini-runtime.yml` with the token value copied from Akto's Hybrid Saas Connector in the quick start menu. Also Replace the value of `AKTO_KAFKA_BROKER_URL` with <instance_ip>:9092
+7. Replace the value of `DATABASE_ABSTRACTOR_SERVICE_TOKEN` in `docker-mini-runtime.yml` with the token value copied from Akto's Hybrid Saas Connector in the quick start menu. Also Replace the value of `AKTO_KAFKA_BROKER_URL` with <instance_ip>:9092. Also Replace the value of `AKTO_THREAT_PROTECTION_BACKEND_TOKEN` and `DATABASE_ABSTRACTOR_SERVICE_TOKEN` in `docker-threat-detection.env` with the token value copied from Akto's Hybrid Saas Connector in the quick start menu.
 
 8. Run `docker-compose -f docker-compose-mini-runtime.yml up -d`
 9. Run `systemctl enable /usr/lib/systemd/system/docker.service` to ensure Docker starts up in case of instance restarts
