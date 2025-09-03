@@ -117,6 +117,7 @@
   * [Add API traffic to Akto using HAR file upload](traffic-connector/manual/har-file-upload.md)
   * [API Import: WSDL in Akto](traffic-connector/manual/wsdl.md)
 * [Configure TLS on kafka](traffic-connector/kafka-tls-in-kubernetes.md)
+* [Configure SASL Authentication on kafka](traffic-connector/kafka-sasl-in-kubernetes.md)
 
 ## API Inventory
 
