@@ -253,7 +253,7 @@ async function sendToAkto(request, requestBody, response, responseBody, env) {
   });
 
   try {
-    const aktoResponse = await fetch(aktoRequest);
+    const aktoResponse = await env.data_injection_worker.fetch(aktoRequest);
     const responseText = await aktoResponse.text(); // always read body
 
     // Always print the response
@@ -297,30 +297,36 @@ function generateLog(req, requestBody, res, responseBody) {
 
 ***
 
-## Step 3: Configure Worker Routing
+## Step 3: Configure Worker Routing with Service Binding
 
-As the traffic connector worker & mini-runtime-service container are in the same Cloudflare account ie. same zone, the global\_fetch\_strictly\_public compatibility flag is enabled. This ensures that the Worker can make requests to the Akto Mini-Runtime Service Container without any issues.
+To securely connect your client Worker (e.g., mcp worker) with the Akto Mini-Runtime-Service Container, use **service binding**. This allows your Worker to call the container Worker internally, without exposing it to the public internet.
+
+### 1. Add Service Binding to Your Client Worker
 
 1. In the Cloudflare Dashboard, go to **Workers & Pages**.
-2. Under **Overview**, select your Worker.
-3. Navigate to **Settings** > **Runtime**.
-4.  Edit **Compatibility Flags** and add `global_fetch_strictly_public` to the list of flags.'
+2. Under **Overview**, select your client Worker (e.g., mcp worker).
+3. Navigate to **Settings** > **Bindings**.
+4. Click **Add binding** and select **Service binding**.
+5. In the **Variable name** field, enter:  
+   ```
+   data_injection_worker
+   ```
+6. In **Service binding**, select the container Worker you created in Step 1.
+7. In **Entrypoint**, select the container's Durable Object name.
+8. Click **Add** and then **Deploy** your Worker.
 
-    <figure><img src="../../.gitbook/assets/cloudflare-compatibility-flags.png" alt=""><figcaption></figcaption></figure>
+### 2. Restrict Container Worker to Internal Network
 
-If you'd like to route specific domains or paths through this Worker:
+1. Go to the container Worker in the Cloudflare Dashboard.
+2. Click **Settings**.
+3. Navigate to **Domains & Routes**.
+4. Disable both **workers.dev** and **Preview URLs**.
 
-5. In the Cloudflare Dashboard, go to **Workers & Pages**.
-6. Under **Overview**, select your Worker.
-7. Navigate to **Settings** > **Domains & Routes**.
-8. Click **Add Route**.
-9.  Select the appropriate zone (domain), and enter a route pattern such as:
+This ensures your container Worker is only accessible internally via service binding, improving security.
 
-    ```
-    *.yourdomain.com/*
-    ```
+***
 
-This ensures all traffic matching the route is intercepted and mirrored to Akto.
+Now, your client Worker can securely communicate with the Akto Mini-Runtime-Service Container using the `data_injection_worker` binding, and your container Worker is not exposed
 
 ***
 
