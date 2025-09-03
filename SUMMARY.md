@@ -353,6 +353,9 @@
 ## API reference
 
 * [API reference](api-reference/api-reference.md)
+* [Discovery](api-reference/discovery.md)
+* [Testing](api-reference/testing.md)
+* [Testing results](api-reference/testing-results.md)
 
 ***
 
