@@ -354,8 +354,8 @@
 
 * [API reference](api-reference/api-reference.md)
 * [Discovery](api-reference/discovery.md)
-* [Testing](api-reference/testing.md)
-* [Testing results](api-reference/testing-results.md)
+* [Security Testing](api-reference/security-testing.md)
+* [Scan results](api-reference/scan-results.md)
 
 ***
 
