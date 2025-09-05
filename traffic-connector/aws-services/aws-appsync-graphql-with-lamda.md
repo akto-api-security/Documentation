@@ -192,11 +192,11 @@ export function request(ctx) {
 		  path: '/graphql',
 		  requestHeaders: (ctx.request?.headers || {}),
 		  method: ctx.request?.headers?.['x-forwarded-method'] ||  'POST',
-		  requestPayload: JSON.stringify({
+		  requestPayload: {
 			  operationName: ctx.info.fieldName,
 			  query: "",
 			  variables: ctx.arguments || {}
-		  }),
+		  },
 		  ip: ctx.request?.headers?.['x-forwarded-for'] ||  '',
 		  traffic_source: 'AppSync',
 	  }
