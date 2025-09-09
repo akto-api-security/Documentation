@@ -335,6 +335,10 @@
 
 * [Splunk](siem-integration/splunk.md)
 
+## OTHER INTEGRATIONS
+
+* [JFrog](other-integrations/splunk.md)
+
 ## Alerts
 
 * [Gmail Webhook](alerts/gmail-webhook.md)
