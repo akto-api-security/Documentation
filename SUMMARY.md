@@ -13,6 +13,7 @@
 * [MCP Security](mcp-security.md)
 * [MCP Import](mcp-import.md)
 * [AI Security](ai-security.md)
+* [AI Agent Security](ai-agent-security.md)
 
 ## AI Agents
 
