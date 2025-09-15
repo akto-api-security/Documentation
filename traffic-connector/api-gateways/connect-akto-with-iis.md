@@ -57,6 +57,8 @@ Ensure this IP is reachable from your IIS server. You will need this to forward 
 
 Akto provides a native IIS module that can capture HTTP request and response headers and payloads. This module supports both 64-bit and 32-bit environments.
 
+👉 **Important:** You must download and use only one DLL — either 64-bit or 32-bit depending on your system. Regardless of which one you choose, always rename it to `AktoNativeIisTrafficCollector.dll`, move it to `C:\akto_configs`, and use that same name everywhere.
+
 ---
 
 ### 2.1 Prepare Configuration File
@@ -83,18 +85,20 @@ Akto provides a native IIS module that can capture HTTP request and response hea
 
 You need to register the Akto IIS module globally so it applies to all websites.
 
-1. Download the DLLs to `C:\akto_configs`:
+1. Download the correct DLL for your environment (pick **only one**):
 
    ```powershell
-   Invoke-WebRequest -Uri https://github.com/akto-api-security/iis-collector-native-module/raw/refs/heads/master/x64/Release/AktoNativeIisTrafficCollector.dll -OutFile C:\akto_configs\AktoTrafficConnector_x64.dll
-   Invoke-WebRequest -Uri https://github.com/akto-api-security/iis-collector-native-module/raw/refs/heads/master/x86/Release/AktoNativeIisTrafficCollector.dll -OutFile C:\akto_configs\AktoTrafficConnector_x86.dll
+   # For 64-bit IIS
+   Invoke-WebRequest -Uri https://github.com/akto-api-security/iis-collector-native-module/raw/refs/heads/master/x64/Release/AktoNativeIisTrafficCollector.dll -OutFile C:\akto_configs\AktoNativeIisTrafficCollector.dll
+
+   # For 32-bit IIS
+   Invoke-WebRequest -Uri https://github.com/akto-api-security/iis-collector-native-module/raw/refs/heads/master/x86/Release/AktoNativeIisTrafficCollector.dll -OutFile C:\akto_configs\AktoNativeIisTrafficCollector.dll
    ```
 
 2. Open an **elevated command prompt (Administrator)** and run the following commands:
 
    ```cmd
-   %windir%\system32\inetsrv\appcmd.exe install module /name:AktoTrafficConnector /image:"C:\akto_configs\AktoTrafficConnector_x64.dll" /add:true
-   %windir%\system32\inetsrv\appcmd.exe install module /name:AktoTrafficConnector /image:"C:\akto_configs\AktoTrafficConnector_x86.dll" /add:true
+   %windir%\system32\inetsrv\appcmd.exe install module /name:AktoTrafficConnector /image:"C:\akto_configs\AktoNativeIisTrafficCollector.dll" /add:true
    appcmd.exe set config /section:system.webServer/globalModules /+[name='AktoNativeIisTrafficCollector',image='C:\akto_configs\AktoNativeIisTrafficCollector.dll']
    appcmd.exe list config /section:system.webServer/globalModules
    ```
@@ -112,7 +116,7 @@ You need to register the Akto IIS module globally so it applies to all websites.
 
 If you want to install the module for **just one website**, follow these steps:
 
-1. Copy the appropriate DLL (`x64` or `x86`) into a directory named `bin` under your site’s root folder (e.g., `C:\inetpub\wwwroot\MySite\bin`).
+1. Copy the correct DLL into a directory named `bin` under your site’s root folder (e.g., `C:\inetpub\wwwroot\MySite\bin`).
 
 2. Update the `web.config` of that website:
 
@@ -120,7 +124,7 @@ If you want to install the module for **just one website**, follow these steps:
 <configuration>
   <system.webServer>
     <modules>
-      <add name="AktoTrafficConnector" image="C:\inetpub\wwwroot\MySite\bin\AktoTrafficConnector_x64.dll" />
+      <add name="AktoTrafficConnector" image="C:\inetpub\wwwroot\MySite\bin\AktoNativeIisTrafficCollector.dll" />
     </modules>
   </system.webServer>
 </configuration>
@@ -140,7 +144,7 @@ Once installed:
 If no traffic is appearing, check:
 
 * IIS logs for module load errors.
-* Check logs in `C:\akto_config\logs\log_20xx.txt`
+* Check logs in `C:\akto_configs\logs\log_20xx.txt`
 * Akto Data-Ingestion Service logs to ensure it’s receiving traffic.
 
 ---
