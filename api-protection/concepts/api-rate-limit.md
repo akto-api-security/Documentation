@@ -1,7 +1,7 @@
 
 # API Abuse 
 
-### Akto's Next Gen API RateLimits Discovery:
+### Akto's Next Gen API Rate Limits Discovery:
 
 Traditional ratelimits rely on knowing the number of rpm allowed or supported ahead of time. In large organisations with 100s of APIs this is very difficult to do reliably.
 
