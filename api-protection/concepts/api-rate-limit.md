@@ -3,7 +3,7 @@
 
 ### Akto's Next Gen API Rate Limits Discovery:
 
-Traditional ratelimits rely on knowing the number of rpm allowed or supported ahead of time. In large organisations with 100s of APIs this is very difficult to do reliably.
+Traditional ratelimits rely on knowing the number of rpm allowed or supported by servers ahead of time. In large organisations with 100s of APIs this is very difficult to do reliably. As the organization evovles so does the APIs and their usage patterns making static API rate limiting even more challenging.
 
 For instance, an API may experience varying traffic volumes to endpoints like `/cancel-booking` compared to `/book`. Furthermore, the `/book` endpoint could see an uptick in usage following a successful marketing push.
 
