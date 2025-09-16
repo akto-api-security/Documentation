@@ -192,6 +192,7 @@
 * [Concepts](api-protection/concepts/README.md)
   * [Schema Conformance](api-protection/concepts/schema-conformance.md)
   * [Threat Actors](api-protection/concepts/threat-actors.md)
+  * [Dynamic Api RateLimiting](api-protection/concepts/api-rate-limit.md)
   * [Threat Policy](api-protection/concepts/threat-policy.md)
   * [Remediation Steps for API Protection Issues](api-protection/concepts/remediation-steps-for-api-protection-issues.md)
 
