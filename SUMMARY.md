@@ -14,6 +14,7 @@
 * [MCP Import](mcp-import.md)
 * [AI Security](ai-security.md)
 * [AI Agent Security](ai-agent-security.md)
+* [MCP Watch](mcp-watch.md)
 * [MCP Proxy](agentic-ai/akto-mcp-proxy.md)
 
 ## AI Agents
