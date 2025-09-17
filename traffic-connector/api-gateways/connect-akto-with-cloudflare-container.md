@@ -199,27 +199,57 @@ https://super-resonance-827f.billing-53a.workers.dev
 ```javascript
 export default {
   async fetch(request, env, ctx) {
-    const requestClone = request.clone();
-    const backendResponse = await fetch("https://httpbin.org/get");
-
-    try {
-      const contentType = (request.headers.get("content-type") || "").toLowerCase();
-      const shouldCapture = isAllowedContentType(contentType) && isValidStatus(backendResponse.status);
-
-      if (shouldCapture) {
-        const requestBody = await requestClone.text();
-        const responseClone = backendResponse.clone();
-        const responseBody = await responseClone.text();
-
-        ctx.waitUntil(sendToAkto(request, requestBody, backendResponse, responseBody, env));
-      }
-    } catch (error) {
-      console.error("Error while processing original request or response: ", error);
-    }
-
-    return backendResponse;
+    const [reqForFetch, reqForCollector] = await duplicateRequest(request); // At the starting of your fetch method
+    const backendResponse = await fetch(reqForFetch);
+    return collectTraffic(reqForCollector, backendResponse, env, ctx); // just after getting response
   },
 };
+
+async function duplicateRequest(request) {
+  if (!request.body) {
+    return [request, request.clone()];
+  }
+  const [stream1, stream2] = request.body.tee();
+  const req1 = new Request(request, { body: stream1 });
+  const req2 = new Request(request, { body: stream2 });
+  return [req1, req2];
+}
+
+function collectTraffic(request, backendResponse, env, ctx) {
+  const contentType = (request.headers.get("content-type") || "").toLowerCase();
+  const isAllowed = isAllowedContentType(contentType);
+  const shouldCapture = isAllowed && isValidStatus(backendResponse.status);
+
+  if (!shouldCapture) return backendResponse;
+
+  // Split response stream
+  let responseForClient = backendResponse;
+  let responseForLogging = null;
+
+  if (backendResponse.body) {
+    const [respStream1, respStream2] = backendResponse.body.tee();
+
+    // Return one response to client
+    responseForClient = new Response(respStream1, {
+      headers: backendResponse.headers,
+      status: backendResponse.status,
+      statusText: backendResponse.statusText
+    });
+
+    // Keep the other for logging
+    responseForLogging = respStream2;
+  }
+
+  ctx.waitUntil((async () => {
+    let requestBody = "";
+    if (request.body) requestBody = await streamToString(request.body);
+    let responseBody = "";
+    if (responseForLogging) responseBody = await streamToString(responseForLogging);
+    await sendToAkto(request, requestBody, backendResponse, responseBody, env);
+  })());
+
+  return responseForClient;
+}
 
 function isAllowedContentType(contentType) {
   const allowedTypes = [
@@ -230,7 +260,6 @@ function isAllowedContentType(contentType) {
     "application/x-www-form-urlencoded",
     "application/soap+xml"
   ];
-
   return allowedTypes.some(type => contentType.includes(type));
 }
 
@@ -238,48 +267,42 @@ function isValidStatus(status) {
   return (status >= 200 && status < 300) || [301, 302, 304].includes(status);
 }
 
+async function streamToString(stream) {
+  const reader = stream.getReader();
+  const decoder = new TextDecoder();
+  let result = "";
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    result += decoder.decode(value, { stream: true });
+  }
+  return result;
+}
+
 async function sendToAkto(request, requestBody, response, responseBody, env) {
-  const aktoAPI = "https://<your-cloudflare-container-ingestion-service-address>/api/ingestData";
-
+  const aktoAPI = "https://<your-ingestion-service-address>/api/ingestData";
   const logs = generateLog(request, requestBody, response, responseBody);
-
   const aktoRequest = new Request(aktoAPI, {
     method: "POST",
     body: logs,
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": "<your-api-key>"
-    },
+    headers: { "Content-Type": "application/json", "x-api-key": "<YOUR_AKTO_API_KEY>" },
   });
-
-  try {
-    const aktoResponse = await env.data_injection_worker.fetch(aktoRequest);
-    const responseText = await aktoResponse.text(); // always read body
-
-    // Always print the response
-    console.log(`Akto response: ${aktoResponse.status} ${aktoResponse.statusText}, Body: ${responseText}`);
-
-    // Optionally, you can handle specific status codes
-    if (!aktoResponse.ok) {
-      console.warn("Non-2xx response from Akto.");
-    }
-
-  } catch (err) {
-    console.error("Error sending data to Akto:", err);
+  const aktoResponse = await env.data_injection_worker.fetch(aktoRequest);
+  if (aktoResponse.status === 400) {
+    console.error(`Akto response: ${aktoResponse.status} ${aktoResponse.statusText}, Body: ${await aktoResponse.text()}`);
   }
 }
 
 function generateLog(req, requestBody, res, responseBody) {
   const url = new URL(req.url);
-  const path = url.pathname;
   const value = {
-    path: path,
+    path: url.pathname,
     requestHeaders: JSON.stringify(Object.fromEntries(req.headers)),
     responseHeaders: JSON.stringify(Object.fromEntries(res.headers)),
     method: req.method,
     requestPayload: requestBody,
     responsePayload: responseBody,
-    ip: req.headers.get('x-forwarded-for') || req.headers.get('cf-connecting-ip') || req.headers.get('x-real-ip') || '',
+    ip: req.headers.get("x-forwarded-for") || req.headers.get("cf-connecting-ip") || req.headers.get("x-real-ip") || "",
     time: Math.round(Date.now() / 1000).toString(),
     statusCode: res.status.toString(),
     type: "HTTP/1.1",
@@ -288,10 +311,9 @@ function generateLog(req, requestBody, res, responseBody) {
     akto_vxlan_id: "0",
     is_pending: "false",
     source: "MIRRORING",
-    tag: "{\n  \"service\": \"lambda\"\n}"
+    tag: "{\n  \"service\": \"cloudflare\"\n}"
   };
-
-  return JSON.stringify({ "batchData": [value] });
+  return JSON.stringify({ batchData: [value] });
 }
 ```
 
