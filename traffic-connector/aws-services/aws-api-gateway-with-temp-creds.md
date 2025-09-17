@@ -230,12 +230,6 @@ spec:
 
 1. If fetching logs from multiple accounts, make sure that the cross account role [ generally which belongs to the monitoring account ] attached to the module can read logs from all the aforementioned accounts.
 
-2. To use multiple Log group ARNs, use the image `aktosecurity/mirror-api-logging:api-gateway-logging-temp-cred-multiple-arn` in the template provided above and fill the environment variable `<LOG_GROUP_ARN>` as the show in the example here 
-
-```bash
-LOG_GROUP_ARN=arn:aws:logs:ap-south-1:021978053257:log-group:API-Gateway-Execution-Logs_juroiydk3c/Dev:*,arn:aws:logs:ap-south-1:021978053257:log-group:API-Gateway-Execution-Logs_juroiydk3c/Dev2:*,arn:aws:logs:ap-south-1:021978053257:log-group:API-Gateway-Execution-Logs_juroiydk3c/Dev3:*
-```
-
 ----------
 
 With this setup, Akto can fetch CloudWatch logs from API Gateway across AWS accounts using temporary credentials.
