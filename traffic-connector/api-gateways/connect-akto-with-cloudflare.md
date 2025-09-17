@@ -33,8 +33,7 @@ export default {
   async fetch(request, env, ctx) {
     const [reqForFetch, reqForCollector] = await duplicateRequest(request); // At the starting of your fetch method
     const backendResponse = await fetch(reqForFetch);
-    collectTraffic(reqForCollector, backendResponse, env, ctx); // just after getting response
-    return backendResponse;
+    return collectTraffic(reqForCollector, backendResponse, env, ctx); // just after getting response
   },
 };
 
@@ -53,11 +52,23 @@ function collectTraffic(request, backendResponse, env, ctx) {
   const isAllowed = isAllowedContentType(contentType);
   const shouldCapture = isAllowed && isValidStatus(backendResponse.status);
 
-  if (!shouldCapture) return;
+  if (!shouldCapture) return backendResponse;
 
+  // Split response stream
+  let responseForClient = backendResponse;
   let responseForLogging = null;
+
   if (backendResponse.body) {
-    const [, respStream2] = backendResponse.body.tee();
+    const [respStream1, respStream2] = backendResponse.body.tee();
+
+    // Return one response to client
+    responseForClient = new Response(respStream1, {
+      headers: backendResponse.headers,
+      status: backendResponse.status,
+      statusText: backendResponse.statusText
+    });
+
+    // Keep the other for logging
     responseForLogging = respStream2;
   }
 
@@ -68,6 +79,8 @@ function collectTraffic(request, backendResponse, env, ctx) {
     if (responseForLogging) responseBody = await streamToString(responseForLogging);
     await sendToAkto(request, requestBody, backendResponse, responseBody, env);
   })());
+
+  return responseForClient;
 }
 
 function isAllowedContentType(contentType) {
@@ -104,9 +117,9 @@ async function sendToAkto(request, requestBody, response, responseBody, env) {
   const aktoRequest = new Request(aktoAPI, {
     method: "POST",
     body: logs,
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "x-api-key": "<YOUR_AKTO_API_KEY>" },
   });
-  const aktoResponse = await fetch(aktoRequest);
+  const aktoResponse = await env.data_ingest_worker.fetch(aktoRequest);
   if (aktoResponse.status === 400) {
     console.error(`Akto response: ${aktoResponse.status} ${aktoResponse.statusText}, Body: ${await aktoResponse.text()}`);
   }
