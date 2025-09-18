@@ -204,8 +204,6 @@ spec:
             value: ""
           - name: CLOUDWATCH_READ_BATCH_SIZE
             value: "5"
-          - name: LOG_GROUP_AWS_ACCOUNT_ID
-            value: ""
           - name: CROSS_ACCOUNT_ROLE_ARN
             value: ""
           - name: LOG_GROUP_PREFIX
@@ -221,14 +219,14 @@ spec:
 - Replace `<namespace>` with the Kubernetes namespace used in Steps 3.3 and 4.  
 - For `AKTO_KAFKA_BROKER_MAL`, use the value of the `mini-runtime` service deployed in Step 1.1.  
 - For `<LOG_GROUP_ARN>`, enter the value obtained in Step 1.2.5. (This is optional if you want to use multiple CloudWatch log groups)
-- Replace `DATABASE_ABSTRACTOR_TOKEN`, with the database abstractor token from Akto dashboard.
-- For `<LOG_GROUP_AWS_ACCOUNT_ID>`, enter the AWS account id where your cloudwatch logs are located. You can skip this, if filling in the accountIDs on the Akto Dashboard.
+- Replace `<DATABASE_ABSTRACTOR_TOKEN>`, with the database abstractor token from Akto dashboard.
 - For `<SESSION_NAME>`, use any name you want for the session.  
 - Replace `<AWS_REGION>` with the AWS region where your EKS cluster is located.
 
 ## Note:
 
 1. If fetching logs from multiple accounts, make sure that the cross account role [ generally which belongs to the monitoring account ] attached to the module can read logs from all the aforementioned accounts.
+2. If adding multiple role ARNs, in Akto, make sure that the eks pod created here, has the correct IAM policies to be able to assume these role ARNs.
 
 ----------
 
