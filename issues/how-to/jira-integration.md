@@ -39,7 +39,7 @@ You can configure **one or multiple Jira projects**. For each project:
 
 ### What Happens When You Enable/Disable Bi-Directional Integration?
 
-<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 #### Enabling Bi-Directional Integration:
 

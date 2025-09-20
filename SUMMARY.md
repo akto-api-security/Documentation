@@ -11,7 +11,9 @@
 ***
 
 * [MCP Security](mcp-security.md)
+* [MCP Recon](mcp-recon.md)
 * [MCP Import](mcp-import.md)
+* [AI Agent Import](ai-agent-import.md)
 * [AI Model Import](ai-model-import.md)
 * [AI Security](ai-security.md)
 * [AI Agent Security](ai-agent-security.md)
