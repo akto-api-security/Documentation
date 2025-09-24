@@ -4,7 +4,7 @@
 
 
 {% hint style="info" %}
-This is feature is coming soon....
+This feature is coming soon....
 {% endhint %}
 
 ---
