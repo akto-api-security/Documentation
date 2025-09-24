@@ -78,8 +78,7 @@ For each detected MCP server config:
 }
 ```
 
-<img width="1092" height="497" alt="Screenshot 2025-09-24 at 6 20 24 PM" src="https://github.com/user-attachments/assets/6b2b8e04-3a40-4516-80cc-f2e7fa52d7c0" />
-
+<figure><img src="./.gitbook/assets/mcp_endpoint_shield_cursor.png" alt=""><figcaption></figcaption></figure>
 
 
 **What changed:**  
@@ -95,7 +94,7 @@ For each detected MCP server config:
 If you want to run manually (instead of auto-detection):  
 
 ```bash
-mcp-endpoint-shield stdio   --name <project_name>   --akto-api-token <token>   --exec <your_mcp_server_command> [args...]
+mcp-endpoint-shield stdio --name <project_name> --akto-api-token <token> --exec <your_mcp_server_command> [args...]
 ```
 
 ### Examples
@@ -105,7 +104,7 @@ mcp-endpoint-shield stdio   --name <project_name>   --akto-api-token <token>   -
   ```
 - Dockerized server:
   ```bash
-  mcp-endpoint-shield stdio     --name my-mcp     --akto-api-token <TOKEN>     --env AKTO_API_KEY=<TOKEN>     --exec docker run --rm -i -e AKTO_API_KEY=<TOKEN> your/mcp-image:latest
+  mcp-endpoint-shield stdio --name my-mcp --akto-api-token <TOKEN> --env AKTO_API_KEY=<TOKEN> --exec docker run --rm -i -e AKTO_API_KEY=<TOKEN> your/mcp-image:latest
   ```
 
 ---
