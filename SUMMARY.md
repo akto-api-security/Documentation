@@ -13,11 +13,11 @@
 * [MCP Security](mcp-security.md)
 * [MCP Recon](mcp-recon.md)
 * [MCP Import](mcp-import.md)
+* [MCP Endpoint Shield](mcp-endpoint-shield.md)
 * [AI Agent Import](ai-agent-import.md)
 * [AI Model Import](ai-model-import.md)
 * [AI Security](ai-security.md)
 * [AI Agent Security](ai-agent-security.md)
-* [MCP Watch](mcp-watch.md)
 * [MCP Proxy](agentic-ai/akto-mcp-proxy.md)
 
 ## AI Agents
