@@ -78,6 +78,10 @@ For each detected MCP server config:
 }
 ```
 
+<img width="1092" height="497" alt="Screenshot 2025-09-24 at 6 20 24 PM" src="https://github.com/user-attachments/assets/6b2b8e04-3a40-4516-80cc-f2e7fa52d7c0" />
+
+
+
 **What changed:**  
 - The server is renamed from `playwright-mcp` → `playwright-mcp-endpoint-shield`.  
 - `mcp-endpoint-shield` is now the entry command.  
