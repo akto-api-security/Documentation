@@ -5,9 +5,8 @@ MCP Endpoint Shield adds **runtime security** to any MCP server while preserving
 ---
 
 ## ✨ Features
-- ✅ Continuous safety checks on all requests and responses  
+- ✅ Continuous safety checks on all requests and responses to the MCP servers
 - ✅ Automatic blocking of unsafe interactions (via standard JSON-RPC errors)  
-- ✅ Lightweight analytics to help uncover issues faster  
 - ✅ Works out-of-the-box with popular MCP clients (Cursor, VS Code, Claude)  
 - ✅ Zero changes required in your MCP server  
 
@@ -25,7 +24,7 @@ mv mcp-endpoint-shield /usr/local/bin/
 
 ---
 
-## 🔍 Configuration Auto-Detection
+## 🔍 Auto-Detection
 Akto MCP Endpoint Shield automatically detects MCP client configurations:  
 - **Cursor** → Reads `~/.cursor/mcp.json`  
 - **Visual Studio Code** → Reads `.vscode/mcp.json` inside your workspace  
