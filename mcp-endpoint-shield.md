@@ -125,7 +125,7 @@ mcp-endpoint-shield stdio   --name <project_name>   --akto-api-token <token>   -
 ---
 
 ## 📜 Logging
-- Location: `$HOME/.akto/mcp_endpoint_shied.log`  
+- Location: `$HOME/.akto/mcp_endpoint_shield.log`  
 - Format: human-readable text logs  
 - Includes: project name (`--name`) for easy filtering  
 - Rotation: automatic (size-based) to prevent unbounded growth  
