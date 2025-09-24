@@ -20,18 +20,15 @@ Akto MCP Proxy is a security and governance layer that sits between MCP (Model C
 └─────────────┘        └─────────────────┘        └──────────────┘
                               │
                               ▼
-                       ┌─────────────────┐
+                       ┌──────────────────┐
                        │ Threat Detection │
                        │   & Guardrails   │
-                       └─────────────────┘
+                       └──────────────────┘
 ```
 
 
 Cloud setup
 <figure><img src="../.gitbook/assets/akto-mcp-proxy-cloud.png" alt=""><figcaption></figcaption></figure>
-
-Local setup
-<figure><img src="../.gitbook/assets/akto-mcp-proxy-local.png" alt=""><figcaption></figcaption></figure>
 
 ## How It Works
 
