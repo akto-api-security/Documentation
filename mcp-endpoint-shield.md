@@ -1,6 +1,6 @@
 # Akto MCP Endpoint Shield
 
-MCP Endpoint Shield adds **runtime security** to any MCP server while preserving your normal workflow. It acts as a protective layer between your MCP client (e.g., Cursor, VS Code, Claude) and your server—**with zero code changes required**.
+MCP Endpoint Shield provides **runtime security** and auto-discovery of local MCP servers configured on your machine. It acts as a protective layer between the MCP client (e.g., Cursor, VS Code, Claude) and the MCP servers—requiring no changes to your setup.
 
 ---
 
