@@ -16,6 +16,7 @@
 * [MCP Endpoint Shield](mcp-endpoint-shield.md)
 * [AI Agent Import](ai-agent-import.md)
 * [AI Model Import](ai-model-import.md)
+* [AI Agent Proxy](agentic-ai/akto-agent-proxy.md)
 * [AI Security](ai-security.md)
 * [AI Agent Security](ai-agent-security.md)
 * [Agentic Shield](agentic-shield.md)
