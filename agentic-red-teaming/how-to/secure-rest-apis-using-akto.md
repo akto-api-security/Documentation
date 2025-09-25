@@ -12,7 +12,7 @@ You can use Akto to help you secure your REST APIs in the CI/CD pipeline:
 
 ### API Inventory
 
-Akto can automatically prepare an API Inventory for REST APIs. Use one of our [traffic connectors](broken-reference/) to capture API traffic. Akto will start populating API endpoints, methods, and parameters in the dashboard.
+Akto can automatically prepare an API Inventory for REST APIs. Use one of our [traffic connectors](../../api-security-testing/how-to/broken-reference/) to capture API traffic. Akto will start populating API endpoints, methods, and parameters in the dashboard.
 
 You will see a separate entry for each endpoint along with its HTTP method (GET, POST, PUT, DELETE).
 

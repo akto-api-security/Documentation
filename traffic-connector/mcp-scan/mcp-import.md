@@ -2,7 +2,7 @@
 
 Akto now supports direct import of **MCPs** (tools, resources, and prompts) into **MCP Inventory** via **Quick Start**. With just your SSE endpoint URL, you can auto-discover all active MCP tools, resources, and prompts — no manual setup required.
 
-<figure><img src=".gitbook/assets/image (138).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (138).png" alt=""><figcaption></figcaption></figure>
 
 ***
 
