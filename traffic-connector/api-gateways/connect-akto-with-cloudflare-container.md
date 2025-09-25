@@ -346,6 +346,37 @@ To securely connect your client Worker (e.g., mcp worker) with the Akto Mini-Run
 
 This ensures your container Worker is only accessible internally via service binding, improving security.
 
+### 3. Add Service Binding via `wrangler.toml` or `wrangler.json`
+
+Instead of using the Dashboard, you can also define the binding directly in your configuration file:
+
+**`wrangler.toml`:**
+
+```toml
+...
+services = [
+  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>" }
+]
+...
+```
+
+**`wrangler.json`:**
+
+```json
+{
+  ...
+  "services": [
+    {
+      "binding": "<BINDING_NAME>",
+      "service": "<WORKER_NAME>"
+    }
+  ]
+  ...
+}
+```
+
+This approach lets you manage service bindings as code, making deployments reproducible and easier to version control.
+
 ***
 
 Now, your client Worker can securely communicate with the Akto Mini-Runtime-Service Container using the `data_injection_worker` binding, and your container Worker is not exposed
