@@ -1,17 +1,13 @@
 # Table of contents
 
-* [GitHub repository](https://github.com/akto-api-security/community-edition)
-* [What is Akto?](README.md)
-* [AktoGPT](aktogpt.md)
-
 ## AGENTIC AI
 
-* [Akto MCP Server](agentic-ai/akto-mcp-server.md)
+* [Akto MCP Server](README.md)
+* [MCP Security](agentic-ai/mcp-security.md)
+* [MCP Recon](agentic-ai/mcp-recon.md)
 
 ***
 
-* [MCP Security](mcp-security.md)
-* [MCP Recon](mcp-recon.md)
 * [MCP Import](mcp-import.md)
 * [MCP Endpoint Shield](mcp-endpoint-shield.md)
 * [AI Agent Import](ai-agent-import.md)
@@ -21,14 +17,6 @@
 * [AI Agent Security](ai-agent-security.md)
 * [Agentic Shield](agentic-shield.md)
 * [MCP Proxy](agentic-ai/akto-mcp-proxy.md)
-
-## AI Agents
-
-* [Source Code Analyzer](ai-agents/source-code-analyzer.md)
-* [False Positive Finder](ai-agents/false-positive-finder.md)
-* [Sensitive Data Scanner](ai-agents/sensitive-data-scanner.md)
-* [API Vulnerability Scanner](ai-agents/api-vulnerability-scanner.md)
-* [API Grouping Agent](ai-agents/api-grouping-agent.md)
 
 ## Getting Started
 
@@ -50,10 +38,6 @@
   * [GCP Deploy](getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md)
 * [Local Deploy](getting-started/local-deploy.md)
 * [FAQs on data concerns](getting-started/faqs-on-data-concerns.md)
-
-## DAST
-
-* [Akto DAST](dast/akto-dast.md)
 
 ## Traffic Connector
 
@@ -129,80 +113,80 @@
 * [Configure TLS on kafka](traffic-connector/kafka-tls-in-kubernetes.md)
 * [Configure SASL Authentication on kafka](traffic-connector/kafka-sasl-in-kubernetes.md)
 
-## API Inventory
+## Agentic Discovery
 
-* [Concepts](api-inventory-1/concepts/README.md)
-  * [API Endpoints](api-inventory-1/concepts/api-endpoints.md)
-  * [Meta Properties of API Endpoint](api-inventory-1/concepts/meta-properties-of-api-endpoint.md)
-  * [API Collection](api-inventory-1/concepts/api-collection.md)
-  * [API Call Stats](api-inventory/concepts/api-call-stats.md)
-  * [Explore mode](api-inventory-1/concepts/explore-mode.md)
-  * [API Sequence](api-inventory/concepts/api-sequence.md)
-  * [gRPC API Coverage with Akto](api-inventory/concepts/grpc-api-coverage-with-akto.md)
-  * [Data Types](api-inventory-1/concepts/data-types.md)
-  * [API Groups](api-inventory-1/concepts/api-groups.md)
-  * [Environment Type](api-inventory-1/concepts/environment-type.md)
-  * [Protocol Support in Akto](api-inventory/concepts/protocol-support-in-akto.md)
-  * [API Changes](api-inventory-1/concepts/api-changes.md)
-  * [Third Party APIs](api-inventory/concepts/third-party-apis.md)
-  * [Tags](api-inventory-1/concepts/tags.md)
-  * [API Dependency Graph](api-inventory/concepts/api-dependency-graph.md)
-  * [Sensitive Data](api-inventory-1/concepts/sensitive-data.md)
-  * [Alerts](api-inventory-1/concepts/alerts.md)
-  * [Shadow APIs](api-inventory-1/concepts/shadow-apis.md)
-  * [Zombie APIs](api-inventory/concepts/zombie-apis.md)
-  * [Risk Score](api-inventory-1/concepts/risk-score.md)
-  * [Auth types](api-inventory-1/concepts/auth-types.md)
-  * [Access Type](api-inventory-1/concepts/access-type.md)
-  * [API discovery from source code](api-inventory-1/concepts/api-inventory-from-source-code.md)
-  * [Advanced Filter Option](api-inventory-1/concepts/advanced-filter-option.md)
-* [How-To](api-inventory-1/how-to/README.md)
-  * [Enable Tree view for API collections](api-inventory-1/how-to/enable-tree-view-for-api-collections.md)
-  * [Export an API Collection to Postman](api-inventory-1/how-to/export-an-api-collection-to-postman.md)
-  * [Export an API Collection to Burp](api-inventory-1/how-to/export-an-api-collection-to-burp.md)
-  * [Create API group](api-inventory-1/how-to/create-api-group.md)
-  * [Collection-Based RBAC](api-inventory/how-to/collection-based-rbac.md)
-  * [Descriptions for API Collections & Endpoints](api-inventory/how-to/descriptions-for-api-collections-and-endpoints.md)
-  * [Remove API(s) from API group](api-inventory-1/how-to/remove-api-s-from-api-group.md)
-  * [Deactivating and Reactivating API Collections in Akto](api-inventory-1/how-to/deactivate-an-api-collection.md)
-  * [Add collection using Explore Mode](api-inventory-1/how-to/add-collection-using-explore-mode.md)
-  * [De-merge API](api-inventory/how-to/de-merge-api.md)
-  * [Mark a Collection Out of Testing Scope](api-inventory/how-to/mark-a-collection-out-of-testing-scope.md)
-  * [Create Swagger File Using Akto](api-inventory-1/how-to/create-swagger-file-using-akto.md)
-  * [Copy API Endpoints Data](api-inventory-1/how-to/copy-api-endpoints-data.md)
-  * [Add an API Collection](api-inventory-1/how-to/add-an-api-collection.md)
-  * [Set environment type](api-inventory-1/how-to/set-environment-type.md)
-  * [Delete an API Collection](api-inventory-1/how-to/delete-an-api-collection.md)
-  * [Create a Custom Data Type](api-inventory-1/how-to/create-a-custom-data-type.md)
-  * [Reset Data Types in Akto](api-inventory/how-to/reset-data-types-in-akto.md)
-  * [Set Sensitivity of a Data Type](api-inventory-1/how-to/set-sensitivity-of-a-data-type.md)
-  * [De-activate a data type](api-inventory-1/how-to/de-activate-a-data-type.md)
-  * [Add a Custom Auth Type](api-inventory-1/how-to/add-a-custom-auth-type.md)
-  * [Reset an Auth Type](api-inventory-1/how-to/reset-an-auth-type.md)
-  * [Configure Access Types](api-inventory-1/how-to/configure-access-types.md)
-  * [View New API Endpoint](api-inventory-1/how-to/view-new-api-endpoint.md)
-  * [Add Private CIDRs list](api-inventory-1/how-to/add-private-cidrs-list.md)
-  * [View New Parameters](api-inventory-1/how-to/view-new-parameters.md)
-  * [Configure alerts on API changes](api-inventory-1/how-to/configure-alerts-on-api-changes.md)
-  * [Create a custom collection](api-inventory-1/how-to/how-to-create-a-custom-collection.md)
-  * [Redact sensitive data](api-inventory-1/how-to/redact-sensitive-data.md)
-  * [Extract APIs from github hosted source code using our Github Action](api-inventory-1/how-to/extract-apis-from-source-code-gha.md)
-  * [Extract APIs from source code using our Docker based CLI](api-inventory-1/how-to/extract-apis-from-source-code-docker-cli.md)
-  * [Remove Bad Endpoints](api-inventory-1/how-to/remove-bad-endpoints.md)
-  * [Create New Tags](api-inventory-1/how-to/create-new-tags.md)
-  * [Edit Tags](api-inventory-1/how-to/edit-tags.md)
+* [Concepts](agentic-discovery/concepts/README.md)
+  * [API Endpoints](agentic-discovery/concepts/api-endpoints.md)
+  * [Meta Properties of API Endpoint](agentic-discovery/concepts/meta-properties-of-api-endpoint.md)
+  * [API Collection](agentic-discovery/concepts/api-collection.md)
+  * [API Call Stats](agentic-discovery/concepts/api-call-stats.md)
+  * [Explore mode](agentic-discovery/concepts/explore-mode.md)
+  * [API Sequence](agentic-discovery/concepts/api-sequence.md)
+  * [gRPC API Coverage with Akto](agentic-discovery/concepts/grpc-api-coverage-with-akto.md)
+  * [Data Types](agentic-discovery/concepts/data-types.md)
+  * [API Groups](agentic-discovery/concepts/api-groups.md)
+  * [Environment Type](agentic-discovery/concepts/environment-type.md)
+  * [Protocol Support in Akto](agentic-discovery/concepts/protocol-support-in-akto.md)
+  * [API Changes](agentic-discovery/concepts/api-changes.md)
+  * [Third Party APIs](agentic-discovery/concepts/third-party-apis.md)
+  * [Tags](agentic-discovery/concepts/tags.md)
+  * [API Dependency Graph](agentic-discovery/concepts/api-dependency-graph.md)
+  * [Sensitive Data](agentic-discovery/concepts/sensitive-data.md)
+  * [Alerts](agentic-discovery/concepts/alerts.md)
+  * [Shadow APIs](agentic-discovery/concepts/shadow-apis.md)
+  * [Zombie APIs](agentic-discovery/concepts/zombie-apis.md)
+  * [Risk Score](agentic-discovery/concepts/risk-score.md)
+  * [Auth types](agentic-discovery/concepts/auth-types.md)
+  * [Access Type](agentic-discovery/concepts/access-type.md)
+  * [API discovery from source code](agentic-discovery/concepts/api-inventory-from-source-code.md)
+  * [Advanced Filter Option](agentic-discovery/concepts/advanced-filter-option.md)
+* [How-To](agentic-discovery/how-to/README.md)
+  * [Enable Tree view for API collections](agentic-discovery/how-to/enable-tree-view-for-api-collections.md)
+  * [Export an API Collection to Postman](agentic-discovery/how-to/export-an-api-collection-to-postman.md)
+  * [Export an API Collection to Burp](agentic-discovery/how-to/export-an-api-collection-to-burp.md)
+  * [Create API group](agentic-discovery/how-to/create-api-group.md)
+  * [Collection-Based RBAC](agentic-discovery/how-to/collection-based-rbac.md)
+  * [Descriptions for API Collections & Endpoints](agentic-discovery/how-to/descriptions-for-api-collections-and-endpoints.md)
+  * [Remove API(s) from API group](agentic-discovery/how-to/remove-api-s-from-api-group.md)
+  * [Deactivating and Reactivating API Collections in Akto](agentic-discovery/how-to/deactivate-an-api-collection.md)
+  * [Add collection using Explore Mode](agentic-discovery/how-to/add-collection-using-explore-mode.md)
+  * [De-merge API](agentic-discovery/how-to/de-merge-api.md)
+  * [Mark a Collection Out of Testing Scope](agentic-discovery/how-to/mark-a-collection-out-of-testing-scope.md)
+  * [Create Swagger File Using Akto](agentic-discovery/how-to/create-swagger-file-using-akto.md)
+  * [Copy API Endpoints Data](agentic-discovery/how-to/copy-api-endpoints-data.md)
+  * [Add an API Collection](agentic-discovery/how-to/add-an-api-collection.md)
+  * [Set environment type](agentic-discovery/how-to/set-environment-type.md)
+  * [Delete an API Collection](agentic-discovery/how-to/delete-an-api-collection.md)
+  * [Create a Custom Data Type](agentic-discovery/how-to/create-a-custom-data-type.md)
+  * [Reset Data Types in Akto](agentic-discovery/how-to/reset-data-types-in-akto.md)
+  * [Set Sensitivity of a Data Type](agentic-discovery/how-to/set-sensitivity-of-a-data-type.md)
+  * [De-activate a data type](agentic-discovery/how-to/de-activate-a-data-type.md)
+  * [Add a Custom Auth Type](agentic-discovery/how-to/add-a-custom-auth-type.md)
+  * [Reset an Auth Type](agentic-discovery/how-to/reset-an-auth-type.md)
+  * [Configure Access Types](agentic-discovery/how-to/configure-access-types.md)
+  * [View New API Endpoint](agentic-discovery/how-to/view-new-api-endpoint.md)
+  * [Add Private CIDRs list](agentic-discovery/how-to/add-private-cidrs-list.md)
+  * [View New Parameters](agentic-discovery/how-to/view-new-parameters.md)
+  * [Configure alerts on API changes](agentic-discovery/how-to/configure-alerts-on-api-changes.md)
+  * [Create a custom collection](agentic-discovery/how-to/how-to-create-a-custom-collection.md)
+  * [Redact sensitive data](agentic-discovery/how-to/redact-sensitive-data.md)
+  * [Extract APIs from github hosted source code using our Github Action](agentic-discovery/how-to/extract-apis-from-source-code-gha.md)
+  * [Extract APIs from source code using our Docker based CLI](agentic-discovery/how-to/extract-apis-from-source-code-docker-cli.md)
+  * [Remove Bad Endpoints](agentic-discovery/how-to/remove-bad-endpoints.md)
+  * [Create New Tags](agentic-discovery/how-to/create-new-tags.md)
+  * [Edit Tags](agentic-discovery/how-to/edit-tags.md)
 
-## API Protection
+## MCP Protection
 
-* [Overview](api-protection/concepts/overview.md)
-* [External API Runtime Threat Notifications](api-protection/external-api-runtime-threat-notifications.md)
-* [Concepts](api-protection/concepts/README.md)
-  * [Schema Conformance](api-protection/concepts/schema-conformance.md)
-  * [Threat Actors](api-protection/concepts/threat-actors.md)
-  * [Dynamic Api Rate Limiting](api-protection/concepts/api-rate-limit.md)
-  * [Threat Policy](api-protection/concepts/threat-policy.md)
-  * [Successful Exploits](api-protection/concepts/successful-exploits.md)
-  * [Remediation Steps for API Protection Issues](api-protection/concepts/remediation-steps-for-api-protection-issues.md)
+* [Overview](mcp-protection/overview.md)
+* [External API Runtime Threat Notifications](mcp-protection/external-api-runtime-threat-notifications.md)
+* [Concepts](mcp-protection/concepts/README.md)
+  * [Schema Conformance](mcp-protection/concepts/schema-conformance.md)
+  * [Threat Actors](mcp-protection/concepts/threat-actors.md)
+  * [Dynamic Api Rate Limiting](mcp-protection/concepts/api-rate-limit.md)
+  * [Threat Policy](mcp-protection/concepts/threat-policy.md)
+  * [Successful Exploits](mcp-protection/concepts/successful-exploits.md)
+  * [Remediation Steps for API Protection Issues](mcp-protection/concepts/remediation-steps-for-api-protection-issues.md)
 
 ***
 
@@ -211,36 +195,36 @@
   * [Cloudflare WAF](waf/cloudflare-waf.md)
 * [Bot Policy](bot-policy.md)
 
-## Test Editor
+## Probe Library
 
-* [Concepts](test-editor/concepts/README.md)
-  * [Overview](test-editor/concepts/overview.md)
-  * [Test YAML](test-editor/concepts/test-yaml.md)
-  * [Test Library](test-editor/concepts/test-library.md)
-  * [Custom Test](test-editor/concepts/custom-test.md)
-  * [Test YAML Syntax (Detailed)](test-editor/concepts/test-yaml-syntax-detailed/README.md)
-    * [ID](test-editor/concepts/test-yaml-syntax-detailed/id.md)
-    * [Info](test-editor/concepts/test-yaml-syntax-detailed/info.md)
-    * [Wordlists](test-editor/concepts/test-yaml-syntax-detailed/wordlists.md)
-    * [Auth](test-editor/concepts/test-yaml-syntax-detailed/auth.md)
-    * [API Selection Filters](test-editor/concepts/test-yaml-syntax-detailed/api-selection-filters.md)
-    * [Execute](test-editor/concepts/test-yaml-syntax-detailed/execute.md)
-    * [Validation](test-editor/concepts/test-yaml-syntax-detailed/validation.md)
-    * [Contexts](test-editor/concepts/test-yaml-syntax-detailed/contexts.md)
-    * [Strategy](test-editor/concepts/test-yaml-syntax-detailed/strategy.md)
-    * [Conditional flows](test-editor/concepts/test-yaml-syntax-detailed/conditional-flows.md)
-  * [Template YAMLs](test-editor/concepts/template-yamls/README.md)
-    * [Local File Inclusion with Akto](test-editor/concepts/template-yamls/local-file-inclusion-with-akto.md)
-  * [Dynamic severity](test-editor/concepts/dynamic-severity.md)
-* [How To](test-editor/how-to/README.md)
-  * [Edit Test](test-editor/how-to/edit-test.md)
-  * [Create a Custom Test](test-editor/how-to/create-a-custom-test.md)
-  * [Deactivate Test](test-editor/how-to/deactivate-test.md)
-  * [Play in Test Editor Background](test-editor/how-to/play-in-test-editor-background.md)
-  * [Copy Test Content](test-editor/how-to/copy-test-content.md)
-  * [Opening Endpoint in Test Editor](test-editor/how-to/opening-endpoint-in-test-editor.md)
-  * [Add a New Test Library](test-editor/how-to/add-a-new-test-library.md)
-  * [Contribute to Test Library](test-editor/how-to/contribute-to-test-library.md)
+* [Concepts](probe-library/concepts/README.md)
+  * [Overview](probe-library/concepts/overview.md)
+  * [Test YAML](probe-library/concepts/test-yaml.md)
+  * [Test Library](probe-library/concepts/test-library.md)
+  * [Custom Test](probe-library/concepts/custom-test.md)
+  * [Test YAML Syntax (Detailed)](probe-library/concepts/test-yaml-syntax-detailed/README.md)
+    * [ID](probe-library/concepts/test-yaml-syntax-detailed/id.md)
+    * [Info](probe-library/concepts/test-yaml-syntax-detailed/info.md)
+    * [Wordlists](probe-library/concepts/test-yaml-syntax-detailed/wordlists.md)
+    * [Auth](probe-library/concepts/test-yaml-syntax-detailed/auth.md)
+    * [API Selection Filters](probe-library/concepts/test-yaml-syntax-detailed/api-selection-filters.md)
+    * [Execute](probe-library/concepts/test-yaml-syntax-detailed/execute.md)
+    * [Validation](probe-library/concepts/test-yaml-syntax-detailed/validation.md)
+    * [Contexts](probe-library/concepts/test-yaml-syntax-detailed/contexts.md)
+    * [Strategy](probe-library/concepts/test-yaml-syntax-detailed/strategy.md)
+    * [Conditional flows](probe-library/concepts/test-yaml-syntax-detailed/conditional-flows.md)
+  * [Template YAMLs](probe-library/concepts/template-yamls/README.md)
+    * [Local File Inclusion with Akto](probe-library/concepts/template-yamls/local-file-inclusion-with-akto.md)
+  * [Dynamic severity](probe-library/concepts/dynamic-severity.md)
+* [How To](probe-library/how-to/README.md)
+  * [Edit Test](probe-library/how-to/edit-test.md)
+  * [Create a Custom Test](probe-library/how-to/create-a-custom-test.md)
+  * [Deactivate Test](probe-library/how-to/deactivate-test.md)
+  * [Play in Test Editor Background](probe-library/how-to/play-in-test-editor-background.md)
+  * [Copy Test Content](probe-library/how-to/copy-test-content.md)
+  * [Opening Endpoint in Test Editor](probe-library/how-to/opening-endpoint-in-test-editor.md)
+  * [Add a New Test Library](probe-library/how-to/add-a-new-test-library.md)
+  * [Contribute to Test Library](probe-library/how-to/contribute-to-test-library.md)
 
 ## API Security Testing
 
@@ -337,11 +321,11 @@
 * [Concepts](compliance/concepts/README.md)
   * [Overview](compliance/concepts/overview.md)
 
-## API security posture
+## Agentic security posture
 
-* [Concepts](api-security-posture/concepts/README.md)
-  * [Overview](api-security-posture/concepts/overview.md)
-  * [Analysis](api-security-posture/concepts/analysis.md)
+* [Concepts](agentic-security-posture/concepts/README.md)
+  * [Overview](agentic-security-posture/concepts/overview.md)
+  * [Analysis](agentic-security-posture/concepts/analysis.md)
 
 ## SIEM Integration
 
@@ -357,14 +341,6 @@
 * [Slack Webhook](alerts/slack-webhook.md)
 * [Microsoft Teams Webhook](alerts/microsoft-teams-webhook.md)
 * [Setup alerts for Akto test run results](alerts/alerts-testing-results.md)
-
-## Pricing
-
-* [Pricing Plans](pricing/pricing-plans.md)
-* [How To](pricing/how-to/README.md)
-  * [Upgrade Your Plan](pricing/how-to/upgrade-your-plan.md)
-  * [Downgrade Your Plan](pricing/how-to/downgrade-your-plan.md)
-  * [Sync Usage Data](pricing/how-to/sync-usage-data.md)
 
 ## API reference
 
@@ -382,28 +358,10 @@
   * [Fetch Data](api-reference/threat-protection/fetch-data.md)
   * [Modify Data](api-reference/threat-protection/modify-data.md)
 
-***
-
-* [Github contribution guide](github-contribution-guide.md)
-
-## Components
-
-* [Dashboard](components/dashboard.md)
-* [Testing module](components/testing-module.md)
-* [Traffic mirroring module](components/traffic-mirroring-module.md)
-* [Runtime analyzer](components/runtime-analyzer.md)
-* [Context analyzer](components/context-analyzer.md)
-* [Puppeteer server](components/puppeteer-server.md)
-* [Other OSS](components/other-oss.md)
-* [robots.txt](components/robots.txt.md)
-
 ## Troubleshooting
 
 * [How to get logs](troubleshooting/logs.md)
 * [How to disable logging](troubleshooting/disable-logging.md)
 * [How to update helm deployments](troubleshooting/updates.md)
-
-***
-
-* [Stay Updated on New Releases](stay-updated-on-new-releases.md)
-* [Support](support.md)
+* [Stay Updated on New Releases](troubleshooting/stay-updated-on-new-releases.md)
+* [Support](troubleshooting/support.md)

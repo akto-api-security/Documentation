@@ -25,17 +25,17 @@ The HTTP Archive format, or HAR, is a `JSON-formatted archive file format` for l
 
 Launch your Chrome browser and navigate to the web page for which you want to capture the traffic. For demonstration purposes, we will capture the traffic from [https://juiceshop.akto.io](https://juiceshop.akto.io)
 
-{% @arcade/embed flowId="0rereawiRT0wuVKtM9wS" url="https://app.arcade.software/share/0rereawiRT0wuVKtM9wS" %}
+{% @arcade/embed url="https://app.arcade.software/share/0rereawiRT0wuVKtM9wS" flowId="0rereawiRT0wuVKtM9wS" %}
 
 ## Steps to upload HAR file in Akto dashboard
 
 Add the generated HAR file to your API collection by following the steps demonstrated below.
 
-{% @arcade/embed flowId="tErOE27G2Zw8UI8DLqlD" url="https://app.arcade.software/share/tErOE27G2Zw8UI8DLqlD" %}
+{% @arcade/embed url="https://app.arcade.software/share/tErOE27G2Zw8UI8DLqlD" flowId="tErOE27G2Zw8UI8DLqlD" %}
 
 ### What's next?
 
-Head to [API Discovery](../../api-inventory-1/concepts/api-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.
+Head to [API Discovery](../../agentic-discovery/concepts/api-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.
 
 ## Frequently Asked Questions (FAQs)
 

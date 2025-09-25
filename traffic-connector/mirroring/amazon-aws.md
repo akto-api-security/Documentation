@@ -8,7 +8,7 @@ description: >-
 
 ## Introduction
 
-[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](broken-reference). One such source is AWS Traffic Mirroring.
+[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](broken-reference/). One such source is AWS Traffic Mirroring.
 
 Traffic Mirroring is an Amazon VPC feature that you can use to copy network traffic from an elastic network interface of type `interface`.
 
@@ -85,7 +85,7 @@ You have now given Akto the permissions to read loadbalancer names from your AWS
 
 ### What's next?
 
-You can now go to your API Inventory to see all the API traffic Akto has captured. Head to [API Discovery](../../api-inventory-1/concepts/api-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.
+You can now go to your API Inventory to see all the API traffic Akto has captured. Head to [API Discovery](../../agentic-discovery/concepts/api-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.
 
 ## Frequently Asked Questions (FAQs)
 

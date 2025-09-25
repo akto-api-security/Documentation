@@ -8,7 +8,7 @@ description: >-
 
 ## Introduction
 
-[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](broken-reference). If you don't have access to staging or production environment, you can create API inventory using Burp's traffic.
+[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](broken-reference/). If you don't have access to staging or production environment, you can create API inventory using Burp's traffic.
 
 {% hint style="info" %}
 Note that traffic from Burp Suite won't be automated like the native cloud connectors.
@@ -33,7 +33,7 @@ Akto Burp connection Demo
 
 ### What's next?
 
-Head to [API Discovery](../../api-inventory-1/concepts/api-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.
+Head to [API Discovery](../../agentic-discovery/concepts/api-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.
 
 ## Frequently Asked Questions (FAQs)
 

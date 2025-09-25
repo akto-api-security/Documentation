@@ -1,56 +1,158 @@
-# What is Akto?
+# Akto MCP Server
 
-[Getting-Started](./#getting-started) • [API Discovery](api-inventory-1/concepts/api-endpoints.md) • [API testing](api-security-testing/concepts/test.md) • [Add Test](test-editor/concepts/test-library.md) • [Join Discord community](https://discord.com/invite/Wpc6xVME4s)&#x20;
+### **What is Model Context Protocol?**
 
-Akto is an instant API security platform that takes only 60 secs to get started. Akto is used by security teams to maintain a continuous inventory of APIs, test APIs for vulnerabilities and find runtime issues. Akto offers tests for all OWASP top 10 and HackerOne Top 10 categories including BOLA, authentication, SSRF, XSS, security configurations, etc. Akto's powerful testing engine runs variety of business logic tests by reading traffic data to understand API traffic pattern leading to reduced false positives. Akto can integrate with multiple traffic sources - Burpsuite, AWS, postman, GCP, gateways, etc.
+The Model Context Protocol (MCP) is a standardized protocol that enables AI models to interact with external tools and services. In the context of Akto, the MCP server acts as a bridge between AI-powered tools (like Claude, Cursor, etc.) and Akto's API security platform, allowing these tools to access and analyze your API security data.
 
-Akto enables security and engineering teams to secure their APIs by doing three things:
+{% embed url="https://youtu.be/QXdGqadpos4" %}
 
-1. [API discovery](api-inventory-1/concepts/api-collection.md)
-2. [Run business logic tests in CI/CD](ci-cd/how-to/run-tests-in-cicd.md)
-3. [Find vulnerabilities in run-time](api-security-testing/concepts/test.md)
+### **Prerequisites**
 
-{% embed url="https://www.youtube.com/watch?v=XVpcX78IeFI" %}
+* Docker installed and running
+* Akto API Key
 
-## Getting Started
+***
 
-Get started with Akto Cloud in 5 simple steps:
+### **Getting Started**
 
-### 1. Sign Up
+#### **Step 1: Generating an API Key**
 
-* Visit [app.akto.io](https://app.akto.io)
-* Create account with your work email
+For detailed information about generating and managing API keys, refer to the [Akto API Reference Documentation](../api-reference/api-reference.md).
 
-<figure><img src=".gitbook/assets/image (46).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-### 2. Create API Inventory
+#### **Step 2: Configuring MCP Clients**
 
-* Go to API Collections → Create new collection
-* Name your collection
-* Connect your [traffic source](broken-reference) (Burp Suite/AWS/Postman) from Quick Start.
+{% tabs fullWidth="false" %}
+{% tab title="Cursor" %}
+1. **Open Settings**
+   * Launch Cursor
+   * Go to Settings
+   * Navigate to the MCP tab
+2.  **Add MCP Server**
 
-<figure><img src=".gitbook/assets/image (6) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+    * Click "Add new global MCP server"
+    * Paste the following configuration:
 
-### 3. Set Authentication
+    ```json
+    {
+      "mcpServers": {
+        "akto-mcp-server": {
+          "command": "docker",
+          "args": [
+            "run",
+            "--rm",
+            "-i",
+            "-e",
+            "AKTO_API_KEY",
+            "aktosecurity/akto-mcp-server:latest"
+          ],
+          "env": {
+            "AKTO_API_KEY": "your_api_key"
+          }
+        }
+      }
+    }
 
-* Go to Settings → Authentication
-* Create auth type (Bearer/API Key/Basic)
+    ```
 
-<figure><img src=".gitbook/assets/image (47).png" alt=""><figcaption></figcaption></figure>
+    * Replace `your_api_key` with your actual API key
+    * Click Save to activate
+    * Check the status of the server by clicking on the "MCP" tab and looking for "akto-mcp-server" under Active Servers
+{% endtab %}
 
-### 4. Configure Attacker Token
+{% tab title="Claude Desktop" %}
+1. **Locate Config File**
+   * macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+   * Windows: `%APPDATA%\\Claude\\claude_desktop_config.json`
+2.  **Update Configuration**
 
-* Go to User Configuration
-* Set ATTACKER\_TOKEN\_ALL
+    * Add the following configuration:
 
-<figure><img src=".gitbook/assets/image (50).png" alt=""><figcaption></figcaption></figure>
+    ```json
+    {
+      "mcpServers": {
+        "akto-mcp-server": {
+          "command": "docker",
+          "args": [
+            "run",
+            "--rm",
+            "-i",
+            "-e",
+            "AKTO_API_KEY",
+            "aktosecurity/akto-mcp-server:latest"
+          ],
+          "env": {
+            "AKTO_API_KEY": "your_api_key"
+          }
+        }
+      }
+    }
 
-### 5. Run Tests
+    ```
 
-* Select your collection
-* Click Run Test
-* Choose tests you want to run
-* Select Test role
-* Click "Run once now"
+    * Replace `your_api_key` with your actual API key
+    * Save the file
+    * Restart Claude Desktop
+    * Open Claude's Settings > MCP tab to check server status and connection details
+{% endtab %}
+{% endtabs %}
 
-<figure><img src=".gitbook/assets/image (7) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+Each tool is designed to work seamlessly with AI models to provide comprehensive access to your API security data and analysis capabilities.
+
+***
+
+### **Feature Highlights**
+
+The MCP server provides easy access to Akto's powerful API security features through AI tools. Here's what you can do:
+
+1. **View Your APIs**: Get a complete list of all your APIs and their details in one place
+2. **Track API Changes**: Monitor new endpoints and changes in your API landscape
+3. **Find Security Issues**: Automatically detect vulnerabilities and security risks in your APIs
+4. **Analyze Sensitive Data**: Identify and track sensitive information in your API responses
+5. **Monitor API Health**: Keep track of API performance and security status
+6. **Track Issues**: View and monitor the status of security issues
+7. **Get Security Insights**: Receive AI-powered analysis and recommendations for your APIs
+8. **View Risk Scores**: Access risk scores for your APIs to understand their security posture
+
+Each of these capabilities is designed to work seamlessly with AI tools like Claude and Cursor, making API security management more intuitive and efficient.
+
+***
+
+### Prompt Examples
+
+1. List active API collections.
+2. How many endpoints in `Collection_Name`? Show the one with the highest risk.
+3. List top 5 high severity issues.
+4. Get schema for API: `API_Path`
+5. How many test runs in the last 48 hours?
+6. Summarize issues by status (open, ignored, fixed) and severity.
+7. List sensitive parameters for `API_Path`
+
+***
+
+### **Troubleshooting**
+
+#### **Server Connection Issues**
+
+* Verify API key is correct
+* Check network connectivity
+* Ensure Docker is running
+* Verify Docker image pull was successful
+
+#### **Client Configuration**
+
+* Validate JSON configuration
+* Check file permissions
+* Verify environment variables
+* Ensure Docker image name is correct (`aktosecurity/akto-mcp-server`)
+
+***
+
+### Get Support for your Akto setup
+
+There are multiple ways to request support from Akto. We are 24X7 available on the following:
+
+1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
+2. Join our [discord channel](https://www.akto.io/community) for community support.
+3. Contact `help@akto.io` for email support.

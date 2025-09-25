@@ -12,13 +12,13 @@ You can use Akto to help you secure your SOAP APIs in the CI/CD pipeline:
 
 ### API Inventory
 
-Akto can automatically prepare an API Inventory for SOAP APIs. Use one of our [traffic connectors](broken-reference) or upload WSDL files directly. Akto will populate the dashboard with all detected SOAP operations and their request/response structures.
+Akto can automatically prepare an API Inventory for SOAP APIs. Use one of our [traffic connectors](broken-reference/) or upload WSDL files directly. Akto will populate the dashboard with all detected SOAP operations and their request/response structures.
 
 You will see a separate entry for each SOAP action (operation) along with its endpoint. Click on an API to view its detailed request and response XML schema.
 
 ### Sensitive data exposure
 
-Go to [Sensitive Data](../../api-inventory-1/concepts/sensitive-data.md) to check if your APIs are sending sensitive or PII data in the API response. You can also [configure Slack/Webhook alerts](../../api-inventory-1/concepts/alerts.md) to get notified in real-time when sensitive data is detected.
+Go to [Sensitive Data](../../agentic-discovery/concepts/sensitive-data.md) to check if your APIs are sending sensitive or PII data in the API response. You can also [configure Slack/Webhook alerts](../../agentic-discovery/concepts/alerts.md) to get notified in real-time when sensitive data is detected.
 
 ### Run OWASP Top 10 tests
 
@@ -28,7 +28,7 @@ Akto will automatically generate security tests tailored to SOAP, including test
 
 ### Custom SOAP security tests
 
-Using Akto’s test editor, you can write your own security tests for SOAP APIs. See instructions for custom tests [here](../../test-editor/concepts/custom-test.md).
+Using Akto’s test editor, you can write your own security tests for SOAP APIs. See instructions for custom tests [here](../../probe-library/concepts/custom-test.md).
 
 Here are a few SOAP-specific test instructions you can use:
 

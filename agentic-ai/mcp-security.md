@@ -15,7 +15,7 @@ Gain instant visibility into every MCP server running in your environment:
 * Automatically detects MCP servers and the APIs they expose.
 * Works across cloud, hybrid, and on-prem environments.
 
-<figure><img src=".gitbook/assets/image (120).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (120).png" alt=""><figcaption></figcaption></figure>
 
 2. **Security Testing for MCPs**
 
@@ -29,7 +29,7 @@ Uncover critical vulnerabilities unique to MCP architectures using Akto's curate
 
 Each test simulates real-world attack paths and highlights risk with contextual severity scoring.
 
-<figure><img src=".gitbook/assets/image (121).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (121).png" alt=""><figcaption></figcaption></figure>
 
 3. **Continuous Monitoring & Threat Detection**
 
@@ -39,7 +39,7 @@ Stay ahead of evolving threats with intelligent real-time monitoring:
 * Visualizes threats by actor, IP address, country, and reputation.
 * Enables early detection of misuse and lateral movement.
 
-<figure><img src=".gitbook/assets/image (122).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (122).png" alt=""><figcaption></figcaption></figure>
 
 ### 🚀 Get Started with MCP Security
 

@@ -6,7 +6,7 @@ MCP Recon helps you **discover and catalog MCP-compatible servers** across your 
 
 ### ⚙️ Setup
 
-1. Open **Akto Dashboard → Quick Start →  MCP Recon**
+1. Open **Akto Dashboard → Quick Start → MCP Recon**
 2. Click **Connect**
 3. Enter IP ranges in either format:
    * CIDR: `192.168.1.0/24`
@@ -14,11 +14,11 @@ MCP Recon helps you **discover and catalog MCP-compatible servers** across your 
    * Multiple ranges: `192.168.1.0/24, 10.0.0.1-10.0.0.255`
 4. Click **Discover**
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 ***
 
-### 📊  What You Get
+### 📊 What You Get
 
 * A **catalog of MCP-compatible servers** found in your specified ranges
 * Automatic registration of discovered endpoints in Akto

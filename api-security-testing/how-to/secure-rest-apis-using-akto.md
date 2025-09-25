@@ -12,7 +12,7 @@ You can use Akto to help you secure your REST APIs in the CI/CD pipeline:
 
 ### API Inventory
 
-Akto can automatically prepare an API Inventory for REST APIs. Use one of our [traffic connectors](broken-reference) to capture API traffic. Akto will start populating API endpoints, methods, and parameters in the dashboard.
+Akto can automatically prepare an API Inventory for REST APIs. Use one of our [traffic connectors](broken-reference/) to capture API traffic. Akto will start populating API endpoints, methods, and parameters in the dashboard.
 
 You will see a separate entry for each endpoint along with its HTTP method (GET, POST, PUT, DELETE).
 
@@ -20,7 +20,7 @@ Click on the API to see its request and response schema.
 
 ### Sensitive data exposure
 
-Go to [Sensitive Data](../../api-inventory-1/concepts/sensitive-data.md) to check if your APIs are sending sensitive or PII data in the API response. You can also [configure Slack/Webhook alerts](../../api-inventory-1/concepts/alerts.md) for real-time notifications.
+Go to [Sensitive Data](../../agentic-discovery/concepts/sensitive-data.md) to check if your APIs are sending sensitive or PII data in the API response. You can also [configure Slack/Webhook alerts](../../agentic-discovery/concepts/alerts.md) for real-time notifications.
 
 ### Run OWASP Top 10 tests
 
@@ -30,7 +30,7 @@ Akto will automatically generate and run security tests for your API endpoints, 
 
 ### Custom REST security tests
 
-Using Akto's unique test editor, you can also write your own security tests for REST APIs. See instructions for custom tests [here](../../test-editor/concepts/custom-test.md).
+Using Akto's unique test editor, you can also write your own security tests for REST APIs. See instructions for custom tests [here](../../probe-library/concepts/custom-test.md).
 
 There are a few REST-specific instructions you can use:
 
