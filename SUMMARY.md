@@ -3,9 +3,7 @@
 ## AGENTIC AI
 
 * [Akto MCP Server](README.md)
-* [MCP Red Teaming](agentic-ai/mcp-red-teaming.md)
 * [AI Security](agentic-ai/ai-security.md)
-* [Agentic Red Teaming](agentic-ai/ai-agent-security.md)
 
 ## Getting Started
 
@@ -112,6 +110,12 @@
 * [Configure TLS on kafka](traffic-connector/kafka-tls-in-kubernetes.md)
 * [Configure SASL Authentication on kafka](traffic-connector/kafka-sasl-in-kubernetes.md)
 
+## Agentic security posture
+
+* [Concepts](agentic-security-posture/concepts/README.md)
+  * [Overview](agentic-security-posture/concepts/overview.md)
+  * [Analysis](agentic-security-posture/concepts/analysis.md)
+
 ## Agentic Discovery
 
 * [Concepts](agentic-discovery/concepts/README.md)
@@ -194,40 +198,11 @@
   * [Cloudflare WAF](waf/cloudflare-waf.md)
 * [Bot Policy](bot-policy.md)
 
-## Probe Library
-
-* [Concepts](probe-library/concepts/README.md)
-  * [Overview](probe-library/concepts/overview.md)
-  * [Test YAML](probe-library/concepts/test-yaml.md)
-  * [Test Library](probe-library/concepts/test-library.md)
-  * [Custom Test](probe-library/concepts/custom-test.md)
-  * [Test YAML Syntax (Detailed)](probe-library/concepts/test-yaml-syntax-detailed/README.md)
-    * [ID](probe-library/concepts/test-yaml-syntax-detailed/id.md)
-    * [Info](probe-library/concepts/test-yaml-syntax-detailed/info.md)
-    * [Wordlists](probe-library/concepts/test-yaml-syntax-detailed/wordlists.md)
-    * [Auth](probe-library/concepts/test-yaml-syntax-detailed/auth.md)
-    * [API Selection Filters](probe-library/concepts/test-yaml-syntax-detailed/api-selection-filters.md)
-    * [Execute](probe-library/concepts/test-yaml-syntax-detailed/execute.md)
-    * [Validation](probe-library/concepts/test-yaml-syntax-detailed/validation.md)
-    * [Contexts](probe-library/concepts/test-yaml-syntax-detailed/contexts.md)
-    * [Strategy](probe-library/concepts/test-yaml-syntax-detailed/strategy.md)
-    * [Conditional flows](probe-library/concepts/test-yaml-syntax-detailed/conditional-flows.md)
-  * [Template YAMLs](probe-library/concepts/template-yamls/README.md)
-    * [Local File Inclusion with Akto](probe-library/concepts/template-yamls/local-file-inclusion-with-akto.md)
-  * [Dynamic severity](probe-library/concepts/dynamic-severity.md)
-* [How To](probe-library/how-to/README.md)
-  * [Edit Test](probe-library/how-to/edit-test.md)
-  * [Create a Custom Test](probe-library/how-to/create-a-custom-test.md)
-  * [Deactivate Test](probe-library/how-to/deactivate-test.md)
-  * [Play in Test Editor Background](probe-library/how-to/play-in-test-editor-background.md)
-  * [Copy Test Content](probe-library/how-to/copy-test-content.md)
-  * [Opening Endpoint in Test Editor](probe-library/how-to/opening-endpoint-in-test-editor.md)
-  * [Add a New Test Library](probe-library/how-to/add-a-new-test-library.md)
-  * [Contribute to Test Library](probe-library/how-to/contribute-to-test-library.md)
-
 ## Agentic Red Teaming
 
 * [Concepts](agentic-red-teaming/concepts/README.md)
+  * [MCP Red Teaming](agentic-red-teaming/concepts/mcp-red-teaming.md)
+  * [Agentic Red Teaming](agentic-red-teaming/concepts/ai-agent-security.md)
   * [Severity Levels](agentic-red-teaming/concepts/severity-levels.md)
   * [Test](agentic-red-teaming/concepts/test.md)
   * [Result types](agentic-red-teaming/concepts/result-types.md)
@@ -270,6 +245,37 @@
   * [Secure SOAP APIs using Akto](agentic-red-teaming/how-to/secure-soap-apis-using-akto.md)
   * [Create and Edit Auth Types](agentic-red-teaming/how-to/create-and-edit-auth-types.md)
 
+## Probe Library
+
+* [Concepts](probe-library/concepts/README.md)
+  * [Overview](probe-library/concepts/overview.md)
+  * [Test YAML](probe-library/concepts/test-yaml.md)
+  * [Test Library](probe-library/concepts/test-library.md)
+  * [Custom Test](probe-library/concepts/custom-test.md)
+  * [Test YAML Syntax (Detailed)](probe-library/concepts/test-yaml-syntax-detailed/README.md)
+    * [ID](probe-library/concepts/test-yaml-syntax-detailed/id.md)
+    * [Info](probe-library/concepts/test-yaml-syntax-detailed/info.md)
+    * [Wordlists](probe-library/concepts/test-yaml-syntax-detailed/wordlists.md)
+    * [Auth](probe-library/concepts/test-yaml-syntax-detailed/auth.md)
+    * [API Selection Filters](probe-library/concepts/test-yaml-syntax-detailed/api-selection-filters.md)
+    * [Execute](probe-library/concepts/test-yaml-syntax-detailed/execute.md)
+    * [Validation](probe-library/concepts/test-yaml-syntax-detailed/validation.md)
+    * [Contexts](probe-library/concepts/test-yaml-syntax-detailed/contexts.md)
+    * [Strategy](probe-library/concepts/test-yaml-syntax-detailed/strategy.md)
+    * [Conditional flows](probe-library/concepts/test-yaml-syntax-detailed/conditional-flows.md)
+  * [Template YAMLs](probe-library/concepts/template-yamls/README.md)
+    * [Local File Inclusion with Akto](probe-library/concepts/template-yamls/local-file-inclusion-with-akto.md)
+  * [Dynamic severity](probe-library/concepts/dynamic-severity.md)
+* [How To](probe-library/how-to/README.md)
+  * [Edit Test](probe-library/how-to/edit-test.md)
+  * [Create a Custom Test](probe-library/how-to/create-a-custom-test.md)
+  * [Deactivate Test](probe-library/how-to/deactivate-test.md)
+  * [Play in Test Editor Background](probe-library/how-to/play-in-test-editor-background.md)
+  * [Copy Test Content](probe-library/how-to/copy-test-content.md)
+  * [Opening Endpoint in Test Editor](probe-library/how-to/opening-endpoint-in-test-editor.md)
+  * [Add a New Test Library](probe-library/how-to/add-a-new-test-library.md)
+  * [Contribute to Test Library](probe-library/how-to/contribute-to-test-library.md)
+
 ## Issues
 
 * [Concepts](issues/concepts/README.md)
@@ -284,6 +290,11 @@
     * [Review Issues Marked as False Positives](issues/how-to/triage-issues/review-issues-marked-as-false-positives.md)
   * [Export Selected Issues to Reports](issues/how-to/export-selected-issues-to-reports.md)
   * [Export Vulnerability Report](issues/how-to/export-vulnerability-report.md)
+
+## Compliance
+
+* [Concepts](compliance/concepts/README.md)
+  * [Overview](compliance/concepts/overview.md)
 
 ## CI/CD
 
@@ -314,17 +325,6 @@
   * [Github OIDC](account/sso/github-oidc.md)
   * [Google Workspace SSO](account/sso/google-workspace-sso.md)
   * [Add Members From SSO](account/sso/add-members-from-sso.md)
-
-## Compliance
-
-* [Concepts](compliance/concepts/README.md)
-  * [Overview](compliance/concepts/overview.md)
-
-## Agentic security posture
-
-* [Concepts](agentic-security-posture/concepts/README.md)
-  * [Overview](agentic-security-posture/concepts/overview.md)
-  * [Analysis](agentic-security-posture/concepts/analysis.md)
 
 ## SIEM Integration
 
