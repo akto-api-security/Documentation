@@ -16,22 +16,19 @@ Akto Agent Proxy is a security and governance layer that sits between agent clie
 
 ```
 ┌───────────────┐        ┌───────────────────┐        ┌───────────────┐
-│ Agent Client  │───────▶│  Akto Agent Proxy │───────▶│ Agent Server  │
+│     User      │───────▶│  Akto Agent Proxy │───────▶│   AI Agent    │
 └───────────────┘        └───────────────────┘        └───────────────┘
-                              │
-                              ▼
-                       ┌─────────────────┐
-                       │ Threat Detection │
-                       │   & Guardrails   │
-                       └─────────────────┘
+                                  │
+                                  ▼
+                          ┌──────────────────┐
+                          │ Threat Detection │
+                          │   & Guardrails   │
+                          └──────────────────┘
 ```
 
 
 Cloud setup
 <figure><img src="../.gitbook/assets/akto-agent-proxy-cloud.png" alt=""><figcaption></figcaption></figure>
-
-Local setup
-<figure><img src="../.gitbook/assets/akto-agent-proxy-local.png" alt=""><figcaption></figcaption></figure>
 
 ## How It Works
 
