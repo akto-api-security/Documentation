@@ -24,7 +24,7 @@ Before configuring the Cloudflare Worker Traffic Connector, you need to deploy t
 
 ### Container deployment
 
-1. Create `wrangler.jsonc` file with these contents -&#x20;
+1. Create `wrangler.jsonc` file with these contents -
 
 ```
 {
@@ -38,7 +38,7 @@ Before configuring the Cloudflare Worker Traffic Connector, you need to deploy t
 
 ```
 
-2. Push Akto container to your registry (steps mentioned on[ Cloudflare docs](https://developers.cloudflare.com/containers/image-management/#using-pre-built-container-images))
+2. Push Akto container to your registry (steps mentioned on[ Cloudflare docs](https://developers.cloudflare.com/containers/platform-details/image-management/))
 
 ```
 docker pull --platform linux/amd64 aktosecurity/mini-runtime-service:latest
@@ -52,11 +52,9 @@ Login Succeeded The push refers to repository \[registry.cloudflare.com/\<ID>/ak
 
 This is the path of image to be configured in wrangler.jsonc - registry.cloudflare.com/\<ID>/akto-mini-runtime:latest
 
-
-
 ### Deploy Akto Traffic Collector (worker)
 
-1. Create a new Cloudflare project.&#x20;
+1. Create a new Cloudflare project.
 2. In `wrangler.jsonc` file of the workder, add the docker image address
 
 ```javascript
@@ -329,10 +327,11 @@ To securely connect your client Worker (e.g., mcp worker) with the Akto Mini-Run
 2. Under **Overview**, select your client Worker (e.g., mcp worker).
 3. Navigate to **Settings** > **Bindings**.
 4. Click **Add binding** and select **Service binding**.
-5. In the **Variable name** field, enter:  
-   ```
-   data_injection_worker
-   ```
+5.  In the **Variable name** field, enter:
+
+    ```
+    data_injection_worker
+    ```
 6. In **Service binding**, select the container Worker you created in Step 1.
 7. In **Entrypoint**, select the container's Durable Object name.
 8. Click **Add** and then **Deploy** your Worker.
