@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Akto's Agentic Platform](README.md)
+* [Akto's Agentic Security](README.md)
 * [Akto MCP Server](akto-mcp-server.md)
 * [AI Security](ai-security.md)
 
@@ -35,8 +35,8 @@
 
 * [Concepts](agentic-discovery/concepts/README.md)
   * [Endpoints](agentic-discovery/concepts/endpoints/README.md)
-    * [Agent Endpoints](agentic-discovery/concepts/endpoints/agent-endpoints.md)
-    * [MCP Endpoints](agentic-discovery/concepts/endpoints/mcp-endpoints.md)
+    * [Agent Component](agentic-discovery/concepts/endpoints/agent-component.md)
+    * [MCP Component](agentic-discovery/concepts/endpoints/mcp-endpoints.md)
   * [Collections](agentic-discovery/concepts/collections/README.md)
     * [Agent Collection](agentic-discovery/concepts/collections/agent-collection.md)
     * [MCP Collection](agentic-discovery/concepts/collections/mcp-collection.md)
@@ -194,19 +194,19 @@
   * [Secure REST APIs using Akto](agentic-red-teaming/how-to/secure-rest-apis-using-akto.md)
   * [Secure SOAP APIs using Akto](agentic-red-teaming/how-to/secure-soap-apis-using-akto.md)
 
-## Agentic Protection
+## Guardrails
 
-* [Overview](agentic-protection/overview.md)
-* [External API Runtime Threat Notifications](agentic-protection/external-api-runtime-threat-notifications.md)
-* [Concepts](agentic-protection/concepts/README.md)
-  * [Schema Conformance](agentic-protection/concepts/schema-conformance.md)
-  * [Threat Actors](agentic-protection/concepts/threat-actors.md)
-  * [Dynamic Api Rate Limiting](agentic-protection/concepts/api-rate-limit.md)
-  * [Threat Policy](agentic-protection/concepts/threat-policy.md)
-  * [Successful Exploits](agentic-protection/concepts/successful-exploits.md)
-  * [Remediation Steps](agentic-protection/concepts/remediation-steps/README.md)
-    * [For Agent Protection Issues](agentic-protection/concepts/remediation-steps/for-agent-protection-issues.md)
-    * [For MCP Protection Issues](agentic-protection/concepts/remediation-steps/for-mcp-protection-issues.md)
+* [Overview](guardrails/overview.md)
+* [External API Runtime Threat Notifications](guardrails/external-api-runtime-threat-notifications.md)
+* [Concepts](guardrails/concepts/README.md)
+  * [Schema Conformance](guardrails/concepts/schema-conformance.md)
+  * [Threat Actors](guardrails/concepts/threat-actors.md)
+  * [Dynamic Api Rate Limiting](guardrails/concepts/api-rate-limit.md)
+  * [Threat Policy](guardrails/concepts/threat-policy.md)
+  * [Successful Exploits](guardrails/concepts/successful-exploits.md)
+  * [Remediation Steps](guardrails/concepts/remediation-steps/README.md)
+    * [For Agent Protection Issues](guardrails/concepts/remediation-steps/for-agent-protection-issues.md)
+    * [For MCP Protection Issues](guardrails/concepts/remediation-steps/for-mcp-protection-issues.md)
 
 ## Issues
 
