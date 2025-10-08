@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Secure SOAP APIs using Akto
 
 ### Introduction

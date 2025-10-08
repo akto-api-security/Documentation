@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Secure REST APIs using Akto
 
 ### Introduction

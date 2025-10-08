@@ -1,10 +1,12 @@
+---
+hidden: true
+---
+
 # De-merge API
 
 Akto automatically merges APIs when it detects changing elements like UUIDs, String, Integer, etc in endpoints. This helps keep your API inventory clean and organized. However, there might be cases where you want to separate these merged APIs.
 
-{% @arcade/embed flowId="XotQ1dCbLDUUsblmFAym" url="https://app.arcade.software/share/XotQ1dCbLDUUsblmFAym" %}
-
-
+{% @arcade/embed url="https://app.arcade.software/share/XotQ1dCbLDUUsblmFAym" flowId="XotQ1dCbLDUUsblmFAym" %}
 
 ### Steps to De-merge APIs:
 

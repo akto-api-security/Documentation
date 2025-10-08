@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Secure GraphQL APIs using Akto
 
 ## Introduction
