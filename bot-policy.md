@@ -4,9 +4,9 @@ Bot detection happens using a combination of abnormal request patterns. You can 
 
 #### **Request Pattern Analysis**
 
-* **Rate limiting**: Too many requests in a short time. The "threshold" is calculated dynamically - separately for each API. A "payment" or "login" API should enforce a stricter rate limit that "product search" APIs.&#x20;
-* **Endpoint access sequence**: Bots may not follow normal navigation flow.&#x20;
-* **Schema conformance**: Missing headers or malformed requests - you can use Akto to find the schema or you can upload your own.&#x20;
+* **Rate limiting**: Too many requests in a short time. The "threshold" is calculated dynamically - separately for each API. A "payment" or "login" API should enforce a stricter rate limit that "product search" APIs.
+* **Endpoint access sequence**: Bots may not follow normal navigation flow.
+* **Schema conformance**: Missing headers or malformed requests - you can use Akto to find the schema or you can upload your own.
 
 ```yaml
 id: AdaptiveBotDetection
@@ -67,8 +67,4 @@ aggregation_rules:
       condition:
         matchCount: 10
         windowThreshold: 30
-
-```
-
-```
 ```

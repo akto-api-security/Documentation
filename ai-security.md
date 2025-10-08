@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # AI Security
 
 With the rise of large language models (LLMs), securing the APIs behind LLMs and chatbots is critical. Akto protects these APIs through four key pillars, with deep coverage of OWASP Top 10 LLM vulnerabilities.
