@@ -1,10 +1,10 @@
-# Descriptions for API Collections & Endpoints
+# MCP Collections & Endpoints
 
 Adding descriptions to your API collections and endpoints in Akto helps keep your API inventory well-organized and easier to understand for all team members. It’s especially useful for documentation, collaboration, and tracking purposes.
 
 ### Steps to Add a Description to an API Collection
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 1. **Navigate to API Discovery:**
    * On the left sidebar, click on **API Discovery**.
@@ -19,7 +19,7 @@ Adding descriptions to your API collections and endpoints in Akto helps keep you
 
 ### Steps to Add a Description to an API Endpoint
 
-<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 1. **View the API Collection:**
    * Go to the **API Discovery** section and select your API collection.

@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Deactivating and Reactivating API Collections in Akto
 
 Managing your API collections effectively helps ensure optimal performance and control within Akto. Below is a step-by-step guide on how to deactivate and reactivate collections.

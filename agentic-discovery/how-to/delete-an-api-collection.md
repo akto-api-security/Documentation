@@ -1,5 +1,6 @@
 ---
 description: Explore about deleting an API collection in Akto.
+hidden: true
 ---
 
 # Delete an API Collection

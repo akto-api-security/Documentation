@@ -1,4 +1,4 @@
-# API Groups
+# Agent Group
 
 API groups are a feature in Akto that allow you to organize and categorize related API endpoints. This functionality helps in managing large API inventories by grouping endpoints based on common characteristics, functionalities, or any other relevant criteria.
 
@@ -16,7 +16,7 @@ API groups are a feature in Akto that allow you to organize and categorize relat
 
 ### Learn:
 
-* [How to create API group](../how-to/create-api-group.md)
-* [How to remove API from group](../how-to/remove-api-s-from-api-group.md)
+* [How to create API group](../../how-to/create-group/mcp-group.md)
+* [How to remove API from group](../../how-to/delete/mcp-component.md)
 
 API groups are a powerful tool for organizing your API inventory, enabling more efficient management and analysis of your endpoints.

@@ -33,7 +33,7 @@ Akto Burp connection Demo
 
 ### What's next?
 
-Head to [API Discovery](../../agentic-discovery/concepts/api-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.
+Head to [API Discovery](../../agentic-discovery/concepts/collections/mcp-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.
 
 ## Frequently Asked Questions (FAQs)
 

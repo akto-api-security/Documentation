@@ -1,4 +1,4 @@
-# Enable Tree view for API collections
+# Agent collections
 
 ## How to Enable Tree View for API Collections
 
@@ -11,7 +11,7 @@ The Tree view feature in Akto allows you to visualize your API collections in a 
 3. Open the dropdown menu
 4. Select "Display tree view"
 
-<figure><img src="../../.gitbook/assets/image (31).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (31).png" alt=""><figcaption></figcaption></figure>
 
 ### Using the Tree View
 

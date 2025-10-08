@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # gRPC API Coverage with Akto
 
 **Akto** enables you to test and secure your gRPC services with ease. gRPC is a high-performance framework that uses HTTP/2 and Protocol Buffers for fast, type-safe communication. With Akto, you can:

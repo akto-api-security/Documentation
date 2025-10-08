@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # API Sequence
 
 ### Overview
@@ -14,7 +18,7 @@ Akto automatically detects API sequences based on traffic patterns and presents 
 
 ***
 
-### 📊 API Sequence&#x20;
+### 📊 API Sequence
 
 The **API Sequences Overview** section gives a snapshot of the identified sequences:
 

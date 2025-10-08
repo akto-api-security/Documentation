@@ -2,17 +2,17 @@
 description: Explore the details of API collection and more.
 ---
 
-# API Collection
+# MCP Collection
 
 Akto automatically groups similar APIs into meaningful collections based on their subdomain names. However, you can sort and also create your own custom API collection if you want.
 
 For example, if you want all your payment APIs to be part of a separate collection, you can create a new collection named "Payment APIs" and then add all APIs that start with "/payments" to this newly created collection.
 
-You can also [set environment type](../how-to/set-environment-type.md) for an API collection as **Staging** or **Production.**&#x20;
+You can also [set environment type](../../how-to/set-environment-type.md) for an API collection as **Staging** or **Production.**
 
 ## View API Collection
 
-In the demonstration below, let's check out and view details for the API collection viz.- **New Burp**.&#x20;
+In the demonstration below, let's check out and view details for the API collection viz.- **New Burp**.
 
 Go to the **API Discovery > API Collection** and click on any **API Collection** to view its Endpoints (**New Burp** in this case).
 

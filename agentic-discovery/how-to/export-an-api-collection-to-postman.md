@@ -1,5 +1,6 @@
 ---
 description: Explore about exporting an API collection to Postman.
+hidden: true
 ---
 
 # Export an API Collection to Postman
@@ -24,7 +25,7 @@ In the above demonstration, we integrated Postman with Akto to enable exporting 
 
 In the demonstration below, we export API collection viz.- **demo\_collection** from Akto to the Postman workspace.
 
-Once you have configured Postman with your Akto account, you can easily export your **`API collection`**  in Akto to your Postman workspace. This allows you to run and test your APIs efficiently.
+Once you have configured Postman with your Akto account, you can easily export your **`API collection`** in Akto to your Postman workspace. This allows you to run and test your APIs efficiently.
 
 Go to **API Discovery> API Collection**. Select the API Collection you want to export to Postman. Click on **Export > Postman** to export the API Collection to Postman.
 

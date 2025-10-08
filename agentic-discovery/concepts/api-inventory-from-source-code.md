@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # API discovery from source code
 
 Akto supports creating API inventory from source code with the help of our code analysis tool. Simply run our code analysis tool on your source code repositories to discover APIs, including shadow APIs. This source code-based API inventory integrates seamlessly with the traffic-based API inventory.
@@ -16,11 +20,13 @@ Akto supports creating API inventory from source code with the help of our code 
 ### How to use
 
 To get started with creating API inventory from source code, choose between the following two methods depending on where your source code is hosted:
+
 1. [Extract APIs from github hosted source code using our Github Action](../how-to/extract-apis-from-source-code-gha.md)
 2. [Extract APIs from source code using our Docker based CLI](../how-to/extract-apis-from-source-code-docker-cli.md)
 
 The following web application frameworks are currently supported:
-1. Spring Boot 
+
+1. Spring Boot
 2. Django
 3. ExpressJS
 4. Mux
