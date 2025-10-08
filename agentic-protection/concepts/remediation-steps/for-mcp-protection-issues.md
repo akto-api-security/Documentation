@@ -1,4 +1,4 @@
-# Remediation Steps for API Protection Issues
+# For MCP Protection Issues
 
 Akto not only detects malicious behavior in real time through its API Protection engine, but also provides remediation guidance to help you reduce risk and improve your security posture immediately. These recommendations are directly accessible from the platform to support fast and informed action.
 
@@ -9,7 +9,7 @@ Akto not only detects malicious behavior in real time through its API Protection
 3. Click on the payload or alert to open its detailed view
 4. Open the Remediation tab to view suggested next steps
 
-<figure><img src="../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
 
 ### What the Remediation Tab Includes
 

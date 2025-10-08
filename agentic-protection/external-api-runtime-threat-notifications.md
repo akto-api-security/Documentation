@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # External API Runtime Threat Notifications
 
 To notify external systems (e.g., SIEM tools, alerting systems, incident management platforms) about **API runtime threats** detected by Akto, including high-frequency 4XX errors, SSRF, broken auth logic, and more.

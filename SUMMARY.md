@@ -204,7 +204,9 @@
   * [Dynamic Api Rate Limiting](agentic-protection/concepts/api-rate-limit.md)
   * [Threat Policy](agentic-protection/concepts/threat-policy.md)
   * [Successful Exploits](agentic-protection/concepts/successful-exploits.md)
-  * [Remediation Steps for API Protection Issues](agentic-protection/concepts/remediation-steps-for-api-protection-issues.md)
+  * [Remediation Steps](agentic-protection/concepts/remediation-steps/README.md)
+    * [For Agent Protection Issues](agentic-protection/concepts/remediation-steps/for-agent-protection-issues.md)
+    * [For MCP Protection Issues](agentic-protection/concepts/remediation-steps/for-mcp-protection-issues.md)
 
 ## Issues
 
