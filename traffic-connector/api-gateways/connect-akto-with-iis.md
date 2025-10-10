@@ -73,7 +73,7 @@ Akto provides a native IIS module that can capture HTTP request and response hea
 
    ```json
    {
-     "backendUrl": "https://DATA-INGESTION-SERVICE-URL/api/ingestData"
+     "backendUrl": "http://DATA-INGESTION-SERVICE-URL:9091/api/ingestData"
    }
    ```
 
