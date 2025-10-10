@@ -76,7 +76,7 @@ For each detected MCP server config:
 }
 ```
 
-<figure><img src="./.gitbook/assets/mcp_endpoint_shield_cursor.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="./.gitbook/assets/mcp_endpoint_shield_example.png" alt=""><figcaption></figcaption></figure>
 
 
 **What changed:**  
