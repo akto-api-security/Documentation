@@ -45,11 +45,11 @@ For each detected MCP server config:
 ```json
 {
   "mcpServers": {
-    "playwright-mcp": {
+    "chrome-devtools-mcp": {
       "command": "npx",
       "args": [
         "-y"
-        "@playwright/mcp@latest"
+        "chrome-devtools-mcp@latest"
       ]
     }
   }
@@ -60,16 +60,16 @@ For each detected MCP server config:
 ```json
 {
   "mcpServers": {
-    "playwright-mcp-endpoint-shield": {
+    "chrome-devtools-mcp": {
       "command": "mcp-endpoint-shield",
       "args": [
         "stdio",
         "--name",
-        "playwright-mcp",
+        "chrome-devtools-mcp",
         "--exec",
         "npx",
         "-y",
-        "@playwright/mcp@latest"
+        "chrome-devtools-mcp@latest"
       ]
     }
   }
@@ -80,9 +80,8 @@ For each detected MCP server config:
 
 
 **What changed:**  
-- The server is renamed from `playwright-mcp` → `playwright-mcp-endpoint-shield`.  
 - `mcp-endpoint-shield` is now the entry command.  
-- Original server command (`npx @playwright/mcp@latest`) is passed through `--exec`.  
+- Original server command (`npx -y chrome-devtools-mcp@latest`) is passed through `--exec`.  
 
 ---
 
