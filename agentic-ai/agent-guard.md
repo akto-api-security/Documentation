@@ -1,4 +1,4 @@
-# 🛡️ Agent Guard
+# Agent Guard
 
 ## 📖 Introduction
 
