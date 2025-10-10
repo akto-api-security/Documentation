@@ -21,6 +21,7 @@
 * [AI Agent Security](ai-agent-security.md)
 * [Agentic Shield](agentic-shield.md)
 * [MCP Proxy](agentic-ai/akto-mcp-proxy.md)
+* [Agent Guard](agentic-ai/agent-guard.md)
 
 ## AI Agents
 
