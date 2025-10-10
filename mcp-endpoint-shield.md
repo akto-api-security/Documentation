@@ -66,8 +66,6 @@ For each detected MCP server config:
         "stdio",
         "--name",
         "playwright-mcp",
-        "--akto-api-token",
-        "<your akto api token>",
         "--exec",
         "npx",
         "-y",
@@ -85,7 +83,6 @@ For each detected MCP server config:
 - The server is renamed from `playwright-mcp` → `playwright-mcp-endpoint-shield`.  
 - `mcp-endpoint-shield` is now the entry command.  
 - Original server command (`npx @playwright/mcp@latest`) is passed through `--exec`.  
-- Security flags (`--akto-api-token`) are automatically injected.  
 
 ---
 
@@ -94,24 +91,23 @@ For each detected MCP server config:
 If you want to run manually (instead of auto-detection):  
 
 ```bash
-mcp-endpoint-shield stdio --name <project_name> --akto-api-token <token> --exec <your_mcp_server_command> [args...]
+mcp-endpoint-shield stdio --name <project_name> --exec <your_mcp_server_command> [args...]
 ```
 
 ### Examples
 - Python server:
   ```bash
-  mcp-endpoint-shield stdio --name my-mcp --akto-api-token <TOKEN> --exec uv run server.py
+  mcp-endpoint-shield stdio --name my-mcp --exec uv run server.py
   ```
 - Dockerized server:
   ```bash
-  mcp-endpoint-shield stdio --name my-mcp --akto-api-token <TOKEN> --env AKTO_API_KEY=<TOKEN> --exec docker run --rm -i -e AKTO_API_KEY=<TOKEN> your/mcp-image:latest
+  mcp-endpoint-shield stdio --name my-mcp --env AKTO_API_KEY=<TOKEN> --exec docker run --rm -i -e AKTO_API_KEY=<TOKEN> your/mcp-image:latest
   ```
 
 ---
 
 ## ⚙️ Common Flags
-- `--name <project_name>` → Friendly label used in logs and insights  
-- `--akto-api-token <token>` → Your Akto API token  
+- `--name <project_name>` → Friendly label used in logs and insights
 - `--exec <command> [args...]` → Command to start your MCP server  
 - `--env KEY=VALUE` (repeatable) → Pass additional environment variables to the MCP process  
 
