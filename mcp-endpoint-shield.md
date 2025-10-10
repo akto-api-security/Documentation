@@ -101,7 +101,7 @@ mcp-endpoint-shield stdio --name <project_name> --exec <your_mcp_server_command>
   ```
 - Dockerized server:
   ```bash
-  mcp-endpoint-shield stdio --name my-mcp --env AKTO_API_KEY=<TOKEN> --exec docker run --rm -i -e AKTO_API_KEY=<TOKEN> your/mcp-image:latest
+  mcp-endpoint-shield stdio --name my-mcp --exec docker run --rm -i your/mcp-image:latest
   ```
 
 ---
