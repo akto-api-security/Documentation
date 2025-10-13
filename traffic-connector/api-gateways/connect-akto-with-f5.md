@@ -160,17 +160,33 @@ RUNTIME_MODE=hybrid
 
 ### Node Setup
 
-1. Create a new node in your F5 dashboard. Use the ip of Traffic Collector instance as Address
+1. Inside left nav bar go to Local Traffic -> Nodes -> Node List
+
+<figure><img src="../../.gitbook/assets/f5-node-list.png" alt=""><figcaption></figcaption></figure>
+
+2. Create a new node in your F5 dashboard. Use the ip of Traffic Collector instance as Address
+
+<figure><img src="../../.gitbook/assets/f5-node-create.png" alt=""><figcaption></figcaption></figure>
 
 ### Pool Setup
 
-1. Create a new pool in your F5 dashboard.
+1. Inside left nav bar go to Local Traffic -> Pools -> Pool List
+
+<figure><img src="../../.gitbook/assets/f5-pool-list.png" alt=""><figcaption></figcaption></figure>
+
+2. Create a new pool in your F5 dashboard.
    1. Address - Use the ip of Traffic Collector instance
    2. Service Port - 1053
 
+<figure><img src="../../.gitbook/assets/f5-pool-create.png" alt=""><figcaption></figcaption></figure>
+
 ### IRULE
 
-1. Create a new iRule with the following tcl script
+1. Inside left nav bar go to Local Traffic -> iRules -> iRule List
+
+<figure><img src="../../.gitbook/assets/f5-irule-list.png" alt=""><figcaption></figcaption></figure>
+
+2. Create a new iRule with the following tcl script
 
 ```tcl
 when RULE_INIT {
@@ -202,8 +218,8 @@ when HTTP_REQUEST {
       if { [string tolower $aHeader] == "content-type" } {
         set contentTypeHeaderValue [HTTP::header value $aHeader]
       }
-      set lwcasekey [string map -nocase {"\\"" "\\\\\\""}[string tolower $aHeader]]
-      set value [string map -nocase {"\\"" "\\\\\\""} [HTTP::header value $aHeader]]
+      set lwcasekey [string map -nocase {"\"" "\\\""}[string tolower $aHeader]]
+      set value [string map -nocase {"\"" "\\\""} [HTTP::header value $aHeader]]
       set headers "${static::header_name}${lwcasekey}${static::header_value}${value}"
       append reqHeaderString $headers
     }
@@ -233,8 +249,8 @@ when HTTP_RESPONSE  {
     set response_time [clock clicks -milliseconds]
     set resHeaderString "${static::response_header_start}"
     foreach aHeader [HTTP::header names] {
-      set lwcasekey [string map -nocase {"\\"" "\\\\\\""}[string tolower $aHeader]]
-      set value [string map -nocase {"\\"" "\\\\\\""} [HTTP::header value $aHeader]]
+      set lwcasekey [string map -nocase {"\"" "\\\""}[string tolower $aHeader]]
+      set value [string map -nocase {"\"" "\\\""} [HTTP::header value $aHeader]]
       set headers "${static::header_name}${lwcasekey}${static::header_value}${value}"
       append resHeaderString $headers
     }
@@ -244,7 +260,7 @@ when HTTP_RESPONSE  {
     set forwarded_data 0
     if { [HTTP::header exists "Content-Length"] && [HTTP::header value "Content-Length"] == 0 } {
        set response_payload ""
-       HSL::send $hsl "${static::hsl_start}$correlationId $method $uri $client_addr $local_port [HTTP::status] $host [HTTP::version] $request_time $response_time $reqHeaderString $resHeaderString ${static::request_payload}$request_payload ${static::response_payload}$response_payload ${static::hsl_end}\\n"
+       HSL::send $hsl "${static::hsl_start}$correlationId $method $uri $client_addr $local_port [HTTP::status] $host [HTTP::version] $request_time $response_time $reqHeaderString $resHeaderString ${static::request_payload}$request_payload ${static::response_payload}$response_payload ${static::hsl_end}\n"
        set forwarded_data 1
     }
 }
@@ -259,9 +275,11 @@ when HTTP_RESPONSE_DATA {
         set response_payload [b64encode [string range "[HTTP::payload]" 0 $capture_length]]
     }
     if { $forwarded_data != 1 } {
-        HSL::send $hsl "${static::hsl_start} ${static::hsl_start} ${static::hsl_start} ${static::hsl_start} ${static::hsl_start} ${static::hsl_start} $correlationId $method $uri $client_addr $local_port [HTTP::status] $host [HTTP::version] $request_time $response_time $reqHeaderString $resHeaderString ${static::request_payload}$request_payload ${static::response_payload}$response_payload ${static::hsl_end}\\n"
+        HSL::send $hsl "${static::hsl_start} ${static::hsl_start} ${static::hsl_start} ${static::hsl_start} ${static::hsl_start} ${static::hsl_start} $correlationId $method $uri $client_addr $local_port [HTTP::status] $host [HTTP::version] $request_time $response_time $reqHeaderString $resHeaderString ${static::request_payload}$request_payload ${static::response_payload}$response_payload ${static::hsl_end}\n"
     }
 }
 ```
 
-2. Attach the iRule to your virtual server by going to resources section under your virtual server.
+<figure><img src="../../.gitbook/assets/f5-irule-create.png" alt=""><figcaption></figcaption></figure>
+
+3. Attach the iRule to your virtual server by going to resources section under your virtual server.
