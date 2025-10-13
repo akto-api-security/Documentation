@@ -160,32 +160,34 @@ RUNTIME_MODE=hybrid
 
 ### Node Setup
 
-1. Inside left nav bar go to Local Traffic -> Nodes -> Node List
+1.  Inside left nav bar go to Local Traffic -> Nodes -> Node List
 
-<figure><img src="../../.gitbook/assets/f5-node-list.png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/image (141).png" alt=""><figcaption></figcaption></figure>
+2.  Create a new node in your F5 dashboard. Use the ip of Traffic Collector instance as Address
 
-2. Create a new node in your F5 dashboard. Use the ip of Traffic Collector instance as Address
+    <figure><img src="../../.gitbook/assets/image (142).png" alt=""><figcaption></figcaption></figure>
 
 <figure><img src="../../.gitbook/assets/f5-node-create.png" alt=""><figcaption></figcaption></figure>
 
 ### Pool Setup
 
-1. Inside left nav bar go to Local Traffic -> Pools -> Pool List
+1.  Inside left nav bar go to Local Traffic -> Pools -> Pool List
 
-<figure><img src="../../.gitbook/assets/f5-pool-list.png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/image (143).png" alt=""><figcaption></figcaption></figure>
+2.  Create a new pool in your F5 dashboard.
 
-2. Create a new pool in your F5 dashboard.
-   1. Address - Use the ip of Traffic Collector instance
-   2. Service Port - 1053
+    1. Address - Use the ip of Traffic Collector instance
+    2. Service Port - 1053
+
+    <figure><img src="../../.gitbook/assets/image (144).png" alt=""><figcaption></figcaption></figure>
 
 <figure><img src="../../.gitbook/assets/f5-pool-create.png" alt=""><figcaption></figcaption></figure>
 
 ### IRULE
 
-1. Inside left nav bar go to Local Traffic -> iRules -> iRule List
+1.  Inside left nav bar go to Local Traffic -> iRules -> iRule List
 
-<figure><img src="../../.gitbook/assets/f5-irule-list.png" alt=""><figcaption></figcaption></figure>
-
+    <figure><img src="../../.gitbook/assets/image (145).png" alt=""><figcaption></figcaption></figure>
 2. Create a new iRule with the following tcl script
 
 ```tcl
@@ -280,6 +282,6 @@ when HTTP_RESPONSE_DATA {
 }
 ```
 
-<figure><img src="../../.gitbook/assets/f5-irule-create.png" alt=""><figcaption></figcaption></figure>
+3.  Attach the iRule to your virtual server by going to resources section under your virtual server.
 
-3. Attach the iRule to your virtual server by going to resources section under your virtual server.
+    <figure><img src="../../.gitbook/assets/image (146).png" alt=""><figcaption></figcaption></figure>
