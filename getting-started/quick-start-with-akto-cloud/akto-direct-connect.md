@@ -12,7 +12,7 @@ This fully-managed setup is ideal for teams that want **quick onboarding**, **ze
 
 #### Run the Traffic Collector
 
-Replace the CLOUD_PROCESSOR_AUTHENTICATION_TOKEN from previous step
+Replace the CLOUD_PROCESSOR_AUTHENTICATION_TOKEN below with the JWT token copied from previous step
 
 ```bash
 docker run -d \
@@ -29,7 +29,7 @@ docker run -d \
   -v /:/host \
   -e AKTO_TRAFFIC_BATCH_TIME_SECS=10 \
   -e AKTO_TRAFFIC_BATCH_SIZE=100 \
-  -e AKTO_KAFKA_BROKER_MAL=<kafka-ip> \
+  -e AKTO_KAFKA_BROKER_MAL=34.54.44.171 \
   -e CLOUD_PROCESSOR_MODE=true \
   -e CLOUD_PROCESSOR_AUTHENTICATION_TOKEN=<token-from-step-1> \
   -e PROBE_ALL_PID=true \
