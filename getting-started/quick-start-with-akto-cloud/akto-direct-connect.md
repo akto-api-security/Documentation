@@ -4,12 +4,12 @@
 
 This fully-managed setup is ideal for teams that want **quick onboarding**, **zero maintenance overhead**, and **fast time-to-value** with API security testing.
 
-<figure><img src="../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Get Authentication Token 
 1. Login to Akto dashboard at [app.akto.io](https://app.akto.io)
 2. Go to Quick Start > Hybrid Saas > Click on “Connect” button
-3. Copy the JWT token (marked in red) [ Also referred as `CLOUD_PROCESSOR_AUTHENTICATION_TOKEN` later]
+3. Copy the JWT token/databaseAbstractorToken (marked in red) 
 
 #### Run the Traffic Collector
 
