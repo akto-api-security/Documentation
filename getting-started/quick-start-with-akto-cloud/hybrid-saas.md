@@ -100,8 +100,8 @@ kubectl get svc -n <namespace>
    1. Platform
       1. Amazon Linux 2023
    2. Spec
-      1. 2 vCPU
-      2. 4GB RAM
+      1. 16 vCPU
+      2. 32GB RAM
       3. 20GB Hard disk
       4. Don’t use burstable instances
    3. Network
