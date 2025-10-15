@@ -73,7 +73,7 @@ Akto provides a native IIS module that can capture HTTP request and response hea
 
    ```json
    {
-     "backendUrl": "https://DATA-INGESTION-SERVICE-URL/api/ingestData"
+     "backendUrl": "http://DATA-INGESTION-SERVICE-URL:9091/api/ingestData"
    }
    ```
 
@@ -99,8 +99,8 @@ You need to register the Akto IIS module globally so it applies to all websites.
 
    ```cmd
    %windir%\system32\inetsrv\appcmd.exe install module /name:AktoTrafficConnector /image:"C:\akto_configs\AktoNativeIisTrafficCollector.dll" /add:true
-   appcmd.exe set config /section:system.webServer/globalModules /+[name='AktoNativeIisTrafficCollector',image='C:\akto_configs\AktoNativeIisTrafficCollector.dll']
-   appcmd.exe list config /section:system.webServer/globalModules
+   %windir%\system32\inetsrv\appcmd.exe set config /section:system.webServer/globalModules /+[name='AktoNativeIisTrafficCollector',image='C:\akto_configs\AktoNativeIisTrafficCollector.dll']
+   %windir%\system32\inetsrv\appcmd.exe list config /section:system.webServer/globalModules
    ```
 
    These commands:
@@ -109,6 +109,11 @@ You need to register the Akto IIS module globally so it applies to all websites.
    * Add it for **all sites** so that traffic from every hosted website is mirrored
    * Explicitly add `AktoNativeIisTrafficCollector` to the global modules section
    * List all registered global modules for verification
+
+3. Restart your IIS server:
+    ```bash
+    iisreset
+    ```
 
 ---
 
@@ -131,6 +136,11 @@ If you want to install the module for **just one website**, follow these steps:
 ```
 
 3. Ensure the app pool identity has read access to this folder and its DLLs.
+
+4. Restart your IIS server:
+    ```bash
+    iisreset
+    ```
 
 ---
 

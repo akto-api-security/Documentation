@@ -1,69 +1,80 @@
-🚀 Import MCP Endpoints into Akto
+# MCP Import
 
-Akto now supports direct import of API endpoints from MCP servers via Quick Start. With just your SSE endpoint URL, you can auto-discover all active MCP tools, resources, and prompts — no manual setup required.
-🔧 What You Need
+Akto now supports direct import of **MCPs** (tools, resources, and prompts) into **MCP Inventory** via **Quick Start**. With just your SSE endpoint URL, you can auto-discover all active MCP tools, resources, and prompts — no manual setup required.
 
-    MCP SSE Endpoint URL (e.g., ends with /sse)
+<figure><img src=".gitbook/assets/image (138).png" alt=""><figcaption></figcaption></figure>
 
-    (Optional) Authorization headers, only if your MCP server requires them:
+***
 
-        Header Key (e.g., Authorization)
+### 🔧 What You Need
 
-        Header Value (e.g., Bearer <your-token>)
+* **MCP SSE Endpoint URL** (e.g., ends with `/sse`)
+*   **(Optional) Authorization headers** – only if your MCP server requires them:
 
-✅ Steps to Import
-1. Open Akto Dashboard → Go to Quick Start
-2. Select “Import from MCP”
-3. Fill in SSE Details
+    ```
+    Header Key: Authorization
+    Header Value: Bearer <your-token>
+    ```
 
-    SSE Endpoint URL:
-    e.g., https://mcp.example.com/sse
+***
 
-    (Optional) Add Auth Headers:
+### ✅ Steps to Import
 
-        Header Key: Authorization
+1. **Open Akto Dashboard** → Go to _Quick Start_
+2. **Select**: _Import from MCP_
+3. **Fill in SSE Details**
+   * SSE Endpoint URL: e.g., `https://mcp.example.com/sse`
+   *   _(Optional)_ Add Auth Headers:
 
-        Header Value: Bearer your-token
+       ```
+       Header Key: Authorization
+       Header Value: Bearer your-token
+       ```
+   * If your MCP server is not secured, leave auth fields blank.
+4. **Click Import**
 
-    If your MCP server is not secured, leave the auth fields blank.
+Akto will then:
 
-4. Click Import
+* Start listening to the SSE stream
+* Scan events like `tool_call`, `resource_call`, and `prompt_response`
+* Auto-register all observed MCP endpoints
 
-Akto will start listening to the SSE stream, scan events like tool_call, resource_call, and prompt_response, and auto-register all observed API endpoints.
-🧪 Example Inputs
-With Authorization
+**Example With Authorization**
 
+```
 SSE Endpoint URL: https://mcp.example.com/sse
 Header Key: Authorization
 Header Value: Bearer abc123
+```
 
-Without Authorization
+**Without Authorization**
 
+```
 SSE Endpoint URL: https://mcp.example.com/sse
+```
 
-🔍 What Gets Imported?
+***
+
+### 🔍 What Gets Imported?
 
 Akto will detect and add:
 
-    All tool endpoints (/v1/tools/...) → tagged as mcp-tools
+* All **tool endpoints** (`/v1/tools/...`) → tagged as `mcp-tools`
+* All **resource endpoints** (`/v1/resources/...`) → tagged as `mcp-resources`
+* All **prompt endpoints** (`/v1/prompts/...`) → tagged as `mcp-prompts`
 
-    All resource endpoints (/v1/resources/...) → tagged as mcp-resources
+These will appear in **MCP Inventory**, ready for monitoring and testing.
 
-    All prompt endpoints (/v1/prompts/...) → tagged as mcp-prompts
+***
 
-These will appear in API Inventory, ready for monitoring and testing.
-🔐 Security
+### 🔒 Security
 
-    Auth headers (if any) are used once, only during import, and are not stored
+* Auth headers (if any) are used **only once** during import and are **not stored**
+* Akto uses **read-only access** to your SSE stream
 
-    Akto uses read-only access to your SSE stream
+***
 
-📘 Learn More
-
-See detailed setup guide here:
-👉 Get Started with [MCP Security](https://www.akto.io/mcp-security-demo)
-
-## Get Support for your Akto setup
+### Get Support for your Akto setup
 
 There are multiple ways to request support from Akto. We are 24X7 available on the following:
 

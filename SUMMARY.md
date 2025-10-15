@@ -11,10 +11,17 @@
 ***
 
 * [MCP Security](mcp-security.md)
+* [MCP Recon](mcp-recon.md)
 * [MCP Import](mcp-import.md)
+* [MCP Endpoint Shield](mcp-endpoint-shield.md)
+* [AI Agent Import](ai-agent-import.md)
+* [AI Model Import](ai-model-import.md)
+* [AI Agent Proxy](agentic-ai/akto-agent-proxy.md)
 * [AI Security](ai-security.md)
 * [AI Agent Security](ai-agent-security.md)
+* [Agentic Shield](agentic-shield.md)
 * [MCP Proxy](agentic-ai/akto-mcp-proxy.md)
+* [Agent Guard](agentic-ai/agent-guard.md)
 
 ## AI Agents
 
@@ -72,6 +79,7 @@
   * [Connect Akto with Kong](traffic-connector/api-gateways/connect-akto-with-kong.md)
   * [Connect Akto with Kong Mesh](traffic-connector/api-gateways/connect-akto-with-kong-mesh.md)
   * [Connect Akto with Cloudflare](traffic-connector/api-gateways/connect-akto-with-cloudflare.md)
+  * [Connect Akto with Cloudflare Worker Proxy](<traffic-connector/api-gateways/connect-akto-with-cloudflare-worker-proxy (1).md>)
   * [Connect Akto with Cloudflare Container](traffic-connector/api-gateways/connect-akto-with-cloudflare-container.md)
   * [Connect Akto with IBM Connect](traffic-connector/api-gateways/connect-akto-with-ibm-connect.md)
   * [Connect Akto with Mulesoft Flex Gateway](traffic-connector/api-gateways/mulesoft-flex.md)
@@ -119,6 +127,7 @@
   * [Connect Akto with OpenAPI](traffic-connector/manual/openapi.md)
   * [Add API traffic to Akto using HAR file upload](traffic-connector/manual/har-file-upload.md)
   * [API Import: WSDL in Akto](traffic-connector/manual/wsdl.md)
+  * [Connect Akto with Imperva](traffic-connector/manual/imperva.md)
 * [Configure TLS on kafka](traffic-connector/kafka-tls-in-kubernetes.md)
 * [Configure SASL Authentication on kafka](traffic-connector/kafka-sasl-in-kubernetes.md)
 
@@ -192,7 +201,9 @@
 * [Concepts](api-protection/concepts/README.md)
   * [Schema Conformance](api-protection/concepts/schema-conformance.md)
   * [Threat Actors](api-protection/concepts/threat-actors.md)
+  * [Dynamic Api Rate Limiting](api-protection/concepts/api-rate-limit.md)
   * [Threat Policy](api-protection/concepts/threat-policy.md)
+  * [Successful Exploits](api-protection/concepts/successful-exploits.md)
   * [Remediation Steps for API Protection Issues](api-protection/concepts/remediation-steps-for-api-protection-issues.md)
 
 ***

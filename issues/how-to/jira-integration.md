@@ -39,7 +39,7 @@ You can configure **one or multiple Jira projects**. For each project:
 
 ### What Happens When You Enable/Disable Bi-Directional Integration?
 
-<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 #### Enabling Bi-Directional Integration:
 
@@ -65,6 +65,11 @@ This feature assumes that **no separate custom workflows** are created in your J
 
 * ⚠️ **Mandatory fields** set in Jira are not currently supported in this integration. Ensure that all required fields are included and properly configured in Jira to ensure smooth ticket creation.
 * You can configure **different bi-directional settings per project** to tailor the sync behavior to each project’s needs.
+* Always double-check your status mappings before enabling or modifying bi-directional settings.
+* The bi-directional sync runs once every hour. Each run only processes issues that were updated after the previous sync.
+* A Jira ticket can only move to a new status if that transition is allowed. If it’s not, the status will remain unchanged.
+* If an error occurs while updating an issue, it is logged and skipped. That issue will not be retried in the next sync.
+* If the sync job doesn’t run for some time (e.g., 6 hours due to a technical issue), the next successful run will pick up all updates made since the last successful sync.
 
 ***
 
