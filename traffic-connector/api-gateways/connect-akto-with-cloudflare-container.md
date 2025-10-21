@@ -213,7 +213,7 @@ async function duplicateRequest(request) {
   return [req1, req2];
 }
 
-function collectTraffic(request, backendResponse, env, ctx) {
+function collectTraffic(request, backendResponse, env, ctx, extra) {
   const contentType = (request.headers.get("content-type") || "").toLowerCase();
   const isAllowed = isAllowedContentType(contentType);
   const shouldCapture = isAllowed && isValidStatus(backendResponse.status);
@@ -243,7 +243,7 @@ function collectTraffic(request, backendResponse, env, ctx) {
     if (request.body) requestBody = await streamToString(request.body);
     let responseBody = "";
     if (responseForLogging) responseBody = await streamToString(responseForLogging);
-    await sendToAkto(request, requestBody, backendResponse, responseBody, env);
+    await sendToAkto(request, requestBody, backendResponse, responseBody, env, extra);
   })());
 
   return responseForClient;
@@ -277,9 +277,9 @@ async function streamToString(stream) {
   return result;
 }
 
-async function sendToAkto(request, requestBody, response, responseBody, env) {
+async function sendToAkto(request, requestBody, response, responseBody, env, extra) {
   const aktoAPI = "https://<your-ingestion-service-address>/api/ingestData";
-  const logs = generateLog(request, requestBody, response, responseBody);
+  const logs = generateLog(request, requestBody, response, responseBody, extra);
   const aktoRequest = new Request(aktoAPI, {
     method: "POST",
     body: logs,
@@ -291,10 +291,59 @@ async function sendToAkto(request, requestBody, response, responseBody, env) {
   }
 }
 
-function generateLog(req, requestBody, res, responseBody) {
+function getStatusText(statusCode) {
+  const statusTexts = {
+    100: "Continue",
+    101: "Switching Protocols",
+    200: "OK",
+    201: "Created",
+    202: "Accepted",
+    203: "Non-Authoritative Information",
+    204: "No Content",
+    205: "Reset Content",
+    206: "Partial Content",
+    300: "Multiple Choices",
+    301: "Moved Permanently",
+    302: "Found",
+    303: "See Other",
+    304: "Not Modified",
+    307: "Temporary Redirect",
+    308: "Permanent Redirect",
+    400: "Bad Request",
+    401: "Unauthorized",
+    402: "Payment Required",
+    403: "Forbidden",
+    404: "Not Found",
+    405: "Method Not Allowed",
+    406: "Not Acceptable",
+    407: "Proxy Authentication Required",
+    408: "Request Timeout",
+    409: "Conflict",
+    410: "Gone",
+    411: "Length Required",
+    412: "Precondition Failed",
+    413: "Payload Too Large",
+    414: "URI Too Long",
+    415: "Unsupported Media Type",
+    416: "Range Not Satisfiable",
+    417: "Expectation Failed",
+    422: "Unprocessable Entity",
+    429: "Too Many Requests",
+    500: "Internal Server Error",
+    501: "Not Implemented",
+    502: "Bad Gateway",
+    503: "Service Unavailable",
+    504: "Gateway Timeout",
+    505: "HTTP Version Not Supported",
+  };
+  return statusTexts[statusCode] || "Unknown";
+}
+
+function generateLog(req, requestBody, res, responseBody, extra) {
   const url = new URL(req.url);
+  const statusText = res.statusText || getStatusText(res.status);
   const value = {
-    path: url.pathname,
+    path: url.pathname + url.search,
     requestHeaders: JSON.stringify(Object.fromEntries(req.headers)),
     responseHeaders: JSON.stringify(Object.fromEntries(res.headers)),
     method: req.method,
@@ -304,15 +353,38 @@ function generateLog(req, requestBody, res, responseBody) {
     time: Math.round(Date.now() / 1000).toString(),
     statusCode: res.status.toString(),
     type: "HTTP/1.1",
-    status: res.statusText,
+    status: statusText,
     akto_account_id: "1000000",
     akto_vxlan_id: "0",
     is_pending: "false",
     source: "MIRRORING",
     tag: "{\n  \"service\": \"cloudflare\"\n}"
   };
+
+  // ONLY add parentMcpToolNames if it exists and is not empty
+  if (extra?.parentMcpToolNames && extra?.parentMcpToolNames.length > 0) {
+    value.parentMcpToolNames = extra.parentMcpToolNames;
+    console.log(`Added parentMcpToolNames to log: ${JSON.stringify(extra.parentMcpToolNames)}`);
+  } else {
+    console.log("No parentMcpToolNames - this is MCP traffic (not from inside a tool)");
+  }
+
   return JSON.stringify({ batchData: [value] });
 }
+```
+
+***
+
+### Capturing MCP Server Traffic
+
+If you're using this integration to collect MCP server traffic, you can also capture both the MCP tool calls and the API calls being made inside them. This allows you to map the relationship between MCP tools and their underlying API calls in the Akto dashboard.
+
+To enable this functionality, add the following lines around your MCP tool's fetch function:
+
+```javascript
+const [reqForFetch, reqForCollector] = await duplicateRequest(request); // At the starting of your mcp tool fetch method
+const backendResponse = await fetch(reqForFetch);
+const responseForClient = collectTraffic(reqForCollector, backendResponse, env, ctx); // add this line just after getting response
 ```
 
 ***
