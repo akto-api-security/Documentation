@@ -130,6 +130,7 @@ Ensure this instance is publicly accessible, as it will receive traffic logs fro
             akto_vxlan_id: "0",
             is_pending: "false",
             source: "MIRRORING",
+            tag: "{\n  \"service\": \"cloudflare\"\n}"
             };
 
             console.log("📤 Sending log entry to webhook...");
