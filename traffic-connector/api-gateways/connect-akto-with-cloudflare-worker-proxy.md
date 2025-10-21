@@ -141,9 +141,13 @@ Ensure this instance is publicly accessible, as it will receive traffic logs fro
             });
 
             // await env.<CONTAINER_BINDING_VARIABLE_NAME>.fetch(aktoReq);
-            await fetch(aktoReq);
+            const aktoResp = await fetch(aktoReq);
 
-            console.log("✅ Log sent");
+            if(aktoResp == 200) {
+                console.log("✅ Log sent to akto");
+            } else {
+                console.log("❌ Failed to send data to Akto. Response Status: " + aktoResp?.status);
+            }
         } catch (err) {
             console.error("❌ Log error:", err);
         }
