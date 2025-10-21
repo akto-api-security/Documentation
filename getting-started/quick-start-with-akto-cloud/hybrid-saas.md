@@ -109,7 +109,7 @@ kubectl get svc -n <namespace>
       2. connectivity to internet (typically via NAT)
       3. connectivity to your staging service
    4. Security groups
-      1. Inbound - Open ports 22, 9092
+      1. Inbound - Open port 9092
       2. Outbound - Open all
 2. SSH into this new instance in your Cloud
 3. Run `sudo su -`
