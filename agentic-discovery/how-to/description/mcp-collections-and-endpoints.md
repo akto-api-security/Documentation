@@ -1,48 +1,37 @@
+---
+description: Add descriptions to MCP collections and endpoints for better documentation.
+---
+
 # MCP Collections & Endpoints
 
-Adding descriptions to your API collections and endpoints in Akto helps keep your API inventory well-organized and easier to understand for all team members. It’s especially useful for documentation, collaboration, and tracking purposes.
+Adding descriptions to your MCP collections and endpoints helps keep your MCP inventory organized and easier to understand.
 
-### Steps to Add a Description to an API Collection
+## Add Description to MCP Collection
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+1. Navigate to **Agentic Discovery > Collections**
+2. Select your MCP collection
+3. Click **Add a brief description** at the top
+4. Enter description (up to 64 characters)
+5. Press Enter or click outside to save
 
-1. **Navigate to API Discovery:**
-   * On the left sidebar, click on **API Discovery**.
-2. **Select the API Collection:**
-   * Choose your desired API collection from the list.
-3. **Add or Edit the Description:**
-   * Click **Add a brief description** (located at the top of the collection view).
-   * Enter your description (up to 64 characters).
-   * Click anywhere outside the input box or press Enter to save.
+## Add Description to MCP Endpoint
 
-***
+1. Go to **Agentic Discovery** and select your MCP collection
+2. Click on the MCP endpoint
+3. In the right panel, click the description field
+4. Enter description (up to 64 characters)
+5. Changes save automatically
 
-### Steps to Add a Description to an API Endpoint
+## Why Add Descriptions?
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+- **Clarity**: Understand MCP server purpose and capabilities
+- **Documentation**: Keep inventory current
+- **Collaboration**: Help teams understand MCP tools
+- **Security**: Aid in permission audits
 
-1. **View the API Collection:**
-   * Go to the **API Discovery** section and select your API collection.
-2. **Select the Endpoint:**
-   * Click on the endpoint you want to describe.
-3. **Add/Edit the Endpoint Description:**
-   * In the right panel that opens, you'll see a field under the endpoint path.
-   * Click to edit and enter a description (up to 64 characters).
-   * Your changes will save automatically or when you click outside the input box.
+## Example Descriptions
 
-***
-
-### Why Add Descriptions?
-
-* **Improve clarity:** Helps team members understand the purpose of APIs quickly.
-* **Better documentation:** Keeps your API inventory up-to-date with meaningful notes.
-* **Ease of collaboration:** New developers or testers can onboard faster.
-* **Audit readiness:** Detailed notes aid in security and compliance reviews.
-
-***
-
-### Best Practices
-
-* **Be concise but clear:** Use plain language to describe the API’s function.
-* **Include key details:** Mention core use cases (e.g., “Updates lettering item categories for truck signs”).
-* **Keep it updated:** Regularly review and revise descriptions as APIs evolve.
+- "Filesystem MCP - read/write to /data directory"
+- "Slack MCP - customer support channel access"
+- "Postgres MCP - read-only customer database"
+- "GitHub MCP - code repository management"

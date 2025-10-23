@@ -1,23 +1,37 @@
 # Test Result
 
-API test results provide valuable insights into the security posture of an API. These results are generated through systematic security testing procedures that evaluate various aspects of the API's behavior. You can view all your test results and take action on them in one place.
+Agentic security test results provide insights into the security posture of your AI agents and agentic systems. Results are generated through systematic security testing that evaluates agent behaviors, tool permissions, and vulnerability responses. View all test results and take action in one place.
 
-In the demonstration below, we have viewed the test result of the selected API endpoint, "BOLA by changing auth token".&#x20;
+To view results, navigate to **Agentic Red Teaming > Results** and select the test from your scan results.
 
-Go to **Testing > Results**. Click on the test that you have chosen from the test categories.
+## Viewing Test Details
 
-{% @arcade/embed flowId="Qc3ooTCl1AmYj9yk6rFD" url="https://app.arcade.software/share/Qc3ooTCl1AmYj9yk6rFD" %}
+Each test result displays comprehensive information about detected vulnerabilities:
 
-In the above demonstration, Akto ran **`BOLA by changing auth token`** tests on the **`rest/products/INTEGER/reviews`** endpoint. The results show high vulnerability when testing **"BOLA changing the auth token"** through a custom test.
+**Severity**: Indicates risk level (Critical, High, Medium, Low)
 
-### Instant Visibility into Test Outcomes
+**Agent Component**: Shows the specific agent tool or endpoint tested
 
-Akto provides **instant visibility** into test results, enabling you to quickly understand the security impact of each test. You can easily view **HTTP status codes** (e.g., `403 Forbidden`, `200 OK`) alongside **response messages** to assess how the API responded to different test conditions.&#x20;
+**Hostname**: Identifies the host where the component is running
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+**Auth Type**: Displays authentication method used
 
-### Time Delays for Multi-Step and Async Test Flows
+**Access Type**: Shows whether the component is public, private, or partner
 
-Akto allows you to insert precise **delays between API requests** using the `wait` directive in your test templates. This is particularly valuable when testing **asynchronous operations**, **multi-step flows**, or **delayed backend responses** where subsequent API calls depend on prior processing.
+**Sensitive Data**: Indicates if sensitive data exposure was detected
 
-<figure><img src="../../.gitbook/assets/image (118).png" alt=""><figcaption></figcaption></figure>
+**Detected**: Timestamp of when the vulnerability was first found
+
+**Impact**: Describes the potential security impact
+
+**Tags**: Category tags (OWASP, DB Leak, Connection String Exposure, etc.)
+
+**References**: Links to relevant vulnerability documentation
+
+## Test Result Timeline
+
+View the timeline of test attempts to understand how vulnerabilities were detected and validated across multiple test iterations.
+
+## Request and Response Analysis
+
+Examine detailed request payloads and response data to understand exactly how the vulnerability manifests, including any prompt injection payloads, tool calls, or malicious inputs used during testing.

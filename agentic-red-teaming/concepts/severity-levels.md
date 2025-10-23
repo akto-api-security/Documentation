@@ -1,19 +1,27 @@
 # Severity Levels
 
-Akto classifies API security vulnerabilities into four severity levels to help teams prioritize their remediation efforts. Each level indicates the potential impact on your API security posture and guides response timing.
+Akto classifies agentic security vulnerabilities into four severity levels to help teams prioritize remediation efforts. Each level indicates potential impact on your agentic system security posture.
 
-### Critical Severity
+## Critical Severity
 
-Critical severity issues pose immediate risk to API security and require urgent attention. These vulnerabilities could lead to unauthorized data access, system compromise, or service disruption. Immediate remediation is essential.
+Critical severity issues pose immediate risk and require urgent attention. These vulnerabilities could lead to unauthorized tool execution, system compromise, sensitive data exposure, or complete agent takeover.
 
-### High Severity
+Examples include successful prompt injections that bypass all guardrails, unauthorized access to critical tools, or hardcoded credentials in agent responses.
 
-High severity issues indicate significant API security risks requiring prompt remediation. While not as immediately dangerous as Critical issues, these vulnerabilities can severely impact API integrity and data security if exploited.
+## High Severity
 
-### Medium Severity
+High severity issues indicate significant security risks requiring prompt remediation. While not immediately exploitable, these vulnerabilities can severely impact agent integrity and data security.
 
-Medium severity issues represent moderate risks to API security. These vulnerabilities might affect specific API endpoints or security controls, requiring planned remediation within standard development cycles.
+Examples include partial prompt injection success, improper output handling, or excessive tool permissions.
 
-### Low Severity
+## Medium Severity
 
-Low severity findings indicate minor API security concerns. While these issues don't pose immediate threats, they represent opportunities to strengthen API security controls and should be addressed during regular maintenance.
+Medium severity issues represent moderate risks. These vulnerabilities might affect specific agent components or security controls, requiring planned remediation within standard development cycles.
+
+Examples include information disclosure through error messages, supply chain vulnerabilities in dependencies, or inadequate input validation.
+
+## Low Severity
+
+Low severity findings indicate minor security concerns. While not immediate threats, they represent opportunities to strengthen security controls and should be addressed during regular maintenance.
+
+Examples include verbose error messages, deprecated API usage, or minor configuration issues.

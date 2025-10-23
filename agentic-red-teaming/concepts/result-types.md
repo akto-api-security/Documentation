@@ -1,23 +1,23 @@
-# Result types
+# Result Types
 
-Akto's API security testing provides comprehensive insights into the security posture of your APIs. The results are categorized into different types, each offering specific information about the state of your API endpoints. Understanding these result types is crucial for effectively interpreting test outcomes and prioritizing necessary actions to enhance API security.
+Akto's agentic security testing provides comprehensive insights into the security posture of your AI agents and agentic systems. Results are categorized into different types, each offering specific information about the state of tested components.
 
-### 1. Vulnerable
+## Vulnerable
 
-Indicates that a security vulnerability has been detected in the API endpoint. These issues require immediate attention and remediation. The severity level (Critical, High, Medium, Low) is typically provided to prioritize the vulnerabilities.
+A security vulnerability has been detected in the agent component. These issues require immediate attention and remediation. Severity levels (Critical, High, Medium, Low) help prioritize vulnerabilities.
 
-### 2. Need Configuration
+## Need Configuration
 
-Indicates that some tests could not be performed due to missing configuration details. Akto provides an option on the screen to add the required configuration, allowing users to complete these tests without leaving the interface. This ensures a more thorough security assessment by enabling all relevant tests.
+Tests could not be performed due to missing configuration details. Akto provides options to add required configuration directly, enabling completion of these tests for thorough security assessment.
 
-### 3. Skipped
+## Skipped
 
-Represents tests that were not executed. This often occurs when the API fails to satisfy certain preconditions necessary for the test, such as authentication requirements. The exact reason for skipping is usually provided in the error message.
+Tests were not executed, often because the agent component did not satisfy preconditions necessary for testing, such as authentication requirements. The exact reason for skipping is provided in the error message.
 
-### 4. No Vulnerability Found
+## No Vulnerability Found
 
-Indicates that the specific security test was completed successfully, and no vulnerabilities were detected for that particular check.
+The security test completed successfully with no vulnerabilities detected for that particular check.
 
-### 5. Domain Unreachable
+## Domain Unreachable
 
-Signifies that the test couldn't connect to the API endpoint, possibly due to network issues, incorrect URL, or the API being offline. This result type requires investigation into the API's availability and accessibility.
+The test couldn't connect to the agent component, possibly due to network issues, incorrect configuration, or the component being offline. This requires investigation into component availability and accessibility.

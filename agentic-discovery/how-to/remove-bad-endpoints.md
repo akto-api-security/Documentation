@@ -1,50 +1,31 @@
 ---
-description: Learn how remove bad endpoints in akto dashboard.
+description: Learn how to remove bad components in Akto dashboard.
 ---
 
-# Remove Bad Endpoints
+# Remove Bad Components
 
-Akto gives user options to ignore the static files endpoints or endpoints having default payloads.This documentation is essential for users looking to maintain a clean and efficient endpoint inventory in their Akto setup.\
-We have two methods for removing bad endpoints from your inventory:
+Akto gives users options to ignore static file components or components having default payloads. This documentation helps you maintain a clean and efficient component inventory in your Akto setup.
+
+We have two methods for removing bad components from your inventory:
 
 1. [Select file type](remove-bad-endpoints.md#selecting-static-endpoints-file-type)
 2. [Add default payloads](remove-bad-endpoints.md#adding-default-payloads)
 
-## Ways to remove bad endpoints in Akto
+## Ways to remove bad components in Akto
 
-### Selecting static endpoints file type
+### Selecting static component file types
 
 1. Navigate to `Settings`. Then open `About` tab in the left nav.
 2. Click on the `Select redundant url types` button in `More settings` section on the page.
-
-<div align="center"><figure><img src="../../.gitbook/assets/file-type1.png" alt="Select file type"><figcaption><p>File type button</p></figcaption></figure></div>
-
-3. Select the `File types` which you want to ignore and akto will ignore those endpoints from the future. You can also remove some default types we ignore.
-
-<div align="center"><figure><img src="../../.gitbook/assets/file-type-2.png" alt="Select file type" width="400"><figcaption><p>Options present</p></figcaption></figure></div>
+3. Select the `File types` which you want to ignore and Akto will ignore those components from the future. You can also remove some default types we ignore.
 
 ### Adding default payloads
 
 1. Navigate to `Settings`. Then open `Default payloads` tab in the left nav.
-2. Click on `Add your own` and then enter the domain name of the urls you want to ignore.
-
-<div align="center"><figure><img src="../../.gitbook/assets/payloads--4.png" alt="Select file type"><figcaption><p>The above example has 'app.getbeamer.com' as domain name</p></figcaption></figure></div>
-
-3. After adding domain name, `enter the regex` for response payload.
-
-<figure><img src="../../.gitbook/assets/payloads--2.png" alt="Select file type"><figcaption></figcaption></figure>
-
-4. Now akto will ignore urls in which response payload matches the above regex.
-
-<figure><img src="../../.gitbook/assets/payloads--3.png" alt="Select file type" height="150" width="650"><figcaption><p>The above url has 'html type payload' as domain name</p></figcaption></figure>
-
-5. On re-uploading the Traffic via Har, we observer the api was ignored and thus was not stored in the inventory.
-
-<figure><img src="../../.gitbook/assets/payloads--5.png" alt="Select file type"><figcaption></figcaption></figure>
-
-### Summary
-
-The guide includes detailed step-by-step instructions, complete with visual aids and examples, to assist users in navigating through the Akto settings and applying these configurations effectively.
+2. Click on `Add your own` and then enter the domain name of the URLs you want to ignore.
+3. After adding domain name, enter the regex for response payload.
+4. Akto will now ignore components where response payload matches the regex.
+5. On re-uploading traffic, the matched components will be ignored and not stored in the inventory.
 
 ## Get Support for your Akto setup
 

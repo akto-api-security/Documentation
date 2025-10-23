@@ -1,19 +1,44 @@
 ---
-description: Explore about setting sensitivity of a data type.
+description: Configure where data types should be treated as sensitive in agentic systems.
 ---
 
 # Set Sensitivity of a Data Type
 
-Akto not only allows you to create a custom data type but also offers you the option to set the sensitivity of the data type. This helps in specifying which data types should be treated with extra caution because they contain sensitive information.
+Control where data types are flagged as sensitive - in agent inputs, outputs, tool calls, or context.
 
-For example, if you want to flag tokens as sensitive whenever they appear in API responses, you need to set the **`"TOKEN"`** data type to be sensitive in the API response. After specifying the **`"TOKEN`**" data type to be sensitive in the API response, whenever any token appears in an API response, Akto will automatically flag it as sensitive data.
+## Why Set Sensitivity
 
-In the demonstration below, let's set the **`"TOKEN"`** data type to be as sensitive only in API response.
+Example: Flag "TOKEN" as sensitive only in agent responses, not in requests. This reduces noise while ensuring leaked credentials are caught.
 
-Go to **API Discovery> Sensitive data**. Click on **"…"** of the Data Type and select **Edit** to set the sensitivity of the data type.
+## How to Configure
 
-{% embed url="https://demo.arcade.software/a56KiVd6fD0GIthN15PG?embed=" %}
-Set sensitivity of a data type
-{% endembed %}
+1. Go to **Agentic Discovery > Sensitive Data**
+2. Click **"..."** on the data type
+3. Select **Edit**
+4. Choose sensitivity locations:
+   - Agent Inputs (prompts, requests)
+   - Agent Outputs (LLM responses)
+   - Tool Invocations (MCP calls)
+   - Context/Memory (conversation history)
+   - All locations
 
-In the above demonstration, we have set the sensitivity of the **`“TOKEN”`** data type to be sensitive only in API response. Now Akto will flag all the tokens present in API responses as sensitive data across all your API collections.
+## Agentic-Specific Sensitivity
+
+**Agent Inputs**: User prompts, questions
+- Sensitive: PII, credentials, secrets
+
+**Agent Outputs**: LLM-generated responses
+- Sensitive: Leaked credentials, PII in responses
+
+**Tool Invocations**: MCP tool calls
+- Sensitive: Database queries, file paths, API keys
+
+**Context/Memory**: Agent conversation history
+- Sensitive: Accumulated PII, session data
+
+## Example: API Keys
+
+Set API_KEY sensitive in:
+- ✅ Agent Outputs (catch leaks)
+- ✅ Tool Invocations (monitor access)
+- ❌ Agent Inputs (expected to receive keys)

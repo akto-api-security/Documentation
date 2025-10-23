@@ -1,14 +1,26 @@
-# Remove API(s) from API group
+---
+description: Remove MCP components from MCP groups in Akto.
+---
 
-{% @arcade/embed flowId="ki0xLmJnmnSw3Wz0YMXs" url="https://app.arcade.software/share/ki0xLmJnmnSw3Wz0YMXs" %}
+# Remove MCP Component(s) from Group
 
-To remove APIs from an API group in Akto:
+To remove MCP components from an MCP group:
 
-1. Navigate to the API group from API Discovery page in Akto.
-2. Select the checkbox next to the API(s) you want to remove from the group.
-3. Once selected, a menu will appear at the bottom of the list.
-4. Click on the "Remove from API group" button in this menu.
+1. Navigate to the MCP group from **Agentic Discovery** page
+2. Select the checkbox next to the MCP component(s) you want to remove
+3. Click **Remove from MCP group** button at the bottom
+4. Confirm the removal
 
-This action will remove the selected API(s) from the current API group without deleting them from your overall API inventory. The APIs will still exist in your system but will no longer be associated with this particular group.
+## Important Notes
 
-Note that you can select multiple APIs at once for bulk removal from the group.
+- This removes components from the group only
+- MCP endpoints remain in your inventory
+- They can be added to other groups
+- Supports bulk removal (select multiple components)
+
+## Use Cases
+
+- Reorganizing MCP groups by server type
+- Moving MCP servers between risk categories
+- Removing decommissioned MCP servers from active groups
+- Updating group membership after permission changes

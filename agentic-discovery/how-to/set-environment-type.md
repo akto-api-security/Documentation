@@ -1,19 +1,27 @@
-# Set environment type
+---
+description: Mark agent and MCP collections as Development, Staging, or Production.
+---
 
-If you are tracking and testing multiple environments through Akto, you can mark your API collections as **Staging** or **Production**.
+# Set Environment Type
 
-It will help you in triaging alerts - for example, urgency for a new Sensitive Data in `Production` vs `Staging` . Similarly, testing shouldn't be done on collections marked as `Production`.
+Mark your agent and MCP collections with an environment type to help prioritize testing and triage alerts.
 
-To set environment type for an API collection, go to **API Discovery** > **API Collections**. Select any number of API Collections from the table and click on `Set env type`.
+## How to Set Environment Type
 
-Note that collections that have the word `demo` or `staging` in them are already marked as `Staging`.
+1. Go to **Agentic Discovery > Collections**
+2. Select one or more collections
+3. Click **Set env type**
+4. Choose: Development, Staging, or Production
 
-{% embed url="https://demo.arcade.software/8BoWUglWUDmOpPnSbbNG" %}
+## Auto-Detection
 
-### Custom Environment Type
+Collections with "demo" or "staging" in their name are automatically marked as Staging.
 
-In addition to the default Production and Staging environments, you can set custom environment types for your API collections in Akto.&#x20;
+## Custom Environment Types
 
-This flexibility allows you to better organize and manage your API collections according to your specific deployment stages, testing requirements, or organizational needs. For example, you might want to create environment types like 'Development', 'QA', or 'Pre-Production' to match your workflow.
-
-<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+You can create custom environment types beyond the defaults:
+- Development
+- QA
+- Pre-Production
+- Partner Integration
+- Customer Demo

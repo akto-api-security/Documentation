@@ -1,50 +1,45 @@
 # MCP Red Teaming
 
-The Akto MCP Security Module is designed for teams working with LLMs, agent frameworks, or AI-based orchestration systems. As MCPs become a new layer in modern application stacks, they also introduce new attack surfaces — often unmonitored and untested. Akto brings complete visibility and protection with zero friction.
+The Akto MCP Security Module is designed for teams working with LLMs, agent frameworks, and AI-based orchestration systems. As Model Context Protocol (MCP) becomes a standard layer in agentic stacks, it introduces new attack surfaces that are often unmonitored and untested.
 
-Akto automatically identifies MCP servers, discovers associated API endpoints, runs targeted security tests, and continuously monitors for misconfigurations, threats, and data leaks — all in real time.
+Akto automatically identifies MCP servers, discovers tool definitions and resources, runs targeted security tests, and continuously monitors for misconfigurations, threats, and data leaks in real time.
 
-{% embed url="https://youtu.be/RLjKVXTSEr8?list=TLGGYe7pKsUNGEowODA3MjAyNQ" %}
+## Key Capabilities
 
-### 🔧 Key Capabilities
+### MCP Server Discovery
 
-1. **MCP Server Discovery**
+Gain instant visibility into every MCP server in your environment:
 
-Gain instant visibility into every MCP server running in your environment:
+- Automatically detects MCP servers and the tools they expose
+- Works across cloud, hybrid, and on-prem environments
+- Maps tool dependencies and resource access patterns
 
-* Automatically detects MCP servers and the APIs they expose.
-* Works across cloud, hybrid, and on-prem environments.
+### Security Testing for MCPs
 
-<figure><img src="../../.gitbook/assets/image (120).png" alt=""><figcaption></figcaption></figure>
+Uncover critical vulnerabilities unique to MCP architectures:
 
-2. **Security Testing for MCPs**
+**Prompt Injection**: Tests for indirect prompt injection through MCP tool responses and resource content.
 
-Uncover critical vulnerabilities unique to MCP architectures using Akto's curated test library:
+**Tool Poisoning**: Validates tool definition integrity and detects malicious tool implementations.
 
-* **Prompt Injection**
-* **Tool Poisoning**
-* **Excessive Permissions**
-* **Unauthorized Endpoint Access**
-* **Insecure Authentication**
+**Excessive Permissions**: Identifies overly broad tool permissions and resource access grants.
 
-Each test simulates real-world attack paths and highlights risk with contextual severity scoring.
+**Unauthorized Endpoint Access**: Tests authorization boundaries for tool invocations and resource requests.
 
-<figure><img src="../../.gitbook/assets/image (121).png" alt=""><figcaption></figcaption></figure>
+**Insecure Authentication**: Validates authentication mechanisms for MCP server connections.
 
-3. **Continuous Monitoring & Threat Detection**
+**MCP Protocol Security**: Tests for protocol-specific vulnerabilities including malformed requests and response manipulation.
 
-Stay ahead of evolving threats with intelligent real-time monitoring:
+Each test simulates real-world attack paths with contextual severity scoring.
 
-* Detects unusual tool activity, malicious actor behavior, and abnormal API patterns.
-* Visualizes threats by actor, IP address, country, and reputation.
-* Enables early detection of misuse and lateral movement.
+### Continuous Monitoring
 
-<figure><img src="../../.gitbook/assets/image (122).png" alt=""><figcaption></figcaption></figure>
+Stay ahead of threats with real-time monitoring:
 
-### 🚀 Get Started with MCP Security
+- Detects unusual tool invocation patterns and malicious actor behavior
+- Visualizes threats by actor, IP address, and reputation
+- Enables early detection of tool misuse and lateral movement
 
-Akto's MCP Security Module is a **paid feature** designed for security-conscious teams working with LLMs, agent frameworks, and AI orchestration tools.
+## Get Started with MCP Security
 
-If you're ready to enable deep visibility, automated testing, and continuous protection for your MCP stack — we're here to help.
-
-👉 [**Request a personalized demo**](https://www.akto.io/mcp-security-demo) to see how it works in your environment.
+Akto's MCP Security Module provides deep visibility, automated testing, and continuous protection for MCP implementations.
