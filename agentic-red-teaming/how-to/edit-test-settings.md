@@ -1,5 +1,17 @@
 # Edit Test Settings
 
-Head over to test results page of a particular test run and you can edit test settings and re-run tests directly, instead of creating a new test run.
+From the test results page, you can edit test settings and re-run tests directly without creating a new test run.
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+## Editing and Re-running Tests
+
+1. Navigate to **Agentic Red Teaming > Results**
+2. Select the test run you want to modify
+3. Click **Edit test settings**
+4. Adjust parameters such as:
+   - Test categories
+   - Rate limits
+   - Authentication settings
+   - Target components
+5. Click **Re-run test** to execute with updated settings
+
+This allows quick iteration on test configurations without starting from scratch.

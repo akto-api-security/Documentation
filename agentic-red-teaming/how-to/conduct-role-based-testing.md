@@ -1,25 +1,24 @@
 ---
-description: Explore about how to do role-based testing.
+description: Conduct role-based security testing for agentic systems.
 ---
 
 # Conduct Role-Based Testing
 
-Akto enables you to conduct role-based testing for your API collection which aligns with the principle of **Role-Based Access Control (RBAC).** It verifies that each role can only access its security posture
+Akto enables role-based testing for agentic systems, aligning with Role-Based Access Control (RBAC) principles. This verifies that each role can only access authorized agent components and tools.
 
-This security testing approach is essential for maintaining the integrity of the system by reducing the risk of unauthorized access and potential data breaches, especially in environments where user roles are diverse and complex.&#x20;
+This testing approach is essential for maintaining system integrity by reducing risks of unauthorized access and data breaches, especially in environments where agent roles are diverse and complex.
 
-In the demonstration below, let’s conduct role-based testing for the **“juice\_shop\_demo”** collection by selecting a **test role** as **“Member”** and checking if access to the data and functionality present in this collection is relevant to this role.&#x20;
+## Conducting Role-Based Tests
 
-When you [run a test](run-test.md) you can select your test role as a **Member** for your test, ensuring that the test accurately reflects the permissions and access levels associated with this role.
+When you [run a test](run-test.md), you can select a test role to ensure the test reflects the permissions and access levels associated with that role.
 
-Select the API Collection and click on the **Run Test.** Select the **Test Categories** and **Tests** you want to test along with selecting a **Test Role** as a **"Member"** for your test, then click on **Run Test** to conduct Role-based Testing.
+1. Navigate to **Agentic Discovery > Collections**
+2. Select the collection containing agent components
+3. Click **Run Test**
+4. Select test categories
+5. Choose a **Test Role** (e.g., Member, Admin, Viewer)
+6. Click **Run Test**
 
-{% embed url="https://demo.arcade.software/FAjElwQtMP4jcFITIg22?embed=" %}
+## Reviewing Role-Based Test Results
 
-In the demonstration above, we have performed role-based testing for the **“juice\_shop\_demo”** collection by selecting the **test role** as **Member.**\
-\
-Now let's check the results of the role-based testing. Akto ran BOLA tests on th **`juice_shop_demo`** collection by selecting the test role as a **Member**.
-
-{% @arcade/embed flowId="Nx6IQOZ4WXM9P06nAuE6" url="https://app.arcade.software/share/Nx6IQOZ4WXM9P06nAuE6" %}
-
-In the above demonstration, since there is no vulnerability found in the **`juice_shop_demo`** collection, there is no information displayed in the **`vulnerable`** section which means that the access of data and functionality present in the **`juice_shop_demo`** collection is relevant to this role.
+Navigate to **Agentic Red Teaming > Results** to view findings. If no vulnerabilities are found in the vulnerable section, it indicates that access control for that role is properly configured and the role cannot access unauthorized components or tools.

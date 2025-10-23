@@ -1,33 +1,24 @@
 ---
-description: Learn all about scheduled tests.
+description: Schedule recurring security tests for agentic systems.
 ---
 
 # Schedule Tests
 
-## Choose an API Endpoint for Scheduling Tests
+Akto enables you to schedule tests for agent components, ensuring consistent and regular security validation. By scheduling tests to run at predetermined intervals, you can continuously monitor security posture and detect potential vulnerabilities before they escalate.
 
-Akto enables you to schedule tests for API endpoints. It ensures consistent and regular verification of API functionality, even in complex and dynamic environments.
+## Scheduling Tests for Agent Components
 
-By scheduling tests to run at predetermined intervals, you can continuously monitor API performance and detect potential issues before they escalate into critical problems.
+1. Navigate to **Agentic Discovery > Collections**
+2. Select the collection containing agent components you want to test
+3. Click **Run Test**
+4. Select test categories (Prompt Injection, MCP Security, LLM Security, etc.)
+5. Choose specific tests or select all tests in the category
+6. Click **Schedule** to set the time trigger
+7. Configure schedule (daily, weekly, or custom interval)
+8. Click **Run Test** to activate the schedule
 
-In the demonstration below, let’s run a test and schedule it for the **“rest/products/search”** endpoint within the collection name **"demo\_collection."**
+## Viewing Scheduled Test Results
 
-Go to **API Discovery >API Collection.** Select the **API Collection** and click on the **Run Test.** Select the **Test Categories** and **Tests** that you want to test. **Select Time** to trigger your test, then click on **Run Test** to schedule the test.
+Scheduled tests run automatically at configured intervals. Results are available in **Agentic Red Teaming > Results**.
 
-{% @arcade/embed flowId="hK8GaU6w1YYkeRZtrBwr" url="https://app.arcade.software/share/hK8GaU6w1YYkeRZtrBwr" %}
-
-In the above demonstration, we have scheduled tests to run daily at 2 am till its completion for **“GET https://juiceshop.akto.io/rest/products/search”** endpoint within the collection name **"demo\_collection".**
-
-### Results of Scheduled Test
-
-By analyzing the results of scheduled tests, you can identify and address any issues or vulnerabilities, ensuring that the API functions as intended and meets the requirements.
-
-Moreover, these results can inform decisions related to data breaches, and performance optimization.
-
-In the demonstration below, after running the scheduled test named **“test\_for\_one\_endpoint”** for an endpoint, let’s check for the vulnerabilities present in the selected endpoint.
-
-Go to **Testing > Results**. Click on the scheduled test to identify vulnerabilities based on the selected endpoint tests.
-
-{% embed url="https://demo.arcade.software/Xg3bC0JuLKLabOlqrKtY?embed=" %}
-
-In the demonstration above, after running the scheduled test named **“test\_for\_one\_endpoint”**, we checked the endpoint **“GET https://juiceshop.akto.io/redirect”** and found an error named **“Kernel open command injection in Ruby”** present in the endpoint.
+By analyzing scheduled test results, you can identify and address vulnerabilities, ensuring agent components function securely and meet security requirements. Results inform decisions related to security improvements, guardrail adjustments, and tool permission refinements.

@@ -1,33 +1,32 @@
-# Configure global rate limit
+# Configure Global Rate Limit
 
-## Configure Global Rate Limit
+The Global Rate Limit feature allows you to control the number of security tests executed per minute against agent components. This helps manage load during testing and prevents overwhelming your agentic systems.
 
-The Global Rate Limit feature in Akto allows you to control the number of API tests executed per minute. This helps in managing the load on your API endpoints during testing and prevents overwhelming your systems.
+## Setting the Rate Limit
 
-{% @arcade/embed flowId="1QaTKUMxKMQbDgzpmfih" url="https://app.arcade.software/share/1QaTKUMxKMQbDgzpmfih" %}
+1. Navigate to **Agentic Red Teaming > User Config**
+2. Locate the **Global Rate Limit** section
+3. Set the maximum number of tests per minute
+4. Click **Save** to apply changes
 
-### Understanding the Rate Limit
+## Understanding Rate Limits
 
-* The rate limit defines the maximum number of API tests Akto will perform per minute.
-* "No limit" means Akto will test APIs as fast as possible, without any rate restriction.
-* Choose a limit that balances between thorough testing and the capacity of your API infrastructure.
+The rate limit defines the maximum number of security tests Akto will perform per minute against your agent components.
 
-### Use Cases
+"No limit" means tests will execute as fast as possible without rate restrictions.
 
-1. **Load Management**: Prevent overloading your API servers during testing phases.
-2. **Realistic Testing**: Simulate real-world API usage patterns by limiting the test rate.
-3. **Resource Optimization**: Manage resource allocation between testing and production environments.
+Choose a limit that balances thorough testing with your infrastructure capacity.
 
-### Best Practices
+## Use Cases
 
-1. Start with a lower limit and gradually increase it to find the optimal testing speed for your environment.
-2. Consider your API's normal traffic patterns when setting the limit.
-3. Adjust the limit based on the time of day or your application's peak/off-peak hours.
-4. For critical or high-load systems, maintain a conservative rate limit to ensure stability.
+**Load Management**: Prevent overloading agent components during security testing.
 
-### Troubleshooting
+**Realistic Testing**: Simulate real-world usage patterns by limiting test rate.
 
-* If you encounter timeouts or errors during testing, consider lowering the rate limit.
-* For faster test completion, increase the rate limit, but monitor your API's performance closely.
+**Resource Optimization**: Manage resource allocation between testing and production environments.
 
-Remember, the ideal rate limit depends on your specific API infrastructure and testing requirements. Regularly review and adjust this setting as your API ecosystem evolves.
+## Troubleshooting
+
+If you encounter timeouts or errors during testing, lower the rate limit.
+
+For faster test completion, increase the rate limit while monitoring component performance.

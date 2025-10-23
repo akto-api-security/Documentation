@@ -1,27 +1,51 @@
 ---
-description: A comprehensive suite for validating API security posture.
+description: Comprehensive security testing for AI agents and agentic systems.
 ---
 
 # Test
 
-Akto comes with over 1000+ pre-built tests to find vulnerabilities like Broken Authentication, Broken Object Level Authorization (BOLA), Server Side Request Forgery (SSRF), and the rest of OWASP's Top 10, SANS Top 25 and HackerOne Top 10 in APIs. You can also create custom tests that match your API's unique needs. This way, you can ensure a detailed and targeted security check that perfectly aligns with your API's structure and requirements.
+Akto provides specialized security testing for AI agents, LLM applications, and agentic systems. The platform includes pre-built test suites covering OWASP Top 10 for LLMs, prompt injection attacks, MCP security, tool misuse, and other agentic-specific vulnerabilities.
 
-You can also schedule your test to run at times that best fit your workflow, ensuring that your API security is checked regularly without disrupting your normal operations.
+You can schedule tests to run at times that fit your workflow, ensuring continuous security validation without disrupting operations. For scheduling information, refer to [Schedule Test](../how-to/schedule-tests.md).
 
-For more information on how to schedule the test, please refer to the documentation- [**Schedule Test**](../how-to/schedule-tests.md). You can also [create your custom tests](../../probe-library/concepts/custom-test.md) and [run tests in CI/CD](../../ci-cd/how-to/run-tests-in-cicd.md) for continuous testing.
+## Test Categories
 
-### Akto's Approach
+Akto organizes agentic security tests into specialized categories:
 
-Utilizing Akto's approach of using real traffic data for API scanning has numerous advantages for API issues:
+**LLM Security**: Tests for model-specific vulnerabilities including prompt injection, jailbreaking, and output manipulation.
 
-1\. Enhanced Endpoint Coverage: Even though Swagger files include several endpoints, only a small portion are directly testable. The majority require specific data elements like identifiers for testing. By utilizing real traffic data, we can significantly increase our endpoint coverage.
+**Prompt Injection**: Comprehensive testing for direct and indirect prompt injection attacks across various agent workflows.
 
-2\. Expanded Test Scope: Real traffic data allowed us to test for more sophisticated issues such as Business Logic flaws, Broken Authentication, and Broken Authorization, which isn't possible with the Swagger file alone.
+**MCP Security**: Validates Model Context Protocol implementations, tool authorization, and resource access controls.
 
-3\. Detection of Shadow APIs: Our approach reveals several APIs that aren't documented in the Swagger file, highlighting the presence of Shadow APIs.
+**Agent Identity**: Tests for agent impersonation, role escalation, and identity validation bypasses.
 
-### Protocol and Event Stream Support
+**Sensitive Information Disclosure**: Detects exposure of credentials, PII, internal system details, and training data leakage.
 
-Akto supports a wide variety of API protocols out-of-the-box, ensuring your tests can be run across modern architectures. This includes **REST, GraphQL, gRPC, JSON-RPC**, and **Event-stream** based APIs. Whether your system uses synchronous request/response APIs or real-time event-driven streams, Akto’s testing engine can effectively scan and validate them for vulnerabilities using real traffic data or simulated inputs.
+**Supply Chain**: Identifies vulnerabilities in agent dependencies, third-party integrations, and model providers.
 
-<figure><img src="../../.gitbook/assets/image (119).png" alt=""><figcaption></figcaption></figure>
+**Excessive Agency**: Validates tool permissions, autonomous action limits, and guardrail effectiveness.
+
+**Data Poisoning**: Tests for manipulation of agent memory, context windows, and retrieval systems.
+
+## Akto's Approach
+
+Akto uses real agent traffic to enhance testing effectiveness:
+
+**Real-World Context**: Tests use actual agent interactions, tool calls, and conversation patterns to identify vulnerabilities that static analysis would miss.
+
+**Shadow Agent Detection**: Discovers undocumented agents, unauthorized LLM integrations, and rogue tool usage across your infrastructure.
+
+**Dynamic Test Coverage**: Adapts tests based on observed agent behaviors, tool chains, and conversation flows.
+
+## Protocol Support
+
+Akto supports testing across multiple protocols used in agentic systems:
+
+**REST & GraphQL**: Tests HTTP-based agent endpoints and tool integrations.
+
+**gRPC**: Validates agent-to-agent communication and microservice interactions.
+
+**WebSocket**: Tests real-time agent streams and persistent connections.
+
+**MCP (Model Context Protocol)**: Specialized testing for MCP server implementations and tool definitions.

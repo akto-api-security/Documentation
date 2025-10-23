@@ -1,23 +1,38 @@
 ---
-description: >-
-  Effortlessly conduct API tests by category for comprehensive evaluation of
-  security vulnerabilities and issues.
+description: Run security tests by category for comprehensive vulnerability evaluation.
 ---
 
 # Run Tests by Category
 
-With Akto's testing module, you can conduct hundreds of tests on your APIs from all of OWASP API's Top 10. You can select individual tests from Akto's test library or organize and run tests by category. This categorization allows you to run specific tests such as **Broken Object Level Authorization (BOLA).** These tests are tailored to evaluate different facets of your API endpoints' security.
+Akto's testing module allows you to conduct specialized security tests on agentic systems. You can select individual tests or organize and run tests by category, allowing targeted evaluation of specific security domains.
 
-In the demonstration below, let's run a test by category on a particular endpoint within an API collection.
+## Available Test Categories
 
-For example, we'll be running the **Broken Object Level Authorization (BOLA)** category tests on the **`rest/products/INTEGER/reviews`** endpoint of the **`juice_shop_demo`** collection.
+**Prompt Injection**: Tests for direct and indirect prompt injection vulnerabilities across agent workflows.
 
-{% embed url="https://app.arcade.software/share/JN1APG6S9URAvX2nI9xj" %}
+**LLM Security**: Validates model-specific security controls including jailbreak attempts and output manipulation.
 
-In the demonstration above, we performed a test on the **`rest/products/INTEGER/reviews`** endpoint from the **`juice_shop_demo`** API. Our focus was on the **Broken Object Level Authorization (BOLA)** category to detect any potential security issues.
+**MCP Security**: Tests Model Context Protocol implementations for tool authorization and resource access vulnerabilities.
 
-Now let's check the results. Akto ran tests on the **`rest/products/INTEGER/reviews`** endpoint, and it seems like there's an issue with this endpoint as it returned unexpected results.
+**Agent Identity**: Evaluates agent impersonation and role escalation vulnerabilities.
 
-{% embed url="https://app.arcade.software/share/Qc3ooTCl1AmYj9yk6rFD" %}
+**Sensitive Information Disclosure**: Detects exposure of credentials, PII, internal system details, and training data.
 
-Akto ran **`BOLA by changing auth token`** tests on the **`rest/products/INTEGER/reviews`** endpoint. The results show high-severity issues when testing **"BOLA changing the auth token"** through a custom test.
+**Supply Chain**: Identifies vulnerabilities in agent dependencies and third-party integrations.
+
+**Excessive Agency**: Validates tool permissions and autonomous action boundaries.
+
+**Data Poisoning**: Tests for manipulation of agent memory and context windows.
+
+## Running Tests by Category
+
+1. Navigate to **Agentic Discovery > Collections**
+2. Select the collection containing agent components
+3. Click **Run Test**
+4. Select one or more test categories
+5. Choose specific tests within the category or select all
+6. Click **Run Test** to execute
+
+## Reviewing Category Test Results
+
+After running category-based tests, navigate to **Agentic Red Teaming > Results** to view findings. Results are organized by severity and category, allowing quick identification of vulnerabilities within specific security domains.

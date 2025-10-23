@@ -1,15 +1,16 @@
 ---
-description: Explore about how to stop the scheduled tests.
+description: Stop running or scheduled security tests.
 ---
 
 # Stop Tests
 
-You can stop the tests in Akto at any time if there are changes in the API endpoints, parameters, authentication methods, or test environment. Stopping tests allows you to make necessary adjustments in the test scripts accordingly to ensure accurate and meaningful results.&#x20;
+You can stop tests in Akto at any time if there are changes in agent components, parameters, authentication methods, or the test environment. Stopping tests allows you to make necessary adjustments to ensure accurate and meaningful results.
 
-In the demonstration below, we stop the test named **“test\_for\_one\_endpoint.”**
+## Stopping a Running Test
 
-Go to **Testing > Results.** Click on **"..."** and select **“Stop”** to stop the respective test.
+1. Navigate to **Agentic Red Teaming > Results**
+2. Locate the running test you want to stop
+3. Click the menu icon (**...**) next to the test
+4. Select **Stop** to halt the test execution
 
-{% embed url="https://demo.arcade.software/0roYlNeGtCAmR8LU8roT?embed=" %}
-
-In the above demonstration, we have stopped the currently running test named **“test\_for\_one\_endpoint.”**
+Tests can be stopped immediately without affecting previously collected results. This is useful when agent configurations change or when you need to adjust test parameters.
