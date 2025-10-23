@@ -1,10 +1,10 @@
-# Connect Akto with IIS
+# Connect Akto with Internet Information Services (IIS)
 
 Microsoft IIS (Internet Information Services) is a widely used web server for hosting web applications on Windows. Integrating IIS with Akto enables you to automatically mirror API traffic (including headers and payloads) to the Akto backend, empowering deep visibility and continuous API security analysis.
 
 To connect Akto with your IIS server, follow the steps below:
 
----
+***
 
 ## Step 1: Deploy the Akto Data-Ingestion Service
 
@@ -25,9 +25,11 @@ wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/featur
 ### 1.2 Retrieve the `DATABASE_ABSTRACTOR_SERVICE_TOKEN`
 
 * Log in to the [Akto Dashboard](https://app.akto.io/)
-* Navigate to the **Quick Start** tab in the left panel
+*   Navigate to the **Quick Start** tab in the left panel
+
     <figure><img src="../../.gitbook/assets/Quick-Start.png" alt=""><figcaption></figcaption></figure>
-* Select **Hybrid SaaS Connector**
+*   Select **Hybrid SaaS Connector**
+
     <figure><img src="../../.gitbook/assets/HybridSaaSConnector.png" alt=""><figcaption></figcaption></figure>
 * Copy the token from the **Runtime Service Command** section
 
@@ -51,7 +53,7 @@ docker-compose -f docker-compose-mini-runtime-data-ingestion.yaml up -d
 
 Ensure this IP is reachable from your IIS server. You will need this to forward the traffic data to Akto.
 
----
+***
 
 ## Step 2: Install the IIS Traffic Connector
 
@@ -59,70 +61,67 @@ Akto provides a native IIS module that can capture HTTP request and response hea
 
 👉 **Important:** You must download and use only one DLL — either 64-bit or 32-bit depending on your system. Regardless of which one you choose, always rename it to `AktoNativeIisTrafficCollector.dll`, move it to `C:\akto_configs`, and use that same name everywhere.
 
----
+***
 
 ### 2.1 Prepare Configuration File
 
-1. Create a folder at the root of your C drive:
+1.  Create a folder at the root of your C drive:
 
-   ```powershell
-   mkdir C:\akto_configs
-   ```
+    ```powershell
+    mkdir C:\akto_configs
+    ```
+2.  Inside it, create a file named `config.json` with the following content:
 
-2. Inside it, create a file named `config.json` with the following content:
+    ```json
+    {
+      "backendUrl": "http://DATA-INGESTION-SERVICE-URL:9091/api/ingestData"
+    }
+    ```
 
-   ```json
-   {
-     "backendUrl": "http://DATA-INGESTION-SERVICE-URL:9091/api/ingestData"
-   }
-   ```
+    Replace `DATA-INGESTION-SERVICE-URL` with the address of your deployed Akto ingestion service.
 
-   Replace `DATA-INGESTION-SERVICE-URL` with the address of your deployed Akto ingestion service.
-
----
+***
 
 ### 2.2 Install the Module Globally (Recommended)
 
 You need to register the Akto IIS module globally so it applies to all websites.
 
-1. Download the correct DLL for your environment (pick **only one**):
+1.  Download the correct DLL for your environment (pick **only one**). You can also simply paste the link in browser and download the DLL file.&#x20;
 
-   ```powershell
-   # For 64-bit IIS
-   Invoke-WebRequest -Uri https://github.com/akto-api-security/iis-collector-native-module/raw/refs/heads/master/x64/Release/AktoNativeIisTrafficCollector.dll -OutFile C:\akto_configs\AktoNativeIisTrafficCollector.dll
+    ```powershell
+    # For 64-bit IIS
+    Invoke-WebRequest -Uri https://github.com/akto-api-security/iis-collector-native-module/raw/refs/heads/master/x64/Release/AktoNativeIisTrafficCollector.dll -OutFile C:\akto_configs\AktoNativeIisTrafficCollector.dll
 
-   # For 32-bit IIS
-   Invoke-WebRequest -Uri https://github.com/akto-api-security/iis-collector-native-module/raw/refs/heads/master/x86/Release/AktoNativeIisTrafficCollector.dll -OutFile C:\akto_configs\AktoNativeIisTrafficCollector.dll
-   ```
+    # For 32-bit IIS
+    Invoke-WebRequest -Uri https://github.com/akto-api-security/iis-collector-native-module/raw/refs/heads/master/x86/Release/AktoNativeIisTrafficCollector.dll -OutFile C:\akto_configs\AktoNativeIisTrafficCollector.dll
+    ```
+2.  Open an **elevated command prompt (Administrator)** and run the following commands:
 
-2. Open an **elevated command prompt (Administrator)** and run the following commands:
+    ```cmd
+    %windir%\system32\inetsrv\appcmd.exe install module /name:AktoTrafficConnector /image:"C:\akto_configs\AktoNativeIisTrafficCollector.dll" /add:true
+    %windir%\system32\inetsrv\appcmd.exe set config /section:system.webServer/globalModules /+[name='AktoNativeIisTrafficCollector',image='C:\akto_configs\AktoNativeIisTrafficCollector.dll']
+    %windir%\system32\inetsrv\appcmd.exe list config /section:system.webServer/globalModules
+    ```
 
-   ```cmd
-   %windir%\system32\inetsrv\appcmd.exe install module /name:AktoTrafficConnector /image:"C:\akto_configs\AktoNativeIisTrafficCollector.dll" /add:true
-   %windir%\system32\inetsrv\appcmd.exe set config /section:system.webServer/globalModules /+[name='AktoNativeIisTrafficCollector',image='C:\akto_configs\AktoNativeIisTrafficCollector.dll']
-   %windir%\system32\inetsrv\appcmd.exe list config /section:system.webServer/globalModules
-   ```
+    These commands:
 
-   These commands:
+    * Register the `AktoTrafficConnector` module in IIS
+    * Add it for **all sites** so that traffic from every hosted website is mirrored
+    * Explicitly add `AktoNativeIisTrafficCollector` to the global modules section
+    * List all registered global modules for verification
+3.  Restart your IIS server:
 
-   * Register the `AktoTrafficConnector` module in IIS
-   * Add it for **all sites** so that traffic from every hosted website is mirrored
-   * Explicitly add `AktoNativeIisTrafficCollector` to the global modules section
-   * List all registered global modules for verification
-
-3. Restart your IIS server:
     ```bash
     iisreset
     ```
 
----
+***
 
 ### 2.3 Add Module to a Specific Website Only (Alternative Method)
 
 If you want to install the module for **just one website**, follow these steps:
 
 1. Copy the correct DLL into a directory named `bin` under your site’s root folder (e.g., `C:\inetpub\wwwroot\MySite\bin`).
-
 2. Update the `web.config` of that website:
 
 ```xml
@@ -136,13 +135,13 @@ If you want to install the module for **just one website**, follow these steps:
 ```
 
 3. Ensure the app pool identity has read access to this folder and its DLLs.
+4.  Restart your IIS server:
 
-4. Restart your IIS server:
     ```bash
     iisreset
     ```
 
----
+***
 
 ## Step 3: Verify the Integration
 
@@ -157,7 +156,7 @@ If no traffic is appearing, check:
 * Check logs in `C:\akto_configs\logs\log_20xx.txt`
 * Akto Data-Ingestion Service logs to ensure it’s receiving traffic.
 
----
+***
 
 ## Get Support for your Akto setup
 
