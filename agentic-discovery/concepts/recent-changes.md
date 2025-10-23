@@ -1,19 +1,42 @@
 ---
-description: Explore the API changes and more.
+description: Explore agent component changes and updates across your agentic systems.
 ---
 
-# API Changes
+# Recent Changes
 
-If you want to check all the API endpoints and Parameters that have been newly added to your API collection or APIs that have experienced changes, you can navigate to the API change section from the Akto Dashboard.
+If you want to check all the agent components and parameters that have been newly added to your agentic collections or components that have experienced changes, you can navigate to the Recent Changes section from the Akto Dashboard.
 
-In the demonstration below, we'll review the changes in the API over the past two months.
+## View Recent Changes
 
-Go to the **API Discovery > API Changes**. All new APIs are listed here. Click on any new **API endpoint** to view its details.&#x20;
+Monitor changes to your AI agents and MCP components over time to maintain security visibility and track system evolution.
 
-{% embed url="https://demo.arcade.software/Iwb4cLDXkjVsiDeEH39u?embed=" %}
-View an API change
-{% endembed %}
+### How to Access Recent Changes
 
-In the above demonstration, we observed that 109 new endpoints were introduced in the last two months, out of which, two of them are sharing sensitive data. For example, the endpoint **`rest/admin/application-configur`** is sending out an **`Email ID`** in its response.
+1. Navigate to **Agentic Discovery > Recent Changes**
+2. Select your time period (e.g., last 7 days, last 30 days, last 2 months)
+3. Review all new and modified agent components
+4. Click on any component to view detailed changes
 
-You can also configure alerts on API changes.  For more information on how to create your webhook alert, refer to this [link](https://docs.akto.io/api-inventory/how-to/configure-alerts-on-api-changes).
+### What You Can Track
+
+The Recent Changes section shows:
+
+- **New Agent Components**: Newly discovered AI agents or MCP endpoints
+- **Modified Components**: Changes to existing agent configurations
+- **New Parameters**: Additional input/output parameters for agents
+- **Sensitive Data Detection**: Components sharing sensitive information
+- **Tool Additions**: New tools or resources added to MCP servers
+- **Framework Updates**: Changes to underlying agent frameworks (LangChain, LlamaIndex, etc.)
+
+### Example Use Case
+
+For instance, you might observe that 15 new agent components were introduced in the last two months, with 3 of them sharing sensitive data. For example, an agent component like `/admin/user-config` might be sending out an **Email ID** or **API Key** in its response, which requires immediate security review.
+
+## Configure Alerts
+
+You can configure alerts to be notified when new agent components are discovered or existing components change. This helps you:
+
+- Respond quickly to unauthorized agents
+- Track system evolution
+- Maintain security compliance
+- Monitor for shadow or zombie agents

@@ -6,48 +6,42 @@ description: Access types can be public, internal or partner.
 
 ## Access Type
 
-Akto provides visibility into your APIs, regardless of whether they're accessed from a public network or internally via microservices. This feature enables you to monitor and ensure that internal APIs aren't exposed to the public network, thus enhancing your security measures.
+Akto provides visibility into your agent components and MCP endpoints, regardless of whether they're accessed from a public network or internally. This feature enables you to monitor and ensure that internal agent components aren't exposed to the public network, thus enhancing your security measures.
 
-Learn [here](../how-to/configure-access-types.md) how to configure Access Type CIDRs.&#x20;
+Learn [here](../how-to/configure-access-types.md) how to configure Access Type CIDRs.
 
 ### Possible Access Types
 
-1. [Public](access-type.md#what-is-public-api)
-2. [Internal](access-type.md#what-is-internal-api)
-3. [Partner](access-type.md#what-is-partner-api)
+1. [Public](access-type.md#what-is-public-component)
+2. [Internal](access-type.md#what-is-internal-component)
+3. [Partner](access-type.md#what-is-partner-component)
 4. None
 
 ### How it works?
 
-Akto uses `X-Forwarded-For` header to understand the list of IPs through which API call was routed. The evaluation rules are in the following order -&#x20;
+Akto uses `X-Forwarded-For` header to understand the list of IPs through which the request was routed. The evaluation rules are in the following order:
 
-1. If any 1 IP is present which is not in `Private` or `Partner` IP list, it is marked as `Public`.&#x20;
+1. If any 1 IP is present which is not in `Private` or `Partner` IP list, it is marked as `Public`.
 2. If any 1 IP in the header is from `Partner` and rest of the IPs are in `Private` list, it is marked as `Partner`
-3. If all IPs are in `Private` IPs list, then API is marked as `Private`
+3. If all IPs are in `Private` IPs list, then the component is marked as `Private`
 4. If header is absent, then we mark it as `None`
 
-### What is Public API?
+### What is Public Component?
 
-Public APIs refer to the specific API endpoints that are exposed to the public network. These APIs are typically used by the web dashboard or mobile app or directly via client-SDKs.  These are openly available and accessible over the Internet. For example, a public API endpoint for a weather service might give access to weather data such as current weather, forecasts, or past weather details. Login APIs for Netflix are "public" APIs, because they can be hit from a public domain.&#x20;
+Public components refer to agent endpoints or MCP servers that are exposed to the public network. These components are typically used by web interfaces, mobile apps, or external client applications. For example, a customer-facing chat agent or a public-facing AI assistant would be classified as public.
 
-### What is Internal API?
+### What is Internal Component?
 
-Internal APIs refer to the specific API endpoints that are used strictly internal and are NOT exposed to public network. These APIs are typically used by the other microservices and internal tools. For example, a `/api/v1/send-welcome-email` API endpoint to send email notification for new users. This API is used by another microservice (`register.company.io`) to send a welcome message to new users. Many times, specifically `/health` endpoints are **internal** because they are accessed only internally.&#x20;
+Internal components refer to agent components or MCP endpoints that are used strictly internally and are NOT exposed to the public network. These are typically used by other microservices and internal tools. For example, an internal RAG system or an agent that processes backend data would be classified as internal.
 
-### What is Partner API?
+### What is Partner Component?
 
-Partner APIs refer to the specific API endpoints that can be used by IPs outside your VPC, but the access is limited to a small set of IPs. For example, a bank might open some of its APIs to **VISA** and **MasterCard** APIs only. Companies might setup VPC peering or whitelist only the NAT gateway of the Partners.&#x20;
+Partner components refer to agent endpoints or MCP servers that can be accessed by IPs outside your VPC, but access is limited to a specific set of IPs. For example, an agent that integrates with a third-party service (like Salesforce or Stripe) might be classified as a partner component. Companies might set up VPC peering or whitelist specific partner IPs.
 
 
 
 ### Detect Access Types
 
-In the demonstration below, let's check out all the public APIs present in the **`juices-ALBTa-ME7JZNNWLKCF`** collection.
+Go to **Agentic Discovery > Collections**. Select a collection and filter by Access type to view public, internal, or partner components.
 
-Go to the **API Discovery > API Collection**. Select an **API Collection** and check the Access type to **Public**.
-
-{% embed url="https://demo.arcade.software/gw1onqsZpRzx5eCuqwio?embed=" %}
-Detect new public API
-{% endembed %}
-
-In the above demonstration, we discovered the presence of 53 public APIs in the **`juices-ALBTa-ME7JZNNWLKCF`** collection and viewed the details of one of the endpoint, which is **`js/{param_STRING}`**
+You can use access type filtering to identify which agent components or MCP endpoints are exposed to the public network and require additional security controls.

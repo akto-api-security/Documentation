@@ -1,30 +1,65 @@
+---
+description: Categorize and organize agent components and MCP endpoints using custom tags for better inventory management.
+---
+
 # Tags
 
 ## Tags in Akto
 
-Tags in Akto are used to categorize and organize your API endpoints. They help in filtering, searching, and managing large API inventories more efficiently.
+Tags in Akto are flexible labels used to categorize and organize your agent components and MCP endpoints. They help in filtering, searching, and managing large agentic inventories more efficiently.
 
-{% @arcade/embed flowId="SjOUh8GKixDUMl1smAO3" url="https://app.arcade.software/share/SjOUh8GKixDUMl1smAO3" %}
+## What are Tags?
+
+Tags are custom labels you can apply to:
+- Agent components
+- MCP servers and their tools
+- Agent collections
+- MCP collections
+
+Unlike built-in classifications (like Environment Type or Access Type), tags are completely customizable to fit your organization's needs.
+
+## Tag Management
 
 ### Tag List View
 
-* Shows all created tags
-* Displays tag name, creation date, and creator
-* Allows searching and pagination of tags
+The tags interface shows:
+- All created tags and their usage count
+- Tag name, creation date, and creator
+- Number of components using each tag
+- Search and pagination capabilities
 
-### Benefits of Using Tags
+## Use Cases
 
-* Improved organization of API endpoints
-* Faster searching and filtering of APIs
-* Better team collaboration through standardized categorization
+### Security Testing
+Tag agents for targeted security testing:
+```
+- #prompt-injection-tested
+- #red-team-approved
+- #security-review-pending
+```
 
-### Best Practices
+### Compliance Tracking
+Tag components by regulatory requirements:
+```
+- #gdpr-compliant
+- #hipaa-required
+- #pci-dss-scope
+```
 
-* Use consistent naming conventions
-* Create a tagging strategy that aligns with your API management goals
-* Regularly review and update tags to maintain relevance
+### Performance Monitoring
+Tag for operational tracking:
+```
+- #high-token-usage
+- #slow-response
+- #needs-optimization
+```
 
-For more details on working with tags, see:
+### Incident Response
+Tag for security incidents:
+```
+- #incident-2024-01
+- #vulnerability-found
+- #remediation-required
+```
 
-* [How to Create New Tags](../how-to/create-new-tags.md)
-* [How to Edit Tags](../how-to/edit-tags.md)
+Tags are a powerful and flexible tool for organizing your agentic inventory according to your organization's unique needs.

@@ -1,21 +1,24 @@
 ---
-description: Akto can detect and alert about Shadow APIs
+description: Akto can detect and alert about Shadow Agents
 ---
 
-# Shadow APIs
+# Shadow Agents
 
-Shadow APIs are APIs that exist within the system but are not documented or known to the managers or owners of the API ecosystem. These can pose a significant security risk as they can be exploited without detection.
+Shadow Agents are AI agents or agentic components that exist within the system but are not documented or known to the managers or owners of the agentic ecosystem. These can pose a significant security risk as they can be exploited without detection.
 
-For example, a software development team might create new version of an API (`/v3/`) for but forgets to remove `/v2/` . If the team removes security controls and forgets to secure `/v2` API when the feature goes live, it becomes a Shadow API. Unauthorized users who discover this API might be able to access sensitive data or perform actions that could harm the system.&#x20;
+For example, a development team might create a new version of an agent component (`/v3/agent`) but forgets to remove `/v2/agent`. If the team removes security controls and forgets to secure the `/v2` agent when the feature goes live, it becomes a Shadow Agent. Unauthorized users who discover this agent might be able to access sensitive data, invoke unauthorized tools, or perform actions that could harm the system.
 
-Because `v2` is still active, but not documented anymore, it will most likely bypass all future security checks. This unnoticed API poses significant risk.&#x20;
+Because `v2` is still active but not documented anymore, it will most likely bypass all future security checks. This unnoticed agent poses significant risk.
 
-### Detect Shadow APIs
+### How to Detect Shadow Agents
 
-Akto now creates an API collection titled ‘Shadow APIs’ when testing your APIs.
+1. Navigate to **Agentic Discovery > Collections**
+2. Look for the 'Shadow Agents' tab
+3. Review flagged components for undocumented or deprecated agents
+4. Run security scans to identify agents with missing documentation or security controls
 
-You can test your collection for this Improper Inventory Management vulnerability through the test `BOLA in old api versions`
-
-Here’s how you can do it on Akto:
-
-{% embed url="https://demo.arcade.software/6RM70qc19XYu6q7MIVJL" %}
+Shadow agents can include:
+- Deprecated agent endpoints still accepting requests
+- Undocumented MCP tools or resources
+- Agent components bypassing authentication
+- Legacy AI agent versions with outdated security

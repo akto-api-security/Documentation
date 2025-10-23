@@ -1,12 +1,12 @@
 # Advanced Filter Option
 
-By using these Advanced Filter Options, you can tailor Akto's analysis to focus on the specific aspects of your API traffic that are most relevant to your current needs.
+By using these Advanced Filter Options, you can tailor Akto's analysis to focus on the specific aspects of your agent component traffic that are most relevant to your current needs.
 
 ### Overview
 
 Advanced filters allow you to:
 
-* Include or exclude specific API endpoints based on criteria
+* Include or exclude specific agent components or MCP endpoints based on criteria
 * Focus analysis on particular HTTP methods, response codes, or content types
 * Target specific hosts or domains for monitoring
 * Create complex filtering rules using logical operators (AND, OR)
@@ -18,17 +18,15 @@ Advanced filters allow you to:
 * Enter the YAML configuration based on your requirements.
 * Click "Save" to apply the filter.
 
-{% @arcade/embed url="https://app.arcade.software/share/CTMTUrQxSuYh1Zkftd2F" flowId="CTMTUrQxSuYh1Zkftd2F" %}
-
 ### Default Blocking Filter
 
-Akto comes with a pre-configured default filter that automatically focuses your analysis on the most relevant API traffic by excluding common noise.
+Akto comes with a pre-configured default filter that automatically focuses your analysis on the most relevant agent traffic by excluding common noise.
 
-Ignores the following APIs:
+Ignores the following:
 
-1. APIs with response code greater than or equal to 400
-2. APIs which are of HTML type
-3. APIs which are from your localhost server
+1. Components with response code greater than or equal to 400
+2. HTML-type responses
+3. Traffic from localhost server
 
 ```yaml
 id: DEFAULT_BLOCK_FILTER
@@ -58,7 +56,7 @@ Here are some use cases that demonstrate how you can customize the Advanced Filt
 
 #### Case 1: Selective Host Content Filtering
 
-Ignore APIs from specific hosts that have content-type text or HTML.
+Ignore agent traffic from specific hosts that have content-type text or HTML.
 
 **When to use:** When you want to exclude HTML/text content from specific domains but continue monitoring other content types.
 
@@ -84,11 +82,11 @@ filter:
               - text
 ```
 
-#### Case 2: API Version and Method Filtering
+#### Case 2: Component Version and Method Filtering
 
-Only allow APIs with specific version path (api/v1) and restrict to certain HTTP methods.
+Only allow components with specific version path (api/v1) and restrict to certain HTTP methods.
 
-**When to use:** When you want to focus on a specific API version and limit the HTTP methods being analyzed.
+**When to use:** When you want to focus on a specific version and limit the HTTP methods being analyzed.
 
 ```yaml
 id: DEFAULT_ALLOW_FILTER
@@ -142,11 +140,3 @@ execute:
 * **for\_one**: Applies conditions to at least one of the headers
 
 This filter will only allow traffic that meets all specified conditions. For more details on advanced filtering options, visit [API Selection Filters](../../probe-library/concepts/test-yaml-syntax-detailed/api-selection-filters.md).
-
-### Best Practices
-
-* Start with broader filters and narrow down as needed
-* Test filters on a small subset of traffic before applying widely
-* Use the `regex` pattern carefully; overly complex patterns may impact performance
-* When using multiple conditions, understand how `and` and `or` operators affect your filter logic
-* Regularly review and update your filters as your API landscape evolves

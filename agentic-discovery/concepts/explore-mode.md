@@ -1,52 +1,83 @@
-# Explore mode
+---
+description: Efficiently browse, filter, and organize agent components and MCP endpoints using Explore Mode.
+---
 
-Explore Mode allows users to efficiently browse and filter APIs from their existing inventory, and create collections based on the filtered results.
+# Explore Mode
 
-{% @arcade/embed flowId="CmTQE2SZ1L6XkaPNV5Dc" url="https://app.arcade.software/share/CmTQE2SZ1L6XkaPNV5Dc" %}
+Explore Mode allows users to efficiently browse and filter agent components and MCP endpoints from their existing inventory, and create collections based on the filtered results. It's a powerful tool for discovering and organizing your agentic systems.
 
-### Key Features
+## Key Features
 
-#### Filtering APIs
+### Filtering Agent Components
 
-Explore Mode provides several filtering options to help users narrow down their API search:
+Explore Mode provides several filtering options to help users narrow down their agent and MCP endpoint search:
 
-* API list: Select from available API lists
-* API collection: Choose specific API collections
-* API endpoint: Search for particular endpoints
-* Method: Filter by HTTP method (GET, POST, etc.)
-* Path matches regex: Use regular expressions to filter API paths
-* Host name matches regex: Filter by host names using regex
+- **Collection**: Select from available agent or MCP collections
+- **Component Type**: Filter by Agent, MCP Server, Tool, Resource
+- **Endpoint**: Search for particular component endpoints
+- **Method**: Filter by HTTP method (GET, POST, etc.) or protocol type
+- **Path matches regex**: Use regular expressions to filter component paths
+- **Host name matches regex**: Filter by host names using regex
+- **Framework**: Filter by detected framework (LangChain, LlamaIndex, CrewAI, etc.)
+- **LLM Provider**: Filter by AI provider (OpenAI, Anthropic, Google, etc.)
 
-#### Viewing Results
+### Viewing Results
 
 After applying filters, the interface displays:
 
-1. A summary of filtered results, e.g., "Listing 200 endpoints out of total 2776 endpoints"
-2. A table of matching API endpoints with the following information:
-   * HTTP method
-   * API path
-   * Risk score
-   * Hostname
-   * Access Type (e.g., No access type, Private, Public)
-   * Auth type (e.g., JWT, unauthenticated, custom\_authorization\_header)
-   * Sensitive params
-   * Source location
-   * Last seen date
+1. **Summary**: e.g., "Listing 45 agent components out of total 191 components"
+2. **Results Table** with the following information:
+   - Component type (Agent, MCP Server, Tool, etc.)
+   - Component path/endpoint
+   - Risk score
+   - Hostname
+   - Access Type (Private, Public, Third-party)
+   - Auth type (JWT, unauthenticated, custom headers)
+   - Sensitive params
+   - Framework detected
+   - Source location
+   - Last seen date
 
-You can further categorize results using tabs:
+## Use Cases
 
-1. All
-2. New
-3. Sensitive
-4. High risk
-5. No auth
-6. Shadow
+### Discovering Shadow Agents
 
-### Usage Tips
+Filter for components with:
+- No documentation
+- High risk scores
+- Recent discovery dates
+- No standard authentication
 
-* Use the "Add condition" button to apply multiple filters for more precise results
-* The "Clear all" option allows you to reset all applied filters
-* Adjust filters incrementally to refine your search
-* Save frequently used filter combinations as collections for quick access in future sessions
+### Finding High-Risk MCP Servers
 
-Explore Mode streamlines the process of discovering and organizing APIs within your inventory, enabling more efficient API management and integration workflows. Learn [How to create collections using Explore mode](../how-to/add-collection-using-explore-mode.md).
+Filter for MCP components with:
+- Public access type
+- Sensitive data handling
+- Write permissions
+- No authentication
+
+### Organizing by Framework
+
+Create collections for specific agent frameworks:
+- All LangChain agents
+- All LlamaIndex query engines
+- All CrewAI multi-agent systems
+
+### Compliance Auditing
+
+Filter for components that:
+- Handle PII or regulated data
+- Are publicly accessible
+- Lack proper authentication
+- Have elevated risk scores
+
+## Creating Collections from Explore Mode
+
+Once you've filtered your results, you can:
+
+1. Click **Create Collection** from filtered results
+2. Name your collection descriptively
+3. The collection is created with all filtered components
+4. Use this collection for targeted security testing
+
+Explore Mode streamlines the process of discovering and organizing agent components within your inventory, enabling more efficient agentic system management and security workflows.

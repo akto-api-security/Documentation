@@ -1,56 +1,67 @@
 ---
 hidden: true
+description: Understand agent component sequences and workflow patterns in your agentic systems.
 ---
 
-# API Sequence
+# Agent Component Sequences
 
-### Overview
+## Overview
 
-API sequences are chains of API calls that represent user or system workflows. Identifying these sequences is critical for:
+Agent component sequences are chains of component invocations that represent user or agent workflows. Identifying these sequences is critical for:
 
-* Detecting logic-based vulnerabilities
-* Improving testing coverage
-* Understanding API usage patterns
+- Detecting logic-based vulnerabilities in agentic workflows
+- Improving security testing coverage
+- Understanding agent usage patterns and behavior
+- Identifying potential security risks in multi-step operations
 
-Akto automatically detects API sequences based on traffic patterns and presents them with visual flow charts and associated statistics.
+Akto automatically detects component sequences based on traffic patterns and presents them with visual flow charts and associated statistics.
 
-<figure><img src="../../.gitbook/assets/image (131).png" alt=""><figcaption></figcaption></figure>
+## Component Sequence Statistics
 
-***
+The **Component Sequences Overview** section gives a snapshot of the identified sequences:
 
-### 📊 API Sequence
+- **Total Sequences**: Number of detected unique agent workflows
+- **Total Transitions**: Number of component invocations between steps
+- **Avg Probability**: Likelihood of these sequences occurring in real traffic (based on behavioral analysis)
 
-The **API Sequences Overview** section gives a snapshot of the identified sequences:
+Example metrics:
+- **10 Total Sequences**
+- **196 Total Transitions**
+- **67.1% Avg Probability**
 
-* **Total Sequences:** Number of detected unique API workflows
-* **Total Transitions:** Number of API call transitions between steps
-* **Avg Probability:** Likelihood of these sequences occurring in real traffic (based on behavioral analysis)
+## How Sequences Are Formed
 
-Example from your screenshot:
+Akto analyzes live traffic to group agent components into sequences by:
 
-* **10 Total Sequences**
-* **196 Total Transitions**
-* **67.1% Avg Probability**
+1. **Temporal Proximity**: Component invocations made in close succession
+2. **Entity Linkage**: Requests sharing identifiers (like `userId`, `sessionId`, `conversationId`)
+3. **Agent Flow Logic**: Common patterns like `agent init → tool invocation → response generation`
+4. **Data Dependencies**: When output from one component becomes input to another
 
-***
+Each node in the sequence represents a component (e.g., `agent/chat`, `mcp/filesystem/read`), and edges indicate transitions and data flow.
 
-### 🧠 How Sequences Are Formed
+## Common Agent Sequence Patterns
 
-Akto analyzes live traffic to group API endpoints into sequences by:
+### User Interaction Flow
+```
+User Request → Agent Router → Context Retrieval → LLM Invocation → Tool Execution → Response
+```
 
-1. **Temporal Proximity** – Requests made in close succession.
-2. **Entity Linkage** – Requests sharing IDs (like `orderId`, `userId`, `sessionId`).
-3. **User Flow Logic** – Common patterns like `login → fetch profile → create order`.
+### MCP Tool Chain
+```
+Agent Init → MCP Discovery → Tool Selection → Tool Invocation → Result Processing
+```
 
-Each node in the sequence represents an endpoint (e.g., `POST /api/users/login`), and edges indicate transitions.
+### Multi-Agent Workflow
+```
+Primary Agent → Sub-Agent 1 → Sub-Agent 2 → Result Aggregation → Final Response
+```
 
-***
-
-### Get Support for your Akto setup
+## Get Support
 
 There are multiple ways to request support from Akto. We are 24X7 available on the following:
 
-1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
-2. Join our [discord channel](https://www.akto.io/community) for community support.
-3. Contact `help@akto.io` for email support.
-4. Contact us [here](https://www.akto.io/contact-us).
+1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply
+2. Join our [discord channel](https://www.akto.io/community) for community support
+3. Contact `help@akto.io` for email support
+4. Contact us [here](https://www.akto.io/contact-us)

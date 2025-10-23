@@ -1,33 +1,30 @@
 ---
-description: View all API endpoints across all of your services in Akto.
+description: View all MCP components across all of your services in Akto.
 ---
 
-# MCP Endpoints
+# MCP Components
 
-## What is an API Endpoint?
+## What is an MCP Component?
 
-API endpoints are specific URLs or addresses within an API that serve as access points for different functionalities or resources. They define where and how data or actions can be requested or performed within the API, typically using HTTP methods like GET, POST, PUT, or DELETE.
+MCP (Model Context Protocol) components are specific interaction points within the Model Context Protocol that serve as access points for different functionalities, tools, resources, and prompts. They define where and how data or actions can be requested or performed within the MCP system, enabling standardized communication between AI models and external services.
 
-## View an Endpoint
+## View an MCP Component
 
-Akto automatically updates your API inventory whenever new APIs are detected and allows you to view the endpoints. By viewing endpoints, you get a detailed overview of the API's capabilities.
+Akto automatically updates your MCP inventory whenever new MCP components are detected and allows you to view them in detail. By viewing MCP components, you get a detailed overview of the protocol's capabilities and exposed functionalities.
 
-This includes details of **`header & response`** data and **`payloads`**, which shows how data is structured when interacting with the API. You can also identify any sensitive parameters that the endpoint has, such as passwords or personal identification numbers, ensuring that they are handled securely.
+### What You Can View
 
-In the demonstration below, we are viewing the details of the **`api/quantity/`** endpoint within the **“New Burp”** collection.
+When viewing an MCP component, you have access to:
 
-Go to the **API Discovery > API Collection.** Select the **"New Burp"** collection, and click on **`api/quantity/`** Endpoint to view its details.
+- **Request & Response Data**: Shows how data is structured when interacting with the MCP server
+- **Message Payloads**: Detailed view of the protocol communication format
+- **Sensitive Parameters**: Identification of security-sensitive data such as authentication tokens or private information
+- **Sample Values**: Real examples showing how data flows during MCP protocol communications
 
-{% embed url="https://demo.arcade.software/boBiQNlJHTbRmmfE6nZR?embed=" %}
-View an Endpoint
-{% endembed %}
+### How to View MCP Components
 
-In the above demonstration, we observed that there are 14 request headers and 9 response headers which gives us a deep understanding of the interaction between the client and the server. By viewing the sample values of these headers, we see how data changes during API calls.
+1. Navigate to **Agentic Discovery > MCP Collection**
+2. Select your collection
+3. Click on an MCP Component to view its details
 
-You can also copy your API endpoint data for troubleshooting, debugging, version control, etc. For more information, refer to this [link](https://docs.akto.io/api-inventory/how-to/copy-api-endpoints-data).
-
-### Tech Stack Detection with Akto-AI
-
-Akto automatically identifies the **underlying technologies** used by your APIs through intelligent traffic analysis powered by **Akto-AI**. For each endpoint, Akto displays detected stacks such as **AWS**, **Azure**, **MongoDB**, **Stripe**, and more—based on observed request headers, payload patterns, and infrastructure clues. This gives teams better visibility into their API environment and helps prioritize tests or security policies based on tech stack relevance.
-
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+The request and response structure provides a deep understanding of the interaction between the MCP client and server, allowing you to analyze how data flows during protocol communications.
