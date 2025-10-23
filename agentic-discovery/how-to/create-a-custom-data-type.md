@@ -1,61 +1,60 @@
 ---
-description: Explore about Creating a custom data type.
+description: Create custom data types for agentic-specific patterns in your organization.
 ---
 
 # Create a Custom Data Type
 
-Akto comes with over 40 built-in data types by default. However, some businesses might have unique data types, such as a transaction ID prefixed with **"TXN\_ID"**. These are specific to your business. If you want Akto to recognize these data types, you can configure them in the application.
+Akto comes with 50+ built-in data types. Create custom types for business-specific patterns in your agent systems.
 
-If you have a highly sensitive, non-standard data type, you can define the pattern in Akto. Afterward, Akto will inform you about which API is sharing this data.
+## Common Agentic Custom Data Types
 
-In the demonstration below, let's create a custom data type named **TXN\_ID** specifically for handling sensitive information found only in API responses.\
-\
-Go to **API Discovery > Sensitive data**. Click on the **Create Custom Data Type** and enter the data type details and conditions.
+- Transaction IDs (e.g., "TXN_12345")
+- Agent IDs or session tokens
+- Custom API key formats
+- Tool invocation signatures
+- Context window identifiers
 
-{% embed url="https://demo.arcade.software/p9oqszsEUzWcnFV3ou6h?embed=" %}
-Add custom data type
-{% endembed %}
+## How to Create
 
-In the above demonstration, we have created a data type named **`TXN_ID`** for handling sensitive information found only in API responses.
+1. Go to **Agentic Discovery > Sensitive Data**
+2. Click **Create Custom Data Type**
+3. Enter name (e.g., "AGENT_SESSION_ID")
+4. Define key and value conditions
+5. Save
 
-## Add Data Type Condition
+## Add Key Conditions
 
-While creating custom data types within Akto, it's essential to add specific data type conditions to ensure the integrity and validity of the data stored in those types. The specific conditions you set are dependent on the needs of your application. There are two data type conditions that you can set when creating custom data types: **`Key condition`** and **`Value condition`**.
+Define how Akto should detect the key:
+- **Equals to**: Exact match (e.g., key = "agent_id")
+- **Matches regex**: Pattern match (e.g., key matches `agent_.*`)
+- **Contains**: Partial match
 
-### Key Conditions
+## Add Value Conditions
 
-You can set key conditions and define your requirements to instruct Akto on how you would like to detect the key. For example, you should ensure that a key follows a certain regex pattern or is equal to the data type (**e.g.** **`TXN_ID`**).&#x20;
-
-In the demonstration below, we have added a key condition that is equal to the specific key named  **“TXN\_ID”**, which means instructing Akto to find it within our API data.
-
-{% embed url="https://demo.arcade.software/ha1KAVihKpRjDZJXRXh4?embed=" %}
-Add Key Conditions
-{% endembed %}
-
-In the above demonstration, we set the key condition to **"Equals to"** and specified the key name as **"TXN\_ID"**. Now Akto will search for the condition where the key matches **"TXN\_ID"** within the API data.
-
-### Value Conditions
-
-You can set value conditions and define your requirements to instruct Akto on how you would like to detect the value. For example, you might want to ensure that a value follows a certain regex pattern or is equal to the data type (**e.g.** **`\btxn_id\b`**).
-
-In the demonstration below, we selected the condition type **"Matches regex"** and specified the value name as **`\btxn_id\b`**, which represents the regex pattern for transaction ID.
-
-{% embed url="https://demo.arcade.software/OJhWdKLlFJmQpiR0izld?embed=" %}
-Add Value Conditions
-{% endembed %}
-
-In the above demonstration, we selected the condition type **"Matches regex"** and specified the value name as **`\btxn_id\b`**. The system will now search the data for values that match this regex pattern. Any values that contain the specified regex pattern will be identified by this condition.
+Define how Akto should detect the value:
+- **Matches regex**: Pattern for value (e.g., `\bagent_[a-z0-9]{16}\b`)
+- **Equals to**: Exact value match
+- **Length**: Value length constraints
 
 ## AktoGPT
 
-AktoGPT is a powerful AI tool integrated into the Akto platform that greatly simplifies the task of creating custom data types by generating regex patterns. With AktoGPT, you can define complex patterns that are tailored to your specific application needs, thereby ensuring the accuracy and security of your data handling processes.
+Use AktoGPT to generate regex patterns automatically:
 
-In the demonstration below, we have generated a regex pattern for a **`credit card number`** and added it to Akto.
+1. Click **AktoGPT** button
+2. Describe your pattern (e.g., "agent session ID with prefix")
+3. Review generated regex
+4. Add to Akto
 
-Go to **API Discovery > Sensitive data**. Click on the **AktoGPT** and select the prompt to generate a Regix pattern.
+## Example: Agent Session ID
 
-{% embed url="https://demo.arcade.software/RekxtkzRue4w3v3Yl0J9?embed=" %}
-Add Regix using AktoGPT
-{% endembed %}
+**Key Condition**: Equals to "agent_session"
+**Value Condition**: Matches regex `\bagt_[a-f0-9]{32}\b`
 
-In the above demonstration, we successfully generated a regex pattern to detect **`credit card numbers`** and added it directly to Akto for monitoring and protection against unauthorized data exposure.
+This detects patterns like: `agent_session: "agt_a1b2c3d4..."`
+
+## Best Practices
+
+- Test regex patterns before adding
+- Document custom data types for your team
+- Review detected instances to verify accuracy
+- Use AktoGPT for complex patterns

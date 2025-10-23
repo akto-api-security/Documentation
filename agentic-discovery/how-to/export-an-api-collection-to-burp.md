@@ -1,22 +1,66 @@
 ---
-description: Explore about exporting an API collection to Burp.
+description: Learn how to export agent and MCP collections to Burp Suite for manual security testing.
 hidden: true
 ---
 
-# Export an API Collection to Burp
+# Export an Agentic Collection to Burp
 
-Akto allows you to take any of your API collections and download them to your Burp Suite setup. This means you can use Burp Suite to interact with and test the APIs however you want. It's a handy way to explore and experiment with APIs right from your local Burp software.
+Akto allows you to export any of your agent or MCP collections and import them into your Burp Suite setup. This enables you to use Burp Suite's powerful manual testing capabilities to interact with and test your AI agents and MCP endpoints however you want. It's a handy way to perform deep security analysis on agentic components right from your local Burp Suite.
 
-In the demonstration below, we connected Akto and Burp Suite by downloading a **`.jar`** file (Akto extension file) from the **Quick Start** page, adding the same to the Burp account, and enabling the extension in Burp using **`AKTO_IP`** and **`AKTO_TOKEN`.**
+## Setup Akto Extension in Burp Suite
 
-A **`.jar`** file is used to install extensions in Burp Suite, which are additional functionalities or modules that enhance the capabilities of this security testing software. In this case, the .jar file from Akto helps to install the Akto extension right into your Burp Suite account.
+To export collections to Burp, you first need to install and configure the Akto extension in Burp Suite.
 
-Go to **Quick Start > Burp Suite > Configure.** Click on the Download to download the executable "Jar file" to add the Akto extension to your Burp Suite account.
+### Installation Steps
 
-Open Burp and add the downloaded jar file in the extension tab. Once the plugin is loaded, click on the **"Options"** tab inside the plugin. Copy the **`AKTO_IP`** and **`AKTO_TOKEN`** values from your Akto account and paste them into the options tab of your Burp Suite account. Enter the name of the collection that you want to export then click on **"Import from Akto".**
+1. Navigate to **Quick Start > Burp Suite > Configure** in your Akto dashboard
+2. Click **Download** to download the executable JAR file (Akto extension for Burp Suite)
+3. Open Burp Suite and go to the **Extensions** tab
+4. Click **Add** and select the downloaded JAR file
+5. Once loaded, click on the **Options** tab inside the Akto plugin
 
-{% embed url="https://app.arcade.software/share/RyMBHnUJaFJ5f65pVyRp" %}
-Export an API collection to Burp
-{% endembed %}
+### Configuration Steps
 
-In the demonstration above, we installed the Akto plugin in Burp Suite to export API collections from Akto. Then, we directly exported the **`"juice_shop_demo"`** collection into our Burp Suite account.
+1. Copy the **AKTO_IP** value from your Akto account
+2. Copy the **AKTO_TOKEN** value from your Akto account
+3. Paste both values into the Options tab of the Akto plugin in Burp Suite
+4. Click **Save** to confirm the configuration
+
+{% hint style="info" %}
+A **JAR file** is used to install extensions in Burp Suite, which add additional functionalities or modules that enhance the capabilities of this security testing software. The Akto JAR file enables seamless integration between Akto and Burp Suite.
+{% endhint %}
+
+## Export a Collection to Burp
+
+Once the Akto plugin is configured in Burp Suite:
+
+1. In the Akto plugin within Burp Suite, enter the name of the collection you want to export
+2. Click on **Import from Akto**
+3. The collection will be imported into Burp Suite with all agent components and MCP endpoints
+
+## What Gets Exported
+
+When you export a collection to Burp, you receive:
+
+- **Agent Components**: All AI agent endpoints with their request/response structures
+- **MCP Endpoints**: All Model Context Protocol tools and resources
+- **Sample Requests**: Example requests for each component
+- **Authentication Details**: Configured authentication methods (if applicable)
+- **Parameters**: Input and output parameters for each component
+
+## Use Cases for Burp Suite Integration
+
+- **Manual Security Testing**: Perform in-depth manual testing on agent components
+- **Custom Attack Scenarios**: Create custom attacks specific to agentic vulnerabilities
+- **Intercepting Traffic**: Use Burp Proxy to intercept and modify agent requests
+- **Advanced Scanning**: Leverage Burp's scanner for deeper vulnerability analysis
+- **Payload Crafting**: Manually craft payloads to test prompt injection and tool misuse
+- **Session Testing**: Test authentication and session management in agentic workflows
+
+## Troubleshooting
+
+If the export fails:
+- Verify AKTO_IP and AKTO_TOKEN are correct
+- Check network connectivity between Burp Suite and Akto
+- Ensure the collection name is exact (case-sensitive)
+- Verify you have permissions to access the collection in Akto

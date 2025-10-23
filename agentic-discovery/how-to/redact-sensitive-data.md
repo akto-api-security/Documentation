@@ -1,33 +1,46 @@
-# Redact sensitive data
+---
+description: Protect sensitive data by redacting it from the Akto dashboard and logs.
+---
 
-Redacting data in API security is critical to protect sensitive information from unauthorized access. It allows businesses to comply with data privacy regulations and prevent potential data breaches. By enabling granular redaction controls, you can specify exactly what data to hide, reducing the risk of exposing sensitive data to Akto dashboard users.
+# Redact Sensitive Data
 
-You can redact data at multiple levels - &#x20;
+Redact sensitive data to comply with privacy regulations and prevent unauthorized access. Critical for agent systems handling PII and credentials.
 
-1. [Redact for a data type](redact-sensitive-data.md#redact-for-a-data-type)
-2. [Redact for an API Collection](redact-sensitive-data.md#redact-for-api-collection)
-3. [Redact for all APIs](redact-sensitive-data.md#redact-for-all-apis)
+## Redaction Levels
 
-{% hint style="info" %}
-Note that redacting data affects security testing. Because we aren't storing values, most likely the API can't be replayed and hence can't be tested.
+1. **By Data Type**: Redact all instances of a data type (e.g., all API keys)
+2. **By Collection**: Redact entire agent/MCP collection
+3. **Global**: Redact all data across all agents
+
+## Important Note
+
+{% hint style="warning" %}
+Redacting data affects security testing. Without stored values, agent requests can't be replayed and tested.
 {% endhint %}
 
-### How it works?
+## How Redaction Works
 
-Once redact is on, Akto processes API calls, but doesn't store the values. You can expect to see `{"name": "*****", password: "*****"}` for the APIs. If redact is on for an API collection, Akto won't show sample API calls as well.&#x20;
+Values are replaced with `*****`:
+```json
+{"agent_prompt": "*****", "llm_response": "*****"}
+```
 
-### Redact for a data type
+## Redact by Data Type
 
-Go to **API Discovery** > **Sensitive data**. Select the data type and click on `Edit`. Scroll down and set the **Redact this data type** to either `True` or `False`.
+1. Go to **Agentic Discovery > Sensitive Data**
+2. Select data type
+3. Click **Edit**
+4. Set **Redact this data type** to **True**
 
-{% embed url="https://demo.arcade.software/SqSssV6nI66CIeDU4pyv" %}
+## Redact by Collection
 
-### Redact for API collection
+1. Open the agent/MCP collection
+2. Click **More options**
+3. Select **Redact**
+4. Click **Enable**
 
-Open the API collection where you want to redact values. Click on **More options** at the top and select `Redact`. Click on **Enable** on the confirmation dialog box.&#x20;
+## Redact All Data
 
-{% embed url="https://demo.arcade.software/kJAfG2by8TjAV3vsUwee" %}
-
-### Redact for all APIs
-
-Go to **Settings** > **About** . Click on `redact data`. This will hide all values in all the API calls.&#x20;
+1. Go to **Settings > About**
+2. Click **Redact data**
+3. Confirm (affects all collections)

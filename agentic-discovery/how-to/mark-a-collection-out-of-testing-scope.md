@@ -1,30 +1,28 @@
+---
+description: Exclude agent and MCP collections from security testing.
+---
+
 # Mark a Collection Out of Testing Scope
 
-In Akto, you may not always want to test every API collection. For example, sandbox collections, third-party APIs, or deprecated services may not be relevant for active security testing.\
-The **“Mark collections as out of testing scope”** option lets you exclude such collections from scans, ensuring tests only run on meaningful targets
+Exclude collections from security testing when they shouldn't be tested (sandbox agents, demo agents, third-party MCP servers, etc.).
 
-<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+## How to Mark Out of Scope
 
-***
+1. Go to **Agentic Discovery > Collections**
+2. Select the collection(s) to exclude
+3. Click **Mark collections as out of testing scope**
+4. Confirm
 
-### Steps to Mark a Collection Out of Testing Scope
+## When to Use
 
-1. Go to **API Discovery → Collections** in the left navigation.
-2. Select the collection(s) you want to exclude by checking the box next to their name.
-3. Click the **Mark collections as out of testing scope** button at the bottom of the page.
-4. The selected collections will now be excluded from future security tests.
+- Sandbox or demo agents
+- Third-party MCP servers you don't control
+- Deprecated agents being phased out
+- Development/test agents not ready for scanning
 
-***
+## Important Notes
 
-### Notes
-
-* Collections marked out of scope will still appear in your inventory, but they won’t be part of **API Security Testing**.
-* You can always bring them back into scope by re-enabling testing.
-* Use this feature to keep test results clean and focused on **critical APIs only**.
-
-***
-
-### Best Practice
-
-* Regularly review collections and mark **staging, deprecated, or irrelevant collections** as out of scope.
-* Keep only **production and business-critical APIs** in testing scope for the most accurate security posture.
+- Collections remain visible in inventory
+- They won't be included in security tests
+- Can be brought back into scope anytime
+- Keeps test results focused on critical agents
