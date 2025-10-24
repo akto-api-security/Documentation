@@ -1,12 +1,10 @@
 # Azure DevOps Boards Integration
 
-The Azure DevOps Boards integration in Akto allows you to seamlessly create and manage work items for API security vulnerabilities directly in your Azure Boards. This integration streamlines the process of tracking and remediating API issues, ensuring your teams stay aligned and proactive.
-
-<figure><img src="../../.gitbook/assets/image (101).png" alt=""><figcaption></figcaption></figure>
+The Azure DevOps Boards integration in Akto allows you to seamlessly create and manage work items for agentic security vulnerabilities directly in your Azure Boards. This integration streamlines the process of tracking and remediating vulnerabilities in your AI agents, MCP endpoints, and LLM components, ensuring your teams stay aligned and proactive.
 
 #### How It Works
 
-Once integrated, Akto automatically pushes API vulnerability findings as work items into your specified Azure Boards projects. This provides real-time visibility and traceability of security issues within your existing DevOps workflow.
+Once integrated, Akto automatically pushes agentic security vulnerability findings as work items into your specified Azure Boards projects. This provides real-time visibility and traceability of agent component security issues within your existing DevOps workflow.
 
 #### Setting Up the Integration
 
@@ -31,12 +29,12 @@ Follow these steps to integrate Azure DevOps Boards with Akto:
 
 #### Example Setup
 
-| Field                  | Example Value                   |
-| ---------------------- | ------------------------------- |
-| Azure DevOps Board URL | `https://dev.azure.com`         |
-| Organization           | `my-organization`               |
-| Personal Auth Token    | `****************`              |
-| Projects               | `API-Security,Backend-Services` |
+| Field                  | Example Value                         |
+| ---------------------- | ------------------------------------- |
+| Azure DevOps Board URL | `https://dev.azure.com`               |
+| Organization           | `my-organization`                     |
+| Personal Auth Token    | `****************`                    |
+| Projects               | `Agentic-Security,Agent-Components` |
 
 #### Permissions
 
@@ -53,3 +51,4 @@ There are multiple ways to request support from Akto. We are 24X7 available on t
 2. Join our [discord channel](https://www.akto.io/community) for community support.
 3. Contact `help@akto.io` for email support.
 4. Contact us [here](https://www.akto.io/contact-us).
+
