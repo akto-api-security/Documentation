@@ -1,18 +1,19 @@
 # Test Library
 
-Akto offers you the ability to add your own tests as YAML files, hence, allowing you to execute your personalized tests alongside the automated tests developed by Akto against your API collections. This functionality streamlines the testing process and increases the efficiency of identifying and addressing potential security vulnerabilities in your APIs.
+Akto offers the ability to add your own probes as YAML files, allowing you to execute personalized security tests alongside automated probes developed by Akto against your agent components and MCP endpoints. This streamlines the testing process and increases efficiency in identifying agentic security vulnerabilities.
 
-### What is Akto's Test Library?
+### What is Akto's Probe Library?
 
-Akto's test library is an extensive collection of tests that allows for security testing without writing code. It is a useful resource for testers who want to quickly select from various test scenarios to test different parts of software or systems. This approach saves time and ensures a more efficient testing process.
+Akto's Probe Library is an extensive collection of security tests specifically designed for agentic systems. It enables security testing of AI agents, LLM components, and MCP endpoints without writing code. This resource allows teams to quickly select from various probe scenarios targeting agent-specific vulnerabilities including prompt injections, tool abuse, and permission escalation.
 
-### Why Test Library is Needed?
+### Why Probe Library is Essential?
 
-A Test Library is essential for several reasons:
+The Probe Library is essential for several reasons:
 
-* **Time Efficiency**: Security engineers can easily select from various pre-existing test scenarios, avoiding the time-consuming task of creating security test cases from the initial phase.
-* **Focused Testing:** You can target a particular API or a set of APIs (workflow) for security testing.
-* **Enhanced Productivity**: By leveraging the Test Library, security engineers can optimize their efforts, ensuring a more efficient and thorough testing process.
+* **Time Efficiency**: Security engineers can select from pre-existing probe scenarios specifically designed for agentic threats, avoiding time-consuming custom test creation
+* **Focused Testing**: Target specific agent components, MCP endpoints, or tool integrations for comprehensive security testing
+* **Agentic-Specific Coverage**: Access probes designed for autonomous system vulnerabilities that traditional API testing misses
+* **Enhanced Productivity**: Optimize security efforts with specialized probes for AI agent architectures
 
 Today we have the following test categories in our library, each one having multiple tests:
 

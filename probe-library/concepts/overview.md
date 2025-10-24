@@ -1,15 +1,15 @@
 ---
-description: A quick overview of Akto's Test Editor
+description: Comprehensive probe library for agentic security testing
 ---
 
 # Overview
 
-Akto Test Editor is the test playground for security teams and developers to write their custom tests to find vulnerabilities in APIs.
+Akto Probe Library is the security testing framework for teams protecting AI agents, LLM components, and MCP endpoints. Write custom probes to discover vulnerabilities specific to autonomous systems including prompt injections, tool abuse, and permission escalation.
 
-Test Editor consists of three blocks:
+Probe Library consists of three blocks:
 
-1. [Test Library](test-library.md) consisting of 1000+ built-in tests.
-2. [YAML test](test-yaml.md) editor.
-3. Sample API request and response to test.
+1. [Test Library](test-library.md) with 1000+ built-in probes for agentic security
+2. [YAML probe](test-yaml.md) editor for custom test creation
+3. Sample agent component requests and responses for testing
 
 <figure><img src="../../.gitbook/assets/Test Editor.png" alt=""><figcaption></figcaption></figure>

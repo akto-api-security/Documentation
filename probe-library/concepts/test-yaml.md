@@ -1,14 +1,14 @@
-# Test YAML
+# Probe YAML
 
-YAML tests are a powerful tool to identify security vulnerabilities in your APIs. Using Akto YAML format, you can define tests with metadata, API filters, execution details, and validation checks. These tests can be customized to target specific vulnerabilities and run against your APIs to ensure they are secure. Akto Test Editor provides a user-friendly interface to create and edit these tests, making it easy to integrate them into your security workflow.
+YAML probes are a powerful tool to identify security vulnerabilities in your AI agents, MCP endpoints, and LLM components. Using Akto YAML format, you can define probes with metadata, component filters, execution details, and validation checks. These probes can be customized to target agentic-specific vulnerabilities including prompt injections, tool abuse, and permission escalation. Akto Probe Library provides a user-friendly interface to create and edit these probes, making it easy to integrate them into your agentic security workflow.
 
-### What is YAML Test?
+### What is YAML Probe?
 
-A YAML test in Akto is a configuration file written in YAML (YAML Ain't Markup Language) that defines a set of instructions for testing APIs to find security vulnerabilities. It includes details about the test, how to select which APIs to test, how to execute the test, and how to validate the results. The test is executed against APIs, and the results are used to identify any issues with the API's security.
+A YAML probe in Akto is a configuration file written in YAML (YAML Ain't Markup Language) that defines a set of instructions for testing agent components to find security vulnerabilities. It includes details about the probe, how to select which components to test, how to execute the probe, and how to validate the results. The probe is executed against agent components and MCP endpoints, and the results are used to identify any agentic security issues.
 
-You can create and run tests to detect vulnerabilities in your APIs. Tests are written in Akto's YAML format, which includes sections for metadata, selection filters, execution details, and validation checks.
+You can create and run probes to detect vulnerabilities in your autonomous systems. Probes are written in Akto's YAML format, which includes sections for metadata, selection filters, execution details, and validation checks.
 
-## 6 Blocks of Test Editor
+## 6 Blocks of Probe Editor
 
 ### Block 1: ID
 

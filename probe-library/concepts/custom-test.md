@@ -1,9 +1,9 @@
-# Custom Test
+# Custom Probes
 
-There will always be a lot of security test cases that are very specific to your business and won't be available in a generic testing tool. You can write and automate such tests in Akto.
+Security requirements for agentic systems are often unique to your business context and agent architecture. Akto enables you to write and automate custom security probes tailored to your specific AI agents and MCP implementations.
 
-You can write tests in YAML to check various aspects of your APIs, such as behavior, response times, error handling, and security vulnerabilities. Custom tests are especially useful when dealing with unique scenarios or complex systems that may not be covered by predefined tests.
+You can write probes in YAML to test various aspects of your agent components, including prompt handling, tool permission boundaries, data leakage patterns, MCP endpoint security, and agentic-specific vulnerabilities. Custom probes are especially useful for testing unique agent behaviors, complex tool chains, or proprietary LLM integrations that may not be covered by predefined probes.
 
-The Test Editor in Akto includes a test library with over 200 built-in tests, a YAML-based editor for creating custom tests, and a feature to run tests on a sample API. This streamlines the testing process and makes writing and running effective tests for your APIs easier for you.
+The Probe Library in Akto includes over 1000 built-in probes for agentic security, a YAML-based editor for creating custom probes, and features to test probes on sample agent components. This streamlines the security testing process for autonomous systems.
 
 For more information on creating custom tests, please refer to this documentation- [Create a Custom Test](../how-to/create-a-custom-test.md).
