@@ -31,6 +31,10 @@
   * [Overview](agentic-security-posture/concepts/overview.md)
   * [Analysis](agentic-security-posture/concepts/analysis.md)
 
+## Endpoint Security
+
+* [Overview](endpoint-security/overview.md)
+
 ## Agentic Discovery
 
 * [Concepts](agentic-discovery/concepts/README.md)
