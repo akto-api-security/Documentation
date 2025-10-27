@@ -108,7 +108,7 @@
   * [Remove Bad Components](agentic-discovery/how-to/remove-bad-endpoints.md)
   * [Create New Tags](agentic-discovery/how-to/create-new-tags.md)
   * [Edit Tags](agentic-discovery/how-to/edit-tags.md)
-  * [De-merge API](agentic-discovery/how-to/de-merge-api.md)
+  * [De-merge Agentic Components](agentic-discovery/how-to/de-merge-agentic-components.md)
   * [Extract APIs from github hosted source code using our Github Action](agentic-discovery/how-to/extract-apis-from-source-code-gha.md)
   * [Delete an API Collection](agentic-discovery/how-to/delete-an-api-collection.md)
   * [Export an API Collection to Postman](agentic-discovery/how-to/export-an-api-collection-to-postman.md)
