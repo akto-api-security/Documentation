@@ -180,7 +180,425 @@ https://super-resonance-827f.billing-53a.workers.dev
 
 ***
 
-## Step 2: Set Up Your Cloudflare Worker Script
+## Step 2: Deploy Agent Guard Services - **Required for MCP Guardrails**
+
+The Agent Guard services are **prerequisites** for enabling MCP Guardrails in Step 3. Deploy these services first before proceeding with the MCP Guardrails integration.
+
+### 2.1 Pull and Push Agent Guard Container Images
+
+1. Pull and push the Agent Guard Engine container image:
+
+```bash
+docker pull --platform linux/amd64 public.ecr.aws/aktosecurity/akto-agent-guard-engine:1.12.1_local
+docker tag public.ecr.aws/aktosecurity/akto-agent-guard-engine:1.12.1_local agent-guard-engine:testing
+wrangler containers push agent-guard-engine:testing
+```
+
+2. Pull and push the Agent Guard Executor container image:
+
+```bash
+docker pull --platform linux/amd64 public.ecr.aws/aktosecurity/akto-agent-guard-executor:1.12.1_local
+docker tag public.ecr.aws/aktosecurity/akto-agent-guard-executor:1.12.1_local agent-guard-executor:testing
+wrangler containers push agent-guard-executor:testing
+```
+
+### 2.2 Deploy Agent Guard Executor Service
+
+Deploy the Executor service first, as the Engine service depends on it.
+
+1. Create a new Cloudflare Worker project for the Agent Guard Executor.
+
+2. Create `src/index.ts`:
+
+```typescript
+import { Container, getContainer } from "@cloudflare/containers";
+
+export interface Env {
+  AKTO_AGENT_GUARD_EXECUTOR_CONTAINER: DurableObjectNamespace<AktoAgentGuardExecutorContainer>;
+}
+
+export class AktoAgentGuardExecutorContainer extends Container {
+  defaultPort = 8092;
+  sleepAfter = "168h";
+  maxStartupTime = "120s";
+
+  constructor(state: DurableObjectState, env: Env) {
+    super(state, env);
+    this.envVars = {
+      PYTHONUNBUFFERED: "1",
+      PORT: "8092",
+      HF_HOME: "/app/.cache/huggingface"
+    };
+  }
+}
+
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    const url = new URL(request.url);
+
+    switch (url.pathname) {
+      case '/':
+        return new Response(JSON.stringify({
+          service: 'Akto Agent Guard Executor Worker',
+          version: '1.0.0',
+        }), {
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+      case '/health':
+        return new Response(JSON.stringify({
+          status: 'healthy',
+          timestamp: new Date().toISOString(),
+        }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+      default:
+        try {
+          let scannerName = 'default-executor';
+          try {
+            if (request.method === 'POST' && request.headers.get('content-type')?.includes('application/json')) {
+              const body = await request.clone().json() as any;
+              scannerName = body.scanner_name || scannerName;
+            }
+          } catch (e) {
+            // Use default scanner name
+          }
+
+          const stub = getContainer(env.AKTO_AGENT_GUARD_EXECUTOR_CONTAINER, scannerName);
+          await stub.startAndWaitForPorts();
+          const response = await stub.fetch(request);
+          return response;
+        } catch (error) {
+          return new Response(JSON.stringify({
+            error: 'Failed to process execution request',
+            message: error instanceof Error ? error.message : 'Unknown error',
+          }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' },
+          });
+        }
+    }
+  },
+};
+```
+
+3. Create `wrangler.jsonc`:
+
+```json
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "akto-agent-guard-executor",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-06-23",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  "containers": [
+    {
+      "name": "akto-agent-guard-executor-container",
+      "class_name": "AktoAgentGuardExecutorContainer",
+      "image": "registry.cloudflare.com/<ID>/agent-guard-executor:testing",
+      "instance_type": "standard-3",
+      "max_instances": 10
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "AktoAgentGuardExecutorContainer",
+        "name": "AKTO_AGENT_GUARD_EXECUTOR_CONTAINER"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "new_sqlite_classes": ["AktoAgentGuardExecutorContainer"],
+      "tag": "v1"
+    }
+  ]
+}
+```
+
+4. Deploy the Agent Guard Executor:
+
+```bash
+wrangler deploy
+```
+
+Note the deployed URL - you'll use it in the Agent Guard Engine's `PYTHON_SERVICE_URL` environment variable.
+
+### 2.3 Deploy Agent Guard Engine Service
+
+The Agent Guard Engine is responsible for security scanning and threat detection.
+
+1. Create a new Cloudflare Worker project for the Agent Guard Engine.
+
+2. Create `src/index.ts` with the following content:
+
+```typescript
+import { Container, getContainer } from "@cloudflare/containers";
+
+export interface Env {
+  AKTO_AGENT_GUARD_ENGINE_CONTAINER: DurableObjectNamespace<AktoAgentGuardEngineContainer>;
+}
+
+export class AktoAgentGuardEngineContainer extends Container {
+  defaultPort = 8091;
+  sleepAfter = "2h";
+  maxStartupTime = "60s";
+
+  constructor(state: DurableObjectState, env: Env) {
+    super(state, env);
+    this.envVars = {
+      PORT: "8091",
+      GIN_MODE: "release",
+      PYTHON_SERVICE_URL: "<your-executor-service-url>",
+    };
+  }
+}
+
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    const url = new URL(request.url);
+
+    switch (url.pathname) {
+      case '/':
+        return new Response(JSON.stringify({
+          service: 'Akto Agent Guard Engine Worker',
+          version: '1.0.0',
+        }), {
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+      case '/health':
+        return new Response(JSON.stringify({
+          status: 'healthy',
+          timestamp: new Date().toISOString(),
+        }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+      default:
+        try {
+          const stub = getContainer(env.AKTO_AGENT_GUARD_ENGINE_CONTAINER, "main");
+          await stub.startAndWaitForPorts();
+          const response = await stub.fetch(request);
+          return response;
+        } catch (error) {
+          return new Response(JSON.stringify({
+            error: 'Failed to process scan request',
+            message: error instanceof Error ? error.message : 'Unknown error',
+          }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' },
+          });
+        }
+    }
+  },
+};
+```
+
+3. Create `wrangler.jsonc`:
+
+```json
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "akto-agent-guard-engine",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-06-23",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  "containers": [
+    {
+      "name": "akto-agent-guard-engine-container",
+      "class_name": "AktoAgentGuardEngineContainer",
+      "image": "registry.cloudflare.com/<ID>/agent-guard-engine:testing",
+      "instance_type": "standard-1",
+      "max_instances": 1
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "AktoAgentGuardEngineContainer",
+        "name": "AKTO_AGENT_GUARD_ENGINE_CONTAINER"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "new_sqlite_classes": ["AktoAgentGuardEngineContainer"],
+      "tag": "v1"
+    }
+  ]
+}
+```
+
+4. Update the `PYTHON_SERVICE_URL` environment variable with the Executor's deployed URL from Step 2.2.
+
+5. Deploy the Agent Guard Engine:
+
+```bash
+wrangler deploy
+```
+
+Note the deployed URL - you'll use it as `<your-agent-guard-url>` in the MCP Guardrails configuration in Step 3.
+
+**Important:** Save the Agent Guard Engine URL from this step - it's required for configuring the MCP Guardrails service in Step 3.
+
+***
+
+## Step 3: Add MCP Guardrails Integration
+
+**Prerequisites:** You must complete Step 2 (Deploy Agent Guard Services) before proceeding with this step. The MCP Guardrails service depends on the Agent Guard Engine URL from Step 2.3.
+
+MCP (Model Context Protocol) Guardrails provide real-time security scanning and threat detection for AI agent interactions.
+
+### 3.1 Push MCP Guardrails Container Image
+
+1. Pull and push the MCP Guardrails container image:
+
+```bash
+docker pull --platform linux/amd64 public.ecr.aws/aktosecurity/akto-guardrails-service:1.12.1_local
+docker tag public.ecr.aws/aktosecurity/akto-guardrails-service:1.12.1_local mcp-guardrails:testing
+wrangler containers push mcp-guardrails:testing
+```
+
+### 3.2 Update wrangler.jsonc
+
+Add the MCP Guardrails container configuration to your `wrangler.jsonc`:
+
+```diff
+  "containers": [
+    {
+      "class_name": "MiniRuntimeServiceContainer",
+      "image": "registry.cloudflare.com/<ID>/mrs:testing",
+      "max_instances": 10,
+      "instance_type": "standard",
+      "name": "mini-runtime-service-container"
+-   }
++   },
++   {
++     "class_name": "McpGuardrailsContainer",
++     "image": "registry.cloudflare.com/<ID>/mcp-guardrails:testing",
++     "max_instances": 10,
++     "instance_type": "standard",
++     "name": "mcp-guardrails-service"
++   }
+  ]
+```
+
+Add the Durable Object binding:
+
+```diff
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "MiniRuntimeServiceContainer",
+        "name": "MINI_RUNTIME_SERVICE_CONTAINER"
++     },
++     {
++       "class_name": "McpGuardrailsContainer",
++       "name": "MCP_GUARDRAILS_CONTAINER"
+      }
+    ]
+  }
+```
+
+Add the migration:
+
+```diff
+  "migrations": [
+    {
+      "new_sqlite_classes": [
+        "MiniRuntimeServiceContainer"
+      ],
+      "tag": "v1"
++   },
++   {
++     "new_sqlite_classes": [
++       "McpGuardrailsContainer"
++     ],
++     "tag": "v2"
+    }
+  ]
+```
+
+### 3.3 Update src/index.ts for MCP Guardrails
+
+Add the MCP Guardrails container class:
+
+```javascript
+export class McpGuardrailsContainer extends Container {
+  defaultPort = 8081;
+
+  envVars = {
+    SERVER_PORT: "8081",
+    DATABASE_ABSTRACTOR_SERVICE_URL: "https://cyborg.akto.io",
+    DATABASE_ABSTRACTOR_SERVICE_TOKEN: "<akto-auth-token>",
+    AGENT_GUARD_ENGINE_URL: "<your-agent-guard-url>",
+    THREAT_BACKEND_URL: "https://tbs.akto.io",
+    THREAT_BACKEND_TOKEN: "<akto-auth-token>",
+    LOG_LEVEL: "info",
+    GIN_MODE: "release"
+  };
+}
+```
+
+Update the Hono app bindings:
+
+```diff
+  const app = new Hono<{
+-   Bindings: { MY_CONTAINER: DurableObjectNamespace<MyContainer> };
++   Bindings: {
++     MINI_RUNTIME_SERVICE_CONTAINER: DurableObjectNamespace<MiniRuntimeServiceContainer>;
++     MCP_GUARDRAILS_CONTAINER: DurableObjectNamespace<McpGuardrailsContainer>;
++   };
+  }>();
+```
+
+Update the `/api/ingestData` endpoint to send requests to both containers:
+
+```diff
+  app.post("/api/ingestData", async (c) => {
+-   const containerInstance = getRandom(c.env.MY_CONTAINER, INSTANCE_COUNT);
+-   const containerId = c.env.MY_CONTAINER.idFromName(`/container/${containerInstance}`);
+-   const container = c.env.MY_CONTAINER.get(containerId);
++   const containerInstance = getRandom(c.env.MINI_RUNTIME_SERVICE_CONTAINER, INSTANCE_COUNT);
++   const containerId = c.env.MINI_RUNTIME_SERVICE_CONTAINER.idFromName(`/container/${containerInstance}`);
++   const container = c.env.MINI_RUNTIME_SERVICE_CONTAINER.get(containerId);
++
++   // Get MCP Guardrails container instance
++   const mcpGuardrailsInstance = getRandom(c.env.MCP_GUARDRAILS_CONTAINER, INSTANCE_COUNT);
++   const mcpGuardrailsContainerId = c.env.MCP_GUARDRAILS_CONTAINER.idFromName(`/container/${mcpGuardrailsInstance}`);
++   const mcpGuardrailsContainer = c.env.MCP_GUARDRAILS_CONTAINER.get(mcpGuardrailsContainerId);
++
++   // Send requests to both containers in parallel
++   const [mainResponse] = await Promise.all([
++     container.fetch(c.req.raw.clone()),
++     mcpGuardrailsContainer.fetch(c.req.raw.clone())
++   ]);
++
++   return mainResponse;
+-   return await container.fetch(c.req.raw);
+  });
+```
+
+3. Deploy the updated configuration:
+
+```bash
+wrangler deploy
+```
+
+***
+
+## Step 4: Set Up Your Cloudflare Worker Script
 
 1. Navigate to the [Cloudflare Dashboard](https://dash.cloudflare.com/) and select your account.
 2.  Go to **Workers & Pages**.
@@ -389,7 +807,7 @@ const responseForClient = collectTraffic(reqForCollector, backendResponse, env, 
 
 ***
 
-## Step 3: Configure Worker Routing with Service Binding
+## Step 5: Configure Worker Routing with Service Binding
 
 To securely connect your client Worker (e.g., mcp worker) with the Akto Mini-Runtime-Service Container, use **service binding**. This allows your Worker to call the container Worker internally, without exposing it to the public internet.
 
@@ -454,7 +872,7 @@ Now, your client Worker can securely communicate with the Akto Mini-Runtime-Serv
 
 ***
 
-## Step 4: Verify the Setup
+## Step 6: Verify the Setup
 
 1. Confirm that API traffic data (requests and responses) are captured on the Akto dashboard under the respective api collection.
 2. Check logs of your Cloudflare container for any initialization messages from the extension.
