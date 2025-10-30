@@ -180,7 +180,7 @@ https://super-resonance-827f.billing-53a.workers.dev
 
 ***
 
-## Step 2: Deploy Agent Guard Services (Beta) - **Required for MCP Guardrails**
+## Step 2: Deploy Agent Guard Services - **Required for MCP Guardrails**
 
 The Agent Guard services are **prerequisites** for enabling MCP Guardrails in Step 3. Deploy these services first before proceeding with the MCP Guardrails integration.
 
@@ -454,7 +454,7 @@ Note the deployed URL - you'll use it as `<your-agent-guard-url>` in the MCP Gua
 
 ***
 
-## Step 3: Add MCP Guardrails Integration (Beta)
+## Step 3: Add MCP Guardrails Integration
 
 **Prerequisites:** You must complete Step 2 (Deploy Agent Guard Services) before proceeding with this step. The MCP Guardrails service depends on the Agent Guard Engine URL from Step 2.3.
 
