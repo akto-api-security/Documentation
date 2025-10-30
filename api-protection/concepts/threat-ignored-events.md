@@ -21,9 +21,9 @@ filter:
 
 info:
   name: "IgnoredEvent"
-  description: "Marks threats as successful exploits"
-  details: "Identifies which threat activities were actual successful attacks"
-  impact: "Distinguishes real attacks from false positives"
+  description: "Marks threats as ignored events"
+  details: "Identifies which threat activities to ignore"
+  impact: "Sets the events status as ignored."
   category:
     name: "IgnoredEvent"
     displayName: "IgnoredEvent"
