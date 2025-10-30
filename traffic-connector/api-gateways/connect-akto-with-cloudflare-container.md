@@ -180,9 +180,9 @@ https://super-resonance-827f.billing-53a.workers.dev
 
 ***
 
-## Step 2: Deploy Agent Guard Services (Beta)
+## Step 2: Deploy Agent Guard Services (Beta) - **Required for MCP Guardrails**
 
-To enable AI security guardrails, you need to deploy the Agent Guard Engine and Executor services first.
+The Agent Guard services are **prerequisites** for enabling MCP Guardrails in Step 3. Deploy these services first before proceeding with the MCP Guardrails integration.
 
 ### 2.1 Pull and Push Agent Guard Container Images
 
@@ -448,13 +448,17 @@ export default {
 wrangler deploy
 ```
 
-Note the deployed URL - you'll use it as `<your-agent-guard-url>` in the MCP Guardrails configuration.
+Note the deployed URL - you'll use it as `<your-agent-guard-url>` in the MCP Guardrails configuration in Step 3.
+
+**Important:** Save the Agent Guard Engine URL from this step - it's required for configuring the MCP Guardrails service in Step 3.
 
 ***
 
 ## Step 3: Add MCP Guardrails Integration (Beta)
 
-To enable MCP (Model Context Protocol) guardrails for additional security, follow these steps. **Note:** This requires the Agent Guard services deployed in Step 2.
+**Prerequisites:** You must complete Step 2 (Deploy Agent Guard Services) before proceeding with this step. The MCP Guardrails service depends on the Agent Guard Engine URL from Step 2.3.
+
+MCP (Model Context Protocol) Guardrails provide real-time security scanning and threat detection for AI agent interactions.
 
 ### 3.1 Push MCP Guardrails Container Image
 
