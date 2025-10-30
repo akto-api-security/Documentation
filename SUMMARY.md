@@ -204,6 +204,7 @@
   * [Dynamic Api Rate Limiting](api-protection/concepts/api-rate-limit.md)
   * [Threat Policy](api-protection/concepts/threat-policy.md)
   * [Successful Exploits](api-protection/concepts/successful-exploits.md)
+  * [Configure Ignored Events](api-protection/concepts/threat-ignore-events.md)
   * [Remediation Steps for API Protection Issues](api-protection/concepts/remediation-steps-for-api-protection-issues.md)
 
 ***
