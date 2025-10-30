@@ -120,7 +120,7 @@ helm install akto-mini-testing akto/akto-mini-testing -n <your-namespace> --set 
 5.  Paste the following in `docker-compose-testing.yml` file. Use token from step(3) for DATABASE\_ABSTRACTOR\_SERVICE\_TOKEN value. Don't use double-quotes
 
     ```
-    version: '3.8'
+    version: '3.3'
     services:
       akto-api-security-testing:
         image: public.ecr.aws/aktosecurity/akto-api-security-mini-testing:latest
@@ -144,7 +144,7 @@ helm install akto-mini-testing akto/akto-mini-testing -n <your-namespace> --set 
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock
         environment:
-          WATCHTOWER_CLEANUP: true
+          WATCHTOWER_CLEANUP: "true"
           WATCHTOWER_POLL_INTERVAL: 1800
         labels:
           com.centurylinklabs.watchtower.enable: "false"
