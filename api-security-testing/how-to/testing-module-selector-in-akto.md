@@ -47,7 +47,7 @@ This section shows:
 In your `docker-compose-testing.yml` file, add the environment variable `MINI_TESTING_NAME` under the `akto-api-security-testing` service.
 
 ```yaml
-version: '3.3'
+version: '3.8'
 services:
   akto-api-security-testing:
     image: public.ecr.aws/aktosecurity/akto-api-security-mini-testing:latest
