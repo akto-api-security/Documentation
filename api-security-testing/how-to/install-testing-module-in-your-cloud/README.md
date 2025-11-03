@@ -30,51 +30,6 @@ You can now use a Helm-chart to install Akto Security Testing module in your clo
 
 ### Helm-chart
 
-#### Pre-requisites / Dependencies
-
-If you don't need auto-scaling, skip this section.
-
-Otherwise, if auto-scaling needs to be enabled to allow parallel test runs via multiple k8s pods, we need to install few dependencies via helm charts.
-
-1. Install `kube-prometheus-stack`
-
-```bash
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo update prometheus-community
-    
-helm install prometheus prometheus-community/kube-prometheus-stack \
-	--namespace <your-namespace> \
-	--create-namespace
-```
-
-2. Install `keda`
-
-```bash
-helm repo add kedacore https://kedacore.github.io/charts  
-helm repo update kedacore
-
-helm install keda kedacore/keda \
-  --namespace <your-namespace> \
-  --create-namespace
-```
-
-3. Upgrade `keda` to set `watchNamespace`
-   1. This restricts keda to watch/control only specific namespace(s)
-   2. Its fine if you get this error - `Error: UPGRADE FAILED: no RoleBinding with the name "keda-operator" found`
-   3. As a fix, re-run the helm upgrade command mentioned below, as the first run would create the `keda-operator` deployment in k8s.
-
-```bash
-helm upgrade keda kedacore/keda \
-  --namespace <your-namespace> \
-  --set watchNamespace=<your-namespace>
-```
-
-4. While installing / upgrading Akto's helm chart (covered in later sections) additionally set the following flag
-
-```
---set testing.autoScaling.enabled=true
-```
-
 #### Akto's helm chart installation
 
 1. Add akto helm repository.
@@ -96,6 +51,73 @@ helm install akto-mini-testing akto/akto-mini-testing -n <your-namespace> --set 
 ```
 
 **Note: If you want to modify the helm chart according to your needs, you can clone the same from** [**mini-testing-helm-chart**](https://github.com/akto-api-security/helm-charts/tree/master/charts/mini-testing)
+
+#### Setup auto scaling for the testing module pods
+
+If you don't need auto-scaling, skip this section.
+
+Otherwise, if auto-scaling needs to be enabled to allow parallel test runs via multiple k8s pods, we need to install few dependencies via helm charts.
+
+1. Verify `kube-prometheus-stack` is already installed
+
+Auto-scaling requires a monitoring service to be already installed on your Kubernetes cluster. Currently, we support `kube-prometheus-stack` (support for additional monitoring services will be added as needed).
+
+You need to identify the following details from your existing monitoring installation:
+- Namespace where the monitoring service is installed
+- Service name (e.g., `prometheus-kube-prometheus-prometheus`)
+- Port number (e.g., `9090`)
+
+You can find these details using:
+
+```bash
+# Check namespace where prometheus is installed
+helm list -A | grep prometheus
+
+# Get service name and port
+kubectl get svc -A | grep prometheus
+```
+
+2. Install `keda`
+
+KEDA (Kubernetes Event Driven Autoscaling) acts as the autoscaling controller that monitors custom metrics from Prometheus and automatically scales the testing module pods up or down based on workload demand.
+
+```bash
+helm repo add kedacore https://kedacore.github.io/charts
+helm repo update kedacore
+
+helm install keda kedacore/keda \
+  --namespace <your-namespace> \
+  --create-namespace
+```
+
+3. Upgrade `keda` to set `watchNamespace`
+   1. This restricts keda to watch/control only specific namespace(s)
+   2. Its fine if you get this error - `Error: UPGRADE FAILED: no RoleBinding with the name "keda-operator" found`
+   3. As a fix, re-run the helm upgrade command mentioned below, as the first run would create the `keda-operator` deployment in k8s.
+
+```bash
+helm upgrade keda kedacore/keda \
+  --namespace <your-namespace> \
+  --set watchNamespace=<your-namespace>
+```
+
+4. While installing / upgrading Akto's helm chart (covered in earlier sections) additionally set the following flags
+
+```
+--set testing.autoScaling.enabled=true \
+--set testing.kubePrometheus.namespace=<monitoring-namespace> \
+--set testing.kubePrometheus.serviceName=<prometheus-service-name> \
+--set testing.kubePrometheus.port=<prometheus-port>
+```
+
+For example:
+
+```
+--set testing.autoScaling.enabled=true \
+--set testing.kubePrometheus.namespace=monitoring \
+--set testing.kubePrometheus.serviceName=prometheus-kube-prometheus-prometheus \
+--set testing.kubePrometheus.port=9090
+```
 
 ### Linux VM
 
