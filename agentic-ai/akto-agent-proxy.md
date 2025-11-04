@@ -26,7 +26,7 @@ The AI Agent Proxy runs as a Docker container on the same VM as your AI agent co
        │                                   │                                    │
        │                                   │                                    │
        │  1. Send Request                  │                                    │
-       │ ─────────────────────────────────►│                                    │
+       │ ────────────────────────────────► │                                    │
        │                                   │                                    │
        │                    ┌──────────────────────────────┐                    │
        │                    │ 2. Request Guardrails &      │                    │
@@ -37,11 +37,11 @@ The AI Agent Proxy runs as a Docker container on the same VM as your AI agent co
        │                    └──────────────────────────────┘                    │
        │                                   │                                    │
        │                                   │  3. Forward If Valid               │
-       │                                   │ ──────────────────────────────────►│
+       │                                   │ ─────────────────────────────────► │
        │                                   │                                    │
        │                                   │                                    │
        │                                   │  4. Return Response                │
-       │                                   │ ◄──────────────────────────────────│
+       │                                   │ ◄───────────────────────────────── │
        │                                   │                                    │
        │                    ┌──────────────────────────────┐                    │
        │                    │ 5. Response Guardrails       │                    │
@@ -52,7 +52,7 @@ The AI Agent Proxy runs as a Docker container on the same VM as your AI agent co
        │                                   │                                    │
        │  6. Return Response               │                                    │
        │     (Original/Blocked/Redacted)   │                                    │
-       │ ◄─────────────────────────────────│                                    │
+       │ ◄──────────────────────────────── │                                    │
        │                                   │                                    │
 ```
 
