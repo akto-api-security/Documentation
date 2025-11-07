@@ -52,22 +52,19 @@ helm install akto-mini-testing akto/akto-mini-testing -n <your-namespace> --set 
 
 **Note: If you want to modify the helm chart according to your needs, you can clone the same from** [**mini-testing-helm-chart**](https://github.com/akto-api-security/helm-charts/tree/master/charts/mini-testing)
 
-#### Setup auto scaling for the testing module pods
+#### Setup Autoscaling for Testing Module Pods
 
-If you don't need auto-scaling, skip this section.
+If you don't need autoscaling, skip this section.
 
-Otherwise, if auto-scaling needs to be enabled to allow parallel test runs via multiple k8s pods, we need to install few dependencies via helm charts.
+Autoscaling enables parallel test runs via multiple Kubernetes pods that scale based on workload.
 
-1. Verify `kube-prometheus-stack` is already installed
+##### Step 1: Verify Prometheus is Installed
 
-Auto-scaling requires a monitoring service to be already installed on your Kubernetes cluster. Currently, we support `kube-prometheus-stack` (support for additional monitoring services will be added as needed).
+Autoscaling requires Prometheus to collect and query metrics. Choose one of the following options:
 
-You need to identify the following details from your existing monitoring installation:
-- Namespace where the monitoring service is installed
-- Service name (e.g., `prometheus-kube-prometheus-prometheus`)
-- Port number (e.g., `9090`)
+**Option A: In-Cluster Prometheus (kube-prometheus-stack)**
 
-You can find these details using:
+If you have `kube-prometheus-stack` installed in your cluster, identify these details:
 
 ```bash
 # Check namespace where prometheus is installed
@@ -77,9 +74,52 @@ helm list -A | grep prometheus
 kubectl get svc -A | grep prometheus
 ```
 
-2. Install `keda`
+You'll need:
+- Namespace (e.g., `monitoring`)
+- Service name (e.g., `prometheus-kube-prometheus-prometheus`)
+- Port (e.g., `9090`)
 
-KEDA (Kubernetes Event Driven Autoscaling) acts as the autoscaling controller that monitors custom metrics from Prometheus and automatically scales the testing module pods up or down based on workload demand.
+**Option B: Grafana Cloud Prometheus**
+
+If using Grafana Cloud, you'll need:
+- Query URL (e.g., `https://prometheus-prod-XX.grafana.net/api/prom`)
+- Username (numeric instance ID)
+- Read API token
+
+**Note:** For Grafana Cloud, you'll also need to deploy a metrics collector in your cluster. Contact Akto support for assistance with Grafana Cloud setup.
+
+**Important - Metrics Collection Configuration:**
+
+When configuring your metrics collector (e.g., Grafana Alloy) for Grafana Cloud, ensure you **do not add container labels** to scraped metrics. This is critical to prevent metric duplication.
+
+**Technical context:**
+- Pods are scraped at the pod IP level (all containers in a pod share the same network namespace)
+- Only ONE container per pod serves metrics on the specified port
+- Adding container labels artificially creates duplicate time series for all containers in the pod, even though metrics originate from a single container
+
+**Example issue:** A pod with 4 containers (app, sidecar, kafka, zookeeper) would generate 4 time series per metric instead of 1, causing incorrect aggregations like `avg()`.
+
+**Before deploying to production, verify:**
+1. Only ONE container per pod exposes metrics on the annotated port (e.g., port 9400)
+2. The `prometheus.io/port` annotation matches the actual metrics endpoint port
+3. Your metrics queries do not filter by container label (use `pod` or `namespace` labels instead)
+4. Your metrics collector configuration does NOT include rules that add container labels
+
+Example of what to **AVOID** in your collector configuration:
+```yaml
+# DO NOT include this rule - it causes metric duplication
+rule {
+  source_labels = ["__meta_kubernetes_pod_container_name"]
+  action = "replace"
+  target_label = "container"
+}
+```
+
+If you need per-container metrics, configure your collector to scrape at the container level with unique ports for each container.
+
+##### Step 2: Install KEDA
+
+KEDA monitors Prometheus metrics and automatically scales pods based on workload.
 
 ```bash
 helm repo add kedacore https://kedacore.github.io/charts
@@ -88,35 +128,82 @@ helm repo update kedacore
 helm install keda kedacore/keda \
   --namespace <your-namespace> \
   --create-namespace
-```
 
-3. Upgrade `keda` to set `watchNamespace`
-   1. This restricts keda to watch/control only specific namespace(s)
-   2. Its fine if you get this error - `Error: UPGRADE FAILED: no RoleBinding with the name "keda-operator" found`
-   3. As a fix, re-run the helm upgrade command mentioned below, as the first run would create the `keda-operator` deployment in k8s.
-
-```bash
+# Restrict KEDA to watch only your namespace (optional but recommended)
 helm upgrade keda kedacore/keda \
   --namespace <your-namespace> \
   --set watchNamespace=<your-namespace>
 ```
 
-4. While installing / upgrading Akto's helm chart (covered in earlier sections) additionally set the following flags
+**Note:** If you get an error `Error: UPGRADE FAILED: no RoleBinding with the name "keda-operator" found`, simply re-run the upgrade command.
 
-```
---set testing.autoScaling.enabled=true \
---set testing.kubePrometheus.namespace=<monitoring-namespace> \
---set testing.kubePrometheus.serviceName=<prometheus-service-name> \
---set testing.kubePrometheus.port=<prometheus-port>
+##### Step 3: Install/Upgrade Akto Mini-Testing
+
+**Option A: With In-Cluster Prometheus**
+
+```bash
+helm install akto-mini-testing akto/akto-mini-testing \
+  --namespace <your-namespace> \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<AKTO_TOKEN>" \
+  --set testing.autoScaling.enabled=true \
+  --set testing.kubePrometheus.enabled=true \
+  --set testing.kubePrometheus.namespace=<monitoring-namespace> \
+  --set testing.kubePrometheus.serviceName=<prometheus-service-name> \
+  --set testing.kubePrometheus.port=<prometheus-port>
 ```
 
-For example:
-
+Example:
+```bash
+helm install akto-mini-testing akto/akto-mini-testing \
+  --namespace akto \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="your-token" \
+  --set testing.autoScaling.enabled=true \
+  --set testing.kubePrometheus.enabled=true \
+  --set testing.kubePrometheus.namespace=monitoring \
+  --set testing.kubePrometheus.serviceName=prometheus-kube-prometheus-prometheus \
+  --set testing.kubePrometheus.port=9090
 ```
---set testing.autoScaling.enabled=true \
---set testing.kubePrometheus.namespace=monitoring \
---set testing.kubePrometheus.serviceName=prometheus-kube-prometheus-prometheus \
---set testing.kubePrometheus.port=9090
+
+**Option B: With Grafana Cloud Prometheus**
+
+```bash
+helm install akto-mini-testing akto/akto-mini-testing \
+  --namespace <your-namespace> \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<AKTO_TOKEN>" \
+  --set testing.autoScaling.enabled=true \
+  --set testing.kubePrometheus.enabled=false \
+  --set testing.grafanaCloud.enabled=true \
+  --set testing.grafanaCloud.queryUrl="<your-grafana-cloud-query-url>" \
+  --set testing.grafanaCloud.username="<your-username>" \
+  --set testing.grafanaCloud.readToken="<your-read-token>"
+```
+
+Example:
+```bash
+helm install akto-mini-testing akto/akto-mini-testing \
+  --namespace akto \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="your-token" \
+  --set testing.autoScaling.enabled=true \
+  --set testing.kubePrometheus.enabled=false \
+  --set testing.grafanaCloud.enabled=true \
+  --set testing.grafanaCloud.queryUrl="https://prometheus-prod-43.grafana.net/api/prom" \
+  --set testing.grafanaCloud.username="2781763" \
+  --set testing.grafanaCloud.readToken="your-read-token"
+```
+
+**Note:** For Grafana Cloud setup, contact Akto support for assistance with metrics collection and obtaining credentials.
+
+##### Verify Autoscaling
+
+```bash
+# Check KEDA ScaledObject
+kubectl get scaledobject -n <your-namespace>
+
+# Check HPA created by KEDA
+kubectl get hpa -n <your-namespace>
+
+# Watch scaling in action
+kubectl get hpa -n <your-namespace> -w
 ```
 
 ### Linux VM
