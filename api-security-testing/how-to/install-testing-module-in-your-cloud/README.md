@@ -206,6 +206,84 @@ kubectl get hpa -n <your-namespace>
 kubectl get hpa -n <your-namespace> -w
 ```
 
+#### Uninstalling
+
+**IMPORTANT:** Always uninstall Helm releases BEFORE deleting the namespace. Deleting the namespace first will leave orphaned cluster-scoped resources that will cause conflicts when reinstalling.
+
+##### Correct Uninstall Order
+
+```bash
+# 1. Uninstall mini-testing chart
+helm uninstall akto-mini-testing -n <your-namespace>
+
+# 2. Uninstall KEDA (only if not used by other applications)
+helm uninstall keda -n <keda-namespace>
+
+# 3. Delete KEDA CRDs (only if completely removing KEDA from cluster)
+kubectl delete crd scaledobjects.keda.sh
+kubectl delete crd scaledjobs.keda.sh
+kubectl delete crd triggerauthentications.keda.sh
+kubectl delete crd clustertriggerauthentications.keda.sh
+kubectl delete crd cloudeventsources.eventing.keda.sh
+
+# 4. Now safe to delete the namespace
+kubectl delete namespace <your-namespace>
+```
+
+##### Troubleshooting: Recovering from Incorrect Uninstall
+
+If you deleted the namespace before uninstalling KEDA, you'll encounter errors when trying to reinstall. Follow these steps to recover:
+
+**1. Namespace Stuck in Terminating State**
+
+```bash
+# Remove finalizers to force delete the namespace
+kubectl patch namespace <namespace-name> -p '{"metadata":{"finalizers":[]}}' --type=merge
+```
+
+**2. Clean Up Orphaned KEDA Resources**
+
+When a namespace is deleted before uninstalling KEDA, cluster-scoped resources remain with old namespace annotations, causing installation failures.
+
+```bash
+# Delete orphaned CRDs
+kubectl get crd | grep keda.sh | awk '{print $1}' | xargs kubectl delete crd
+
+# Delete orphaned ClusterRoles
+kubectl get clusterrole | grep keda | awk '{print $1}' | xargs kubectl delete clusterrole
+
+# Delete orphaned ClusterRoleBindings
+kubectl get clusterrolebinding | grep keda | awk '{print $1}' | xargs kubectl delete clusterrolebinding
+
+# Delete orphaned RoleBinding in kube-system (used by KEDA for extension apiserver)
+kubectl delete rolebinding keda-operator-auth-reader -n kube-system 2>/dev/null
+
+# Check for and delete any other KEDA Roles in kube-system
+kubectl get role -n kube-system | grep keda | awk '{print $1}' | xargs kubectl delete role 2>/dev/null
+
+# Delete webhooks
+kubectl delete mutatingwebhookconfiguration keda-admission 2>/dev/null
+kubectl delete validatingwebhookconfiguration keda-admission 2>/dev/null
+
+# Delete APIServices
+kubectl get apiservice | grep keda | awk '{print $1}' | xargs kubectl delete apiservice 2>/dev/null
+```
+
+**3. Reinstall KEDA Cleanly**
+
+```bash
+# Add KEDA repo if not already added
+helm repo add kedacore https://kedacore.github.io/charts
+helm repo update kedacore
+
+# Install KEDA in your namespace
+helm install keda kedacore/keda --namespace <your-namespace>
+```
+
+**4. Reinstall Mini-Testing**
+
+Follow the installation steps from [Step 3: Install/Upgrade Akto Mini-Testing](#step-3-installupgrade-akto-mini-testing) above.
+
 ### Linux VM
 
 1. Create a new instance with the following requirements
