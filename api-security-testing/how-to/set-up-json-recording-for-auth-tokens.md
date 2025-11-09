@@ -27,65 +27,77 @@ To extract **auth tokens or cookies** from API calls:
 
 ***
 
-### 2. How to Upload Chrome Recording
+### 2. Add Timeouts of 40 Seconds
 
-1. Go to **Akto Dashboard > Testing > Test Roles**.
-2. Paste a **Token Fetch Command** to extract the token or cookie (see below).
-3. Click **Upload JSON Recording**.
-4. Akto will extract and verify the token/cookie within a couple of minutes.
+1. Add timeout in each step in the JSON
 
-{% hint style="info" %}
-⏱️ Akto requires the command and processing to complete within **40 seconds**.
-{% endhint %}
+```
+"timeout": 40000,
+```
 
-***
+<figure><img src="../../.gitbook/assets/image (50).png" alt="" width="375"><figcaption></figcaption></figure>
 
-### 3. Add Timeouts of 40 Seconds
 
-Keep in mind:
 
-* Chrome recording session (especially login flow) should complete in **under 40 seconds**.
-* Token fetch command execution is limited to **40 seconds** in Akto.
-* If extraction or upload takes longer, the process will fail.
+2. Each step in Chrome recording session (especially login flow) should complete in **under 40 seconds**.
 
 ***
 
-### 4. Intercept and Locate Auth Tokens / Cookies
+### 3. Intercept and Locate Auth Tokens / Cookies
 
-During recording, inspect the following sources in DevTools:
+Observe where are auth tokens being used in your application.
 
-* **Auth Tokens**: Look in response bodies for keys like `access_token`, `auth_token`, `id_token`.
-* **Cookies**: Look under response headers (`Set-Cookie`) or browser storage (`localStorage`, `sessionStorage`).
+* If your auth tokens are present in cookie, Akto will record it automatically
+* If your auth tokens are part of headers (eg. `authorization` or `x-csrf-token`), then you should tell Akto how to record these tokens while login happening&#x20;
 
-Knowing where your token is returned helps when writing the **Token Fetch Command**.
+You can configure which API would have these tokens. eg. say, your token is present in `authorization` header in `/api/v1/user/details` , please enter the following in the first section of your json -&#x20;
+
+```json
+            "requests": [
+                {
+                    "urlRegex": ".*/api/v1/user/.*", // you can use regex too to match more than 1 API
+                    "position": "header",
+                    "name": "authorization",
+                    "saveAs": "authTokenHeader" // we will use this variable name later
+                }
+            ],
+
+```
+
+<figure><img src="../../.gitbook/assets/image (59).png" alt="" width="375"><figcaption></figcaption></figure>
+
+> The `authTokenHeader` value will be returned as `cookieMap` under `aktoOutput.authTokenHeader` object
 
 ***
 
-### 5. How to Write Command to Extract cookieMap or Auth Token
+### 4. How to Write Command to Extract cookieMap or Auth Token
 
 Paste the appropriate **JavaScript command** into the **Token Fetch Command** field in Akto.
 
-**✅ To extract all cookies as a header:**
+**✅ To extract all cookies as a header (including header-based auth token as described in step(3)):**
 
 ```js
 Object.entries(cookieMap).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('; ')
 ```
 
-**✅ To extract an auth token from localStorage:**
+<figure><img src="../../.gitbook/assets/image (126).png" alt=""><figcaption></figcaption></figure>
+
+**✅ To extract, say, `access_token` from localStorage:**
 
 ```js
 "Bearer " + JSON.parse(Object.values(window.localStorage).find(x => x.indexOf("access_token") > -1)).body.access_token
 ```
 
-<figure><img src="../../.gitbook/assets/image (126).png" alt=""><figcaption></figcaption></figure>
-
-{% hint style="info" %}
-⏱️ Keep this execution under 40 seconds for successful validation.
-{% endhint %}
-
 ***
 
-### 6. How to Use the "Extract" Section
+### 5. How to Upload Chrome Recording
+
+1. Go to **Akto Dashboard > Testing > Test Roles**.
+2. Paste a **Token Fetch Command** to extract the token or cookie (step 4).
+3. Click **Upload JSON Recording**. Select the recording file after editing (step3)
+4. Akto will extract and verify the token/cookie within a couple of minutes.
+
+***
 
 After the token is fetched, define how Akto should use it for authentication.
 
@@ -93,17 +105,12 @@ After the token is fetched, define how Akto should use it for authentication.
 2. Choose the source:
    * `Header` — to send the token in a request header (e.g., `Authorization`)
    * `Body` — if the token must be sent in the request body
-3. Specify:
-   * **Key**: e.g., `Authorization`
-   * **Value**: Reference the token using `${x1.response.body.token}` or your specific token path.
-
-Example:
-
-| Type   | Key           | Value                       |
-| ------ | ------------- | --------------------------- |
-| Header | Authorization | `${x1.response.body.token}` |
-
-This lets Akto inject the token into future requests dynamically.
+3. If you want to extract cookie and use that as the auth token, do the following -&#x20;
+   1. **Key**: `Cookie`
+   2. **Value**:  `${x1.response.body.token}`&#x20;
+4. If you want to extract token using step (3) from a different header, please set the following -&#x20;
+   * **Key**:  `Authorization`
+   * **Value:** If you are extracting tokens using step(3) above, use  `${x1.response.body.aktoOutput.authTokenHeader}` to extract the token
 
 ***
 

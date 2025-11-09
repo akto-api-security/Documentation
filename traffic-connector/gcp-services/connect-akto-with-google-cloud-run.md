@@ -12,6 +12,6 @@ To connect Akto with Google Cloud Run, follow these steps -
    1. Go to **Quick Start** in Akto Dashboard
    2. Scroll to **Google Cloud Run** block and click on the **Connect** button to get instructions
 
-<figure><img src="../../.gitbook/assets/image (59).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (58) (1).png" alt=""><figcaption></figcaption></figure>
 
 To enable this premium connector for your account, please reach out to our team at [help@akto.io](mailto:help@akto.io) for pricing and setup information.

@@ -1,6 +1,6 @@
 # Traffic mirroring module
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (96) (1).png" alt=""><figcaption></figcaption></figure>
 
 This module processes all the mirrored traffic. From the mirrored traffic, it assembles tcp packets in a sequence. Once it builds the bidirectional TCP connection stream from the mirrored traffic, it extracts HTTP req-resp pairs from the stream. And each such pair is then pushed to **Kafka**.
 
