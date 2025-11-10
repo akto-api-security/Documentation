@@ -205,6 +205,7 @@
   * [Threat Policy](api-protection/concepts/threat-policy.md)
   * [Successful Exploits](api-protection/concepts/successful-exploits.md)
   * [Configure Ignored Events](api-protection/concepts/threat-ignored-events.md)
+  * [Configure Ignored Events Per Rule](api-protection/concepts/ignore-events-at-rule-level.md)
   * [Remediation Steps for API Protection Issues](api-protection/concepts/remediation-steps-for-api-protection-issues.md)
 
 ***
