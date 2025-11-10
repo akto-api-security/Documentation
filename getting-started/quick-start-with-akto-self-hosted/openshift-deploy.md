@@ -4,15 +4,15 @@ description: Learn how to deploy Akto on Openshift cluster
 
 # Openshift Deploy
 
-Openshift is RedHat's managed private cluster offering - based on Docker and orchestration by Kubernetes.&#x20;
+Openshift is RedHat's managed private cluster offering - based on Docker and orchestration by Kubernetes.
 
-Steps to get Akto running on your Openshift cluster -&#x20;
+Steps to get Akto running on your Openshift cluster -
 
-1. You can use same steps as [Helm Deploy](helm-deploy.md) to deploy Akto.&#x20;
+1. You can use same steps as [Helm Deploy](helm-deploy.md) to deploy Akto.
 2. [Add service account](openshift-deploy.md#service-account-manifest) to get permissions for traffic connector.
-3. You can use [Kubernetes Daemonset connector](../../traffic-connector/kubernetes/kubernetes.md) or [eBPF on mTLS](../../traffic-connector/ebpf/ebpf-mtls.md) as your traffic connector.&#x20;
+3. You can use [eBPF on mTLS](../../traffic-connector/ebpf/ebpf-mtls.md) as your traffic connector.
 
-Add the following to the Daemonset connector -&#x20;
+Add the following to the Daemonset connector -
 
 > They listen to `any` interface by default - which might NOT be allowed in some Openshift clusters. If that's the case, contact support@akto.io - we can help listen traffic on `br-ex` interface.
 
@@ -27,11 +27,11 @@ Add the following to the Daemonset connector -&#x20;
           privileged: true
 ```
 
-#### Service account manifest&#x20;
+#### Service account manifest
 
 On Openshift, for a pod to be able to listen to node traffic (eg. a daemonset pod), it needs to be assigned some special permissions.
 
-1\. Create a Service Account&#x20;
+1\. Create a Service Account
 
 ```yaml
 apiVersion: v1
@@ -48,21 +48,38 @@ metadata:
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:
-  name: akto-daemonset-scc
-allowPrivilegedContainer: true
-allowHostNetwork: true
+  name: akto-ebpf-scc
+  annotations:
+    kubernetes.io/description: "Minimal eBPF SCC for Akto"
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegedContainer: false
+allowedCapabilities:
+  - BPF
+  - PERFMON
+  - NET_ADMIN
+defaultAddCapabilities: []
 requiredDropCapabilities:
-- NET_ADMIN
-seLinuxContext:
-  type: RunAsAny
+  - ALL
+readOnlyRootFilesystem: false
 runAsUser:
-  type: RunAsAny
-runAsUser:
-  type: RunAsAny
+  type: MustRunAsRange
+  uidRangeStart: 100000
 seLinuxContext:
   type: MustRunAs
-users:
-- system:serviceaccount:<NAMESPACE>:akto-daemonset-serviceaccount
+fsGroup:
+  type: RunAsAny
+supplementalGroups:
+  type: RunAsAny
+volumes:
+  - configMap
+  - secret
+  - emptyDir
+  - projected
+priority: 10
 ```
 
 3. Add SCC to service account
