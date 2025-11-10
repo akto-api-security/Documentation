@@ -3,10 +3,12 @@
 Customizable filters that mark detected security threats by Akto's Runtime Threat Protection as ignored in the Threat Activity dashboard. 
 
 
-#### How to configure 
+#### How to configure
 Go to **API Threat Detection → Threat Activity** in the left sidebar. Click **More Actions → Configure Ignored Events**.
 
 **Note:** Policies must use category name `IgnoredEvent`
+
+**Syntax Reference:** For detailed syntax on how to define API selection filters, see [API Selection Filters](https://docs.akto.io/test-editor/concepts/test-yaml-syntax-detailed/api-selection-filters).
 
 <figure><img src="../../.gitbook/assets/configure-ingored.png" alt=""><figcaption></figcaption></figure>
 
