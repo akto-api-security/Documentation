@@ -51,16 +51,15 @@ metadata:
   name: akto-ebpf-scc
   annotations:
     kubernetes.io/description: "Minimal eBPF SCC for Akto"
-allowHostDirVolumePlugin: false
-allowHostIPC: false
+allowHostDirVolumePlugin: true
+allowHostIPC: true
 allowHostNetwork: false
-allowHostPID: false
+allowHostPID: true
 allowHostPorts: false
-allowPrivilegedContainer: false
+allowPrivilegedContainer: true
 allowedCapabilities:
-  - BPF
-  - PERFMON
-  - NET_ADMIN
+  - SYS_PTRACE
+  - SYS_ADMIN
 defaultAddCapabilities: []
 requiredDropCapabilities:
   - ALL
@@ -74,11 +73,14 @@ fsGroup:
   type: RunAsAny
 supplementalGroups:
   type: RunAsAny
+users:
+  - system:serviceaccount:akto:pod-watcher
 volumes:
   - configMap
   - secret
   - emptyDir
   - projected
+  - hostPath
 priority: 10
 ```
 
