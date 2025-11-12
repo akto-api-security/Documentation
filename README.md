@@ -1,62 +1,162 @@
-# Akto's Agentic Security Platform
+---
+hidden: true
+---
 
-Akto provides comprehensive security for AI agents, LLM applications, and Model Context Protocol (MCP) implementations. As organizations deploy increasingly autonomous AI systems, Akto ensures these agent components remain secure, compliant, and resilient against emerging threats.
+# Akto MCP Server
 
-## What is Agentic Security?
+### **What is Model Context Protocol?**
 
-Agentic security focuses on protecting AI agents, their tool integrations, and MCP endpoints from vulnerabilities specific to autonomous systems. Unlike traditional API security, agentic security addresses:
+The Model Context Protocol (MCP) is a standardized protocol that enables AI models to interact with external tools and services. In the context of Akto, the MCP server acts as a bridge between AI-powered tools (like Claude, Cursor, etc.) and Akto's API security platform, allowing these tools to access and analyze your API security data.
 
-- **Prompt injection attacks** that manipulate agent behavior
-- **Tool permission escalation** where agents access unauthorized capabilities
-- **MCP vulnerabilities** in Model Context Protocol implementations
-- **Data leakage** through agent interactions and tool calls
-- **Supply chain risks** in agent dependencies and third-party integrations
+{% embed url="https://youtu.be/QXdGqadpos4" %}
 
-## Platform Overview
+### **Prerequisites**
 
-### Agentic Discovery
-Automatically map your entire agent landscape, including AI agents, LLM components, MCP endpoints, and tool integrations. Track agent behaviors, data flows, and identify shadow or zombie agents across your infrastructure.
+* Docker installed and running
+* Akto API Key
 
-### Agentic Red Teaming
-Test your agents with 1000+ specialized security probes designed for agentic systems. Identify vulnerabilities through automated testing that simulates real-world attack patterns including prompt injections, tool abuse, and privilege escalation.
+***
 
-### Guardrails
-Deploy real-time protection for your production agents. Monitor and block threats as they occur, enforce schema conformance, manage threat actors, and prevent successful exploits before they impact your systems.
+### **Getting Started**
 
-### Probe Library
-Access and customize an extensive library of security tests specifically designed for agent components. Create custom probes using YAML templates to address your unique security requirements.
+#### **Step 1: Generating an API Key**
 
-### Issues Management
-Centralize vulnerability tracking across all agent components. Triage security issues, integrate with Jira and Azure DevOps, export vulnerability reports, and maintain consistent issue tracking across multiple scans.
+For detailed information about generating and managing API keys, refer to the [Akto API Reference Documentation](api-reference/api-reference.md).
 
-### Compliance
-Ensure your agentic systems meet regulatory requirements. Map detected issues to compliance frameworks including SOC 2, HIPAA, PCI DSS, GDPR, and more. Generate audit-ready reports demonstrating compliance posture.
+<figure><img src=".gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-### Agentic Security Posture
-Gain comprehensive visibility into your agent security landscape. Track risk scores, identify misconfigurations, detect sensitive data exposure, and monitor test coverage across all agent components.
+#### **Step 2: Configuring MCP Clients**
 
-## Getting Started
+{% tabs fullWidth="false" %}
+{% tab title="Cursor" %}
+1. **Open Settings**
+   * Launch Cursor
+   * Go to Settings
+   * Navigate to the MCP tab
+2.  **Add MCP Server**
 
-1. **Deploy Akto** - Choose between [Akto Cloud](getting-started/quick-start-with-akto-cloud/README.md) or [Self-Hosted](getting-started/quick-start-with-akto-self-hosted/README.md)
-2. **Connect Your Agents** - Set up traffic connectors for [MCP endpoints](traffic-connector/mcp-scan/README.md) or [AI agents](traffic-connector/agentic-scan/README.md)
-3. **Run Security Scans** - Execute [Agentic Red Teaming](agentic-red-teaming/concepts/README.md) tests on your components
-4. **Monitor & Protect** - Enable [Guardrails](guardrails/overview.md) for real-time threat protection
-5. **Track Compliance** - Review your [Compliance](compliance/concepts/README.md) posture against regulatory frameworks
+    * Click "Add new global MCP server"
+    * Paste the following configuration:
 
-## Key Features
+    ```json
+    {
+      "mcpServers": {
+        "akto-mcp-server": {
+          "command": "docker",
+          "args": [
+            "run",
+            "--rm",
+            "-i",
+            "-e",
+            "AKTO_API_KEY",
+            "aktosecurity/akto-mcp-server:latest"
+          ],
+          "env": {
+            "AKTO_API_KEY": "your_api_key"
+          }
+        }
+      }
+    }
 
-- **1000+ Agentic Security Tests** - Specialized probes for agent-specific vulnerabilities
-- **Real-Time Threat Protection** - Block attacks against agents as they occur
-- **MCP Security** - Comprehensive coverage for Model Context Protocol implementations
-- **Tool Permission Analysis** - Monitor and control agent tool access
-- **Compliance Mapping** - Align agent security with 12+ regulatory frameworks
-- **Custom Test Creation** - Build YAML-based tests for your unique agent architecture
-- **Continuous Monitoring** - Track agent behaviors and security posture over time
+    ```
 
-## Support
+    * Replace `your_api_key` with your actual API key
+    * Click Save to activate
+    * Check the status of the server by clicking on the "MCP" tab and looking for "akto-mcp-server" under Active Servers
+{% endtab %}
 
-- In-app Intercom support
-- [Discord Community](https://www.akto.io/community)
-- Email: help@akto.io
-- [Contact Us](https://www.akto.io/contact-us)
+{% tab title="Claude Desktop" %}
+1. **Locate Config File**
+   * macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+   * Windows: `%APPDATA%\\Claude\\claude_desktop_config.json`
+2.  **Update Configuration**
 
+    * Add the following configuration:
+
+    ```json
+    {
+      "mcpServers": {
+        "akto-mcp-server": {
+          "command": "docker",
+          "args": [
+            "run",
+            "--rm",
+            "-i",
+            "-e",
+            "AKTO_API_KEY",
+            "aktosecurity/akto-mcp-server:latest"
+          ],
+          "env": {
+            "AKTO_API_KEY": "your_api_key"
+          }
+        }
+      }
+    }
+
+    ```
+
+    * Replace `your_api_key` with your actual API key
+    * Save the file
+    * Restart Claude Desktop
+    * Open Claude's Settings > MCP tab to check server status and connection details
+{% endtab %}
+{% endtabs %}
+
+Each tool is designed to work seamlessly with AI models to provide comprehensive access to your API security data and analysis capabilities.
+
+***
+
+### **Feature Highlights**
+
+The MCP server provides easy access to Akto's powerful API security features through AI tools. Here's what you can do:
+
+1. **View Your APIs**: Get a complete list of all your APIs and their details in one place
+2. **Track API Changes**: Monitor new endpoints and changes in your API landscape
+3. **Find Security Issues**: Automatically detect vulnerabilities and security risks in your APIs
+4. **Analyze Sensitive Data**: Identify and track sensitive information in your API responses
+5. **Monitor API Health**: Keep track of API performance and security status
+6. **Track Issues**: View and monitor the status of security issues
+7. **Get Security Insights**: Receive AI-powered analysis and recommendations for your APIs
+8. **View Risk Scores**: Access risk scores for your APIs to understand their security posture
+
+Each of these capabilities is designed to work seamlessly with AI tools like Claude and Cursor, making API security management more intuitive and efficient.
+
+***
+
+### Prompt Examples
+
+1. List active API collections.
+2. How many endpoints in `Collection_Name`? Show the one with the highest risk.
+3. List top 5 high severity issues.
+4. Get schema for API: `API_Path`
+5. How many test runs in the last 48 hours?
+6. Summarize issues by status (open, ignored, fixed) and severity.
+7. List sensitive parameters for `API_Path`
+
+***
+
+### **Troubleshooting**
+
+#### **Server Connection Issues**
+
+* Verify API key is correct
+* Check network connectivity
+* Ensure Docker is running
+* Verify Docker image pull was successful
+
+#### **Client Configuration**
+
+* Validate JSON configuration
+* Check file permissions
+* Verify environment variables
+* Ensure Docker image name is correct (`aktosecurity/akto-mcp-server`)
+
+***
+
+### Get Support for your Akto setup
+
+There are multiple ways to request support from Akto. We are 24X7 available on the following:
+
+1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
+2. Join our [discord channel](https://www.akto.io/community) for community support.
+3. Contact `help@akto.io` for email support.

@@ -7,9 +7,9 @@ Azure Red Hat OpenShift provides highly available, fully managed OpenShift clust
 <figure><img src="../../.gitbook/assets/image (52).png" alt=""><figcaption></figcaption></figure>
 
 1. [Add service account](connect-akto-with-azure-openshift.md#service-account-manifest) to get permissions for traffic connector.
-2. You can use [Kubernetes Daemonset connector](../kubernetes/kubernetes.md) or [eBPF on mTLS](../ebpf/ebpf-mtls.md) as your traffic connector.&#x20;
+2. You can use [Kubernetes Daemonset connector](../../getting-started/agentic-discovery/homegrown-discovery-agents/kubernetes/kubernetes.md) or [eBPF on mTLS](../../getting-started/agentic-discovery/homegrown-discovery-agents/ebpf/ebpf-mtls.md) as your traffic connector.
 
-Add the following to the Daemonset connector -&#x20;
+Add the following to the Daemonset connector -
 
 > They listen to `any` interface by default - which might NOT be allowed in some Openshift clusters. If that's the case, contact support@akto.io - we can help listen traffic on `br-ex` interface.
 
@@ -24,11 +24,11 @@ Add the following to the Daemonset connector -&#x20;
           privileged: true
 ```
 
-#### Service account manifest&#x20;
+#### Service account manifest
 
 On Openshift, for a pod to be able to listen to node traffic (eg. a daemonset pod), it needs to be assigned some special permissions.
 
-1\. Create a Service Account&#x20;
+1\. Create a Service Account
 
 ```yaml
 apiVersion: v1

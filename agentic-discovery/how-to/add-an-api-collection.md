@@ -1,13 +1,15 @@
 ---
-description: Learn how to add agent and MCP collections to Akto for centralized agentic security management.
+description: >-
+  Learn how to add agent and MCP collections to Akto for centralized agentic
+  security management.
 ---
 
-# Add an Agentic Collection
+# Create Collection
 
 You can add your agent and MCP collections to Akto to centralize and organize your agentic components. It allows you to organize your AI agents and MCP servers by function, making it easier to discover, monitor, and secure them. This helps maintain consistent security across your agentic systems and simplifies team collaboration. There are two methods to add your collections:
 
-- Create a New Collection Manually
-- Create Automated Collections via Traffic Connectors
+* Create a New Collection Manually
+* Create Automated Collections via Traffic Connectors
 
 ## Add a New Collection Manually
 
@@ -55,7 +57,7 @@ You can connect Akto with **AWS API Gateway** for automated agent component dete
 
 #### **Kong**
 
-You can connect Akto with **Kong** for automated agent detection which enhances the platform's agility, accelerates integration, improves management, and ensures a more secure and efficient ecosystem for developers leveraging agentic systems. [Click here](../../traffic-connector/api-gateways/connect-akto-with-kong.md) for detailed steps.
+You can connect Akto with **Kong** for automated agent detection which enhances the platform's agility, accelerates integration, improves management, and ensures a more secure and efficient ecosystem for developers leveraging agentic systems. [Click here](../../getting-started/agentic-discovery/homegrown-discovery-agents/api-gateways/connect-akto-with-kong.md) for detailed steps.
 
 #### **NGINX**
 
@@ -83,8 +85,8 @@ Packet Mirroring is a GCP feature that clones the traffic of specified instances
 
 ## Best Practices
 
-- Organize collections by environment (production, staging, development)
-- Separate agent collections from MCP collections for clarity
-- Use descriptive names that reflect the collection's purpose
-- Regularly review and update collection memberships
-- Monitor collection growth to identify new agent components
+* Organize collections by environment (production, staging, development)
+* Separate agent collections from MCP collections for clarity
+* Use descriptive names that reflect the collection's purpose
+* Regularly review and update collection memberships
+* Monitor collection growth to identify new agent components

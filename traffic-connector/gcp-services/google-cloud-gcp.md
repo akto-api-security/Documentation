@@ -8,7 +8,7 @@ description: >-
 
 ## Introduction
 
-[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](../traffic-data-sources.md). One such source is GCP Packet Mirroring.
+[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](../../traffic-data-sources.md). One such source is GCP Packet Mirroring.
 
 <figure><img src="../../.gitbook/assets/image (82).png" alt=""><figcaption></figcaption></figure>
 

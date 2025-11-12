@@ -1,4 +1,4 @@
-# Configure Kafka broker and producers to use TLS
+# Configure TLS on kafka
 
 We can configure kafka which is deployed as part of the hybrid runtime setup to use TLS for all producers.
 
@@ -85,15 +85,15 @@ kubectl create secret generic kafka-certs \
   --from-file=ca-cert.pem
 ```
 
-4. Install the helm chart for [hybrid-saas](../getting-started/quick-start-with-akto-cloud/hybrid-saas.md#helm-chart) and add the following attribute at the end of the helm install command. This will configure kafka to use TLS on port `9093`.
+4. Install the helm chart for [hybrid-saas](../getting-started/hybrid-saas.md#helm-chart) and add the following attribute at the end of the helm install command. This will configure kafka to use TLS on port `9093`.
 
 ```bash
 --set mini_runtime.kafka1.useTls=true
 ```
 
-4. Configure producers to use TLS.
+4.  Configure producers to use TLS.
 
-    1. Traffic connectors which are generally deployed as daemonsets need to be configured to use TLS to send data to the kafka broker. Here is the updated configuration for the [kubernetes connector](./kubernetes/kubernetes.md#setting-up-akto-daemonset-pod-on-your-k8s-cluster). Here, we've mounted the `ca-cert.pem` file on the file system for the daemonset.
+    1. Traffic connectors which are generally deployed as daemonsets need to be configured to use TLS to send data to the kafka broker. Here is the updated configuration for the [kubernetes connector](../getting-started/agentic-discovery/homegrown-discovery-agents/kubernetes/kubernetes.md#setting-up-akto-daemonset-pod-on-your-k8s-cluster). Here, we've mounted the `ca-cert.pem` file on the file system for the daemonset.
 
     ```bash
     apiVersion: apps/v1
@@ -142,7 +142,7 @@ kubectl create secret generic kafka-certs \
                 secretName: kafka-certs
     ```
 
-    2. Similar configuration can also be added to the [eBPF](../traffic-connector/ebpf/ebpf.md) traffic connector.
+    2. Similar configuration can also be added to the [eBPF](../getting-started/agentic-discovery/homegrown-discovery-agents/ebpf/ebpf.md) traffic connector.
 
 ### Note:
 
