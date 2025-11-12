@@ -105,7 +105,7 @@ kubectl get svc -n <namespace>
       2. Outbound - Open all
 2. SSH into this new instance in your Cloud
 3. Run `sudo su -`
-4. Install [docker](https://github.com/akto-api-security/infra/blob/feature/quick-setup/get-docker.sh) and [docker-compose](https://github.com/akto-api-security/infra/blob/feature/quick-setup/get-docker-compose.sh).
+4. Install docker and docker-compose.
 5. Run the following commands to download setup files -
 
 ```
