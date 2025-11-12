@@ -66,7 +66,8 @@ requiredDropCapabilities:
 readOnlyRootFilesystem: false
 runAsUser:
   type: MustRunAsRange
-  uidRangeStart: 100000
+  uidRangeMin: 100000
+  uidRangeMax: 2147483647
 seLinuxContext:
   type: MustRunAs
 fsGroup:
@@ -89,3 +90,16 @@ priority: 10
 ```bash
 oc adm policy add-scc-to-user akto-daemonset-scc -z akto-daemonset-serviceaccount
 ```
+
+## Notes:
+
+1. The SecurityContextConstraints are based on official Redhat documentation, supporting up to [v4.19](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization/managing-pod-security-policies)
+
+## Get Support for your Akto setup
+
+There are multiple ways to request support from Akto. We are 24X7 available on the following:
+
+1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
+2. Join our [discord channel](https://www.akto.io/community) for community support.
+3. Contact `help@akto.io` for email support.
+4. Contact us [here](https://www.akto.io/contact-us).

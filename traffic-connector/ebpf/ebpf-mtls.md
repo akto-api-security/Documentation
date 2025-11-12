@@ -36,7 +36,7 @@ spec:
       labels:
         app: akto-collector
     spec:
-      hostNetwork: true
+      hostNetwork: false
       dnsPolicy: ClusterFirstWithHostNet
       hostPID: true
       containers:

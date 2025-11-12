@@ -303,7 +303,7 @@ Follow the installation steps from [Step 3: Install/Upgrade Akto Mini-Testing](#
       2. Outbound - Open all
 2. SSH into this new instance in your Cloud
 3. Run `sudo su -`
-4. Install [docker](https://github.com/akto-api-security/infra/blob/feature/quick-setup/get-docker.sh) and [docker-compose](https://github.com/akto-api-security/infra/blob/feature/quick-setup/get-docker-compose.sh).
+4. Install docker and docker-compose.
 5.  Paste the following in `docker-compose-testing.yml` file. Use token from step(3) for DATABASE\_ABSTRACTOR\_SERVICE\_TOKEN value. Don't use double-quotes
 
     ```
