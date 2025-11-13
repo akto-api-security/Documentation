@@ -1,7 +1,10 @@
 # Quickstart
 
+Welcome to Akto Agentic AI Security! Secure your AI agents, MCP servers, and agentic applications with complete visibility, automated testing, and real-time protection. Get started in minutes by choosing what you need.
 
-## 🔍 Agentic Discovery
+---
+
+## Agentic Discovery
 
 Automatically discover and inventory all your AI agents, MCP servers, and tools across your infrastructure.
 
@@ -10,7 +13,7 @@ Automatically discover and inventory all your AI agents, MCP servers, and tools 
 
 ---
 
-## 🎯 Agentic Red Teaming
+## Agentic Red Teaming
 
 Test your AI agents and MCP servers with 1000+ specialized security probes. Identify vulnerabilities like prompt injections, tool abuse, and privilege escalation before attackers do.
 
@@ -21,7 +24,7 @@ Import your components to start testing:
 
 ---
 
-## 🛡️ Agentic Guardrails
+## Agentic Guardrails
 
 Deploy real-time protection for your production agents. Block threats as they occur, enforce schema conformance, and prevent exploits before they impact your systems.
 
@@ -31,17 +34,7 @@ Set up protection proxies:
 
 ---
 
-## 📚 Resources
+## Resources
 
-<table>
-  <tr>
-    <td width="50%">
-      <h3>🚀 <a href="hybrid-saas.md">Hybrid SaaS Deployment</a></h3>
-      <p>Deploy Akto in your own cloud environment while leveraging managed services for scalability and ease of management.</p>
-    </td>
-    <td width="50%">
-      <h3>💬 <a href="https://www.akto.io/community">Get Support</a></h3>
-      <p>Join our community on Discord, use in-app Intercom support, or email us at help@akto.io for assistance.</p>
-    </td>
-  </tr>
-</table>
+- [Hybrid SaaS Deployment](hybrid-saas.md) - Deploy Akto in your own cloud
+- Support - Contact help@akto.io or use in-app Intercom
