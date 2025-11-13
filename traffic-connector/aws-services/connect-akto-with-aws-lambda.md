@@ -142,7 +142,7 @@ make updateFunctionConfiguration FUNCTION_NAME=my-production-lambda AKTO_MIRRORI
 
 Once your Lambda extension is connected, Akto automatically tags API Collection with the source, like `service=lambda`. This helps you easily track and filter API Collection based on their origin. You can view this under **API Discovery > API Collections**.
 
-<figure><img src="../../.gitbook/assets/image (116).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (115) (1).png" alt=""><figcaption></figcaption></figure>
 
 ***
 

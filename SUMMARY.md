@@ -42,7 +42,7 @@
 
 ## Getting Started
 
-* [Akto's Agentic Security](getting-started/readme.md)
+* [Quickstart](getting-started/quickstart.md)
 * [Agentic Discovery](getting-started/agentic-discovery/README.md)
   * [Homegrown Discovery Agents](getting-started/agentic-discovery/homegrown-discovery-agents/README.md)
     * [Gateways](getting-started/agentic-discovery/homegrown-discovery-agents/api-gateways/README.md)
