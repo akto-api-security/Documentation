@@ -180,6 +180,14 @@ https://super-resonance-827f.billing-53a.workers.dev
 
 ***
 
+## Architecture: MCP Guardrails and Data Ingestion
+
+The following diagram shows the architecture for Steps 2 and 3, illustrating how the Client MCP Worker, Akto Worker (Data ingestion), and Akto Guardrails Executor work together:
+
+<figure><img src="../../.gitbook/assets/cloudflare-guardrails-architecture.png" alt=""><figcaption><p>Architecture diagram showing MCP Guardrails and Data Ingestion flow</p></figcaption></figure>
+
+***
+
 ## Step 2: Deploy Agent Guard Executor Service - **Required for MCP Guardrails**
 
 The Agent Guard Executor service is a **prerequisite** for enabling MCP Guardrails in Step 3. The MCP Guardrails Worker will communicate with this service via Cloudflare worker-to-worker binding.
@@ -199,6 +207,14 @@ git clone https://github.com/akto-api-security/akto-cloudflare-deployments.git
 cd akto-cloudflare-deployments
 git checkout feature/ingestion-and-guardrails
 cd workers/akto-guardrails-executor
+```
+
+Alternatively, download and extract the zip file:
+
+```bash
+curl -L -o akto-cloudflare-deployments.zip https://github.com/akto-api-security/akto-cloudflare-deployments/archive/refs/heads/feature/ingestion-and-guardrails.zip
+unzip akto-cloudflare-deployments.zip
+cd akto-cloudflare-deployments-feature-ingestion-and-guardrails/workers/akto-guardrails-executor
 ```
 
 ### 2.2 Install Dependencies
@@ -261,6 +277,12 @@ Navigate to the MCP Guardrails Worker directory:
 
 ```bash
 cd akto-cloudflare-deployments/workers/akto-ingest-guardrails
+```
+
+If you downloaded the zip file in Step 2, navigate to:
+
+```bash
+cd akto-cloudflare-deployments-feature-ingestion-and-guardrails/workers/akto-ingest-guardrails
 ```
 
 ### 3.2 Install Dependencies
