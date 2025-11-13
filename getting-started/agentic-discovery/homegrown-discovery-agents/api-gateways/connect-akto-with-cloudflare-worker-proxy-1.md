@@ -200,11 +200,11 @@ This ensures all traffic matching the route is intercepted and mirrored to Akto.
 
 ## Step 4: Verify the Setup
 
-1. Confirm that API traffic data (requests and responses) are captured on the Akto dashboard under the respective API collection.
+1. Confirm that agent traffic data (requests and responses) are captured on the Akto dashboard under the respective API collection.
 2. Check logs of your Worker for any initialization or forwarding messages.
 3. Go back to the [Akto Dashboard](https://app.akto.io/).
 4. Navigate to **API Collections** > **Hostname**.
-5. You should start seeing the traffic from your Cloudflare Worker.
+5. You should start seeing the agent traffic from your Cloudflare Worker.
 
 ***
 

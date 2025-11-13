@@ -2,7 +2,7 @@
 
 <figure><img src="../../../../.gitbook/assets/image (91).png" alt=""><figcaption></figcaption></figure>
 
-If your API calls are being routed through NGINX, you can use Akto's NGINX module to send traffic to Akto dashboard. Below guide will help you do this:
+If your agent requests are being routed through NGINX, you can use Akto's NGINX module to send agent traffic to Akto dashboard. Below guide will help you do this:
 
 ## Step 1: Configure Akto Traffic Processor
 
@@ -55,7 +55,7 @@ server {
 }
 ```
 
-6\. Restart NGINX by `nginx -s reload`. This will start logging all the request-response logs to akto.
+6\. Restart NGINX by `nginx -s reload`. This will start logging all the agent request-response logs to akto.
 
 </details>
 

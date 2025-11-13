@@ -331,13 +331,13 @@ This will upload and register both prehook and posthook global policies with you
 
 ***
 
-## Step 3: Confirm Traffic is Flowing to Akto
+## Step 3: Confirm Agent Traffic is Flowing to Akto
 
 After setup:
 
-* Make a few API calls from your applications.
+* Make a few agent requests from your applications.
 * Go to the **API Collections** in Akto dashboard.
-* You should begin seeing real-time API traffic, including headers, payloads, status codes, and timestamps.
+* You should begin seeing real-time agent traffic, including headers, payloads, status codes, and timestamps.
 
 ***
 

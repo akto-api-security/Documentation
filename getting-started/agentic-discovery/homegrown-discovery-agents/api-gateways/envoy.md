@@ -1,16 +1,16 @@
 # Connect Akto with Envoy
 
-If your API calls are being routed through ENVOY, you can use Akto's ENVOY module to send traffic to Akto dashboard. This module can also be used with Istio service mesh, because it is based on ENVOY proxy. Below guide will help you do this:
+If your agent requests are being routed through ENVOY, you can use Akto's ENVOY module to send agent traffic to Akto dashboard. This module can also be used with Istio service mesh, because it is based on ENVOY proxy. Below guide will help you do this:
 
 <figure><img src="../../../../.gitbook/assets/image (94).png" alt=""><figcaption></figcaption></figure>
 
 ## Creating AWS Policy
 
-1\. Go to Quick Start on your Akto dashboard and expand the `Connect traffic data` section.
+1\. Go to Quick Start on your Akto dashboard and expand the `Connect discovery agents` section.
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/236832212-603647ca-fceb-46fc-baf7-150c2e6b7ec0.png" alt=""><figcaption></figcaption></figure>
 
-2\. Scroll down to `Data processors setup` section.
+2\. Scroll down to `Discovery agents infrastructure` section.
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/237100095-67164c73-2a0b-4505-8268-c932df4a1d27.png" alt=""><figcaption></figcaption></figure>
 
@@ -32,13 +32,13 @@ If your API calls are being routed through ENVOY, you can use Akto's ENVOY modul
 
 8\. Once the policy is created, go back to the `dashboard`.
 
-## Setting up Data processors
+## Setting up Discovery agents infrastructure
 
-1\. Click on `Setup traffic processors` button.
+1\. Click on `Setup Akto Traffic Processor` button.
 
 <figure><img src="https://github.com/akto-api-security/Documentation/assets/91221068/c3e08f08-ec81-4c47-b3b0-fbc1eacc4fe0" alt=""><figcaption></figcaption></figure>
 
-2\. This will bring up infra that will process your traffic.
+2\. This will bring up infra that will process your agent traffic.
 
 <figure><img src="https://github.com/akto-api-security/Documentation/assets/91221068/7d7d437d-1370-4628-aa10-908b33b907b0" alt=""><figcaption></figcaption></figure>
 

@@ -50,7 +50,7 @@ docker-compose -f docker-compose-data-ingestion-runtime.yml up -d
 
 ### 1.5 Note the IP Address of the Data-Ingestion Service
 
-Ensure the instance is accessible from the network where your Apigee API proxy is configured. Note the instance's IP address, as it will be required by the Apigee connector to send traffic data.
+Ensure the instance is accessible from the network where your Apigee API proxy is configured. Note the instance's IP address, as it will be required by the Apigee connector to send agent traffic data.
 
 ***
 
@@ -88,7 +88,7 @@ If you already have an **Intermediate** or **Comprehensive** environment, you ca
     <figure><img src="../../../../.gitbook/assets/create_apigee_proxy_button.png" alt=""><figcaption></figcaption></figure>
 3. Configure the proxy with the following details:
    * **Proxy Name**: Enter a unique name for your proxy.
-   * **Base Path**: Specify the base path for the proxy (e.g., `/api/v1`). This path will be used as the prefix for all API calls.
+   * **Base Path**: Specify the base path for the proxy (e.g., `/api/v1`). This path will be used as the prefix for all agent requests.
    * **Target (Existing API)**: Provide the URL of your backend service (e.g., `https://your-backend-service.com`).
    * **Proxy Template**: Select **Reverse Proxy** as the proxy template.
    * **Environment**: Select an **Intermediate** or **Comprehensive** environment where the proxy will be deployed.
@@ -252,8 +252,8 @@ var ingestionUrl = "https://<data-ingestion-service-ip>:9091/api/ingestData";
 
 ### 2.6 Test the Integration
 
-* Make a test API call through the Apigee proxy.
-* Verify in the Akto dashboard that the traffic is being ingested correctly.
+* Make a test agent request through the Apigee proxy.
+* Verify in the Akto dashboard that the agent traffic is being ingested correctly.
 
 ***
 

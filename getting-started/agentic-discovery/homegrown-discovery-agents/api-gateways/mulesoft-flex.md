@@ -1,6 +1,6 @@
 ---
 description: >-
-  Learn about how to send API traffic data using Mulesoft Flex Policy to Akto
+  Learn about how to send agent traffic data using Mulesoft Flex Policy to Akto
   from your environment.
 ---
 

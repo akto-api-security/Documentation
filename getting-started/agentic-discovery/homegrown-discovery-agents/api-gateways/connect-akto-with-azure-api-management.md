@@ -50,7 +50,7 @@ docker-compose -f docker-compose-data-ingestion-runtime.yml up -d
 
 ### 1.5 Note the IP Address of the Data-Ingestion Service
 
-Ensure the instance is accessible from the network where your Azure APIM is configured. Note the instance's IP address, as it will be required by the Azure APIM connector to send traffic data.
+Ensure the instance is accessible from the network where your Azure APIM is configured. Note the instance's IP address, as it will be required by the Azure APIM connector to send agent traffic data.
 
 ***
 
@@ -276,7 +276,7 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
 ## Step 5: Verify the Integration
 
 1. Send test requests to the configured API endpoint.
-2. Check the Akto Data-Ingestion Service logs to verify that the traffic data is being ingested correctly.
+2. Check the Akto Data-Ingestion Service logs to verify that the agent traffic data is being ingested correctly.
 
 ### Get Support for your Akto setup
 
