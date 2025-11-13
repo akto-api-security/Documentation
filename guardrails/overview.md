@@ -12,8 +12,8 @@ To enable Akto Guardrails, set the following environment variable in your Akto t
 
 Supported traffic connectors for Guardrails:
 
-* [MCP Scan](broken-reference)
-* [Agentic Scan](broken-reference)
+* MCP Scan
+* Agentic Scan
 * [eBPF Traffic Connector](../getting-started/agentic-discovery/homegrown-discovery-agents/ebpf/)
 * [Kubernetes Traffic Connector](../getting-started/agentic-discovery/homegrown-discovery-agents/kubernetes/kubernetes.md)
 * [Virtual Machines Traffic Connector](../traffic-connector/virtual-machines/)

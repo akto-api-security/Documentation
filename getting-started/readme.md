@@ -44,8 +44,8 @@ Gain comprehensive visibility into your agent security landscape. Track risk sco
 
 ## Getting Started
 
-1. **Deploy Akto** - Choose between [Akto Cloud](broken-reference) or [Self-Hosted](broken-reference)
-2. **Connect Your Agents** - Set up traffic connectors for [MCP endpoints](broken-reference) or [AI agents](broken-reference)
+1. **Deploy Akto** - Choose between Akto Cloud or Self-Hosted
+2. **Connect Your Agents** - Set up traffic connectors for MCP endpoints or AI agents
 3. **Run Security Scans** - Execute [Agentic Red Teaming](../agentic-red-teaming/concepts/) tests on your components
 4. **Monitor & Protect** - Enable [Guardrails](../guardrails/overview.md) for real-time threat protection
 5. **Track Compliance** - Review your [Compliance](../compliance/concepts/) posture against regulatory frameworks
