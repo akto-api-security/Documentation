@@ -1,7 +1,6 @@
 # Table of contents
 
 * [Akto MCP Server](README.md)
-* [AI Security](ai-security.md)
 * [Traffic Data Sources](traffic-data-sources.md)
 
 ## Traffic Connector
@@ -129,10 +128,8 @@
   * [Risk Score](agentic-discovery/concepts/risk-score.md)
   * [Auth types](agentic-discovery/concepts/auth-types.md)
   * [Access Type](agentic-discovery/concepts/access-type.md)
-  * [API Call Stats](agentic-discovery/concepts/api-call-stats.md)
-  * [API Sequence](agentic-discovery/concepts/api-sequence.md)
-  * [gRPC API Coverage with Akto](agentic-discovery/concepts/grpc-api-coverage-with-akto.md)
-  * [API discovery from source code](agentic-discovery/concepts/api-inventory-from-source-code.md)
+  * [Agentic Call Stats](agentic-discovery/concepts/api-call-stats.md)
+  * [Agentic Sequence](agentic-discovery/concepts/api-sequence.md)
   * [Advanced Filter Option](agentic-discovery/concepts/advanced-filter-option.md)
 * [How-To](agentic-discovery/how-to/README.md)
   * [Enable Tree View](agentic-discovery/how-to/enable-tree-view/README.md)
@@ -175,12 +172,7 @@
   * [Create New Tags](agentic-discovery/how-to/create-new-tags.md)
   * [Edit Tags](agentic-discovery/how-to/edit-tags.md)
   * [De-merge Agentic Components](agentic-discovery/how-to/de-merge-agentic-components.md)
-  * [Extract APIs from github hosted source code using our Github Action](agentic-discovery/how-to/extract-apis-from-source-code-gha.md)
-  * [Delete an API Collection](agentic-discovery/how-to/delete-an-api-collection.md)
-  * [Export an API Collection to Postman](agentic-discovery/how-to/export-an-api-collection-to-postman.md)
-  * [Export an API Collection to Burp](agentic-discovery/how-to/export-an-api-collection-to-burp.md)
-  * [Deactivating and Reactivating API Collections in Akto](agentic-discovery/how-to/deactivate-an-api-collection.md)
-  * [Extract APIs from source code using our Docker based CLI](agentic-discovery/how-to/extract-apis-from-source-code-docker-cli.md)
+  * [Deactivating and Reactivating Agentic Collections in Akto](agentic-discovery/how-to/deactivate-an-api-collection.md)
 
 ## Probe Library
 
@@ -260,14 +252,10 @@
   * [Conduct Role-Based Testing](agentic-red-teaming/how-to/conduct-role-based-testing.md)
   * [Run tests in CLI using Akto](agentic-red-teaming/how-to/run-tests-in-cli-using-akto.md)
   * [Create and Edit Auth Types](agentic-red-teaming/how-to/create-and-edit-auth-types.md)
-  * [Secure GraphQL APIs using Akto](agentic-red-teaming/how-to/secure-graphql-apis-using-akto.md)
-  * [Secure REST APIs using Akto](agentic-red-teaming/how-to/secure-rest-apis-using-akto.md)
-  * [Secure SOAP APIs using Akto](agentic-red-teaming/how-to/secure-soap-apis-using-akto.md)
 
 ## Guardrails
 
 * [Overview](guardrails/overview.md)
-* [External API Runtime Threat Notifications](guardrails/external-api-runtime-threat-notifications.md)
 * [Concepts](guardrails/concepts/README.md)
   * [Schema Conformance](guardrails/concepts/schema-conformance.md)
   * [Threat Actors](guardrails/concepts/threat-actors.md)
