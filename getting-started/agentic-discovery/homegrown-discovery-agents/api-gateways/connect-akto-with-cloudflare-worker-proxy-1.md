@@ -10,7 +10,7 @@ To connect Akto with Cloudflare, follow these steps -
 
 ## Step 1: Deploy the Akto Data-Ingestion Service
 
-Before configuring the Cloudflare Worker Traffic Connector, you need to deploy the Akto Data-Ingestion Service. Ensure that the service is running and accessible via a publicly available URL. Set up and configure Akto Traffic Processor. The steps are mentioned [here](https://docs.akto.io/getting-started/traffic-processor/hybrid-saas). Ensure this instance is publicly accessible, as it will receive traffic logs from your Cloudflare Worker.
+Before configuring the Cloudflare Worker Traffic Connector, you need to deploy the Akto Data-Ingestion Service. Ensure that the service is running and accessible via a publicly available URL. Set up and configure Akto Traffic Processor. The steps are mentioned [here](../../../hybrid-saas.md). Ensure this instance is publicly accessible, as it will receive traffic logs from your Cloudflare Worker.
 
 ***
 

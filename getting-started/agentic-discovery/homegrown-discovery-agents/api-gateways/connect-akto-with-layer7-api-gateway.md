@@ -6,7 +6,7 @@ Layer7 API Gateway, part of Broadcom's API management suite, provides enterprise
 
 To connect Akto with Broadcom Layer7 API Gateway, follow these steps -
 
-1. Set up and configure Akto Traffic Processor. The steps are mentioned [here](https://docs.akto.io/getting-started/traffic-processor/hybrid-saas).
+1. Set up and configure Akto Traffic Processor. The steps are mentioned [here](../../../hybrid-saas.md).
 2. Add Layer7 API Gateway connector
    1. Go to **Quick Start** in Akto Dashboard
    2. Scroll to **Layer7 API Gateway** block and click on the **Connect** button to get instructions

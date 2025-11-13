@@ -4,7 +4,7 @@ Red Hat 3Scale API Management platform helps organizations share, secure, distri
 
 To connect Akto with 3Scale, follow these steps -
 
-1. Set up and configure Akto Traffic Processor. The steps are mentioned [here](https://docs.akto.io/getting-started/traffic-processor/hybrid-saas).
+1. Set up and configure Akto Traffic Processor. The steps are mentioned [here](../../../hybrid-saas.md).
 2. Add 3Scale connector
    1. Go to **Quick Start** in Akto Dashboard
    2. Scroll to **3Scale** block and click on the **Connect** button to get instructions

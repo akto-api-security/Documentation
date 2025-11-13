@@ -6,7 +6,7 @@ If your agent requests are being routed through NGINX, you can use Akto's NGINX 
 
 ## Step 1: Configure Akto Traffic Processor
 
-Set up and configure Akto Traffic Processor. The steps are mentioned [here](https://docs.akto.io/getting-started/traffic-processor/hybrid-saas).
+Set up and configure Akto Traffic Processor. The steps are mentioned [here](../../../hybrid-saas.md).
 
 ## Step 2: Add NGINX module
 

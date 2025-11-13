@@ -6,7 +6,7 @@ Citrix is a comprehensive application delivery and security solution that manage
 
 To connect Akto with Citrix Netscaler Gateway, follow these steps -
 
-1. Set up and configure Akto Traffic Processor. The steps are mentioned [here](https://docs.akto.io/getting-started/traffic-processor/hybrid-saas).
+1. Set up and configure Akto Traffic Processor. The steps are mentioned [here](../../../hybrid-saas.md).
 2. Add Citrix Netscaler Gateway connector
    1. Go to **Quick Start** in Akto Dashboard
    2. Scroll to **Citrix** block and click on the **Connect** button to get instructions

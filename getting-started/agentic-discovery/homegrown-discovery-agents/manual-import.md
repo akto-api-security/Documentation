@@ -15,17 +15,17 @@ Manual import is ideal when you:
 ### Import AI Agents
 Import AI agents from AWS Bedrock, Azure AI Foundry, Databricks, Google Vertex AI, IBM Watsonx, or your custom agents directly into Akto for security testing.
 
-→ [Import AI Agents](../../../agentic-red-teaming/ai-agent-import.md)
+→ [Import AI Agents](../../agentic-red-teaming/ai-agent-import.md)
 
 ### Import MCP Servers
 Import MCP servers by connecting to their SSE endpoints. Akto will automatically discover all tools, resources, and prompts for testing.
 
-→ [Import MCP Servers](../../../agentic-red-teaming/mcp-import.md)
+→ [Import MCP Servers](../../agentic-red-teaming/mcp-import.md)
 
 ### Import AI Models
 Import large language models and custom AI implementations for comprehensive security testing.
 
-→ [Import AI Models](../../../agentic-red-teaming/ai-model-import.md)
+→ [Import AI Models](../../agentic-red-teaming/ai-model-import.md)
 
 ## What Happens After Import
 

@@ -6,7 +6,7 @@ HAProxy is a high-performance, open-source load balancer and proxy server for TC
 
 To connect Akto with HAProxy, follow these steps -
 
-1. Set up and configure Akto Traffic Processor. The steps are mentioned [here](https://docs.akto.io/getting-started/traffic-processor/hybrid-saas).
+1. Set up and configure Akto Traffic Processor. The steps are mentioned [here](../../../hybrid-saas.md).
 2. Add HAProxy connector
    1. Go to **Quick Start** in Akto Dashboard
    2. Scroll to **HA Proxy** block and click on the **Connect** button to get instructions
