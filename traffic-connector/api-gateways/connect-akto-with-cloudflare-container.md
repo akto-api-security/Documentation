@@ -180,64 +180,169 @@ https://super-resonance-827f.billing-53a.workers.dev
 
 ***
 
+## Architecture: MCP Guardrails and Data Ingestion
+
+The following diagram shows the architecture for Steps 2 and 3, illustrating how the Client MCP Worker, Akto Worker (Data ingestion), and Akto Guardrails Executor work together:
+
+<figure><img src="../../.gitbook/assets/cloudflare-guardrails-architecture.png" alt=""><figcaption><p>Architecture diagram showing MCP Guardrails and Data Ingestion flow</p></figcaption></figure>
+
+***
+
 ## Step 2: Deploy Agent Guard Executor Service - **Required for MCP Guardrails**
 
 The Agent Guard Executor service is a **prerequisite** for enabling MCP Guardrails in Step 3. The MCP Guardrails Worker will communicate with this service via Cloudflare worker-to-worker binding.
 
-### 2.1 Pull and Push Agent Guard Executor Container Image
+### Prerequisites
 
-Pull and push the Agent Guard Executor container image:
+- Docker with buildx
+- Node.js 18+
+- Wrangler CLI authenticated with your Cloudflare account
+
+### 2.1 Checkout Worker Code
+
+Clone the worker code from the repository:
 
 ```bash
-docker pull --platform linux/amd64 public.ecr.aws/aktosecurity/akto-agent-guard-executor:1.12.1_local
-docker tag public.ecr.aws/aktosecurity/akto-agent-guard-executor:1.12.1_local agent-guard-executor:testing
-wrangler containers push agent-guard-executor:testing
+git clone https://github.com/akto-api-security/akto-cloudflare-deployments.git
+cd akto-cloudflare-deployments
+git checkout feature/ingestion-and-guardrails
+cd workers/akto-guardrails-executor
 ```
 
-### 2.2 Deploy Agent Guard Executor Worker
+Alternatively, download and extract the zip file:
 
-For the complete implementation of the Agent Guard Executor service, refer to the code repository:
+```bash
+curl -L -o akto-cloudflare-deployments.zip https://github.com/akto-api-security/akto-cloudflare-deployments/archive/refs/heads/feature/ingestion-and-guardrails.zip
+unzip akto-cloudflare-deployments.zip
+cd akto-cloudflare-deployments-feature-ingestion-and-guardrails/workers/akto-guardrails-executor
+```
 
-**[Agent Guard Executor Worker](https://github.com/akto-api-security/akto/tree/deployment/agent-guard-service-prod/apps/agent-guard/python-service/worker)**
+### 2.2 Install Dependencies
 
-This repository contains:
-- Container configuration files (`wrangler.jsonc`)
-- Worker implementation (`src/index.ts`)
-- Agent Guard Executor container setup
-- Environment variable templates
+```bash
+npm install
+```
 
-**Important:** In the `wrangler.jsonc` file from the repository, replace the `"image": "../container/Dockerfile"` value with your Cloudflare registry URL for the pushed image:
+### 2.3 Pull and Push Agent Guard Executor Container Image
+
+Pull, rebuild, and push the Agent Guard Executor container image to Cloudflare registry:
+
+```bash
+# Pull the image
+docker pull --platform linux/amd64 public.ecr.aws/aktosecurity/akto-agent-guard-executor:1.12.1_local
+
+# Rebuild for linux/amd64 (required)
+docker buildx build --platform linux/amd64 --load -t agent-guard-executor:testing - <<'EOF'
+FROM public.ecr.aws/aktosecurity/akto-agent-guard-executor:1.12.1_local
+EOF
+
+# Push to Cloudflare registry
+npx wrangler containers push agent-guard-executor:testing
+```
+
+### 2.4 Configure Worker
+
+Update the `wrangler.jsonc` file in the `akto-guardrails-executor` directory. Replace the image path with your Cloudflare registry URL:
 
 ```json
-"image": "registry.cloudflare.com/<ID>/agent-guard-executor:testing"
+"image": "registry.cloudflare.com/<YOUR_CLOUDFLARE_ACCOUNT_ID>/agent-guard-executor:testing"
+```
+
+### 2.5 Deploy Worker
+
+```bash
+npx wrangler deploy
 ```
 
 After deploying the Agent Guard Executor Worker, note its worker name - you'll use it to configure the worker-to-worker service binding in Step 3.
 
 ***
 
-## Step 3: Deploy MCP Guardrails Worker
+## Step 3: Deploy MCP Guardrails Worker (Ingestion with Guardrails)
 
 **Prerequisites:** You must complete Step 2 (Deploy Agent Guard Executor Service) before proceeding with this step. The MCP Guardrails Worker communicates with the Agent Guard Executor via worker-to-worker binding.
 
 MCP (Model Context Protocol) Guardrails provide real-time security scanning and threat detection for AI agent interactions. The MCP Guardrails Worker orchestrates guardrail enforcement based on configured policies.
 
-For the complete implementation of the MCP Guardrails Worker, refer to the code repository:
+### Prerequisites
 
-**[MCP Guardrails Worker](https://github.com/akto-api-security/cloudflare-container-deployment/tree/visa-private-worker)**
+- Node.js 18+
+- Wrangler CLI authenticated with your Cloudflare account
+- Docker with buildx
+- Step 2 completed (Agent Guard Executor Worker deployed)
 
-This repository contains:
-- Worker configuration files (`wrangler.jsonc`)
-- MCP Guardrails Worker implementation (`src/index.ts`)
-- Service binding configuration for Agent Guard Executor
-- Policy orchestration logic
-- Environment variable templates
+### 3.1 Checkout Worker Code
 
-### Key Configuration Notes:
+Navigate to the MCP Guardrails Worker directory:
 
-1. **Worker-to-Worker Binding**: Configure a service binding to connect the MCP Guardrails Worker with the Agent Guard Executor Worker deployed in Step 2.
+```bash
+cd akto-cloudflare-deployments/workers/akto-ingest-guardrails
+```
 
-2. **Policy-Based Orchestration**: The MCP Guardrails Worker handles the orchestration of guardrail checks based on your configured security and audit policies.
+If you downloaded the zip file in Step 2, navigate to:
+
+```bash
+cd akto-cloudflare-deployments-feature-ingestion-and-guardrails/workers/akto-ingest-guardrails
+```
+
+### 3.2 Install Dependencies
+
+```bash
+npm install
+```
+
+### 3.3 Push Mini Runtime Service Container Image
+
+Pull, rebuild, and push the Mini Runtime Service container image:
+
+```bash
+# Pull the image
+docker pull --platform linux/amd64 aktosecurity/mini-runtime-service:latest
+
+# Rebuild for linux/amd64 (required)
+docker buildx build --platform linux/amd64 --load -t mrs:testing - <<'EOF'
+FROM aktosecurity/mini-runtime-service:latest
+EOF
+
+# Push to Cloudflare registry
+npx wrangler containers push mrs:testing
+```
+
+### 3.4 Configure Worker
+
+Update the `wrangler.jsonc` file:
+
+1. Set the container image path with your Cloudflare account ID:
+   ```json
+   "image": "registry.cloudflare.com/<YOUR_CLOUDFLARE_ACCOUNT_ID>/mrs:testing"
+   ```
+
+2. Configure service bindings to connect with the Agent Guard Executor Worker deployed in Step 2.
+
+### 3.5 Set Secrets
+
+Set the required secrets for the worker:
+
+```bash
+npx wrangler secret put DATABASE_ABSTRACTOR_SERVICE_TOKEN
+npx wrangler secret put THREAT_BACKEND_TOKEN
+```
+
+**Environment Variables:**
+- `DATABASE_ABSTRACTOR_SERVICE_URL`: "https://cyborg.akto.io"
+- `THREAT_BACKEND_URL`: "https://tbs.akto.io"
+- `ENABLE_MCP_GUARDRAILS`: "true" (set to "false" to disable guardrails)
+
+### 3.6 Deploy Worker
+
+```bash
+npx wrangler deploy
+```
+
+**Important Notes:**
+- This worker is private and does not expose a public HTTP URL
+- The MCP Guardrails Worker handles the orchestration of guardrail checks based on your configured security and audit policies
+- Worker-to-worker binding enables secure communication with the Agent Guard Executor Worker
 
 ***
 
