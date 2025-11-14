@@ -84,8 +84,8 @@ mini_runtime:
   useExternalKafka: true
   externalKafka:
     brokerUrl: "<YOUR_HOST_IP>:9093"  # External SASL listener address
-    username: "aktouser"  # Your Kafka SASL username
-    password: "akto-password"  # Your Kafka SASL password
+    username: "<YOUR_USERNAME>"  # Your Kafka SASL username
+    password: "<YOUR_PASSWORD>"  # Your Kafka SASL password
 ```
 
 Install or upgrade the Helm chart:
@@ -117,8 +117,8 @@ helm install akto-runtime ./charts/mini-runtime \
 helm install akto-runtime ./charts/mini-runtime \
   --set mini_runtime.useExternalKafka=true \
   --set mini_runtime.externalKafka.brokerUrl="<YOUR_HOST_IP>:9093" \
-  --set mini_runtime.externalKafka.username="aktouser" \
-  --set mini_runtime.externalKafka.password="akto-password" \
+  --set mini_runtime.externalKafka.username="<YOUR_USERNAME>" \
+  --set mini_runtime.externalKafka.password="<YOUR_PASSWORD>" \
   --set mini_runtime.aktoApiSecurityRuntime.env.databaseAbstractorToken="<YOUR_TOKEN>" \
   -n akto \
   --create-namespace
