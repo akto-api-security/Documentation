@@ -9,7 +9,7 @@ The fastest and easiest way to get started with Akto. Ideal for organizations lo
 Steps:
 
 1. [Set up Traffic Processor](quick-start-with-akto-self-hosted/helm-deploy.md)
-2. [Configure Traffic Connector](broken-reference)
+2. [Configure Traffic Connector](../traffic-connector/traffic-data-sources.md)
 
 ### 2. Self-Hosted Deployment
 
@@ -27,6 +27,6 @@ Perfect for development teams, security researchers, or evaluation purposes.
 
 Steps:
 
-1. [Configure Traffic Connector](broken-reference)
+1. [Configure Traffic Connector](../traffic-connector/traffic-data-sources.md)
 
 Choose your preferred deployment option to start building a robust API Security program with Akto.
