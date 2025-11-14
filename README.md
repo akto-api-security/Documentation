@@ -8,6 +8,8 @@ Welcome to Akto Agentic AI Security! Secure your AI agents, MCP servers, and age
 
 Automatically discover and inventory all your AI agents, MCP servers, and tools across your infrastructure.
 
+→ [Get Started with Agentic Discovery](getting-started/agentic-discovery/)
+
 * [Homegrown Discovery Agents](getting-started/agentic-discovery/homegrown-discovery-agents/) - API Gateways, eBPF, Kubernetes, manual import, and MCP Recon
 * [Endpoints Discovery Agents](getting-started/agentic-discovery/endpoints-discovery-agents/) - Browser extensions, secure web networks, MCP endpoint shield, and agentic shield
 
@@ -16,6 +18,8 @@ Automatically discover and inventory all your AI agents, MCP servers, and tools 
 ## Agentic Red Teaming
 
 Test your AI agents and MCP servers with 1000+ specialized security probes. Identify vulnerabilities like prompt injections, tool abuse, and privilege escalation before attackers do.
+
+→ [Get Started with Agentic Red Teaming](getting-started/agentic-red-teaming/)
 
 Import your components to start testing:
 
@@ -28,6 +32,8 @@ Import your components to start testing:
 ## Agentic Guardrails
 
 Deploy real-time protection for your production agents. Block threats as they occur, enforce schema conformance, and prevent exploits before they impact your systems.
+
+→ [Get Started with Agentic Guardrails](getting-started/agentic-guardrails/)
 
 Set up protection proxies:
 
