@@ -157,6 +157,7 @@
 ## Agentic Red Teaming
 
 * [Get Started](agentic-red-teaming/get-started/README.md)
+  * [Red team existing Agentic Asset](agentic-red-teaming/get-started/red-team-existing-agentic-asset.md)
   * [Manual Import](agentic-red-teaming/get-started/manual-import/README.md)
     * [AI Agent Import](getting-started/agentic-red-teaming/ai-agent-import.md)
     * [MCP Import](getting-started/agentic-red-teaming/mcp-import.md)
