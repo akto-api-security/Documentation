@@ -9,7 +9,15 @@ Test your AI agents, MCP servers, and AI models with 1000+ specialized security 
 1. Go to [app.akto.io](https://app.akto.io)
 2. Sign up for a new account or log in to your existing account
 
-### Step 2: Import Your Components
+### Step 2: Choose Testing Approach
+
+**Option A: Test Existing Assets**
+
+Already have discovered agents and MCP servers in your inventory? Start testing immediately.
+
+→ [Red Team Existing Agentic Asset](red-team-existing-agentic-asset.md)
+
+**Option B: Import New Components**
 
 Navigate to **Quick Start** in your Akto dashboard and import the components you want to test:
 
