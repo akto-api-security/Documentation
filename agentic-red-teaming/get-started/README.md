@@ -14,16 +14,19 @@ Test your AI agents, MCP servers, and AI models with 1000+ specialized security 
 Navigate to **Quick Start** in your Akto dashboard and import the components you want to test:
 
 #### Import AI Agents
+
 Test agents from AWS Bedrock, Azure AI Foundry, Databricks, Google Vertex AI, IBM Watsonx, or custom agents.
 
 → [Import AI Agents](manual-import/)
 
 #### Import MCP Servers
+
 Test Model Context Protocol tools, resources, and prompts by connecting to SSE endpoints.
 
 → [Import MCP Servers](manual-import/)
 
 #### Import AI Models
+
 Test large language models and custom AI implementations for security vulnerabilities.
 
 → [Import AI Agents](manual-import/)
@@ -31,6 +34,7 @@ Test large language models and custom AI implementations for security vulnerabil
 ### Step 3: Run Security Tests
 
 Once imported:
+
 1. Navigate to **Agentic Red Teaming** in your dashboard
 2. Select the components you want to test
 3. Choose from 1000+ specialized security probes
@@ -39,6 +43,7 @@ Once imported:
 ### Step 4: Review Results
 
 After tests complete:
+
 1. View all identified vulnerabilities
 2. See detailed exploit scenarios
 3. Get remediation guidance for each issue
@@ -47,17 +52,18 @@ After tests complete:
 ## What Gets Tested
 
 Akto tests for:
-- Prompt injection attacks
-- Tool permission escalation
-- Data leakage vulnerabilities
-- Authentication bypass
-- MCP schema violations
-- Supply chain risks
+
+* Prompt injection attacks
+* Tool permission escalation
+* Data leakage vulnerabilities
+* Authentication bypass
+* MCP schema violations
+* Supply chain risks
 
 ## Next Steps
 
-- Set up continuous testing with [discovery agents](../../agentic-discovery/get-started/)
-- Enable [Guardrails](../../guardrails/overview.md) to block threats in production
-- Review compliance posture against security frameworks
+* Set up continuous testing with [Discovery Agents](broken-reference)
+* Enable [Guardrails](../../guardrails/overview.md) to block threats in production
+* Review compliance posture against security frameworks
 
 Need help? Contact support@akto.io or use in-app Intercom.
