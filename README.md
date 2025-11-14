@@ -2,6 +2,8 @@
 
 Welcome to Akto Agentic AI Security! Secure your AI agents, MCP servers, and agentic applications with complete visibility, automated testing, and real-time protection. Get started in minutes by choosing what you need.
 
+<figure><img src=".gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+
 ***
 
 ## Agentic Discovery

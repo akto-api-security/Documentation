@@ -13,11 +13,9 @@ Discover and inventory all your AI agents, MCP servers, and tool integrations ac
 
 Navigate to **Quick Start** in your Akto dashboard and select your preferred discovery method:
 
-**[Homegrown Discovery Agents](../homegrown-discovery-agents/)**
-Deploy discovery agents to continuously monitor your infrastructure. Includes API Gateways, eBPF, Kubernetes, manual import, and MCP Recon.
+[**Homegrown Discovery Agents**](../homegrown-discovery-agents/) Deploy discovery agents to continuously monitor your infrastructure. Includes API Gateways, eBPF, Kubernetes, manual import, and MCP Recon.
 
-**[Endpoints Discovery Agents](../endpoints-discovery-agents/)**
-Get started immediately without infrastructure setup. Includes browser extensions, secure web networks, MCP endpoint shield, and agentic shield.
+[**Endpoints Discovery Agents**](../endpoints-discovery-agents/) Get started immediately without infrastructure setup. Includes browser extensions, secure web networks, MCP endpoint shield, and agentic shield.
 
 ### Step 3: Configure Your Discovery Agent
 
@@ -26,6 +24,7 @@ Follow the setup guide for your chosen method. Each connector provides step-by-s
 ### Step 4: View Your Inventory
 
 Once your discovery agent is running:
+
 1. Go to **Agentic Discovery** in your dashboard
 2. See all discovered agents, MCP servers, and tools
 3. Click on any component to view detailed information
@@ -33,16 +32,17 @@ Once your discovery agent is running:
 ## What Gets Discovered
 
 Akto automatically identifies:
-- AI agents and their endpoints
-- MCP servers (tools, resources, prompts)
-- Tool integrations and permissions
-- Data flows and agent interactions
-- Authentication patterns
+
+* AI agents and their endpoints
+* MCP servers (tools, resources, prompts)
+* Tool integrations and permissions
+* Data flows and agent interactions
+* Authentication patterns
 
 ## Next Steps
 
-- Run [security tests](../../agentic-red-teaming/get-started/) on discovered components
-- Enable [Guardrails](../../guardrails/overview.md) for real-time protection
-- Review discovered agents for shadow or zombie components
+* Run [Security Tests](../../agentic-red-teaming/concepts/ai-agent-security.md) on discovered components
+* Enable [Guardrails](../../guardrails/overview.md) for real-time protection
+* Review discovered agents for shadow or zombie components
 
 Need help? Contact support@akto.io or use in-app Intercom.
