@@ -1,6 +1,6 @@
 # Connect Akto with Internet Information Services (IIS)
 
-Microsoft IIS (Internet Information Services) is a widely used web server for hosting web applications on Windows. Integrating IIS with Akto enables you to automatically mirror agent traffic (including headers and payloads) to the Akto backend, empowering deep visibility and continuous API security analysis.
+Microsoft IIS (Internet Information Services) is a widely used web server for hosting web applications on Windows. Integrating IIS with Akto enables you to automatically mirror traffic (including headers and payloads) to the Akto backend, empowering deep visibility and continuous security analysis.
 
 To connect Akto with your IIS server, follow the steps below:
 
@@ -51,7 +51,7 @@ docker-compose -f docker-compose-mini-runtime-data-ingestion.yaml up -d
 
 ### 1.5 Note the IP Address of the Data-Ingestion Service
 
-Ensure this IP is reachable from your IIS server. You will need this to forward the agent traffic data to Akto.
+Ensure this IP is reachable from your IIS server. You will need this to forward the traffic data to Akto.
 
 ***
 
@@ -106,7 +106,7 @@ You need to register the Akto IIS module globally so it applies to all websites.
     These commands:
 
     * Register the `AktoTrafficConnector` module in IIS
-    * Add it for **all sites** so that agent traffic from every hosted website is mirrored
+    * Add it for **all sites** so that traffic from every hosted website is mirrored
     * Explicitly add `AktoNativeIisTrafficCollector` to the global modules section
     * List all registered global modules for verification
 
@@ -137,14 +137,14 @@ If you want to install the module for **just one website**, follow these steps:
 
 Once installed:
 
-1. Make a few requests to your IIS-hosted APIs.
-2. In your Akto dashboard, go to the **API Collections** tab and confirm that agent traffic is appearing.
+1. Make a few requests to your IIS-hosted applications.
+2. In your Akto dashboard, go to the **Agent Collections** tab and confirm that traffic is appearing.
 
-If no agent traffic is appearing, check:
+If no traffic is appearing, check:
 
 * IIS logs for module load errors.
 * Check logs in `C:\akto_configs\logs\log_20xx.txt`
-* Akto Data-Ingestion Service logs to ensure it's receiving agent traffic.
+* Akto Data-Ingestion Service logs to ensure it's receiving traffic.
 
 ***
 

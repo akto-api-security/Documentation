@@ -1,6 +1,6 @@
 # Connect Akto with F5
 
-F5 is a leading application security and delivery platform that provides advanced traffic management and security features. Integrating F5 with Akto allows automatic discovery and security testing of all APIs flowing through your F5 infrastructure, ensuring comprehensive security coverage across your application delivery network.
+F5 is a leading application security and delivery platform that provides advanced traffic management and security features. Integrating F5 with Akto allows automatic discovery and security testing of all agentic components flowing through your F5 infrastructure, ensuring comprehensive security coverage across your application delivery network.
 
 <figure><img src="../../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 

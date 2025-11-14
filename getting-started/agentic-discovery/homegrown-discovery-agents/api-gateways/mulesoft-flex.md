@@ -45,7 +45,7 @@ DATABASE_ABSTRACTOR_SERVICE_TOKEN=token
 
 8\. Run `docker-compose -f docker-compose-data-ingestion-runtime.yml -d`
 
-9\. Make sure this instance is reachable from the instances where your api's are hosted, on which policy will be applied
+9\. Make sure this instance is reachable from the instances where your applications are hosted, on which policy will be applied
 
 ## Connect Akto with Mulesoft Flex Gateway
 
@@ -69,7 +69,7 @@ make build
 
 6\. Publish the policy to mulesoft exchange by running `make publish`
 
-7\. Select your api's on which you want to apply Akto Policy.
+7\. Select your APIs on which you want to apply Akto Policy.
 
 8\. Copy the instance ip where Akto Runtime was deployed, and replace \<url> in the below string and use it as input param `ingestionUrl` to the policy
 

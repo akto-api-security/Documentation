@@ -1,16 +1,16 @@
 ---
-description: Learn how to send API traffic data from your Kubernetes cluster to Akto.
+description: Learn how to send agent traffic data from your Kubernetes cluster to Akto.
 ---
 
 # Connect Akto with Kubernetes in AWS
 
 ## Introduction
 
-[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your [traffic sources](../../../../traffic-data-sources.md). One such source is your Kubernetes cluster.
+[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to discover agents and analyze for security issues. It does so by connecting to one of your [traffic sources](../../../../traffic-data-sources.md). One such source is your Kubernetes cluster.
 
 `Kubernetes` is an open-source container orchestration system for automating software deployment, scaling, and management.
 
-You can add Akto DaemonSet to your Kubernetes cluster. It is very lightweight and will run 1 per node in your Kubernetes cluster. It will intercept alll the node traffic and send it to Akto traffic analyzer. Akto's traffic analyzer analyzes this traffic to create your application's APIs request and response, understand API metadata and find misconfigurations. Akto can work with high traffic scale though you can always configure the amount of traffic you want to send to Akto dashboard.
+You can add Akto DaemonSet to your Kubernetes cluster. It is very lightweight and will run 1 per node in your Kubernetes cluster. It will intercept alll the node traffic and send it to Akto traffic analyzer. Akto's traffic analyzer analyzes this traffic to create your application's agent requests and responses, understand agent metadata and find security issues. Akto can work with high traffic scale though you can always configure the amount of traffic you want to send to Akto dashboard.
 
 ## Overview of Akto-Kubernetes setup
 
@@ -84,7 +84,7 @@ If you have installed on _GCP_, _Kubernetes_ or _OpenShift_ -
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/236832493-35b27843-dce9-482a-803a-033999c55aef.png" alt="Run the command"><figcaption><p>Run the command</p></figcaption></figure>
 
-6. Go to `API Discovery` on Akto dashboard to see your new APIs
+6. Go to `Agent Discovery` on Akto dashboard to see your discovered agents
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/236832509-8e8c84ff-633e-4ffe-b11b-344d02ca6e74.png" alt="Check API Discovery"><figcaption><p>Check API Discovery</p></figcaption></figure>
 
@@ -96,7 +96,7 @@ Data remains strictly within your VPC. Akto doesn't take data out of your VPC at
 
 **Does adding DaemonSet have any impact on performance or latency?**
 
-Zero impact on latency. The DaemonSet doesn't sit like a proxy. It simply intercepts traffic - very similar to tcpdump. It is very lightweight. We have benchmarked it against traffic as high as 20M API requests/min. It consumes very low resources (CPU & RAM).
+Zero impact on latency. The DaemonSet doesn't sit like a proxy. It simply intercepts traffic - very similar to tcpdump. It is very lightweight. We have benchmarked it against traffic as high as 20M agent requests/min. It consumes very low resources (CPU & RAM).
 
 ## Troubleshooting Guide
 

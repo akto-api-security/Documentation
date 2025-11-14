@@ -77,7 +77,7 @@ Please make sure you are building docker image on the same platform as your app 
 kubectl apply -f <your-deployment-file>
 ```
 
-5. Apply `akto-envoy-filter.yaml` to start capturing agent requests and send to Akto dashboard.
+5. Apply `akto-envoy-filter.yaml` to start capturing requests and send to Akto dashboard.
 
 ```
 kubectl apply -f akto-envoy-filter.yaml

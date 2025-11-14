@@ -1,6 +1,6 @@
 # Connect Akto with Cloudflare
 
-Cloudflare is a global network security platform that provides CDN, DDoS protection, and API security services. Integrating Cloudflare with Akto will enable automatic discovery of all APIs passing through your Cloudflare infrastructure, helping you maintain continuous visibility and protection of your edge-distributed APIs.
+Cloudflare is a global network security platform that provides CDN, DDoS protection, and security services. Integrating Cloudflare with Akto will enable automatic discovery of all agentic components passing through your Cloudflare infrastructure, helping you maintain continuous visibility and protection of your edge-distributed components.
 
 <figure><img src="../../../../.gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
 
@@ -171,11 +171,11 @@ This ensures all traffic matching the route is intercepted and mirrored to Akto.
 
 ## Step 4: Verify the Setup
 
-1. Confirm that agent traffic data (requests and responses) are captured on the Akto dashboard under the respective api collection.
+1. Confirm that traffic data (requests and responses) are captured on the Akto dashboard under the respective collection.
 2. Check logs of your Lambda function for any initialization messages from the extension.
 3. Go back to the [Akto Dashboard](https://app.akto.io/).
-4. Navigate to **Api Collections** > **Hostname**.
-5. You should start seeing the agent traffic from your Cloudflare Worker.
+4. Navigate to **Agent Collections** > **Hostname**.
+5. You should start seeing the traffic from your Cloudflare Worker.
 
 ***
 

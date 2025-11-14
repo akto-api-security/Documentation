@@ -1,6 +1,6 @@
 # Connect Akto with IBM Connect
 
-IBM API Connect is IBM's comprehensive API management solution designed specifically for enterprises running hybrid cloud environments. By integrating IBM API Connect with Akto, you'll be able to automatically discover and test the security of all APIs across your IBM Cloud and on-premise environments, helping you maintain consistent security standards across your entire API infrastructure.
+IBM API Connect is IBM's comprehensive API management solution designed specifically for enterprises running hybrid cloud environments. By integrating IBM API Connect with Akto, you'll be able to automatically discover and test the security of all agentic components across your IBM Cloud and on-premise environments, helping you maintain consistent security standards across your entire infrastructure.
 
 <figure><img src="../../../../.gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
 
@@ -331,13 +331,13 @@ This will upload and register both prehook and posthook global policies with you
 
 ***
 
-## Step 3: Confirm Agent Traffic is Flowing to Akto
+## Step 3: Confirm Traffic is Flowing to Akto
 
 After setup:
 
-* Make a few agent requests from your applications.
-* Go to the **API Collections** in Akto dashboard.
-* You should begin seeing real-time agent traffic, including headers, payloads, status codes, and timestamps.
+* Make a few requests from your applications.
+* Go to the **Agent Collections** in Akto dashboard.
+* You should begin seeing real-time traffic, including headers, payloads, status codes, and timestamps.
 
 ***
 

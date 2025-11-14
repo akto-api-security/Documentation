@@ -150,7 +150,7 @@ For `AKTO_NLB_IP` , Use the service IP or load balancer name of Traffic Processo
   value: "true"
 ```
 
-4. You can check your `API inventory` on Akto dashboard to see endpoints being discovered.
+4. You can check your `agentic inventory` on Akto dashboard to see agentic components being discovered.
 
 ## Notes:
 
@@ -164,7 +164,7 @@ Data remains strictly within your VPC. Akto doesn't take data out of your VPC at
 
 **Does adding DaemonSet have any impact on performance or latency?**
 
-Zero impact on latency. The DaemonSet doesn't sit like a proxy. It works on eBPF technology, which works on traces function calls at kernel level. It is very lightweight. We have benchmarked it against traffic as high as 20M API requests/min. It consumes very low resources (CPU & RAM).
+Zero impact on latency. The DaemonSet doesn't sit like a proxy. It works on eBPF technology, which works on traces function calls at kernel level. It is very lightweight. We have benchmarked it against traffic as high as 20M agent requests/min. It consumes very low resources (CPU & RAM).
 
 **I don't see my error on this list here.**
 

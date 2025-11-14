@@ -1,6 +1,6 @@
 # Connect Akto with 3Scale
 
-Red Hat 3Scale API Management platform helps organizations share, secure, distribute, and control their APIs. Connecting 3Scale with Akto enables automatic discovery and security testing of all APIs managed through your 3Scale infrastructure, providing comprehensive API security coverage across your Red Hat ecosystem.
+Red Hat 3Scale API Management platform helps organizations share, secure, distribute, and control their APIs. Connecting 3Scale with Akto enables automatic discovery and security testing of all agentic components managed through your 3Scale infrastructure, providing comprehensive security coverage across your Red Hat ecosystem.
 
 To connect Akto with 3Scale, follow these steps -
 

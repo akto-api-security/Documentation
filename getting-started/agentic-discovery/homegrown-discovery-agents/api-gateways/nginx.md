@@ -55,7 +55,7 @@ server {
 }
 ```
 
-6\. Restart NGINX by `nginx -s reload`. This will start logging all the agent request-response logs to akto.
+6\. Restart NGINX by `nginx -s reload`. This will start logging all the agent requests and responses to akto.
 
 </details>
 

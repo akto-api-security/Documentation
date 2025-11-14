@@ -1,6 +1,6 @@
 # Connect Akto with Azure API Management
 
-Azure API Management is Microsoft's fully managed service for securing, publishing, and analyzing APIs in the Azure cloud. Integrating Azure API Management with Akto enables automatic discovery and security testing of all APIs running in your Azure environment, providing seamless security coverage across your cloud infrastructure.
+Azure API Management is Microsoft's fully managed service for securing, publishing, and analyzing APIs in the Azure cloud. Integrating Azure API Management with Akto enables automatic discovery and security testing of all agentic components running in your Azure environment, providing seamless security coverage across your cloud infrastructure.
 
 <figure><img src="../../../../.gitbook/assets/image (26).png" alt=""><figcaption></figcaption></figure>
 
@@ -276,7 +276,7 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
 ## Step 5: Verify the Integration
 
 1. Send test requests to the configured API endpoint.
-2. Check the Akto Data-Ingestion Service logs to verify that the agent traffic data is being ingested correctly.
+2. Check the Akto Data-Ingestion Service logs to verify that the traffic data is being ingested correctly.
 
 ### Get Support for your Akto setup
 

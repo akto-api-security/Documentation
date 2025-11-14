@@ -1,6 +1,6 @@
 # Connect Akto with Kong Mesh
 
-Kong Mesh is a service mesh platform that manages service-to-service communication in modern cloud-native applications. Integrating Kong Mesh with Akto will allow you to automatically discover and test the security of internal APIs and service communications within your mesh environment, ensuring your microservices are protected against potential vulnerabilities.
+Kong Mesh is a service mesh platform that manages service-to-service communication in modern cloud-native applications. Integrating Kong Mesh with Akto will allow you to automatically discover and test the security of internal agentic components and service communications within your mesh environment, ensuring your microservices are protected against potential vulnerabilities.
 
 To connect Akto with Kong Mesh, follow these steps -
 

@@ -1,6 +1,6 @@
 # Connect Akto with Kong
 
-Kong is an API gateway that helps organizations manage and orchestrate API traffic across microservices and legacy systems. Connecting Kong with Akto will enable automatic API discovery and security testing of all APIs flowing through your Kong gateway, providing comprehensive visibility into your API landscape without any manual configuration.
+Kong is a gateway that helps organizations manage and orchestrate traffic across microservices and legacy systems. Connecting Kong with Akto will enable automatic discovery and security testing of all agentic components flowing through your Kong gateway, providing comprehensive visibility into your agentic landscape without any manual configuration.
 
 <figure><img src="../../../../.gitbook/assets/image (92).png" alt=""><figcaption></figcaption></figure>
 
