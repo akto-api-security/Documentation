@@ -148,7 +148,7 @@ After deploying the Agent Guard Executor Worker, note its worker name - you'll u
 
 The Akto Ingest-Guardrails Worker is **required for both deployment options**:
 - **Data Ingestion Only**: Set `ENABLE_MCP_GUARDRAILS` to `false`
-- **Data Ingestion with Guardrails**: Set `ENABLE_MCP_GUARDRAILS` to `true` (requires akto-guardrails-executor deployed first)
+- **Data Ingestion with Guardrails**: Set `ENABLE_MCP_GUARDRAILS` to `true` (requires `akto-guardrails-executor` deployed first)
 
 This worker handles traffic data ingestion to Akto and optionally orchestrates MCP guardrail enforcement based on configured policies.
 
@@ -157,7 +157,7 @@ This worker handles traffic data ingestion to Akto and optionally orchestrates M
 - Node.js 18+
 - Wrangler CLI authenticated with your Cloudflare account
 - Docker with buildx
-- If enabling guardrails: akto-guardrails-executor Worker deployed (see previous section)
+- If enabling guardrails: `akto-guardrails-executor` Worker deployed (see previous section)
 
 #### 1. Checkout Worker Code
 
