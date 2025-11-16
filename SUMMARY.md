@@ -130,6 +130,7 @@
   * [Connect Akto with Imperva](traffic-connector/manual/imperva.md)
 * [Configure TLS on kafka](traffic-connector/kafka-tls-in-kubernetes.md)
 * [Configure SASL Authentication on kafka](traffic-connector/kafka-sasl-in-kubernetes.md)
+* [Configure external kafka](traffic-connector/external-kafka-in-kuberneters.md)
 
 ## API Inventory
 
