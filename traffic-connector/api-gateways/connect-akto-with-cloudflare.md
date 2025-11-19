@@ -218,7 +218,7 @@ npm install
 Pull, rebuild, and push the Mini Runtime Service container image:
 
 ```bash
-# Pull the image
+# Pull the base image
 docker pull --platform linux/amd64 aktosecurity/mini-runtime-service:latest
 
 # Rebuild for linux/amd64 (required)
@@ -251,13 +251,55 @@ Update the `wrangler.jsonc` file:
 
 3. **If enabling guardrails** (Option 2): Configure service bindings to connect with the Agent Guard Executor Worker deployed in the previous section.
 
+4. **Optional - Setup KV Namespace for Rate Limiting**: Rate limiting for MCP guardrails is controlled by this KV namespace binding. To disable rate limiting, skip this step or comment out the `kv_namespaces` block in `wrangler.jsonc`.
+
+   Create KV namespace (if not already exists):
+   ```bash
+   npx wrangler kv namespace create "AKTO_GUARDRAILS_RATE_LIMIT_KV"
+   ```
+
+   Uncomment and update the `kv_namespaces` block in `wrangler.jsonc` with the generated ID:
+   ```jsonc
+   "kv_namespaces": [
+     {
+       "binding": "AKTO_GUARDRAILS_RATE_LIMIT_KV",
+       "id": "<GENERATED_KV_ID>"
+     }
+   ]
+   ```
+
+   If the namespace already exists, get the ID from Cloudflare UI: **Storage & Databases > Workers KV > AKTO_GUARDRAILS_RATE_LIMIT_KV**
+
+   **Rate Limiting Configuration:**
+
+   Rate limiting is applied globally across all MCP tool calls and tracked per IP per tool by default.
+
+   **Configuration Source:**
+
+   Rate limit rules are automatically fetched from the backend. Configure via:
+
+   **Akto Dashboard**: Settings > Threat Configuration
+
+   The worker uses the first STATIC rule configuration:
+   - `maxRequests` - Maximum number of requests allowed
+   - `period` - Time window in minutes
+
+   Rate limits are tracked per IP per tool by default.
+
+   **Fallback Configuration:**
+
+   If the backend is unavailable or no static rule is found, defaults are used:
+   - Limit: 100 requests
+   - Window: 300 seconds (5 minutes)
+   - Tracking: Per IP per tool
+
 #### 5. Set Secrets
 
 Set the required secrets for the worker:
 
 ```bash
-npx wrangler secret put DATABASE_ABSTRACTOR_SERVICE_TOKEN
-npx wrangler secret put THREAT_BACKEND_TOKEN
+wrangler secret put DATABASE_ABSTRACTOR_SERVICE_TOKEN
+wrangler secret put THREAT_BACKEND_TOKEN
 ```
 
 **Environment Variables:**
@@ -272,9 +314,11 @@ npx wrangler deploy
 ```
 
 **Important Notes:**
-- This worker is private and does not expose a public HTTP URL
+- This worker is private and does not expose a public HTTP URL (set via `workers_dev: false`)
 - Worker-to-worker binding enables secure communication with the Agent Guard Executor Worker (if guardrails enabled)
 - The worker orchestrates guardrail checks based on your configured security and audit policies (if guardrails enabled)
+- Rate limiting requires KV namespace to be set up (optional)
+- Rate limits are distributed across Cloudflare edge locations via KV
 
 ***
 
