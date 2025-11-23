@@ -340,6 +340,8 @@ Reference the example worker from the [akto-ingestion-publisher](https://github.
 
 ##### 2. Update Your Worker's Fetch Handler
 
+> **Note:** Replace `yourRequestHandler` with your actual request handler function in the code below.
+
 ```typescript
 import { replicateRequest, replicateResponse } from "./akto/utils";
 import { ingestTrafficToAkto } from "./akto/ingest-data";
