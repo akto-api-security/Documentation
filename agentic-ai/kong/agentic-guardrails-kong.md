@@ -17,7 +17,7 @@ This integration requires you to download our custom plugin, install it inside y
 Clone the GitHub repository containing the plugin files.
 
 ```bash
-git clone http://github.com/akto-api-security/kong-integration.git
+git clone https://github.com/akto-api-security/kong-integration.git
 ```
 
 Inside the repository, navigate to the `/plugin` directory. You will find the following two required files:
