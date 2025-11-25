@@ -22,6 +22,8 @@
 * [Agentic Shield](agentic-shield.md)
 * [MCP Proxy](agentic-ai/akto-mcp-proxy.md)
 * [Agent Guard](agentic-ai/agent-guard.md)
+* [Kong services](agentic-ai/kong/README.md)
+  * [Kong Agentic Guardrail Integration](agentic-ai/kong/agentic-guardrails-kong.md)
 
 ## AI Agents
 
