@@ -30,15 +30,7 @@ Update the following variables in the `n8n-cron.env` file:
 ```bash
 N8N_BASE_URL=https://<YOUR_INSTANCE_URL>
 N8N_API_KEY=<API_KEY>
-```
-
-**Kafka Configuration (Optional)**
-
-Below are the default values for Kafka configuration which you can change as required:
-
-```bash
-KAFKA_BROKERS=kafka1:19092
-KAFKA_TOPIC=akto.api.logs
+AKTO_KAFKA_BROKER_URL=kafka1:19092
 ```
 
 ## Step 4: Start the N8N Traffic Connector
