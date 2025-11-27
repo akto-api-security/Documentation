@@ -176,7 +176,7 @@
   * [Create Swagger File Using Akto](api-inventory-1/how-to/create-swagger-file-using-akto.md)
   * [Copy API Endpoints Data](api-inventory-1/how-to/copy-api-endpoints-data.md)
   * [Add an API Collection](api-inventory-1/how-to/add-an-api-collection.md)
-  * [Set tags](api-inventory/how-to/set-tags.md)
+  * [Set Tags in Akto](api-inventory/how-to/set-tags.md)
   * [Delete an API Collection](api-inventory-1/how-to/delete-an-api-collection.md)
   * [Create a Custom Data Type](api-inventory-1/how-to/create-a-custom-data-type.md)
   * [Reset Data Types in Akto](api-inventory/how-to/reset-data-types-in-akto.md)

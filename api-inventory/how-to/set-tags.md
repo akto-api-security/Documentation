@@ -1,4 +1,4 @@
-# Set tags
+# Set Tags in Akto
 
 If you are tracking and testing multiple environments through Akto, you can **tag** your API collections as **Staging** or **Production**.
 
@@ -12,6 +12,6 @@ Note that collections that have the word `demo` or `staging` in them are already
 
 In addition to the default Production and Staging environments, **you can set custom tags** for your API collections in Akto.
 
-This flexibility allows you to better organize and manage your API collections according to your specific deployment stages, testing requirements, or organizational needs. For example, you might want to create tags types like 'Development', 'QA', or 'Pre-Production' to match your workflow.
+This flexibility allows you to better organize and manage your API collections according to your specific deployment stages, testing requirements, or organizational needs. For example, you might want to create environment tags types like 'Development', 'QA', or 'Pre-Production' to match your workflow or maybe data source tags.
 
 <figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
