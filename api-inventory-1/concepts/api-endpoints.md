@@ -30,4 +30,4 @@ You can also copy your API endpoint data for troubleshooting, debugging, version
 
 Akto automatically identifies the **underlying technologies** used by your APIs through intelligent traffic analysis powered by **Akto-AI**. For each endpoint, Akto displays detected stacks such as **AWS**, **Azure**, **MongoDB**, **Stripe**, and more—based on observed request headers, payload patterns, and infrastructure clues. This gives teams better visibility into their API environment and helps prioritize tests or security policies based on tech stack relevance.
 
-<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>

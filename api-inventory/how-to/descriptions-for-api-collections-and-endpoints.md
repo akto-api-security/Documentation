@@ -19,7 +19,7 @@ Adding descriptions to your API collections and endpoints in Akto helps keep you
 
 ### Steps to Add a Description to an API Endpoint
 
-<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 1. **View the API Collection:**
    * Go to the **API Discovery** section and select your API collection.

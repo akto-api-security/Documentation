@@ -151,7 +151,6 @@
   * [Protocol Support in Akto](api-inventory/concepts/protocol-support-in-akto.md)
   * [API Changes](api-inventory-1/concepts/api-changes.md)
   * [Third Party APIs](api-inventory/concepts/third-party-apis.md)
-  * [Tags](api-inventory-1/concepts/tags.md)
   * [API Dependency Graph](api-inventory/concepts/api-dependency-graph.md)
   * [Sensitive Data](api-inventory-1/concepts/sensitive-data.md)
   * [Alerts](api-inventory-1/concepts/alerts.md)
@@ -177,7 +176,7 @@
   * [Create Swagger File Using Akto](api-inventory-1/how-to/create-swagger-file-using-akto.md)
   * [Copy API Endpoints Data](api-inventory-1/how-to/copy-api-endpoints-data.md)
   * [Add an API Collection](api-inventory-1/how-to/add-an-api-collection.md)
-  * [Set environment type](api-inventory-1/how-to/set-environment-type.md)
+  * [Set tags](api-inventory/how-to/set-tags.md)
   * [Delete an API Collection](api-inventory-1/how-to/delete-an-api-collection.md)
   * [Create a Custom Data Type](api-inventory-1/how-to/create-a-custom-data-type.md)
   * [Reset Data Types in Akto](api-inventory/how-to/reset-data-types-in-akto.md)
@@ -195,8 +194,6 @@
   * [Extract APIs from github hosted source code using our Github Action](api-inventory-1/how-to/extract-apis-from-source-code-gha.md)
   * [Extract APIs from source code using our Docker based CLI](api-inventory-1/how-to/extract-apis-from-source-code-docker-cli.md)
   * [Remove Bad Endpoints](api-inventory-1/how-to/remove-bad-endpoints.md)
-  * [Create New Tags](api-inventory-1/how-to/create-new-tags.md)
-  * [Edit Tags](api-inventory-1/how-to/edit-tags.md)
 
 ## API Protection
 

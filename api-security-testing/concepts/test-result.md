@@ -2,19 +2,19 @@
 
 API test results provide valuable insights into the security posture of an API. These results are generated through systematic security testing procedures that evaluate various aspects of the API's behavior. You can view all your test results and take action on them in one place.
 
-In the demonstration below, we have viewed the test result of the selected API endpoint, "BOLA by changing auth token".&#x20;
+In the demonstration below, we have viewed the test result of the selected API endpoint, "BOLA by changing auth token".
 
 Go to **Testing > Results**. Click on the test that you have chosen from the test categories.
 
-{% @arcade/embed flowId="Qc3ooTCl1AmYj9yk6rFD" url="https://app.arcade.software/share/Qc3ooTCl1AmYj9yk6rFD" %}
+{% @arcade/embed url="https://app.arcade.software/share/Qc3ooTCl1AmYj9yk6rFD" flowId="Qc3ooTCl1AmYj9yk6rFD" %}
 
 In the above demonstration, Akto ran **`BOLA by changing auth token`** tests on the **`rest/products/INTEGER/reviews`** endpoint. The results show high vulnerability when testing **"BOLA changing the auth token"** through a custom test.
 
 ### Instant Visibility into Test Outcomes
 
-Akto provides **instant visibility** into test results, enabling you to quickly understand the security impact of each test. You can easily view **HTTP status codes** (e.g., `403 Forbidden`, `200 OK`) alongside **response messages** to assess how the API responded to different test conditions.&#x20;
+Akto provides **instant visibility** into test results, enabling you to quickly understand the security impact of each test. You can easily view **HTTP status codes** (e.g., `403 Forbidden`, `200 OK`) alongside **response messages** to assess how the API responded to different test conditions.
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Time Delays for Multi-Step and Async Test Flows
 

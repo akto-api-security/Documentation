@@ -1,6 +1,6 @@
 # Environment Type
 
-The Environment Type feature in Akto allows users to tag API collections as either Staging or Production. This helps teams prioritize testing and triage alerts based on the environment’s criticality. Learn [How to Set Environment Type](../how-to/set-environment-type.md).
+The Environment Type feature in Akto allows users to tag API collections as either Staging or Production. This helps teams prioritize testing and triage alerts based on the environment’s criticality. Learn [How to Set Environment Type](../../api-inventory/how-to/set-tags.md).
 
 ### Helps with:
 

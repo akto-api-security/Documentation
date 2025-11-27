@@ -1,13 +1,12 @@
 # Connect Akto with N8N
 
-<figure><img src="../.gitbook/assets/n8n.png" alt=""><figcaption></figcaption></figure>
-
 N8N is a workflow automation platform that connects various services and automates tasks. This setup is recommended if you want to monitor API traffic from your N8N workflows and ensure your automated processes maintain security standards.
 
 The Akto N8N connector automatically:
-- Fetches all workflow metadata from your N8N instance
-- Monitors workflow executions
-- Sends API traffic data to Akto for security analysis
+
+* Fetches all workflow metadata from your N8N instance
+* Monitors workflow executions
+* Sends API traffic data to Akto for security analysis
 
 ## Step 1: Configure Akto Traffic Processor
 
@@ -48,13 +47,15 @@ This will start monitoring your N8N workflows and send API traffic data to Akto 
 The N8N connector collects two types of data:
 
 ### Workflow Metadata
-- All workflows from your N8N instance
-- Webhook URLs (if configured in workflow)
+
+* All workflows from your N8N instance
+* Webhook URLs (if configured in workflow)
 
 ### Workflow Executions
-- Executions from the last hour
-- First node input data
-- Last node output data
+
+* Executions from the last hour
+* First node input data
+* Last node output data
 
 ## Get Support for your Akto setup
 
