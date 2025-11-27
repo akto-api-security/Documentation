@@ -96,3 +96,4 @@ redirects:
   api-security-testing/how-to/run-tests-in-cicd: ci-cd/how-to/run-tests-in-cicd.md
   api-security-testing/how-to/configure-testing-in-cloud: api-security-testing/how-to/install-testing-module-in-your-cloud.md
   getting-started/quickstart-with-akto-cloud/hybrid-saas: getting-started/quick-start-with-akto-cloud/hybrid-saas.md
+  api-inventory/how-to/set-environment-type: api-inventory/how-to/set-tags.md
