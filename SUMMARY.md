@@ -330,6 +330,7 @@
 * [How to Switch Between Accounts in Akto](account/how-to-switch-between-accounts-in-akto.md)
 * [Understanding Role Permissions](account/understanding-role-permissions.md)
 * [Custom roles](account/custom-roles.md)
+* [Metrics](account/metrics.md)
 * [Audit Logs](account/audit-logs.md)
 * [SSO](account/sso/README.md)
   * [Azure AD SAML](account/sso/azuread-saml.md)
