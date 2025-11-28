@@ -124,6 +124,7 @@
   * [Connect Akto with TCP Agent](traffic-connector/virtual-machines/tcp-agent.md)
 * [Workflow Automation](traffic-connector/workflow-automation/README.md)
   * [Connect Akto with N8N](traffic-connector/n8n.md)
+  * [Connect Akto with LangChain](traffic-connector/langchain.md)
 * [Manual](traffic-connector/manual/README.md)
   * [Connect Akto with Burp suite](traffic-connector/manual/burp-suite.md)
   * [Connect Akto with Postman](traffic-connector/manual/postman.md)
