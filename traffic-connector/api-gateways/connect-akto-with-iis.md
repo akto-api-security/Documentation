@@ -74,11 +74,20 @@ Akto provides a native IIS module that can capture HTTP request and response hea
 
     ```json
     {
-      "backendUrl": "http://DATA-INGESTION-SERVICE-URL:9091/api/ingestData"
+      "backendUrl": "http://DATA-INGESTION-SERVICE-URL:9091/api/ingestData",
+      "logLevel": "INFO",
+      "maxPayloadSize": 1048576,
+      "maxQueueSize": 1000
     }
     ```
 
     Replace `DATA-INGESTION-SERVICE-URL` with the address of your deployed Akto ingestion service.
+
+    **Configuration Fields:**
+    * `backendUrl` - The URL of your Akto data-ingestion service endpoint
+    * `logLevel` - Controls the logging verbosity. Accepted values: `INFO`, `WARN`, `NONE`, `ERROR`, or `DEBUG`
+    * `maxPayloadSize` - Maximum size (in bytes) of request + response to capture. Only traffic with total size less than this value will be captured. Example: `1048576` for 1MB
+    * `maxQueueSize` - Maximum number of requests to store in memory before flushing to Akto. Controls memory usage and batch size
 
 ***
 
