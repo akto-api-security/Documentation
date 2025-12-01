@@ -17,9 +17,7 @@ Set up and configure Akto Traffic Processor. The steps are mentioned [here](http
 Clone the Akto infrastructure repository and checkout the feature branch:
 
 ```bash
-git clone https://github.com/akto-api-security/infra.git
-cd infra
-git checkout feature/quick-setup
+wget https://github.com/akto-api-security/infra/blob/feature/quick-setup/docker-compose-n8n-cron.yaml
 ```
 
 ## Step 3: Configure N8N Environment Variables

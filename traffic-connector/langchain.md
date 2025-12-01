@@ -18,8 +18,7 @@ Set up and configure Akto Traffic Processor. The steps are mentioned [here](http
 Clone the Akto infrastructure repository:
 
 ```bash
-git clone https://github.com/akto-api-security/infra.git
-cd infra
+wget https://github.com/akto-api-security/infra/blob/feature/quick-setup/docker-compose-langchain-cron.yaml
 ```
 
 ## Step 3: Configure LangChain Environment Variables
