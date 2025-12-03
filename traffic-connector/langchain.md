@@ -19,6 +19,8 @@ Clone the Akto infrastructure repository:
 
 ```bash
 wget https://github.com/akto-api-security/infra/blob/feature/quick-setup/docker-compose-langchain-cron.yaml
+
+wget https://github.com/akto-api-security/infra/blob/feature/quick-setup/langchain-cron.env
 ```
 
 ## Step 3: Configure LangChain Environment Variables

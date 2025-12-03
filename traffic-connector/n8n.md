@@ -18,6 +18,8 @@ Clone the Akto infrastructure repository and checkout the feature branch:
 
 ```bash
 wget https://github.com/akto-api-security/infra/blob/feature/quick-setup/docker-compose-n8n-cron.yaml
+
+wget https://github.com/akto-api-security/infra/blob/feature/quick-setup/n8n-cron.env
 ```
 
 ## Step 3: Configure N8N Environment Variables
