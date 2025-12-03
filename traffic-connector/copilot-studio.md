@@ -31,9 +31,9 @@ To monitor your Copilot Studio application, you need to configure Azure Applicat
 Clone the Akto infrastructure repository:
 
 ```bash
-wget https://github.com/akto-api-security/infra/blob/feature/quick-setup/docker-compose-copilot-cron.yaml
+wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-compose-copilot-studio-cron.yaml
 
-wget https://github.com/akto-api-security/infra/blob/feature/quick-setup/copilot-studio-cron.env
+wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/copilot-studio-cron.env
 ```
 
 ## Step 4: Configure Copilot Studio Environment Variables
