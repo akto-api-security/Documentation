@@ -20,6 +20,8 @@ Clone the Akto infrastructure repository and checkout the feature branch:
 wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-compose-n8n-cron.yaml
 
 wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/n8n-cron.env
+
+wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/watchtower.env
 ```
 
 ## Step 3: Configure N8N Environment Variables

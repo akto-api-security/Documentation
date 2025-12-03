@@ -34,6 +34,8 @@ Clone the Akto infrastructure repository:
 wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-compose-copilot-studio-cron.yaml
 
 wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/copilot-studio-cron.env
+
+wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/watchtower.env
 ```
 
 ## Step 4: Configure Copilot Studio Environment Variables
