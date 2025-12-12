@@ -59,7 +59,9 @@ Before setting up the DevRev Integration, ensure you have:
 2. Select one or more parts where you want to create security issues
 3. You can search for specific parts using the dropdown's search functionality
 
-![Placeholder: Screenshot showing Parts dropdown with multiple selections]
+<figure><img src="../../.gitbook/assets/devrev_fetch_parts.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/devrev_select_parts.png" alt=""><figcaption></figcaption></figure>
+
 
 ### Step 7: Save Configuration
 
@@ -71,7 +73,7 @@ Before setting up the DevRev Integration, ensure you have:
 1. The page will now show your configured DevRev integration
 2. You should see the organization URL and selected parts displayed
 
-![Placeholder: Screenshot showing configured DevRev integration details]
+<figure><img src="../../.gitbook/assets/devrev_created.png" alt=""><figcaption></figcaption></figure>
 
 ---
 ## Updating DevRev Integration
