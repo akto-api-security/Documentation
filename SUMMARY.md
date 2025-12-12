@@ -305,7 +305,7 @@
   * [Jira Integration](issues/how-to/jira-integration.md)
   * [Azure DevOps Boards Integration](issues/how-to/azure-devops-boards-integration.md)
   * [ServiceNow Integration](issues/how-to/servicenow-integration.md)
-  * [DevRev Integration] (issues/how-to/devrev-integration.md)
+  * [DevRev Integration](issues/how-to/devrev-integration.md)
   * [Triage Issues](issues/how-to/triage-issues/README.md)
     * [Review Issues Marked as False Positives](issues/how-to/triage-issues/review-issues-marked-as-false-positives.md)
   * [Export Selected Issues to Reports](issues/how-to/export-selected-issues-to-reports.md)
