@@ -1,4 +1,4 @@
-# DevRev Integration User Guide
+# DevRev Integration
 
 This guide will help you set up DevRev Integration in Akto to automatically create and track security issues in your DevRev workspace.
 
