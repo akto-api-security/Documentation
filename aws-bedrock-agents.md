@@ -4,6 +4,13 @@
 
 This guide provides step-by-step instructions for setting up AKTO's AWS Bedrock monitoring solution in your AWS account. This solution automatically captures, processes, and sends AWS Bedrock agent conversations to your AKTO instance for security analysis.
 
+## What You'll Achieve
+
+✅ **Automated Bedrock Monitoring**: Capture all AWS Bedrock agent conversations  
+✅ **Real-time Processing**: Process logs every 5 minutes automatically  
+✅ **Security Analysis**: Send conversation data to AKTO for threat detection  
+✅ **Multi-Model Support**: Works with Amazon Nova, Claude, and other Bedrock models  
+✅ **Client-Side Deployment**: Complete data isolation in your AWS account
 
 ## Prerequisites
 
