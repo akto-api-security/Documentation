@@ -330,13 +330,22 @@ Required files for client deployment:
 4. **`README.md`** - Quick reference guide
 5. **`CLIENT_SETUP_GUIDE.md`** - This comprehensive guide
 
-## Support
+## Issues debugging
 
 For issues or questions:
 
 1. **Check CloudWatch Logs**: Monitor Lambda execution logs
 2. **Review S3 Configuration**: Ensure bucket exists and is accessible
 3. **Verify AKTO Connectivity**: Test endpoint and API key
+
+### Get Support for your Akto setup
+
+There are multiple ways to request support from Akto. We are 24X7 available on the following:
+
+1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
+2. Join our [discord channel](https://www.akto.io/community) for community support.
+3. Contact `help@akto.io` for email support.
+4. Contact us [here](https://www.akto.io/contact-us).
 
 ---
 
