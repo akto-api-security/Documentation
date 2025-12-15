@@ -82,8 +82,8 @@ aws sts get-caller-identity
 ```json
 {
     "UserId": "AIDACKXXXXXXXXXXXXXXXXX",
-    "Account": "123456789012",
-    "Arn": "arn:aws:iam::123456789012:user/your-username"
+    "Account": "123456789***",
+    "Arn": "arn:aws:iam::123456789***:user/your-username"
 }
 ```
 ✅ **Should show your account ID** - You're ready!  
@@ -133,7 +133,7 @@ The script will prompt you for the required information:
 =================================================
 
 📊 Deployment Information:
-   AWS Account ID: 123456789012
+   AWS Account ID: 123456789***
    AWS Region: us-east-1
 
 S3 Bucket Configuration:
@@ -181,15 +181,15 @@ The script will automatically:
 🎉 Deployment completed successfully!
 
 📋 What was created:
-   • Lambda Function: akto-bedrock-log-processor-123456789012
-   • IAM Role: akto-bedrock-processor-role-123456789012
-   • EventBridge Rule: akto-bedrock-schedule-123456789012 (runs every 5 minutes)
+   • Lambda Function: akto-bedrock-log-processor-123456789***
+   • IAM Role: akto-bedrock-processor-role-123456789***
+   • EventBridge Rule: akto-bedrock-schedule-123456789*** (runs every 5 minutes)
    • Using existing S3 Bucket: my-company-bedrock-logs-2024
 
 🔍 Next steps:
 1. Generate some AWS Bedrock conversations
-2. Monitor Lambda logs: aws logs tail /aws/lambda/akto-bedrock-log-processor-123456789012 --follow
-3. Test manually: aws lambda invoke --function-name akto-bedrock-log-processor-123456789012 --payload '{}' response.json
+2. Monitor Lambda logs: aws logs tail /aws/lambda/akto-bedrock-log-processor-123456789*** --follow
+3. Test manually: aws lambda invoke --function-name akto-bedrock-log-processor-123456789*** --payload '{}' response.json
 
 🎯 The system will automatically process Bedrock logs every 5 minutes!
 ```
