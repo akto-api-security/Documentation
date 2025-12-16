@@ -4,7 +4,8 @@ description: You can execute and compare responses from multiple API calls in pa
 
 # Parallel flows
 
-This instruction is required when you want to fire multiple API calls in **parallel** and compare their responses. A simple use case is testing for **Username enumeration vulnerability** using a password-reset endpoint, where different requests can be sent at the same time and their responses compared.
+This instruction is required when you want to fire multiple API calls in **parallel** and compare their responses. 
+A simple use case for this would be to test for race conditions in API by sending multiple requests in parallel.
 
 To configure Akto test YAML for multiple parallel requests, set `type: parallel`. All the `requests` defined under this block are fired **at the same time**.
 
@@ -36,13 +37,13 @@ execute:
   requests:
   - req:
     - add_body_param:
-        test: one
+        test2: one
   - req:
     - add_body_param:
-        test: two
+        test2: two
   - req:
     - add_body_param:
-        test: three
+        test3: three
 validate:
   response_code:
     gte: 200
@@ -57,22 +58,22 @@ execute:
   requests:
   - req:
     - add_body_param:
-        country: US
+        test1: one
     - validate:
         response_payload:
-          regex: ".*\"region\":\"north_america\".*"
+          regex: ".*\"test1\":\"one\".*" 
   - req:
     - add_body_param:
-        country: IN
+        test2: two
     - validate:
         response_payload:
-          regex: ".*\"region\":\"asia\".*"
+          regex: ".*\"test2\":\"two\".*" 
   - req:
     - add_body_param:
-        country: DE
+        test3: three
     - validate:
         response_payload:
-          regex: ".*\"region\":\"europe\".*"
+          regex: ".*\"test3\":\"three\".*"
 validate:
   response_code:
     gte: 200
