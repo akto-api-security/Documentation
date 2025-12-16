@@ -24,7 +24,7 @@ execute:
 For each request in a parallel flow, you can now use&#x20;
 
 * A global `validate` block to test for a certain response across all parallel requests. 
-* A global  `validate` block for each individual request. 
+* A local  `validate` block for each individual request. 
 * A local `validate` block and global `validate` block.
 
 If multiple `validate` blocks are used, all the validate blocks will be evaluated using the `Logical AND` operation. 
