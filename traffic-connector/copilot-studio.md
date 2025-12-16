@@ -1,13 +1,12 @@
 # Connect Akto with Microsoft Copilot Studio
 
-<figure><img src="../.gitbook/assets/copilot-studio.png" alt=""><figcaption></figcaption></figure>
-
 Microsoft Copilot Studio is a platform for building and deploying conversational AI agents and copilots. This setup is recommended if you want to monitor API traffic from your Copilot Studio applications and ensure your AI-powered conversations maintain security standards.
 
 The Akto Copilot Studio connector automatically:
-- Fetches all Copilot Studio conversation data
-- Monitors bot interactions and user conversations
-- Sends API traffic data to Akto for security analysis
+
+* Fetches all Copilot Studio conversation data
+* Monitors bot interactions and user conversations
+* Sends API traffic data to Akto for security analysis
 
 ## Step 1: Configure Akto Traffic Processor
 
@@ -18,13 +17,11 @@ Set up and configure Akto Traffic Processor. The steps are mentioned [here](http
 To monitor your Copilot Studio application, you need to configure Azure Application Insights:
 
 1. **Create Application Insights Resource** (if not already created):
-   - Follow the [Azure Application Insights documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/app/create-workspace-resource) to create a new Application Insights resource
-
+   * Follow the [Azure Application Insights documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/app/create-workspace-resource) to create a new Application Insights resource
 2. **Configure Your Copilot in Copilot Studio**:
-   - Follow the [Copilot Studio Application Insights integration guide](https://learn.microsoft.com/en-us/microsoft-copilot-studio/advanced-bot-framework-composer-capture-telemetry) to connect your copilot to Application Insights
-
+   * Follow the [Copilot Studio Application Insights integration guide](https://learn.microsoft.com/en-us/microsoft-copilot-studio/advanced-bot-framework-composer-capture-telemetry) to connect your copilot to Application Insights
 3. **Get Your Application Insights Credentials**:
-   - Follow the [API Access documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/app/api-filtering) to get your Application ID and create an API Key with "Read telemetry" permission
+   * Follow the [API Access documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/app/api-filtering) to get your Application ID and create an API Key with "Read telemetry" permission
 
 ## Step 3: Clone the Akto Infrastructure Repository
 
@@ -63,14 +60,16 @@ This will start monitoring your Copilot Studio conversations and send API traffi
 The Copilot Studio connector collects conversation data from your copilot applications:
 
 ### Conversation Data
-- All bot conversations and user interactions
-- User messages and bot responses
-- Conversation topics and flows
+
+* All bot conversations and user interactions
+* User messages and bot responses
+* Conversation topics and flows
 
 ### Metadata
-- Conversation IDs and timestamps
-- Channel information (Web Chat, Teams, etc.)
-- Activity IDs for tracking message pairs
+
+* Conversation IDs and timestamps
+* Channel information (Web Chat, Teams, etc.)
+* Activity IDs for tracking message pairs
 
 ## How It Works
 
@@ -84,10 +83,11 @@ The connector uses Azure Application Insights to retrieve conversation telemetry
 ## Supported Channels
 
 The connector works with all channels supported by Copilot Studio:
-- Direct Line (Web Chat)
-- Microsoft Teams
-- Copilot Studio Test Chat
-- Custom channels
+
+* Direct Line (Web Chat)
+* Microsoft Teams
+* Copilot Studio Test Chat
+* Custom channels
 
 All conversation sources are normalized by the Bot Framework before being logged to Application Insights.
 

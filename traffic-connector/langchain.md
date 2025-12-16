@@ -1,13 +1,12 @@
 # Connect Akto with LangChain
 
-<figure><img src="../.gitbook/assets/langchain.png" alt=""><figcaption></figcaption></figure>
-
 LangChain is a framework for developing applications powered by language models. This setup is recommended if you want to monitor API traffic from your LangChain applications and ensure your AI-powered processes maintain security standards.
 
 The Akto LangChain connector automatically:
-- Fetches all LangChain application metadata
-- Monitors LangChain executions
-- Sends API traffic data to Akto for security analysis
+
+* Fetches all LangChain application metadata
+* Monitors LangChain executions
+* Sends API traffic data to Akto for security analysis
 
 ## Step 1: Configure Akto Traffic Processor
 
@@ -50,11 +49,13 @@ This will start monitoring your LangChain applications and send API traffic data
 The LangChain connector collects execution data from your LangChain applications:
 
 ### Application Metadata
-- All LangChain applications and traces
+
+* All LangChain applications and traces
 
 ### Execution Data
-- Recent execution traces
-- Input and output data
+
+* Recent execution traces
+* Input and output data
 
 ## Get Support for your Akto setup
 
