@@ -6,7 +6,7 @@ description: You can execute and compare responses from multiple API calls in YA
 
 This instruction is required when you want to fire multiple API calls and compare their responses. A simple use case is testing for **Username enumeration vulnerability** using password-reset endpoint.
 
-To configure Akto test YAML for multiple requests, set `type: true`
+To configure Akto test YAML for multiple requests, set `type: multiple`
 
 ```yaml
 execute: 
