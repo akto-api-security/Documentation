@@ -237,6 +237,7 @@
     * [Contexts](test-editor/concepts/test-yaml-syntax-detailed/contexts.md)
     * [Strategy](test-editor/concepts/test-yaml-syntax-detailed/strategy.md)
     * [Conditional flows](test-editor/concepts/test-yaml-syntax-detailed/conditional-flows.md)
+    * [Parallel flows](test-editor/concepts/test-yaml-syntax-detailed/parallel-flows.md)
   * [Template YAMLs](test-editor/concepts/template-yamls/README.md)
     * [Local File Inclusion with Akto](test-editor/concepts/template-yamls/local-file-inclusion-with-akto.md)
   * [Dynamic severity](test-editor/concepts/dynamic-severity.md)
