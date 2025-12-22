@@ -346,7 +346,15 @@ npx wrangler deploy
 #### Step 2: Deploy akto-ingest-guardrails
 
 ```bash
-cd ../akto-ingest-guardrails
+# Clone repository
+git clone https://github.com/akto-api-security/akto-cloudflare-deployments.git
+cd akto-cloudflare-deployments
+
+# Switch to the blocked_mode_guardrails branch
+git checkout feature/blocked_mode_guardrails
+
+# Navigate to the ingest guardrails worker
+cd workers/akto-ingest-guardrails
 npm install
 
 # Push MRS container image
@@ -376,7 +384,15 @@ npx wrangler deploy
 #### Step 3: Deploy akto-cloudflare-proxy
 
 ```bash
-cd ../akto-cloudflare-proxy
+# Clone repository
+git clone https://github.com/akto-api-security/akto-cloudflare-deployments.git
+cd akto-cloudflare-deployments
+
+# Switch to the blocked_mode_guardrails branch
+git checkout feature/blocked_mode_guardrails
+
+# Navigate to the cloudflare proxy worker
+cd workers/akto-cloudflare-proxy
 npm install
 
 # Update wrangler.jsonc - configure service bindings and mode
@@ -537,6 +553,181 @@ curl https://mcp.yourdomain.com/
 | Threat Blocking | ❌ | ✅ |
 | Original Payload Reporting | ✅ | ✅ |
 | Fail-Open | ✅ Yes | ✅ Yes |
+
+---
+
+### Updating Existing Deployments
+
+If you already have `akto-guardrails-executor` deployed and want to update the proxy and ingest-guardrails workers with the latest code, follow these steps:
+
+#### Step 1: Get Latest Code
+
+```bash
+# Clone the repository (if not already cloned)
+git clone https://github.com/akto-api-security/akto-cloudflare-deployments.git
+cd akto-cloudflare-deployments
+
+# Checkout the feature branch
+git checkout feature/blocked_mode_guardrails
+
+# Pull latest changes
+git pull origin feature/blocked_mode_guardrails
+```
+
+---
+
+#### Step 2: Update akto-ingest-guardrails Worker
+
+Navigate to the worker directory and install dependencies:
+
+```bash
+cd workers/akto-ingest-guardrails
+npm install
+```
+
+**Review and configure `wrangler.jsonc`:**
+
+```jsonc
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "akto-ingest-guardrails",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-05-23",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+
+  "observability": {
+    "enabled": true
+  },
+
+  "containers": [
+    {
+      "class_name": "AktoMiniRuntimeServiceContainer",
+      "image": "registry.cloudflare.com/<YOUR_ACCOUNT_ID>/mrs:testing",
+      "max_instances": 10,
+      "instance_type": "standard-1",
+      "name": "akto-mini-runtime-service-container"
+    }
+  ],
+
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "AktoMiniRuntimeServiceContainer",
+        "name": "AKTO_MINI_RUNTIME_SERVICE_CONTAINER"
+      }
+    ]
+  },
+
+  "migrations": [
+    {
+      "new_sqlite_classes": ["AktoMiniRuntimeServiceContainer"],
+      "tag": "v1"
+    }
+  ],
+
+  "services": [
+    {
+      "binding": "AKTO_GUARDRAILS_EXECUTOR",
+      "service": "akto-guardrails-executor"  // UPDATE: Ensure this matches your executor worker name
+    }
+  ],
+
+  "vars": {
+    "DATABASE_ABSTRACTOR_SERVICE_URL": "https://cyborg.akto.io",
+    "THREAT_BACKEND_URL": "https://tbs.akto.io",
+    "ENABLE_MCP_GUARDRAILS": "true"  // UPDATE: Set to "true" to enable guardrails
+  }
+}
+```
+
+**Key configuration updates:**
+
+1. **Service Binding**: Verify `AKTO_GUARDRAILS_EXECUTOR` service name matches your deployed executor worker
+2. **Enable Guardrails**: Ensure `ENABLE_MCP_GUARDRAILS: "true"`
+
+**Set secrets (if not already configured):**
+
+```bash
+# Get token from: Akto Dashboard → Quick Start → Hybrid Saas → Connect
+npx wrangler secret put DATABASE_ABSTRACTOR_SERVICE_TOKEN
+npx wrangler secret put THREAT_BACKEND_TOKEN
+```
+
+**Deploy the updated worker:**
+
+```bash
+npx wrangler deploy
+```
+
+---
+
+#### Step 3: Update akto-cloudflare-proxy Worker
+
+Navigate to the worker directory and install dependencies:
+
+```bash
+cd ..
+cd workers/akto-cloudflare-proxy
+npm install
+```
+
+**Review and configure `wrangler.jsonc`:**
+
+```jsonc
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "akto-cloudflare-proxy",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-06-23",
+  "compatibility_flags": ["nodejs_compat"],
+
+  "observability": {
+    "enabled": true
+  },
+
+  "services": [
+    {
+      "binding": "MCP",
+      "service": "<YOUR_MCP_SERVER_NAME>"  // UPDATE: Replace with your MCP server worker name
+    },
+    {
+      "binding": "AKTO_GUARDRAILS",
+      "service": "akto-ingest-guardrails"  // UPDATE: Should match your ingest-guardrails worker name
+    },
+    {
+      "binding": "AKTO_INGEST_GUARDRAILS",
+      "service": "akto-ingest-guardrails"  // UPDATE: Should match your ingest-guardrails worker name
+    }
+  ],
+
+  "vars": {
+    "GUARDRAILS_MODE": "blocked"  // UPDATE: Choose "async" or "blocked"
+  },
+
+  // Optional: Configure routes if you want automatic routing
+  // "routes": [
+  //   {
+  //     "pattern": "mcp.yourdomain.com/*",
+  //     "zone_name": "yourdomain.com"
+  //   }
+  // ]
+}
+```
+
+**Key configuration updates:**
+
+1. **MCP Service Binding** (REQUIRED): Replace `<YOUR_MCP_SERVER_NAME>` with your actual MCP server worker name
+2. **Guardrails Service Bindings** (REQUIRED): Both should point to your `akto-ingest-guardrails` worker
+3. **Guardrails Mode** (REQUIRED): Choose `"async"` (monitor only) or `"blocked"` (block threats)
+4. **Routes** (OPTIONAL): Configure if you want automatic domain routing, otherwise use workers.dev URL
+
+**Deploy the updated worker:**
+
+```bash
+npx wrangler deploy
+```
 
 ---
 
