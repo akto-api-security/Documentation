@@ -212,6 +212,12 @@
   * [Configure Ignored Events](api-protection/concepts/threat-ignored-events.md)
   * [Configure Ignored Events Per Rule](api-protection/concepts/ignore-events-at-rule-level.md)
   * [Remediation Steps for API Protection Issues](api-protection/concepts/remediation-steps-for-api-protection-issues.md)
+* [How To](api-protection/how-to/README.md)
+  * [Manage Threat Policies](api-protection/how-to/manage-threat-policies.md)
+  * [View Threat Activity Breakdown](api-protection/how-to/view-threat-activity-breakdown.md)
+  * [Take Actions on Threats](api-protection/how-to/take-actions-on-threats.md)
+  * [Export Visualisation and Report](api-protection/how-to/export-visualisation-and-report.md)
+  * [Create Internal Workflow Item](api-protection/how-to/create-internal-workflow-item.md)
 
 ***
 
