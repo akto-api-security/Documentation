@@ -35,12 +35,12 @@ Import your components to start testing:
 
 Deploy real-time protection for your production agents. Block threats as they occur, enforce schema conformance, and prevent exploits before they impact your systems.
 
-→ [Get Started with Agentic Guardrails](guardrails/overview.md)
+→ [Get Started with Agentic Guardrails](agentic-guardrails/overview/)
 
 Set up protection proxies:
 
-* [MCP Proxy](getting-started/agentic-guardrails/akto-mcp-proxy.md) - Real-time protection for MCP servers
-* [Agent Proxy](getting-started/agentic-guardrails/akto-agent-proxy.md) - Real-time protection for AI agents
+* [MCP Proxy](agentic-guardrails/overview/proxy/akto-mcp-proxy.md) - Real-time protection for MCP servers
+* [Agent Proxy](agentic-guardrails/overview/proxy/akto-agent-proxy.md) - Real-time protection for AI agents
 
 ***
 

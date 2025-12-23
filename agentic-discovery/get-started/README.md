@@ -42,7 +42,7 @@ Akto automatically identifies:
 ## Next Steps
 
 * Run [security tests](../../agentic-red-teaming/get-started/) on discovered components
-* Enable [Guardrails](../../guardrails/overview.md) for real-time protection
+* Enable [Guardrails](../../agentic-guardrails/overview/) for real-time protection
 * Review discovered agents for shadow or zombie components
 
 Need help? Contact support@akto.io or use in-app Intercom.

@@ -1,71 +1,71 @@
-# MCP Proxy
+# AI Agent Proxy
 
 ## Overview
 
-Akto MCP Proxy is a security and governance layer that sits between MCP (Model Context Protocol) clients and MCP servers. It enables organizations to implement threat protection, security policies, and guardrails for all MCP server requests while maintaining seamless connectivity to the original MCP servers.
+Akto Agent Proxy is a security and governance layer that sits between agent clients and agent servers. It enables organizations to implement threat protection, security policies, and guardrails for all agent server requests while maintaining seamless connectivity to the original agent servers.
 
 ## Key Features
 
 * **Threat Protection**: Real-time scanning and blocking of malicious requests
 * **Security Guardrails**: Enforce organizational security policies and compliance requirements
-* **Request Monitoring**: Complete visibility into all MCP communications
-* **Transparent Proxying**: Zero-configuration changes required on MCP servers
+* **Request Monitoring**: Complete visibility into all agent communications
+* **Transparent Proxying**: Zero-configuration changes required on agent servers
 * **Performance Optimization**: Intelligent caching and request optimization
 
 ## Architecture
 
 ```
-┌─────────────┐        ┌─────────────────┐        ┌──────────────┐
-│ MCP Client  │───────▶│  Akto MCP Proxy │───────▶│  MCP Server  │
-└─────────────┘        └─────────────────┘        └──────────────┘
-                              │
-                              ▼
-                       ┌──────────────────┐
-                       │ Threat Detection │
-                       │   & Guardrails   │
-                       └──────────────────┘
+┌───────────────┐        ┌───────────────────┐        ┌───────────────┐
+│     User      │───────▶│  Akto Agent Proxy │───────▶│   AI Agent    │
+└───────────────┘        └───────────────────┘        └───────────────┘
+                                  │
+                                  ▼
+                          ┌──────────────────┐
+                          │ Threat Detection │
+                          │   & Guardrails   │
+                          └──────────────────┘
 ```
 
 Cloud setup
 
-<figure><img src="../../.gitbook/assets/akto-mcp-proxy-cloud.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/akto-agent-proxy-cloud.png" alt=""><figcaption></figcaption></figure>
 
 ## How It Works
 
-1. **Request Interception**: MCP clients send requests to the Akto proxy endpoint instead of directly to MCP servers
+1. **Request Interception**: Agent clients send requests to the Akto proxy endpoint instead of directly to agent servers
 2. **Security Analysis**: Each request undergoes threat detection and policy validation
 3. **Policy Enforcement**: Requests are evaluated against configured guardrails
-4. **Request Forwarding**: Validated requests are forwarded to the original MCP server
+4. **Request Forwarding**: Validated requests are forwarded to the original agent server
 5. **Response Processing**: Server responses are analyzed and returned to the client
 
 ## Configuration
 
 ### Basic Setup
 
-To use Akto MCP Proxy, simply prepend your original MCP server URL with the Akto proxy endpoint. All existing authentication and credentials for your original MCP server remain unchanged.
+To use Akto Agent Proxy, simply prepend your original agent server URL with the Akto proxy endpoint. All existing authentication and credentials for your original agent server remain unchanged.
 
 **Proxy URL Format:**
 
 ```
-https://mcp-proxy.akto.io/proxy/{protocol}/{host}/{path}
+https://agent-proxy.akto.io/proxy/{protocol}/{host}/{path}
 ```
 
-Where the original MCP server URL is transformed by:
+Where the original agent server URL is transformed by:
 
 * Replacing `://` with `/`
-* Example: `https://mcp.example.com/api` → `https/mcp.example.com/api`
+* Example: `https://agent.example.com/api` → `https/agent.example.com/api`
 
 ### Configuration Examples
 
-1.  **SSE-based MCP Server**
+1.  **SSE-based Agent Server**
 
     Original configuration:
 
     ```json
     {
-      "mcpServers": {
+      "agentServers": {
         "kite-trading": {
-          "url": "https://mcp.kite.trade/sse",
+          "url": "https://agent.kite.trade/sse",
           "apiKey": "your-kite-api-key"
         }
       }
@@ -76,23 +76,23 @@ Where the original MCP server URL is transformed by:
 
     ```json
     {
-      "mcpServers": {
+      "agentServers": {
         "kite-trading": {
-          "url": "https://mcp-proxy.akto.io/proxy/https/mcp.kite.trade/sse",
+          "url": "https://agent-proxy.akto.io/proxy/https/agent.kite.trade/sse",
           "apiKey": "your-kite-api-key"
         }
       }
     }
     ```
-2.  **WebSocket MCP Server**
+2.  **WebSocket Agent Server**
 
     Original configuration:
 
     ```json
     {
-      "mcpServers": {
+      "agentServers": {
         "data-server": {
-          "url": "wss://api.example.com/mcp",
+          "url": "wss://api.example.com/agent",
           "auth": {
             "token": "bearer-token-123"
           }
@@ -105,9 +105,9 @@ Where the original MCP server URL is transformed by:
 
     ```json
     {
-      "mcpServers": {
+      "agentServers": {
         "data-server": {
-          "url": "https://mcp-proxy.akto.io/proxy/wss/api.example.com/mcp",
+          "url": "https://agent-proxy.akto.io/proxy/wss/api.example.com/agent",
           "auth": {
             "token": "bearer-token-123"
           }
@@ -120,7 +120,7 @@ Where the original MCP server URL is transformed by:
 
 * All original authentication credentials (API keys, tokens, etc.) remain the same
 * The proxy transparently forwards authentication headers to the original server
-* No changes required on the MCP server side
+* No changes required on the agent server side
 * The proxy URL supports both HTTP/HTTPS and WebSocket protocols
 
 ### Advanced Configuration
@@ -176,7 +176,7 @@ threat_detection:
 ### 2. Access Control
 
 * **Authentication**: API key-based authentication for all proxy requests
-* **Authorization**: Role-based access control for different MCP operations
+* **Authorization**: Role-based access control for different agent operations
 * **IP Whitelisting**: Restrict access to approved IP addresses
 * **Session Management**: Secure session handling with automatic timeout
 
@@ -245,7 +245,7 @@ Authorization: Bearer {api_key}
 1. **Regular Policy Updates**: Keep security policies and guardrails up-to-date
 2. **Monitor Alert Fatigue**: Fine-tune detection rules to reduce false positives
 3. **Performance Optimization**: Use caching for frequently accessed resources
-4. **Backup Configuration**: Maintain fallback options for critical MCP servers
+4. **Backup Configuration**: Maintain fallback options for critical agent servers
 5. **Regular Audits**: Review logs and analytics for security insights
 
 ## Troubleshooting

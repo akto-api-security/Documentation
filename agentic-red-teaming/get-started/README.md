@@ -71,7 +71,7 @@ Akto tests for:
 ## Next Steps
 
 * Set up continuous testing with [discovery agents](../../agentic-discovery/get-started/)
-* Enable [Guardrails](../../guardrails/overview.md) to block threats in production
+* Enable [Guardrails](../../agentic-guardrails/overview/) to block threats in production
 * Review compliance posture against security frameworks
 
 Need help? Contact support@akto.io or use in-app Intercom.

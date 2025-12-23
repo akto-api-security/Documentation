@@ -4,7 +4,7 @@ Run comprehensive security tests on your already discovered AI agents, MCP serve
 
 ## Run Security Tests
 
-Once your agentic assets are discovered and inventoried in Akto, you can immediately start testing them with [1000+ specialized security probes](broken-reference) designed for AI agents and MCP servers.
+Once your agentic assets are discovered and inventoried in Akto, you can immediately start testing them with [1000+ specialized security probes](/broken/pages/Et6PgCfroa4umh0CPo3K) designed for AI agents and MCP servers.
 
 ### Quick Steps
 
@@ -21,6 +21,6 @@ Once tests complete:
 1. **Review Results** - See all identified vulnerabilities with severity levels
 2. **Get Remediation Guidance** - Follow step-by-step fixes for each issue
 3. **Export Reports** - Share findings with your team
-4. **Enable Guardrails** - Deploy [real-time protection](../../guardrails/overview.md) to block threats in production
+4. **Enable Guardrails** - Deploy [real-time protection](../../agentic-guardrails/overview/) to block threats in production
 
 Need help? Contact support@akto.io or use in-app Intercom.

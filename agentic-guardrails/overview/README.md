@@ -24,30 +24,35 @@ Deploy real-time protection for your AI agents and MCP servers. Akto Guardrails 
 Select and configure the appropriate protection proxy:
 
 #### For MCP Servers
+
 Deploy real-time protection for Model Context Protocol servers, tools, and resources.
 
-→ [Set Up MCP Proxy](../getting-started/agentic-guardrails/akto-mcp-proxy.md)
+→ [Set Up MCP Proxy](proxy/akto-mcp-proxy.md)
 
 **What it protects:**
-- MCP tool invocations
-- Resource access patterns
-- Prompt handling
-- Schema compliance
+
+* MCP tool invocations
+* Resource access patterns
+* Prompt handling
+* Schema compliance
 
 #### For AI Agents
+
 Deploy real-time protection for AI agents and LLM applications.
 
-→ [Set Up Agent Proxy](../getting-started/agentic-guardrails/akto-agent-proxy.md)
+→ [Set Up Agent Proxy](proxy/akto-agent-proxy.md)
 
 **What it protects:**
-- Agent requests and responses
-- Tool permission enforcement
-- Authentication patterns
-- Data leakage prevention
+
+* Agent requests and responses
+* Tool permission enforcement
+* Authentication patterns
+* Data leakage prevention
 
 ### Step 4: Enable Protection
 
 Once your proxy is configured:
+
 1. Set environment variable: `AKTO_THREAT_ENABLED=true`
 2. Start routing traffic through the proxy
 3. Monitor threats in **Guardrails** dashboard
@@ -56,6 +61,7 @@ Once your proxy is configured:
 ### Step 5: Monitor & Respond
 
 From your Guardrails dashboard:
+
 1. View real-time threat detection
 2. See blocked attacks and patterns
 3. Configure blocking rules
@@ -64,12 +70,13 @@ From your Guardrails dashboard:
 ## What Gets Protected
 
 Akto Guardrails defends against:
-- Prompt injection attacks
-- Tool abuse and permission escalation
-- Unauthorized access attempts
-- Schema violations
-- Suspicious data patterns
-- Known attack signatures
+
+* Prompt injection attacks
+* Tool abuse and permission escalation
+* Unauthorized access attempts
+* Schema violations
+* Suspicious data patterns
+* Known attack signatures
 
 ## Key Features
 
@@ -83,8 +90,8 @@ Akto Guardrails defends against:
 
 ## Next Steps
 
-- [Discover your agents](../agentic-discovery/get-started/) to get full visibility
-- [Run security tests](../agentic-red-teaming/get-started/) to identify vulnerabilities
-- Configure custom blocking policies for your use case
+* [Discover your agents](../../agentic-discovery/get-started/) to get full visibility
+* [Run security tests](../../agentic-red-teaming/get-started/) to identify vulnerabilities
+* Configure custom blocking policies for your use case
 
 Need help? Contact support@akto.io or use in-app Intercom.
