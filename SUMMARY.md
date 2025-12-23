@@ -57,7 +57,8 @@
 
 ## DAST
 
-* [Akto DAST](dast/akto-dast.md)
+* [Getting Started wiht Akto DAST](dast/akto-dast.md)
+* [View DAST Scans](dast/view-dast-scans.md)
 
 ## Traffic Connector
 
