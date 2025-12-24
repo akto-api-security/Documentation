@@ -14,6 +14,7 @@
 * [MCP Recon](mcp-recon.md)
 * [MCP Import](mcp-import.md)
 * [MCP Endpoint Shield](mcp-endpoint-shield.md)
+* [MCP Endpoint Shield via Cursor Hooks](mcp-endpoint-shield-cursor-hooks.md)
 * [AI Agent Import](ai-agent-import.md)
 * [AI Model Import](ai-model-import.md)
 * [AI Agent Proxy](agentic-ai/akto-agent-proxy.md)
