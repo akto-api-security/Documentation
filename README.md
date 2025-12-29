@@ -2,7 +2,7 @@
 
 Welcome to Akto Agentic AI Security! Secure your AI agents, MCP servers, and agentic applications with complete visibility, automated testing, and real-time protection. Get started in minutes by choosing what you need.
 
-<figure><img src=".gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (5) (2).png" alt=""><figcaption></figcaption></figure>
 
 ***
 
@@ -10,10 +10,10 @@ Welcome to Akto Agentic AI Security! Secure your AI agents, MCP servers, and age
 
 Automatically discover and inventory all your AI agents, MCP servers, and tools across your infrastructure.
 
-→ [Get Started with Agentic Discovery](agentic-discovery/get-started/)
+→ [Get Started with Agentic Discovery](agentic-discovery/get-started.md)
 
-* [Homegrown Discovery Agents](getting-started/agentic-discovery/homegrown-discovery-agents/) - API Gateways, eBPF, Kubernetes, manual import, and MCP Recon
-* [Endpoints Discovery Agents](getting-started/agentic-discovery/endpoints-discovery-agents/) - Browser extensions, secure web networks, MCP endpoint shield, and agentic shield
+* [Homegrown Discovery Agents](akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/) - API Gateways, eBPF, Kubernetes, manual import, and MCP Recon
+* [Endpoints Discovery Agents](akto-argus-agentic-ai-security-for-homegrown-ai/endpoints-discovery-agents.md) - Browser extensions, secure web networks, MCP endpoint shield, and agentic shield
 
 ***
 
@@ -46,5 +46,5 @@ Set up protection proxies:
 
 ## Resources
 
-* [Hybrid SaaS Deployment](getting-started/hybrid-saas.md) - Deploy Akto in your own cloud
+* [Hybrid SaaS Deployment](akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/hybrid-saas.md) - Deploy Akto in your own cloud
 * Support - Contact help@akto.io or use in-app Intercom

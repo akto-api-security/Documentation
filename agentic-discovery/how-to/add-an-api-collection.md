@@ -57,7 +57,7 @@ You can connect Akto with **AWS API Gateway** for automated agent component dete
 
 #### **Kong**
 
-You can connect Akto with **Kong** for automated agent detection which enhances the platform's agility, accelerates integration, improves management, and ensures a more secure and efficient ecosystem for developers leveraging agentic systems. [Click here](../../getting-started/agentic-discovery/homegrown-discovery-agents/api-gateways/connect-akto-with-kong.md) for detailed steps.
+You can connect Akto with **Kong** for automated agent detection which enhances the platform's agility, accelerates integration, improves management, and ensures a more secure and efficient ecosystem for developers leveraging agentic systems. [Click here](../../akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/api-gateways/connect-akto-with-kong.md) for detailed steps.
 
 #### **NGINX**
 

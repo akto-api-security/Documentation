@@ -40,7 +40,7 @@ description: Add Akto app in your GitHub organization
 
 * In Akto dashboard go to `Settings > Integrations > Reporting > Github App` and click `Configure`
 
-<figure><img src="../../.gitbook/assets/image (9) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (9) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 * Add Github App Id and upload secret key `.pem` file.
 

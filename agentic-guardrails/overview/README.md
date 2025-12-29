@@ -90,7 +90,7 @@ Akto Guardrails defends against:
 
 ## Next Steps
 
-* [Discover your agents](../../agentic-discovery/get-started/) to get full visibility
+* [Discover your agents](../../agentic-discovery/get-started.md) to get full visibility
 * [Run security tests](../../agentic-red-teaming/get-started/) to identify vulnerabilities
 * Configure custom blocking policies for your use case
 
