@@ -71,7 +71,7 @@ Confirm the action in the confirmation dialog.
 The policy status then changes to **Inactive**, and enforcement stops for that policy while preserving configuration data.
 
 {% hint style="info" %}
-## **Additional Option**
+### **Additional Option**
 
 * Select **View Details** from the same menu to open the guardrail policy form.
 * Update configuration settings directly from the policy form if required.

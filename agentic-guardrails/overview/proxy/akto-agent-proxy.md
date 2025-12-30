@@ -28,8 +28,6 @@ Akto Agent Proxy is a security and governance layer that sits between agent clie
 
 Cloud setup
 
-<figure><img src="../../../.gitbook/assets/akto-agent-proxy-cloud.png" alt=""><figcaption></figcaption></figure>
-
 ## How It Works
 
 1. **Request Interception**: Agent clients send requests to the Akto proxy endpoint instead of directly to agent servers

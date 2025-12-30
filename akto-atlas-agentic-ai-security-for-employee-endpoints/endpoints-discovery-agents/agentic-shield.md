@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Agentic Shield
 
 :rocket: Discover and Protect LLM calls done from your **Local Environment**.

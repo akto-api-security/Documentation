@@ -10,7 +10,8 @@
     * [Chrome](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/chrome.md)
     * [Firefox](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/firefox.md)
     * [Safari](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/safari.md)
-  * [MCP Endpoint Shield](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield.md)
+  * [MCP Endpoint Shield](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/README.md)
+    * [MCP Endpoint Shield via Cursor Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/mcp-endpoint-shield-via-cursor-hooks.md)
   * [Agentic Shield](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/agentic-shield.md)
 * [Concepts](akto-atlas-agentic-ai-security-for-employee-endpoints/concepts/README.md)
   * [MCP Endpoint Shield](akto-atlas-agentic-ai-security-for-employee-endpoints/concepts/mcp-endpoint-shield.md)
@@ -67,6 +68,7 @@
     * [Connect Akto with AWS Fargate](akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/aws-services/aws-fargate.md)
     * [Connect Akto with AWS EKS](akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/aws-services/aws-eks.md)
     * [Connect Akto with AWS ECS](akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/aws-services/aws-ecs.md)
+    * [Connect Akto with AWS Bedrock](akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/aws-services/connect-akto-with-aws-bedrock.md)
   * [GCP Services](akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/gcp-services/README.md)
     * [Connect Akto with GCP Packet Mirroring](akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/gcp-services/google-cloud-gcp.md)
     * [Connect Akto with Apigee](akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/gcp-services/connect-akto-with-apigee.md)
@@ -88,8 +90,6 @@
   * [Configure TLS on kafka](akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/kafka-tls-in-kubernetes.md)
   * [Configure SASL Authentication on kafka](akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/kafka-sasl-in-kubernetes.md)
   * [Traffic Data Sources](akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/traffic-data-sources.md)
-
-## Endpoint Security
 
 ## Agentic Discovery
 
@@ -300,8 +300,8 @@
 
 ## Compliance
 
-* [Concepts](compliance/concepts/README.md)
-  * [Overview](compliance/concepts/overview.md)
+* [Overview](compliance/overview.md)
+* [Concepts](compliance/concepts.md)
 
 ***
 
