@@ -1,6 +1,6 @@
 ---
 description: Welcome to Akto Agentic AI Security!
-cover: .gitbook/assets/Agentic Security Cover page (4).png
+cover: .gitbook/assets/Agentic Security Cover page (5).png
 coverY: 0
 layout:
   width: default
