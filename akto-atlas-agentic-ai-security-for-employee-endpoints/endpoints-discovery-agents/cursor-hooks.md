@@ -12,7 +12,6 @@ MCP Endpoint Shield via Cursor Hooks provides **zero-installation runtime securi
 * ✅ **Real-time Protection** - Intercepts every MCP request and response
 * ✅ **Centralized Monitoring** - All threats reported to Akto dashboard
 * ✅ **Automatic Updates** - Hook scripts auto-sync security policies
-* ✅ **Minimal Overhead** - Lightweight scripts with negligible performance impact
 
 ***
 
@@ -966,7 +965,6 @@ export AKTO_ASYNC_REPORTING="false"
 | **MCP Config Changes**    | None required                | Automatic config wrapping         |
 | **IDE Support**           | Cursor only                  | Cursor, VS Code, Claude Desktop   |
 | **Updates**               | Manual script update via Git | Auto-update via agent             |
-| **Performance Overhead**  | \~5-10ms per call            | \~2-5ms per call                  |
 | **Enterprise Deployment** | Via script distribution      | Via MDM (Jamf, Intune)            |
 | **Multi-IDE Protection**  | Requires separate setup      | Single agent protects all IDEs    |
 | **Offline Mode**          | Limited (requires API calls) | Full offline detection available  |
@@ -988,7 +986,6 @@ export AKTO_ASYNC_REPORTING="false"
 * Enterprise-wide deployment via MDM
 * Need automatic updates and centralized management
 * Require offline/air-gapped operation
-* Want lowest possible performance overhead
 
 ***
 
