@@ -16,6 +16,6 @@ Akto will automatically rerun tests for the selected agent components and update
 
 After the scan completes:
 
-- If the issue is fixed, it moves to the **No vulnerability found** tab
-- If the issue persists, it remains under **Vulnerable**
-- You can repeat the rescan anytime as needed
+* If the issue is fixed, it moves to the **No vulnerability found** tab
+* If the issue persists, it remains under **Vulnerable**
+* You can repeat the rescan anytime as needed

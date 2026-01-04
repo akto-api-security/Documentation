@@ -10,10 +10,10 @@ You can create custom test roles representing different personas or scenarios, e
 
 ## Common Scan Roles
 
-**TEST_USER**: Standard user role for testing typical agent interactions and permissions.
+**TEST\_USER**: Standard user role for testing typical agent interactions and permissions.
 
-**ATTACKER_TOKEN_ALL**: Simulates an attacker with compromised credentials to validate security boundaries.
+**ATTACKER\_TOKEN\_ALL**: Simulates an attacker with compromised credentials to validate security boundaries.
 
 **MEMBER**: Regular member role for testing team-level access controls and collaboration features.
 
-For information on creating test roles, refer to [Create a Test Role](../how-to/create-a-test-role.md).
+For information on creating test roles, refer to [Create a Test Role](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/create-a-test-role.md).

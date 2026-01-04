@@ -10,14 +10,14 @@ Contexts will help you query all your data from Akto dashboard - which you can t
 
 Akto supports 4 types of contexts -
 
-1. [Roles](contexts.md#roles-access-context) (`roles_access_context`) - You can access tokens from [Test roles](../../../agentic-red-teaming/concepts/test-role.md) that you have configured in the dashboard
+1. [Roles](contexts.md#roles-access-context) (`roles_access_context`) - You can access tokens from [Test roles](../../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/test-role.md) that you have configured in the dashboard
 2. [API Inventory](contexts.md#api-inventory-context) (`endpoint_in_traffic_context`) - You can use this context to check if an endpoint already exists in API Inventory. This is useful while discovering shadow APIs. An endpoint is a shadow endpoint only if it exists and is NOT being used by the application.
 3. [Parameters](contexts.md#parameters-context) (`param_context`) - You can use this context to query all parameters (JSON/form-data etc.). For example, you want to run a BOLA test that tries to access `cart` details by changing `cart_id` parameter in the request body. You can use `param_context` to query all keys that match `.*cart_id.*` and use this wordlist in your BOLA test.
 4. [Private variable](contexts.md#private-variable-context) (`private_variable_context)` - You can use this context to find out if a particular value is being used by exactly 1 user or multiple users. A `cart_id` or a `transaction_id` is particular to a user, whereas `product_id` can be queried by multiple users
 
 ### Roles access context
 
-Once you [create a Test role](../../../agentic-red-teaming/how-to/create-a-test-role.md) in Akto dashboard and [configure auth tokens](../../../agentic-red-teaming/how-to/create-a-test-role.md#adding-auth-token-for-role) for that role, you can use the auth tokens in your YAML test.
+Once you [create a Test role](../../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/create-a-test-role.md) in Akto dashboard and [configure auth tokens](../../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/create-a-test-role.md#adding-auth-token-for-role) for that role, you can use the auth tokens in your YAML test.
 
 **Example** - You want to test each admin API if they can be accessed using a member token. To carry out this test, you can create a role called `MEMBER_TOLE` . You would also have to add auth token to the role (eg `Authorization: Bearer member.role.token`) . You can now use it in your YAML to replace the auth token header.
 

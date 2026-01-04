@@ -4,4 +4,4 @@ JSON Recording automates the process of capturing and managing authentication to
 
 This feature is particularly useful for testing agent components that require authentication, such as LLM provider API calls, MCP server connections, or tool invocations requiring bearer tokens.
 
-Learn how to [Set Up JSON Recording for Auth Tokens](../how-to/set-up-json-recording-for-auth-tokens.md).
+Learn how to [Set Up JSON Recording for Auth Tokens](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/set-up-json-recording-for-auth-tokens.md).

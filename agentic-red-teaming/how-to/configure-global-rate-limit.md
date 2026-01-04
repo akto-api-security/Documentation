@@ -1,4 +1,4 @@
-# Configure Global Rate Limit
+# Configure global rate limit
 
 The Global Rate Limit feature allows you to control the number of security tests executed per minute against agent components. This helps manage load during testing and prevents overwhelming your agentic systems.
 

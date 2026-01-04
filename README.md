@@ -35,7 +35,7 @@ Test your AI agents and MCP servers with 1000+ specialized security probes. Iden
 
 **Import your components to start testing**
 
-<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><h4>AI Agents</h4></td><td>AWS Bedrock, Azure AI, Databricks, Vertex AI, Watsonx, or custom agents</td><td><a href="getting-started/agentic-red-teaming/ai-agent-import.md">ai-agent-import.md</a></td></tr><tr><td><h4>MCP Servers</h4></td><td>Model Context Protocol tools, resources, and prompts</td><td><a href="getting-started/agentic-red-teaming/mcp-import.md">mcp-import.md</a></td></tr><tr><td><h4>AI Models</h4></td><td>Large language models and custom AI implementations</td><td><a href="getting-started/agentic-red-teaming/ai-model-import.md">ai-model-import.md</a></td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><h4>AI Agents</h4></td><td>AWS Bedrock, Azure AI, Databricks, Vertex AI, Watsonx, or custom agents</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/ai-agent-import.md">ai-agent-import.md</a></td></tr><tr><td><h4>MCP Servers</h4></td><td>Model Context Protocol tools, resources, and prompts</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/mcp-import.md">mcp-import.md</a></td></tr><tr><td><h4>AI Models</h4></td><td>Large language models and custom AI implementations</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/ai-model-import.md">ai-model-import.md</a></td></tr></tbody></table>
 
 ***
 
@@ -49,7 +49,7 @@ Deploy real-time protection for your production agents. Block threats as they oc
 
 ## Resources
 
-<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><h4>Hybrid SaaS Deployement</h4></td><td>Deploy Akto in your cloud</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/hybrid-saas.md">hybrid-saas.md</a></td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><h4>Hybrid SaaS Deployement</h4></td><td>Deploy Akto in your cloud</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md">hybrid-saas.md</a></td></tr></tbody></table>
 
 {% hint style="success" %}
 ## Akto Support

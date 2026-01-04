@@ -16,7 +16,7 @@ There could be multiple reasons why you'd want to install testing module within 
 
 1. Login to Akto dashboard at [app.akto.io](https://app.akto.io)
 2. Go to Quick Start > Hybrid Saas > Click on “Connect” button
-3. Copy the JWT token (marked in red) [ Also referred as `Database Abstractor Token` later]
+3. Copy the JWT token (marked in red) \[ Also referred as `Database Abstractor Token` later]
 
 You can now use a Helm-chart to install Akto Security Testing module in your cloud or install manually
 
@@ -31,10 +31,13 @@ You can now use a Helm-chart to install Akto Security Testing module in your clo
 ### Helm-chart
 
 #### Pre-requisites / Dependencies
+
 If you don't need auto-scaling, skip this section.
 
 Otherwise, if auto-scaling needs to be enabled to allow parallel test runs via multiple k8s pods, we need to install few dependencies via helm charts.
+
 1. Install `kube-prometheus-stack`
+
 ```bash
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update prometheus-community
@@ -43,7 +46,9 @@ helm install prometheus prometheus-community/kube-prometheus-stack \
 	--namespace <your-namespace> \
 	--create-namespace
 ```
+
 2. Install `keda`
+
 ```bash
 helm repo add kedacore https://kedacore.github.io/charts  
 helm repo update kedacore
@@ -52,34 +57,45 @@ helm install keda kedacore/keda \
   --namespace <your-namespace> \
   --create-namespace
 ```
+
 3. Upgrade `keda` to set `watchNamespace`
    1. This restricts keda to watch/control only specific namespace(s)
    2. Its fine if you get this error - `Error: UPGRADE FAILED: no RoleBinding with the name "keda-operator" found`
    3. As a fix, re-run the helm upgrade command mentioned below, as the first run would create the `keda-operator` deployment in k8s.
+
 ```bash
 helm upgrade keda kedacore/keda \
   --namespace <your-namespace> \
   --set watchNamespace=<your-namespace>
 ```
+
 4. While installing / upgrading Akto's helm chart (covered in later sections) additionally set the following flag
+
 ```
 --set testing.autoScaling.enabled=true
 ```
 
 #### Akto's helm chart installation
+
 1. Add akto helm repository.
+
 ```bash
 helm repo add akto https://akto-api-security.github.io/helm-charts/
 ```
-##### Note: If you've already added akto helm repository, update the helm repository using:
+
+**Note: If you've already added akto helm repository, update the helm repository using:**
+
 ```bash
 helm repo update akto
 ```
+
 2. Using the dashboard abstractor token saved in the above steps, deploy the helm chart below.
+
 ```bash
 helm install akto-mini-testing akto/akto-mini-testing -n <your-namespace> --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<your-database-abstractor-token>"
 ```
-##### Note: If you want to modify the helm chart according to your needs, you can clone the same from [mini-testing-helm-chart](https://github.com/akto-api-security/helm-charts/tree/master/charts/mini-testing)
+
+**Note: If you want to modify the helm chart according to your needs, you can clone the same from** [**mini-testing-helm-chart**](https://github.com/akto-api-security/helm-charts/tree/master/charts/mini-testing)
 
 ### Linux VM
 

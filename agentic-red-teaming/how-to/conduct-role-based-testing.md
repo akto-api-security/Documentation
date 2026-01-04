@@ -10,7 +10,7 @@ This testing approach is essential for maintaining system integrity by reducing 
 
 ## Conducting Role-Based Tests
 
-When you [run a test](run-test.md), you can select a test role to ensure the test reflects the permissions and access levels associated with that role.
+When you [run a test](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/run-test.md), you can select a test role to ensure the test reflects the permissions and access levels associated with that role.
 
 1. Navigate to **Agentic Discovery > Collections**
 2. Select the collection containing agent components

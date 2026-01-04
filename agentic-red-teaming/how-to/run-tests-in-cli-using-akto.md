@@ -1,13 +1,13 @@
-# Run Tests in CLI Using Akto
+# Run tests in CLI using Akto
 
 You can run Akto testing module via CLI for local testing of agent components.
 
 ## When to Use
 
-- Run Akto tests locally on any agent collection
-- Results from CLI are NOT saved in Akto dashboard
-- Best used when developers want to run tests locally before committing code
-- Override application host URL to localhost or different staging URL
+* Run Akto tests locally on any agent collection
+* Results from CLI are NOT saved in Akto dashboard
+* Best used when developers want to run tests locally before committing code
+* Override application host URL to localhost or different staging URL
 
 ## How to Use
 
@@ -16,15 +16,15 @@ Prepare the following environment variables:
 1. `AKTO_API_KEY` - Go to My accounts > Settings > Integrations > Akto API > Generate token
 2. `AKTO_DASHBOARD_URL` - URL of your dashboard
 3. `TEST_IDS` - Space-separated list of test IDs to run (e.g., `PROMPT_INJECTION MCP_AUTH_BYPASS`) or `ALL` for all tests
-4. `API_COLLECTION_NAME` - Collection name to test (e.g., agent_collection)
+4. `API_COLLECTION_NAME` - Collection name to test (e.g., agent\_collection)
 5. `API_COLLECTION_ID` - Collection ID (integer). Only one of `API_COLLECTION_NAME` or `API_COLLECTION_ID` is required
 6. `TEST_APIS` - Space-separated list of components to test. If absent, all components are selected
 7. `OVERRIDE_APP_URL` - Change the application host for testing
 8. `OUTPUT_LEVEL` - Output level:
-   - `NONE` - No output file
-   - `SUMMARY` - [Default] Tests executed and list of vulnerable components
-   - `DETAILED` - Summary plus test descriptions and impact
-   - `DEBUG` - Detailed output with original and attempt request/response
+   * `NONE` - No output file
+   * `SUMMARY` - \[Default] Tests executed and list of vulnerable components
+   * `DETAILED` - Summary plus test descriptions and impact
+   * `DEBUG` - Detailed output with original and attempt request/response
 
 Example CLI:
 

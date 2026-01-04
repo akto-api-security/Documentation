@@ -15,7 +15,7 @@ Test your AI agents, MCP servers, and AI models with 1000+ specialized security 
 
 Already have discovered agents and MCP servers in your inventory? Start testing immediately.
 
-→ [Red Team Existing Agentic Asset](red-team-existing-agentic-asset.md)
+→ [Red Team Existing Agentic Asset](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/red-team-existing-agentic-asset.md)
 
 **Option B: Import New Components**
 
@@ -25,19 +25,19 @@ Navigate to **Quick Start** in your Akto dashboard and import the components you
 
 Test agents from AWS Bedrock, Azure AI Foundry, Databricks, Google Vertex AI, IBM Watsonx, or custom agents.
 
-→ [Import AI Agents](manual-import/)
+→ [Import AI Agents](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/)
 
 #### Import MCP Servers
 
 Test Model Context Protocol tools, resources, and prompts by connecting to SSE endpoints.
 
-→ [Import MCP Servers](manual-import/)
+→ [Import MCP Servers](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/)
 
 #### Import AI Models
 
 Test large language models and custom AI implementations for security vulnerabilities.
 
-→ [Import AI Agents](manual-import/)
+→ [Import AI Agents](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/)
 
 ### Step 3: Run Security Tests
 

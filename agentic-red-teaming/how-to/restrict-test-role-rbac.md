@@ -1,6 +1,6 @@
 # Restrict Access to a Test Role Using RBAC
 
-> 📖 If you're new to Test Roles, start with [Create a Test Role](create-a-test-role.md).
+> 📖 If you're new to Test Roles, start with [Create a Test Role](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/create-a-test-role.md).
 
 You can now **restrict access to test roles** based on user roles (RBAC). This gives you fine-grained control over who can view or use a particular test role.
 
@@ -10,7 +10,7 @@ This is especially useful in collaborative environments where different teams (e
 
 ## 📘 Prerequisite
 
-Make sure you’ve already created [Custom Roles](../../account/custom-roles.md) for your team members.
+Make sure you’ve already created [Custom Roles](../../account-management/custom-roles.md) for your team members.
 
 ***
 
@@ -46,5 +46,5 @@ Make sure you’ve already created [Custom Roles](../../account/custom-roles.md)
 
 ## 📎 Related Documentation
 
-* [Create a Test Role](create-a-test-role.md)
-* [Custom Roles](../../account/custom-roles.md)
+* [Create a Test Role](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/create-a-test-role.md)
+* [Custom Roles](../../account-management/custom-roles.md)

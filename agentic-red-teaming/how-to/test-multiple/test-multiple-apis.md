@@ -2,7 +2,7 @@
 description: Explore about how to test multiple APIs.
 ---
 
-# Test Multiple APIs
+# MCP Components
 
 Akto allows you to test multiple APIs of your collection (at once) as it enhances efficiency by saving time compared to conducting separate tests for each API.
 
@@ -14,6 +14,6 @@ Go to **API Discovery > API Collection**. Select the **API Collection** and clic
 
 In the above demonstration, we have run **`Lack of Resources & Rate Limiting`** the test for all the endpoints of the **"juice\_shop\_demo"** collection. Now, let's review the outcomes of these tests.
 
-{% @arcade/embed flowId="hmTC34aUsrpA7FSNWlkS" url="https://app.arcade.software/share/hmTC34aUsrpA7FSNWlkS" %}
+{% @arcade/embed url="https://app.arcade.software/share/hmTC34aUsrpA7FSNWlkS" flowId="hmTC34aUsrpA7FSNWlkS" %}
 
 In the above demonstration, no vulnerabilities were identified in the **`juice_shop_demo`** collection, resulting in no entries in the **`vulnerable`** section.

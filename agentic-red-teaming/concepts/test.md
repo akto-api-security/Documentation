@@ -6,7 +6,7 @@ description: Comprehensive security testing for AI agents and agentic systems.
 
 Akto provides specialized security testing for AI agents, LLM applications, and agentic systems. The platform includes pre-built test suites covering OWASP Top 10 for LLMs, prompt injection attacks, MCP security, tool misuse, and other agentic-specific vulnerabilities.
 
-You can schedule tests to run at times that fit your workflow, ensuring continuous security validation without disrupting operations. For scheduling information, refer to [Schedule Test](../how-to/schedule-tests.md).
+You can schedule tests to run at times that fit your workflow, ensuring continuous security validation without disrupting operations. For scheduling information, refer to [Schedule Test](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/schedule-tests.md).
 
 ## Test Categories
 

@@ -10,9 +10,9 @@ Akto automatically identifies MCP servers, discovers tool definitions and resour
 
 Gain instant visibility into every MCP server in your environment:
 
-- Automatically detects MCP servers and the tools they expose
-- Works across cloud, hybrid, and on-prem environments
-- Maps tool dependencies and resource access patterns
+* Automatically detects MCP servers and the tools they expose
+* Works across cloud, hybrid, and on-prem environments
+* Maps tool dependencies and resource access patterns
 
 ### Security Testing for MCPs
 
@@ -36,9 +36,9 @@ Each test simulates real-world attack paths with contextual severity scoring.
 
 Stay ahead of threats with real-time monitoring:
 
-- Detects unusual tool invocation patterns and malicious actor behavior
-- Visualizes threats by actor, IP address, and reputation
-- Enables early detection of tool misuse and lateral movement
+* Detects unusual tool invocation patterns and malicious actor behavior
+* Visualizes threats by actor, IP address, and reputation
+* Enables early detection of tool misuse and lateral movement
 
 ## Get Started with MCP Security
 

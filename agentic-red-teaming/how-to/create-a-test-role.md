@@ -35,9 +35,7 @@ You can add header conditions to use the auth token only for specific scenarios.
 For continuous testing, set Akto to automatically fetch fresh auth tokens before each test run. This ensures tests use valid authentication.
 
 1. **Configure Request Details**: Set up the API call details including URL, method, headers, and body to obtain a token.
-
 2. **Execute the Call**: Test the API call to verify it returns an auth token.
-
 3. **Extract Token**: Identify where the token appears in the response (header or body) and configure extraction.
 
 Akto will execute this sequence before running tests to fetch a fresh auth token, enabling daily tests and CI/CD integration without token expiry issues.
@@ -49,9 +47,9 @@ To add TLS authentication:
 1. Create a test role and click **Add auth**
 2. Click **TLS Authentication**
 3. For PEM certificate type:
-   - Input the client certificate
-   - Input the client private key
-   - Input the certificate authority certificate (optional)
+   * Input the client certificate
+   * Input the client private key
+   * Input the certificate authority certificate (optional)
 4. Click **Save**
 
 If you have a P12 type key, convert it to PEM using:
@@ -61,4 +59,4 @@ openssl pkcs12 -in ./client.p12 -out client.crt -clcerts -nokeys
 openssl pkcs12 -in ./client.p12 -out client.key -nocerts -nodes
 ```
 
-You can limit visibility of a Test Role using RBAC with the "Scope Role" dropdown. For details, see [Restrict Access to a Test Role Using RBAC](restrict-test-role-rbac.md).
+You can limit visibility of a Test Role using RBAC with the "Scope Role" dropdown. For details, see [Restrict Access to a Test Role Using RBAC](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/restrict-test-role-rbac.md).

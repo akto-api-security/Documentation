@@ -16,33 +16,35 @@ The report highlights vulnerability counts, severity distribution, affected cate
 
 **Header Summary**
 
-- **Vulnerable Components Found**: Number of agent components with security issues
-- **Vulnerable Issues**: Total vulnerability count
-- **Scan Duration**: Test execution time
-- **Test Description**: Overview of tested categories (prompt injection, tool permissions, etc.)
+* **Vulnerable Components Found**: Number of agent components with security issues
+* **Vulnerable Issues**: Total vulnerability count
+* **Scan Duration**: Test execution time
+* **Test Description**: Overview of tested categories (prompt injection, tool permissions, etc.)
 
 **Issues by Severity**
 
 Visual breakdown showing vulnerabilities across severity levels:
-- Critical
-- High
-- Medium
-- Low
+
+* Critical
+* High
+* Medium
+* Low
 
 This helps prioritize remediation efforts.
 
 **Top Categories by Issues**
 
 Breakdown of issues by vulnerability categories such as:
-- Prompt Injection
-- Sensitive Information Disclosure
-- MCP Security
-- LLM Security
-- Supply Chain
+
+* Prompt Injection
+* Sensitive Information Disclosure
+* MCP Security
+* LLM Security
+* Supply Chain
 
 **Test Configuration Details**
 
-- Test type (one-time, scheduled, CI/CD)
-- Unique hosts tested
-- Max concurrent requests
-- Start and completion timestamps
+* Test type (one-time, scheduled, CI/CD)
+* Unique hosts tested
+* Max concurrent requests
+* Start and completion timestamps

@@ -13,14 +13,15 @@ Custom Test Suites allow you to create tailored sets of security tests that alig
 ## Key Features
 
 **Flexible Test Selection**: Choose from specialized test categories including:
-- Prompt Injection
-- LLM Security
-- MCP Security
-- Agent Identity Impersonation
-- Sensitive Information Disclosure
-- Supply Chain vulnerabilities
-- Excessive Agency
-- Data Poisoning
+
+* Prompt Injection
+* LLM Security
+* MCP Security
+* Agent Identity Impersonation
+* Sensitive Information Disclosure
+* Supply Chain vulnerabilities
+* Excessive Agency
+* Data Poisoning
 
 **Category-Level and Individual Test Selection**: Select entire categories or drill down to specific tests (e.g., specific prompt injection techniques or MCP authentication bypasses).
 

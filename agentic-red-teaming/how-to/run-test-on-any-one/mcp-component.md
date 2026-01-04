@@ -1,6 +1,6 @@
-# Run Test on Any One Endpoint
+# MCP Component
 
-{% @arcade/embed flowId="N2zsZyKkhAhBvKOxc5AX" url="https://app.arcade.software/share/N2zsZyKkhAhBvKOxc5AX" %}
+{% @arcade/embed url="https://app.arcade.software/share/N2zsZyKkhAhBvKOxc5AX" flowId="N2zsZyKkhAhBvKOxc5AX" %}
 
 1. Navigate to API Discovery > API Collections
 2. Select the desired API collection

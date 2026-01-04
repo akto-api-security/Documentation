@@ -8,10 +8,10 @@ Once your agentic assets are discovered and inventoried in Akto, you can immedia
 
 ### Quick Steps
 
-1. Navigate to [**Agentic Red Teaming**](../concepts/ai-agent-security.md) in your Akto dashboard
+1. Navigate to [**Agentic Red Teaming**](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/ai-agent-security.md) in your Akto dashboard
 2. Select the assets you want to test from your inventory
 3. Choose from available test categories (prompt injection, tool abuse, data leakage, etc.)
-4. Click [**Run Tests**](../how-to/run-test.md) to start scanning
+4. Click [**Run Tests**](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/run-test.md) to start scanning
 5. Review results and remediation guidance
 
 ## After Testing

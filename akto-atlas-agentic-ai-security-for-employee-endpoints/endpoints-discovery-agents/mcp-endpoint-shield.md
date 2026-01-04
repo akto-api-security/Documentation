@@ -6,6 +6,16 @@ MCP Endpoint Shield provides **runtime security** and auto-discovery of local MC
 
 ***
 
+## What is Agentic Endpoint Shield?
+
+Endpoint Shield continuously monitors employee devices to identify and track:
+
+* **AI Agents**: All deployed agents across web, desktop, and endpoint devices
+* **MCP Servers**: Model Context Protocol server instances running locally or remotely
+* **Device Information**: Complete device inventory with hardware IDs, usernames, and locations
+* **Agent Activity**: Real-time heartbeat monitoring and deployment status
+* **MCP Connections**: Server URLs, connection health, and last seen timestamps
+
 ### ✨ Features
 
 * ✅ Continuous safety checks on all requests and responses to the MCP servers

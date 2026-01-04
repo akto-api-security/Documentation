@@ -4,7 +4,7 @@
 
 The Pre-request script feature in Akto allows you to execute custom JavaScript code before each API test is run. This powerful functionality enables you to dynamically modify request parameters or perform any necessary pre-test operations.
 
-{% @arcade/embed flowId="y9rVLnnM4hZKDB4428FM" url="https://app.arcade.software/share/y9rVLnnM4hZKDB4428FM" %}
+{% @arcade/embed url="https://app.arcade.software/share/y9rVLnnM4hZKDB4428FM" flowId="y9rVLnnM4hZKDB4428FM" %}
 
 ### Setting Up the Pre-request Script
 

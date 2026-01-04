@@ -43,4 +43,4 @@ Traditional AppSec and cloud security platforms were designed for deterministic 
 
 ## Next Step: Homegrown Agentic Discovery
 
-Begin by setting up [**Homegrown Agentic Discovery**](homegrown-discovery-agents/) to automatically identify AI agents, MCP servers, and GenAI applications running in your cloud. This establishes the inventory required for continuous testing and runtime guardrails.
+Begin by setting up [**Homegrown Agentic Discovery**](connectors/) to automatically identify AI agents, MCP servers, and GenAI applications running in your cloud. This establishes the inventory required for continuous testing and runtime guardrails.

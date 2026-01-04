@@ -1,4 +1,4 @@
-# Result Types
+# Result types
 
 Akto's agentic security testing provides comprehensive insights into the security posture of your AI agents and agentic systems. Results are categorized into different types, each offering specific information about the state of tested components.
 

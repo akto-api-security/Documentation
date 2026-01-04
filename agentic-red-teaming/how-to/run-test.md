@@ -16,12 +16,12 @@ Running security tests in Akto involves assessing agent components to evaluate t
 
 When running tests, you can select from specialized categories:
 
-- **Prompt Injection**: Tests for direct and indirect prompt injection vulnerabilities
-- **LLM Security**: Validates model-specific security controls
-- **MCP Security**: Tests Model Context Protocol implementations
-- **Sensitive Information Disclosure**: Detects credential and PII exposure
-- **Excessive Agency**: Validates tool permission boundaries
-- **Supply Chain**: Identifies dependency vulnerabilities
+* **Prompt Injection**: Tests for direct and indirect prompt injection vulnerabilities
+* **LLM Security**: Validates model-specific security controls
+* **MCP Security**: Tests Model Context Protocol implementations
+* **Sensitive Information Disclosure**: Detects credential and PII exposure
+* **Excessive Agency**: Validates tool permission boundaries
+* **Supply Chain**: Identifies dependency vulnerabilities
 
 and more...
 

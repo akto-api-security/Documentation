@@ -13,9 +13,9 @@ Discover and inventory all your AI agents, MCP servers, and tool integrations ac
 
 Navigate to **Quick Start** in your Akto dashboard and select your preferred discovery method:
 
-[**Homegrown Discovery Agents**](homegrown-discovery-agents/) Deploy discovery agents to continuously monitor your infrastructure. Includes API Gateways, eBPF, Kubernetes, manual import, and MCP Recon.
+[**Homegrown Discovery Agents**](../akto-argus-agentic-ai-security-for-homegrown-ai/connectors/) Deploy discovery agents to continuously monitor your infrastructure. Includes API Gateways, eBPF, Kubernetes, manual import, and MCP Recon.
 
-[**Endpoints Discovery Agents**](endpoints-discovery-agents/) Get started immediately without infrastructure setup. Includes browser extensions, secure web networks, MCP endpoint shield, and agentic shield.
+[**Endpoints Discovery Agents**](../akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/) Get started immediately without infrastructure setup. Includes browser extensions, secure web networks, MCP endpoint shield, and agentic shield.
 
 ### Step 3: Configure Your Discovery Agent
 
@@ -41,7 +41,7 @@ Akto automatically identifies:
 
 ## Next Steps
 
-* Run [security tests](../agentic-red-teaming/get-started/) on discovered components
+* Run [security tests](../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/) on discovered components
 * Enable [Guardrails](../agentic-guardrails/overview/) for real-time protection
 * Review discovered agents for shadow or zombie components
 
