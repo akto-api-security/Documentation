@@ -36,7 +36,7 @@ Each Playground session separates trusted instructions from adversarial input to
 {% tab title="System Prompts" %}
 System Prompts define the baseline instructions provided to the AI agent. System Prompts represent the trusted control layer under test.
 
-<figure><img src="../../.gitbook/assets/image (2).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (2).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endtab %}
 
 {% tab title="User Input" %}

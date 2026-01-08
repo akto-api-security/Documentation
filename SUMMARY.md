@@ -428,6 +428,7 @@
 
 ## Integrations
 
+* [MCP Registry Integratio](integrations/mcp-registry-integratio.md)
 * [CI/CD Integrations](integrations/ci-cd-integrations/README.md)
   * [GitHub Actions](integrations/ci-cd-integrations/github-actions/README.md)
     * [Create GitHub App](integrations/ci-cd-integrations/github-actions/create-github-app.md)
