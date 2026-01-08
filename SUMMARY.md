@@ -200,6 +200,7 @@
   * [Extract APIs from github hosted source code using our Github Action](api-inventory-1/how-to/extract-apis-from-source-code-gha.md)
   * [Extract APIs from source code using our Docker based CLI](api-inventory-1/how-to/extract-apis-from-source-code-docker-cli.md)
   * [Remove Bad Endpoints](api-inventory-1/how-to/remove-bad-endpoints.md)
+  * [Bulk De-Merge APIs](api-inventory/how-to/bulk-de-merge-apis.md)
 
 ## API Protection
 
@@ -214,6 +215,7 @@
   * [Configure Ignored Events](api-protection/concepts/threat-ignored-events.md)
   * [Configure Ignored Events Per Rule](api-protection/concepts/ignore-events-at-rule-level.md)
   * [Remediation Steps for API Protection Issues](api-protection/concepts/remediation-steps-for-api-protection-issues.md)
+  * [Event Retention Control](api-protection/concepts/event-retention-control.md)
 * [How To](api-protection/how-to/README.md)
   * [Manage Threat Policies](api-protection/how-to/manage-threat-policies.md)
   * [View Threat Activity Breakdown](api-protection/how-to/view-threat-activity-breakdown.md)
@@ -259,6 +261,7 @@
   * [Opening Endpoint in Test Editor](test-editor/how-to/opening-endpoint-in-test-editor.md)
   * [Add a New Test Library](test-editor/how-to/add-a-new-test-library.md)
   * [Contribute to Test Library](test-editor/how-to/contribute-to-test-library.md)
+  * [Add Test Role in Editor](test-editor/how-to/add-test-role-in-editor.md)
 
 ## API Security Testing
 
@@ -304,6 +307,7 @@
   * [Secure REST APIs using Akto](api-security-testing/how-to/secure-rest-apis-using-akto.md)
   * [Secure SOAP APIs using Akto](api-security-testing/how-to/secure-soap-apis-using-akto.md)
   * [Create and Edit Auth Types](api-security-testing/how-to/create-and-edit-auth-types.md)
+  * [Configure Global Test Settings](api-security-testing/how-to/configure-global-test-settings.md)
 
 ## Issues
 
@@ -316,7 +320,7 @@
   * [Jira Integration](issues/how-to/jira-integration.md)
   * [Azure DevOps Boards Integration](issues/how-to/azure-devops-boards-integration.md)
   * [ServiceNow Integration](issues/how-to/servicenow-integration.md)
-  * [DevRev Integration](issues/how-to/devrev-integration.md)
+  * [DevRev Integrationoc](issues/how-to/devrev-integration.md)
   * [Triage Issues](issues/how-to/triage-issues/README.md)
     * [Review Issues Marked as False Positives](issues/how-to/triage-issues/review-issues-marked-as-false-positives.md)
   * [Export Selected Issues to Reports](issues/how-to/export-selected-issues-to-reports.md)
