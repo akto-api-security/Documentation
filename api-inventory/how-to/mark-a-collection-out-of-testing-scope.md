@@ -3,7 +3,7 @@
 In Akto, you may not always want to test every API collection. For example, sandbox collections, third-party APIs, or deprecated services may not be relevant for active security testing.\
 The **“Mark collections as out of testing scope”** option lets you exclude such collections from scans, ensuring tests only run on meaningful targets
 
-<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
 ***
 

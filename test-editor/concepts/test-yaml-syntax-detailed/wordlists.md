@@ -75,4 +75,4 @@ This will create a wordlist dynamically from your traffic data. It will resolve 
 
 You can **combine multiple wordlists** in the same test to build richer, more exhaustive scenarios. This is useful when your API parameters depend on combinations of values—for instance, names with roles, paths with tokens, or header values with payloads.
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>

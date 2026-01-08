@@ -14,4 +14,4 @@ In addition to the default Production and Staging environments, **you can set cu
 
 This flexibility allows you to better organize and manage your API collections according to your specific deployment stages, testing requirements, or organizational needs. For example, you might want to create environment tags types like 'Development', 'QA', or 'Pre-Production' to match your workflow or maybe data source tags.
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
