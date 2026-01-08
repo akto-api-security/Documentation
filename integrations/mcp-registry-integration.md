@@ -1,4 +1,4 @@
-# MCP Registry Integratio
+# MCP Registry Integration
 
 ## Overview
 
