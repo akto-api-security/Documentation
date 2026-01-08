@@ -35,6 +35,8 @@ Enter the following information:
 * **API Key**: The authentication key used to access the selected provider.
 * **Model**: The specific model version exposed by the provider.
 
+<figure><img src="../.gitbook/assets/Screenshot 2026-01-08 at 7.30.00 PM.png" alt="" width="563"><figcaption></figcaption></figure>
+
 The API key must have sufficient permissions to invoke the selected model.
 {% endstep %}
 
