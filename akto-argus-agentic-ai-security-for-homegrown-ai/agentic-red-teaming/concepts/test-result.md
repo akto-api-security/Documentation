@@ -1,12 +1,12 @@
-# Test Result
+# Scan Results
 
-Agentic security test results provide insights into the security posture of your AI agents and agentic systems. Results are generated through systematic security testing that evaluates agent behaviors, tool permissions, and vulnerability responses. View all test results and take action in one place.
+Agentic security scan results provide insights into the security posture of your AI agents and agentic systems. Results are generated through systematic security testing that evaluates agent behaviors, tool permissions, and vulnerability responses. View all scan results and take action in one place.
 
 To view results, navigate to **Agentic Red Teaming > Results** and select the test from your scan results.
 
-## Viewing Test Details
+## Viewing Scan Details
 
-Each test result displays comprehensive information about detected vulnerabilities:
+Each scan result displays comprehensive information about detected vulnerabilities:
 
 **Severity**: Indicates risk level (Critical, High, Medium, Low)
 
@@ -28,10 +28,25 @@ Each test result displays comprehensive information about detected vulnerabiliti
 
 **References**: Links to relevant vulnerability documentation
 
-## Test Result Timeline
+### Scan Result Timeline
 
-View the timeline of test attempts to understand how vulnerabilities were detected and validated across multiple test iterations.
+View the timeline of scan attempts to understand how vulnerabilities were detected and validated across multiple test iterations.
 
-## Request and Response Analysis
+### Request and Response Analysis
 
 Examine detailed request payloads and response data to understand exactly how the vulnerability manifests, including any prompt injection payloads, tool calls, or malicious inputs used during testing.
+
+### Evidence as Agentic Conversation
+
+The **Evidence** section displays scan results as a chronological agentic conversation. The conversation records how the agent executed the test and how tools responded during the scan.
+
+#### **What the Evidence Shows**
+
+The Evidence view includes:
+
+* The tested interaction describing the security behaviour evaluated
+* The agent response showing the sequence of tool invocations
+*   The exact outputs returned by each tool
+
+    <figure><img src="../../../.gitbook/assets/image (42).png" alt="" width="563"><figcaption></figcaption></figure>
+

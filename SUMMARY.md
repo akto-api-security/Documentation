@@ -128,7 +128,7 @@
     * [Result types](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/result-types.md)
     * [Scan Roles](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/test-role.md)
     * [User Config](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/user-config.md)
-    * [Test Result](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/test-result.md)
+    * [Scan Results](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/test-result.md)
     * [Export Summary Report](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/export-summary-report.md)
     * [Remediation Steps for Testing Issues](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/remediation-steps-for-testing-issues.md)
     * [Magic Operator](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/magic-operator.md)
