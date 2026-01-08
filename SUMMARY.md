@@ -167,6 +167,7 @@
   * [Access Type](api-inventory-1/concepts/access-type.md)
   * [API discovery from source code](api-inventory-1/concepts/api-inventory-from-source-code.md)
   * [Advanced Filter Option](api-inventory-1/concepts/advanced-filter-option.md)
+  * [Threat Issues](api-inventory/concepts/threat-issues.md)
 * [How-To](api-inventory-1/how-to/README.md)
   * [Enable Tree view for API collections](api-inventory-1/how-to/enable-tree-view-for-api-collections.md)
   * [Export an API Collection to Postman](api-inventory-1/how-to/export-an-api-collection-to-postman.md)
