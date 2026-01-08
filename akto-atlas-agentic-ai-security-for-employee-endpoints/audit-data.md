@@ -6,7 +6,7 @@ The **Audit Data** page lists all detected MCP components and lets you control t
 
 ## Explore List
 
-The table on the Audit Data page gives you full visibility into each component.&#x20;
+The table on the Audit Data page gives you full visibility into each component.
 
 <details>
 
@@ -24,11 +24,9 @@ The table on the Audit Data page gives you full visibility into each component.&
 | **Marked By**          | The teammate who tagged or updated the entry.                                                                |
 | **Actions**            | Controls that let you approve, disapprove, or apply conditional approval.                                    |
 
-
-
 </details>
 
-<figure><img src="../../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ## Actions You Can Take
 
@@ -38,9 +36,7 @@ From the actions dropdown at the end of each row, you decide how Akto should tre
 * **Disapprove** – You want to block the component entirely.
 *   **Set Conditional Approval** – You want to allow the component, but only within limits you define.
 
-    <figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure>
-
-
+    <figure><img src="../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ## Setting Conditional Approval
 
@@ -50,7 +46,7 @@ If you choose **Conditional Approval**, you can set clear boundaries for how the
 {% tab title="Time Duration Allowed" %}
 You define how long the component can remain active. Once the duration expires, Akto automatically blocks it.
 
-<figure><img src="../../.gitbook/assets/Screenshot 2025-12-17 at 7.27.30 PM.png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Screenshot 2025-12-17 at 7.27.30 PM.png" alt="" width="563"><figcaption></figcaption></figure>
 {% endtab %}
 
 {% tab title="IPs Allowed" %}
@@ -60,19 +56,19 @@ You control where the component can be used from. You can allow:
 * Specific IPs
 * An IP range (CIDR)
 
-<figure><img src="../../.gitbook/assets/Screenshot 2025-12-17 at 7.27.52 PM.png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Screenshot 2025-12-17 at 7.27.52 PM.png" alt="" width="563"><figcaption></figcaption></figure>
 {% endtab %}
 
 {% tab title="Endpoints Allowed" %}
 You choose which endpoints the component can access.
 
-<figure><img src="../../.gitbook/assets/Screenshot 2025-12-17 at 7.28.02 PM.png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Screenshot 2025-12-17 at 7.28.02 PM.png" alt="" width="563"><figcaption></figcaption></figure>
 {% endtab %}
 
 {% tab title="Justification" %}
 You add a mandatory justification so your team understands why you approved the component with conditions.
 
-<figure><img src="../../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endtab %}
 {% endtabs %}
 

@@ -38,6 +38,34 @@ Click **Create Ticket**.
 
 Akto will automatically generate the Jira ticket with the selected configuration.
 
-### **How the Jira Ticket Appears**
+## **Create Work Item**
 
-After creation, you will see a confirmation summary in Akto. Below is an example of how the ticket typically appears:
+If your team uses internal workflows within Akto, you can log and assign tasks using **Work Items**.
+
+### **Prerequisite**
+
+Before creating Jira tickets from Akto, ensure that your Azure DevOps Board is integrated with Akto. Follow for [**Integrations Setup**](/broken/pages/KRajfTWw91KllsU24SAE)
+
+### **Steps**
+
+{% stepper %}
+{% step %}
+Open **Threat Activity** under **API Threat Detection**.
+{% endstep %}
+
+{% step %}
+Select the threat activity that requires internal follow-up.
+{% endstep %}
+
+{% step %}
+Click **Create Work Item** from the action panel.
+{% endstep %}
+
+{% step %}
+Choose details such as title, description, severity, assignee, or notes for internal tracking.
+{% endstep %}
+
+{% step %}
+Save the work item.
+{% endstep %}
+{% endstepper %}
