@@ -2,7 +2,7 @@
 
 The Source Code Analyzer is an autonomous AI agent that scans your source code to identify hidden API endpoints, data flows, and potential risks without requiring runtime traffic. It supports all major programming languages and frameworks, ensuring full coverage across microservices, SDKs, and legacy applications.
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ***
 

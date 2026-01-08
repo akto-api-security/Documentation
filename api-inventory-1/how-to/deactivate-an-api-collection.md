@@ -30,4 +30,4 @@ To resume ingestion and testing, you can reactivate a previously deactivated col
 3. Click **Reactivate collection** from the bottom panel.
 4. Confirm the action in the pop-up dialog.
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>

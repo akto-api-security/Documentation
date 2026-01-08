@@ -31,7 +31,7 @@ Before setting up the DevRev Integration, ensure you have:
 1. On the Integrations page, locate the **DevRev** card
 2. Click on the DevRev card to open the configuration page
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
@@ -62,7 +62,7 @@ Both **part type** and **part name** filters are optional and help you fetch onl
 
 4. Akto connects to the DevRev API using the configured token and retrieves matching parts and projects.
 
-<figure><img src="../../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 You can enter multiple part names by typing each part name exactly as defined, including letter case. Separate part names using commas to to add multiple parts.
