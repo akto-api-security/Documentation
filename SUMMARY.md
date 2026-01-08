@@ -314,7 +314,7 @@
 
 * [Concepts](issues/concepts/README.md)
   * [Overview](issues/concepts/overview.md)
-  * [Values](issues/concepts/values.md)
+  * [Evidence](issues/concepts/values.md)
   * [Vulnerability Report](issues/concepts/vulnerability-report.md)
   * [Remediation](issues/concepts/remediation.md)
 * [How To](issues/how-to/README.md)
