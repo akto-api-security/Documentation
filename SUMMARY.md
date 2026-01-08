@@ -428,6 +428,7 @@
 
 ## Integrations
 
+* [Agent Configuration](integrations/agent-configuration.md)
 * [MCP Registry Integration](integrations/mcp-registry-integration.md)
 * [CI/CD Integrations](integrations/ci-cd-integrations/README.md)
   * [GitHub Actions](integrations/ci-cd-integrations/github-actions/README.md)
