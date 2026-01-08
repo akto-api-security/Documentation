@@ -165,6 +165,8 @@
     * [Conduct Role-Based Testing](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/conduct-role-based-testing.md)
     * [Run tests in CLI using Akto](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/run-tests-in-cli-using-akto.md)
     * [Create and Edit Auth Types](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/create-and-edit-auth-types.md)
+* [Prompt Hardening](akto-argus-agentic-ai-security-for-homegrown-ai/prompt-hardening/README.md)
+  * [Play Around in Prompt Hardening](akto-argus-agentic-ai-security-for-homegrown-ai/prompt-hardening/play-around-in-prompt-hardening.md)
 * [Homegrown Discovery Agents](akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/README.md)
   * [Traffic Data Sources](akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/traffic-data-sources.md)
 * [Probe Library](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/README.md)
