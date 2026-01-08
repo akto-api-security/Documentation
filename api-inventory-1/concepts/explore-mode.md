@@ -2,7 +2,7 @@
 
 Explore Mode allows users to efficiently browse and filter APIs from their existing inventory, and create collections based on the filtered results.
 
-{% @arcade/embed flowId="CmTQE2SZ1L6XkaPNV5Dc" url="https://app.arcade.software/share/CmTQE2SZ1L6XkaPNV5Dc" %}
+{% @arcade/embed url="https://app.arcade.software/share/CmTQE2SZ1L6XkaPNV5Dc" flowId="CmTQE2SZ1L6XkaPNV5Dc" %}
 
 ### Key Features
 
@@ -16,6 +16,19 @@ Explore Mode provides several filtering options to help users narrow down their 
 * Method: Filter by HTTP method (GET, POST, etc.)
 * Path matches regex: Use regular expressions to filter API paths
 * Host name matches regex: Filter by host names using regex
+
+{% hint style="info" %}
+#### Include and Exclude Filtering Behaviour
+
+Each filter supports **include** and **exclude** modes.
+
+* Include mode restricts results to matching APIs.&#x20;
+*   Exclude mode removes matching APIs from the result set.&#x20;
+
+    <figure><img src="../../.gitbook/assets/image (175).png" alt="" width="333"><figcaption></figcaption></figure>
+
+The approach helps you precisely scope API discovery without modifying underlying API inventories.
+{% endhint %}
 
 #### Viewing Results
 
