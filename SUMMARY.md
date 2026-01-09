@@ -448,6 +448,7 @@
 * [Splunk SIEM](integrations/splunk.md)
 * [JFrog](integrations/splunk-1.md)
 * [Jira](integrations/jira-integration.md)
+* [ServiceNow](integrations/servicenow.md)
 * [Azure DevOps Boards](integrations/azure-devops-boards-integration.md)
 
 ## CI/CD Integration
