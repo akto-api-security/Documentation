@@ -14,7 +14,7 @@ MCP Recon helps you **discover and catalog MCP-compatible servers** across your 
    * Multiple ranges: `192.168.1.0/24, 10.0.0.1-10.0.0.255`
 4. Click **Discover**
 
-<figure><img src=".gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ***
 
@@ -24,7 +24,7 @@ MCP Recon helps you **discover and catalog MCP-compatible servers** across your 
 * Automatic registration of discovered endpoints in Akto
 * Data ready for further testing with other MCP features (e.g., Import, Proxy Gateway, Wrapper)
 
-<figure><img src=".gitbook/assets/mcp_recon.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/mcp_recon.png" alt=""><figcaption></figcaption></figure>
 
 ***
 
