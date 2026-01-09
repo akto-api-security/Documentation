@@ -27,6 +27,7 @@
 * [Overview](akto-argus-agentic-ai-security-for-homegrown-ai/endpoints-discovery-agents.md)
 * [Connectors](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/README.md)
   * [AI Agent Proxy](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-proxy.md)
+  * [MCP Proxy](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/mcp-proxy.md)
   * [Gateways](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/api-gateways/README.md)
     * [Connect Akto with Envoy](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/api-gateways/envoy.md)
     * [Connect Akto with NGINX](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/api-gateways/nginx.md)
