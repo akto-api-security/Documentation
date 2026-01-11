@@ -1,4 +1,4 @@
-# Getting Started wiht Akto DAST
+# Getting Started with Akto DAST
 
 Akto DAST (Dynamic Application Security Testing) allows you to automatically scan and collect API endpoints and traffic data directly from your machine. This enables effective security testing without traffic mirroring or cloud agent setup.
 
@@ -6,7 +6,7 @@ Akto DAST (Dynamic Application Security Testing) allows you to automatically sca
 
 ## **Pre-requisite**
 
-**Start Akto DAST Module**: Ensure the DAST module (`aktojax`) is running using the following Docker Compose file:
+**Start Akto DAST Module**: Deploy DAST modules on your infrastructure using the following Docker Compose file:
 
 ```yaml
 version: '3.3'
@@ -16,16 +16,21 @@ services:
     image: aktosecurity/aktojax:latest
     ports:
       - "8088:8088"
+    environment:
+      - DATABASE_ABSTRACTOR_URL=<CYBORG_URL>
+      - DATABASE_ABSTRACTOR_SERVICE_TOKEN=<SERVICE_TOKEN>
+      - DAST_MODULE_NAME=<UNIQUE_MODULE_NAME>
     restart: always
 ```
 
-After running the above Docker Compose setup, set the environment variable on the machine where your Akto dashboard is running:
+**Environment Variables**:
+- `DATABASE_ABSTRACTOR_URL`: URL of Cyborg service for database operations
+- `DATABASE_ABSTRACTOR_SERVICE_TOKEN`: Authentication token for Cyborg (contains account information)
+- `DAST_MODULE_NAME`: A unique name for this DAST module (e.g., `prod-dast-01`, `staging-dast`)
 
-```bash
-export AKTOJAX_SERVICE_URL=http://<IP_ADDRESS_OF_DAST>:8088
-```
-
-Replace `<IP_ADDRESS_OF_DAST>` with the actual IP address of the machine running the Docker container.
+{% hint style="info" %}
+**Note**: If no modules are available, Akto automatically uses the internal DAST service for your crawl.
+{% endhint %}
 
 **Akto X-API-Key**: Generate this from your Akto dashboard under **Settings > Integrations > Akto API.**
 
@@ -47,6 +52,14 @@ In the Akto DAST card, select Connect to open the configuration form.
 {% endstep %}
 
 {% step %}
+Select a DAST Module from the available list.
+
+{% hint style="info" %}
+The dropdown shows all active DAST modules (If you have). If no modules appear, the internal DAST service will be used automatically.
+{% endhint %}
+{% endstep %}
+
+{% step %}
 Configure your crawl settings using the available DAST options:
 
 <details>
@@ -57,7 +70,7 @@ Configure your crawl settings using the available DAST options:
 | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | **Out-of-Scope URLs**            | List of URLs the crawler must not visit. For example: adding `/admin/*` prevents crawling admin pages.                        |
 | **Maximum Page Visits**          | Limits how many pages the crawler explores. For example: setting _200_ restricts the crawl to the first 200 discovered pages. |
-| **DOM Load Timeout (ms)**        | Maximum wait time for a page’s DOM to load before moving on. For example: _3000 ms_ waits up to 3 seconds.                    |
+| **DOM Load Timeout (ms)**        | Maximum wait time for a page's DOM to load before moving on. For example: _3000 ms_ waits up to 3 seconds.                    |
 | **Wait Time After Timeout (ms)** | Additional wait time after DOM timeout before the crawler proceeds. For example: _1000 ms_ adds a 1-second buffer.            |
 | **Enable JavaScript Rendering**  | Allows the crawler to load and execute JavaScript content. Useful for SPAs like React or Vue apps.                            |
 | **Parse SOAP Web Services**      | Enables the crawler to detect and process SOAP endpoints.                                                                     |
