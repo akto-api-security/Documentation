@@ -24,8 +24,9 @@ services:
 ```
 
 **Environment Variables**:
-- `DATABASE_ABSTRACTOR_URL`: URL of Cyborg service for database operations
-- `DATABASE_ABSTRACTOR_SERVICE_TOKEN`: Authentication token for Cyborg (contains account information)
+- `DATABASE_ABSTRACTOR_URL`: URL of database abstractor service (a.k.a. cyborg)
+- `DATABASE_ABSTRACTOR_SERVICE_TOKEN`: Your database abstractor service token (You can kind this from **Akto dashboard > Quick Start > Hybrid Saas (click connect button) > databaseAbstractorToken under Runtime Service Command section**)
+  <figure><img src="../.gitbook/assets/database_abstractor_token_helper_img.png" alt="" width="563"><figcaption></figcaption></figure>
 - `DAST_MODULE_NAME`: A unique name for this DAST module (e.g., `prod-dast-01`, `staging-dast`)
 
 {% hint style="info" %}
