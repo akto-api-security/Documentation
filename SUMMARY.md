@@ -57,6 +57,7 @@
 ## DAST
 
 * [Getting Started with Akto DAST](dast/akto-dast.md)
+* [Getting Started with Akto DAST (On-Prem)](dast/akto-dast-on-premise.md)
 * [View DAST Scans](dast/view-dast-scans.md)
 
 ## Traffic Connector
