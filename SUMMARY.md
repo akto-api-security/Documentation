@@ -12,6 +12,7 @@
 * [MCP Security](agentic-ai/mcp-security.md)
 * [MCP Recon](agentic-ai/mcp-recon.md)
 * [MCP Endpoint Shield](agentic-ai/mcp-endpoint-shield.md)
+* [MCP Endpoint Shield - Jamf MDM Deployment](agentic-ai/mcp-endpoint-shield-jamf-mdm.md)
 * [MCP Endpoint Shield via Cursor Hooks](agentic-ai/mcp-endpoint-shield-cursor-hooks.md)
 * [AI Agent Import](agentic-ai/ai-agent-import.md)
 * [AI Model Import](agentic-ai/ai-model-import.md)
