@@ -1,6 +1,7 @@
 # Table of contents
 
 * [GitHub repository](https://github.com/akto-api-security/community-edition)
+* [Agentic Security Documentation](https://ai-security-docs.akto.io/)
 * [What is Akto?](README.md)
 * [AktoGPT](aktogpt.md)
 
