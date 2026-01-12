@@ -1,5 +1,6 @@
 # Table of contents
 
+* [API Security Documentation](https://docs.akto.io)
 * [Akto Agentic AI Security](README.md)
 
 ## Akto Atlas: Agentic AI Security for Employee Endpoints
