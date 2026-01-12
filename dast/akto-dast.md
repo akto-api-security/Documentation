@@ -24,7 +24,7 @@ services:
 
   zoo1:
     image: confluentinc/cp-zookeeper:6.2.1
-    restart: always
+    restart: on-failure:10
     hostname: zoo1
     user: "0"
     volumes:
@@ -38,12 +38,10 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_SERVER_ID: 1
       ZOOKEEPER_SERVERS: zoo1:2888:3888
-    labels:
-      com.centurylinklabs.watchtower.enable: "false"
 
   kafka1:
     image: confluentinc/cp-kafka:6.2.1
-    restart: always
+    restart: on-failure:10
     hostname: kafka1
     user: "0"
     ports:
@@ -72,63 +70,25 @@ services:
       - ./data-kafka-secrets:/etc/kafka/secrets
     depends_on:
       - zoo1
-    labels:
-      com.centurylinklabs.watchtower.enable: "false"
 
-  akto-api-security-runtime:
-    image: public.ecr.aws/aktosecurity/akto-api-security-mini-runtime:testruntime
-    env_file: ./docker-mini-runtime.env
-    mem_limit: 8g
+  akto-api-security-testing:
+    image: public.ecr.aws/aktosecurity/akto-api-security-mini-testing:latest
+    environment:
+      RUNTIME_MODE: hybrid
+      DATABASE_ABSTRACTOR_SERVICE_TOKEN: "<SERVICE_TOKEN>"
+      PUPPETEER_REPLAY_SERVICE_URL: "http://akto-api-security-puppeteer-replay:3000"
+      NEW_TESTING_ENABLED: "true"
+      KAFKA_BROKER_URL: "kafka1:19092"
+      MINI_TESTING_NAME: "mongodb-mini-testing"
     restart: always
-    depends_on:
-      - kafka1
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "100m"
-        max-file: "2"
 
-  akto-puppeteer-replay:
+  akto-api-security-puppeteer-replay:
     image: public.ecr.aws/aktosecurity/akto-puppeteer-replay:latest
     ports:
       - "3000:3000"
+    environment:
+      NODE_ENV: production
     restart: always
-
-  watchtower:
-    image: containrrr/watchtower
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    env_file: ./watchtower.env
-    labels:
-      com.centurylinklabs.watchtower.enable: "false"
-```
-
-**Environment Files**:
-
-Create `watchtower.env`:
-```bash
-WATCHTOWER_CLEANUP=true
-WATCHTOWER_POLL_INTERVAL=1800
-```
-
-Create `docker-mini-runtime.env`:
-```bash
-AKTO_CONFIG_NAME=staging
-AKTO_KAFKA_TOPIC_NAME=akto.api.logs
-AKTO_KAFKA_BROKER_URL=kafka1:19092
-AKTO_KAFKA_BROKER_MAL=localhost:29092
-AKTO_KAFKA_GROUP_ID_CONFIG=asdf
-AKTO_KAFKA_MAX_POLL_RECORDS_CONFIG=100
-AKTO_ACCOUNT_NAME=<YOUR_ACCOUNT_NAME>
-AKTO_TRAFFIC_BATCH_SIZE=100
-AKTO_TRAFFIC_BATCH_TIME_SECS=10
-USE_HOSTNAME=true
-AKTO_INSTANCE_TYPE=RUNTIME
-DATABASE_ABSTRACTOR_SERVICE_URL=https://cyborg.akto.io
-DATABASE_ABSTRACTOR_SERVICE_TOKEN=<YOUR_SERVICE_TOKEN>
-RUNTIME_MODE=hybrid
-AKTO_THREAT_ENABLED=false
 ```
 
 **Environment Variables**:
@@ -136,7 +96,6 @@ AKTO_THREAT_ENABLED=false
 - `DATABASE_ABSTRACTOR_SERVICE_TOKEN`: Your database abstractor service token (You can find this from **Akto dashboard > Quick Start > Hybrid Saas (click connect button) > databaseAbstractorToken under Runtime Service Command section**)
   <figure><img src="../.gitbook/assets/database_abstractor_token_helper_img.png" alt="" width="563"><figcaption></figcaption></figure>
 - `DAST_MODULE_NAME`: A unique name for this DAST module (e.g., `prod-dast-01`, `staging-dast`)
-- `AKTO_ACCOUNT_NAME`: Your organization or account name
 
 {% hint style="info" %}
 **Note**: If no modules are available, Akto automatically uses the internal DAST service for your crawl.
