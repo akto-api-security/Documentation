@@ -25,6 +25,8 @@ docker run -d \
   --pid=host \
   --cap-add SYS_PTRACE \
   --cap-add SYS_ADMIN \
+  --cpus="0.5" \
+  --memory="512m" \
   -v /lib/modules:/lib/modules \
   -v /sys/kernel:/sys/kernel \
   -v /usr/src:/usr/src \
