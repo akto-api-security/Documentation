@@ -2,7 +2,7 @@
 
 Akto lets you seamlessly import **AI agents** such as **AWS Bedrock, Azure AI Foundry, Databricks, Google Vertex AI, IBM Watsonx**, or even your **custom agent** into **AI Agent Security**. With just the agent endpoint URL and optional configuration, you can start monitoring and testing agent activity instantly.
 
-<figure><img src="../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ***
 
@@ -12,7 +12,7 @@ Akto lets you seamlessly import **AI agents** such as **AWS Bedrock, Azure AI Fo
 * **(Optional) Custom Request Body** – for agents requiring specific input JSON
 * **(Optional) Test Role for Authentication** – for agents with role-based access
 
-<figure><img src="../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ***
 

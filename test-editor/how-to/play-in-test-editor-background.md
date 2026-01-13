@@ -10,7 +10,7 @@ You can change the Test YAML. Learn [here](create-a-custom-test.md).
 
 Click on the API endpoint to select the API you want to check for testing the above YAML.
 
-<figure><img src="../../.gitbook/assets/image (5) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (5) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Select your desired API collection and then select the desired API.
 

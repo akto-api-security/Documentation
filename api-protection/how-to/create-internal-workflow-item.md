@@ -67,7 +67,7 @@ Select the threat activity that requires internal follow-up.
 {% step %}
 Click **Create Work Item** from the action panel.
 
-<figure><img src="../../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (173).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}

@@ -14,7 +14,7 @@ In the above demonstration, Akto ran **`BOLA by changing auth token`** tests on 
 
 Akto provides **instant visibility** into test results, enabling you to quickly understand the security impact of each test. You can easily view **HTTP status codes** (e.g., `403 Forbidden`, `200 OK`) alongside **response messages** to assess how the API responded to different test conditions.
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Time Delays for Multi-Step and Async Test Flows
 

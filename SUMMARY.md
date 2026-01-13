@@ -376,6 +376,7 @@
 ## OTHER INTEGRATIONS
 
 * [JFrog](other-integrations/splunk.md)
+* [Azure Data Explorer](other-integrations/azure-data-explorer.md)
 
 ## Alerts
 

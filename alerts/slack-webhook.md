@@ -2,7 +2,7 @@
 
 Slack integration with Akto enables automatic notifications in your Slack channels when new API endpoints are discovered and security issues are detected. This integration ensures your team stays informed about API changes and potential security concerns in real-time within your Slack workspace.
 
-<figure><img src="../.gitbook/assets/image (5) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (5) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Quick Access Steps
 
@@ -21,4 +21,4 @@ Slack integration with Akto enables automatic notifications in your Slack channe
 
 Below is an example:
 
-<figure><img src="../.gitbook/assets/image (7) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (7) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>

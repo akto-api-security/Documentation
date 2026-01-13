@@ -22,7 +22,7 @@ Select the test you want to edit from the list.
 {% step %}
 Click the **API name box** in the top-right corner.
 
-<figure><img src="../../.gitbook/assets/image (173).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (173) (1).png" alt=""><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}

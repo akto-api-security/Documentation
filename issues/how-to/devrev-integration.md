@@ -1,4 +1,4 @@
-# DevRev Integration
+# DevRev Integrationoc
 
 This guide will help you set up DevRev Integration in Akto to automatically create and track security issues in your DevRev workspace.
 
@@ -31,7 +31,7 @@ Before setting up the DevRev Integration, ensure you have:
 1. On the Integrations page, locate the **DevRev** card
 2. Click on the DevRev card to open the configuration page
 
-<figure><img src="../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
@@ -62,7 +62,7 @@ Both **part type** and **part name** filters are optional and help you fetch onl
 
 4. Akto connects to the DevRev API using the configured token and retrieves matching parts and projects.
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 You can enter multiple part names by typing each part name exactly as defined, including letter case. Separate part names using commas to to add multiple parts.
@@ -82,7 +82,7 @@ You can enter multiple part names by typing each part name exactly as defined, i
 1. The page will now show your configured DevRev integration.
 2.  You should see the organisation URL and selected parts displayed.
 
-    <figure><img src="../../.gitbook/assets/image (2).png" alt="" width="563"><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/image (2) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 {% endstepper %}
 

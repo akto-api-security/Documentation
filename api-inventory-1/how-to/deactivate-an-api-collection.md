@@ -17,7 +17,7 @@ Deactivating a collection halts data ingestion and testing for that specific col
 Once a collection is deactivated, **all associated APIs will be removed after 1 hour**.
 {% endhint %}
 
-<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### 🔁 Reactivating an API Collection
 
@@ -30,4 +30,4 @@ To resume ingestion and testing, you can reactivate a previously deactivated col
 3. Click **Reactivate collection** from the bottom panel.
 4. Confirm the action in the pop-up dialog.
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>

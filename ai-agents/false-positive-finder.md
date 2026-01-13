@@ -2,7 +2,7 @@
 
 The Test False Positive Finder is an AI agent that validates vulnerability test results to detect and reduce misleading failures. It cuts through noisy test outputs, ensuring security teams can focus on real risks without wasting time on false alarms.
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ***
 

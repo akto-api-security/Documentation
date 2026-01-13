@@ -2,7 +2,7 @@
 
 The Sensitive Data Scanner is an AI agent that detects the exposure of personal and sensitive information in your APIs. It continuously monitors API endpoints and payloads to uncover risks related to PII, PHI, authentication tokens, and metadata leaks. This helps organizations maintain privacy compliance and protect customer trust.
 
-<figure><img src="../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ***
 
