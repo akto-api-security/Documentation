@@ -453,6 +453,7 @@
 * [Jira](integrations/jira-integration.md)
 * [ServiceNow](integrations/servicenow.md)
 * [Azure DevOps Boards](integrations/azure-devops-boards-integration.md)
+* [Azure Data Explorer](integrations/azure-data-explorer.md)
 
 ## CI/CD Integration
 
