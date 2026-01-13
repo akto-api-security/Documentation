@@ -97,9 +97,12 @@ docker run --rm -d \
   --privileged \
   --cap-add SYS_PTRACE \
   --cap-add SYS_ADMIN \
+  --cpus="0.5" \
+  --memory="512m" \
   -e AKTO_TRAFFIC_BATCH_TIME_SECS=10 \
   -e AKTO_TRAFFIC_BATCH_SIZE=100 \
   -e AKTO_KAFKA_BROKER_MAL="<AKTO_NLB_IP>:9092" \
+  -e PROBE_ALL_PID=true \
   -v /usr/src:/usr/src:ro \
   -v /lib/modules:/lib/modules:ro \
   -v /sys/kernel:/sys/kernel:ro \
