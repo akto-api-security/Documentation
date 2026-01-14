@@ -485,14 +485,6 @@
   * [Google Workspace SSO](account-management/sso/google-workspace-sso.md)
   * [Add Members From SSO](account-management/sso/add-members-from-sso.md)
 
-## SIEM Integration
-
-* [Splunk](siem-integration/splunk.md)
-
-## OTHER INTEGRATIONS
-
-* [JFrog](other-integrations/splunk.md)
-
 ## Alerts
 
 * [Gmail Webhook](alerts/gmail-webhook.md)
