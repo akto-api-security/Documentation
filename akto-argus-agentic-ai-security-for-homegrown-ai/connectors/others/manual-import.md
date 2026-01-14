@@ -40,4 +40,4 @@ Once you import your components:
 3. Akto identifies vulnerabilities specific to your agent or model
 4. You get detailed remediation guidance for any issues found
 
-For continuous discovery of your infrastructure, consider setting up [homegrown discovery agents](../api-gateways/) or [endpoints discovery agents](../../endpoints-discovery-agents.md).
+For continuous discovery of your infrastructure, consider setting up [homegrown discovery agents](../api-gateways/) or [endpoints discovery agents](../../overview.md).

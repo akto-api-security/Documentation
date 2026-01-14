@@ -26,7 +26,7 @@
 
 ## Akto Argus: Agentic AI Security for Homegrown AI
 
-* [Overview](akto-argus-agentic-ai-security-for-homegrown-ai/endpoints-discovery-agents.md)
+* [Overview](akto-argus-agentic-ai-security-for-homegrown-ai/overview.md)
 * [Connectors](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/README.md)
   * [AI Agent Proxy](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-proxy.md)
   * [MCP Proxy](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/mcp-proxy.md)
@@ -210,8 +210,8 @@
   * [Update Severity](akto-argus-agentic-ai-security-for-homegrown-ai/issues/update-severity.md)
   * [Export Selected Issues to Reports](akto-argus-agentic-ai-security-for-homegrown-ai/issues/export-selected-issues-to-reports.md)
   * [Export Vulnerability Report](akto-argus-agentic-ai-security-for-homegrown-ai/issues/export-vulnerability-report.md)
-* [Compliance](akto-argus-agentic-ai-security-for-homegrown-ai/overview/README.md)
-  * [Bot Policy](akto-argus-agentic-ai-security-for-homegrown-ai/overview/bot-policy.md)
+* [Compliance](akto-argus-agentic-ai-security-for-homegrown-ai/compliance/README.md)
+  * [Bot Policy](akto-argus-agentic-ai-security-for-homegrown-ai/compliance/bot-policy.md)
 
 ## Agentic Discovery
 
