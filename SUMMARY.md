@@ -318,6 +318,7 @@
   * [Vulnerability Report](issues/concepts/vulnerability-report.md)
   * [Remediation](issues/concepts/remediation.md)
 * [How To](issues/how-to/README.md)
+  * [Update Severity](issues/how-to/update-severity.md)
   * [Jira Integration](issues/how-to/jira-integration.md)
   * [Azure DevOps Boards Integration](issues/how-to/azure-devops-boards-integration.md)
   * [ServiceNow Integration](issues/how-to/servicenow-integration.md)
