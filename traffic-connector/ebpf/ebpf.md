@@ -50,6 +50,14 @@ spec:
             value: "100"
           - name: AKTO_KAFKA_BROKER_MAL
             value: "<AKTO_NLB_IP>:9092"
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
         securityContext:
           capabilities:
             add:
