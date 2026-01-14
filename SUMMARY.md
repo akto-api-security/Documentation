@@ -207,6 +207,7 @@
   * [Remediation](akto-argus-agentic-ai-security-for-homegrown-ai/issues/remediation.md)
   * [Triage Issues](akto-argus-agentic-ai-security-for-homegrown-ai/issues/triage-issues/README.md)
     * [Review Issues Marked as False Positives](akto-argus-agentic-ai-security-for-homegrown-ai/issues/triage-issues/review-issues-marked-as-false-positives.md)
+  * [Update Severity](akto-argus-agentic-ai-security-for-homegrown-ai/issues/update-severity.md)
   * [Export Selected Issues to Reports](akto-argus-agentic-ai-security-for-homegrown-ai/issues/export-selected-issues-to-reports.md)
   * [Export Vulnerability Report](akto-argus-agentic-ai-security-for-homegrown-ai/issues/export-vulnerability-report.md)
 * [Compliance](akto-argus-agentic-ai-security-for-homegrown-ai/overview/README.md)
