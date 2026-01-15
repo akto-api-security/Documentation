@@ -80,7 +80,7 @@ This will process your API traffic data and populate APIs on the dashboard. This
 
 ### What's next?
 
-You can now go to your API Inventory to see all the API traffic Akto has captured. Head to [API Discovery](../../../../agentic-discovery/concepts/collections/mcp-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.
+You can now go to your API Inventory to see all the API traffic Akto has captured. Head to [API Discovery](../../../../agentic-ai-discovery/concepts/collections/mcp-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.
 
 ### Get Support for your Akto setup
 

@@ -70,7 +70,7 @@ Akto tests for:
 
 ## Next Steps
 
-* Set up continuous testing with [discovery agents](../../agentic-discovery/get-started.md)
+* Set up continuous testing with [discovery agents](../../agentic-ai-discovery/get-started.md)
 * Enable [Guardrails](../../agentic-guardrails/overview/) to block threats in production
 * Review compliance posture against security frameworks
 

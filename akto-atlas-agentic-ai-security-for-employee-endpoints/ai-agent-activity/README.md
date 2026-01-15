@@ -14,7 +14,7 @@ Organise and review AI agent activity using logical groupings.
 
 Access audit records related to AI agent activity for review, compliance, and investigation.
 
-### [**Sensitive Data**](../../agentic-discovery/concepts/sensitive-data.md)
+### [**Sensitive Data**](../../agentic-ai-discovery/concepts/sensitive-data.md)
 
 Review visibility into sensitive data associated with AI agent activity, based on collected data.
 
