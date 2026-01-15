@@ -15,14 +15,10 @@
     * [Jamf MDM Deployment](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/jamf-mdm-deployment.md)
   * [Cursor Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/cursor-hooks.md)
   * [Agentic Shield](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/agentic-shield.md)
-* [Concepts](akto-atlas-agentic-ai-security-for-employee-endpoints/concepts/README.md)
-  * [MCP Endpoint Shield](akto-atlas-agentic-ai-security-for-employee-endpoints/concepts/mcp-endpoint-shield.md)
+* [AI Agent Activity](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/README.md)
+  * [Audit Data](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/audit-data.md)
+  * [View Endpoint Shield Details](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/view-endpoint-shield-details.md)
 * [Endpoint Security](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoint-security.md)
-* [Secure Web Networks](akto-atlas-agentic-ai-security-for-employee-endpoints/secure-web-networks/README.md)
-  * [Cloudflare WARP](akto-atlas-agentic-ai-security-for-employee-endpoints/secure-web-networks/cloudflare-warp.md)
-  * [Zscaler](akto-atlas-agentic-ai-security-for-employee-endpoints/secure-web-networks/zscaler.md)
-* [Audit Data](akto-atlas-agentic-ai-security-for-employee-endpoints/audit-data.md)
-* [View Endpoint Shield Details](akto-atlas-agentic-ai-security-for-employee-endpoints/view-endpoint-shield-details.md)
 
 ## Akto Argus: Agentic AI Security for Homegrown AI
 
