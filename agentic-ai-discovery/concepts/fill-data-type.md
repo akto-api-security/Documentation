@@ -1,7 +1,5 @@
 # Fill Data Type
 
-## Fill Data Types in Sensitive Data Exposure
-
 ## Overview
 
 The **Fill Data Types** capability allows you to synchronise your Akto instance with the latest sensitive data type definitions maintained by Akto. This synchronisation helps your sensitive data detection stay aligned with evolving data formats, regulatory requirements, and industry patterns without affecting local customisations.
@@ -104,6 +102,6 @@ You may improve long-term accuracy and governance by following these practices:
 
 ## Support and Additional Resources
 
-* Learn about [Sensitive Data Concepts](../concepts/sensitive-data.md)
+* Learn about [Sensitive Data Concepts](sensitive-data.md)
 * [Akto Support](../../troubleshooting/support.md): Contact the Akto support team through official channels
 
