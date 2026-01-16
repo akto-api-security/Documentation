@@ -16,7 +16,6 @@
   * [Cursor Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/cursor-hooks.md)
   * [Agentic Shield](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/agentic-shield.md)
 * [AI Agent Activity](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/README.md)
-  * [Audit Data](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/audit-data.md)
   * [View Endpoint Shield Details](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/view-endpoint-shield-details.md)
 * [Endpoint Security](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoint-security.md)
 
@@ -220,6 +219,7 @@
     * [Agent Collection](agentic-ai-discovery/concepts/collections/agent-collection.md)
     * [MCP Collection](agentic-ai-discovery/concepts/collections/mcp-collection.md)
   * [Meta Properties](agentic-ai-discovery/concepts/meta-properties-of-api-endpoint.md)
+  * [Audit Data](agentic-ai-discovery/concepts/audit-data.md)
   * [Explore mode](agentic-ai-discovery/concepts/explore-mode.md)
   * [Data Types](agentic-ai-discovery/concepts/data-types.md)
   * [Component Group](agentic-ai-discovery/concepts/component-group/README.md)

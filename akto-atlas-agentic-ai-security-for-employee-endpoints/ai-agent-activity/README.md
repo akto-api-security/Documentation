@@ -10,7 +10,7 @@ This section is intended for **IT and AI teams** to review and analyze AI agent 
 
 Organise and review AI agent activity using logical groupings.
 
-### [**Audit Data**](audit-data.md)
+### [**Audit Data**](../../agentic-ai-discovery/concepts/audit-data.md)
 
 Access audit records related to AI agent activity for review, compliance, and investigation.
 
