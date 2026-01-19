@@ -26,7 +26,6 @@ MDM deployment provides significant advantages over manual installation:
 MCP Endpoint Shield uses a **user-level installation** approach that requires no administrator privileges:
 
 * **Installation Type**: User-level (installs to `~/.local/bin/`)
-* **Script Execution**: All scripts run as logged-in user (NOT root)
 * **Services**: LaunchAgents (runs as user, not system-wide)
 * **Token Management**: External configuration file (`~/.config/mcp-endpoint-shield/config.env`)
 * **Binary**: Universal (Intel + Apple Silicon support)
@@ -71,20 +70,6 @@ Permissions to create/edit:
 * Smart Groups (optional)
 * Extension Attributes (optional)
 
-#### 4. Build the Jamf Package
-
-Build the universal binary and create the installer package:
-
-```bash
-cd /path/to/mcp-endpoint-shield
-make release
-mkdir -p dist/universal
-lipo -create dist/darwin-amd64/mcp-endpoint-shield dist/darwin-arm64/mcp-endpoint-shield -output dist/universal/mcp-endpoint-shield
-./pkgbuild-scripts/build_mac_jamf.sh
-```
-
-**Output**: `build/mcp-endpoint-shield-Jamf-Installer.pkg`
-
 ***
 
 ### Deployment Scripts
@@ -98,7 +83,7 @@ This deployment uses three scripts that are included in the MCP Endpoint Shield 
 * **Jamf Parameter 4**: AKTO\_API\_TOKEN (encrypted)
 * **Execution**: Before or with package installation
 
-#### 2. install\_user\_package.sh
+#### 2. install\_from\_staging.sh
 
 * **Purpose**: Installs MCP Endpoint Shield in user context
 * **Run as**: Logged-in user (NOT root)
@@ -121,7 +106,7 @@ This deployment uses three scripts that are included in the MCP Endpoint Shield 
 1. Log into Jamf Pro console
 2. Navigate to **Settings** → **Computer Management** → **Packages**
 3. Click **+ New**
-4. Upload: `build/mcp-endpoint-shield-Jamf-Installer.pkg`
+4. Upload: `mcp-endpoint-shield-Jamf-Installer.pkg`
 5. Configure:
    * **Display Name**: MCP Endpoint Shield
    * **Category**: Security (or Development Tools)
@@ -139,7 +124,7 @@ Navigate to **Settings** → **Computer Management** → **Scripts** and upload 
 * **Parameter Labels**:
   * Parameter 4: `AKTO_API_TOKEN` (description: "API token for MCP Endpoint Shield")
 
-**Script 2: install\_user\_package.sh**
+**Script 2: install\_from\_staging.sh**
 
 * **Display Name**: MCP Endpoint Shield - Install User Package
 * **Category**: MCP Endpoint Shield
@@ -214,15 +199,12 @@ Navigate to **Computers** → **Policies** → **+ New**
 
 #### Scripts
 
-⚠️ **CRITICAL**: For ALL scripts below, check the **"Run as logged-in user"** option in Jamf policy configuration. Do NOT run as root.
-
 Configure scripts in this order:
 
 **Script 1: Deploy Token (Priority: Before)**
 
 * Select: **MCP Endpoint Shield - Deploy Token**
 * Priority: **Before**
-* ✅ **Run as logged-in user**: YES (check this box)
 * Parameter Values:
   * Parameter 4 (AKTO\_API\_TOKEN): `<YOUR_AKTO_TOKEN_HERE>`
     * ⚠️ **IMPORTANT**: Use Jamf's encrypted parameters feature
@@ -232,7 +214,6 @@ Configure scripts in this order:
 
 * Select: **MCP Endpoint Shield - Install User Package**
 * Priority: **After**
-* ✅ **Run as logged-in user**: YES (check this box)
 * No parameters needed
 
 #### Scope
@@ -285,7 +266,6 @@ Navigate to **Computers** → **Policies** → **+ New**
 
 * Select: **MCP Endpoint Shield - Uninstall**
 * Priority: Before
-* ✅ **Run as logged-in user**: YES (check this box)
 
 #### Scope
 
@@ -499,7 +479,6 @@ Navigate to **Computers** → **Policies** → **+ New**
 
 **3. Least Privilege**
 
-* Scripts run as logged-in user (NOT root) - true user-level execution
 * Binaries run as user, not system
 * No system-level daemons
 * All operations confined to user's home directory
