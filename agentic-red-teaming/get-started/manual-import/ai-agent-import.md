@@ -12,7 +12,7 @@ Akto lets you seamlessly import **AI agents** such as **AWS Bedrock, Azure AI Fo
 * **(Optional) Custom Request Body** – for agents requiring specific input JSON
 * **(Optional) Test Role for Authentication** – for agents with role-based access
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ***
 
