@@ -13,7 +13,7 @@
     * [Safari](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/safari.md)
   * [MCP Endpoint Shield](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/README.md)
     * [Jamf MDM Deployment](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/jamf-mdm-deployment.md)
-    * [MacOS Installtion](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/macos-installtion.md)
+    * [MacOS Installation](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/macos-installation.md)
   * [Cursor Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/cursor-hooks.md)
   * [Agentic Shield](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/agentic-shield.md)
 * [AI Agent Activity](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/README.md)
