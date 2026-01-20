@@ -995,12 +995,6 @@ export AKTO_ASYNC_REPORTING="false"
 
 * [Cursor Hooks API Reference](https://docs.cursor.com/hooks)
 
-#### Source Code
-
-* **Hook Scripts**: [https://github.com/akto-api-security/mcp-endpoint-shield/tree/main/cursor-hooks](https://github.com/akto-api-security/mcp-endpoint-shield/tree/main/cursor-hooks)
-* **Report Issues**: [https://github.com/akto-api-security/mcp-endpoint-shield/issues](https://github.com/akto-api-security/mcp-endpoint-shield/issues)
-* **Contribute**: [https://github.com/akto-api-security/mcp-endpoint-shield/blob/main/CONTRIBUTING.md](https://github.com/akto-api-security/mcp-endpoint-shield/blob/main/CONTRIBUTING.md)
-
 #### Support
 
 * **Email**: [help@akto.io](mailto:help@akto.io)
