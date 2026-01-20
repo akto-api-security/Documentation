@@ -1,4 +1,4 @@
-# MCP Endpoint Shield via Cursor Hooks
+# Cursor Hooks
 
 MCP Endpoint Shield via Cursor Hooks provides **zero-installation runtime security** for MCP servers by leveraging Cursor's native hook system. It intercepts all MCP calls (requests and responses), performs validation, blocks malicious activity, and reports threats to your security dashboard—**without requiring any MCP server configuration or wrapper installation**.
 
@@ -993,9 +993,7 @@ export AKTO_ASYNC_REPORTING="false"
 
 #### Documentation
 
-* [Akto MCP Endpoint Shield Main Docs](https://docs.akto.io/mcp-endpoint-shield)
 * [Cursor Hooks API Reference](https://docs.cursor.com/hooks)
-* [Akto API Documentation](https://docs.akto.io/api)
 
 #### Source Code
 
@@ -1008,13 +1006,11 @@ export AKTO_ASYNC_REPORTING="false"
 * **Email**: [help@akto.io](mailto:help@akto.io)
 * **Discord**: [https://www.akto.io/community](https://www.akto.io/community)
 * **Slack**: Join `#mcp-endpoint-shield` channel
-* **GitHub Issues**: [Report bugs](https://github.com/akto-api-security/mcp-endpoint-shield/issues)
 
 #### Community
 
 * [Akto Blog](https://www.akto.io/blog) - Latest security insights
-* [MCP Security Best Practices](https://www.akto.io/blog/mcp-security)
-* [Case Studies](https://www.akto.io/customers) - How teams use Akto
+* [MCP Security Best Practices](https://www.akto.io/blog/mcp-security-best-practices)
 
 ***
 
@@ -1028,14 +1024,6 @@ export AKTO_ASYNC_REPORTING="false"
 * ✅ **Reliability**: Graceful degradation - if hook fails, MCP operation proceeds
 * ✅ **Complete Coverage**: Both request and response phases protected
 * ✅ **Comprehensive Reporting**: All events logged to Akto Dashboard
-
-***
-
-### 📄 License
-
-Akto MCP Endpoint Shield via Cursor Hooks is provided under the [Akto Enterprise License](https://www.akto.io/license).
-
-***
 
 **🎯 Get Started Now**
 
@@ -1060,7 +1048,3 @@ EOF
 export AKTO_API_TOKEN="your-token"
 # Restart Cursor - Done!
 ```
-
-***
-
-_Last updated: 2025-12-24_
