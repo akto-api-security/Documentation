@@ -20,7 +20,7 @@ The Agent List displays all endpoints where the shield is active. Each row conta
 | **Last Heartbeat** | Timestamp of the most recent health check sent by the agent.         |
 | **Last Deployed**  | Timestamp showing when the latest shield configuration was deployed. |
 
-<figure><img src="../../.gitbook/assets/image (4).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (4) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 You can select any Agent ID to view deeper information.
 
@@ -32,15 +32,14 @@ When you click an **Agent ID**, you see two tabs that help you understand what i
 
 This tab shows you the MCP servers associated with the selected agent. You can review server details and the specific endpoints or commands that are shielded on that device.
 
-<figure><img src="../../.gitbook/assets/image (5).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (5) (3).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ### Agent Logs
 
 This tab provides a chronological log of the agent’s activity. You can track what the agent executed, when it checked in, and how enforcement behaved on that endpoint.
 
-<figure><img src="../../.gitbook/assets/image (6).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (6) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ## Learn More
 
 To understand how Endpoint Shield works at a conceptual level—including architecture, workflow, and protection mechanics, refer to the [**MCP** **Endpoint Shield**](https://docs.akto.io/mcp-endpoint-shield)**.**
-

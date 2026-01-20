@@ -22,7 +22,7 @@ The guardrail policies list displays existing policies and provides access to po
 1. Locate the **Create Guardrail** button in the top-right corner of the Guardrail Policies page.
 2.  Select **Create Guardrail** to open the guardrail configuration form.
 
-    <figure><img src="../../.gitbook/assets/image (6) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/image (6) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ### Fill the Configuration Form
 
@@ -176,7 +176,7 @@ This section defines where the guardrail policy is enforced.
 </details>
 
 {% hint style="warning" %}
-#### Guardrail Deployment Scope Behaviour
+**Guardrail Deployment Scope Behaviour**
 
 By default, Akto does not apply a newly created guardrail policy to any server or agent server.\
 A guardrail policy becomes active only after you explicitly select the target **MCP servers** and **agent servers** in the **Server and Application Settings** section.
