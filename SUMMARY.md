@@ -2,6 +2,10 @@
 
 * [API Security Documentation](https://docs.akto.io)
 * [Akto Agentic AI Security](README.md)
+  * [AI Security](readme/ai-security.md)
+  * [MCP Security](readme/mcp-security.md)
+  * [Akto MCP Server](readme/akto-mcp-server.md)
+* [What is AI Agent Security?](what-is-ai-agent-security.md)
 
 ## Akto Atlas: Agentic AI Security for Employee Endpoints
 
@@ -24,8 +28,6 @@
 
 * [Overview](akto-argus-agentic-ai-security-for-homegrown-ai/overview.md)
 * [Connectors](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/README.md)
-  * [AI Agent Proxy](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-proxy.md)
-  * [MCP Proxy](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/mcp-proxy.md)
   * [MCP Import](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/mcp-import.md)
   * [AI Agent Security](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/README.md)
     * [AWS Bedrock](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/connect-akto-with-aws-bedrock.md)
@@ -272,9 +274,8 @@
 ## Agentic Guardrails
 
 * [Get Started](agentic-guardrails/overview/README.md)
-  * [Proxy](agentic-guardrails/overview/proxy/README.md)
-    * [MCP Proxy](agentic-guardrails/overview/proxy/akto-mcp-proxy.md)
-    * [AI Agent Proxy](agentic-guardrails/overview/proxy/akto-agent-proxy.md)
+  * [MCP Proxy](agentic-guardrails/overview/akto-mcp-proxy.md)
+  * [AI Agent Proxy](agentic-guardrails/overview/akto-agent-proxy.md)
 * [Concepts](agentic-guardrails/concepts/README.md)
   * [Agent Guard](agentic-guardrails/concepts/agent-guard.md)
   * [Schema Conformance](agentic-guardrails/concepts/schema-conformance.md)

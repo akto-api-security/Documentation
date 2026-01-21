@@ -27,7 +27,7 @@ Select and configure the appropriate protection proxy:
 
 Deploy real-time protection for Model Context Protocol servers, tools, and resources.
 
-→ [Set Up MCP Proxy](proxy/akto-mcp-proxy.md)
+→ [Set Up MCP Proxy](akto-mcp-proxy.md)
 
 **What it protects:**
 
@@ -40,7 +40,7 @@ Deploy real-time protection for Model Context Protocol servers, tools, and resou
 
 Deploy real-time protection for AI agents and LLM applications.
 
-→ [Set Up Agent Proxy](proxy/akto-agent-proxy.md)
+→ [Set Up Agent Proxy](akto-agent-proxy.md)
 
 **What it protects:**
 
@@ -92,6 +92,6 @@ Akto Guardrails defends against:
 
 * [Discover your agents](../../agentic-ai-discovery/get-started.md) to get full visibility
 * [Run security tests](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/) to identify vulnerabilities
-* Configure custom blocking policies for your use case
+* [Configure custom blocking policies for your use case](../how-to/create-guardrail-policies.md)
 
 Need help? Contact support@akto.io or use in-app Intercom.

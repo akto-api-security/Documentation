@@ -1,10 +1,10 @@
 # AI Agent Proxy
 
-### Overview
+## Overview
 
 AI Agent Proxy is a security layer that protects AI agent applications by intercepting, analyzing, and securing communications between end users and AI agents. It provides real-time threat detection, guardrails enforcement, and response filtering for AI agent deployments running in customer environments.
 
-### Key Features
+## Key Features
 
 * **Threat Detection**: Real-time scanning and blocking of malicious requests before they reach your AI agent
 * **Request Guardrails**: Enforce security policies on incoming requests to prevent attacks and policy violations
@@ -13,50 +13,29 @@ AI Agent Proxy is a security layer that protects AI agent applications by interc
 * **Complete Visibility**: Monitor all AI agent communications with comprehensive logging
 * **Container-Based Deployment**: Deploy as Docker containers alongside your AI agent infrastructure
 
-### Architecture
+## Architecture
 
 The AI Agent Proxy runs as a Docker container on the same VM as your AI agent container, providing a secure gateway for all AI agent traffic.
 
-```
-┌──────────────┐          ┌──────────────────────────────────┐          ┌──────────────┐
-│              │          │  AI Agent Proxy                  │          │  AI Agent    │
-│   End User   │          │  (Docker Container)              │          │  Container   │
-│              │          │                                  │          │              │
-└──────────────┘          └──────────────────────────────────┘          └──────────────┘
-       │                                   │                                    │
-       │                                   │                                    │
-       │  1. Send Request                  │                                    │
-       │ ────────────────────────────────► │                                    │
-       │                                   │                                    │
-       │                    ┌──────────────────────────────┐                    │
-       │                    │ 2. Request Guardrails &      │                    │
-       │                    │    Threat Detection          │                    │
-       │                    │  - Prompt Injection          │                    │
-       │                    │  - SQL/Command Injection     │                    │
-       │                    │  - PII Input Validation      │                    │
-       │                    └──────────────────────────────┘                    │
-       │                                   │                                    │
-       │                                   │  3. Forward If Valid               │
-       │                                   │ ─────────────────────────────────► │
-       │                                   │                                    │
-       │                                   │                                    │
-       │                                   │  4. Return Response                │
-       │                                   │ ◄───────────────────────────────── │
-       │                                   │                                    │
-       │                    ┌──────────────────────────────┐                    │
-       │                    │ 5. Response Guardrails       │                    │
-       │                    │  - PII Detection & Redaction │                    │
-       │                    │  - Sensitive Data Filtering  │                    │
-       │                    │  - Content Policy Validation │                    │
-       │                    └──────────────────────────────┘                    │
-       │                                   │                                    │
-       │  6. Return Response               │                                    │
-       │     (Original/Blocked/Redacted)   │                                    │
-       │ ◄──────────────────────────────── │                                    │
-       │                                   │                                    │
+```mermaid
+sequenceDiagram
+    participant U as End User
+    participant P as AI Agent Proxy (Docker Container)   
+    participant A as AI Agent Container
+
+    U ->> P: 1.Send request
+
+    Note over P: 2. Request Guardrails & Threat<br>detection<br>(Prompt injection<br>SQL or command injection<br>PII input validation)
+
+    P ->> A: 3. Forward if valid
+    A -->> P: 4. Return response
+
+    Note over P: 5. Response guardrails<br>(PII detection and redaction<br>Sensitive data filtering<br>Content policy validation)
+
+    P -->> U: 6. Return response<br> (Original/Blocked/Redacted)
 ```
 
-**Traffic Flow:**
+### **Traffic Flow:**
 
 1. End user sends request to AI Agent Proxy endpoint
 2. Proxy performs threat detection and applies request guardrails
@@ -65,15 +44,15 @@ The AI Agent Proxy runs as a Docker container on the same VM as your AI agent co
 5. Proxy receives response and applies response guardrails and redaction rules
 6. End user receives final response (original, blocked, or redacted)
 
-### Deployment
+## Deployment
 
-#### Prerequisites
+## **Prerequisites**
 
 * Docker installed on your VM
 * An AI agent application running as a Docker container
 * Network connectivity between proxy and AI agent containers
 
-#### Docker Compose Setup
+## **Docker Compose Setup**
 
 Create a `docker-compose.yml` file to run both the AI agent and proxy containers:
 
@@ -108,7 +87,7 @@ services:
     restart: always
 ```
 
-#### Environment Variables
+#### **Environment Variables**
 
 Configure the AI Agent Proxy with the following environment variables:
 
@@ -122,7 +101,7 @@ Configure the AI Agent Proxy with the following environment variables:
 | `ENABLE_REQUEST_LOGGING`    | Enable detailed request logging (true/false) | No       |
 | `ENABLE_RESPONSE_REDACTION` | Enable automatic PII redaction (true/false)  | No       |
 
-#### Start the Services
+#### **Start the Services**
 
 ```bash
 # Start both containers
@@ -138,7 +117,7 @@ docker-compose logs -f akto-ai-proxy
 docker-compose logs -f ai-agent
 ```
 
-#### Configure Your Application
+#### **Configure Your Application**
 
 Update your application to route AI agent requests through the proxy:
 
@@ -154,9 +133,9 @@ http://localhost:8080/agent/query
 http://localhost:3000/agent/query
 ```
 
-### Security Features
+## Security Features
 
-#### 1. Request Threat Detection
+### **1. Request Threat Detection**
 
 The proxy analyzes incoming requests for security threats including:
 
@@ -167,7 +146,7 @@ The proxy analyzes incoming requests for security threats including:
 * **Data Exfiltration**: Identifies attempts to extract sensitive information
 * **SSRF (Server-Side Request Forgery)**: Blocks unauthorized internal network access
 
-#### 2. Request Guardrails
+### **2. Request Guardrails**
 
 Enforce security policies on incoming requests:
 
@@ -197,7 +176,7 @@ request_guardrails:
     action: "block"
 ```
 
-#### 3. Response Guardrails
+### **3. Response Guardrails**
 
 The proxy receives responses from the AI agent and applies security checks and data protection:
 
@@ -229,7 +208,7 @@ response_guardrails:
     action: "block"
 ```
 
-#### 4. Response Handling
+### **4. Response Handling**
 
 After receiving the response from the AI agent, the proxy applies guardrails and returns one of three types of responses to the end user:
 
@@ -276,9 +255,9 @@ After receiving the response from the AI agent, the proxy applies guardrails and
 }
 ```
 
-### Configuration
+## Configuration
 
-#### Basic Guardrails Configuration
+### **Basic Guardrails Configuration**
 
 Create a `guardrails.yml` file to define your security policies:
 
@@ -318,7 +297,7 @@ settings:
   default_action: "block"
 ```
 
-#### Advanced Configuration
+### **Advanced Configuration**
 
 Configure threat detection sensitivity and custom rules:
 
@@ -345,9 +324,9 @@ threat_detection:
       severity: "high"
 ```
 
-### Monitoring & Logging
+## Monitoring & Logging
 
-#### Container Logs
+### **Container Logs**
 
 View real-time logs from the proxy:
 
@@ -362,7 +341,7 @@ docker logs --tail 100 akto-ai-proxy
 docker logs akto-ai-proxy | grep "BLOCKED"
 ```
 
-#### Log Format
+**Log Format**
 
 The proxy generates structured JSON logs:
 
@@ -381,12 +360,12 @@ The proxy generates structured JSON logs:
 }
 ```
 
-#### Dashboard Integration
+## **Dashboard Integration**
 
 Connect to Akto dashboard for centralized monitoring:
 
 1. Login to [app.akto.io](https://app.akto.io)
-2. Navigate to AI Security > Agent Proxy
+2. Navigate to Akto Argus Dashboard -> Connectors -> AI Agent Proxy
 3. View real-time metrics:
    * Request volume and trends
    * Threat detection statistics
@@ -394,9 +373,9 @@ Connect to Akto dashboard for centralized monitoring:
    * Top guardrails triggered
    * Response redaction statistics
 
-### Networking
+#### Networking
 
-#### Container Network Configuration
+**Container Network Configuration**
 
 The proxy and AI agent containers communicate over a Docker network:
 
@@ -417,7 +396,7 @@ networks:
     driver: bridge
 ```
 
-#### Exposing Proxy to End Users
+**Exposing Proxy to End Users**
 
 For production deployments, use a reverse proxy or load balancer:
 
@@ -444,7 +423,7 @@ server {
 }
 ```
 
-### Best Practices
+#### Best Practices
 
 1. **Network Isolation**: Run containers in a dedicated Docker network for security
 2. **Resource Limits**: Set CPU and memory limits for both containers
@@ -455,11 +434,9 @@ server {
 7. **Secure Tokens**: Store `AKTO_DASHBOARD_TOKEN` securely using Docker secrets or environment files
 8. **Log Rotation**: Configure log rotation to prevent disk space issues
 
-### Troubleshooting
+## Troubleshooting **Common Issues**
 
-#### Common Issues
-
-**Proxy Cannot Connect to AI Agent**
+### **Proxy Cannot Connect to AI Agent**
 
 **Symptoms**: 502 Bad Gateway errors
 
@@ -476,7 +453,7 @@ docker exec akto-ai-proxy ping ai-agent
 docker exec akto-ai-proxy env | grep TARGET_AGENT_URL
 ```
 
-**Requests Being Blocked Incorrectly**
+### **Requests Being Blocked Incorrectly**
 
 **Symptoms**: Legitimate requests returning blocked status
 
@@ -487,7 +464,7 @@ docker exec akto-ai-proxy env | grep TARGET_AGENT_URL
 * Adjust sensitivity levels or whitelist patterns
 * Temporarily disable specific guardrails for testing
 
-**High Latency**
+### **High Latency**
 
 **Symptoms**: Slow response times through proxy
 
@@ -502,7 +479,7 @@ docker stats akto-ai-proxy
 # Consider disabling expensive checks for non-critical paths
 ```
 
-**Container Restart Loops**
+### **Container Restart Loops**
 
 **Symptoms**: Proxy container keeps restarting
 
@@ -518,7 +495,7 @@ docker logs akto-ai-proxy
 # - Insufficient memory/CPU
 ```
 
-#### Debug Mode
+### **Debug Mode**
 
 Enable debug logging for troubleshooting:
 
@@ -530,7 +507,7 @@ services:
       - ENABLE_REQUEST_LOGGING=true
 ```
 
-### Get Support
+## Get Support
 
 There are multiple ways to request support from Akto. We are 24X7 available on the following:
 

@@ -12,7 +12,7 @@ This document is designed for MacOS Installation and end-user reference. It expl
 
 When the user double-clicks the **MCP Endpoint Shield Installer**, macOS may display a warning stating that the application could not be verified and was blocked to protect the system.
 
-<figure><img src="../../../.gitbook/assets/image (1).png" alt="" width="375"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
 
 This is expected behaviour for applications distributed outside the Mac App Store.
 
@@ -29,7 +29,7 @@ This is expected behaviour for applications distributed outside the Mac App Stor
 
 This screen confirms that the user has explicitly approved the installer. Once approved, macOS will allow the installer to run normally.
 
-<figure><img src="../../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 No administrator privileges are required at this stage.
 {% endstep %}
@@ -39,7 +39,7 @@ No administrator privileges are required at this stage.
 
 After approval, the installer wizard launches.
 
-<figure><img src="../../../.gitbook/assets/image (2) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 The introduction screen explains:
 

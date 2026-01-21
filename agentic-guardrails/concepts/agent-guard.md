@@ -1,23 +1,23 @@
 # Agent Guard
 
-## 📖 Introduction
+## Introduction
 
 Akto's Agent Guard provides a comprehensive security layer for AI-powered applications through intelligent scanners that detect and prevent threats in real-time. This reference guide covers all scanners available in the Agent Guard system.
 
-### 🤔 What are Guardrail Scanners?
+## What are Guardrail Scanners?
 
 Guardrail scanners are specialized security modules that analyze content flowing through your AI systems. They act as intelligent checkpoints 🔍, examining both user inputs and AI-generated outputs to identify security threats, policy violations, data leaks, and content safety issues before they cause harm.
 
-### ⚙️ How Guardrails Work
+## How Guardrails Work
 
 Akto's Agent Guard operates on a dual-layer approach:
 
-* **📥 Input Layer**: Scanners validate user messages before they reach your AI models, blocking malicious prompts, credential leaks, and policy violations
-* **📤 Output Layer**: Scanners verify AI-generated responses before delivery to users, preventing data exposure, harmful content, and compliance violations
+* **Input Layer**: Scanners validate user messages before they reach your AI models, blocking malicious prompts, credential leaks, and policy violations
+* **Output Layer**: Scanners verify AI-generated responses before delivery to users, preventing data exposure, harmful content, and compliance violations
 
 Each scanner specializes in detecting specific threat categories, from credential exposure and prompt injection attacks to toxic content and sensitive data leaks. Scanners can be combined to create custom security policies tailored to your application's needs.
 
-### 🎯 When to Use Which Scanners
+## When to Use Which Scanners
 
 **🤖 For Agentic Applications**:
 
@@ -34,7 +34,7 @@ Each scanner specializes in detecting specific threat categories, from credentia
 * Implement comprehensive scanner suites covering security, compliance, and content policies
 * Layer multiple scanners for defense-in-depth protection
 
-### 📋 Scanner Categories
+## Scanner Categories
 
 This guide organizes scanners into two main categories:
 
@@ -43,11 +43,9 @@ This guide organizes scanners into two main categories:
 
 Each scanner entry includes its purpose, detection capabilities, risk prevention benefits, real-world use cases, and example detections.
 
-***
+## INPUT/PROMPT SCANNERS
 
-## 📥 INPUT/PROMPT SCANNERS
-
-Input scanners analyze user messages before they reach your AI models. These scanners protect against malicious inputs, policy violations, and security threats.
+Input scanners analyse user messages before they reach your AI models. These scanners protect against malicious inputs, policy violations, and security threats.
 
 ### 1. 🔐 Secrets Scanner
 
@@ -402,12 +400,12 @@ Input scanners analyze user messages before they reach your AI models. These sca
 
 **Example Transformation**:
 
-* Input: "Contact John at john@email.com"
+* Input: "Contact John at [john@email.com](mailto:john@email.com)"
 * Output: "Contact \[NAME] at \[EMAIL]"
 
 ***
 
-## 📤 OUTPUT SCANNERS
+## OUTPUT SCANNERS
 
 Output scanners validate AI-generated responses before they reach users. These scanners prevent data leaks, ensure quality, and maintain safety standards.
 
@@ -436,7 +434,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 **Example Detection**:
 
-* ✅ Blocks: "Contact John Doe at john.doe@company.com or 555-123-4567"
+* ✅ Blocks: "Contact John Doe at [john.doe@company.com](mailto:john.doe@company.com) or 555-123-4567"
 * ✅ Blocks: Responses containing SSN: 123-45-6789
 * ✅ Flags: Any PII exposure in AI-generated content
 
@@ -466,7 +464,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 **Example Detection**:
 
-* ✅ Blocks: "Visit http://suspicious-phishing-site.xyz"
+* ✅ Blocks: "Visit [http://suspicious-phishing-site.xyz](http://suspicious-phishing-site.xyz)"
 * ✅ Verifies URL reputation
 * ✅ Protects against social engineering
 
@@ -801,7 +799,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 **Example Transformation**:
 
 * Anonymized: "Contact \[NAME] at \[EMAIL]"
-* Deanonymized: "Contact John at john@email.com" (when authorized)
+* Deanonymized: "Contact John at [john@email.com](mailto:john@email.com)" (when authorized)
 
 ***
 
@@ -845,11 +843,11 @@ Output: Toxicity + Bias + BanTopics
 
 ***
 
-## 📊 Summary
+### 📊 Summary
 
 Akto's Agent Guard delivers comprehensive AI security through specialized scanners designed to protect your AI applications at every layer.
 
-### Complete Coverage
+#### Complete Coverage
 
 **Input Protection**:
 
@@ -868,36 +866,36 @@ Akto's Agent Guard delivers comprehensive AI security through specialized scanne
 * **Policy Compliance**: BanTopics, BanSubstrings, BanCompetitors, Code, Language - Enforce guidelines
 * **Privacy Management**: Deanonymize - Controlled data restoration
 
-### Key Benefits
+## Key Benefits
 
-**Security First**:
+#### **Security First**:
 
 * Prevent prompt injection attacks and jailbreaking attempts
 * Block credential and API key exposure in prompts and responses
 * Detect and stop malicious URL distribution
 
-**Compliance Ready**:
+#### **Compliance Ready**:
 
 * GDPR: Anonymize PII, detect sensitive data exposure
 * HIPAA: Protect healthcare information across all interactions
 * PCI-DSS: Prevent payment card data leaks
 * SOC 2: Demonstrate security controls with audit logs
 
-**Production Optimized**:
+#### **Production Optimized**:
 
 * High-performance architecture with intelligent caching
 * Parallel scanner execution for minimal latency impact
 * Configurable thresholds for balanced security and user experience
 * Real-time detection with millisecond response times
 
-**Enterprise Flexible**:
+#### **Enterprise Flexible**:
 
 * Combine scanners to match your specific security requirements
 * Industry-specific configurations for Healthcare, Finance, E-commerce, Education
 * Use case templates for Chatbots, Developer Tools, Public APIs, Content Moderation
 * Granular control over risk thresholds and actions (block, flag, sanitize)
 
-### Getting Started
+## Getting Started
 
 * **Identify Your Use Case**: Review the configuration examples to find patterns matching your application
 * **Select Core Scanners**: Start with 3-5 scanners covering your primary risks (e.g., Secrets + PromptInjection + Toxicity)
@@ -905,11 +903,11 @@ Akto's Agent Guard delivers comprehensive AI security through specialized scanne
 * **Deploy Incrementally**: Enable scanners in monitoring mode first, then enforce blocking policies
 * **Monitor & Optimize**: Track detection patterns and adjust scanner combinations over time
 
-### Next Steps
+## Next Steps
 
-* **Akto Dashboard**: Configure and monitor your guardrails in real-time
-* **Result**: Enterprise-grade AI security with minimal performance impact and maximum protection.
+* [Configure and monitor your guardrails in real-time](../how-to/create-guardrail-policies.md)
+* [**Result**:](guardrail-activity.md) Enterprise-grade AI security with minimal performance impact and maximum protection.
 
-***
+#### **Need Help?**&#x20;
 
-**Need Help?** Visit [Akto Support](https://docs.akto.io/support) or join our [Discord Community](https://discord.com/invite/Wpc6xVME4s) for assistance with guardrail configuration and deployment.
+Visit [Akto Support](https://docs.akto.io/support) or join our [Discord Community](https://discord.com/invite/Wpc6xVME4s) for assistance with guardrail configuration and deployment.

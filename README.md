@@ -45,7 +45,7 @@ Deploy real-time protection for your production agents. Block threats as they oc
 
 **Set up protection proxies**
 
-<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><h4>MCP Proxy</h4></td><td>Real-time protection for MCP servers</td><td><a href="agentic-guardrails/overview/proxy/akto-mcp-proxy.md">akto-mcp-proxy.md</a></td></tr><tr><td><h4>Agent Proxy</h4></td><td>Real-time protection for AI agents</td><td><a href="agentic-guardrails/overview/proxy/akto-agent-proxy.md">akto-agent-proxy.md</a></td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><h4>MCP Proxy</h4></td><td>Real-time protection for MCP servers</td><td><a href="agentic-guardrails/overview/akto-mcp-proxy.md">akto-mcp-proxy.md</a></td></tr><tr><td><h4>Agent Proxy</h4></td><td>Real-time protection for AI agents</td><td><a href="agentic-guardrails/overview/akto-agent-proxy.md">akto-agent-proxy.md</a></td></tr></tbody></table>
 
 ## Resources
 

@@ -1,8 +1,23 @@
-# Connect Akto with AWS Bedrock
+# AWS Bedrock
 
 ## Overview
 
 This guide provides step-by-step instructions for setting up AKTO's AWS Bedrock monitoring solution in your AWS account. This solution automatically captures, processes, and sends AWS Bedrock agent conversations to your AKTO instance for security analysis.
+
+## System Architecture
+
+```mermaid
+flowchart LR
+    A[AWS Bedrock Agent] --> B[Model Invocation Logging] --> C[S3 Bucket]
+    C --> E[Lambda Function]
+    D[EventBridge every 5 minutes] --> E
+    E --> F[Data Ingestion API] --> G[AKTO Dashboard]
+
+
+
+```
+
+
 
 ## What You'll Achieve
 
@@ -31,9 +46,11 @@ This guide provides step-by-step instructions for setting up AKTO's AWS Bedrock 
 
 ## Step-by-Step Setup
 
-**Step 1: Install AWS CLI if not installed**
+{% stepper %}
+{% step %}
+### **Install AWS CLI if not installed**
 
-If aws CLI is already configured then move to Step 2
+If AWS CLI is already configured then move to Step 2
 
 ```bash
 # On Mac:
@@ -46,55 +63,55 @@ unzip awscliv2.zip
 sudo ./aws/install
 ```
 
-**Step 1.1: Install Node.js**
+1.  **Install Node.js**
 
-```bash
-# On Mac:
-brew install node
+    ```bash
+    # On Mac:
+    brew install node
 
-# On Windows/Linux: Download from https://nodejs.org/
-```
+    # On Windows/Linux: Download from https://nodejs.org/
+    ```
+2.  **Configure AWS Credentials**
 
-**Step 1.2: Configure AWS Credentials**
+    You need to tell AWS who you are:
 
-You need to tell AWS who you are:
+    ```bash
+    aws configure
+    ```
 
-```bash
-aws configure
-```
+    It will ask for:
 
-It will ask for:
+    * **AWS Access Key ID**: Get from AWS Console → IAM → Users → Your User → Security credentials
+    * **AWS Secret Access Key**: Same place as above
+    * **Default region**: Use `us-east-1` (or your preferred region)
+    * **Default output format**: Just press Enter
+3.  **Test AWS Access**
 
-* **AWS Access Key ID**: Get from AWS Console → IAM → Users → Your User → Security credentials
-* **AWS Secret Access Key**: Same place as above
-* **Default region**: Use `us-east-1` (or your preferred region)
-* **Default output format**: Just press Enter
+    ```bash
+    aws sts get-caller-identity
+    ```
+4.  Verify your AWS identity
 
-**Step 1.3: Test AWS Access**
+    ```bash
+    aws sts get-caller-identity
+    ```
 
-```bash
-aws sts get-caller-identity
-```
+    Expected Output
 
-## Verify your AWS identity
+    ```json
+    {
+        "UserId": "AIDACKXXXXXXXXXXXXXXXXX",
+        "Account": "123456789***",
+        "Arn": "arn:aws:iam::123456789012:user/your-username"
+    }
+    ```
 
-aws sts get-caller-identity
+    ✅ **Should show your account ID** - You're ready!\
+    ❌ **Shows error** - Fix your credentials first
+{% endstep %}
 
-````
-
-**Expected Output:**
-```json
-{
-    "UserId": "AIDACKXXXXXXXXXXXXXXXXX",
-    "Account": "123456789***",
-    "Arn": "arn:aws:iam::123456789012:user/your-username"
-}
-````
-
-✅ **Should show your account ID** - You're ready!\
-❌ **Shows error** - Fix your credentials first
-
-**Step 2: Download the Solution**
+{% step %}
+### **Download the Solution**
 
 ```bash
 # Clone the repository
@@ -106,8 +123,10 @@ cd akto_aws_bedrock_discovery
 # Make scripts executable
 chmod +x simple-deploy.sh test-solution.sh
 ```
+{% endstep %}
 
-**Step 3: Prepare Your Information**
+{% step %}
+### **Prepare Your Information**
 
 Before running the deployment, gather this information:
 
@@ -120,8 +139,10 @@ Before running the deployment, gather this information:
 3. **AKTO API Key**: Authentication key for your AKTO instance
    * Obtain from your AKTO dashboard
    * Example: `ak_live_xxxxxxxxxxxxxxxxxxxx`
+{% endstep %}
 
-**Step 4: Run the Deployment**
+{% step %}
+### **Run the Deployment**
 
 Execute the deployment script:
 
@@ -157,8 +178,10 @@ Enter AKTO Data Ingestion URL (e.g., https://your-akto-instance.com/api/ingestDa
 Enter AKTO API Key: ak_live_xxxxxxxxxxxxxxxxxxxx
 ✅ Using API Key: ak_live_...
 ```
+{% endstep %}
 
-**Step 5: Wait for Deployment**
+{% step %}
+### **Wait for Deployment**
 
 The script will automatically:
 
@@ -197,8 +220,10 @@ The script will automatically:
 
 🎯 The system will automatically process Bedrock logs every 5 minutes!
 ```
+{% endstep %}
 
-**Step 6: Verify the Deployment**
+{% step %}
+### **Verify the Deployment**
 
 Run the verification script:
 
@@ -212,8 +237,10 @@ This will check:
 * ✅ S3 bucket is properly configured
 * ✅ CloudWatch logs are working
 * ✅ EventBridge schedule is active
+{% endstep %}
 
-**Step 7: Create S3 Bucket (If Needed)**
+{% step %}
+### **Create S3 Bucket (If Needed)**
 
 If you don't have an S3 bucket, create one:
 
@@ -226,8 +253,10 @@ aws s3api put-bucket-versioning \
     --bucket my-company-bedrock-logs-2024 \
     --versioning-configuration Status=Enabled
 ```
+{% endstep %}
 
-**Step 8: Test with Bedrock**
+{% step %}
+### **Test with Bedrock**
 
 Generate a test conversation:
 
@@ -239,8 +268,10 @@ aws bedrock-runtime invoke-model \
     --content-type application/json \
     test-output.json
 ```
+{% endstep %}
 
-**Step 9: Monitor the System**
+{% step %}
+### **Monitor the System**
 
 **Check Lambda Logs:**
 
@@ -262,20 +293,12 @@ aws lambda invoke \
     --payload '{}' \
     response.json
 ```
+{% endstep %}
+{% endstepper %}
 
-#### System Architecture
+## Troubleshooting **Common Issues**
 
-```
-AWS Bedrock Agent → Model Invocation Logging → S3 Bucket
-                                                    ↓
-AKTO Dashboard ← Data Ingestion API ← Lambda Function ← EventBridge (5 min)
-```
-
-## Troubleshooting
-
-### **Common Issues**
-
-**1. Permission Denied Errors**
+### **1. Permission Denied Errors**
 
 ```bash
 # Check your AWS credentials
@@ -285,14 +308,14 @@ aws sts get-caller-identity
 aws iam list-attached-user-policies --user-name YOUR_USERNAME
 ```
 
-**2. S3 Bucket Already Exists**
+### **2. S3 Bucket Already Exists**
 
 ```bash
 # Choose a different bucket name or check if you own it
 aws s3 ls s3://your-bucket-name
 ```
 
-**3. Lambda Function Not Processing**
+### **3. Lambda Function Not Processing**
 
 ```bash
 # Check Lambda logs for errors
@@ -302,7 +325,7 @@ aws logs describe-log-groups --log-group-name-prefix "/aws/lambda/akto-bedrock"
 aws logs tail /aws/lambda/akto-bedrock-log-processor-YOUR_ACCOUNT_ID --follow
 ```
 
-**4. AKTO Connection Issues**
+### **4. AKTO Connection Issues**
 
 ```bash
 # Test connectivity to your AKTO instance
