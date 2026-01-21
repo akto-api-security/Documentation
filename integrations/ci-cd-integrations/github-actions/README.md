@@ -12,9 +12,9 @@ Akto integrates with GitHub Actions to add automated API security testing to you
 
 * GitHub repository with Actions enabled
 * Akto dashboard access
-* [Akto API credentials](../../../ci-cd-integration/how-to/get-api-credentials.md)
-* [Valid test ID from Akto test](../../../ci-cd-integration/how-to/test-id-from-akto-test.md)
-* [GitHub App](../../../ci-cd-integration/github-actions/create-github-app.md) installed and configured (required for PR comments)
+* [Akto API credentials](/broken/pages/fxxYPwGU1kTuZwMAksYR)
+* [Valid test ID from Akto test](/broken/pages/q2Oz4FsKPEq381Pwpaws)
+* [GitHub App](/broken/pages/Kn59XMqtMXUTwjhcDM28) installed and configured (required for PR comments)
 
 ### Steps to Configure GitHub Actions
 

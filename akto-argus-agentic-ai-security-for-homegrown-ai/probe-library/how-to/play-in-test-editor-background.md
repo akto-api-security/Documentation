@@ -2,9 +2,9 @@
 
 ## Step 1: Select a Probe YAML
 
-Select any default probe of your choice and replace the 3 sections (api\_selection\_filters, execute, validate) with the above YAML text. Please refer the [Edit test](../../../probe-library/how-to/edit-test.md) section for a better understanding of how to edit a probe YAML.
+Select any default probe of your choice and replace the 3 sections (api\_selection\_filters, execute, validate) with the above YAML text. Please refer the [Edit test](/broken/pages/gSQBHt7XLdG1z3uuD8HO) section for a better understanding of how to edit a probe YAML.
 
-You can change the Probe YAML. Learn [here](../../../probe-library/how-to/create-a-custom-test.md).
+You can change the Probe YAML. Learn [here](/broken/pages/IFwx1BIVVVK4uM4f3Ibt).
 
 ## Step 2: **Select your Sample Agent Component For Testing**
 

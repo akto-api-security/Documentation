@@ -8,8 +8,8 @@ Akto Probe Library is the security testing framework for teams protecting AI age
 
 Probe Library consists of three blocks:
 
-1. [Test Library](../../../probe-library/concepts/test-library.md) with 1000+ built-in probes for agentic security
-2. [YAML probe](../../../probe-library/concepts/test-yaml.md) editor for custom test creation
+1. [Test Library](/broken/pages/dSsJ61a6X5l3Lw6xFIMb) with 1000+ built-in probes for agentic security
+2. [YAML probe](/broken/pages/BjSVcpZldqHcKBVqo1Ln) editor for custom test creation
 3. Sample agent component requests and responses for testing
 
 <figure><img src="../../../.gitbook/assets/Test Editor.png" alt=""><figcaption></figcaption></figure>

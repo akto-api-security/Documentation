@@ -14,8 +14,8 @@ Akto integrates with GitLab to add automated API security testing to your CI/CD 
 * GitLab repository with CI/CD enabled
 * Docker runner configured in GitLab
 * [Akto dashboard access](https://app.akto.io/)
-* [Akto API credentials](../../ci-cd-integration/how-to/get-api-credentials.md) (API key and dashboard URL)
-* [Valid test ID from your Akto test](../../ci-cd-integration/how-to/test-id-from-akto-test.md)
+* [Akto API credentials](/broken/pages/fxxYPwGU1kTuZwMAksYR) (API key and dashboard URL)
+* [Valid test ID from your Akto test](/broken/pages/q2Oz4FsKPEq381Pwpaws)
 
 ### Steps to Configure GitLab
 

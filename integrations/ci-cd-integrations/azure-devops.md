@@ -12,8 +12,8 @@ Akto's integration with Azure DevOps allows you to maintain API security through
 
 * Azure DevOps project with administrator access
 * Akto dashboard access
-* [Akto API credentials](../../ci-cd-integration/how-to/get-api-credentials.md) (API key and dashboard URL)
-* [Valid test ID from Akto test](../../ci-cd-integration/how-to/test-id-from-akto-test.md)
+* [Akto API credentials](/broken/pages/fxxYPwGU1kTuZwMAksYR) (API key and dashboard URL)
+* [Valid test ID from Akto test](/broken/pages/q2Oz4FsKPEq381Pwpaws)
 
 ### Steps to Configure Azure DevOps Pipeline
 
@@ -74,8 +74,8 @@ stages:
 2. Add the following required variables:
 
 * `AKTO_DASHBOARD_URL`: Your Akto dashboard URL
-* `AKTO_API_KEY`: [Your Akto API key](../../ci-cd-integration/how-to/get-api-credentials.md) (mark as secret)
-* `AKTO_TEST_ID`: [Your Akto test ID](../../ci-cd-integration/how-to/test-id-from-akto-test.md)
+* `AKTO_API_KEY`: [Your Akto API key](/broken/pages/fxxYPwGU1kTuZwMAksYR) (mark as secret)
+* `AKTO_TEST_ID`: [Your Akto test ID](/broken/pages/q2Oz4FsKPEq381Pwpaws)
 * `WAIT_TIME_FOR_RESULT`: Time to wait for test results
 
 <figure><img src="../../.gitbook/assets/image (68).png" alt=""><figcaption></figcaption></figure>

@@ -139,4 +139,4 @@ execute:
 * **regex**: Uses regular expressions for pattern matching
 * **for\_one**: Applies conditions to at least one of the headers
 
-This filter will only allow traffic that meets all specified conditions. For more details on advanced filtering options, visit [API Selection Filters](../../probe-library/concepts/test-yaml-syntax-detailed/api-selection-filters.md).
+This filter will only allow traffic that meets all specified conditions. For more details on advanced filtering options, visit [API Selection Filters](/broken/pages/CkkvJFihp6S2g0ks3KQR).
