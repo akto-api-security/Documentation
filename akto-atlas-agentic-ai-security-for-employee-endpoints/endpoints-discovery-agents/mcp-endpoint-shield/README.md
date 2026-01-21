@@ -2,9 +2,7 @@
 
 ## Overview
 
-MCP Endpoint Shield provides **runtime security** and auto-discovery of local MCP servers configured on your machine. It acts as a protective layer between the MCP client (e.g., Cursor, VS Code, Claude) and the MCP servers—requiring no changes to your setup.
-
-***
+MCP Endpoint Shield provides **runtime security** and auto-discovery of local MCP servers configured on your machine. It acts as a protective layer between the MCP client (e.g., Cursor, VS Code, Claude) and the MCP servers, requiring no changes to your setup.
 
 ## What is Agentic Endpoint Shield?
 
@@ -16,24 +14,20 @@ Endpoint Shield continuously monitors employee devices to identify and track:
 * **Agent Activity**: Real-time heartbeat monitoring and deployment status
 * **MCP Connections**: Server URLs, connection health, and last seen timestamps
 
-### ✨ Features
+## Features
 
-* ✅ Continuous safety checks on all requests and responses to the MCP servers
-* ✅ Automatic blocking of unsafe interactions (via standard JSON-RPC errors)
-* ✅ Works out-of-the-box with popular MCP clients (Cursor, VS Code, Claude)
-* ✅ Zero changes required in your MCP server
+* Continuous safety checks on all requests and responses to the MCP servers
+* Automatic blocking of unsafe interactions (via standard JSON-RPC errors)
+* Works out-of-the-box with popular MCP clients (Cursor, VS Code, Claude)
+* Zero changes required in your MCP server
 
-***
-
-### 📦 Installation
+## Installation
 
 * The application is provided as an installble package (.app, .deb, .exe)
 * Please reach out to Akto Support to get your installer.
-* Please refer to the Manaul Run section if you wish to run the tool without an installer
+* Please refer to the [Manaul Setup](./#manual-setup) section if you wish to run the tool without an installer.
 
-***
-
-### 🔍 Auto-Detection
+## Auto-Detection
 
 Akto MCP Endpoint Shield automatically detects MCP client configurations:
 
@@ -47,13 +41,15 @@ For each detected MCP server config:
 2. Each server entry is automatically wrapped with **Akto MCP Endpoint Shield**.
 3. Your MCP clients transparently run through the shield without requiring manual reconfiguration.
 
-👉 You don’t need to manually edit your MCP config files — the wrapper handles this for you.
+{% hint style="warning" %}
+You don’t need to manually edit your MCP config files — the wrapper handles this for you.
+{% endhint %}
 
-***
+<details>
 
-#### 📄 Example — Cursor `mcp.json`
+<summary>Example — Cursor <code>mcp.json</code></summary>
 
-**Original file (before wrapping):**
+### **Original file (before wrapping):**
 
 ```json
 {
@@ -69,7 +65,7 @@ For each detected MCP server config:
 }
 ```
 
-**Automatically wrapped file (after Akto MCP Endpoint Shield):**
+### **Automatically wrapped file (after Akto MCP Endpoint Shield):**
 
 ```json
 {
@@ -90,26 +86,30 @@ For each detected MCP server config:
 }
 ```
 
-<figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2Fgit-blob-a71682de7c1df47b6a5ea827fc2bf83af6fde9ff%2Fmcp_endpoint_shield_example.png?alt=media" alt=""><figcaption></figcaption></figure>
+Here how the wrap looks in the code:&#x20;
 
-**What changed:**
+<figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2Fgit-blob-a71682de7c1df47b6a5ea827fc2bf83af6fde9ff%2Fmcp_endpoint_shield_example.png?alt=media" alt="" width="563"><figcaption></figcaption></figure>
+
+#### **What changed:**
 
 * `mcp-endpoint-shield` is now the entry command.
 * Original server command (`npx -y chrome-devtools-mcp@latest`) is passed through `--exec`.
 
-***
+</details>
 
-### 🔧 Manual Setup
+## Manual Setup
 
 Follow these steps to manually set up and run MCP Endpoint Shield to protect your MCP servers.
 
-#### Prerequisites
+### Prerequisites
 
 * You have the `mcp-endpoint-shield` binary available
 * You have an Akto API token
 * uninstall MCP Endpoint Shield if installed previously using installers
 
-#### Step 1: Set Your API Token
+{% stepper %}
+{% step %}
+### Set Your API Token
 
 Set the `AKTO_API_TOKEN` environment variable:
 
@@ -119,27 +119,28 @@ export AKTO_API_TOKEN="your-actual-token-here"
 
 **Make it permanent** (optional):
 
-For **bash** users, add to `~/.bashrc`:
+*   For **bash** users, add to `~/.bashrc`:
 
-```bash
-echo 'export AKTO_API_TOKEN="your-actual-token-here"' >> ~/.bashrc
-source ~/.bashrc
-```
+    ```bash
+    echo 'export AKTO_API_TOKEN="your-actual-token-here"' >> ~/.bashrc
+    source ~/.bashrc
+    ```
+*   For **zsh** users, add to `~/.zshrc`:
 
-For **zsh** users, add to `~/.zshrc`:
-
-```bash
-echo 'export AKTO_API_TOKEN="your-actual-token-here"' >> ~/.zshrc
-source ~/.zshrc
-```
+    ```bash
+    echo 'export AKTO_API_TOKEN="your-actual-token-here"' >> ~/.zshrc
+    source ~/.zshrc
+    ```
 
 Verify it's set:
 
 ```bash
 echo $AKTO_API_TOKEN
 ```
+{% endstep %}
 
-#### Step 2: Start the Agent
+{% step %}
+### Start the Agent
 
 The agent automatically discovers and protects your MCP servers.
 
@@ -162,19 +163,26 @@ Agent mode started. Press Ctrl+C to stop...
 * Sync security policies from Akto backend
 * Watch for changes and auto-update configs
 
-**Note:** If you want the agent to run in the background, use:
+{% hint style="info" %}
+## **Note:**&#x20;
 
-```bash
-nohup ./mcp-endpoint-shield agent > agent.log 2>&1 &
-```
+If you want the agent to run in the background, use:
 
-#### Step 3: Protecting Local MCP Servers (STDIO)
+<pre class="language-bash"><code class="lang-bash"><strong>nohup ./mcp-endpoint-shield agent > agent.log 2>&#x26;1 &#x26;
+</strong></code></pre>
+{% endhint %}
+{% endstep %}
+
+{% step %}
+### Protecting Local MCP Servers (STDIO)
 
 **Option A: Let the Agent Wrap It (Recommended)**
 
 If the agent is running (Step 2), it will **automatically** detect and wrap your config. Your MCP configuration will be automatically modified to route through the security shield.
 
-**Example transformation:**
+<details>
+
+<summary><strong>Example transformation</strong></summary>
 
 Before:
 
@@ -212,11 +220,23 @@ After (automatic):
 }
 ```
 
+</details>
+
 **Restart your MCP client** (Cursor/VS Code) to apply changes.
 
 **Option B: Manual Wrapping (If Not Using Agent)**
 
 If you're not running the agent, manually edit your MCP config file (e.g., `~/.cursor/mcp.json`):
+
+**Key changes:**
+
+1. Change `command` to the full path of `mcp-endpoint-shield`
+2. Add `"stdio", "--name", "<server-name>", "--akto-api-token", "<your-token>", "--exec"` to the start of `args`
+3. Place the original command (`npx`) and arguments (`-y`, `chrome-devtools`) after `--exec`
+
+<details>
+
+<summary><strong>Example transformation</strong></summary>
 
 **Before:**
 
@@ -254,15 +274,13 @@ If you're not running the agent, manually edit your MCP config file (e.g., `~/.c
 }
 ```
 
-**Key changes:**
-
-1. Change `command` to the full path of `mcp-endpoint-shield`
-2. Add `"stdio", "--name", "<server-name>", "--akto-api-token", "<your-token>", "--exec"` to the start of `args`
-3. Place the original command (`npx`) and arguments (`-y`, `chrome-devtools`) after `--exec`
+</details>
 
 **Restart your MCP client** to apply changes.
+{% endstep %}
 
-#### Step 4: Protecting Remote MCP Servers (HTTP)
+{% step %}
+### Protecting Remote MCP Servers (HTTP)
 
 For HTTP-based MCP servers, run the HTTP proxy in a **new terminal**:
 
@@ -280,7 +298,9 @@ Project: default, Skip Threat: false
 
 **Keep this terminal running.**
 
+{% hint style="info" %}
 **Note:** The proxy runs on port `57294` by default.
+{% endhint %}
 
 **Configure Your Remote MCP Server**
 
@@ -330,32 +350,34 @@ The proxy will:
 * Return the response back to your client
 
 **Restart your MCP client** to apply changes.
+{% endstep %}
 
-#### Step 5: Verify Everything is Working
+{% step %}
+### Verify Everything is Working
 
-**Check Agent Status**
+*   **Check Agent Status**
 
-Look at the agent terminal - you should see:
+    Look at the agent terminal - you should see:
 
-```
-Agent mode started. Press Ctrl+C to stop...
-```
+    ```
+    Agent mode started. Press Ctrl+C to stop...
+    ```
 
-No errors means it's working!
+    No errors means it's working!
+*   **Check HTTP Proxy Status**
 
-**Check HTTP Proxy Status**
+    Look at the proxy terminal:
 
-Look at the proxy terminal:
+    ```
+    Starting MCP HTTP Proxy on 127.0.0.1:57294
+    ```
+*   **Test Your MCP Server**
 
-```
-Starting MCP HTTP Proxy on 127.0.0.1:57294
-```
+    Open your MCP client (Cursor, VS Code, Claude Desktop) and try using your wrapped MCP server. It should work normally, but now with security protection.Step 4:&#x20;
+{% endstep %}
+{% endstepper %}
 
-**Test Your MCP Server**
-
-Open your MCP client (Cursor, VS Code, Claude Desktop) and try using your wrapped MCP server. It should work normally, but now with security protection.
-
-#### Quick Command Reference
+## Quick Command Reference
 
 **Terminal 1 - Agent:**
 
@@ -382,22 +404,18 @@ This protects:
 * **STDIO servers** (like `npx -y chrome-devtools`) via agent
 * **HTTP servers** (remote MCP servers) via proxy
 
-***
-
-### ⚙️ Common Flags
+## Common Flags
 
 * `--name <project_name>` → Friendly label used in logs and insights
 * `--akto-api-token <token>` → Your Akto API token
 * `--exec <command> [args...]` → Command to start your MCP server
 * `--env KEY=VALUE` (repeatable) → Pass additional environment variables to the MCP process
 
-***
+## Logging
 
-### 📜 Logging
+Based on Log File Locations, choose from the following:&#x20;
 
-#### Log File Locations
-
-**Manual Run**
+### Manual Run
 
 When you manually run `mcp-endpoint-shield`, logs are written to:
 
@@ -416,58 +434,54 @@ ls -la ~/.akto-mcp-endpoint-shield/logs/
 tail -f ~/.akto-mcp-endpoint-shield/logs/*.log
 ```
 
-**MacOS System Service (LaunchDaemon)**
+### MacOS System Service (LaunchDaemon)
 
 When installed and running as a system service on macOS:
 
-**Agent logs:**
+*   **Agent logs**
 
-```
-/var/log/akto-mcp-endpoint-shield/agent.log
-/var/log/akto-mcp-endpoint-shield/agent-error.log
-```
+    ```
+    /var/log/akto-mcp-endpoint-shield/agent.log
+    /var/log/akto-mcp-endpoint-shield/agent-error.log
+    ```
+*   **HTTP Proxy logs**
 
-**HTTP Proxy logs:**
+    ```
+    /var/log/akto-mcp-endpoint-shield/proxy-server.log
+    /var/log/akto-mcp-endpoint-shield/proxy-error.log
+    ```
+*   **View logs**
 
-```
-/var/log/akto-mcp-endpoint-shield/proxy-server.log
-/var/log/akto-mcp-endpoint-shield/proxy-error.log
-```
+    ```bash
+    sudo tail -f /var/log/akto-mcp-endpoint-shield/*.log
+    ```
 
-**View logs:**
-
-```bash
-sudo tail -f /var/log/akto-mcp-endpoint-shield/*.log
-```
-
-**Linux System Service (systemd)**
+### Linux System Service (systemd)
 
 When installed and running as a systemd service on Linux:
 
-**Agent logs:**
+*   **Agent logs**
 
-```
-/var/log/akto-mcp-endpoint-shield/agent.log
-```
+    ```
+    /var/log/akto-mcp-endpoint-shield/agent.log
+    ```
+*   **HTTP Proxy logs**
 
-**HTTP Proxy logs:**
+    ```
+    /var/log/akto-mcp-endpoint-shield/proxy-server.log
+    ```
+*   **View logs**
 
-```
-/var/log/akto-mcp-endpoint-shield/proxy-server.log
-```
+    ```bash
+    # Direct log files
+    sudo tail -f /var/log/akto-mcp-endpoint-shield/*.log
 
-**View logs:**
+    # Via systemd journalctl
+    sudo journalctl -u mcp-endpoint-shield-agent -f
+    sudo journalctl -u mcp-endpoint-shield -f
+    ```
 
-```bash
-# Direct log files
-sudo tail -f /var/log/akto-mcp-endpoint-shield/*.log
-
-# Via systemd journalctl
-sudo journalctl -u mcp-endpoint-shield-agent -f
-sudo journalctl -u mcp-endpoint-shield -f
-```
-
-**STDIO Wrapped MCP servers (Manual and Installer)**
+### STDIO Wrapped MCP servers (Manual and Installer)
 
 Each wrapped STDIO MCP server gets its own log file named after the `--name` attribute:
 
@@ -475,34 +489,45 @@ Each wrapped STDIO MCP server gets its own log file named after the `--name` att
 ~/.akto-mcp-endpoint-shield/logs/<name>.log
 ```
 
-***
-
 ## Troubleshooting
 
-**Issue:** `AKTO_API_TOKEN is not set` ➡ Cause: Environment variable not configured. ➡ Fix: Set the token with `export AKTO_API_TOKEN="your-token"` and verify with `echo $AKTO_API_TOKEN`.
+**Issue:** `AKTO_API_TOKEN is not set`&#x20;
 
-**Issue:** `Port already in use` (HTTP Proxy) ➡ Cause: Port 57294 is already being used by another process. ➡ Fix 1: Find and kill the process with `lsof -i :57294` and `kill -9 PID`. ➡ Fix 2: Use a different port with `./mcp-endpoint-shield http --port 8080` and update your config.
+* **Cause**: Environment variable not configured.
+* **Fix**: Set the token with `export AKTO_API_TOKEN="your-token"` and verify with `echo $AKTO_API_TOKEN`.
 
-**Issue:** MCP server not working after wrapping ➡ Cause: Multiple possible causes. ➡ Fix:
+**Issue:** `Port already in use` (HTTP Proxy)&#x20;
 
-1. Restart your MCP client,
-2. Verify binary path with `which mcp-endpoint-shield`,
-3. Check logs at `~/.akto-mcp-endpoint-shield/logs/` or `/var/log/akto-mcp-endpoint-shield/` (if installed using installer)
-4. Test original command works standalone.
+* **Cause**: Port 57294 is already being used by another process.&#x20;
+* **Fix 1**: Find and kill the process with `lsof -i :57294` and `kill -9 PID`.&#x20;
+* **Fix 2**: Use a different port with `./mcp-endpoint-shield http --port 8080` and update your config.
 
-**Issue:** `permission denied: ./mcp-endpoint-shield` ➡ Cause: Binary doesn't have execute permissions. ➡ Fix: Run `chmod +x ./mcp-endpoint-shield`.
+**Issue:** MCP server not working after wrapping&#x20;
 
-**Issue:** `command not found: mcp-endpoint-shield` ➡ Cause: Binary not in PATH or wrong path used. ➡ Fix: Use full path (`./mcp-endpoint-shield` or `/usr/local/bin/mcp-endpoint-shield`) or add to PATH with `export PATH=$PATH:/path/to/binary/directory`.
+* **Cause**: Multiple possible causes.&#x20;
+* **Fix**:
+  * Restart your MCP client,
+  * Verify binary path with `which mcp-endpoint-shield`,
+  * Check logs at `~/.akto-mcp-endpoint-shield/logs/` or `/var/log/akto-mcp-endpoint-shield/` (if installed using installer)
+  * Test original command works standalone.
 
-***
+**Issue:** `permission denied: ./mcp-endpoint-shield` ➡&#x20;
 
-### 🔒 Guarantees
+* **Cause**: Binary doesn't have execute permissions. ➡&#x20;
+* **Fix**: Run `chmod +x ./mcp-endpoint-shield`.
 
-* ✅ **Transparency**: Safe traffic is never altered.
-* ✅ **Clarity**: Unsafe traffic always results in a clear JSON-RPC error.
-* ✅ **Minimal footprint**: Designed to stay invisible unless an issue occurs.
+**Issue:** `command not found: mcp-endpoint-shield` ➡&#x20;
 
-***
+* **Cause**: Binary not in PATH or wrong path used. ➡&#x20;
+* **Fix**: Use full path (`./mcp-endpoint-shield` or `/usr/local/bin/mcp-endpoint-shield`) or add to PATH with `export PATH=$PATH:/path/to/binary/directory`.
+
+{% hint style="success" %}
+## Akto Security Scope&#x20;
+
+* **Transparency**: Safe traffic is never altered.
+* **Clarity**: Unsafe traffic always results in a clear JSON-RPC error.
+* **Minimal footprint**: Designed to stay invisible unless an issue occurs.
+{% endhint %}
 
 ## Get Support for your Akto setup
 

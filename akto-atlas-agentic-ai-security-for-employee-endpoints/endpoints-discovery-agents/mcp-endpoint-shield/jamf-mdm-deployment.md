@@ -599,32 +599,13 @@ tail -f /var/log/jamf.log
 
 ### Support
 
-#### User Documentation
-
-Provide users with:
-
-* What MCP Endpoint Shield does
-* Why it's required (security/compliance)
-* How to check if it's running
-* Who to contact for issues
-
-#### Admin Contacts
-
 * **Jamf Issues**: IT Helpdesk
 * **MCP Shield Issues**: Security Team
 * **Token Issues**: Security Team
 * **Akto Platform**: support@akto.io
 
-***
-
 ### Related Documentation
 
-* MCP Endpoint Shield Overview - General installation and manual setup
-* MCP Endpoint Shield via Cursor Hooks - Alternative deployment method
+* [MCP Endpoint Shield Overview](./) - General installation and manual setup
+* [MCP Endpoint Shield via Cursor Hooks](../cursor-hooks.md) - Alternative deployment method
 * MCP Security - Security concepts and best practices
-
-***
-
-### Version
-
-This documentation is for MCP Endpoint Shield v1.1.5 (Jamf deployment).
