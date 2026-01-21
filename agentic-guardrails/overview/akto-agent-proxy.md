@@ -72,7 +72,7 @@ services:
     restart: always
 
   akto-ai-proxy:
-    image: aktosecurity/ai-agent-proxy:latest
+    image: public.ecr.aws/aktosecurity/akto-ai-agent-shield:latest
     container_name: akto-ai-proxy
     ports:
       - "3000:3000"
