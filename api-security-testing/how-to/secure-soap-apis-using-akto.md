@@ -12,7 +12,7 @@ You can use Akto to help you secure your SOAP APIs in the CI/CD pipeline:
 
 ### API Inventory
 
-Akto can automatically prepare an API Inventory for SOAP APIs. Use one of our [traffic connectors](broken-reference) or upload WSDL files directly. Akto will populate the dashboard with all detected SOAP operations and their request/response structures.
+Akto can automatically prepare an API Inventory for SOAP APIs. Use one of our [traffic connectors](/broken/pages/pCnFacdZeAJG3wmDZDLS) or upload WSDL files directly. Akto will populate the dashboard with all detected SOAP operations and their request/response structures.
 
 You will see a separate entry for each SOAP action (operation) along with its endpoint. Click on an API to view its detailed request and response XML schema.
 
