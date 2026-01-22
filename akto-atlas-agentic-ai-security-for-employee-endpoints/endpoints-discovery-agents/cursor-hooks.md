@@ -54,7 +54,7 @@ sequenceDiagram
         AfterHook-->>User: Block / Redact response
     else Non-Malicious Response
         AfterHook-->>Akto: Report event
-        AfterHook-->>User: Response to user
+        AfterHook->>User: Response to user
     end
 
 ```
