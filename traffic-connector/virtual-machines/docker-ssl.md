@@ -46,13 +46,13 @@ docker run -d \
   -e AKTO_TRAFFIC_BATCH_SIZE=100 \
   -e AKTO_KAFKA_BROKER_MAL="<kafka-ip>:9092" \
   -e PROBE_ALL_PID=true \
-  aktosecurity/mirror-api-logging:k8s_ebpf
+  public.ecr.aws/aktosecurity/mirror-api-logging:k8s_ebpf
 ```
 
 In case you face an issue with the spaces in the command above
 
 ```bash
-docker run -d --name akto-api-security-traffic-collector --restart always --network host --pid=host --privileged --cap-add SYS_PTRACE --cap-add SYS_ADMIN --cpus="0.5" --memory="512m" -v /lib/modules:/lib/modules -v /sys/kernel:/sys/kernel -v /usr/src:/usr/src -v /:/host -e AKTO_TRAFFIC_BATCH_TIME_SECS=10 -e AKTO_TRAFFIC_BATCH_SIZE=100 -e AKTO_KAFKA_BROKER_MAL=<kafka_ip> -e PROBE_ALL_PID=true aktosecurity/mirror-api-logging:k8s_ebpf
+docker run -d --name akto-api-security-traffic-collector --restart always --network host --pid=host --privileged --cap-add SYS_PTRACE --cap-add SYS_ADMIN --cpus="0.5" --memory="512m" -v /lib/modules:/lib/modules -v /sys/kernel:/sys/kernel -v /usr/src:/usr/src -v /:/host -e AKTO_TRAFFIC_BATCH_TIME_SECS=10 -e AKTO_TRAFFIC_BATCH_SIZE=100 -e AKTO_KAFKA_BROKER_MAL=<kafka_ip> -e PROBE_ALL_PID=true public.ecr.aws/aktosecurity/mirror-api-logging:k8s_ebpf
 ```
 
 #### What’s Happening Behind the Scenes?

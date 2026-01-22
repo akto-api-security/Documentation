@@ -41,7 +41,7 @@ spec:
       hostPID: true
       containers:
       - name: mirror-api-logging
-        image: aktosecurity/mirror-api-logging:k8s_ebpf
+        image: public.ecr.aws/aktosecurity/mirror-api-logging:k8s_ebpf
         resources:
           limits:
             cpu: 500m
@@ -107,7 +107,7 @@ docker run --rm -d \
   -v /lib/modules:/lib/modules:ro \
   -v /sys/kernel:/sys/kernel:ro \
   -v /:/host:ro \
-  aktosecurity/mirror-api-logging:k8s_ebpf
+  public.ecr.aws/aktosecurity/mirror-api-logging:k8s_ebpf
 ```
 
 For `AKTO_NLB_IP` , Use the service IP or load balancer name of Traffic Processor from step (1)
