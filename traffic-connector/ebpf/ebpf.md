@@ -35,7 +35,7 @@ spec:
       hostPID: true
       containers:
       - name: mirror-api-logging
-        image: aktosecurity/mirror-api-logging:k8s_ebpf
+        image: public.ecr.aws/aktosecurity/mirror-api-logging:k8s_ebpf
         resources:
           limits:
             cpu: 500m
