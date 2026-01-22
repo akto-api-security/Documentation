@@ -55,32 +55,32 @@ Download the Akto MCP guard scripts from our GitHub repository:
 
 ```bash
 # Download before-execution hook
-curl -o ~/.cursor/hooks/mcp-guard-before.sh \
+curl -o ~/.cursor/hooks/akto/akto-mcp-guard-before.sh \
   https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-before.sh
 
 # Download after-execution hook
-curl -o ~/.cursor/hooks/mcp-guard-after.sh \
+curl -o ~/.cursor/hooks/akto/akto-mcp-guard-after.sh \
   https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-after.sh
 
 # Make scripts executable
-chmod +x ~/.cursor/hooks/mcp-guard-before.sh
-chmod +x ~/.cursor/hooks/mcp-guard-after.sh
+chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
+chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-after.sh
 ```
 
 **Option B: Using wget**
 
 ```bash
 # Download before-execution hook
-wget -O ~/.cursor/hooks/mcp-guard-before.sh \
+wget -O ~/.cursor/hooks/akto/akto-mcp-guard-before.sh \
 https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-before.sh
 
 # Download after-execution hook
-wget -O ~/.cursor/hooks/mcp-guard-after.sh \
+wget -O ~/.cursor/hooks/akto/akto-mcp-guard-after.sh \
 https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-after.sh
 
 # Make scripts executable
-chmod +x ~/.cursor/hooks/mcp-guard-before.sh
-chmod +x ~/.cursor/hooks/mcp-guard-after.sh
+chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
+chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-after.sh
 ```
 
 **Option C: Clone the Repository**
@@ -92,11 +92,11 @@ cd akto/apps/mcp-endpoint-shield/cursor-hooks
 
 # Copy hooks to Cursor directory
 cp cursor-hooks/akto-mcp-guard-before.sh ~/.cursor/hooks/akto
-cp cursor-hooks/mcp-guard-after.sh ~/.cursor/hooks/akto
+cp cursor-hooks/akto-mcp-guard-after.sh ~/.cursor/hooks/akto
 
 # Make scripts executable
 chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
-chmod +x ~/.cursor/hooks/akto-mcp-guard-after.sh
+chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-after.sh
 ```
 {% endstep %}
 
@@ -116,12 +116,12 @@ cat > ~/.cursor/hooks.json << 'EOF'
   "hooks": {
     "beforeMCPExecution": [
       {
-        "command": "~/.cursor/hooks/mcp-guard-before.sh"
+        "command": "~/.cursor/hooks/akto/akto-mcp-guard-before.sh"
       }
     ],
     "afterMCPExecution": [
       {
-        "command": "~/.cursor/hooks/mcp-guard-after.sh"
+        "command": "~/.cursor/hooks/akto/akto-mcp-guard-after.sh"
       }
     ]
   }
@@ -146,15 +146,15 @@ EOF
   "hooks": {
     "beforeMCPExecution": [
       {
-        "command": "~/.cursor/hooks/mcp-guard-before.sh"
+        "command": "~/.cursor/hooks/akto/akto-mcp-guard-before.sh"
       },
       {
-        "command": "~/.cursor/hooks/custom-logger.sh"
+        "command": "~/.cursor/hooks/akto/custom-logger.sh"
       }
     ],
     "afterMCPExecution": [
       {
-        "command": "~/.cursor/hooks/mcp-guard-after.sh"
+        "command": "~/.cursor/hooks/akto/akto-mcp-guard-after.sh"
       }
     ]
   }
@@ -208,7 +208,7 @@ The hook scripts will automatically read from this file.
 Edit the hook scripts to include your token directly (less secure):
 
 ```bash
-# Edit ~/.cursor/hooks/mcp-guard-before.sh
+# Edit ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
 # Find the line: AKTO_API_TOKEN="${AKTO_API_TOKEN:-}"
 # Replace with: AKTO_API_TOKEN="your-actual-token-here"
 ```
@@ -239,10 +239,10 @@ Check that hooks are working:
 
 ```bash
 # View hook execution logs
-tail -f ~/.cursor/hooks/logs/mcp-guard.log
+tail -f ~/.cursor/hooks/akto/logs/mcp-guard.log
 
 # Check for errors
-cat ~/.cursor/hooks/logs/mcp-guard-error.log
+cat ~/.cursor/hooks/akto/logs/mcp-guard-error.log
 ```
 
 3. **Test with MCP Operation**
@@ -485,7 +485,7 @@ Edit `~/.cursor/hooks.json` for advanced scenarios:
   "hooks": {
     "beforeMCPExecution": [
       {
-        "command": "~/.cursor/hooks/mcp-guard-before.sh",
+        "command": "~/.cursor/hooks/akto/akto-mcp-guard-before.sh",
         "conditions": {
           "mcpServers": ["filesystem", "postgres"],
           "toolNames": ["read_file", "execute_query"]
@@ -504,7 +504,7 @@ Edit `~/.cursor/hooks.json` for advanced scenarios:
   "hooks": {
     "beforeMCPExecution": [
       {
-        "command": "~/.cursor/hooks/mcp-guard-before.sh",
+        "command": "~/.cursor/hooks/akto/akto-mcp-guard-before.sh",
         "args": ["--strict-mode", "--log-level=debug"]
       }
     ]
@@ -520,7 +520,7 @@ Edit `~/.cursor/hooks.json` for advanced scenarios:
   "hooks": {
     "beforeMCPExecution": [
       {
-        "command": "~/.cursor/hooks/mcp-guard-before.sh",
+        "command": "~/.cursor/hooks/akto/akto-mcp-guard-before.sh",
         "timeout": 2000
       }
     ]
@@ -612,9 +612,9 @@ For organizations deploying to multiple developers:
 
 <pre class="language-bash"><code class="lang-bash"># In your org's config repo
 mkdir -p cursor-hooks
-curl -o cursor-hooks/mcp-guard-before.sh \
+curl -o cursor-hooks/akto-mcp-guard-before.sh \
   https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-before.sh
-curl -o cursor-hooks/mcp-guard-after.sh \
+curl -o cursor-hooks/akto-mcp-guard-after.sh \
 <strong>  https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-after.sh
 </strong></code></pre>
 {% endstep %}
@@ -635,13 +635,13 @@ mkdir -p ~/.cursor/hooks
 
 # Download hooks from org repo (or from Akto GitHub)
 curl -s https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-before.sh \
-  -o ~/.cursor/hooks/mcp-guard-before.sh
+  -o ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
 curl -s https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-after.sh \
-  -o ~/.cursor/hooks/mcp-guard-after.sh
+  -o ~/.cursor/hooks/akto/akto-mcp-guard-after.sh
 
 # Make executable
-chmod +x ~/.cursor/hooks/mcp-guard-before.sh
-chmod +x ~/.cursor/hooks/mcp-guard-after.sh
+chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
+chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-after.sh
 
 # Create hooks.json
 cat > ~/.cursor/hooks.json << 'EOF'
@@ -650,12 +650,12 @@ cat > ~/.cursor/hooks.json << 'EOF'
   "hooks": {
     "beforeMCPExecution": [
       {
-        "command": "~/.cursor/hooks/mcp-guard-before.sh"
+        "command": "~/.cursor/hooks/akto/akto-mcp-guard-before.sh"
       }
     ],
     "afterMCPExecution": [
       {
-        "command": "~/.cursor/hooks/mcp-guard-after.sh"
+        "command": "~/.cursor/hooks/akto/akto-mcp-guard-after.sh"
       }
     ]
   }
@@ -744,7 +744,7 @@ if [ ! -f "$HOOKS_FILE" ]; then
   exit 1
 fi
 
-if ! grep -q "mcp-guard-before.sh" "$HOOKS_FILE"; then
+if ! grep -q "akto-mcp-guard-before.sh" "$HOOKS_FILE"; then
   echo "FAIL: Akto hooks not present"
   curl -X POST https://compliance.example.com/report \
     -d "user=$(whoami)&status=non-compliant&reason=akto-hooks-missing"
@@ -793,7 +793,7 @@ akto-cli reports generate \
 cat ~/.cursor/hooks.json
 
 # Check if scripts exist and are executable
-ls -la ~/.cursor/hooks/mcp-guard-*.sh
+ls -la ~/.cursor/hooks/akto/mcp-guard-*.sh
 
 # Check Cursor logs
 tail -f ~/Library/Logs/Cursor/main.log  # macOS
@@ -804,8 +804,8 @@ tail -f ~/.config/Cursor/logs/main.log  # Linux
 
 ```bash
 # Ensure proper permissions
-chmod +x ~/.cursor/hooks/mcp-guard-before.sh
-chmod +x ~/.cursor/hooks/mcp-guard-after.sh
+chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
+chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-after.sh
 
 # Verify hooks.json syntax
 cat ~/.cursor/hooks.json | jq .
@@ -842,7 +842,7 @@ chmod 600 ~/.akto/config
 
     ```bash
     # Check hook execution time
-    time ~/.cursor/hooks/mcp-guard-before.sh <<< '{"jsonrpc":"2.0","method":"test","id":1}'
+    time ~/.cursor/hooks/akto/akto-mcp-guard-before.sh <<< '{"jsonrpc":"2.0","method":"test","id":1}'
     ```
 *   **Fix:**
 
@@ -859,18 +859,18 @@ chmod 600 ~/.akto/config
 
 #### Permission Denied Errors
 
-* **Issue:** `Permission denied: ~/.cursor/hooks/mcp-guard-before.sh`
+* **Issue:** `Permission denied: ~/.cursor/hooks/akto/akto-mcp-guard-before.sh`
 *   **Fix:**
 
     ```bash
     # Make scripts executable
-    chmod +x ~/.cursor/hooks/mcp-guard-before.sh
-    chmod +x ~/.cursor/hooks/mcp-guard-after.sh
+    chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
+    chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-after.sh
 
     # Check ownership
-    ls -la ~/.cursor/hooks/
+    ls -la ~/.cursor/hooks/akto/
     # If wrong owner:
-    chown $(whoami) ~/.cursor/hooks/mcp-guard-*.sh
+    chown $(whoami) ~/.cursor/hooks/akto/mcp-guard-*.sh
     ```
 
 
@@ -883,10 +883,10 @@ chmod 600 ~/.akto/config
     ```bash
     # Run hook manually with test input
     echo '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"read_file","arguments":{"path":"test.txt"}},"id":1}' | \
-      ~/.cursor/hooks/mcp-guard-before.sh
+      ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
 
     # Check for syntax errors
-    bash -n ~/.cursor/hooks/mcp-guard-before.sh
+    bash -n ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
 
     # Check dependencies
     which jq curl
@@ -899,7 +899,7 @@ chmod 600 ~/.akto/config
     apt-get install jq  # Linux
 
     # Update hook script to latest version
-    curl -o ~/.cursor/hooks/mcp-guard-before.sh \
+    curl -o ~/.cursor/hooks/akto/akto-mcp-guard-before.sh \
         https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-before.sh
     ```
 
@@ -914,7 +914,7 @@ chmod 600 ~/.akto/config
       https://app.akto.io/api/v1/health
 
     # Check hook logs
-    cat ~/.cursor/hooks/logs/mcp-guard.log | grep ERROR
+    cat ~/.cursor/hooks/akto/logs/mcp-guard.log | grep ERROR
 
     # Test manual event submission
     curl -X POST https://app.akto.io/api/v1/mcp/events \
@@ -1002,18 +1002,18 @@ chmod 600 ~/.akto/config
 
 ```bash
 # Quick setup (30 seconds)
-curl -o ~/.cursor/hooks/mcp-guard-before.sh \
+curl -o ~/.cursor/hooks/akto/akto-mcp-guard-before.sh \
   https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-before.sh
-curl -o ~/.cursor/hooks/mcp-guard-after.sh \
+curl -o ~/.cursor/hooks/akto/akto-mcp-guard-after.sh \
   https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-after.sh
-chmod +x ~/.cursor/hooks/mcp-guard-*.sh
+chmod +x ~/.cursor/hooks/akto/mcp-guard-*.sh
 
 cat > ~/.cursor/hooks.json << 'EOF'
 {
   "version": 1,
   "hooks": {
-    "beforeMCPExecution": [{"command": "~/.cursor/hooks/mcp-guard-before.sh"}],
-    "afterMCPExecution": [{"command": "~/.cursor/hooks/mcp-guard-after.sh"}]
+    "beforeMCPExecution": [{"command": "~/.cursor/hooks/akto/akto-mcp-guard-before.sh"}],
+    "afterMCPExecution": [{"command": "~/.cursor/hooks/akto/akto-mcp-guard-after.sh"}]
   }
 }
 EOF
