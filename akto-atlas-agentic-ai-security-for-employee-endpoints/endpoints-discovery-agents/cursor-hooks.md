@@ -15,10 +15,52 @@ MCP Endpoint Shield via Cursor Hooks provides **zero-installation runtime securi
 
 Cursor's hook system allows you to execute custom scripts before and after MCP operations. Akto leverages these hooks to provide comprehensive security:
 
-<figure><img src="../../.gitbook/assets/image (103).png" alt="" width="563"><figcaption></figcaption></figure>
+```mermaid
+sequenceDiagram
+    autonumber
+
+    participant User
+    participant BeforeHook as beforeMCPExecution Hook
+    participant MCP as MCP Server Execution
+    participant AfterHook as afterMCPExecution Hook
+    participant Akto as Akto Dashboard
+
+    %% -------------------------
+    %% Request Processing Phase
+    %% -------------------------
+    User->>BeforeHook: User Request
+
+    Note over BeforeHook: Check guardrail policies<br/>Validate request syntax<br/>Detect malicious patterns
+
+    alt Malicious Request
+        BeforeHook-->>User: Block request
+        BeforeHook-->>Akto: Report event
+    else Non-Malicious Request
+        BeforeHook->>MCP: Forward request
+    end
+
+    %% -------------------------
+    %% MCP Execution Phase
+    %% -------------------------
+    MCP->>AfterHook: Execution response
+
+    Note over AfterHook: Check guardrail policies<br/>Analyze response data<br/>Detect sensitive leaks
+
+    %% -------------------------
+    %% Response Processing Phase
+    %% -------------------------
+    alt Malicious Response
+        AfterHook-->>Akto: Report event
+        AfterHook-->>User: Block / Redact response
+    else Non-Malicious Response
+        AfterHook-->>Akto: Report event
+        AfterHook-->>User: Response to user
+    end
+
+```
 
 {% hint style="info" %}
-## **Key Points:**
+### **Key Points:**
 
 * `beforeMCPExecution` hook checks guardrail policies and validates requests
 * `afterMCPExecution` hook checks guardrail policies and analyzes responses
@@ -37,17 +79,17 @@ Cursor's hook system allows you to execute custom scripts before and after MCP o
 
 {% stepper %}
 {% step %}
-### Create Hook Directory
+#### Create Hook Directory
 
 Create the Cursor hooks directory if it doesn't exist:
 
 ```bash
-mkdir -p ~/.cursor/hooks
+mkdir -p ~/.cursor/hooks/akto
 ```
 {% endstep %}
 
 {% step %}
-### Download Hook Scripts
+#### Download Hook Scripts
 
 Download the Akto MCP guard scripts from our GitHub repository:
 
@@ -101,7 +143,7 @@ chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-after.sh
 {% endstep %}
 
 {% step %}
-### Configure Hooks in Cursor
+#### Configure Hooks in Cursor
 
 Create or edit the Cursor hooks configuration file:
 
@@ -161,15 +203,13 @@ EOF
 }
 ```
 
-
-
 </details>
 {% endstep %}
 
 {% step %}
-### Set Your Akto API Token
+#### Set Your Akto API Token
 
-The hook scripts need your Akto API token to report security events. The following options are present to set tokens:&#x20;
+The hook scripts need your Akto API token to report security events. The following options are present to set tokens:
 
 {% tabs %}
 {% tab title="A: Environment Variable (Recommended)" %}
@@ -217,7 +257,7 @@ Edit the hook scripts to include your token directly (less secure):
 {% endstep %}
 
 {% step %}
-### Restart Cursor
+#### Restart Cursor
 
 Restart Cursor IDE to activate the hooks:
 
@@ -228,7 +268,7 @@ Restart Cursor IDE to activate the hooks:
 {% endstep %}
 
 {% step %}
-### Verify Installation
+#### Verify Installation
 
 Check that hooks are working:
 
@@ -336,8 +376,6 @@ The after-execution hook performs:
 [2025-12-24T10:35:12Z] [INFO] Response redacted - sensitive data removed
 [2025-12-24T10:35:12Z] [INFO] Reported to Akto Dashboard: incident-456
 ```
-
-
 
 </details>
 
@@ -448,8 +486,6 @@ Set up notifications for critical events:
   ]
 }
 ```
-
-
 
 </details>
 
@@ -631,7 +667,7 @@ set -e
 echo "🔧 Installing Akto MCP Shield hooks for Cursor..."
 
 # Create hooks directory
-mkdir -p ~/.cursor/hooks
+mkdir -p ~/.cursor/hooks/akto
 
 # Download hooks from org repo (or from Akto GitHub)
 curl -s https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-before.sh \
@@ -723,8 +759,6 @@ jobs:
             exit 1
           fi
 ```
-
-
 {% endtab %}
 
 {% tab title="Automated Monitoring" %}
@@ -873,8 +907,6 @@ chmod 600 ~/.akto/config
     chown $(whoami) ~/.cursor/hooks/akto/mcp-guard-*.sh
     ```
 
-
-
 #### Hook Script Crashes
 
 * **Issue:** Hook exits with error code, MCP operations fail
@@ -986,7 +1018,7 @@ chmod 600 ~/.akto/config
 * [MCP Security Best Practices](https://www.akto.io/blog/mcp-security-best-practices)
 
 {% hint style="success" %}
-## Akto Security Scope
+### Akto Security Scope
 
 * **Transparency**: Safe MCP traffic is never altered or delayed
 * **Clarity**: Blocked requests return standard JSON-RPC errors with clear explanations
