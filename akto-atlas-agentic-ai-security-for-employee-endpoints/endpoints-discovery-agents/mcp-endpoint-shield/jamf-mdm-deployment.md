@@ -595,8 +595,6 @@ tail -f /var/log/jamf.log
 | $3        | Username         | Current user                     |
 | $4        | AKTO\_API\_TOKEN | Token for MCP Shield (encrypted) |
 
-***
-
 ### Support
 
 * **Jamf Issues**: IT Helpdesk

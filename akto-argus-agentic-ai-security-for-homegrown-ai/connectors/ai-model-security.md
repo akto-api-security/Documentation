@@ -46,7 +46,7 @@ Click **Connect.**
 * _(Optional)_ Enable **custom request body** if the model requires non-default payloads
 *   _(Optional)_ Use **test role for authentication** if your AI model enforces role-based access
 
-    <figure><img src="../../.gitbook/assets/image (2).png" alt="" width="375"><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/image (2) (1).png" alt="" width="375"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
