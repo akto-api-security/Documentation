@@ -10,7 +10,7 @@ This is especially useful in collaborative environments where different teams (e
 
 ## 📘 Prerequisite
 
-Make sure you’ve already created [Custom Roles](../../account/custom-roles.md) for your team members.
+Make sure you’ve already created [Custom Roles](../../account-management/custom-roles.md) for your team members.
 
 ***
 
@@ -47,4 +47,4 @@ Make sure you’ve already created [Custom Roles](../../account/custom-roles.md)
 ## 📎 Related Documentation
 
 * [Create a Test Role](create-a-test-role.md)
-* [Custom Roles](../../account/custom-roles.md)
+* [Custom Roles](../../account-management/custom-roles.md)

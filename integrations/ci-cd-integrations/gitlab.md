@@ -6,7 +6,7 @@ Akto integrates with GitLab to add automated API security testing to your CI/CD 
 * View security test results directly in merge requests
 * Block merges based on security test results
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Prerequisites
 
@@ -50,7 +50,7 @@ test_scan:
     - node index.js
 ```
 
-<figure><img src="../.gitbook/assets/image (74).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (74).png" alt=""><figcaption></figcaption></figure>
 
 2. Configure GitLab CI/CD Variables
    1. Go to Settings > CI/CD > Variables
@@ -58,7 +58,7 @@ test_scan:
       * `AKTO_API_KEY` (mark as masked and protected)
       * `AKTO_TEST_ID`
 
-<figure><img src="../.gitbook/assets/image (73).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (73).png" alt=""><figcaption></figcaption></figure>
 
 #### 3. Verify Integration
 
@@ -66,7 +66,7 @@ test_scan:
 2. Pipeline will automatically run
 3. Check "CI/CD > Pipelines" for test results
 
-<figure><img src="../.gitbook/assets/image (75).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (75).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="info" %}
 Note: Never commit sensitive credentials like API keys directly in your configuration files. Always use GitLab CI/CD variables for sensitive data.

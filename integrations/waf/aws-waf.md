@@ -2,7 +2,7 @@
 
 The AWS WAF (Web Application Firewall) integration with Akto enables you to bolster your web application security effortlessly. This integration allows you to detect vulnerabilities, monitor web traffic, and implement protection rules to safeguard your digital assets.
 
-<figure><img src="../.gitbook/assets/image (111).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (111).png" alt=""><figcaption></figcaption></figure>
 
 ### Prerequisites
 

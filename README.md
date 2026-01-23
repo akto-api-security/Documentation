@@ -7,7 +7,7 @@ Akto is an instant API security platform that takes only 60 secs to get started.
 Akto enables security and engineering teams to secure their APIs by doing three things:
 
 1. [API discovery](api-inventory-1/concepts/api-collection.md)
-2. [Run business logic tests in CI/CD](ci-cd/how-to/run-tests-in-cicd.md)
+2. [Run business logic tests in CI/CD](integrations/ci-cd-integrations/how-to/run-tests-in-cicd.md)
 3. [Find vulnerabilities in run-time](api-security-testing/concepts/test.md)
 
 {% embed url="https://www.youtube.com/watch?v=XVpcX78IeFI" %}

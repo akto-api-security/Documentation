@@ -27,4 +27,4 @@
 
 ### Learn More
 
-For information on integrating Akto with Jira for streamlined issue management, visit our [Jira Integration Guide](../jira-integration.md).
+For information on integrating Akto with Jira for streamlined issue management, visit our [Jira Integration Guide](../../../integrations/jira.md).

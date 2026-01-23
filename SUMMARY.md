@@ -112,6 +112,12 @@
 * [Configure SASL Authentication on kafka](traffic-connector/kafka-sasl-in-kubernetes.md)
 * [Configure external kafka](traffic-connector/external-kafka-in-kuberneters.md)
 
+## API security posture
+
+* [Concepts](api-security-posture/concepts/README.md)
+  * [Overview](api-security-posture/concepts/overview.md)
+  * [Analysis](api-security-posture/concepts/analysis.md)
+
 ## API Inventory
 
 * [Concepts](api-inventory-1/concepts/README.md)
@@ -174,32 +180,8 @@
   * [Remove Bad Endpoints](api-inventory-1/how-to/remove-bad-endpoints.md)
   * [Bulk De-Merge APIs](api-inventory/how-to/bulk-de-merge-apis.md)
 
-## API Protection
-
-* [Overview](api-protection/concepts/overview.md)
-* [External API Runtime Threat Notifications](api-protection/external-api-runtime-threat-notifications.md)
-* [Concepts](api-protection/concepts/README.md)
-  * [Schema Conformance](api-protection/concepts/schema-conformance.md)
-  * [Threat Actors](api-protection/concepts/threat-actors.md)
-  * [Dynamic Api Rate Limiting](api-protection/concepts/api-rate-limit.md)
-  * [Threat Policy](api-protection/concepts/threat-policy.md)
-  * [Successful Exploits](api-protection/concepts/successful-exploits.md)
-  * [Configure Ignored Events](api-protection/concepts/threat-ignored-events.md)
-  * [Configure Ignored Events Per Rule](api-protection/concepts/ignore-events-at-rule-level.md)
-  * [Remediation Steps for API Protection Issues](api-protection/concepts/remediation-steps-for-api-protection-issues.md)
-  * [Event Retention Control](api-protection/concepts/event-retention-control.md)
-* [How To](api-protection/how-to/README.md)
-  * [Manage Threat Policies](api-protection/how-to/manage-threat-policies.md)
-  * [View Threat Activity Breakdown](api-protection/how-to/view-threat-activity-breakdown.md)
-  * [Take Actions on Threats](api-protection/how-to/take-actions-on-threats.md)
-  * [Export Visualisation and Report](api-protection/how-to/export-visualisation-and-report.md)
-  * [Create Internal Workflow Item](api-protection/how-to/create-internal-workflow-item.md)
-
 ***
 
-* [WAF](waf/README.md)
-  * [AWS WAF](waf/aws-waf.md)
-  * [Cloudflare WAF](waf/cloudflare-waf.md)
 * [Bot Policy](bot-policy.md)
 
 ## Test Editor
@@ -290,65 +272,61 @@
   * [Remediation](issues/concepts/remediation.md)
 * [How To](issues/how-to/README.md)
   * [Update Severity](issues/how-to/update-severity.md)
-  * [Jira Integration](issues/how-to/jira-integration.md)
-  * [Azure DevOps Boards Integration](issues/how-to/azure-devops-boards-integration.md)
-  * [ServiceNow Integration](issues/how-to/servicenow-integration.md)
-  * [DevRev Integration](issues/how-to/devrev-integration.md)
   * [Triage Issues](issues/how-to/triage-issues/README.md)
     * [Review Issues Marked as False Positives](issues/how-to/triage-issues/review-issues-marked-as-false-positives.md)
   * [Export Selected Issues to Reports](issues/how-to/export-selected-issues-to-reports.md)
   * [Export Vulnerability Report](issues/how-to/export-vulnerability-report.md)
-
-## CI/CD
-
-* [GitHub Actions](ci-cd/github-actions/README.md)
-  * [Create GitHub App](ci-cd/github-actions/create-github-app.md)
-* [Jenkins](ci-cd/jenkins.md)
-* [Azure DevOps](ci-cd/azure-devops.md)
-* [GitLab](ci-cd/gitlab.md)
-* [Generic CI/CD](ci-cd/docker.md)
-* [How To](ci-cd/how-to/README.md)
-  * [Run tests in CI/CD](ci-cd/how-to/run-tests-in-cicd.md)
-  * [Add test to CI/CD Pipeline](ci-cd/how-to/add-test-to-ci-cd-pipeline.md)
-  * [Get API Credentials](ci-cd/how-to/get-api-credentials.md)
-  * [Test ID from Akto test](ci-cd/how-to/test-id-from-akto-test.md)
-
-## Account
-
-* [Invite User](account/invite-user/README.md)
-  * [Change role of a User](account/invite-user/change-role-of-a-user.md)
-* [Create a New Account](account/create-a-new-account.md)
-* [How to Switch Between Accounts in Akto](account/how-to-switch-between-accounts-in-akto.md)
-* [Understanding Role Permissions](account/understanding-role-permissions.md)
-* [Custom roles](account/custom-roles.md)
-* [Metrics](account/metrics.md)
-* [Audit Logs](account/audit-logs.md)
-* [SSO](account/sso/README.md)
-  * [Azure AD SAML](account/sso/azuread-saml.md)
-  * [Okta OIDC](account/sso/okta-oidc.md)
-  * [Github OIDC](account/sso/github-oidc.md)
-  * [Google Workspace SSO](account/sso/google-workspace-sso.md)
-  * [Add Members From SSO](account/sso/add-members-from-sso.md)
 
 ## Compliance
 
 * [Concepts](compliance/concepts/README.md)
   * [Overview](compliance/concepts/overview.md)
 
-## API security posture
+## API Protection
 
-* [Concepts](api-security-posture/concepts/README.md)
-  * [Overview](api-security-posture/concepts/overview.md)
-  * [Analysis](api-security-posture/concepts/analysis.md)
+* [Overview](api-protection/concepts/overview.md)
+* [External API Runtime Threat Notifications](api-protection/external-api-runtime-threat-notifications.md)
+* [Concepts](api-protection/concepts/README.md)
+  * [Schema Conformance](api-protection/concepts/schema-conformance.md)
+  * [Threat Actors](api-protection/concepts/threat-actors.md)
+  * [Dynamic Api Rate Limiting](api-protection/concepts/api-rate-limit.md)
+  * [Threat Policy](api-protection/concepts/threat-policy.md)
+  * [Successful Exploits](api-protection/concepts/successful-exploits.md)
+  * [Configure Ignored Events](api-protection/concepts/threat-ignored-events.md)
+  * [Configure Ignored Events Per Rule](api-protection/concepts/ignore-events-at-rule-level.md)
+  * [Remediation Steps for API Protection Issues](api-protection/concepts/remediation-steps-for-api-protection-issues.md)
+  * [Event Retention Control](api-protection/concepts/event-retention-control.md)
+* [How To](api-protection/how-to/README.md)
+  * [Manage Threat Policies](api-protection/how-to/manage-threat-policies.md)
+  * [View Threat Activity Breakdown](api-protection/how-to/view-threat-activity-breakdown.md)
+  * [Take Actions on Threats](api-protection/how-to/take-actions-on-threats.md)
+  * [Export Visualisation and Report](api-protection/how-to/export-visualisation-and-report.md)
+  * [Create Internal Workflow Item](api-protection/how-to/create-internal-workflow-item.md)
 
-## SIEM Integration
+## Integrations
 
-* [Splunk](siem-integration/splunk.md)
-
-## OTHER INTEGRATIONS
-
-* [JFrog](other-integrations/splunk.md)
-* [Azure Data Explorer](other-integrations/azure-data-explorer.md)
+* [CI/CD Integrations](integrations/ci-cd-integrations/README.md)
+  * [GitHub Actions](integrations/ci-cd-integrations/github-actions/README.md)
+    * [Create GitHub App](integrations/ci-cd-integrations/github-actions/create-github-app.md)
+  * [Jenkins](integrations/ci-cd-integrations/jenkins.md)
+  * [Azure DevOps](integrations/ci-cd-integrations/azure-devops.md)
+  * [GitLab](integrations/ci-cd-integrations/gitlab.md)
+  * [Generic CI/CD](integrations/ci-cd-integrations/docker.md)
+  * [How To](integrations/ci-cd-integrations/how-to/README.md)
+    * [Run tests in CI/CD](integrations/ci-cd-integrations/how-to/run-tests-in-cicd.md)
+    * [Add test to CI/CD Pipeline](integrations/ci-cd-integrations/how-to/add-test-to-ci-cd-pipeline.md)
+    * [Get API Credentials](integrations/ci-cd-integrations/how-to/get-api-credentials.md)
+    * [Test ID from Akto test](integrations/ci-cd-integrations/how-to/test-id-from-akto-test.md)
+* [Azure Data Explorer](integrations/azure-data-explorer.md)
+* [Azure DevOps Boards](integrations/azure-devops-boards.md)
+* [DevRev](integrations/devrev.md)
+* [Jira](integrations/jira.md)
+* [JFrog](integrations/jfrog.md)
+* [ServiceNow](integrations/servicenow.md)
+* [Splunk SIEM](integrations/splunk-siem.md)
+* [Web Application Firewall(WAF)](integrations/waf/README.md)
+  * [AWS WAF](integrations/waf/aws-waf.md)
+  * [Cloudflare WAF](integrations/waf/cloudflare-waf.md)
 
 ## Alerts
 
@@ -356,6 +334,23 @@
 * [Slack Webhook](alerts/slack-webhook.md)
 * [Microsoft Teams Webhook](alerts/microsoft-teams-webhook.md)
 * [Setup alerts for Akto test run results](alerts/alerts-testing-results.md)
+
+## Account Management
+
+* [Invite User](account-management/invite-user/README.md)
+  * [Change role of a User](account-management/invite-user/change-role-of-a-user.md)
+* [Create a New Account](account-management/create-a-new-account.md)
+* [How to Switch Between Accounts in Akto](account-management/how-to-switch-between-accounts-in-akto.md)
+* [Understanding Role Permissions](account-management/understanding-role-permissions.md)
+* [Custom roles](account-management/custom-roles.md)
+* [Metrics](account-management/metrics.md)
+* [Audit Logs](account-management/audit-logs.md)
+* [SSO](account-management/sso/README.md)
+  * [Azure AD SAML](account-management/sso/azuread-saml.md)
+  * [Okta OIDC](account-management/sso/okta-oidc.md)
+  * [Github OIDC](account-management/sso/github-oidc.md)
+  * [Google Workspace SSO](account-management/sso/google-workspace-sso.md)
+  * [Add Members From SSO](account-management/sso/add-members-from-sso.md)
 
 ## Pricing
 

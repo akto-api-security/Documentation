@@ -2,7 +2,7 @@
 
 The Cloudflare WAF (Web Application Firewall) integration with Akto allows you to seamlessly enhance your web application security. This integration empowers you to efficiently detect vulnerabilities, analyze and intercept web traffic, and fortify your digital defenses.
 
-<figure><img src="../.gitbook/assets/image (112).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (112).png" alt=""><figcaption></figcaption></figure>
 
 ### Prerequisites
 

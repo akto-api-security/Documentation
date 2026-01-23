@@ -9,7 +9,7 @@ When you review a threat activity in Akto, you may need to involve internal team
 ### **Prerequisites**
 
 * Before creating Jira tickets from Akto, ensure that your Jira account is integrated with Akto.
-* If not yet configured, complete the setup here: [jira-integration.md](../../issues/how-to/jira-integration.md "mention")
+* If not yet configured, complete the setup here: [jira.md](../../integrations/jira.md "mention")
 
 ### Steps
 
@@ -51,7 +51,7 @@ If your team uses internal workflows within Akto, you can log and assign tasks u
 
 ### **Prerequisite**
 
-Before creating Jira tickets from Akto, ensure that your Azure DevOps Board is integrated with Akto. Follow for [**Integrations Setup**](../../issues/how-to/azure-devops-boards-integration.md)
+Before creating Jira tickets from Akto, ensure that your Azure DevOps Board is integrated with Akto. Follow for [**Integrations Setup**](../../integrations/azure-devops-boards.md)
 
 ### **Steps**
 
