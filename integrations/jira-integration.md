@@ -2,40 +2,54 @@
 
 Integrate Akto with Jira to streamline your API security workflow by creating tickets for vulnerabilities directly from Akto.
 
-<figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2Fgit-blob-fdb85ee0e8ffb015ebf83be6beebf776f1dd21e1%2Fimage.png?alt=media" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (109).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ## Benefits
 
-* ✅ Instantly create Jira tickets for API vulnerabilities.
-* ✅ Manage multiple Jira projects from a single integration.
-* ✅ Enable **bi-directional sync** to ensure full alignment between Akto and Jira.
-* ✅ Maintain a centralized view of security issues.
-* ✅ Enhance collaboration between security and development teams.
+* Instantly create Jira tickets for API vulnerabilities.
+* Manage multiple Jira projects from a single integration.
+* Enable **bi-directional sync** to ensure full alignment between Akto and Jira.
+* Maintain a centralized view of security issues.
+* Enhance collaboration between security and development teams.
 
 ## Quick Setup Steps
 
 {% stepper %}
 {% step %}
-**Access Integrations**
+### **Access Integrations**
 
 * Go to **Settings > Integrations**.
 *   Find and click **"Configure"** next to Jira.
 
-    <figure><img src="../.gitbook/assets/image (80).png" alt="" width="563"><figcaption></figcaption></figure>
+    <div data-with-frame="true"><figure><img src="../.gitbook/assets/image (80).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
-**Enter Jira Details**
+### **Enter Jira Details**
 
-* **Base URL:** Your Jira instance URL (e.g., `https://yourcompany.atlassian.net`).
-* **Email:** Your Jira account email.
-*   **API Token:** Your Jira API token (generate in Jira).
+Akto supports integration with both **Jira Cloud** and **Jira Data Center**.
 
-    <figure><img src="../.gitbook/assets/image (47).png" alt="" width="563"><figcaption></figcaption></figure>
+1. Select the **Jira Deployment Type**:
+   1. **Jira Cloud**
+   2. **Jira Data Center**
+2. Based on the selected deployment type, enter the required details:
+   1.  **Jira Cloud**
+
+       1. **Base URL** – Your Jira Cloud instance URL
+       2. **Email** – Email associated with your Jira account
+       3. **API Token** – Jira Cloud API token for authentication
+
+       <div data-with-frame="true"><figure><img src="../.gitbook/assets/image (105).png" alt="" width="563"><figcaption></figcaption></figure></div>
+   2. **Jira Data Center**
+      1. **Base URL** – Your Jira Data Center instance URL
+      2. **Email** – Email associated with your Jira account
+      3.  **Personal Access Token (PAT)** – Token used for Jira Data Center authentication
+
+          <div data-with-frame="true"><figure><img src="../.gitbook/assets/image (107).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
-**Add Projects**
+### **Add Projects**
 
 You can configure **one or multiple Jira projects**. For each project:
 
@@ -48,7 +62,7 @@ You can configure **one or multiple Jira projects**. For each project:
       * Akto Status: **Fixed** → Jira Status: _Select corresponding status_.
       * Akto Status: **Ignored** → Jira Status: _Select corresponding status_.
 
-    <figure><img src="../.gitbook/assets/image (50).png" alt="" width="563"><figcaption></figcaption></figure>
+    <div data-with-frame="true"><figure><img src="../.gitbook/assets/image (50).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 {% hint style="info" %}
 💡 **You can add up to 10 projects per integration.**
@@ -56,20 +70,24 @@ You can configure **one or multiple Jira projects**. For each project:
 {% endstep %}
 
 {% step %}
-#### Map Severity
+### Priority Field Selection
 
-* For each **Akto Severity**, select the corresponding **Jira Priority** from the dropdown.
-  * **Critical** → e.g. Blocker (P0) / Critical (P1)
-  * **High** → e.g. Critical (P1) / Major (P2)
-  * **Medium** → e.g. Major (P2) / Minor (P3)
-  *   **Low** → e.g. Minor (P3) / Trivial (P4)
+Akto allows you to map its vulnerability severity levels to Jira field values for automatic ticket creation.
 
-      <figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2FjitYmYyDkgGxJzPCpB9w%2FScreenshot%202026-01-14%20at%2011.56.33%E2%80%AFAM.png?alt=media&#x26;token=75f0c0a3-ca38-47c7-b887-05e2e9e873d7" alt="" width="563"><figcaption></figcaption></figure>
-* Click **Save Mapping** to apply the configuration.
+1. Select the **Priority Field** to which Akto severities should be mapped.\
+   You can choose Jira’s default **Priority** field or any supported **custom dropdown field** by searching using the field name, ID, or type.
+2. Map each **Akto Severity** level (`Critical`, `High`, `Medium`, `Low`) to the corresponding value available in the selected Jira field.
+3.  Click **Save Mapping** to apply the configuration.
+
+    <div data-with-frame="true"><figure><img src="../.gitbook/assets/image (104).png" alt=""><figcaption></figcaption></figure></div>
+
+{% hint style="warning" %}
+The selected field must be a **select / dropdown field** in Jira for severity mapping to work correctly.
+{% endhint %}
 {% endstep %}
 
 {% step %}
-**Save**
+### **Save Configuration**
 
 * Click **"Save"** to finalise.
 {% endstep %}
@@ -77,16 +95,14 @@ You can configure **one or multiple Jira projects**. For each project:
 
 ## What Happens When You Enable/Disable Bi-Directional Integration?
 
-<figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2Fgit-blob-6d0f968bed8a632f0177c463d138d61e9b6a2218%2Fimage.png?alt=media" alt="" width="563"><figcaption></figcaption></figure>
-
-## **Enabling Bi-Directional Integration**
+### **Enabling Bi-Directional Integration**
 
 * Once enabled for a project, Akto will **start syncing statuses every 1 hour**.
 * Any status change that occurs in Jira during that hour will be **detected in the next sync cycle** and updated in Akto according to your configured mapping.
 * **Existing issues** will **retain their current status** in Akto unless they are updated in Jira.
 * As soon as a status change is detected in Jira (for linked tickets), Akto will **sync the new status to match the mapping you configured**.
 
-## **Disabling Bi-Directional Integration**
+### **Disabling Bi-Directional Integration**
 
 * When disabled, Akto will **stop syncing status updates** from Jira for that project.
 * **Existing issues** in Akto will remain unchanged and **retain their last synced status** at the time of disabling.
