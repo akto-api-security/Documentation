@@ -78,6 +78,7 @@ services:
       - ./config.yaml:/app/config.yaml
       - ./custom_hooks.py:/app/custom_hooks.py
     environment:
+      - LITELLM_URL=${LITELLM_URL}
       - DATA_INGESTION_SERVICE_URL=${DATA_INGESTION_SERVICE_URL}
       - SYNC_MODE=${SYNC_MODE}
     # ... rest of config ...
@@ -87,6 +88,7 @@ services:
 
 ```bash
 # Set environment variables
+export LITELLM_URL=http://your-litellm-instance-url
 export DATA_INGESTION_SERVICE_URL=http://data-ingestion-service-url
 export SYNC_MODE=true
 
