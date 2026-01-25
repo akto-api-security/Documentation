@@ -153,10 +153,7 @@ Verify in Akto dashboard:
 5. Request forwarded to LLM Provider
 6. LLM response received
 7. Hook intercepts response (post-call hook)
-8. Response sent to Akto Data Ingestion Service API
-9. Data Ingestion Service validates response
-   ├─ If BLOCKED: Return error to client
-   └─ If ALLOWED: Return response to client
+8. Response sent to Akto Data Ingestion Service API for showing in the Dashboard
 ```
 
 ### Request Flow (SYNC_MODE=false)
