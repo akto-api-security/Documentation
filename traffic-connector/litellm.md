@@ -33,11 +33,13 @@ curl -O https://raw.githubusercontent.com/akto-api-security/akto/master/apps/gua
 Add these environment variables to your LiteLLM environment (`.env` file or system environment):
 
 ```bash
-# Required: Akto Data Ingestion Service URL
+LITELLM_URL=http://your-litellm-instance-url
+
+# Akto's Data Ingestion Service URL
 DATA_INGESTION_SERVICE_URL=http://data-ingestion-service-url
 
 # Optional: Operation Mode
-SYNC_MODE=true              # true = block violations, false = async logging only
+SYNC_MODE=true              # true = block violations, false = async logging only, default true
 ```
 
 **Note:** `SYNC_MODE` determines behavior:
