@@ -25,7 +25,7 @@ Download the `custom_hooks.py` file to your LiteLLM configuration directory:
 cd /path/to/your/litellm/config
 
 # Download the hook file
-curl -O https://raw.githubusercontent.com/akto-api-security/akto/master/apps/guardrails-service/litellm/custom_hooks.py
+curl -O https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/litellm/custom_hooks.py
 ```
 
 ## Step 2: Configure Environment Variables
