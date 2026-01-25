@@ -153,7 +153,7 @@ Verify in Akto dashboard:
 5. Request forwarded to LLM Provider
 6. LLM response received
 7. Hook intercepts response (post-call hook)
-8. Response sent to Akto Data Ingestion Service API for showing on the dashboard
+8. Response sent to Akto Data Ingestion Service API for showing in the Dashboard
 ```
 
 ### Request Flow (SYNC_MODE=false)
