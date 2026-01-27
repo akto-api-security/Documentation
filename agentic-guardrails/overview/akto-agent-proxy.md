@@ -60,30 +60,34 @@ Create a `docker-compose.yml` file to run both the AI agent and proxy containers
 version: '3.8'
 
 services:
-  ai-agent:
-    image: your-ai-agent:latest
-    container_name: ai-agent
+  anythingllm:
+    image: mintplexlabs/anythingllm:latest
+    container_name: anythingllm
+    ports:
+      - "3001:3001"
+    environment:
+      - SERVER_PORT=3001
+    volumes:
+      - ./anythingllm-storage:/app/server/storage
+    restart: always
+
+  akto-ai-agent-shield:
+    image: public.ecr.aws/aktosecurity/akto-ai-agent-shield:latest
+    container_name: akto-ai-agent-shield
     ports:
       - "8080:8080"
     environment:
-      - AGENT_CONFIG=/config/agent.json
-    volumes:
-      - ./agent-config:/config
-    restart: always
-
-  akto-ai-proxy:
-    image: public.ecr.aws/aktosecurity/akto-ai-agent-shield:latest
-    container_name: akto-ai-proxy
-    ports:
-      - "3000:3000"
-    environment:
-      - TARGET_AGENT_URL=http://ai-agent:8080
-      - AKTO_DASHBOARD_TOKEN=<your-akto-token>
-      - GUARDRAILS_CONFIG=/config/guardrails.yml
-    volumes:
-      - ./proxy-config:/config
+      - AKTO_API_TOKEN=your-akto-api-token-here
+      - AKTO_API_BASE_URL=https://akto-mcp-proxy-nginx.billing-53a.workers.dev
+      - APP_URL=http://anythingllm:3001
+      - PROJECT_NAME=my-ai-agent
+      - APP_TYPE=agent
+      - AKTO_PROXY_PORT=8080
+      - SKIP_THREAT=false
+      - REQUEST_TIMEOUT=120
+      - APPLY_GUARDRAILS_TO_SSE=true
     depends_on:
-      - ai-agent
+      - anythingllm
     restart: always
 ```
 
@@ -91,15 +95,22 @@ services:
 
 Configure the AI Agent Proxy with the following environment variables:
 
-| Variable                    | Description                                  | Required |
-| --------------------------- | -------------------------------------------- | -------- |
-| `TARGET_AGENT_URL`          | URL of your AI agent container               | Yes      |
-| `AKTO_DASHBOARD_TOKEN`      | Authentication token from Akto dashboard     | Yes      |
-| `GUARDRAILS_CONFIG`         | Path to guardrails configuration file        | No       |
-| `LOG_LEVEL`                 | Logging level (info, debug, error)           | No       |
-| `PROXY_PORT`                | Port for proxy server (default: 3000)        | No       |
-| `ENABLE_REQUEST_LOGGING`    | Enable detailed request logging (true/false) | No       |
-| `ENABLE_RESPONSE_REDACTION` | Enable automatic PII redaction (true/false)  | No       |
+| Variable | Description | Required | Default |
+| -------- | ----------- | -------- | ------- |
+| `AKTO_API_TOKEN` | Authentication token from Akto dashboard | Yes | - |
+| `AKTO_API_BASE_URL` | URL for Akto data ingestion service | Yes | - |
+| `APP_URL` | Base URL where your AI agent is running. For docker-compose use service name (e.g., `http://anythingllm:3001`), for local testing use localhost | Yes | - |
+| `PROJECT_NAME` | Unique identifier for this AI agent deployment | Yes | - |
+| `APP_TYPE` | Type of application being proxied: `agent` or `mcp-server` | Yes | `agent` |
+| `APP_SERVER_NAME` | Name to identify this agent server for policy filtering. If not set, will be automatically extracted from APP_URL hostname | No | (extracted from APP_URL) |
+| `AKTO_PROXY_PORT` | Port where AI Agent Shield will listen | No | `8080` |
+| `SKIP_THREAT` | Set to true to skip sending threat reports to Akto (useful for testing) | No | `false` |
+| `REQUEST_TIMEOUT` | Timeout for forwarding requests to AI agent (in seconds) | No | `120` |
+| `MAX_REQUEST_SIZE` | Maximum request body size in bytes (0 = unlimited) | No | `0` |
+| `MAX_RESPONSE_SIZE` | Maximum response body size in bytes (0 = unlimited) | No | `0` |
+| `ALLOWED_HTTP_METHODS` | Comma-separated list of allowed HTTP methods (empty = all allowed) | No | (all methods) |
+| `APPLY_GUARDRAILS_TO_SSE` | Apply guardrails to SSE (Server-Sent Events / text/event-stream) requests | No | `true` |
+| `GUARDRAIL_ENDPOINTS` | Specific endpoints to apply guardrails. Format: `METHOD:PATH` or just `PATH` (defaults to POST). Comma-separated. If set, only these endpoints will have guardrails applied. Example: `POST:/v1/workspace/slug/chat,GET:/v1/query` | No | (apply to all SSE) |
 
 #### **Start the Services**
 
@@ -111,10 +122,10 @@ docker-compose up -d
 docker-compose ps
 
 # View proxy logs
-docker-compose logs -f akto-ai-proxy
+docker-compose logs -f akto-ai-agent-shield
 
 # View AI agent logs
-docker-compose logs -f ai-agent
+docker-compose logs -f anythingllm
 ```
 
 #### **Configure Your Application**
@@ -124,13 +135,13 @@ Update your application to route AI agent requests through the proxy:
 **Before:**
 
 ```
-http://localhost:8080/agent/query
+http://localhost:3001/agent/query
 ```
 
 **After:**
 
 ```
-http://localhost:3000/agent/query
+http://localhost:8080/agent/query
 ```
 
 ## Security Features
@@ -332,13 +343,13 @@ View real-time logs from the proxy:
 
 ```bash
 # Follow proxy logs
-docker logs -f akto-ai-proxy
+docker logs -f akto-ai-agent-shield
 
 # View last 100 lines
-docker logs --tail 100 akto-ai-proxy
+docker logs --tail 100 akto-ai-agent-shield
 
 # Filter for blocked requests
-docker logs akto-ai-proxy | grep "BLOCKED"
+docker logs akto-ai-agent-shield | grep "BLOCKED"
 ```
 
 **Log Format**
@@ -381,12 +392,12 @@ The proxy and AI agent containers communicate over a Docker network:
 
 ```yaml
 services:
-  ai-agent:
+  anythingllm:
     networks:
       - agent-network
     # ... other config
 
-  akto-ai-proxy:
+  akto-ai-agent-shield:
     networks:
       - agent-network
     # ... other config
@@ -404,7 +415,7 @@ For production deployments, use a reverse proxy or load balancer:
 
 ```nginx
 upstream ai-proxy {
-    server localhost:3000;
+    server localhost:8080;
 }
 
 server {
@@ -431,7 +442,7 @@ server {
 4. **Backup Configuration**: Maintain version control for guardrails configuration
 5. **Monitor Performance**: Track proxy latency to ensure minimal overhead
 6. **Tune Guardrails**: Regularly review and optimize guardrail rules to reduce false positives
-7. **Secure Tokens**: Store `AKTO_DASHBOARD_TOKEN` securely using Docker secrets or environment files
+7. **Secure Tokens**: Store `AKTO_API_TOKEN` securely using Docker secrets or environment files
 8. **Log Rotation**: Configure log rotation to prevent disk space issues
 
 ## Troubleshooting **Common Issues**
@@ -447,10 +458,10 @@ server {
 docker ps | grep ai-agent
 
 # Verify network connectivity
-docker exec akto-ai-proxy ping ai-agent
+docker exec akto-ai-agent-shield ping anythingllm
 
-# Check TARGET_AGENT_URL configuration
-docker exec akto-ai-proxy env | grep TARGET_AGENT_URL
+# Check APP_URL configuration
+docker exec akto-ai-agent-shield env | grep APP_URL
 ```
 
 ### **Requests Being Blocked Incorrectly**
@@ -472,7 +483,7 @@ docker exec akto-ai-proxy env | grep TARGET_AGENT_URL
 
 ```bash
 # Check proxy resource usage
-docker stats akto-ai-proxy
+docker stats akto-ai-agent-shield
 
 # Review guardrails complexity
 # Optimize pattern matching rules
@@ -487,11 +498,12 @@ docker stats akto-ai-proxy
 
 ```bash
 # Check container logs
-docker logs akto-ai-proxy
+docker logs akto-ai-agent-shield
 
 # Common causes:
-# - Invalid AKTO_DASHBOARD_TOKEN
-# - Malformed guardrails.yml
+# - Invalid AKTO_API_TOKEN
+# - Invalid AKTO_API_BASE_URL
+# - Missing required environment variables
 # - Insufficient memory/CPU
 ```
 
@@ -501,10 +513,10 @@ Enable debug logging for troubleshooting:
 
 ```yaml
 services:
-  akto-ai-proxy:
+  akto-ai-agent-shield:
     environment:
-      - LOG_LEVEL=debug
-      - ENABLE_REQUEST_LOGGING=true
+      - SKIP_THREAT=true  # Skip sending threats during debugging
+      - REQUEST_TIMEOUT=300  # Increase timeout for debugging
 ```
 
 ## Get Support
