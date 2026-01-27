@@ -60,15 +60,15 @@ Create a `docker-compose.yml` file to run both the AI agent and proxy containers
 version: '3.8'
 
 services:
-  anythingllm:
-    image: mintplexlabs/anythingllm:latest
-    container_name: anythingllm
+  your-agent:
+    image: your-ai-agent:latest
+    container_name: your-agent
     ports:
       - "3001:3001"
     environment:
       - SERVER_PORT=3001
     volumes:
-      - ./anythingllm-storage:/app/server/storage
+      - ./your-agent-storage:/app/server/storage
     restart: always
 
   akto-ai-agent-shield:
@@ -77,9 +77,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - AKTO_API_TOKEN=your-akto-api-token-here
-      - AKTO_API_BASE_URL=https://akto-mcp-proxy-nginx.billing-53a.workers.dev
-      - APP_URL=http://anythingllm:3001
+      - AKTO_API_TOKEN=<your-akto-api-token>
+      - AKTO_API_BASE_URL=<your-akto-data-ingestion-url>
+      - APP_URL=http://your-agent:3001
       - PROJECT_NAME=my-ai-agent
       - APP_TYPE=agent
       - AKTO_PROXY_PORT=8080
@@ -87,7 +87,7 @@ services:
       - REQUEST_TIMEOUT=120
       - APPLY_GUARDRAILS_TO_SSE=true
     depends_on:
-      - anythingllm
+      - your-agent
     restart: always
 ```
 
@@ -98,8 +98,8 @@ Configure the AI Agent Proxy with the following environment variables:
 | Variable | Description | Required | Default |
 | -------- | ----------- | -------- | ------- |
 | `AKTO_API_TOKEN` | Authentication token from Akto dashboard | Yes | - |
-| `AKTO_API_BASE_URL` | URL for Akto data ingestion service | Yes | - |
-| `APP_URL` | Base URL where your AI agent is running. For docker-compose use service name (e.g., `http://anythingllm:3001`), for local testing use localhost | Yes | - |
+| `AKTO_API_BASE_URL` | URL for Akto data ingestion service (obtained from Akto dashboard) | Yes | - |
+| `APP_URL` | Base URL where your AI agent is running. For docker-compose use service name (e.g., `http://your-agent:3001`), for local testing use localhost | Yes | - |
 | `PROJECT_NAME` | Unique identifier for this AI agent deployment | Yes | - |
 | `APP_TYPE` | Type of application being proxied: `agent` or `mcp-server` | Yes | `agent` |
 | `APP_SERVER_NAME` | Name to identify this agent server for policy filtering. If not set, will be automatically extracted from APP_URL hostname | No | (extracted from APP_URL) |
@@ -125,7 +125,7 @@ docker-compose ps
 docker-compose logs -f akto-ai-agent-shield
 
 # View AI agent logs
-docker-compose logs -f anythingllm
+docker-compose logs -f your-agent
 ```
 
 #### **Configure Your Application**
@@ -159,181 +159,29 @@ The proxy analyzes incoming requests for security threats including:
 
 ### **2. Request Guardrails**
 
-Enforce security policies on incoming requests:
-
-```yaml
-# guardrails.yml
-request_guardrails:
-  - name: "Block Sensitive File Access"
-    type: "pattern_match"
-    patterns:
-      - "/etc/passwd"
-      - "/etc/shadow"
-      - "C:\\Windows\\System32"
-    action: "block"
-
-  - name: "PII Input Protection"
-    type: "pii_detection"
-    detect:
-      - ssn
-      - credit_card
-      - passport
-    action: "block"
-
-  - name: "Rate Limiting"
-    type: "rate_limit"
-    max_requests: 100
-    window: "1m"
-    action: "block"
-```
+Enforce security policies on incoming requests including:
+* **Pattern Matching**: Block requests containing sensitive file paths or dangerous patterns
+* **PII Input Protection**: Prevent sensitive data like SSN, credit cards, or passports in requests
+* **Rate Limiting**: Control request frequency to prevent abuse
+* **Custom Rules**: Define organization-specific security policies
 
 ### **3. Response Guardrails**
 
 The proxy receives responses from the AI agent and applies security checks and data protection:
-
-```yaml
-response_guardrails:
-  - name: "PII Redaction"
-    type: "pii_detection"
-    detect:
-      - ssn
-      - credit_card
-      - email
-      - phone_number
-    action: "redact"
-
-  - name: "Sensitive Data Blocking"
-    type: "pattern_match"
-    patterns:
-      - "api[_-]?key"
-      - "password"
-      - "secret"
-    action: "block"
-
-  - name: "Malicious Content Filter"
-    type: "content_filter"
-    detect:
-      - hate_speech
-      - violence
-      - illegal_content
-    action: "block"
-```
-
-### **4. Response Handling**
-
-After receiving the response from the AI agent, the proxy applies guardrails and returns one of three types of responses to the end user:
-
-**Original Response**: Request and response passed all security checks
-
-```json
-{
-  "status": "success",
-  "response": {
-    "data": "AI agent response content"
-  },
-  "security": {
-    "threats_detected": [],
-    "guardrails_triggered": []
-  }
-}
-```
-
-**Blocked Response**: Security violation detected in request or response
-
-```json
-{
-  "status": "blocked",
-  "reason": "Response blocked by guardrail: Sensitive Data Blocking",
-  "violation": {
-    "type": "sensitive_data_detected",
-    "details": "API key detected in AI agent response"
-  }
-}
-```
-
-**Redacted Response**: Sensitive data removed from AI agent response
-
-```json
-{
-  "status": "success",
-  "response": {
-    "data": "User SSN is [REDACTED] and email is [REDACTED]"
-  },
-  "security": {
-    "redactions": ["ssn", "email"],
-    "guardrails_triggered": ["PII Redaction"]
-  }
-}
-```
+* **PII Redaction**: Automatically redact sensitive information like SSN, credit cards, emails, phone numbers
+* **Sensitive Data Blocking**: Block responses containing API keys, passwords, or secrets
+* **Content Filtering**: Filter malicious content including hate speech, violence, or illegal content
+* **Custom Policies**: Configure organization-specific response filtering rules
 
 ## Configuration
 
-### **Basic Guardrails Configuration**
+All guardrails and security policies are configured through the Akto dashboard at [app.akto.io](https://app.akto.io). You can define:
+* Request guardrails (rate limiting, pattern matching, PII detection)
+* Response guardrails (PII redaction, sensitive data blocking, content filtering)
+* Threat detection rules (prompt injection, SQL injection, command injection, etc.)
+* Custom security policies specific to your organization
 
-Create a `guardrails.yml` file to define your security policies:
-
-```yaml
-# Request-level guardrails
-request_guardrails:
-  - name: "Rate Limiting"
-    type: "rate_limit"
-    max_requests: 1000
-    window: "1h"
-    action: "block"
-
-  - name: "Prompt Injection Detection"
-    type: "ai_threat"
-    sensitivity: "high"
-    action: "block"
-
-# Response-level guardrails (applied to AI agent responses)
-response_guardrails:
-  - name: "PII Redaction"
-    type: "pii_detection"
-    detect: ["ssn", "credit_card", "email", "phone_number"]
-    action: "redact"
-    redaction_format: "[REDACTED]"
-
-  - name: "API Key Protection"
-    type: "pattern_match"
-    patterns:
-      - "(?i)api[_-]?key\\s*[:=]\\s*['\"]?[a-zA-Z0-9_-]{20,}"
-      - "(?i)secret[_-]?key\\s*[:=]\\s*['\"]?[a-zA-Z0-9_-]{20,}"
-    action: "redact"
-
-# Global settings
-settings:
-  log_all_requests: true
-  log_blocked_requests: true
-  default_action: "block"
-```
-
-### **Advanced Configuration**
-
-Configure threat detection sensitivity and custom rules:
-
-```yaml
-threat_detection:
-  sensitivity: "high"
-  enabled_checks:
-    - prompt_injection
-    - sql_injection
-    - command_injection
-    - path_traversal
-    - ssrf
-    - data_exfiltration
-
-  custom_rules:
-    - name: "Block AWS Credential Access"
-      pattern: "(?i)(aws_access_key_id|aws_secret_access_key)"
-      action: "block"
-      severity: "critical"
-
-    - name: "Database Connection String Detection"
-      pattern: "(?i)(mongodb|mysql|postgresql)://[^\\s]+"
-      action: "redact"
-      severity: "high"
-```
+Navigate to **Akto Argus Dashboard → Settings → Guardrails** to configure your security policies.
 
 ## Monitoring & Logging
 
@@ -342,33 +190,14 @@ threat_detection:
 View real-time logs from the proxy:
 
 ```bash
-# Follow proxy logs
+# Follow proxy logs (recommended)
+docker exec -it akto-ai-agent-shield sh -c "tail -n 1000 -f /var/log/akto-mcp-endpoint-shield/ai-agent-shield.log"
+
+# Alternative: View docker logs
 docker logs -f akto-ai-agent-shield
 
 # View last 100 lines
 docker logs --tail 100 akto-ai-agent-shield
-
-# Filter for blocked requests
-docker logs akto-ai-agent-shield | grep "BLOCKED"
-```
-
-**Log Format**
-
-The proxy generates structured JSON logs:
-
-```json
-{
-  "timestamp": "2025-01-15T10:30:45Z",
-  "request_id": "req_abc123",
-  "client_ip": "192.168.1.10",
-  "method": "POST",
-  "path": "/agent/query",
-  "status": "blocked",
-  "threat_detected": "prompt_injection",
-  "guardrail": "Prompt Injection Detection",
-  "latency_ms": 12,
-  "response_guardrails_applied": ["PII Redaction", "API Key Protection"]
-}
 ```
 
 ## **Dashboard Integration**
@@ -392,7 +221,7 @@ The proxy and AI agent containers communicate over a Docker network:
 
 ```yaml
 services:
-  anythingllm:
+  your-agent:
     networks:
       - agent-network
     # ... other config
@@ -455,10 +284,10 @@ server {
 
 ```bash
 # Check if AI agent is running
-docker ps | grep ai-agent
+docker ps | grep your-agent
 
 # Verify network connectivity
-docker exec akto-ai-agent-shield ping anythingllm
+docker exec akto-ai-agent-shield ping your-agent
 
 # Check APP_URL configuration
 docker exec akto-ai-agent-shield env | grep APP_URL
