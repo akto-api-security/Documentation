@@ -12,7 +12,7 @@ This document is designed for MacOS Installation and end-user reference. It expl
 
 When the user double-clicks the **MCP Endpoint Shield Installer**, macOS may display a warning stating that the application could not be verified and was blocked to protect the system.
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
 
 This is expected behaviour for applications distributed outside the Mac App Store.
 
@@ -29,7 +29,7 @@ This is expected behaviour for applications distributed outside the Mac App Stor
 
 This screen confirms that the user has explicitly approved the installer. Once approved, macOS will allow the installer to run normally.
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 No administrator privileges are required at this stage.
 {% endstep %}
@@ -39,7 +39,7 @@ No administrator privileges are required at this stage.
 
 After approval, the installer wizard launches.
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 The introduction screen explains:
 
@@ -53,7 +53,7 @@ Click **Continue** to proceed.
 {% step %}
 ### Installation Type Confirmation
 
-<figure><img src="../../../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 Click **Install** to begin installation.
 
@@ -69,7 +69,7 @@ This screen confirms:
 
 After installation, macOS displays a notification indicating that **mcp\_endpoint\_shield.sh** has been added as a background item.
 
-<figure><img src="../../../.gitbook/assets/image (4).png" alt="" width="512"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4) (1).png" alt="" width="512"><figcaption></figcaption></figure>
 
 This means:
 
@@ -89,7 +89,7 @@ After installation, MCP Endpoint Shield may request permission to access specifi
 * Documents
 * Downloads
 
-<div><figure><img src="../../../.gitbook/assets/image (5).png" alt="" width="369"><figcaption></figcaption></figure> <figure><img src="../../../.gitbook/assets/image (7).png" alt="" width="375"><figcaption></figcaption></figure> <figure><img src="../../../.gitbook/assets/image (6).png" alt="" width="351"><figcaption></figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/image (5) (1).png" alt="" width="369"><figcaption></figcaption></figure> <figure><img src="../../../.gitbook/assets/image (7).png" alt="" width="375"><figcaption></figcaption></figure> <figure><img src="../../../.gitbook/assets/image (6).png" alt="" width="351"><figcaption></figcaption></figure></div>
 
 These permissions are used to:
 

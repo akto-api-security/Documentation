@@ -1,7 +1,5 @@
 # Workflow Automation
 
-## Workflow Automation
-
 Monitor AI traffic from workflow automation platforms to ensure your automated processes maintain security standards.
 
 ### Available Integrations

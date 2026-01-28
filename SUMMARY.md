@@ -22,6 +22,11 @@
   * [Cursor Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/cursor-hooks.md)
   * [Agentic Shield](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/agentic-shield.md)
 * [AI Agent Activity](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/README.md)
+  * [Agentic Assets](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-assets/README.md)
+    * [Take Actions on Collections](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-assets/take-actions-on-collections.md)
+  * [Agentic Components](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-components/README.md)
+    * [Take View Level Actions](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-components/take-view-level-actions.md)
+    * [Take Bulk Actions](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-components/take-bulk-actions.md)
   * [View Endpoint Shield Details](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/view-endpoint-shield-details.md)
 
 ## Akto Argus: Agentic AI Security for Homegrown AI
