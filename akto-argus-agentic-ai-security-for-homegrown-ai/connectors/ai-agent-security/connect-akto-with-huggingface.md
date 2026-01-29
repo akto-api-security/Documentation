@@ -32,7 +32,7 @@ Before integrating Akto Proxy:
 ```mermaid
 flowchart LR
     A[EndUser] --> B[Akto AI Agent Proxy] --> C[AI Agent App] --> D[HF Private Inference Endpoint]
-    E --> E[Logs, Guardrails, Analytics] <-- D
+    A --> E[Logs, Guardrails, Analytics] <-- D
 
 
 ```
