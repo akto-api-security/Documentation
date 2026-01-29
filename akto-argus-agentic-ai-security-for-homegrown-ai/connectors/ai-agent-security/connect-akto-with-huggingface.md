@@ -27,11 +27,13 @@ Before integrating Akto Proxy:
 
 ## **Architecture Diagram**
 
-```
-EndUser ──▶ Akto AI Agent Proxy ──▶ AI Agent App ──▶ HF Private Inference Endpoint
-      │                                            ▲
-      │                                            │
-      └────────────── Logs, Guardrails, Analytics ──┘
+
+
+```mermaid
+flowchart LR
+    A[EndUser] --> B[Akto AI Agent Proxy] --> C[AI Agent App] --> D[HF Private Inference Endpoint]
+    E --> E[Logs, Guardrails, Analytics] <-- D
+
 
 ```
 
@@ -178,6 +180,6 @@ By integrating Akto AI Agent Proxy in front of a Hugging Face Private Inference 
 
 - You achieve guardrail enforcement without modifying the client code
 - You capture and monitor model invocation traffic
-- You gain observability equivalent to AWS Bedrock conversation logging
+- You gain observability of conversation logging
 
 Akto Proxy becomes the enforcement and observability layer for private HF model usage.
