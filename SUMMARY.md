@@ -292,7 +292,7 @@
   * [Schema Conformance](agentic-guardrails/concepts/schema-conformance.md)
   * [Guardrail Actors](guardrails/concepts/threat-actors.md)
   * [Guardrail Activity](agentic-guardrails/concepts/guardrail-activity.md)
-  * [Dynamic Api Rate Limiting](agentic-guardrails/concepts/api-rate-limit.md)
+  * [Dynamic Agent Rate Limiting](agentic-guardrails/concepts/api-rate-limit.md)
   * [Guardrail Policy](agentic-guardrails/concepts/threat-policy.md)
   * [Successful Exploits](agentic-guardrails/concepts/successful-exploits.md)
   * [Remediation Steps](agentic-guardrails/concepts/remediation-steps/README.md)
