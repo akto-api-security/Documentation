@@ -50,12 +50,6 @@ Add the following environment variables to your shell configuration file (e.g. `
 # Akto Data Ingestion Service URL (required)
 export AKTO_DATA_INGESTION_URL="http://your-ingestion-service-url"
 
-# Optional: Timeout in seconds for Akto API calls (default: 5)
-export AKTO_TIMEOUT=5
-
-# Optional: Claude API base URL (default: https://api.anthropic.com)
-export CLAUDE_API_URL="https://api.anthropic.com"
-
 # Operation mode: true = block violating prompts, false = allow but still send to Akto (default: true)
 export AKTO_SYNC_MODE=true
 ```
@@ -169,8 +163,6 @@ claude
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `AKTO_DATA_INGESTION_URL` | Yes | — | Base URL of the Akto data ingestion service (e.g. `http://localhost:80`) |
-| `AKTO_TIMEOUT` | No | `5` | Timeout in seconds for Akto API calls |
-| `CLAUDE_API_URL` | No | `https://api.anthropic.com` | Claude API base URL (used in payload metadata) |
 | `AKTO_SYNC_MODE` | No | `true` | `true` = block violating prompts; `false` = allow prompts and log/ingest only |
 
 ## Get Support for your Akto setup
