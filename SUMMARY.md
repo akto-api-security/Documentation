@@ -36,6 +36,7 @@
   * [MCP Import](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/mcp-import.md)
   * [AI Agent Security](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/README.md)
     * [AWS Bedrock](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/connect-akto-with-aws-bedrock.md)
+    * [Hugging Face](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/connect-akto-with-huggingface.md)
   * [AI Model Security](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-model-security.md)
   * [Others](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md)
     * [Connect Akto with Hybrid SaaS](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md)
