@@ -12,8 +12,6 @@ Akto AI Agent Proxy provides:
 
 Hugging Face’s Private Inference Endpoint provides a dedicated, managed model endpoint accessible only via AWS PrivateLink from within a VPC. Hugging Face does **not automatically log full prompt & response conversations** like AWS Bedrock, so Akto must capture this upstream.
 
-(General understanding from Hugging Face docs)
-
 ---
 
 ## **Prerequisites**
