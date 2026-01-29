@@ -173,7 +173,6 @@ Akto Proxy will log:
 - **Guardrail not triggering**: Validate rule pack configuration.
 
 ---
-
 ## **Summary**
 
 By integrating Akto AI Agent Proxy in front of a Hugging Face Private Inference Endpoint:
