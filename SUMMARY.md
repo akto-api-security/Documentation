@@ -44,6 +44,7 @@
       * [LangChain](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/workflow-automation/langchain.md)
       * [Microsoft Copilot Studio](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/workflow-automation/microsoft-copilot-studio.md)
       * [LiteLLM](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/workflow-automation/litellm.md)
+      * [Claude Code CLI](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/workflow-automation/claude-code-cli.md)
     * [MCP Recon](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/mcp-recon.md)
     * [Gateways](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/api-gateways/README.md)
       * [Connect Akto with Envoy](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/api-gateways/envoy.md)
