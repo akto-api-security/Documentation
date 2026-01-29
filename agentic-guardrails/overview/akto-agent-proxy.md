@@ -15,7 +15,7 @@ AI Agent Proxy is a security layer that protects AI agent applications by interc
 
 ## Architecture
 
-The AI Agent Proxy runs as a Docker container on the same VM as your AI agent container, providing a secure gateway for all AI agent traffic.
+The AI Agent Proxy can be deployed as a Docker container or as a Kubernetes sidecar alongside your AI agent, providing a secure gateway for all AI agent traffic.
 
 ```mermaid
 sequenceDiagram
@@ -144,34 +144,251 @@ http://localhost:3001/agent/query
 http://localhost:8080/agent/query
 ```
 
-## Security Features
+## **Kubernetes Setup**
 
-### **1. Request Threat Detection**
+### **Prerequisites**
 
-The proxy analyzes incoming requests for security threats including:
+* Kubernetes cluster (v1.19+)
+* kubectl configured to access your cluster
+* An AI agent application deployed in Kubernetes
+* Akto API token from [app.akto.io](https://app.akto.io)
 
-* **Prompt Injection**: Detects attempts to manipulate AI agent behavior through malicious prompts
-* **SQL Injection**: Blocks SQL injection attempts in agent queries
-* **Command Injection**: Prevents malicious command execution attempts
-* **Path Traversal**: Detects unauthorized file system access attempts
-* **Data Exfiltration**: Identifies attempts to extract sensitive information
-* **SSRF (Server-Side Request Forgery)**: Blocks unauthorized internal network access
+### **Architecture: Sidecar Pattern**
 
-### **2. Request Guardrails**
+The AI Agent Shield runs as a sidecar container in the same pod as your AI agent, providing zero-latency security.
 
-Enforce security policies on incoming requests including:
-* **Pattern Matching**: Block requests containing sensitive file paths or dangerous patterns
-* **PII Input Protection**: Prevent sensitive data like SSN, credit cards, or passports in requests
-* **Rate Limiting**: Control request frequency to prevent abuse
-* **Custom Rules**: Define organization-specific security policies
+```
+Pod: your-agent
+├─ akto-ai-agent-shield:8080  ← External traffic enters here
+│         ↓ localhost
+└─ your-agent:<app-port>      ← Receives filtered traffic
+```
 
-### **3. Response Guardrails**
+**Benefits:**
+- Zero network latency (localhost communication)
+- Automatic scaling with main container
+- Per-pod isolation
+- Simplified service routing
 
-The proxy receives responses from the AI agent and applies security checks and data protection:
-* **PII Redaction**: Automatically redact sensitive information like SSN, credit cards, emails, phone numbers
-* **Sensitive Data Blocking**: Block responses containing API keys, passwords, or secrets
-* **Content Filtering**: Filter malicious content including hate speech, violence, or illegal content
-* **Custom Policies**: Configure organization-specific response filtering rules
+**Traffic Flow:**
+```
+User → Service:80 → Pod:
+                     ├─ Shield:8080 (public)
+                     └─ App:<app-port> (internal)
+```
+
+### **Step 1: Create ConfigMap**
+
+Create a ConfigMap with common AI Agent Shield configuration:
+
+```bash
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: akto-ai-agent-shield-config
+  namespace: your-namespace
+  labels:
+    app: akto-ai-agent-shield
+    component: security-proxy
+data:
+  # Akto API Base URL (obtained from Akto dashboard)
+  AKTO_API_BASE_URL: "<your-akto-data-ingestion-url>"
+
+  # Application Type: "agent" or "mcp-server"
+  APP_TYPE: "agent"
+
+  # Proxy Port
+  AKTO_PROXY_PORT: "8080"
+
+  # Threat Reporting (set to "true" to skip for testing)
+  SKIP_THREAT: "false"
+
+  # Request Timeout (seconds)
+  REQUEST_TIMEOUT: "120"
+
+  # Size Limits (0 = unlimited)
+  MAX_REQUEST_SIZE: "0"
+  MAX_RESPONSE_SIZE: "0"
+
+  # Apply guardrails to SSE requests
+  APPLY_GUARDRAILS_TO_SSE: "true"
+
+  # Allowed HTTP Methods (empty = all allowed)
+  ALLOWED_HTTP_METHODS: ""
+
+  # Specific endpoints for guardrails (empty = apply to all)
+  GUARDRAIL_ENDPOINTS: ""
+EOF
+```
+
+### **Step 2: Add Secret**
+
+Add your Akto API token to a Kubernetes secret:
+
+```bash
+# Create new secret
+kubectl create secret generic your-agent-secret \
+  --from-literal=AKTO_API_TOKEN='<your-akto-api-token>' \
+  --namespace=your-namespace
+
+# Or update existing secret
+kubectl create secret generic your-agent-secret \
+  --from-literal=AKTO_API_TOKEN='<your-akto-api-token>' \
+  --namespace=your-namespace \
+  --dry-run=client -o yaml | kubectl apply -f -
+```
+
+### **Step 3: Update Deployment with Sidecar**
+
+Add the AI Agent Shield sidecar container to your existing deployment:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: your-agent
+  namespace: your-namespace
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: your-agent
+  template:
+    metadata:
+      labels:
+        app: your-agent
+    spec:
+      containers:
+
+      # AI Agent Shield Sidecar
+      - name: akto-ai-agent-shield
+        image: public.ecr.aws/aktosecurity/akto-ai-agent-shield:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+          name: http-proxy
+
+        # Sidecar-specific environment variables
+        env:
+        # Target application URL (localhost for sidecar pattern)
+        - name: APP_URL
+          value: "http://localhost:<your-app-port>"
+
+        # Unique project identifier
+        - name: PROJECT_NAME
+          value: "your-agent"
+
+        # Server name for policy filtering (use k8s service FQDN)
+        - name: APP_SERVER_NAME
+          value: "your-agent.your-namespace.svc.cluster.local"
+
+        # Import configuration from ConfigMap
+        envFrom:
+        - configMapRef:
+            name: akto-ai-agent-shield-config
+
+        # Import AKTO_API_TOKEN from Secret
+        - secretRef:
+            name: your-agent-secret
+
+        # Resource limits
+        resources:
+          limits:
+            cpu: 200m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+
+        # Health checks
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+
+      # Your existing AI agent container
+      - name: your-agent
+        image: your-agent:latest
+        ports:
+        - containerPort: <your-app-port>
+          protocol: TCP
+        # ... rest of your container spec
+```
+
+Apply the updated deployment:
+
+```bash
+kubectl apply -f deployment.yaml
+```
+
+### **Step 4: Update Service**
+
+Update your service to route traffic to the AI Agent Shield sidecar port (8080):
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: your-agent
+  namespace: your-namespace
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080  # Changed from <your-app-port> to 8080 (shield port)
+  selector:
+    app: your-agent
+  type: ClusterIP
+```
+
+Apply the service update:
+
+```bash
+kubectl apply -f service.yaml
+```
+
+**Traffic Flow with Shield:**
+```
+External Request → Service (port 80) → Pod:
+                                        ├─ akto-ai-agent-shield:8080 ← Traffic enters here
+                                        │         ↓ (localhost proxy)
+                                        └─ your-agent:<your-app-port> ← Receives filtered traffic
+```
+
+### **Step 5: Verify Deployment**
+
+```bash
+# Check pods are running
+kubectl get pods -n your-namespace
+
+# Check shield container logs
+kubectl logs -n your-namespace <pod-name> -c akto-ai-agent-shield
+
+# Follow shield logs
+kubectl logs -n your-namespace <pod-name> -c akto-ai-agent-shield -f
+
+# Check detailed shield logs inside container
+kubectl exec -n your-namespace <pod-name> -c akto-ai-agent-shield -- \
+  tail -n 100 /var/log/akto-mcp-endpoint-shield/ai-agent-shield.log
+
+# Test health check
+kubectl port-forward -n your-namespace <pod-name> 8080:8080
+curl http://localhost:8080/health
+
+# Check resource usage
+kubectl top pods -n your-namespace
+```
 
 ## Configuration
 
@@ -212,141 +429,6 @@ Connect to Akto dashboard for centralized monitoring:
    * Blocked request analysis
    * Top guardrails triggered
    * Response redaction statistics
-
-#### Networking
-
-**Container Network Configuration**
-
-The proxy and AI agent containers communicate over a Docker network:
-
-```yaml
-services:
-  your-agent:
-    networks:
-      - agent-network
-    # ... other config
-
-  akto-ai-agent-shield:
-    networks:
-      - agent-network
-    # ... other config
-
-networks:
-  agent-network:
-    driver: bridge
-```
-
-**Exposing Proxy to End Users**
-
-For production deployments, use a reverse proxy or load balancer:
-
-**Using Nginx:**
-
-```nginx
-upstream ai-proxy {
-    server localhost:8080;
-}
-
-server {
-    listen 443 ssl;
-    server_name api.yourdomain.com;
-
-    ssl_certificate /path/to/cert.pem;
-    ssl_certificate_key /path/to/key.pem;
-
-    location /ai/ {
-        proxy_pass http://ai-proxy/;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-for $proxy_add_x_forwarded_for;
-    }
-}
-```
-
-#### Best Practices
-
-1. **Network Isolation**: Run containers in a dedicated Docker network for security
-2. **Resource Limits**: Set CPU and memory limits for both containers
-3. **Regular Updates**: Keep proxy and agent containers updated with latest security patches
-4. **Backup Configuration**: Maintain version control for guardrails configuration
-5. **Monitor Performance**: Track proxy latency to ensure minimal overhead
-6. **Tune Guardrails**: Regularly review and optimize guardrail rules to reduce false positives
-7. **Secure Tokens**: Store `AKTO_API_TOKEN` securely using Docker secrets or environment files
-8. **Log Rotation**: Configure log rotation to prevent disk space issues
-
-## Troubleshooting **Common Issues**
-
-### **Proxy Cannot Connect to AI Agent**
-
-**Symptoms**: 502 Bad Gateway errors
-
-**Solutions**:
-
-```bash
-# Check if AI agent is running
-docker ps | grep your-agent
-
-# Verify network connectivity
-docker exec akto-ai-agent-shield ping your-agent
-
-# Check APP_URL configuration
-docker exec akto-ai-agent-shield env | grep APP_URL
-```
-
-### **Requests Being Blocked Incorrectly**
-
-**Symptoms**: Legitimate requests returning blocked status
-
-**Solutions**:
-
-* Review guardrails configuration for overly strict rules
-* Check proxy logs for specific guardrail triggered
-* Adjust sensitivity levels or whitelist patterns
-* Temporarily disable specific guardrails for testing
-
-### **High Latency**
-
-**Symptoms**: Slow response times through proxy
-
-**Solutions**:
-
-```bash
-# Check proxy resource usage
-docker stats akto-ai-agent-shield
-
-# Review guardrails complexity
-# Optimize pattern matching rules
-# Consider disabling expensive checks for non-critical paths
-```
-
-### **Container Restart Loops**
-
-**Symptoms**: Proxy container keeps restarting
-
-**Solutions**:
-
-```bash
-# Check container logs
-docker logs akto-ai-agent-shield
-
-# Common causes:
-# - Invalid AKTO_API_TOKEN
-# - Invalid AKTO_API_BASE_URL
-# - Missing required environment variables
-# - Insufficient memory/CPU
-```
-
-### **Debug Mode**
-
-Enable debug logging for troubleshooting:
-
-```yaml
-services:
-  akto-ai-agent-shield:
-    environment:
-      - SKIP_THREAT=true  # Skip sending threats during debugging
-      - REQUEST_TIMEOUT=300  # Increase timeout for debugging
-```
 
 ## Get Support
 
