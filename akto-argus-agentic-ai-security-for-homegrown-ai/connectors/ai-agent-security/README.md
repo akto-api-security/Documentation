@@ -9,6 +9,7 @@ Akto lets you seamlessly import **AI agents** such as **AWS Bedrock, Azure AI Fo
 ## Supported AI Agents
 
 * [**AWS Bedrock**](connect-akto-with-aws-bedrock.md) – Import Bedrock agents seamlessly
+* [**Hugging Face**](connect-akto-with-huggingface.md) - Integrate Hugging Face Private Inference Endpoint
 * **Azure AI Foundry** – Import Azure AI Foundry agents seamlessly
 * **Databricks** – Import Databricks agents seamlessly
 * **Google Vertex AI** – Import Vertex AI agents seamlessly
