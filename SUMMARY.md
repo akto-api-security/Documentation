@@ -329,6 +329,7 @@
   * [Cloudflare WAF](integrations/waf/cloudflare-waf.md)
 * [Splunk SIEM](integrations/splunk.md)
 * [JFrog](integrations/splunk-1.md)
+* [DevRev](integrations/devrev.md)
 * [Jira](integrations/jira-integration.md)
 * [ServiceNow](integrations/servicenow.md)
 * [Azure DevOps Boards](integrations/azure-devops-boards-integration.md)
