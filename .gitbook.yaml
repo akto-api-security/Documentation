@@ -99,4 +99,4 @@ redirects:
   api-inventory/how-to/set-environment-type: api-inventory/how-to/set-tags.md
   api-inventory/how-to/create-new-tags: api-inventory/how-to/set-tags.md
   api-inventory/how-to/edit-tags: api-inventory/how-to/set-tags.md
-  agentic-ai: readme.md
+  agentic-ai/mcp-endpoint-shield: readme.md
