@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # AktoGPT
 
 Harness the power of ChatGPT for API Security on your fingertips now! Akto integrates with ChatGPT to bring you insights from the most powerful bot.
@@ -21,16 +25,16 @@ You will find **Ask AktoGPT** button on the dashboard at the top right. Currentl
 
 You can use AktoGPT to automatically group APIs based on their functionality. Follow these steps
 
-1.  Open any API collection and click on the **AktoGPT** button on the screen&#x20;
+1.  Open any API collection and click on the **AktoGPT** button on the screen
 
     <figure><img src="https://user-images.githubusercontent.com/91221068/230788491-239a8200-fb3b-4392-ad3f-2bb4dcd76bab.png" alt=""><figcaption></figcaption></figure>
-2.  From the list of prompts, select **Create API groups**&#x20;
+2.  From the list of prompts, select **Create API groups**
 
     <figure><img src="https://user-images.githubusercontent.com/91221068/230788500-ef8f768d-7c5d-4284-96c4-d0148dfd457f.png" alt=""><figcaption></figcaption></figure>
-3.  Click on the Send button to the right of the prompt&#x20;
+3.  Click on the Send button to the right of the prompt
 
     <figure><img src="https://user-images.githubusercontent.com/91221068/230788506-2333edbc-2319-4f7a-a338-85d10d99cfdb.png" alt=""><figcaption></figcaption></figure>
-4.  It should now classify all the APIs on the screen in multiple groups&#x20;
+4.  It should now classify all the APIs on the screen in multiple groups
 
     <figure><img src="https://user-images.githubusercontent.com/91221068/230788537-8f50238f-1d42-46e0-b6a2-782201495ae0.png" alt=""><figcaption></figcaption></figure>
 
@@ -38,16 +42,16 @@ You can use AktoGPT to automatically group APIs based on their functionality. Fo
 
 You can use AktoGPT to automatically filter APIs based on a search phrase. Follow these steps
 
-1.  Open any API collection and click on the **AktoGPT** button on the screen&#x20;
+1.  Open any API collection and click on the **AktoGPT** button on the screen
 
     <figure><img src="https://user-images.githubusercontent.com/91221068/230788491-239a8200-fb3b-4392-ad3f-2bb4dcd76bab.png" alt=""><figcaption></figcaption></figure>
-2.  From the list of prompts, select **Tell me APIs related to**&#x20;
+2.  From the list of prompts, select **Tell me APIs related to**
 
     <figure><img src="https://user-images.githubusercontent.com/91221068/230788923-a947dbb5-b758-47df-898b-9eb117c86ae3.png" alt=""><figcaption></figcaption></figure>
-3.  Type a search phrase and click on the Send button to the right of the prompt&#x20;
+3.  Type a search phrase and click on the Send button to the right of the prompt
 
     <figure><img src="https://user-images.githubusercontent.com/91221068/230788833-00aa65e2-2d4a-4124-bad0-0643c65ceb3d.png" alt=""><figcaption></figcaption></figure>
-4.  It should now show only APIs related to the search phrase&#x20;
+4.  It should now show only APIs related to the search phrase
 
     <figure><img src="https://user-images.githubusercontent.com/91221068/230788838-577f53fa-aa04-41a1-a5d8-c09116139bd4.png" alt=""><figcaption></figcaption></figure>
 
@@ -68,4 +72,4 @@ You can use AktoGPT to look for any sensitive or PII parameters in the API paylo
 
     <figure><img src="https://user-images.githubusercontent.com/91221068/230789223-b5505cdb-1583-484e-aa93-00d4481ae302.png" alt=""><figcaption></figcaption></figure>
 
-\
+\\
