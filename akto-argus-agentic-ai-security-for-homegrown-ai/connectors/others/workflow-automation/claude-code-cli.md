@@ -27,7 +27,7 @@ Before integrating Akto with Claude Code CLI, ensure you have:
 
 {% stepper %}
 {% step %}
-### Download the Hook Scripts
+#### Download the Hook Scripts
 
 Create the hooks directory and download the validation scripts:
 
@@ -42,7 +42,7 @@ curl -O https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp
 {% endstep %}
 
 {% step %}
-### Configure Environment Variables
+#### Configure Environment Variables
 
 Add the following environment variables to your shell configuration file (e.g. `~/.bashrc`, `~/.zshrc`, or `~/.profile`):
 
@@ -61,9 +61,9 @@ source ~/.zshrc   # or source ~/.bashrc
 ```
 
 {% hint style="warning" %}
-## **Note**
+### **Note**
 
-&#x20;`AKTO_SYNC_MODE` determines behavior:
+`AKTO_SYNC_MODE` determines behavior:
 
 * `AKTO_SYNC_MODE=true`: Prompts are validated BEFORE being sent to Claude. Violations block the prompt immediately.
 * `AKTO_SYNC_MODE=false`: Prompts proceed to Claude; validation and ingestion still run for visibility in Akto.
@@ -71,7 +71,7 @@ source ~/.zshrc   # or source ~/.bashrc
 {% endstep %}
 
 {% step %}
-### Add Hooks to Claude CLI
+#### Add Hooks to Claude CLI
 
 Open or create `~/.claude/settings.json` and add the following. If the file already exists with other settings, add or merge the `hooks` section:
 
@@ -109,7 +109,7 @@ Open or create `~/.claude/settings.json` and add the following. If the file alre
 {% endstep %}
 
 {% step %}
-### Restart Claude Code CLI
+#### Restart Claude Code CLI
 
 Ensure no Claude Code CLI process is running, then run:
 
@@ -119,12 +119,10 @@ claude
 {% endstep %}
 
 {% step %}
-### Verify Integration
+#### Verify Integration
 
 1. **Send a test prompt** in Claude Code (e.g. ask a simple coding question). If guardrails block it, you should see a block message and the prompt will not be sent to Claude.
-
 2. **Complete a request, then exit Claude Code CLI.** The Stop hook will run and send the interaction to Akto.
-
 3. **Verify in Akto dashboard:**
    * Log into your Akto dashboard
    * Navigate to the Collections section
@@ -134,7 +132,7 @@ claude
 
 ## How It Works
 
-### Request Flow (AKTO_SYNC_MODE=true)
+### Request Flow (AKTO\_SYNC\_MODE=true)
 
 ```
 1. User submits prompt in Claude Code CLI
@@ -149,7 +147,7 @@ claude
 8. Request/response data sent to Akto Data Ingestion Service API for the dashboard
 ```
 
-### Request Flow (AKTO_SYNC_MODE=false)
+### Request Flow (AKTO\_SYNC\_MODE=false)
 
 ```
 1. User submits prompt in Claude Code CLI
@@ -160,10 +158,10 @@ claude
 
 ## Environment Reference
 
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `AKTO_DATA_INGESTION_URL` | Yes | — | Base URL of the Akto data ingestion service (e.g. `http://localhost:80`) |
-| `AKTO_SYNC_MODE` | No | `true` | `true` = block violating prompts; `false` = allow prompts and log/ingest only |
+| Variable                  | Required | Default | Description                                                                   |
+| ------------------------- | -------- | ------- | ----------------------------------------------------------------------------- |
+| `AKTO_DATA_INGESTION_URL` | Yes      | —       | Base URL of the Akto data ingestion service (e.g. `http://localhost:80`)      |
+| `AKTO_SYNC_MODE`          | No       | `true`  | `true` = block violating prompts; `false` = allow prompts and log/ingest only |
 
 ## Get Support for your Akto setup
 

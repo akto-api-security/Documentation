@@ -60,10 +60,10 @@ Akto will now automatically:
 
 * Connect to the AI agent endpoint
 * Send sample test requests to validate the configuration
-* Register the agent into **AI Agent Security Inventory** for monitoring and testing&#x20;
+* Register the agent into **AI Agent Security Inventory** for monitoring and testing
 
 {% hint style="success" %}
-## Akto Access Scope
+### Akto Access Scope
 
 * Auth/test roles (if any) are used **only during import** and are **not stored**
 * Akto uses **read-only access** to interact with your AI agent
