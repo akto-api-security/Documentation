@@ -4,8 +4,10 @@
 * [Agentic Security Documentation](https://ai-security-docs.akto.io/)
 * [What is Akto?](README.md)
 * [AktoGPT](aktogpt.md)
-* [Agentic AI Documentation](agentic-ai-documentation.md)
 
+## migration
+
+* [Agentic AI Documentation](migration/agentic-ai-documentation.md)
 
 ## AI Agents
 

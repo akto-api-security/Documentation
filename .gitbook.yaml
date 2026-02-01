@@ -100,23 +100,23 @@ redirects:
   api-inventory/how-to/create-new-tags: api-inventory/how-to/set-tags.md
   api-inventory/how-to/edit-tags: api-inventory/how-to/set-tags.md
 # Agentic AI migration - all paths redirect to migration landing page
-  agentic-ai: agentic-ai-documentation.md
-  agentic-ai/mcp-import: agentic-ai-documentation.md
-  agentic-ai/akto-mcp-server: agentic-ai-documentation.md
-  agentic-ai/mcp-security: agentic-ai-documentation.md
-  agentic-ai/mcp-recon: agentic-ai-documentation.md
-  agentic-ai/mcp-endpoint-shield: agentic-ai-documentation.md
-  agentic-ai/mcp-endpoint-shield-jamf-mdm: agentic-ai-documentation.md
-  agentic-ai/mcp-endpoint-shield-cursor-hooks: agentic-ai-documentation.md
-  agentic-ai/ai-agent-import: agentic-ai-documentation.md
-  agentic-ai/ai-model-import: agentic-ai-documentation.md
-  agentic-ai/akto-agent-proxy: agentic-ai-documentation.md
-  agentic-ai/ai-security: agentic-ai-documentation.md
-  agentic-ai/ai-agent-security: agentic-ai-documentation.md
-  agentic-ai/agentic-shield: agentic-ai-documentation.md
-  agentic-ai/akto-mcp-proxy: agentic-ai-documentation.md
-  agentic-ai/agent-guard: agentic-ai-documentation.md
-  agentic-ai/kong: agentic-ai-documentation.md
-  agentic-ai/kong/README: agentic-ai-documentation.md
-  agentic-ai/kong/agentic-guardrails-kong: agentic-ai-documentation.md
-  agentic-ai/aws-bedrock-agents: agentic-ai-documentation.md
+# agentic-ai: migration/agentic-ai-documentation.md
+  agentic-ai/mcp-import: migration/agentic-ai-documentation.md
+  agentic-ai/akto-mcp-server: migration/agentic-ai-documentation.md
+  agentic-ai/mcp-security: migration/agentic-ai-documentation.md
+  agentic-ai/mcp-recon: migration/agentic-ai-documentation.md
+  agentic-ai/mcp-endpoint-shield: migration/agentic-ai-documentation.md
+  agentic-ai/mcp-endpoint-shield-jamf-mdm: migration/agentic-ai-documentation.md
+  agentic-ai/mcp-endpoint-shield-cursor-hooks: migration/agentic-ai-documentation.md
+  agentic-ai/ai-agent-import: migration/agentic-ai-documentation.md
+  agentic-ai/ai-model-import: migration/agentic-ai-documentation.md
+  agentic-ai/akto-agent-proxy: migration/agentic-ai-documentation.md
+  agentic-ai/ai-security: migration/agentic-ai-documentation.md
+  agentic-ai/ai-agent-security: migration/agentic-ai-documentation.md
+  agentic-ai/agentic-shield: migration/agentic-ai-documentation.md
+  agentic-ai/akto-mcp-proxy: migration/agentic-ai-documentation.md
+  agentic-ai/agent-guard: migration/agentic-ai-documentation.md
+  agentic-ai/kong: migration/agentic-ai-documentation.md
+  agentic-ai/kong/README: migration/agentic-ai-documentation.md
+  agentic-ai/kong/agentic-guardrails-kong: migration/agentic-ai-documentation.md
+  agentic-ai/aws-bedrock-agents: migration/agentic-ai-documentation.md
