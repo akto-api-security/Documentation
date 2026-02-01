@@ -85,7 +85,7 @@ export LOG_LEVEL=INFO
 {% endstep %}
 
 {% step %}
-### **4. Adjust Endpoint URL in Agent App**
+### **Adjust Endpoint URL in Agent App**
 
 Update the AI agent’s inference call configuration:
 
@@ -107,7 +107,7 @@ This ensures:
 {% endstep %}
 
 {% step %}
-### **5. Validate Integration**
+### **Validate Integration**
 
 Verify end-to-end flow:
 
