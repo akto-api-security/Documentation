@@ -4,28 +4,10 @@
 * [Agentic Security Documentation](https://ai-security-docs.akto.io/)
 * [What is Akto?](README.md)
 * [AktoGPT](aktogpt.md)
-* [Agentic AI Documentation](agentic-ai-documentation.md)
 
-## AGENTIC AI
+## migration
 
-* [MCP Import](agentic-ai/mcp-import.md)
-* [Akto MCP Server](agentic-ai/akto-mcp-server.md)
-* [MCP Security](agentic-ai/mcp-security.md)
-* [MCP Recon](agentic-ai/mcp-recon.md)
-* [MCP Endpoint Shield](agentic-ai/mcp-endpoint-shield.md)
-* [MCP Endpoint Shield - Jamf MDM Deployment](agentic-ai/mcp-endpoint-shield-jamf-mdm.md)
-* [MCP Endpoint Shield via Cursor Hooks](agentic-ai/mcp-endpoint-shield-cursor-hooks.md)
-* [AI Agent Import](agentic-ai/ai-agent-import.md)
-* [AI Model Import](agentic-ai/ai-model-import.md)
-* [AI Agent Proxy](agentic-ai/akto-agent-proxy.md)
-* [AI Security](agentic-ai/ai-security.md)
-* [AI Agent Security](agentic-ai/ai-agent-security.md)
-* [Agentic Shield](agentic-ai/agentic-shield.md)
-* [MCP Proxy](agentic-ai/akto-mcp-proxy.md)
-* [Agent Guard](agentic-ai/agent-guard.md)
-* [Kong services](agentic-ai/kong/README.md)
-  * [Kong Agentic Guardrail Integration](agentic-ai/kong/agentic-guardrails-kong.md)
-* [AWS Bedrock Agent](agentic-ai/aws-bedrock-agents.md)
+* [Agentic AI Documentation](migration/agentic-ai-documentation.md)
 
 ## AI Agents
 
