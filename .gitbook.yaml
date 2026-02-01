@@ -99,24 +99,4 @@ redirects:
   api-inventory/how-to/set-environment-type: api-inventory/how-to/set-tags.md
   api-inventory/how-to/create-new-tags: api-inventory/how-to/set-tags.md
   api-inventory/how-to/edit-tags: api-inventory/how-to/set-tags.md
-  # Agentic AI migration - all paths redirect to migration landing page
-  agentic-ai: agentic-ai-migration.md
-  agentic-ai/mcp-import: agentic-ai-migration.md
-  agentic-ai/akto-mcp-server: agentic-ai-migration.md
-  agentic-ai/mcp-security: agentic-ai-migration.md
-  agentic-ai/mcp-recon: agentic-ai-migration.md
-  agentic-ai/mcp-endpoint-shield: agentic-ai-migration.md
-  agentic-ai/mcp-endpoint-shield-jamf-mdm: agentic-ai-migration.md
-  agentic-ai/mcp-endpoint-shield-cursor-hooks: agentic-ai-migration.md
-  agentic-ai/ai-agent-import: agentic-ai-migration.md
-  agentic-ai/ai-model-import: agentic-ai-migration.md
-  agentic-ai/akto-agent-proxy: agentic-ai-migration.md
-  agentic-ai/ai-security: agentic-ai-migration.md
-  agentic-ai/ai-agent-security: agentic-ai-migration.md
-  agentic-ai/agentic-shield: agentic-ai-migration.md
-  agentic-ai/akto-mcp-proxy: agentic-ai-migration.md
-  agentic-ai/agent-guard: agentic-ai-migration.md
-  agentic-ai/kong: agentic-ai-migration.md
-  agentic-ai/kong/README: agentic-ai-migration.md
-  agentic-ai/kong/agentic-guardrails-kong: agentic-ai-migration.md
-  agentic-ai/aws-bedrock-agents: agentic-ai-migration.md
+  agentic-ai/mcp-endpoint-shield: readme.md
