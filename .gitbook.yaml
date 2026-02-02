@@ -95,3 +95,7 @@ redirects:
   api-security-testing/how-to/add-test-to-ci-cd-pipeline: ci-cd/how-to/add-test-to-ci-cd-pipeline.md
   api-security-testing/how-to/run-tests-in-cicd: ci-cd/how-to/run-tests-in-cicd.md
   api-security-testing/how-to/configure-testing-in-cloud: api-security-testing/how-to/install-testing-module-in-your-cloud.md
+
+# Agentic AI Security Redirects
+akto-argus-agentic-ai-security-for-homegrown-ai/connectors/mcp-proxy: agentic-guardrails/overview/akto-mcp-proxy.md
+akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-proxy: agentic-guardrails/overview/akto-agent-proxy.md
