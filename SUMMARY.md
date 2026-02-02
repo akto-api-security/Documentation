@@ -9,14 +9,6 @@
 
 * [Agentic AI Documentation](migration/agentic-ai-documentation.md)
 
-## AI Agents
-
-* [Source Code Analyzer](ai-agents/source-code-analyzer.md)
-* [False Positive Finder](ai-agents/false-positive-finder.md)
-* [Sensitive Data Scanner](ai-agents/sensitive-data-scanner.md)
-* [API Vulnerability Scanner](ai-agents/api-vulnerability-scanner.md)
-* [API Grouping Agent](ai-agents/api-grouping-agent.md)
-
 ## Getting Started
 
 * [Deployment Types](getting-started/deployment-types.md)
