@@ -125,3 +125,13 @@ redirects:
   ai-agents/false-positive-finder: migration/agentic-ai-documentation.md
   ai-agents/sensitive-data-scanner: migration/agentic-ai-documentation.md
   ai-agents/source-code-analyzer: migration/agentic-ai-documentation.md
+  mcp-endpoint-shield-cursor-hooks: migration/agentic-ai-documentation.md
+  mcp-security: migration/agentic-ai-documentation.md
+  ai-agent-import: migration/agentic-ai-documentation.md
+  akto-mcp-proxy: migration/agentic-ai-documentation.md
+  mcp-recon: migration/agentic-ai-documentation.md
+  mcp-import: migration/agentic-ai-documentation.md
+  mcp-endpoint-shield: migration/agentic-ai-documentation.md
+  ai-model-import: migration/agentic-ai-documentation.md
+  agent-guard: migration/agentic-ai-documentation.md
+  ci-cd: migration/agentic-ai-documentation.md
