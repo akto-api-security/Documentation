@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Manual Import
 
 Directly import your AI agents, MCP servers, and AI models into Akto for immediate security testing without deploying discovery agents or connecting to your infrastructure.

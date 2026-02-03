@@ -6,7 +6,7 @@ Akto lets you seamlessly import **AI agents** such as **AWS Bedrock, Azure AI Fo
 
 <figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2Fgit-blob-26c83f936b6d7958a5830edb6b158a31fbdd2e2a%2Fimage.png?alt=media" alt="" width="563"><figcaption></figcaption></figure>
 
-## Supported AI Agents
+## AI Agents Available
 
 The following AI agents, platforms, and tools are supported by Akto Argus for agentic AI security, enabling visibility, governance, and protection across diverse AI ecosystems.
 
