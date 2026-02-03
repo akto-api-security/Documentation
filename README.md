@@ -1,56 +1,96 @@
+---
+cover: .gitbook/assets/Gemini_Generated_Image_em1r4pem1r4pem1r.png
+coverY: 0
+---
+
 # What is Akto?
 
-[Getting-Started](./#getting-started) • [API Discovery](api-inventory-1/concepts/api-endpoints.md) • [API testing](api-security-testing/concepts/test.md) • [Add Test](test-editor/concepts/test-library.md) • [Join Discord community](https://discord.com/invite/Wpc6xVME4s)
 
-Akto is an instant API security platform that takes only 60 secs to get started. Akto is used by security teams to maintain a continuous inventory of APIs, test APIs for vulnerabilities and find runtime issues. Akto offers tests for all OWASP top 10 and HackerOne Top 10 categories including BOLA, authentication, SSRF, XSS, security configurations, etc. Akto's powerful testing engine runs variety of business logic tests by reading traffic data to understand API traffic pattern leading to reduced false positives. Akto can integrate with multiple traffic sources - Burpsuite, AWS, postman, GCP, gateways, etc.
 
-Akto enables security and engineering teams to secure their APIs by doing three things:
+[**API Security**](./#api-security) • [**DAST**](/broken/pages/P0xcGHMlFVFYeUtvKyep) • [**Akto Atlas**](https://ai-security-docs.akto.io/akto-atlas-agentic-ai-security-for-employee-endpoints/overview) • [**Akto Argus**](https://ai-security-docs.akto.io/akto-argus-agentic-ai-security-for-homegrown-ai/overview) • [**Join Discord Community**](https://discord.com/invite/Wpc6xVME4s)
 
-1. [API discovery](api-inventory-1/concepts/api-collection.md)
-2. [Run business logic tests in CI/CD](integrations/ci-cd-integrations/how-to/run-tests-in-cicd.md)
-3. [Find vulnerabilities in run-time](api-security-testing/concepts/test.md)
+Akto is a **unified Agentic AI, MCP, and API security platform** built to secure autonomous AI workflows and modern APIs in production.
 
-{% embed url="https://www.youtube.com/watch?v=XVpcX78IeFI" %}
+Akto has **two major security pillars**:
 
-## Getting Started
+* [Agentic AI Security](./#agentic-ai-security)
+* [API Security](./#api-security)
 
-Get started with Akto Cloud in 5 simple steps:
+## 🤖 Agentic AI Security
 
-### 1. Sign Up
+Akto also secures **Agentic AI systems**, where AI agents interact with tools, APIs, users, and internal systems.
 
-* Visit [app.akto.io](https://app.akto.io)
-* Create account with your work email
+Agentic AI Security in Akto has **two distinct products**:
 
-<figure><img src=".gitbook/assets/image (46).png" alt=""><figcaption></figcaption></figure>
+### Akto Atlas
 
-### 2. Create API Inventory
+**Agentic AI Security for Employee Endpoints**
 
-* Go to API Collections → Create new collection
-* Name your collection
-* Connect your [traffic source](broken-reference/) (Burp Suite/AWS/Postman) from Quick Start.
+* Secures AI agents used by employees
+* Protects internal tools, SaaS actions, and AI-driven workflows
+* Prevents data leakage, prompt abuse, and unsafe agent actions
 
-<figure><img src=".gitbook/assets/image (6) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+{% hint style="success" %}
+📘 Start here: [Akto Altas](https://ai-security-docs.akto.io/akto-atlas-agentic-ai-security-for-employee-endpoints/overview)
+{% endhint %}
 
-### 3. Set Authentication
+### Akto Argus
 
-* Go to Settings → Authentication
-* Create auth type (Bearer/API Key/Basic)
+**Agentic AI Security for Homegrown AI**
 
-<figure><img src=".gitbook/assets/image (47).png" alt=""><figcaption></figcaption></figure>
+* Secures internally built AI agents and LLM workflows
+* Monitors agent decisions, tool usage, and execution paths
+* Detects:
+  * Prompt injection
+  * Privilege misuse
+  * Unsafe autonomous actions
 
-### 4. Configure Attacker Token
+{% hint style="success" %}
+📘 Start here: [Akto Argus](https://ai-security-docs.akto.io/akto-argus-agentic-ai-security-for-homegrown-ai/overview)
+{% endhint %}
 
-* Go to User Configuration
-* Set ATTACKER\_TOKEN\_ALL
+## 🔐 API Security
 
-<figure><img src=".gitbook/assets/image (49) (1).png" alt=""><figcaption></figcaption></figure>
+Akto’s API Security platform helps teams **discover, test, and monitor APIs continuously** using real traffic and dynamic analysis.
 
-### 5. Run Tests
+It consists of **two tightly integrated components**:
 
-* Select your collection
-* Click Run Test
-* Choose tests you want to run
-* Select Test role
-* Click "Run once now"
+### API Security&#x20;
 
-<figure><img src=".gitbook/assets/image (7) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+**Discovery & Runtime**
+
+* Automatically discover APIs from live traffic
+* Maintain a continuously updated API inventory
+* Detect:
+  * Shadow and undocumented APIs
+  * Sensitive data exposure
+  * Authorization and authentication issues at runtime
+* Observe how APIs are _actually used_ in production
+
+{% hint style="success" %}
+📘 Start here: [Getting Started with API Security](readme-1.md)
+{% endhint %}
+
+### DAST&#x20;
+
+**Dynamic API Security Testing**
+
+* Context-aware testing using observed API behavior
+* Covers OWASP API Top 10 + business logic vulnerabilities
+* Supports:
+  * Manual test runs
+  * Scheduled scans
+  * CI/CD execution
+* Extremely low false positives
+
+{% hint style="success" %}
+📘 Start here: [Getting Started with DAST](dast/akto-dast.md)
+{% endhint %}
+
+{% hint style="warning" %}
+## Scope of This Documentation
+
+This documentation site **only covers:** API Security & DAST
+
+For Agentic AI Security, refer to the [**AI Security documentation portal**](https://ai-security-docs.akto.io/)
+{% endhint %}

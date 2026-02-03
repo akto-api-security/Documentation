@@ -3,6 +3,7 @@
 * [GitHub repository](https://github.com/akto-api-security/community-edition)
 * [Agentic Security Documentation](https://ai-security-docs.akto.io/)
 * [What is Akto?](README.md)
+* [Getting Started with API Security](readme-1.md)
 * [AktoGPT](aktogpt.md)
 
 ## migration
