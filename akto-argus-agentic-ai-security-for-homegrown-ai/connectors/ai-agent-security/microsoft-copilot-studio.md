@@ -20,7 +20,7 @@ The Akto Copilot Studio connector automatically:
 {% step %}
 ### Configure Akto Traffic Processor
 
-Set up and configure Akto Traffic Processor. The steps are mentioned [here](../hybrid-saas.md).
+Set up and configure Akto Traffic Processor. The steps are mentioned [here](../others/hybrid-saas.md).
 {% endstep %}
 
 {% step %}
