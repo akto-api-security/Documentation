@@ -134,4 +134,12 @@ redirects:
   mcp-endpoint-shield: migration/agentic-ai-documentation.md
   ai-model-import: migration/agentic-ai-documentation.md
   agent-guard: migration/agentic-ai-documentation.md
+  agentic-shield: migration/agentic-ai-documentation.md
+  gcp: migration/agentic-ai-documentation.md
+  kong: migration/agentic-ai-documentation.md
+  kong/agentic-guardrails-kong: migration/agentic-ai-documentation.md
+  traffic-connector/workflow-automation: migration/agentic-ai-documentation.md
+  traffic-connector/workflow-automation/langchain: migration/agentic-ai-documentation.md
+  traffic-connector/workflow-automation/n8n: migration/agentic-ai-documentation.md
+  traffic-connector/workflow-automation/copilot-studio: migration/agentic-ai-documentation.md
   ci-cd: migration/agentic-ai-documentation.md
