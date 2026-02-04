@@ -14,4 +14,4 @@ Guardrail actors are individuals, groups, or entities responsible for carrying o
 
 **Guardrail Actor Map**: Geographically maps the origin of guardrail actors targeting your autonomous systems
 
-<figure><img src="../../.gitbook/assets/image (9).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (9) (1).png" alt="" width="563"><figcaption></figcaption></figure>

@@ -16,7 +16,7 @@ Examples include:
 
 Each component is discovered from observed runtime traffic.
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (4).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (4) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ### Agentic Components List
 
@@ -53,7 +53,7 @@ Selecting a component opens the **Agentic Component Details** panel.
 
 The Agentic Component Details panel opens alongside the components list and provides an in-depth view of the selected component.
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3).png" alt="" width="375"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
 
 ### Component Metadata
 
@@ -117,7 +117,7 @@ You can switch between **Header** and **Payload** to view response-specific fiel
 {% endtab %}
 {% endtabs %}
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
 
 {% hint style="info" %}
 ## Schema Behaviour Notes

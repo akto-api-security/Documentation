@@ -10,7 +10,8 @@ The Akto Databricks connector enables you to **import Databricks agents seamless
 
 This integration automatically discovers agents using Databricks' Unity Catalog and sends their traffic data to Akto for real-time security analysis.
 
-## What the Connector Does
+{% hint style="success" %}
+## Connector Access Scope
 
 The Databricks connector automatically:
 
@@ -22,6 +23,7 @@ The Databricks connector automatically:
   * Policy violations
   * Runtime threat detection
 * **Unified Security View**: Provides a centralized dashboard view of all Databricks agents alongside your other AI infrastructure
+{% endhint %}
 
 ## Prerequisites
 
@@ -65,70 +67,7 @@ Before setting up the Databricks connector, ensure you have:
 {% endstep %}
 
 {% step %}
-### Download Connector Configuration Files
-
-Download the required configuration files from the Akto infrastructure repository:
-
-```bash
-wget https://raw.githubusercontent.com/akto-api-security/infra/feature/argus-connectors/databricks-cron/databricks-cron.env
-wget https://raw.githubusercontent.com/akto-api-security/infra/feature/argus-connectors/databricks-cron/docker-compose-databricks-cron.yaml
-```
-{% endstep %}
-
-{% step %}
-### Configure Environment Variables
-
-Edit the `databricks-cron.env` file with your Databricks credentials and Akto configuration:
-
-```bash
-# Databricks Configuration
-DATABRICKS_HOST=https://your-workspace.cloud.databricks.com
-DATABRICKS_CLIENT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-DATABRICKS_CLIENT_SECRET=your-client-secret-here
-
-# Unity Catalog Configuration
-DATABRICKS_CATALOG=workspace
-DATABRICKS_SCHEMA=default
-DATABRICKS_PREFIX=                    # Optional: Leave empty or specify a table prefix
-
-# Akto Configuration
-DATA_INGESTION_SERVICE_URL=https://your-akto-ingestion-service.com
-KAFKA_BROKER_HOST=your-kafka-broker:9092
-
-# Connector Settings (Optional)
-RECURRING_INTERVAL_SECONDS=300        # Default: 5 minutes (300 seconds)
-```
-
-<details>
-
-<summary><strong>Configuration Parameters Explained</strong></summary>
-
-<table><thead><tr><th width="251.12890625">Parameter</th><th width="257.51953125">Description</th><th width="114.1875">Required</th><th>Default</th></tr></thead><tbody><tr><td><code>DATABRICKS_HOST</code></td><td>Your Databricks workspace URL</td><td>Yes</td><td>-</td></tr><tr><td><code>DATABRICKS_CLIENT_ID</code></td><td>Service Principal Application ID</td><td>Yes</td><td>-</td></tr><tr><td><code>DATABRICKS_CLIENT_SECRET</code></td><td>Service Principal secret key</td><td>Yes</td><td>-</td></tr><tr><td><code>DATABRICKS_CATALOG</code></td><td>Unity Catalog name to query</td><td>Yes</td><td><code>workspace</code></td></tr><tr><td><code>DATABRICKS_SCHEMA</code></td><td>Schema name within the catalog</td><td>Yes</td><td><code>default</code></td></tr><tr><td><code>DATABRICKS_PREFIX</code></td><td>Optional prefix for table filtering</td><td>No</td><td>(empty)</td></tr><tr><td><code>DATA_INGESTION_SERVICE_URL</code></td><td>URL of Akto Data Ingestion Service</td><td>Yes</td><td>-</td></tr><tr><td><code>KAFKA_BROKER_HOST</code></td><td>Kafka broker endpoint for traffic data</td><td>Yes</td><td>-</td></tr><tr><td><code>RECURRING_INTERVAL_SECONDS</code></td><td>Polling interval in seconds</td><td>No</td><td>300</td></tr></tbody></table>
-
-</details>
-{% endstep %}
-
-{% step %}
-### Launch the Connector
-
-Start the Databricks connector using Docker Compose:
-
-```bash
-docker compose -f docker-compose-databricks-cron.yaml up -d
-```
-
-Verify the connector is running:
-
-```bash
-docker compose -f docker-compose-databricks-cron.yaml ps
-docker compose -f docker-compose-databricks-cron.yaml logs -f
-```
-{% endstep %}
-
-{% step %}
-### Configuration via Akto Dashboard
-
-
+### Configuration from Akto Dashboard
 
 1. Navigate to **Quick Start** > **AI Agent Connectors**
 2. Select **Databricks** from the connector list
@@ -141,7 +80,9 @@ docker compose -f docker-compose-databricks-cron.yaml logs -f
    * **Table Prefix**: Optional prefix for filtering
    * **Data Ingestion URL**: Your Akto ingestion service endpoint
 4. Set the **Recurring Interval** (default: 5 minutes)
-5. Click **Import** to activate the connector
+5.  Click **Import** to activate the connector
+
+    <figure><img src="../../../.gitbook/assets/image (4).png" alt="" width="563"><figcaption></figcaption></figure>
 
 The connector binary (`databricks-shield`) will be automatically deployed and configured.
 {% endstep %}

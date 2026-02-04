@@ -2,7 +2,7 @@
 
 Citrix is a comprehensive application delivery and security solution that manages and optimizes application traffic across enterprise networks. Integrating Citrix with Akto enables automatic discovery and security testing of all agentic components flowing through your Citrix infrastructure, ensuring consistent security monitoring across your application delivery network.
 
-<figure><img src="../../../../.gitbook/assets/image (8) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (8) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 To connect Akto with Citrix Netscaler Gateway, follow these steps -
 

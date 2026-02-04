@@ -2,7 +2,7 @@
 
 Azure API Management is Microsoft's fully managed service for securing, publishing, and analyzing APIs in the Azure cloud. Integrating Azure API Management with Akto enables automatic discovery and security testing of all agentic components running in your Azure environment, providing seamless security coverage across your cloud infrastructure.
 
-<figure><img src="../../../../.gitbook/assets/image (26).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (26).png" alt="" width="563"><figcaption></figcaption></figure>
 
 To connect Akto with Azure API Management, please follow these steps -
 
@@ -25,12 +25,10 @@ wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/featur
 ### 1.2 Retrieve the `DATABASE_ABSTRACTOR_SERVICE_TOKEN`
 
 * Log in to the [Akto Dashboard](https://app.akto.io/).
-*   Navigate to the **Quick Start** tab in the left panel.
-
-    <figure><img src="../../../../.gitbook/assets/Quick-Start.png" alt=""><figcaption></figcaption></figure>
+* Navigate to the **Connectors** tab in the left panel.
 *   Select **Hybrid SaaS Connector** and copy the token from the **Runtime Service Command** section.
 
-    <figure><img src="../../../../.gitbook/assets/HybridSaaSConnector.png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../../../.gitbook/assets/image (2).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ### 1.3 Update the `docker-mini-runtime.env` File
 

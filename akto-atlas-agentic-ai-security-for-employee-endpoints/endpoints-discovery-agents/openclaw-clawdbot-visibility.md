@@ -13,7 +13,7 @@ Akto Atlas does not require direct integration with Clawdbot services, APIs, or 
 
 MCP Endpoint Shield runs on enterprise endpoints and observes local agent connections that use the MCP protocol. When Clawdbot connects to the local MCP endpoint, MCP Endpoint Shield captures usage metadata and forwards the metadata to Akto Atlas for analysis.&#x20;
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ### Data Flow from Endpoint to Akto Atlas
 
@@ -62,7 +62,7 @@ For each Clawdbot asset, Akto Atlas displays:
 * First seen timestamp
 * Last seen timestamp
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image.png" alt="" width="540"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (11).png" alt="" width="540"><figcaption></figcaption></figure></div>
 
 ## Data Scope and Enforcement Boundaries
 

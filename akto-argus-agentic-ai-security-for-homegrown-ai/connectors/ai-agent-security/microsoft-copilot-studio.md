@@ -18,60 +18,107 @@ The Akto Copilot Studio connector automatically:
 
 {% stepper %}
 {% step %}
-### Configure Akto Traffic Processor
+### Configure Akto Traffic Processor <a href="#configure-akto-traffic-processor" id="configure-akto-traffic-processor"></a>
 
-Set up and configure Akto Traffic Processor. The steps are mentioned [here](../others/hybrid-saas.md).
+Set up and configure Akto Traffic Processor. The steps are mentioned [here](https://app.gitbook.com/o/D7iXZSH1dgJbIZmxvQ4m/s/tog5ODwYfqPOf4eQhsOC/~/diff/~/changes/65/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas).
 {% endstep %}
 
 {% step %}
-### Set Up Application Insights
+### Open the Copilot Studio Connector in Akto Argus
 
-To monitor your Copilot Studio application, you need to configure Azure Application Insights:
+1. Navigate to **Akto Argus**.
+2. Open **Connectors**.
+3. Under **AI Agent Security**, locate the **Microsoft Copilot Studio** connector card.
+4.  Select **Connect** to open setup dialog box.
 
-1. **Create Application Insights Resource** (if not already created):
-   * Follow the [Azure Application Insights documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/app/create-workspace-resource) to create a new Application Insights resource
-2. **Configure Your Copilot in Copilot Studio**:
-   * Follow the [Copilot Studio Application Insights integration guide](https://learn.microsoft.com/en-us/microsoft-copilot-studio/advanced-bot-framework-composer-capture-telemetry) to connect your copilot to Application Insights
-3. **Get Your Application Insights Credentials**:
-   * Follow the [API Access documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/app/api-filtering) to get your Application ID and create an API Key with "Read telemetry" permission
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
-### Clone the Akto Infrastructure Repository
+### Enter the Dataverse Environment URL
 
-Clone the Akto infrastructure repository:
+Enter the Dataverse environment URL used by your Copilot Studio instance in the **Dataverse Environment URL** field.
 
-```bash
-wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-compose-copilot-studio-cron.yaml
+* The URL follows the format:\
+  `https://<org>.crm.dynamics.com`
+* The value can be obtained from:
+  * The browser address bar when accessing the Dataverse environment, or
+  * The **Power Platform Admin Center → Environments → Environment details** page.
 
-wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/copilot-studio-cron.env
+This value allows Akto Argus to associate ingested telemetry with the correct Copilot Studio environment.
 
-wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/watchtower.env
-```
+{% hint style="info" %}
+**Official reference:** [Microsoft Dataverse environment overview in Power Platform documentation](https://learn.microsoft.com/power-platform/admin/environments-overview).
+{% endhint %}
 {% endstep %}
 
 {% step %}
-### Configure Copilot Studio Environment Variables
+### Enter the Azure AD Tenant ID
 
-Update the following variables in the `copilot-cron.env` file:
+Enter the **Azure AD Tenant ID** associated with the Copilot Studio deployment.
 
-```bash
-APPINSIGHTS_APP_ID=<YOUR_APPLICATION_INSIGHTS_APP_ID>
-APPINSIGHTS_API_KEY=<YOUR_APPLICATION_INSIGHTS_API_KEY>
-AKTO_KAFKA_BROKER_URL=kafka1:19092
-```
+* The Tenant ID can be obtained from:
+  * **Azure Portal → Microsoft Entra ID (Azure AD) → Overview → Tenant ID**
+* The value is a GUID.
+
+This identifier scopes authentication to the correct Microsoft Entra tenant.
+
+{% hint style="info" %}
+**Official reference:** [Microsoft Entra ID tenant identification documentation](https://learn.microsoft.com/entra/fundamentals/how-to-find-tenant).
+{% endhint %}
 {% endstep %}
 
 {% step %}
-### Start the Copilot Studio Traffic Connector
+### Enter the Azure AD App Client ID
 
-Run the following command to start the Copilot Studio traffic connector:
+Enter the **Application (Client) ID** of the Azure AD app registration used for this integration.
 
-```bash
-docker compose -f docker-compose-copilot-cron.yaml up
-```
+* The Client ID can be obtained from:
+  * **Azure Portal → Microsoft Entra ID → App registrations → Your app → Overview → Application (client) ID**
+* The app registration should be configured with permissions to access Dataverse and Application Insights data.
 
-This will start monitoring your Copilot Studio conversations and send API traffic data to Akto for analysis.
+This value identifies the application Akto Argus uses to authenticate with Microsoft services.
+
+{% hint style="info" %}
+**Official reference:** [Azure AD app registration documentation.](https://learn.microsoft.com/entra/identity-platform/quickstart-register-app)
+{% endhint %}
+{% endstep %}
+
+{% step %}
+### Enter the Azure AD App Client Secret
+
+Enter the **Client Secret** associated with the same Azure AD app registration.
+
+* The Client Secret can be generated from:
+  * **Azure Portal → Microsoft Entra ID → App registrations → Your app → Certificates & secrets**
+* Copy the secret value at creation time. The value is not retrievable later.
+
+This credential enables secure, non-interactive authentication.
+
+{% hint style="info" %}
+**Official reference:** [Azure AD client secret management documentation.](https://learn.microsoft.com/entra/identity-platform/howto-add-app-credentials)
+{% endhint %}
+{% endstep %}
+
+{% step %}
+### Enter the Data Ingestion Service URL
+
+Enter the URL of your **self-hosted data ingestion service** in the **URL for Data Ingestion Service** field in order to forward agent execution and telemetry data into your environment for processing.
+
+{% hint style="warning" %}
+## Note
+
+* The ingestion service must be deployed and exposed in your infrastructure.
+* The URL must be reachable from Akto.
+* The endpoint receives metadata collected by Akto for this connector.
+{% endhint %}
+{% endstep %}
+
+{% step %}
+### Complete the Integration
+
+1. Review all entered values.
+2. Select **Import** to finalize the connection.
 {% endstep %}
 {% endstepper %}
 
