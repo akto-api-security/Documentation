@@ -1,7 +1,7 @@
 ---
-cover: .gitbook/assets/Gemini_Generated_Image_em1r4pem1r4pem1r.png
+cover: .gitbook/assets/Gemini_Generated_Image_em1r4pem1r4pem1r.webp
 coverY: 0
-coverHeight: 364
+coverHeight: 366
 layout:
   width: default
   cover:

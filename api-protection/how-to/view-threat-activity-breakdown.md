@@ -71,7 +71,7 @@ Displays a visual timeline that helps you identify patterns, timing, and frequen
 {% tab title="Values" %}
 Shows the **attempted request** and its **response**.
 
-<figure><img src="../../.gitbook/assets/image (149).png" alt="" width="375"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/threatactivity.webp" alt="" width="375"><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 You can now copy the request in two formats:

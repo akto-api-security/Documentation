@@ -22,13 +22,13 @@ Select the test you want to edit from the list.
 {% step %}
 Click the **API name box** in the top-right corner.
 
-<figure><img src="../../.gitbook/assets/image (173) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image02.webp" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
 In the dialog, choose the desired **test role** from the available options.
 
-<figure><img src="../../.gitbook/assets/image (174).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (174).png" alt="" width="375"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
