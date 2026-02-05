@@ -47,7 +47,7 @@ Before setting up the Azure AI Foundry connector, ensure you have:
    * Read access to agent configurations
    * Access to Application Insights (for telemetry)
 
-## Setps to Connect
+## Steps to Connect
 
 #### Method 1: Import via Akto Dashboard (Recommended)
 
@@ -171,20 +171,6 @@ containers:
 Application Insights will automatically capture all agent requests and responses, forwarding them to Akto for analysis.
 
 ## Data Collection
-
-The Akto connector uses the following Azure AI Foundry API endpoints to discover and monitor your agents:
-
-| API Endpoint                                                              | What It Gets              |
-| ------------------------------------------------------------------------- | ------------------------- |
-| `AZURE_PROJECT_URL/assistants?api-version=v1&limit=100`                   | List of AI agents         |
-| `AZURE_PROJECT_URL/threads?api-version=v1&agent_id={id}&limit=100`        | Conversation sessions     |
-| `AZURE_PROJECT_URL/threads/{thread_id}/messages?api-version=v1&limit=100` | Chat messages (user + AI) |
-
-{% hint style="info" %}
-## **Note**
-
-&#x20;Replace `AZURE_PROJECT_URL` with your Azure AI Foundry project URL (e.g., `https://your-project.openai.azure.com`).
-{% endhint %}
 
 ### Agent Metadata Captured
 
