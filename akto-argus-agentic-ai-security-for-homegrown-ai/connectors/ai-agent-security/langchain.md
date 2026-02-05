@@ -31,7 +31,7 @@ Set up and configure Akto Traffic Processor. The steps are mentioned [here](http
 3. Under **AI Agent Security**, locate the **LangChain** connector card.
 4.  Select **Connect** to open the langchain dialog.
 
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}

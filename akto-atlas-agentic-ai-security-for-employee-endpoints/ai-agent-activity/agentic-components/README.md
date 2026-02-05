@@ -117,7 +117,7 @@ You can switch between **Header** and **Payload** to view response-specific fiel
 {% endtab %}
 {% endtabs %}
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
 
 {% hint style="info" %}
 ## Schema Behaviour Notes
