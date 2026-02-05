@@ -39,7 +39,7 @@ No administrator privileges are required at this stage.
 
 After approval, the installer wizard launches.
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Screenshot-3.webp" alt="" width="563"><figcaption></figcaption></figure>
 
 The introduction screen explains:
 
@@ -53,7 +53,7 @@ Click **Continue** to proceed.
 {% step %}
 ### Installation Type Confirmation
 
-<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Screenshot-4.webp" alt="" width="563"><figcaption></figcaption></figure>
 
 Click **Install** to begin installation.
 
