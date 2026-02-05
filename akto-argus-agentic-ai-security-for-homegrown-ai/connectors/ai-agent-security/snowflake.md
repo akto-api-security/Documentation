@@ -223,7 +223,7 @@ If you need assistance with the Snowflake connector:
 
 * **In-app Chat**: Use the chat widget in your Akto dashboard for instant support
 * **Discord Community**: Join our community at [discord.gg/Wpc6xVME4s](https://discord.gg/Wpc6xVME4s)
-* **Email Support**: Contact us at help@akto.io
-* **Contact Form**: Submit a support request at [akto.io/contact](https://www.akto.io/contact)
+* **Email Support**: Contact us at [help@akto.io](mailto:help@akto.io)
+* **Contact Form**: Submit a support request at [https://www.akto.io/contact-us](https://www.akto.io/contact-us)
 
 Our team is available 24/7 to help with setup, troubleshooting, and best practices.
