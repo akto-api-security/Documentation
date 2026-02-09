@@ -144,7 +144,7 @@ Open the **More actions** menu in the top-right corner.
 {% step %}
 Select **Export to ADX (Azure Data Explorer)**.
 
-<figure><img src="../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 {% endstepper %}
 
@@ -154,6 +154,6 @@ Akto exports the selected guardrail activity data to the configured Azure Data E
 
 After the export completes, the guardrail activity data appears as structured records in the Azure Data Explorer database.
 
-<figure><img src="../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 You can query the exported data using KQL to support investigation, monitoring, and reporting workflows within Azure Data Explorer.
