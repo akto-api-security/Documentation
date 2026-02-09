@@ -1,5 +1,5 @@
 ---
-description: Probe Library for MCP OWASP Top 10 for Security in Akto
+description: Probe Library for OWASP MCP Top 10 for Security in Akto
 ---
 
 # MCP Security Probe Library
