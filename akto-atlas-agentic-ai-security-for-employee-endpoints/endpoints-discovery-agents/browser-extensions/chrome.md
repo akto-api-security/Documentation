@@ -15,12 +15,12 @@ The Chrome extension monitors:
 All captured data is sent securely to your Akto instance for analysis.
 
 {% hint style="info" %}
-## Privacy & Security
+### Privacy & Security
 
 The extension only captures traffic when actively enabled and only sends data to your configured Akto instance. You have full control over what gets monitored.
 {% endhint %}
 
-## Prerequsites&#x20;
+## Prerequsites
 
 * Google Chrome browser (Version 88 or higher)
 * The Akto Security extension ZIP file (required). If you don’t have it, contact the Akto support team.
@@ -30,7 +30,7 @@ The extension only captures traffic when actively enabled and only sends data to
 
 {% stepper %}
 {% step %}
-### Get the Extension Files
+#### Get the Extension Files
 
 * Download the extension package you received
 * If it's a ZIP file, extract it to a folder on your computer
@@ -38,7 +38,7 @@ The extension only captures traffic when actively enabled and only sends data to
 {% endstep %}
 
 {% step %}
-### Open Chrome Extensions
+#### Open Chrome Extensions
 
 Open Chrome and type this in the address bar:
 
@@ -54,7 +54,7 @@ Click the three dots (⋮) in Chrome → **More tools** → **Extensions**
 {% endstep %}
 
 {% step %}
-### Turn On Developer Mode
+#### Turn On Developer Mode
 
 * Look at the top-right corner of the Extensions page
 * Find the **Developer mode** toggle switch
@@ -62,7 +62,7 @@ Click the three dots (⋮) in Chrome → **More tools** → **Extensions**
 {% endstep %}
 
 {% step %}
-### Load the Extension
+#### Load the Extension
 
 * Click the **Load unpacked** button (appears at the top after Step 3)
 * A file browser will open
@@ -71,7 +71,7 @@ Click the three dots (⋮) in Chrome → **More tools** → **Extensions**
 {% endstep %}
 
 {% step %}
-### Verify It's Installed
+#### Verify It's Installed
 
 You should now see **Akto Security** in your extensions list with:
 
@@ -81,7 +81,7 @@ You should now see **Akto Security** in your extensions list with:
 {% endstep %}
 
 {% step %}
-### Pin to Toolbar (Optional but Recommended)
+#### Pin to Toolbar (Optional but Recommended)
 
 * Click the puzzle icon (🧩) in Chrome toolbar
 * Find **Akto Security** in the list
@@ -93,7 +93,7 @@ You should now see **Akto Security** in your extensions list with:
 The extension is now installed and working. It will automatically monitor supported websites in the background.
 
 {% hint style="success" %}
-## Supported Websites
+### Supported Websites
 
 The extension works on these platforms:
 

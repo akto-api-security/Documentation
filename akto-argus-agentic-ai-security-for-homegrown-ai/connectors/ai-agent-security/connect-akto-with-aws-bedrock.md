@@ -17,8 +17,6 @@ flowchart LR
 
 ```
 
-
-
 ## What You'll Achieve
 
 ✅ **Automated Bedrock Monitoring**: Capture all AWS Bedrock agent conversations\
@@ -48,7 +46,7 @@ flowchart LR
 
 {% stepper %}
 {% step %}
-### **Install AWS CLI if not installed**
+#### **Install AWS CLI if not installed**
 
 If AWS CLI is already configured then move to Step 2
 
@@ -111,7 +109,7 @@ sudo ./aws/install
 {% endstep %}
 
 {% step %}
-### **Download the Solution**
+#### **Download the Solution**
 
 ```bash
 # Clone the repository
@@ -126,7 +124,7 @@ chmod +x simple-deploy.sh test-solution.sh
 {% endstep %}
 
 {% step %}
-### **Prepare Your Information**
+#### **Prepare Your Information**
 
 Before running the deployment, gather this information:
 
@@ -142,7 +140,7 @@ Before running the deployment, gather this information:
 {% endstep %}
 
 {% step %}
-### **Run the Deployment**
+#### **Run the Deployment**
 
 Execute the deployment script:
 
@@ -181,7 +179,7 @@ Enter AKTO API Key: ak_live_xxxxxxxxxxxxxxxxxxxx
 {% endstep %}
 
 {% step %}
-### **Wait for Deployment**
+#### **Wait for Deployment**
 
 The script will automatically:
 
@@ -223,7 +221,7 @@ The script will automatically:
 {% endstep %}
 
 {% step %}
-### **Verify the Deployment**
+#### **Verify the Deployment**
 
 Run the verification script:
 
@@ -240,7 +238,7 @@ This will check:
 {% endstep %}
 
 {% step %}
-### **Create S3 Bucket (If Needed)**
+#### **Create S3 Bucket (If Needed)**
 
 If you don't have an S3 bucket, create one:
 
@@ -256,7 +254,7 @@ aws s3api put-bucket-versioning \
 {% endstep %}
 
 {% step %}
-### **Test with Bedrock**
+#### **Test with Bedrock**
 
 Generate a test conversation:
 
@@ -271,7 +269,7 @@ aws bedrock-runtime invoke-model \
 {% endstep %}
 
 {% step %}
-### **Monitor the System**
+#### **Monitor the System**
 
 **Check Lambda Logs:**
 
@@ -336,7 +334,7 @@ curl -X POST "https://your-akto-instance.com/api/ingestData" \
 ```
 
 {% hint style="info" %}
-## **Important Notes**
+### **Important Notes**
 
 1. **Bedrock Logging Configuration**: The Lambda function automatically enables Bedrock model invocation logging on first run if not enabled
 2. **Processing Schedule**: Logs are processed every 5 minutes via EventBridge

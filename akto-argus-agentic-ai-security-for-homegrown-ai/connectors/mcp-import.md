@@ -24,7 +24,7 @@ _Open_ **Akto Argus Dashboard** _→ Go to Connectors._
 {% endstep %}
 
 {% step %}
-Select **MCP Import.**&#x20;
+Select **MCP Import.**
 {% endstep %}
 
 {% step %}
@@ -51,7 +51,7 @@ Enter the following details:
 <figure><img src="../../.gitbook/assets/image (101).png" alt="" width="188"><figcaption></figcaption></figure>
 
 {% hint style="info" %}
-## **Example With Authorisation**
+### **Example With Authorisation**
 
 ```
 SSE Endpoint URL: https://mcp.example.com/sse
@@ -83,7 +83,7 @@ Akto will detect and add:
 These will appear in **MCP Inventory**, ready for monitoring and testing.
 
 {% hint style="success" %}
-## &#x20;Security
+### Security
 
 * Auth headers (if any) are used **only once** during import and are **not stored**
 * Akto uses **read-only access** to your SSE stream

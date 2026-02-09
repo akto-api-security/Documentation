@@ -60,7 +60,7 @@ sequenceDiagram
 ```
 
 {% hint style="info" %}
-### **Key Points:**
+#### **Key Points:**
 
 * `beforeMCPExecution` hook checks guardrail policies and validates requests
 * `afterMCPExecution` hook checks guardrail policies and analyzes responses
@@ -79,7 +79,7 @@ sequenceDiagram
 
 {% stepper %}
 {% step %}
-#### Create Hook Directory
+**Create Hook Directory**
 
 Create the Cursor hooks directory if it doesn't exist:
 
@@ -89,7 +89,7 @@ mkdir -p ~/.cursor/hooks/akto
 {% endstep %}
 
 {% step %}
-#### Download Hook Scripts
+**Download Hook Scripts**
 
 Download the Akto MCP guard scripts from our GitHub repository:
 
@@ -143,7 +143,7 @@ chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-after.sh
 {% endstep %}
 
 {% step %}
-#### Configure Hooks in Cursor
+**Configure Hooks in Cursor**
 
 Create or edit the Cursor hooks configuration file:
 
@@ -207,7 +207,7 @@ EOF
 {% endstep %}
 
 {% step %}
-#### Set Your Akto API Token
+**Set Your Akto API Token**
 
 The hook scripts need your Akto API token to report security events. The following options are present to set tokens:
 
@@ -257,7 +257,7 @@ Edit the hook scripts to include your token directly (less secure):
 {% endstep %}
 
 {% step %}
-#### Restart Cursor
+**Restart Cursor**
 
 Restart Cursor IDE to activate the hooks:
 
@@ -268,7 +268,7 @@ Restart Cursor IDE to activate the hooks:
 {% endstep %}
 
 {% step %}
-#### Verify Installation
+**Verify Installation**
 
 Check that hooks are working:
 
@@ -1018,7 +1018,7 @@ chmod 600 ~/.akto/config
 * [MCP Security Best Practices](https://www.akto.io/blog/mcp-security-best-practices)
 
 {% hint style="success" %}
-### Akto Security Scope
+#### Akto Security Scope
 
 * **Transparency**: Safe MCP traffic is never altered or delayed
 * **Clarity**: Blocked requests return standard JSON-RPC errors with clear explanations

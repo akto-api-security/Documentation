@@ -6,7 +6,7 @@ description: Connect Akto with LangChain
 
 ## Overview
 
-LangChain is a framework for developing applications powered by language models. This setup is recommended if you want to monitor Agent traffic from your LangChain applications and ensure your AI-powered processes maintain security standards.
+LangChain is a framework for developing applications powered by language models. This setup is recommended if you want to monitor API traffic from your LangChain applications and ensure your AI-powered processes maintain security standards.
 
 The Akto LangChain connector automatically:
 
@@ -18,64 +18,47 @@ The Akto LangChain connector automatically:
 
 {% stepper %}
 {% step %}
-### Configure Akto Traffic Processor <a href="#configure-akto-traffic-processor" id="configure-akto-traffic-processor"></a>
+#### Configure Akto Traffic Processor
 
-Set up and configure Akto Traffic Processor. The steps are mentioned [here](https://app.gitbook.com/o/D7iXZSH1dgJbIZmxvQ4m/s/tog5ODwYfqPOf4eQhsOC/~/diff/~/changes/65/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas).
+Set up and configure Akto Traffic Processor. The steps are mentioned [here](../others/hybrid-saas.md).
 {% endstep %}
 
 {% step %}
-### Open the Langchain Connector in Akto Argus
+#### Clone the Akto Infrastructure Repository
 
-1. Navigate to **Akto Argus**.
-2. Open **Connectors**.
-3. Under **AI Agent Security**, locate the **LangChain** connector card.
-4.  Select **Connect** to open the langchain dialog.
+Clone the Akto infrastructure repository:
 
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
+```bash
+wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-compose-langchain-cron.yaml
+
+wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/langchain-cron.env
+
+wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/watchtower.env
+```
 {% endstep %}
 
 {% step %}
-### Enter the LangSmith Base URL
+####
 
-Provide the base URL for the LangSmith API in the **LangSmith Base URL** field.
+Update the following variables in the `langchain-cron.env` file:
+
+```bash
+LANGCHAIN_BASE_URL=https://<YOUR_LANGSMITH_URL>
+LANGCHAIN_API_KEY=<API_KEY>
+AKTO_KAFKA_BROKER_URL=kafka1:19092
+```
 {% endstep %}
 
 {% step %}
-### Enter the LangSmith API Key
+#### Start the LangChain Traffic Connector
 
-Provide a valid LangSmith API key in the **LangSmith API Key** field.
+Run the following command to start the LangChain traffic connector:
 
-Follow the steps to generate the API keys:
+```bash
+docker compose -f docker-compose-langchain-cron.yaml up
+```
 
-* Log in to LangSmith (`smith.langchain.com`).
-* Go to **Settings → API Keys**.
-* Create a new API key and copy it.
-* Enter this key into **LangSmith API Key**.
-{% endstep %}
-
-{% step %}
-### Enter the Data Ingestion Service URL
-
-Enter the URL of your **self-hosted data ingestion service** in the **URL for Data Ingestion Service** field in order to forward agent execution and telemetry data into your environment for processing.
-
-{% hint style="warning" %}
-## Note
-
-* The ingestion service must be deployed and exposed in your infrastructure.
-* The URL must be reachable from Akto.
-* The endpoint receives metadata collected by Akto for this connector.
-{% endhint %}
-{% endstep %}
-
-{% step %}
-### Complete the Integration
-
-After all fields are populated:
-
-1. Review the configuration details.
-2. Select **Import** to finalise the connection.
-
-
+This will start monitoring your LangChain applications and send API traffic data to Akto for analysis.
 {% endstep %}
 {% endstepper %}
 

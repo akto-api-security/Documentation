@@ -97,7 +97,7 @@ After creating the integration:
     <figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2Fgit-blob-71bbf326bee72a3e0749060d0a0af2a60ebf5efe%2Fakto_sn_integration_sample_data.png?alt=media" alt=""><figcaption></figcaption></figure>
 
 {% hint style="info" %}
-## Important Notes
+### Important Notes
 
 * **OAuth Setup:** This integration uses the **New Inbound Integration Experience** in ServiceNow, which is the recommended approach (not the deprecated OAuth API endpoint)
 * **User Permissions:** Ensure the ServiceNow user assigned to the OAuth integration has appropriate permissions to:

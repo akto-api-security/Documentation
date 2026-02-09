@@ -240,7 +240,7 @@ Click **Enable** to confirm.
 {% endstepper %}
 
 {% hint style="info" %}
-## Redaction behavior
+### Redaction behavior
 
 When redaction is enabled:
 

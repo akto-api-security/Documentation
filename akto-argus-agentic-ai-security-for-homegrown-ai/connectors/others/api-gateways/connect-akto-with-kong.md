@@ -101,7 +101,7 @@ curl -X POST http://localhost:8001/plugins \
 ```
 
 {% hint style="info" %}
-## **Configuration Parameters**
+### **Configuration Parameters**
 
 * **`service_url`** - The URL where captured traffic data will be sent (Akto guardrail service endpoint)
 * **`mode`** - Processing mode: `async` or `blocked`
@@ -268,7 +268,7 @@ After all four Helm charts are successfully deployed, you will have:
 4. **AI Guardrails** - AI agent validation and monitoring with Agent Guard Executor
 
 {% hint style="info" %}
-## Important Notes
+### Important Notes
 
 * Ensure your Kong version supports custom plugins (Kong ≥ 2.0 recommended).
 * The plugin must be listed under `plugins` in `kong.conf` to be loaded.

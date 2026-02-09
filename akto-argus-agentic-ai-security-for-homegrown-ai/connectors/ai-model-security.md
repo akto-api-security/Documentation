@@ -46,7 +46,7 @@ Click **Connect.**
 * _(Optional)_ Enable **custom request body** if the model requires non-default payloads
 *   _(Optional)_ Use **test role for authentication** if your AI model enforces role-based access
 
-    <figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/image (2) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
@@ -61,7 +61,7 @@ Akto will now automatically:
 * Add the model into **AI Model Security Inventory** for monitoring and testing
 
 {% hint style="success" %}
-## Akto Access Scope
+### Akto Access Scope
 
 * Auth tokens/headers (if used) are **only applied during import** and are **not stored**
 * Akto uses **read-only access** to interact with your AI endpoint

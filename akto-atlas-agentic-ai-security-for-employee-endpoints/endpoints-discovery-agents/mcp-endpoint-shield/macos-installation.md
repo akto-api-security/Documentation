@@ -8,11 +8,11 @@ This document is designed for MacOS Installation and end-user reference. It expl
 
 {% stepper %}
 {% step %}
-### Gatekeeper Security Warning on First Launch
+#### Gatekeeper Security Warning on First Launch
 
 When the user double-clicks the **MCP Endpoint Shield Installer**, macOS may display a warning stating that the application could not be verified and was blocked to protect the system.
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
 
 This is expected behaviour for applications distributed outside the Mac App Store.
 
@@ -25,21 +25,21 @@ This is expected behaviour for applications distributed outside the Mac App Stor
 {% endstep %}
 
 {% step %}
-### Allowing the Application in Privacy & Security
+#### Allowing the Application in Privacy & Security
 
 This screen confirms that the user has explicitly approved the installer. Once approved, macOS will allow the installer to run normally.
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 No administrator privileges are required at this stage.
 {% endstep %}
 
 {% step %}
-### Installer Wizard – Introduction Screen
+#### Installer Wizard – Introduction Screen
 
 After approval, the installer wizard launches.
 
-<figure><img src="../../../.gitbook/assets/Screenshot-3.webp" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 The introduction screen explains:
 
@@ -51,9 +51,9 @@ Click **Continue** to proceed.
 {% endstep %}
 
 {% step %}
-### Installation Type Confirmation
+#### Installation Type Confirmation
 
-<figure><img src="../../../.gitbook/assets/Screenshot-4.webp" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 Click **Install** to begin installation.
 
@@ -65,11 +65,11 @@ This screen confirms:
 {% endstep %}
 
 {% step %}
-### Background Item Registration
+#### Background Item Registration
 
 After installation, macOS displays a notification indicating that **mcp\_endpoint\_shield.sh** has been added as a background item.
 
-<figure><img src="../../../.gitbook/assets/image (4) (1) (1).png" alt="" width="512"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4) (1).png" alt="" width="512"><figcaption></figcaption></figure>
 
 This means:
 
@@ -81,7 +81,7 @@ This is required for continuous endpoint monitoring.
 {% endstep %}
 
 {% step %}
-### Folder Access Permissions (Optional)
+#### Folder Access Permissions (Optional)
 
 After installation, MCP Endpoint Shield may request permission to access specific folders in the user’s home directory:
 
@@ -89,7 +89,7 @@ After installation, MCP Endpoint Shield may request permission to access specifi
 * Documents
 * Downloads
 
-<div><figure><img src="../../../.gitbook/assets/image (5) (1) (1).png" alt="" width="369"><figcaption></figcaption></figure> <figure><img src="../../../.gitbook/assets/image (7) (1).png" alt="" width="375"><figcaption></figcaption></figure> <figure><img src="../../../.gitbook/assets/image (6) (1).png" alt="" width="351"><figcaption></figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/image (5) (1).png" alt="" width="369"><figcaption></figcaption></figure> <figure><img src="../../../.gitbook/assets/image (7).png" alt="" width="375"><figcaption></figcaption></figure> <figure><img src="../../../.gitbook/assets/image (6).png" alt="" width="351"><figcaption></figcaption></figure></div>
 
 These permissions are used to:
 

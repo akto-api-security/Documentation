@@ -19,7 +19,7 @@ Follow these steps to access Guardrail Activity:
 6. Click any activity to open its detailed drilldown view.
 
 {% hint style="success" %}
-### Filters
+#### Filters
 
 Use filters to quickly narrow down relevant guardrail activities. The search box is located at the top-right corner of the activity list and supports filtering by:
 

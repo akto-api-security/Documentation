@@ -10,11 +10,11 @@ description: Learn how to send API traffic data to Akto SaaS from your cloud set
 
 3\. Click on Quick Start tab in left nav.
 
-<figure><img src="../../../.gitbook/assets/Quick-Start.png" alt="" width="354"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Quick-Start.png" alt=""><figcaption></figcaption></figure>
 
 4\. Search for Hybrid SaaS Connector and click connect.
 
-<figure><img src="../../../.gitbook/assets/HybridSaaSConnector.png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/HybridSaaSConnector.png" alt=""><figcaption></figcaption></figure>
 
 ### Installing Traffic connector
 

@@ -56,7 +56,7 @@ This will process your API traffic data and populate APIs on the dashboard. This
 
 2\. Once complete, you should now see a daemonset config. `Copy the config` and paste in a `text editor`.
 
-<figure><img src="../../../../.gitbook/assets/bigimage02.webp" alt=""><figcaption></figcaption></figure>
+<figure><img src="https://user-images.githubusercontent.com/91221068/236832394-4a3dabc6-60f2-4112-b1cb-127c4a129c6d.png" alt=""><figcaption></figcaption></figure>
 
 3\. Replace `{NAMESPACE}` with your app namespace and `{APP_NAME}` with the name of your app
 

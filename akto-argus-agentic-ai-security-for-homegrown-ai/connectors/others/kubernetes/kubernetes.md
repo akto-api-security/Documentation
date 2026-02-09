@@ -72,20 +72,21 @@ If you have installed on _GCP_, _Kubernetes_ or _OpenShift_ -
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/236832427-2506df70-2040-440d-9347-c81152b110d4.png" alt="Replace namespace in text editor"><figcaption><p>Replace namespace in text editor</p></figcaption></figure>
 
-3.  Create a file `akto-daemonset-config.yaml` with the above YAML config
+3. Create a file `akto-daemonset-config.yaml` with the above YAML config
 
-    <figure><img src="../../../../.gitbook/assets/big image01.webp" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="https://user-images.githubusercontent.com/91221068/236832456-67c34a4b-12d8-46f6-902d-16747771036a.png" alt="Create Akto daemonset config yaml"><figcaption><p>Create Akto daemonset config yaml</p></figcaption></figure>
+
 4. Call `kubectl apply -f akto-daemonset-config.yaml -n <NAMESPACE>` on your _kubectl_ terminal
 
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832475-1a20f62c-05e8-4ca7-85c6-c5bc1d4a9946.png" alt="call yaml" width="563"><figcaption><p>call yaml</p></figcaption></figure>
+<figure><img src="https://user-images.githubusercontent.com/91221068/236832475-1a20f62c-05e8-4ca7-85c6-c5bc1d4a9946.png" alt="call yaml"><figcaption><p>call yaml</p></figcaption></figure>
 
 5. Run the command `kubectl get daemonsets` in terminal. It should show _akto-k8s_ daemonset.
 
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832493-35b27843-dce9-482a-803a-033999c55aef.png" alt="Run the command" width="563"><figcaption><p>Run the command</p></figcaption></figure>
+<figure><img src="https://user-images.githubusercontent.com/91221068/236832493-35b27843-dce9-482a-803a-033999c55aef.png" alt="Run the command"><figcaption><p>Run the command</p></figcaption></figure>
 
 6. Go to `Agent Discovery` on Akto dashboard to see your discovered agents
 
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832509-8e8c84ff-633e-4ffe-b11b-344d02ca6e74.png" alt="Check API Discovery" width="563"><figcaption><p>Check API Discovery</p></figcaption></figure>
+<figure><img src="https://user-images.githubusercontent.com/91221068/236832509-8e8c84ff-633e-4ffe-b11b-344d02ca6e74.png" alt="Check API Discovery"><figcaption><p>Check API Discovery</p></figcaption></figure>
 
 ## Frequently Asked Questions (FAQs)
 

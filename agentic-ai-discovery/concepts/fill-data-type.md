@@ -42,13 +42,13 @@ You can run the synchronization directly from the Akto dashboard:
 
 {% stepper %}
 {% step %}
-Navigate to **Agentic AI Discovery → Sensitive Data**&#x20;
+Navigate to **Agentic AI Discovery → Sensitive Data**
 {% endstep %}
 
 {% step %}
 Select **Fill Data Types** from the top-right corner of the page
 
-<figure><img src="../../.gitbook/assets/image (8) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (8).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
@@ -61,7 +61,7 @@ Refresh the page to view updated and newly added data types
 {% endstepper %}
 
 {% hint style="info" %}
-## Operational Characteristics and Performance
+### Operational Characteristics and Performance
 
 The **Fill Data Types** operation has minimal operational impact:
 
@@ -104,4 +104,3 @@ You may improve long-term accuracy and governance by following these practices:
 
 * Learn about [Sensitive Data Concepts](sensitive-data.md)
 * [Akto Support](../../troubleshooting/support.md): Contact the Akto support team through official channels
-

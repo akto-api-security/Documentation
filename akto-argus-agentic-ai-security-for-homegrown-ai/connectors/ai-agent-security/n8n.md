@@ -18,59 +18,47 @@ The Akto N8N connector automatically:
 
 {% stepper %}
 {% step %}
-### Configure Akto Traffic Processor <a href="#configure-akto-traffic-processor" id="configure-akto-traffic-processor"></a>
+#### Configure Akto Traffic Processor
 
-Set up and configure Akto Traffic Processor. The steps are mentioned [here](https://app.gitbook.com/o/D7iXZSH1dgJbIZmxvQ4m/s/tog5ODwYfqPOf4eQhsOC/~/diff/~/changes/65/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas).
+Set up and configure Akto Traffic Processor. The steps are mentioned [here](../others/hybrid-saas.md).
 {% endstep %}
 
 {% step %}
-### Open the N8N Connector in Akto Argus
+#### Clone the Akto Infrastructure Repository
 
-1. Navigate to **Akto Argus**.
-2. Open **Connectors**.
-3. Under **AI Agent Security**, locate the **N8N** connector card.
-4.  Select **Connect** to open the N8N dialog.
+Clone the Akto infrastructure repository and checkout the feature branch:
 
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (10).png" alt="" width="375"><figcaption></figcaption></figure></div>
+```bash
+wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-compose-n8n-cron.yaml
+
+wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/n8n-cron.env
+
+wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/watchtower.env
+```
 {% endstep %}
 
 {% step %}
-### Enter the N8N Instance URL
+#### Configure N8N Environment Variables
 
-* This is the base URL of your N8N deployment.
-* For N8N Cloud, this is shown after login (e.g., `https://<workspace>.n8n.cloud`).
-* For self-hosted N8N, use your instance’s public hostname/IP.
+Update the following variables in the `n8n-cron.env` file:
+
+```bash
+N8N_BASE_URL=https://<YOUR_INSTANCE_URL>
+N8N_API_KEY=<API_KEY>
+AKTO_KAFKA_BROKER_URL=kafka1:19092
+```
 {% endstep %}
 
 {% step %}
-### Enter the N8N API Key
+#### Start the N8N Traffic Connector
 
-* In N8N, open **Settings → n8n API**.
-* Create a new API key, assign a label, set expiration, and copy the key.
-* Enter the copied key into the **N8N API Key** field.
-{% endstep %}
+Run the following command to start the N8N traffic connector:
 
-{% step %}
-### Enter the Data Ingestion Service URL
+```bash
+docker compose -f docker-compose-n8n-cron.yaml up
+```
 
-Enter the URL of your **self-hosted data ingestion service** in the **URL for Data Ingestion Service** field in order to forward agent execution and telemetry data into your environment for processing.
-
-{% hint style="warning" %}
-## Note
-
-* The ingestion service must be deployed and exposed in your infrastructure.
-* The URL must be reachable from Akto.
-* The endpoint receives metadata collected by Akto for this connector.
-{% endhint %}
-{% endstep %}
-
-{% step %}
-### Complete the Integration
-
-After all fields are populated:
-
-1. Review the configuration details.
-2. Select **Import** to finalize the connection.
+This will start monitoring your N8N workflows and send API traffic data to Akto for analysis.
 {% endstep %}
 {% endstepper %}
 

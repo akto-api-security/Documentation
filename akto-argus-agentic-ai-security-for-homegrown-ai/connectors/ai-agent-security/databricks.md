@@ -1,17 +1,12 @@
----
-hidden: true
----
-
 # Databricks
 
 ## Overview
 
-The Akto Databricks connector enables you to **import Databricks agents seamlessly into Akto Argus**, providing comprehensive security monitoring for your AI agents, workflows, and API interactions running on the Databricks platform.&#x20;
+Databricks is a unified analytics platform built on Apache Spark that enables data teams to collaborate on data engineering, machine learning, and analytics workloads. With the rise of AI agents and LLM-powered applications built on Databricks, organizations need visibility into the security posture of their AI infrastructure.
 
-This integration automatically discovers agents using Databricks' Unity Catalog and sends their traffic data to Akto for real-time security analysis.
+The Akto Databricks connector enables you to **import Databricks agents seamlessly into Akto Argus**, providing comprehensive security monitoring for your AI agents, workflows, and API interactions running on the Databricks platform. This integration automatically discovers agents using Databricks' Unity Catalog and sends their traffic data to Akto for real-time security analysis.
 
-{% hint style="success" %}
-## Connector Access Scope
+## What the Connector Does
 
 The Databricks connector automatically:
 
@@ -23,13 +18,12 @@ The Databricks connector automatically:
   * Policy violations
   * Runtime threat detection
 * **Unified Security View**: Provides a centralized dashboard view of all Databricks agents alongside your other AI infrastructure
-{% endhint %}
 
 ## Prerequisites
 
 Before setting up the Databricks connector, ensure you have:
 
-1. **Akto Traffic Processor Configured** - The Akto Traffic Processor must be set up first. Follow the [Hybrid SaaS Setup Guide](../others/hybrid-saas.md) for instructions.
+1. **Akto Traffic Processor Configured** - The Akto Traffic Processor must be set up first. Follow the [Hybrid SaaS Setup Guide](https://ai-security-docs.akto.io/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas) for instructions.
 2. **Databricks Workspace** - An active Databricks workspace with Unity Catalog enabled
 3. **Service Principal** - A Databricks Service Principal with appropriate permissions:
    * `USE CATALOG` permission on the target Unity Catalog
@@ -43,16 +37,14 @@ Before setting up the Databricks connector, ensure you have:
 
 ## Setup Instructions
 
-{% stepper %}
-{% step %}
-### Create Databricks Service Principal
+### Step 1: Create Databricks Service Principal
 
-* Navigate to your Databricks workspace
-* Go to **Settings** > **Identity and Access**
-* Select **Service Principals** and click **Add Service Principal**
-* Note the **Application (Client) ID** - you'll need this for configuration
-* Generate a **Client Secret** and save it securely
-*   Assign the necessary permissions to the Service Principal:
+1. Navigate to your Databricks workspace
+2. Go to **Settings** > **Identity and Access**
+3. Select **Service Principals** and click **Add Service Principal**
+4. Note the **Application (Client) ID** - you'll need this for configuration
+5. Generate a **Client Secret** and save it securely
+6.  Assign the necessary permissions to the Service Principal:
 
     ```sql
     -- Grant catalog access
@@ -64,39 +56,75 @@ Before setting up the Databricks connector, ensure you have:
     -- Grant read access to tables
     GRANT SELECT ON SCHEMA <your_catalog>.<your_schema> TO `<service_principal_id>`;
     ```
-{% endstep %}
 
-{% step %}
-### Configuration from Akto Dashboard
+### Step 2: Download Connector Configuration Files
 
-1. Navigate to **Quick Start** > **AI Agent Connectors**
-2. Select **Databricks** from the connector list
-3. Fill in the configuration form:
-   * **Databricks Host**: Your workspace URL
-   * **Client ID**: Service Principal ID
-   * **Client Secret**: Service Principal secret
-   * **Unity Catalog**: Catalog name (default: "workspace")
-   * **Schema**: Schema name (default: "default")
-   * **Table Prefix**: Optional prefix for filtering
-   * **Data Ingestion URL**: Your Akto ingestion service endpoint
-4. Set the **Recurring Interval** (default: 5 minutes)
-5.  Click **Import** to activate the connector
+Download the required configuration files from the Akto infrastructure repository:
 
-    <figure><img src="../../../.gitbook/assets/image (4).png" alt="" width="563"><figcaption></figcaption></figure>
+```bash
+wget https://raw.githubusercontent.com/akto-api-security/infra/feature/argus-connectors/databricks-cron/databricks-cron.env
+wget https://raw.githubusercontent.com/akto-api-security/infra/feature/argus-connectors/databricks-cron/docker-compose-databricks-cron.yaml
+```
 
-The connector binary (`databricks-shield`) will be automatically deployed and configured.
-{% endstep %}
+### Step 3: Configure Environment Variables
 
-{% step %}
-### Verify in Akto Dashboard
+Edit the `databricks-cron.env` file with your Databricks credentials and Akto configuration:
+
+```bash
+# Databricks Configuration
+DATABRICKS_HOST=https://your-workspace.cloud.databricks.com
+DATABRICKS_CLIENT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+DATABRICKS_CLIENT_SECRET=your-client-secret-here
+
+# Unity Catalog Configuration
+DATABRICKS_CATALOG=workspace
+DATABRICKS_SCHEMA=default
+DATABRICKS_PREFIX=                    # Optional: Leave empty or specify a table prefix
+
+# Akto Configuration
+DATA_INGESTION_SERVICE_URL=https://your-akto-ingestion-service.com
+KAFKA_BROKER_HOST=your-kafka-broker:9092
+
+# Connector Settings (Optional)
+RECURRING_INTERVAL_SECONDS=300        # Default: 5 minutes (300 seconds)
+```
+
+**Configuration Parameters Explained:**
+
+| Parameter                    | Description                            | Required | Default     |
+| ---------------------------- | -------------------------------------- | -------- | ----------- |
+| `DATABRICKS_HOST`            | Your Databricks workspace URL          | Yes      | -           |
+| `DATABRICKS_CLIENT_ID`       | Service Principal Application ID       | Yes      | -           |
+| `DATABRICKS_CLIENT_SECRET`   | Service Principal secret key           | Yes      | -           |
+| `DATABRICKS_CATALOG`         | Unity Catalog name to query            | Yes      | `workspace` |
+| `DATABRICKS_SCHEMA`          | Schema name within the catalog         | Yes      | `default`   |
+| `DATABRICKS_PREFIX`          | Optional prefix for table filtering    | No       | (empty)     |
+| `DATA_INGESTION_SERVICE_URL` | URL of Akto Data Ingestion Service     | Yes      | -           |
+| `KAFKA_BROKER_HOST`          | Kafka broker endpoint for traffic data | Yes      | -           |
+| `RECURRING_INTERVAL_SECONDS` | Polling interval in seconds            | No       | 300         |
+
+### Step 4: Launch the Connector
+
+Start the Databricks connector using Docker Compose:
+
+```bash
+docker compose -f docker-compose-databricks-cron.yaml up -d
+```
+
+Verify the connector is running:
+
+```bash
+docker compose -f docker-compose-databricks-cron.yaml ps
+docker compose -f docker-compose-databricks-cron.yaml logs -f
+```
+
+### Step 5: Verify in Akto Dashboard
 
 1. Log in to your Akto dashboard
 2. Navigate to **Akto Argus** > **Connectors**
 3. You should see the Databricks connector listed with status "Active"
 4. Check **Agents** section to view discovered Databricks agents
 5. Monitor the **Traffic** tab for incoming data from Databricks agents
-{% endstep %}
-{% endstepper %}
 
 ## Data Collection
 
@@ -124,6 +152,25 @@ For each agent execution, the connector captures:
 * Execution data from the past **60 minutes** is captured in each polling cycle
 * Historical analysis is available in the Akto dashboard
 * Sensitive data is automatically detected and can be masked based on your guardrail policies
+
+## Configuration via Akto Dashboard
+
+You can also configure the Databricks connector directly through the Akto dashboard UI:
+
+1. Navigate to **Quick Start** > **AI Agent Connectors**
+2. Select **Databricks** from the connector list
+3. Fill in the configuration form:
+   * **Databricks Host**: Your workspace URL
+   * **Client ID**: Service Principal ID
+   * **Client Secret**: Service Principal secret
+   * **Unity Catalog**: Catalog name (default: "workspace")
+   * **Schema**: Schema name (default: "default")
+   * **Table Prefix**: Optional prefix for filtering
+   * **Data Ingestion URL**: Your Akto ingestion service endpoint
+4. Set the **Recurring Interval** (default: 5 minutes)
+5. Click **Import** to activate the connector
+
+The connector binary (`databricks-shield`) will be automatically deployed and configured.
 
 ## Troubleshooting
 
@@ -190,6 +237,56 @@ For each agent execution, the connector captures:
 * Check network latency between connector and Databricks
 * Verify Databricks workspace has sufficient compute resources
 * Consider using `DATABRICKS_PREFIX` to filter tables if catalog is very large
+
+## Security Best Practices
+
+1. **Credential Management**:
+   * Store Service Principal secrets in a secure secrets manager
+   * Rotate credentials regularly (at least every 90 days)
+   * Use environment variables or secret mounting, never hardcode credentials
+2. **Network Security**:
+   * Deploy the connector in a private network
+   * Use VPC peering or private endpoints to connect to Databricks
+   * Restrict network access using security groups
+3. **Least Privilege**:
+   * Grant only the minimum permissions required
+   * Create a dedicated Service Principal for Akto connector
+   * Avoid using admin or workspace-owner credentials
+4. **Monitoring**:
+   * Set up alerts for connector failures
+   * Monitor connector logs regularly
+   * Track data ingestion metrics in Akto dashboard
+
+## Advanced Configuration
+
+### Using Table Prefix for Filtering
+
+If you have multiple applications or teams using the same Unity Catalog, use table prefixes to scope the connector:
+
+```bash
+DATABRICKS_PREFIX=production_
+```
+
+This will only discover agents and tables starting with "production\_".
+
+### Custom Polling Intervals
+
+Adjust the polling frequency based on your needs:
+
+* **Real-time monitoring**: `RECURRING_INTERVAL_SECONDS=60` (1 minute)
+* **Standard monitoring**: `RECURRING_INTERVAL_SECONDS=300` (5 minutes - default)
+* **Low-frequency monitoring**: `RECURRING_INTERVAL_SECONDS=900` (15 minutes)
+
+**Note**: More frequent polling increases network traffic and Databricks API usage.
+
+### High Availability Setup
+
+For production deployments, consider running multiple connector instances:
+
+1. Deploy connectors across different availability zones
+2. Configure the same Databricks credentials and Kafka broker
+3. Akto will automatically deduplicate data from multiple sources
+4. Monitor health of all connector instances
 
 ## Support
 

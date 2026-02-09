@@ -2,7 +2,7 @@
 
 Layer7 API Gateway, part of Broadcom's API management suite, provides enterprise-grade API security and management capabilities for large organizations. Integrating Layer7 with Akto allows automatic discovery and security testing of all agentic components managed through your Layer7 gateway, helping maintain robust security standards across your infrastructure.
 
-<figure><img src="../../../../.gitbook/assets/image (7) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (7) (1).png" alt=""><figcaption></figcaption></figure>
 
 To connect Akto with Broadcom Layer7 API Gateway, follow these steps -
 

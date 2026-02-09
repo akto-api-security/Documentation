@@ -59,7 +59,7 @@ Select **Save** to block the IP address.
 {% endstepper %}
 
 {% hint style="info" %}
-### Important Note
+#### Important Note
 
 Blocking an IP address is completely reversible. Once you block an IP, the **Block IP** button changes to **Unblock IP**, allowing you to restore access whenever needed.
 {% endhint %}

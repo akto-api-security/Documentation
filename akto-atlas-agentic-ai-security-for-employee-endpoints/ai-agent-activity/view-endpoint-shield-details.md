@@ -20,7 +20,7 @@ The Agent List displays all endpoints where the shield is active. Each row conta
 | **Last Heartbeat** | Timestamp of the most recent health check sent by the agent.         |
 | **Last Deployed**  | Timestamp showing when the latest shield configuration was deployed. |
 
-<figure><img src="../../.gitbook/assets/image (4) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (4) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 You can select any Agent ID to view deeper information.
 
@@ -38,7 +38,7 @@ This tab shows you the MCP servers associated with the selected agent. You can r
 
 This tab provides a chronological log of the agent’s activity. You can track what the agent executed, when it checked in, and how enforcement behaved on that endpoint.
 
-<figure><img src="../../.gitbook/assets/image (6) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (6) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ## Learn More
 

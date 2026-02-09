@@ -27,7 +27,7 @@ Before integrating Akto with Claude Code CLI, ensure you have:
 
 {% stepper %}
 {% step %}
-#### Download the Hook Scripts
+**Download the Hook Scripts**
 
 Create the hooks directory and download the validation scripts:
 
@@ -42,7 +42,7 @@ curl -O https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp
 {% endstep %}
 
 {% step %}
-#### Configure Environment Variables
+**Configure Environment Variables**
 
 Add the following environment variables to your shell configuration file (e.g. `~/.bashrc`, `~/.zshrc`, or `~/.profile`):
 
@@ -61,7 +61,7 @@ source ~/.zshrc   # or source ~/.bashrc
 ```
 
 {% hint style="warning" %}
-### **Note**
+#### **Note**
 
 `AKTO_SYNC_MODE` determines behavior:
 
@@ -71,7 +71,7 @@ source ~/.zshrc   # or source ~/.bashrc
 {% endstep %}
 
 {% step %}
-#### Add Hooks to Claude CLI
+**Add Hooks to Claude CLI**
 
 Open or create `~/.claude/settings.json` and add the following. If the file already exists with other settings, add or merge the `hooks` section:
 
@@ -109,7 +109,7 @@ Open or create `~/.claude/settings.json` and add the following. If the file alre
 {% endstep %}
 
 {% step %}
-#### Restart Claude Code CLI
+**Restart Claude Code CLI**
 
 Ensure no Claude Code CLI process is running, then run:
 
@@ -119,7 +119,7 @@ claude
 {% endstep %}
 
 {% step %}
-#### Verify Integration
+**Verify Integration**
 
 1. **Send a test prompt** in Claude Code (e.g. ask a simple coding question). If guardrails block it, you should see a block message and the prompt will not be sent to Claude.
 2. **Complete a request, then exit Claude Code CLI.** The Stop hook will run and send the interaction to Akto.

@@ -3,7 +3,7 @@
 This guide will help you set up DevRev Integration in Akto to automatically create and track security issues in your DevRev workspace.
 
 {% hint style="success" %}
-### Prerequisites
+#### Prerequisites
 
 Before setting up the DevRev Integration, ensure you have:
 

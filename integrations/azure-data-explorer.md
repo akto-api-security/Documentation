@@ -78,7 +78,7 @@ Copy the following identifiers:
 {% endstepper %}
 
 {% hint style="warning" %}
-### Azure Data Explorer Access Permissions
+#### Azure Data Explorer Access Permissions
 
 The App Registration requires access to the Azure Data Explorer cluster being integrated.\
 You should ensure that the registered application has permissions to write data into the target ADX database.

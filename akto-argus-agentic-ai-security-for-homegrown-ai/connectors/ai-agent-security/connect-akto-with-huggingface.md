@@ -43,7 +43,7 @@ flowchart LR
 
 {% stepper %}
 {% step %}
-### **Configure Hugging Face Private Inference Endpoint**
+#### **Configure Hugging Face Private Inference Endpoint**
 
 Ensure the endpoint is set up with:
 
@@ -56,7 +56,7 @@ Hugging Face does not log full request/response content by itself. You must capt
 {% endstep %}
 
 {% step %}
-### **Deploy Akto AI Agent Proxy**
+#### **Deploy Akto AI Agent Proxy**
 
 Deploy the proxy in the same VPC where:
 
@@ -66,7 +66,7 @@ Deploy the proxy in the same VPC where:
 {% endstep %}
 
 {% step %}
-### **Configure Proxy Environment**
+#### **Configure Proxy Environment**
 
 Here is an example config for the proxy:
 
@@ -85,7 +85,7 @@ export LOG_LEVEL=INFO
 {% endstep %}
 
 {% step %}
-### **Adjust Endpoint URL in Agent App**
+#### **Adjust Endpoint URL in Agent App**
 
 Update the AI agent’s inference call configuration:
 
@@ -107,7 +107,7 @@ This ensures:
 {% endstep %}
 
 {% step %}
-### **Validate Integration**
+#### **Validate Integration**
 
 Verify end-to-end flow:
 

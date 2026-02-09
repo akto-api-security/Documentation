@@ -25,7 +25,7 @@ layout:
 
 Secure your AI agents, MCP servers, and agentic applications with complete visibility, automated testing, and real-time protection. Get started in minutes by choosing what you need.
 
-<table data-card-size="large" data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><h4>Akto Atlas : Agentic AI Security For Employee Endpoints</h4></td><td>Browser extensions, secure web networks, MCP endpoint shield, and agentic shield</td><td><a href="/broken/pages/WFusT0tNpWX5VAT3cUEh">Broken link</a></td></tr><tr><td><h4>Akto Argus: Agentic AI Security For Homegrown AI</h4></td><td>Browser extensions, secure web networks, MCP endpoint shield, and agentic shield</td><td><a href="/broken/pages/FVjtSz2WygwVQWQKAiZW">Broken link</a></td></tr></tbody></table>
+<table data-card-size="large" data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Akto Atlas : Agentic AI Security For Employee Endpoints</strong></td><td>Browser extensions, secure web networks, MCP endpoint shield, and agentic shield</td><td><a href="/broken/pages/WFusT0tNpWX5VAT3cUEh">Broken link</a></td></tr><tr><td><strong>Akto Argus: Agentic AI Security For Homegrown AI</strong></td><td>Browser extensions, secure web networks, MCP endpoint shield, and agentic shield</td><td><a href="/broken/pages/FVjtSz2WygwVQWQKAiZW">Broken link</a></td></tr></tbody></table>
 
 ***
 
@@ -35,7 +35,7 @@ Test your AI agents and MCP servers with 1000+ specialized security probes. Iden
 
 **Import your components to start testing**
 
-<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><h4>AI Agents</h4></td><td>AWS Bedrock, Azure AI, Databricks, Vertex AI, Watsonx, or custom agents</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/ai-agent-import.md">ai-agent-import.md</a></td></tr><tr><td><h4>MCP Servers</h4></td><td>Model Context Protocol tools, resources, and prompts</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/mcp-import.md">mcp-import.md</a></td></tr><tr><td><h4>AI Models</h4></td><td>Large language models and custom AI implementations</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/ai-model-import.md">ai-model-import.md</a></td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>AI Agents</strong></td><td>AWS Bedrock, Azure AI, Databricks, Vertex AI, Watsonx, or custom agents</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/ai-agent-import.md">ai-agent-import.md</a></td></tr><tr><td><strong>MCP Servers</strong></td><td>Model Context Protocol tools, resources, and prompts</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/mcp-import.md">mcp-import.md</a></td></tr><tr><td><strong>AI Models</strong></td><td>Large language models and custom AI implementations</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/ai-model-import.md">ai-model-import.md</a></td></tr></tbody></table>
 
 ***
 
@@ -45,14 +45,14 @@ Deploy real-time protection for your production agents. Block threats as they oc
 
 **Set up protection proxies**
 
-<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><h4>MCP Proxy</h4></td><td>Real-time protection for MCP servers</td><td><a href="agentic-guardrails/overview/akto-mcp-proxy.md">akto-mcp-proxy.md</a></td></tr><tr><td><h4>Agent Proxy</h4></td><td>Real-time protection for AI agents</td><td><a href="agentic-guardrails/overview/akto-agent-proxy.md">akto-agent-proxy.md</a></td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>MCP Proxy</strong></td><td>Real-time protection for MCP servers</td><td><a href="agentic-guardrails/overview/akto-mcp-proxy.md">akto-mcp-proxy.md</a></td></tr><tr><td><strong>Agent Proxy</strong></td><td>Real-time protection for AI agents</td><td><a href="agentic-guardrails/overview/akto-agent-proxy.md">akto-agent-proxy.md</a></td></tr></tbody></table>
 
 ## Resources
 
-<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><h4>Hybrid SaaS Deployement</h4></td><td>Deploy Akto in your cloud</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md">hybrid-saas.md</a></td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Hybrid SaaS Deployement</strong></td><td>Deploy Akto in your cloud</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md">hybrid-saas.md</a></td></tr></tbody></table>
 
 {% hint style="success" %}
-## Akto Support
+### Akto Support
 
 Contact our support team at **help@akto.io** or use in-app Intercom to reach out for help and guidance.
 {% endhint %}
