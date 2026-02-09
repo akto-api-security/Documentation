@@ -1,9 +1,10 @@
+# Threat Actors
 
-#### Understanding Threat Actors 
+## Understanding Threat Actors 
 
 Threat actors are individuals, groups, or entities responsible for carrying out malicious activities that can harm systems, networks, or data. They are often motivated by financial gain, espionage, ideology, or disruption. Threat actors can range from lone hackers to organized crime groups, nation-states, or insider threats.
 
-#### Key Metrics to Monitor:
+### Key Metrics to Monitor:
 
 **Critical Actors**: Threat actors posing a high risk due to their capability and intent.  
 
@@ -16,13 +17,13 @@ Threat actors are individuals, groups, or entities responsible for carrying out 
 <figure><img src="../../.gitbook/assets/threat-actor.png" alt=""><figcaption></figcaption></figure>
 
 
-#### How to configure Threat Actors
+## How to configure Threat Actors
 
 By default Akto's Threat Protection module uses the client's IP address to identify a threat actor.   
 
 To configure threat actors, navigate to the Settings -> Threat Configuration section in left nav bar.
 
-##### Example Configuration
+### Example Configuration
 - **Type**: `hostname`
 - **Hostname**: `dev.*com`
 - **Header Name**: `authorization`
