@@ -301,6 +301,7 @@
   * [Configure Ignored Events Per Rule](api-protection/concepts/ignore-events-at-rule-level.md)
   * [Remediation Steps for API Protection Issues](api-protection/concepts/remediation-steps-for-api-protection-issues.md)
   * [Event Retention Control](api-protection/concepts/event-retention-control.md)
+  * [Parameter Enumeration Detection](api-protection/concepts/parameter-enumeration-detection.md)
 * [How To](api-protection/how-to/README.md)
   * [Manage Threat Policies](api-protection/how-to/manage-threat-policies.md)
   * [View Threat Activity Breakdown](api-protection/how-to/view-threat-activity-breakdown.md)
