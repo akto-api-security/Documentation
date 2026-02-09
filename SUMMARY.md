@@ -283,6 +283,10 @@
 * [Concepts](compliance/concepts/README.md)
   * [Overview](compliance/concepts/overview.md)
 
+## Threats
+
+* [Threat Dashboard](threats/threat-dashboard.md)
+
 ## API Protection
 
 * [Overview](api-protection/concepts/overview.md)
