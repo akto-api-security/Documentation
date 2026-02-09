@@ -17,19 +17,6 @@ Explore Mode provides several filtering options to help users narrow down their 
 * Path matches regex: Use regular expressions to filter API paths
 * Host name matches regex: Filter by host names using regex
 
-{% hint style="info" %}
-#### Include and Exclude Filtering Behaviour
-
-Each filter supports **include** and **exclude** modes.
-
-* Include mode restricts results to matching APIs.&#x20;
-*   Exclude mode removes matching APIs from the result set.&#x20;
-
-    <figure><img src="../../.gitbook/assets/image (175).png" alt="" width="333"><figcaption></figcaption></figure>
-
-The approach helps you precisely scope API discovery without modifying underlying API inventories.
-{% endhint %}
-
 #### Viewing Results
 
 After applying filters, the interface displays:
