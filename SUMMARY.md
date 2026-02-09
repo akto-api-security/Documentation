@@ -208,6 +208,7 @@
   * [Export Vulnerability Report](akto-argus-agentic-ai-security-for-homegrown-ai/issues/export-vulnerability-report.md)
 * [Compliance](akto-argus-agentic-ai-security-for-homegrown-ai/compliance/README.md)
   * [Bot Policy](akto-argus-agentic-ai-security-for-homegrown-ai/compliance/bot-policy.md)
+* [Threats](akto-argus-agentic-ai-security-for-homegrown-ai/threats.md)
 
 ## Agentic AI Discovery
 
