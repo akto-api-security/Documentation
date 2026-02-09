@@ -208,7 +208,6 @@
   * [Export Vulnerability Report](akto-argus-agentic-ai-security-for-homegrown-ai/issues/export-vulnerability-report.md)
 * [Compliance](akto-argus-agentic-ai-security-for-homegrown-ai/compliance/README.md)
   * [Bot Policy](akto-argus-agentic-ai-security-for-homegrown-ai/compliance/bot-policy.md)
-* [Threats](akto-argus-agentic-ai-security-for-homegrown-ai/threats.md)
 
 ## Agentic AI Discovery
 
@@ -295,6 +294,7 @@
 * [Concepts](agentic-guardrails/concepts/README.md)
   * [Agent Guard](agentic-guardrails/concepts/agent-guard.md)
   * [Schema Conformance](agentic-guardrails/concepts/schema-conformance.md)
+  * [Threat Dashboard](agentic-guardrails/concepts/threat-dashboard.md)
   * [Guardrail Actors](guardrails/concepts/threat-actors.md)
   * [Guardrail Activity](agentic-guardrails/concepts/guardrail-activity.md)
   * [Dynamic Agent Rate Limiting](agentic-guardrails/concepts/api-rate-limit.md)
