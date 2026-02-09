@@ -58,7 +58,7 @@ test_scan:
       * `AKTO_API_KEY` (mark as masked and protected)
       * `AKTO_TEST_ID`
 
-<figure><img src="../../.gitbook/assets/image (73).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (73) (1).png" alt=""><figcaption></figcaption></figure>
 
 #### 3. Verify Integration
 

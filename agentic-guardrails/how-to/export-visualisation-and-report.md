@@ -43,7 +43,7 @@ In the left sidebar, select **Agentic Guardrails** and open the **Guardrails Act
 {% step %}
 In the top-right corner, click **More Actions**.
 
-<figure><img src="../../.gitbook/assets/image (99).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (68).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}

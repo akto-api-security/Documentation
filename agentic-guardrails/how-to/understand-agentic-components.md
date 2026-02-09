@@ -4,7 +4,7 @@
 
 The **Agentic Components under Guardrails** page gives you an aggregated view of guardrail activity across your environment. The primary goal of this page is to help you understand **which guardrail types and categories are being flagged most**, and **where those events originate**.
 
-<figure><img src="../../.gitbook/assets/image (113).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (72).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ## Key Metrics
 

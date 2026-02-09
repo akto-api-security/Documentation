@@ -7,11 +7,11 @@ You can now include specific collections when managing a role. Follow the steps 
 1. Go to **Settings** > **Roles**
 2. Click on `Create new role` button
 
-<figure><img src="../.gitbook/assets/image (27).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (27) (1).png" alt=""><figcaption></figcaption></figure>
 
 #### Modify access for a custom role
 
-{% @arcade/embed flowId="z4rfS2zV48Mr4D3pxmwn" url="https://app.arcade.software/share/z4rfS2zV48Mr4D3pxmwn" %}
+{% @arcade/embed url="https://app.arcade.software/share/z4rfS2zV48Mr4D3pxmwn" flowId="z4rfS2zV48Mr4D3pxmwn" %}
 
 #### **1. Change the Role Settings**
 
@@ -22,7 +22,7 @@ You can now include specific collections when managing a role. Follow the steps 
 #### **2. Assign a Permission Level (Optional)**
 
 1. Use the dropdown next to **Guest** (or the default permission) to choose the appropriate permission level.
-2. This controls what actions role members can perform on the selected collections.&#x20;
+2. This controls what actions role members can perform on the selected collections.
 
 #### **3. (Optional) Set as Default Invite Role**
 
@@ -36,8 +36,6 @@ You can now include specific collections when managing a role. Follow the steps 
 * **Name Roles Clearly**: If you manage multiple roles, use a clear naming convention (e.g., **API-Only**, **View-Only**, etc.) to distinguish them easily.
 * **Default Role**: Be cautious when setting a default invite role—any newly invited user will automatically inherit those permissions.
 
-This new feature streamlines role management by allowing you to pick exactly which collections each role can access.&#x20;
-
-
+This new feature streamlines role management by allowing you to pick exactly which collections each role can access.
 
 If you have any questions or encounter issues, don’t hesitate to contact our support team.

@@ -38,19 +38,19 @@ The detailed view provides complete context required for investigation and remed
 {% tab title="Overview" %}
 Presents the **description**, **details**, and **impact** of the activity, giving you a clear understanding of the activity.
 
-<figure><img src="../../.gitbook/assets/image (62).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (57).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endtab %}
 
 {% tab title="Timeline" %}
 Shows the chronological sequence of events related to the activity.
 
-<figure><img src="../../.gitbook/assets/image (63).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (58).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endtab %}
 
 {% tab title="Values" %}
 Shows the **attempted request** and its **response** that helps validate exploit attempts and understand system behaviour.
 
-<figure><img src="../../.gitbook/assets/image (79).png" alt="" width="375"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (62).png" alt="" width="375"><figcaption></figcaption></figure>
 
 You can copy the request in two formats:
 
@@ -66,7 +66,7 @@ Use **Event Actions** option to update the status of an activity:
 * **Mark for Review** – Move the activity into the review workflow.
 *   **Ignore** – Remove the activity from the active threat list.
 
-    <figure><img src="../../.gitbook/assets/image (84).png" alt="" width="563"><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/image (63).png" alt="" width="563"><figcaption></figcaption></figure>
 
 {% hint style="warning" %}
 Once ignored, Akto will **not flag the same actor and endpoint again** based on the agentic guardrails that originally detected it.

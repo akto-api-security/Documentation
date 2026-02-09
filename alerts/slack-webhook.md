@@ -21,4 +21,4 @@ Slack integration with Akto enables automatic notifications in your Slack channe
 
 Below is an example:
 
-<figure><img src="../.gitbook/assets/image (7) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (7) (1) (1) (2).png" alt=""><figcaption></figcaption></figure>

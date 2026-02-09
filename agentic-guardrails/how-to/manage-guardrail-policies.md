@@ -56,7 +56,7 @@ Locate the required policy in the guardrail policies list.
 {% step %}
 Open the **horizontal dot menu** at the end of the policy row.
 
-<figure><img src="../../.gitbook/assets/image (48).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (44).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
@@ -91,7 +91,7 @@ Select the checkbox at the start of each policy row to mark policies for deletio
 {% step %}
 Locate the **Delete** option at the bottom-center of the screen.
 
-<figure><img src="../../.gitbook/assets/image (49).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (45).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}

@@ -42,7 +42,7 @@ This script sets the `payload` to "test payload" and changes the `method` to "PO
 
 After entering your pre-request script, click the "Save" button at the bottom right of the page to apply your changes.
 
-<figure><img src="../../../.gitbook/assets/image (35).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (35) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Usage Notes
 

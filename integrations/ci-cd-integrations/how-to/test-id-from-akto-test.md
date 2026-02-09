@@ -7,6 +7,6 @@
    * The URL format will be: `https://app.akto.io/dashboard/testing/<test-id>`
    * Example: In `https://app.akto.io/dashboard/testing/6640c63bc03e1b7d1808a1d3`, the test ID is `6640c63bc03e1b7d1808a1d3`
 
-<figure><img src="../../../.gitbook/assets/image (72).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (72) (2).png" alt=""><figcaption></figcaption></figure>
 
 Note: Each test has a unique ID that you'll need to use in your CI/CD configuration

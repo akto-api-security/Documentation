@@ -63,13 +63,13 @@ stages:
       displayName: 'Running Akto Test Scan'
 ```
 
-<figure><img src="../../.gitbook/assets/image (66).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (66) (1).png" alt=""><figcaption></figcaption></figure>
 
 #### 2. Configure Pipeline Variables
 
 1. Go to Pipelines > Edit > Variables
 
-<figure><img src="../../.gitbook/assets/image (67).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (67) (1).png" alt=""><figcaption></figcaption></figure>
 
 2. Add the following required variables:
 
@@ -78,11 +78,11 @@ stages:
 * `AKTO_TEST_ID`: [Your Akto test ID](/broken/pages/q2Oz4FsKPEq381Pwpaws)
 * `WAIT_TIME_FOR_RESULT`: Time to wait for test results
 
-<figure><img src="../../.gitbook/assets/image (68).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (68) (1).png" alt=""><figcaption></figcaption></figure>
 
 Save it and then hit the run button
 
-<figure><img src="../../.gitbook/assets/image (69).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (69) (1).png" alt=""><figcaption></figcaption></figure>
 
 #### 3. Set Up Branch Policies \[OPTIONAL - to configure pipeline for all builds]
 

@@ -79,7 +79,7 @@ Akto allows you to map its vulnerability severity levels to Jira field values fo
 2. Map each **Akto Severity** level (`Critical`, `High`, `Medium`, `Low`) to the corresponding value available in the selected Jira field.
 3.  Click **Save Mapping** to apply the configuration.
 
-    <div data-with-frame="true"><figure><img src="../.gitbook/assets/image (104).png" alt=""><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../.gitbook/assets/image (71).png" alt=""><figcaption></figcaption></figure></div>
 
 {% hint style="warning" %}
 The selected field must be a **select / dropdown field** in Jira for severity mapping to work correctly.

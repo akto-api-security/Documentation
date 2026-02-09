@@ -5,8 +5,8 @@
 3. Look for the "Tokens" section
 4. Click "Generate Token" button if no tokens exist
 
-<figure><img src="../../../.gitbook/assets/image (70).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (70) (1).png" alt=""><figcaption></figcaption></figure>
 
 5. Copy the generated token - this will be your `AKTO_API_KEY`
 
-<figure><img src="../../../.gitbook/assets/image (71).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (71) (1).png" alt=""><figcaption></figcaption></figure>

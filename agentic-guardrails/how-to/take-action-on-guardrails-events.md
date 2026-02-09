@@ -24,7 +24,7 @@ The detailed view for that actor opens.
 {% step %}
 In the top-right corner, select **Block IP**.
 
-<figure><img src="../../.gitbook/assets/image (97).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (67).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
@@ -46,7 +46,7 @@ Open the detailed view for the specific guardrails activity you want to address.
 {% step %}
 Select the **Block IPs** button on the right-hand side.
 
-<figure><img src="../../.gitbook/assets/image (95).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (66).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}

@@ -6,7 +6,7 @@ Akto integrates with GitHub Actions to add automated API security testing to you
 * Automate security testing on pull requests
 * Block merges based on security test results
 
-<figure><img src="../../../.gitbook/assets/image (65).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (65) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Prerequisites
 

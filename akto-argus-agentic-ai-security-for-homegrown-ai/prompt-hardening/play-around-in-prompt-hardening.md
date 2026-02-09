@@ -44,7 +44,7 @@ User Input allows injection of malicious or adversarial content. You can manuall
 
 The **Auto-generate prompt** option creates adversarial input using predefined attack templates.
 
-<figure><img src="../../.gitbook/assets/image (28).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (29).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endtab %}
 
 {% tab title="Auto Generate Prompt" %}

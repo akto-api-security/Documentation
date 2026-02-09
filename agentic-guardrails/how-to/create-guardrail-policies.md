@@ -42,7 +42,7 @@ This section defines identifying metadata and user-facing enforcement messages.
 This section is required to create a guardrail policy.
 {% endhint %}
 
-<figure><img src="../../.gitbook/assets/image (114).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (73).png" alt="" width="563"><figcaption></figcaption></figure>
 
 </details>
 
@@ -63,7 +63,7 @@ Content filters control category-based and attack-based detection.
 * Enable the prompt attack filter to detect jailbreaks and manipulation attempts.
 * Adjust detection strength using the horizontal slider.
 
-<figure><img src="../../.gitbook/assets/image (17).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (28).png" alt="" width="563"><figcaption></figcaption></figure>
 
 </details>
 
@@ -82,7 +82,7 @@ Denied topics block specific concepts in user inputs or model responses.
 You can add up to **30 denied topics** per guardrail policy.
 {% endhint %}
 
-<figure><img src="../../.gitbook/assets/image (29).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (30).png" alt="" width="563"><figcaption></figcaption></figure>
 
 </details>
 
@@ -100,7 +100,7 @@ Word filters enforce keyword- and phrase-based restrictions.
 Akto support for up to **10,000 custom entries**.
 {% endhint %}
 
-<figure><img src="../../.gitbook/assets/image (30).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (32).png" alt="" width="563"><figcaption></figcaption></figure>
 
 </details>
 
@@ -118,7 +118,7 @@ Sensitive information filters prevent exposure of regulated data.
 * **Regex-Based Detection**
   * Add up to **10 custom regex patterns** for structured data detection.
 
-<figure><img src="../../.gitbook/assets/image (32).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (33).png" alt="" width="563"><figcaption></figcaption></figure>
 
 </details>
 
@@ -132,7 +132,7 @@ This rule uses an LLM to classify content against a custom prompt.
 * Configure a **confidence score threshold**.
 * Content is blocked when the model confidence exceeds the configured threshold.
 
-<figure><img src="../../.gitbook/assets/image (33).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (34).png" alt="" width="563"><figcaption></figcaption></figure>
 
 </details>
 
@@ -145,7 +145,7 @@ Intent verification validates agent behavior against a defined base prompt.
 * The evaluation checks whether agent requests align with the expected intent of the base prompt.
 * Requests that deviate from the defined intent are flagged or blocked based on policy behaviour.
 
-<figure><img src="../../.gitbook/assets/image (34).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (35).png" alt="" width="563"><figcaption></figcaption></figure>
 
 </details>
 

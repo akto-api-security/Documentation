@@ -4,7 +4,7 @@
 
 The **Guardrail Activity** page provides a unified view of all agentic guardrail detections across your environment. It enables you to monitor guardrail behavior, assess risk levels, and manage detected events efficiently from a single interface.
 
-<figure><img src="../../.gitbook/assets/image (100).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (69).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ## Key Metrics
 
@@ -82,7 +82,7 @@ Select activities using the checkbox at the start of each row.
 {% step %}
 Bulk action options appear at the bottom center of the screen.
 
-<figure><img src="../../.gitbook/assets/image (102).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (70).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}

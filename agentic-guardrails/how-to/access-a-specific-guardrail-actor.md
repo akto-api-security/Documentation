@@ -20,7 +20,7 @@ From the left navigation bar, go to **Agentic Guardrails → Guardrail Actors**.
 {% step %}
 Scroll down to the actors table.
 
-<figure><img src="../../.gitbook/assets/image (57).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (48).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
@@ -50,7 +50,7 @@ Below the summary, the page presents a list of detected attacks attributed to th
 | --------------- | ---------------------------- | --------------------------- | ----------- | ------------------------------------------------------ |
 | Event timestamp | Classification of the attack | Risk level assigned by Akto | Target host | Guardrail or agentic module that detected the activity |
 
-<figure><img src="../../.gitbook/assets/image (58).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (49).png" alt="" width="563"><figcaption></figcaption></figure>
 
 With the breakdown helps you correlate attack behavior over time, understand which agentic components are involved, and decide on appropriate response actions.
 
