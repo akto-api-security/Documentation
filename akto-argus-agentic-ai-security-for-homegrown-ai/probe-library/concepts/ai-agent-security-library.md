@@ -1,5 +1,5 @@
 ---
-description: Probe Library for AI Agent OWASP Top 10 for Security in Akto
+description: Probe Library for AI Agent OWASP Top 10 for Security
 ---
 
 # AI Agent Security Probe Library

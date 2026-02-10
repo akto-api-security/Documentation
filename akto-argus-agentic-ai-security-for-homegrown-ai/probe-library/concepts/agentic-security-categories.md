@@ -1,4 +1,4 @@
-# Agentic Security Categories in Akto Probe Library
+# title: Agentic Security Categories
 
 ### ASI01: Agent Goal Hijack
 
