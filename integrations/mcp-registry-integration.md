@@ -69,7 +69,7 @@ The connection test validates:
 Only registries that respond successfully are used for MCP server discovery and validation. This testing step helps confirm registry readiness before relying on registry data in agentic workflows.
 
 {% hint style="warning" %}
-### Important Notes
+#### Important Notes
 
 * All registries will be used for MCP server discovery and validation
 * Custom registries must follow the MCP Registry API specification

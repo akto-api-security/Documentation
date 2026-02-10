@@ -34,7 +34,7 @@ The table lists all discovered agentic assets.
 | Last traffic seen | Time of most recent observed interaction                  |
 
 {% hint style="success" %}
-### Search and Filtering
+#### Search and Filtering
 
 * Search: Filters assets by name
 * Type filter: Filters assets by agentic system type
@@ -67,7 +67,7 @@ Expanding an endpoint row reveals additional execution context associated with t
 This expansion helps distinguish different execution environments using the same agentic asset.
 
 {% hint style="info" %}
-### Asset-Level Actions
+#### Asset-Level Actions
 
 The Agentic Asset Details view includes asset-level controls.
 

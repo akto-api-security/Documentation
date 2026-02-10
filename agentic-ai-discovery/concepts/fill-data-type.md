@@ -61,7 +61,7 @@ Refresh the page to view updated and newly added data types
 {% endstepper %}
 
 {% hint style="info" %}
-### Operational Characteristics and Performance
+#### Operational Characteristics and Performance
 
 The **Fill Data Types** operation has minimal operational impact:
 

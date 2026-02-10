@@ -49,7 +49,7 @@ You don’t need to manually edit your MCP config files — the wrapper handles 
 
 <summary>Example — Cursor <code>mcp.json</code></summary>
 
-#### **Original file (before wrapping):**
+**Original file (before wrapping):**
 
 ```json
 {
@@ -65,7 +65,7 @@ You don’t need to manually edit your MCP config files — the wrapper handles 
 }
 ```
 
-#### **Automatically wrapped file (after Akto MCP Endpoint Shield):**
+**Automatically wrapped file (after Akto MCP Endpoint Shield):**
 
 ```json
 {
@@ -109,7 +109,7 @@ Follow these steps to manually set up and run MCP Endpoint Shield to protect you
 
 {% stepper %}
 {% step %}
-#### Set Your API Token
+**Set Your API Token**
 
 Set the `AKTO_API_TOKEN` environment variable:
 
@@ -140,7 +140,7 @@ echo $AKTO_API_TOKEN
 {% endstep %}
 
 {% step %}
-#### Start the Agent
+**Start the Agent**
 
 The agent automatically discovers and protects your MCP servers.
 
@@ -164,7 +164,7 @@ Agent mode started. Press Ctrl+C to stop...
 * Watch for changes and auto-update configs
 
 {% hint style="info" %}
-### **Note:**
+#### **Note:**
 
 If you want the agent to run in the background, use:
 
@@ -174,7 +174,7 @@ If you want the agent to run in the background, use:
 {% endstep %}
 
 {% step %}
-#### Protecting Local MCP Servers (STDIO)
+**Protecting Local MCP Servers (STDIO)**
 
 **Option A: Let the Agent Wrap It (Recommended)**
 
@@ -280,7 +280,7 @@ If you're not running the agent, manually edit your MCP config file (e.g., `~/.c
 {% endstep %}
 
 {% step %}
-#### Protecting Remote MCP Servers (HTTP)
+**Protecting Remote MCP Servers (HTTP)**
 
 For HTTP-based MCP servers, run the HTTP proxy in a **new terminal**:
 
@@ -353,7 +353,7 @@ The proxy will:
 {% endstep %}
 
 {% step %}
-#### Verify Everything is Working
+**Verify Everything is Working**
 
 *   **Check Agent Status**
 
@@ -522,7 +522,7 @@ Each wrapped STDIO MCP server gets its own log file named after the `--name` att
 * **Fix**: Use full path (`./mcp-endpoint-shield` or `/usr/local/bin/mcp-endpoint-shield`) or add to PATH with `export PATH=$PATH:/path/to/binary/directory`.
 
 {% hint style="success" %}
-### Akto Security Scope
+#### Akto Security Scope
 
 * **Transparency**: Safe traffic is never altered.
 * **Clarity**: Unsafe traffic always results in a clear JSON-RPC error.

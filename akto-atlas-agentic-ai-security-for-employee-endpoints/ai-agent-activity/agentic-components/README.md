@@ -23,7 +23,7 @@ Each component is discovered from observed runtime traffic.
 The Agentic Components list displays all components discovered for a selected endpoint.
 
 {% hint style="info" %}
-### Component Filters
+#### Component Filters
 
 You can filter components using predefined categories.
 
@@ -120,7 +120,7 @@ You can switch between **Header** and **Payload** to view response-specific fiel
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (7).png" alt="" width="375"><figcaption></figcaption></figure></div>
 
 {% hint style="info" %}
-### Schema Behaviour Notes
+#### Schema Behaviour Notes
 
 * The schema reflects only fields observed in live traffic.
 * Fields appear when they are first detected.

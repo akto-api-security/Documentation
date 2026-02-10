@@ -18,13 +18,13 @@ The Akto LangChain connector automatically:
 
 {% stepper %}
 {% step %}
-#### Configure Akto Traffic Processor
+**Configure Akto Traffic Processor**
 
 Set up and configure Akto Traffic Processor. The steps are mentioned [here](../others/hybrid-saas.md).
 {% endstep %}
 
 {% step %}
-#### Clone the Akto Infrastructure Repository
+**Clone the Akto Infrastructure Repository**
 
 Clone the Akto infrastructure repository:
 
@@ -38,7 +38,7 @@ wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/featur
 {% endstep %}
 
 {% step %}
-####
+
 
 Update the following variables in the `langchain-cron.env` file:
 
@@ -50,7 +50,7 @@ AKTO_KAFKA_BROKER_URL=kafka1:19092
 {% endstep %}
 
 {% step %}
-#### Start the LangChain Traffic Connector
+**Start the LangChain Traffic Connector**
 
 Run the following command to start the LangChain traffic connector:
 

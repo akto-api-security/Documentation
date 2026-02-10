@@ -117,7 +117,7 @@ Where the original MCP server URL is transformed by:
     ```
 
 {% hint style="info" %}
-### **Important Notes**
+#### **Important Notes**
 
 * All original authentication credentials (API keys, tokens, etc.) remain the same
 * The proxy transparently forwards authentication headers to the original server

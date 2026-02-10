@@ -11,8 +11,6 @@ Each probe represents a **concrete, executable security test** that targets a sp
 > **Note**\
 > The lists below show representative probes for each category. The full library contains **4,000+ MCP and agentic security probes** and continues to expand.
 
-<figure><img src="../../.gitbook/assets/Screenshot 2026-02-09 at 10.50.46 AM.png" alt="MCP Security Probes"><figcaption></figcaption></figure>
-
 ### MCP01: Token Mismanagement & Secret Exposure
 
 Tests in this category validate whether authentication tokens, session identifiers, and secrets are properly handled across MCP requests, tool calls, and downstream APIs.

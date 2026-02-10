@@ -26,7 +26,7 @@ Before integrating Akto with LiteLLM, ensure you have:
 
 {% stepper %}
 {% step %}
-#### Download the Custom Hook
+**Download the Custom Hook**
 
 Download the `custom_hooks.py` file to your LiteLLM configuration directory:
 
@@ -40,7 +40,7 @@ curl -O https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp
 {% endstep %}
 
 {% step %}
-#### Configure Environment Variables
+**Configure Environment Variables**
 
 Add these environment variables to your LiteLLM environment (`.env` file or system environment):
 
@@ -55,7 +55,7 @@ SYNC_MODE=true              # true = block violations, false = async logging onl
 ```
 
 {% hint style="warning" %}
-### **Note**
+#### **Note**
 
 `SYNC_MODE` determines behavior:
 
@@ -65,7 +65,7 @@ SYNC_MODE=true              # true = block violations, false = async logging onl
 {% endstep %}
 
 {% step %}
-#### Update LiteLLM Configuration
+**Update LiteLLM Configuration**
 
 Edit your `config.yaml` to enable the custom hook:
 
@@ -87,7 +87,7 @@ The critical change is adding `callbacks: [custom_hooks.proxy_handler_instance]`
 {% endstep %}
 
 {% step %}
-#### Ensure Hook File is Accessible
+**Ensure Hook File is Accessible**
 
 {% tabs %}
 {% tab title="Using LiteLLM Directly" %}
@@ -125,7 +125,7 @@ services:
 {% endstep %}
 
 {% step %}
-#### Start LiteLLM
+**Start LiteLLM**
 
 ```bash
 # If using Docker Compose
@@ -141,7 +141,7 @@ litellm --config config.yaml
 {% endstep %}
 
 {% step %}
-#### Verify Integration
+**Verify Integration**
 
 Check that LiteLLM starts successfully with the hook:
 

@@ -177,7 +177,7 @@ Close the tag dialog to apply the changes.
 Tags are applied immediately to all selected endpoints.
 
 {% hint style="info" %}
-### Action Scopes
+#### Action Scopes
 
 * Actions apply only to the endpoints selected at the time of execution.
 * Multiple endpoints can be updated in a single action.

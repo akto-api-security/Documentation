@@ -61,7 +61,7 @@ Akto will now automatically:
 * Add the model into **AI Model Security Inventory** for monitoring and testing
 
 {% hint style="success" %}
-### Akto Access Scope
+#### Akto Access Scope
 
 * Auth tokens/headers (if used) are **only applied during import** and are **not stored**
 * Akto uses **read-only access** to interact with your AI endpoint
