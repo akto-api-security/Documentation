@@ -1,6 +1,5 @@
----
-title: Agentic Security Categories
----
+# title: Agentic Security Categories
+
 ### ASI01: Agent Goal Hijack
 
 #### Base64

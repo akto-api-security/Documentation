@@ -1,5 +1,4 @@
 ---
-title: AI Agent Security Library
 description: Probe Library for AI Agent OWASP Top 10 for Security
 ---
 
