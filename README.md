@@ -49,10 +49,10 @@ Deploy real-time protection for your production agents. Block threats as they oc
 
 ## Resources
 
-<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Hybrid SaaS Deployement</strong></td><td>Deploy Akto in your cloud</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md">hybrid-saas.md</a></td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Hybrid SaaS Deployment</strong></td><td>Deploy Akto in your cloud</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md">hybrid-saas.md</a></td></tr></tbody></table>
 
 {% hint style="success" %}
-### Akto Support
+#### Akto Support
 
 Contact our support team at **help@akto.io** or use in-app Intercom to reach out for help and guidance.
 {% endhint %}
