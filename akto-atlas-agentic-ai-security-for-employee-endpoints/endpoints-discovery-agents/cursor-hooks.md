@@ -1,268 +1,259 @@
 # Cursor Hooks
 
-MCP Endpoint Shield via Cursor Hooks provides **zero-installation runtime security** for MCP servers by leveraging Cursor's native hook system. It intercepts all MCP calls (requests and responses), performs validation, blocks malicious activity, and reports threats to your security dashboard—**without requiring any MCP server configuration or wrapper installation**.
+Akto Guardrails for Cursor provides comprehensive security monitoring and validation for both **chat interactions** and **MCP tool executions**. It intercepts all agent operations, validates against security policies, blocks risky behavior, and reports events to your Akto dashboard.
 
-## Key Advantages
+## Key Features
 
 * ✅ **Zero Installation** - No standalone apps or packages to install
-* ✅ **No MCP Config Changes** - Works without wrapping your MCP servers
+* ✅ **Comprehensive Coverage** - Monitors both chat prompts/responses and MCP requests/responses
 * ✅ **Transparent Integration** - Uses Cursor's native hook mechanism
-* ✅ **Real-time Protection** - Intercepts every MCP request and response
-* ✅ **Centralized Monitoring** - All threats reported to Akto dashboard
-* ✅ **Automatic Updates** - Hook scripts auto-sync security policies
+* ✅ **Real-time Protection** - Intercepts every interaction before execution
+* ✅ **Centralized Monitoring** - All events reported to Akto dashboard
+* ✅ **Flexible Deployment** - Supports both Argus and Atlas modes
 
 ## How It Works
 
-Cursor's hook system allows you to execute custom scripts before and after MCP operations. Akto leverages these hooks to provide comprehensive security:
+Cursor's hook system executes custom scripts at four critical points:
 
 ```mermaid
 sequenceDiagram
     autonumber
-
     participant User
-    participant BeforeHook as beforeMCPExecution Hook
-    participant MCP as MCP Server Execution
-    participant AfterHook as afterMCPExecution Hook
+    participant ChatHook as beforeSubmitPrompt Hook
+    participant Agent as AI Agent
+    participant ChatResponseHook as afterAgentResponse Hook
+    participant MCPBeforeHook as beforeMCPExecution Hook
+    participant MCP as MCP Server
+    participant MCPAfterHook as afterMCPExecution Hook
     participant Akto as Akto Dashboard
 
-    %% -------------------------
-    %% Request Processing Phase
-    %% -------------------------
-    User->>BeforeHook: User Request
-
-    Note over BeforeHook: Check guardrail policies<br/>Validate request syntax<br/>Detect malicious patterns
-
-    alt Malicious Request
-        BeforeHook-->>User: Block request
-        BeforeHook-->>Akto: Report event
-    else Non-Malicious Request
-        BeforeHook->>MCP: Forward request
+    User->>ChatHook: User submits chat prompt
+    Note over ChatHook: Validate guardrail policies
+    alt Safe Prompt
+        ChatHook->>Agent: Forward to AI
+        ChatHook-->>Akto: Report event
+    else Malicious
+        ChatHook-->>User: Block
+        ChatHook-->>Akto: Report threat
     end
 
-    %% -------------------------
-    %% MCP Execution Phase
-    %% -------------------------
-    MCP->>AfterHook: Execution response
+    Agent->>ChatResponseHook: Agent response
+    Note over ChatResponseHook: Validate response
+    ChatResponseHook-->>Akto: Report event
+    ChatResponseHook->>User: Response
 
-    Note over AfterHook: Check guardrail policies<br/>Analyze response data<br/>Detect sensitive leaks
+    Agent->>MCPBeforeHook: MCP tool request
+    Note over MCPBeforeHook: Validate tool parameters
+    MCPBeforeHook->>MCP: Execute if safe
+    MCPBeforeHook-->>Akto: Report event
 
-    %% -------------------------
-    %% Response Processing Phase
-    %% -------------------------
-    alt Malicious Response
-        AfterHook-->>Akto: Report event
-        AfterHook-->>User: Block / Redact response
-    else Non-Malicious Response
-        AfterHook-->>Akto: Report event
-        AfterHook->>User: Response to user
-    end
-
+    MCP->>MCPAfterHook: Tool response
+    Note over MCPAfterHook: Validate response
+    MCPAfterHook-->>Akto: Report event
+    MCPAfterHook->>Agent: Response
 ```
 
-{% hint style="info" %}
-#### **Key Points:**
+**4 Hook Points:**
+1. `beforeSubmitPrompt` - Validates chat prompts before sending to AI
+2. `afterAgentResponse` - Validates AI responses before displaying
+3. `beforeMCPExecution` - Validates MCP tool requests before execution
+4. `afterMCPExecution` - Validates MCP tool responses
 
-* `beforeMCPExecution` hook checks guardrail policies and validates requests
-* `afterMCPExecution` hook checks guardrail policies and analyzes responses
-* **Both hooks report to Akto Dashboard** regardless of whether threats are detected
-* Malicious requests/responses are blocked with standard JSON-RPC errors
-* All events (safe and malicious) are logged for compliance and analytics
-{% endhint %}
+## File Structure
+
+```
+~/.cursor/
+├── hooks/
+│   └── akto/
+│       ├── akto-validate-chat-prompt-wrapper.sh       # Chat prompt wrapper
+│       ├── akto-validate-chat-prompt.py               # Chat prompt validation
+│       ├── akto-validate-chat-response-wrapper.sh     # Chat response wrapper
+│       ├── akto-validate-chat-response.py             # Chat response validation
+│       ├── akto-validate-mcp-request-wrapper.sh       # MCP request wrapper
+│       ├── akto-validate-mcp-request.py               # MCP request validation
+│       ├── akto-validate-mcp-response-wrapper.sh      # MCP response wrapper
+│       ├── akto-validate-mcp-response.py              # MCP response validation
+│       └── akto_machine_id.py                         # Device ID utility
+├── akto/
+│   ├── chat-logs/
+│   │   ├── akto-validate-chat-prompt.log
+│   │   └── akto-validate-chat-response.log
+│   └── mcp-logs/
+│       ├── akto-validate-request.log
+│       └── akto-validate-response.log
+└── hooks.json                                          # Hook configuration
+```
+
+**Key Files:**
+* **Wrapper scripts (`.sh`)**: Set environment variables, invoke Python scripts
+  * ⚠️ **Contains `AKTO_DATA_INGESTION_URL` placeholder** - Must be replaced with your Akto instance URL
+* **Python scripts (`.py`)**: Core validation logic and Akto API communication
+* **`akto_machine_id.py`**: Generates unique device identifiers for Atlas mode
+* **`hooks.json`**: Links hooks to wrapper scripts
 
 ## Setup Guide
 
 ### Prerequisites
 
-* Cursor IDE installed (version 0.40+ with hooks support)
-* Akto API token ([Get from Akto Dashboard](https://app.akto.io))
-* macOS, Linux, or Windows with bash/zsh support
+* Cursor IDE (version 0.40+ with hooks support)
+* Akto instance URL
+* macOS, Linux, or Windows with bash/zsh
+
+### Installation Steps
 
 {% stepper %}
 {% step %}
-**Create Hook Directory**
-
-Create the Cursor hooks directory if it doesn't exist:
+**Create Directories**
 
 ```bash
 mkdir -p ~/.cursor/hooks/akto
+mkdir -p ~/.cursor/akto/chat-logs
+mkdir -p ~/.cursor/akto/mcp-logs
 ```
 {% endstep %}
 
 {% step %}
 **Download Hook Scripts**
 
-Download the Akto MCP guard scripts from our GitHub repository:
-
-**Option A: Using curl**
-
 ```bash
-# Download before-execution hook
-curl -o ~/.cursor/hooks/akto/akto-mcp-guard-before.sh \
-  https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-before.sh
+# Base URL for downloading hooks
+HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/agent-hooks/apps/mcp-endpoint-shield/cursor-hooks"
 
-# Download after-execution hook
-curl -o ~/.cursor/hooks/akto/akto-mcp-guard-after.sh \
-  https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-after.sh
+# Download chat validation hooks
+curl -o ~/.cursor/hooks/akto/akto-validate-chat-prompt-wrapper.sh \
+  "${HOOKS_BASE}/akto-validate-chat-prompt-wrapper.sh"
+curl -o ~/.cursor/hooks/akto/akto-validate-chat-prompt.py \
+  "${HOOKS_BASE}/akto-validate-chat-prompt.py"
+curl -o ~/.cursor/hooks/akto/akto-validate-chat-response-wrapper.sh \
+  "${HOOKS_BASE}/akto-validate-chat-response-wrapper.sh"
+curl -o ~/.cursor/hooks/akto/akto-validate-chat-response.py \
+  "${HOOKS_BASE}/akto-validate-chat-response.py"
 
-# Make scripts executable
-chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
-chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-after.sh
-```
+# Download MCP validation hooks
+curl -o ~/.cursor/hooks/akto/akto-validate-mcp-request-wrapper.sh \
+  "${HOOKS_BASE}/akto-validate-mcp-request-wrapper.sh"
+curl -o ~/.cursor/hooks/akto/akto-validate-mcp-request.py \
+  "${HOOKS_BASE}/akto-validate-mcp-request.py"
+curl -o ~/.cursor/hooks/akto/akto-validate-mcp-response-wrapper.sh \
+  "${HOOKS_BASE}/akto-validate-mcp-response-wrapper.sh"
+curl -o ~/.cursor/hooks/akto/akto-validate-mcp-response.py \
+  "${HOOKS_BASE}/akto-validate-mcp-response.py"
 
-**Option B: Using wget**
+# Download utility
+curl -o ~/.cursor/hooks/akto/akto_machine_id.py \
+  "${HOOKS_BASE}/akto_machine_id.py"
 
-```bash
-# Download before-execution hook
-wget -O ~/.cursor/hooks/akto/akto-mcp-guard-before.sh \
-https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-before.sh
-
-# Download after-execution hook
-wget -O ~/.cursor/hooks/akto/akto-mcp-guard-after.sh \
-https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-after.sh
-
-# Make scripts executable
-chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
-chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-after.sh
-```
-
-**Option C: Clone the Repository**
-
-```bash
-# Clone the repository
-git clone https://github.com/akto-api-security/akto.git
-cd akto/apps/mcp-endpoint-shield/cursor-hooks
-
-# Copy hooks to Cursor directory
-cp cursor-hooks/akto-mcp-guard-before.sh ~/.cursor/hooks/akto
-cp cursor-hooks/akto-mcp-guard-after.sh ~/.cursor/hooks/akto
-
-# Make scripts executable
-chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
-chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-after.sh
+# Make executable
+chmod +x ~/.cursor/hooks/akto/*.sh
 ```
 {% endstep %}
 
 {% step %}
-**Configure Hooks in Cursor**
+**Configure Akto Ingestion URL** ⚠️ **CRITICAL STEP**
 
-Create or edit the Cursor hooks configuration file:
+{% hint style="warning" %}
+All wrapper scripts contain placeholder `{{AKTO_DATA_INGESTION_URL}}` that **must be replaced** with your actual Akto instance URL.
+{% endhint %}
+
+**Automated replacement:**
 
 ```bash
-# Create .cursor directory if it doesn't exist
-mkdir -p ~/.cursor
+# Set your Akto ingestion URL
+AKTO_URL="https://your-akto-instance.com"
 
-# Create hooks.json configuration
+# Update all wrapper scripts
+sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.cursor/hooks/akto/*-wrapper.sh
+
+# Verify replacement
+grep "AKTO_DATA_INGESTION_URL" ~/.cursor/hooks/akto/*-wrapper.sh
+```
+
+**Manual replacement (alternative):**
+
+Edit each wrapper script and replace:
+```bash
+AKTO_DATA_INGESTION_URL="{{AKTO_DATA_INGESTION_URL}}"
+```
+With:
+```bash
+AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
+```
+
+Files to update:
+- `akto-validate-chat-prompt-wrapper.sh`
+- `akto-validate-chat-response-wrapper.sh`
+- `akto-validate-mcp-request-wrapper.sh`
+- `akto-validate-mcp-response-wrapper.sh`
+{% endstep %}
+
+{% step %}
+**Configure Hooks**
+
+Create Cursor hooks configuration:
+
+```bash
 cat > ~/.cursor/hooks.json << 'EOF'
 {
   "version": 1,
   "hooks": {
+    "beforeSubmitPrompt": [
+      {
+        "command": "bash ~/.cursor/hooks/akto/akto-validate-chat-prompt-wrapper.sh",
+        "timeout": 10
+      }
+    ],
+    "afterAgentResponse": [
+      {
+        "command": "bash ~/.cursor/hooks/akto/akto-validate-chat-response-wrapper.sh",
+        "timeout": 10
+      }
+    ],
     "beforeMCPExecution": [
       {
-        "command": "~/.cursor/hooks/akto/akto-mcp-guard-before.sh"
+        "command": "bash ~/.cursor/hooks/akto/akto-validate-mcp-request-wrapper.sh",
+        "timeout": 10
       }
     ],
     "afterMCPExecution": [
       {
-        "command": "~/.cursor/hooks/akto/akto-mcp-guard-after.sh"
+        "command": "bash ~/.cursor/hooks/akto/akto-validate-mcp-response-wrapper.sh",
+        "timeout": 10
       }
     ]
   }
 }
 EOF
 ```
-
-**Configuration Options:**
-
-* `version`: Hook configuration schema version (currently `1`)
-* `beforeMCPExecution`: Array of hooks to run before MCP server execution
-* `afterMCPExecution`: Array of hooks to run after MCP server execution
-* `command`: Absolute path to the hook script
-
-<details>
-
-<summary><strong>Example with multiple hooks</strong></summary>
-
-```json
-{
-  "version": 1,
-  "hooks": {
-    "beforeMCPExecution": [
-      {
-        "command": "~/.cursor/hooks/akto/akto-mcp-guard-before.sh"
-      },
-      {
-        "command": "~/.cursor/hooks/akto/custom-logger.sh"
-      }
-    ],
-    "afterMCPExecution": [
-      {
-        "command": "~/.cursor/hooks/akto/akto-mcp-guard-after.sh"
-      }
-    ]
-  }
-}
-```
-
-</details>
 {% endstep %}
 
 {% step %}
-**Set Your Akto API Token**
+**Configure Hook Behavior (Optional)**
 
-The hook scripts need your Akto API token to report security events. The following options are present to set tokens:
-
-{% tabs %}
-{% tab title="A: Environment Variable (Recommended)" %}
-Add to your shell configuration file (`~/.bashrc`, `~/.zshrc`, or `~/.profile`):
+Edit wrapper scripts to customize:
 
 ```bash
-export AKTO_API_TOKEN="your-actual-token-here"
-export AKTO_PROJECT_NAME="default"  # Optional: specify project name
+# In each *-wrapper.sh file:
+
+MODE="atlas"                    # "argus" or "atlas"
+AKTO_SYNC_MODE="true"          # "true" (blocking) or "false" (observe only)
+AKTO_TIMEOUT="5"               # Timeout in seconds
+AKTO_CONNECTOR="claude_code_cli"
 ```
 
-Reload your shell:
+**Mode Options:**
+* **Argus**: Standard validation and reporting
+* **Atlas**: Includes device-specific metadata
 
-```bash
-source ~/.bashrc  # or ~/.zshrc
-```
-{% endtab %}
-
-{% tab title="B: Configuration File" %}
-Create a configuration file:
-
-```bash
-mkdir -p ~/.akto
-cat > ~/.akto/config << 'EOF'
-AKTO_API_TOKEN=your-actual-token-here
-AKTO_PROJECT_NAME=default
-AKTO_SKIP_THREAT=false
-EOF
-
-chmod 600 ~/.akto/config  # Secure the file
-```
-
-The hook scripts will automatically read from this file.
-{% endtab %}
-
-{% tab title="C: Inline in Hook Script" %}
-Edit the hook scripts to include your token directly (less secure):
-
-```bash
-# Edit ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
-# Find the line: AKTO_API_TOKEN="${AKTO_API_TOKEN:-}"
-# Replace with: AKTO_API_TOKEN="your-actual-token-here"
-```
-{% endtab %}
-{% endtabs %}
+**Sync Mode:**
+* **true**: Blocks threats
+* **false**: Reports but allows execution
 {% endstep %}
 
 {% step %}
 **Restart Cursor**
 
-Restart Cursor IDE to activate the hooks:
-
 ```bash
-# Close all Cursor windows, then reopen
+# Close all Cursor windows and reopen
 # Or use Cmd+Q (macOS) / Alt+F4 (Windows/Linux)
 ```
 {% endstep %}
@@ -270,786 +261,250 @@ Restart Cursor IDE to activate the hooks:
 {% step %}
 **Verify Installation**
 
-Check that hooks are working:
-
-1. **Open Cursor Settings**
-   * Go to `Settings` → `Extensions` → `MCP`
-   * Look for "Hooks enabled" indicator
-2. **Check Hook Logs**
+Check logs to confirm hooks are working:
 
 ```bash
-# View hook execution logs
-tail -f ~/.cursor/hooks/akto/logs/mcp-guard.log
+# View chat logs
+tail -f ~/.cursor/akto/chat-logs/akto-validate-chat-prompt.log
+tail -f ~/.cursor/akto/chat-logs/akto-validate-chat-response.log
 
-# Check for errors
-cat ~/.cursor/hooks/akto/logs/mcp-guard-error.log
+# View MCP logs
+tail -f ~/.cursor/akto/mcp-logs/akto-validate-request.log
+tail -f ~/.cursor/akto/mcp-logs/akto-validate-response.log
 ```
 
-3. **Test with MCP Operation**
-
-Use any MCP tool in Cursor (e.g., file search, code completion). You should see:
-
-```bash
-# In the log file
-[2025-12-24T10:30:45Z] [INFO] beforeMCPExecution: Checking guardrail policies
-[2025-12-24T10:30:45Z] [INFO] Request validated - allowing execution
-[2025-12-24T10:30:45Z] [INFO] Reported to Akto Dashboard: event-abc123
-[2025-12-24T10:30:46Z] [INFO] afterMCPExecution: Checking response guardrail policies
-[2025-12-24T10:30:46Z] [INFO] Response clean - no threats detected
-[2025-12-24T10:30:46Z] [INFO] Reported to Akto Dashboard: event-def456
-```
+Test by typing a message in Cursor's chat or using an MCP tool. You should see log entries indicating validation occurred.
 {% endstep %}
 {% endstepper %}
 
-## Security Features
+## Configuration Reference
 
-### Request Validation (beforeMCPExecution)
-
-The before-execution hook performs:
-
-1. **Guardrail Policy Check** - Applies organization-wide security policies
-2. **Request Validation** - Validates JSON-RPC structure and parameters
-3. **Threat Detection** - Identifies malicious patterns:
-   * **SQL Injection Attempts** - Blocks malicious SQL patterns in tool arguments
-   * **Path Traversal** - Prevents access to sensitive file paths (`/etc/passwd`, `.env`, etc.)
-   * **Command Injection** - Detects shell command injection attempts
-   * **Unsafe Tool Calls** - Blocks dangerous MCP tool invocations
-   * **Rate Limiting** - Prevents abuse through excessive requests
-4. **Dashboard Reporting** - Reports all events (safe and malicious) to Akto Dashboard
-
-<details>
-
-<summary><strong>Example: Blocked Request</strong></summary>
-
-```json
-{
-  "jsonrpc": "2.0",
-  "error": {
-    "code": -32001,
-    "message": "Request blocked by Akto MCP Shield: Path traversal attempt detected",
-    "data": {
-      "threat_type": "PATH_TRAVERSAL",
-      "severity": "HIGH",
-      "blocked_path": "../../../../etc/passwd",
-      "incident_id": "akto-threat-2025-12-24-abc123",
-      "guardrail_policy": "block-sensitive-file-access"
-    }
-  },
-  "id": 1
-}
-```
-
-**Log Entry for Blocked Request**
+### Wrapper Script Variables
 
 ```bash
-[2025-12-24T10:35:12Z] [WARN] beforeMCPExecution: Threat detected - PATH_TRAVERSAL
-[2025-12-24T10:35:12Z] [WARN] Guardrail policy violated: block-sensitive-file-access
-[2025-12-24T10:35:12Z] [INFO] Request blocked - JSON-RPC error returned
-[2025-12-24T10:35:12Z] [INFO] Reported to Akto Dashboard: incident-abc123
+MODE="atlas"                                            # "argus" or "atlas"
+AKTO_DATA_INGESTION_URL="{{AKTO_DATA_INGESTION_URL}}"  # ⚠️ MUST REPLACE
+AKTO_SYNC_MODE="true"                                  # "true" or "false"
+AKTO_TIMEOUT="5"                                       # Timeout in seconds
+AKTO_CONNECTOR="claude_code_cli"                       # Connector identifier
 ```
 
-</details>
+### Environment Variables (Optional)
 
-### Response Analysis (afterMCPExecution)
-
-The after-execution hook performs:
-
-1. **Guardrail Policy Check** - Applies response-specific security policies
-2. **Response Validation** - Validates response structure and data
-3. **Threat Detection** - Identifies security issues:
-   * **Sensitive Data Exposure** - Detects credentials, API keys, tokens
-   * **PII Leakage** - Identifies personal information (SSN, credit cards, emails)
-   * **Excessive Data Return** - Flags responses with unusually large payloads
-   * **Anomalous Behavior** - Detects deviations from normal patterns
-   * **Data Exfiltration** - Monitors for suspicious data access patterns
-   * **Compliance Violations** - Checks against configured security policies
-4. **Dashboard Reporting** - Reports all events (safe and malicious) to Akto Dashboard
-
-<details>
-
-<summary><strong>Example: Detected Sensitive Data</strong></summary>
+Override defaults via environment variables:
 
 ```bash
-[2025-12-24T10:35:12Z] [WARN] afterMCPExecution: Sensitive data detected in response
-[2025-12-24T10:35:12Z] [WARN] Guardrail policy violated: prevent-credential-exposure
-[2025-12-24T10:35:12Z] [WARN] Found: AWS_ACCESS_KEY_ID in filesystem read response
-[2025-12-24T10:35:12Z] [INFO] Response redacted - sensitive data removed
-[2025-12-24T10:35:12Z] [INFO] Reported to Akto Dashboard: incident-456
+export MODE="atlas"
+export AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
+export AKTO_SYNC_MODE="true"
+export AKTO_TIMEOUT="5"
 ```
 
-</details>
+## Troubleshooting
 
-### Comprehensive Reporting
-
-All events are reported to Akto Dashboard:
-
-* ✅ **Safe Requests** - Normal operations logged for analytics
-* ✅ **Safe Responses** - Clean responses tracked for compliance
-* ⚠️ **Blocked Requests** - Threat details and remediation actions
-* ⚠️ **Blocked Responses** - Sensitive data exposures and redactions
-
-This provides complete visibility into:
-
-* Total MCP operation volume
-* Security threat trends
-* Compliance audit trails
-* Developer behavior patterns
-* Risk assessment data
-
-## Akto Dashboard Integration
-
-#### Viewing Security Events
-
-1. **Login to Akto Dashboard**: [https://app.akto.io](https://app.akto.io)
-2. **Navigate to MCP Shield Section**:
-   * Go to `Security` → `MCP Endpoint Shield` → `Cursor Hooks`
-3. **View Real-time Events**:
-   * See all MCP requests/responses from your Cursor IDE
-   * Filter by severity, threat type, MCP server, or time range
-   * Drill down into specific incidents for detailed analysis
-
-#### Event Categories
-
-The dashboard organizes events into categories:
-
-**Safe Operations:**
-
-* `mcp.request.allowed` - Request passed all guardrail checks
-* `mcp.response.clean` - Response contained no sensitive data
-
-**Threat Events:**
-
-* `mcp.request.blocked` - Request violated guardrail policy
-* `mcp.response.blocked` - Response contained sensitive/malicious data
-* `mcp.anomaly.detected` - Unusual behavior pattern identified
-
-**Each event includes:**
-
-* Timestamp and duration
-* MCP server name and tool called
-* Request/response payload (sanitized)
-* Guardrail policies evaluated
-* Threat type and severity (if applicable)
-* User and machine identifier
-* Remediation action taken
-
-#### Key Metrics
-
-The dashboard shows:
-
-* **Total MCP Calls** - Volume of MCP operations per day/week/month
-* **Blocked Threats** - Count and types of threats prevented
-* **Sensitive Data Exposures** - Detected leaks of credentials or PII
-* **Top Threat Actors** - Users/machines with most security events
-* **MCP Server Risk Scores** - Which servers pose highest risk
-* **Compliance Status** - Adherence to security policies
-* **Guardrail Policy Effectiveness** - Which policies trigger most often
-
-#### Alert Configuration
-
-Set up notifications for critical events:
-
-1. Go to `Settings` → `Alerts` → `MCP Shield`
-2. Configure alert rules:
-   * **Immediate Alert**: Any high-severity threat detected
-   * **Daily Digest**: Summary of all security events
-   * **Threshold Alert**: More than 5 blocked requests in 1 hour
-3. Choose notification channels:
-   * Slack webhook
-   * Email
-   * PagerDuty
-   * Custom webhooks
-
-<details>
-
-<summary><strong>Example Alert Rule:</strong></summary>
-
-```json
-{
-  "name": "High Severity MCP Threat",
-  "condition": {
-    "severity": "HIGH",
-    "threat_types": ["SQL_INJECTION", "PATH_TRAVERSAL", "COMMAND_INJECTION"],
-    "hook_phase": ["beforeMCPExecution", "afterMCPExecution"]
-  },
-  "actions": [
-    {
-      "type": "slack",
-      "channel": "#security-alerts",
-      "message": "🚨 High-severity MCP threat blocked in Cursor: {{threat_type}} by {{user}} in {{hook_phase}}"
-    },
-    {
-      "type": "email",
-      "recipients": ["security@company.com"],
-      "subject": "MCP Security Alert - {{threat_type}}"
-    }
-  ]
-}
-```
-
-</details>
-
-## Configuration Options
-
-### Hook Script Environment Variables
-
-Configure the hook behavior via environment variables:
+### Hooks Not Executing
 
 ```bash
-# Required
-export AKTO_API_TOKEN="your-token"
+# Check hooks.json exists and is valid
+cat ~/.cursor/hooks.json | python3 -m json.tool
 
-# Optional
-export AKTO_PROJECT_NAME="default"           # Project identifier
-export AKTO_SKIP_THREAT="false"              # Set to "true" for audit-only mode
-export AKTO_LOG_LEVEL="info"                 # debug, info, warn, error
-export AKTO_ENDPOINT="https://app.akto.io"   # Custom Akto instance URL
-export AKTO_TIMEOUT="5"                      # API call timeout in seconds
-export AKTO_RETRY_COUNT="3"                  # Number of retries for failed reports
-export AKTO_ASYNC_REPORTING="true"           # Report events asynchronously
+# Verify scripts are executable
+ls -la ~/.cursor/hooks/akto/
+chmod +x ~/.cursor/hooks/akto/*.sh
+
+# Restart Cursor completely
+killall Cursor && open -a Cursor
 ```
 
-### Advanced Hook Configuration
+### Ingestion URL Not Configured
 
-Edit `~/.cursor/hooks.json` for advanced scenarios:
+```bash
+# Check if placeholder still exists
+grep "{{AKTO_DATA_INGESTION_URL}}" ~/.cursor/hooks/akto/*-wrapper.sh
 
-* **Conditional Hook Execution:**
-
-```json
-{
-  "version": 1,
-  "hooks": {
-    "beforeMCPExecution": [
-      {
-        "command": "~/.cursor/hooks/akto/akto-mcp-guard-before.sh",
-        "conditions": {
-          "mcpServers": ["filesystem", "postgres"],
-          "toolNames": ["read_file", "execute_query"]
-        }
-      }
-    ]
-  }
-}
+# Replace with actual URL
+AKTO_URL="https://your-akto-instance.com"
+sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.cursor/hooks/akto/*-wrapper.sh
 ```
 
-* **Hook with Arguments:**
+### Check Logs for Errors
 
-```json
-{
-  "version": 1,
-  "hooks": {
-    "beforeMCPExecution": [
-      {
-        "command": "~/.cursor/hooks/akto/akto-mcp-guard-before.sh",
-        "args": ["--strict-mode", "--log-level=debug"]
-      }
-    ]
-  }
-}
+```bash
+# View chat logs
+cat ~/.cursor/akto/chat-logs/akto-validate-chat-prompt.log
+cat ~/.cursor/akto/chat-logs/akto-validate-chat-response.log
+
+# View MCP logs
+cat ~/.cursor/akto/mcp-logs/akto-validate-request.log
+cat ~/.cursor/akto/mcp-logs/akto-validate-response.log
 ```
 
-* **Timeout Configuration:**
+### Events Not in Dashboard
 
-```json
-{
-  "version": 1,
-  "hooks": {
-    "beforeMCPExecution": [
-      {
-        "command": "~/.cursor/hooks/akto/akto-mcp-guard-before.sh",
-        "timeout": 2000
-      }
-    ]
-  }
-}
+```bash
+# Test API connectivity
+curl -X POST "${AKTO_DATA_INGESTION_URL}/api/v1/events" \
+  -H "Content-Type: application/json" \
+  -d '{"test": "event"}'
+
+# Verify URL in wrapper scripts
+grep "AKTO_DATA_INGESTION_URL" ~/.cursor/hooks/akto/*-wrapper.sh
 ```
 
-#### Custom Guardrail Policies
+## Uninstallation
 
-Create custom guardrail policies in your Akto dashboard:
+To completely remove Akto hooks from Cursor:
 
-1. Go to `Settings` → `MCP Shield` → `Guardrail Policies`
-2. Create a new policy or edit default policy
-3. Configure rules for both request and response phases
+### Complete Removal
 
-**Example Policy:**
+```bash
+# 1. Remove hook configuration
+rm ~/.cursor/hooks.json
 
-```yaml
-name: "Enterprise MCP Security Policy"
-version: "1.0"
+# 2. Remove Akto hook scripts
+rm -rf ~/.cursor/hooks/akto/
 
-# Request phase policies (beforeMCPExecution)
-request_policies:
-  - name: "Block file system access to secrets"
-    type: "PATH_BLACKLIST"
-    patterns:
-      - "**/.env"
-      - "**/.aws/credentials"
-      - "**/id_rsa"
-      - "**/config/secrets.yml"
-    action: "BLOCK"
-    severity: "CRITICAL"
+# 3. Remove Akto logs (optional - keeps historical data if skipped)
+rm -rf ~/.cursor/akto/
 
-  - name: "Restrict database queries"
-    type: "SQL_PATTERN"
-    patterns:
-      - "DROP TABLE"
-      - "DELETE FROM.*WHERE.*1=1"
-      - "INSERT INTO.*users"
-    action: "BLOCK"
-    severity: "HIGH"
-
-  - name: "Monitor external API calls"
-    type: "EXTERNAL_REQUEST"
-    patterns:
-      - "https://api.stripe.com"
-      - "https://api.github.com"
-    action: "AUDIT"
-    severity: "MEDIUM"
-
-# Response phase policies (afterMCPExecution)
-response_policies:
-  - name: "Detect credentials in responses"
-    type: "RESPONSE_PATTERN"
-    patterns:
-      - "password\\s*[:=]"
-      - "api[_-]?key\\s*[:=]"
-      - "secret\\s*[:=]"
-      - "token\\s*[:=]"
-      - "AKIA[0-9A-Z]{16}"  # AWS access key
-    action: "REDACT"
-    severity: "HIGH"
-
-  - name: "Detect PII in responses"
-    type: "RESPONSE_PATTERN"
-    patterns:
-      - "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b"  # Email
-      - "\\b\\d{3}-\\d{2}-\\d{4}\\b"  # SSN
-      - "\\b\\d{4}[\\s-]?\\d{4}[\\s-]?\\d{4}[\\s-]?\\d{4}\\b"  # Credit card
-    action: "ALERT"
-    severity: "MEDIUM"
-
-  - name: "Limit response size"
-    type: "RESPONSE_SIZE"
-    max_size: "10MB"
-    action: "BLOCK"
-    severity: "MEDIUM"
+# 4. Restart Cursor
+killall Cursor && open -a Cursor
 ```
+
+### Selective Removal (Keep Logs)
+
+If you want to preserve logs for audit purposes:
+
+```bash
+# Remove only hooks and configuration
+rm ~/.cursor/hooks.json
+rm -rf ~/.cursor/hooks/akto/
+
+# Restart Cursor
+killall Cursor && open -a Cursor
+```
+
+### Backup Before Removal
+
+```bash
+# Backup configuration and logs before removal
+mkdir -p ~/akto-backup
+cp ~/.cursor/hooks.json ~/akto-backup/cursor-hooks.json.bak
+cp -r ~/.cursor/akto/ ~/akto-backup/cursor-akto-logs/
+
+# Then proceed with removal steps above
+```
+
+### Verify Removal
+
+```bash
+# Check that hooks are removed
+test -f ~/.cursor/hooks.json && echo "⚠️  hooks.json still exists" || echo "✅ hooks.json removed"
+test -d ~/.cursor/hooks/akto && echo "⚠️  Hook scripts still exist" || echo "✅ Hook scripts removed"
+
+# Check if logs are removed (if you chose to remove them)
+test -d ~/.cursor/akto && echo "ℹ️  Logs still present" || echo "✅ Logs removed"
+```
+
+### Restore Cursor to Default
+
+After uninstallation, Cursor will operate without Akto security monitoring. No restart or additional configuration is needed beyond removing the files.
 
 ## Enterprise Deployment
 
-### Centralized Configuration Management
-
-For organizations deploying to multiple developers:
-
-{% stepper %}
-{% step %}
-**Create Organization-wide Config Repository**
-
-<pre class="language-bash"><code class="lang-bash"># In your org's config repo
-mkdir -p cursor-hooks
-curl -o cursor-hooks/akto-mcp-guard-before.sh \
-  https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-before.sh
-curl -o cursor-hooks/akto-mcp-guard-after.sh \
-<strong>  https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-after.sh
-</strong></code></pre>
-{% endstep %}
-
-{% step %}
-**Create Deployment Script**
+### Automated Deployment Script
 
 ```bash
 #!/bin/bash
 # deploy-cursor-hooks.sh
 
 set -e
+AKTO_URL="${1:-https://your-akto-instance.com}"
 
-echo "🔧 Installing Akto MCP Shield hooks for Cursor..."
+echo "🔧 Installing Akto Guardrails for Cursor..."
 
-# Create hooks directory
-mkdir -p ~/.cursor/hooks/akto
+# Create directories
+mkdir -p ~/.cursor/hooks/akto ~/.cursor/akto/chat-logs ~/.cursor/akto/mcp-logs
 
-# Download hooks from org repo (or from Akto GitHub)
-curl -s https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-before.sh \
-  -o ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
-curl -s https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-after.sh \
-  -o ~/.cursor/hooks/akto/akto-mcp-guard-after.sh
+# Download hooks
+HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/agent-hooks/apps/mcp-endpoint-shield/cursor-hooks"
+curl -s "${HOOKS_BASE}/akto-validate-chat-prompt-wrapper.sh" -o ~/.cursor/hooks/akto/akto-validate-chat-prompt-wrapper.sh
+curl -s "${HOOKS_BASE}/akto-validate-chat-prompt.py" -o ~/.cursor/hooks/akto/akto-validate-chat-prompt.py
+curl -s "${HOOKS_BASE}/akto-validate-chat-response-wrapper.sh" -o ~/.cursor/hooks/akto/akto-validate-chat-response-wrapper.sh
+curl -s "${HOOKS_BASE}/akto-validate-chat-response.py" -o ~/.cursor/hooks/akto/akto-validate-chat-response.py
+curl -s "${HOOKS_BASE}/akto-validate-mcp-request-wrapper.sh" -o ~/.cursor/hooks/akto/akto-validate-mcp-request-wrapper.sh
+curl -s "${HOOKS_BASE}/akto-validate-mcp-request.py" -o ~/.cursor/hooks/akto/akto-validate-mcp-request.py
+curl -s "${HOOKS_BASE}/akto-validate-mcp-response-wrapper.sh" -o ~/.cursor/hooks/akto/akto-validate-mcp-response-wrapper.sh
+curl -s "${HOOKS_BASE}/akto-validate-mcp-response.py" -o ~/.cursor/hooks/akto/akto-validate-mcp-response.py
+curl -s "${HOOKS_BASE}/akto_machine_id.py" -o ~/.cursor/hooks/akto/akto_machine_id.py
 
 # Make executable
-chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
-chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-after.sh
+chmod +x ~/.cursor/hooks/akto/*.sh
+
+# Configure URL
+sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.cursor/hooks/akto/*-wrapper.sh
 
 # Create hooks.json
-cat > ~/.cursor/hooks.json << 'EOF'
+cat > ~/.cursor/hooks.json << 'EOFHOOKS'
 {
   "version": 1,
   "hooks": {
-    "beforeMCPExecution": [
-      {
-        "command": "~/.cursor/hooks/akto/akto-mcp-guard-before.sh"
-      }
-    ],
-    "afterMCPExecution": [
-      {
-        "command": "~/.cursor/hooks/akto/akto-mcp-guard-after.sh"
-      }
-    ]
+    "beforeSubmitPrompt": [{"command": "bash ~/.cursor/hooks/akto/akto-validate-chat-prompt-wrapper.sh", "timeout": 10}],
+    "afterAgentResponse": [{"command": "bash ~/.cursor/hooks/akto/akto-validate-chat-response-wrapper.sh", "timeout": 10}],
+    "beforeMCPExecution": [{"command": "bash ~/.cursor/hooks/akto/akto-validate-mcp-request-wrapper.sh", "timeout": 10}],
+    "afterMCPExecution": [{"command": "bash ~/.cursor/hooks/akto/akto-validate-mcp-response-wrapper.sh", "timeout": 10}]
   }
 }
-EOF
+EOFHOOKS
 
-# Set API token from organization SSM/Vault
-export AKTO_API_TOKEN=$(get-secret "akto/api-token")
-
-echo "✅ Installation complete! Please restart Cursor."
+echo "✅ Installation complete! Restart Cursor."
+echo "📍 Akto instance: ${AKTO_URL}"
 ```
-{% endstep %}
 
-{% step %}
-**Distribute to Developers**
+**Deploy to developers:**
 
 ```bash
-# Option A: via email/docs
-curl -fsSL https://github.com/your-org/security-config/raw/main/deploy-cursor-hooks.sh | bash
-
-# Option B: via MDM (similar to MCP Endpoint Shield installer)
-# Create .pkg/.msi installer that runs the script
-
-# Option C: via onboarding automation
-# Add to new developer setup checklist
+curl -fsSL https://your-org.com/deploy-cursor-hooks.sh | bash -s https://your-akto-instance.com
 ```
-{% endstep %}
-{% endstepper %}
 
-### Policy Enforcement
-
-Enforce hook installation across the organization:
-
-{% tabs %}
-{% tab title="A: Pre-commit Checks" %}
-Add to your git hooks:
+## Quick Setup Summary
 
 ```bash
-#!/bin/bash
-# .git/hooks/pre-commit
+# 1. Create directories
+mkdir -p ~/.cursor/hooks/akto ~/.cursor/akto/chat-logs ~/.cursor/akto/mcp-logs
 
-if [ ! -f ~/.cursor/hooks.json ]; then
-  echo "❌ Akto MCP Shield hooks not installed!"
-  echo "Run: curl -fsSL https://setup.example.com/cursor-hooks | bash"
-  exit 1
-fi
-```
-{% endtab %}
+# 2. Download all hook scripts from GitHub (see step 2 above)
 
-{% tab title="B: CI/CD Verification" %}
-```yaml
-# .github/workflows/security-check.yml
-name: Security Compliance Check
+# 3. ⚠️ Configure Akto URL (REQUIRED)
+AKTO_URL="https://your-akto-instance.com"
+sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.cursor/hooks/akto/*-wrapper.sh
 
-on: [push, pull_request]
+# 4. Make executable
+chmod +x ~/.cursor/hooks/akto/*.sh
 
-jobs:
-  check-mcp-hooks:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Verify developer has MCP hooks
-        run: |
-          if ! grep -q "mcp-guard" ~/.cursor/hooks.json 2>/dev/null; then
-            echo "::error::MCP Shield hooks not configured"
-            exit 1
-          fi
-```
-{% endtab %}
+# 5. Create hooks.json (see step 4 above)
 
-{% tab title="Automated Monitoring" %}
-Deploy monitoring script via MDM:
-
-```bash
-#!/bin/bash
-# check-cursor-hooks-compliance.sh
-
-HOOKS_FILE="$HOME/.cursor/hooks.json"
-
-if [ ! -f "$HOOKS_FILE" ]; then
-  echo "FAIL: Hooks not configured"
-  # Report to compliance dashboard
-  curl -X POST https://compliance.example.com/report \
-    -d "user=$(whoami)&status=non-compliant&reason=hooks-missing"
-  exit 1
-fi
-
-if ! grep -q "akto-mcp-guard-before.sh" "$HOOKS_FILE"; then
-  echo "FAIL: Akto hooks not present"
-  curl -X POST https://compliance.example.com/report \
-    -d "user=$(whoami)&status=non-compliant&reason=akto-hooks-missing"
-  exit 1
-fi
-
-echo "PASS: Cursor hooks compliant"
-exit 0
-```
-{% endtab %}
-{% endtabs %}
-
-## Audit and Compliance
-
-**SOC 2 / ISO 27001 Requirements:**
-
-1. **Access Logging**: All MCP operations logged to Akto dashboard
-2. **Threat Prevention**: Real-time blocking of malicious requests/responses
-3. **Data Loss Prevention**: Detection of sensitive data exposures
-4. **Incident Response**: Automated alerting and reporting
-5. **Audit Trail**: Immutable logs for compliance audits
-6. **Complete Coverage**: Both request and response phases monitored
-
-**Generate Compliance Report:**
-
-```bash
-# From Akto Dashboard
-akto-cli reports generate \
-  --type mcp-shield \
-  --format pdf \
-  --start-date 2025-01-01 \
-  --end-date 2025-12-31 \
-  --output compliance-report-2025.pdf
+# 6. Restart Cursor
 ```
 
-### Troubleshooting
+## Comparison with Claude CLI Hooks
 
-#### Hooks Not Executing
+| Feature                | Cursor Hooks                          | Claude CLI Hooks                     |
+| ---------------------- | ------------------------------------- | ------------------------------------ |
+| **Platform**           | Cursor IDE                            | Claude CLI                           |
+| **Hook Points**        | 4 (Chat + MCP, each with req/resp)   | 2 (Prompt + Response)                |
+| **Chat Monitoring**    | ✅ Yes (beforeSubmitPrompt, afterAgentResponse) | ✅ Yes (UserPromptSubmit, Stop) |
+| **MCP Tool Monitoring**| ✅ Yes (beforeMCPExecution, afterMCPExecution) | ❌ No                          |
+| **Total Files**        | 10 files (4 wrappers, 4 Python, 1 utility, 1 config) | 6 files (2 wrappers, 2 Python, 1 utility, 1 config) |
+| **Configuration File** | `~/.cursor/hooks.json`                | `~/.claude/settings.json`            |
+| **Chat Log Location**  | `~/.cursor/akto/chat-logs/`           | `~/.claude/akto/logs/`               |
+| **MCP Log Location**   | `~/.cursor/akto/mcp-logs/`            | N/A                                  |
+| **Setup Complexity**   | More files, more comprehensive        | Fewer files, simpler                 |
 
-**Issue:** MCP operations work but hooks don't seem to run
+**See also:** [Claude CLI Hooks](claude-cli-hooks.md) for Claude CLI setup
 
-**Diagnosis:**
+## Resources
 
-```bash
-# Check if hooks.json exists
-cat ~/.cursor/hooks.json
-
-# Check if scripts exist and are executable
-ls -la ~/.cursor/hooks/akto/mcp-guard-*.sh
-
-# Check Cursor logs
-tail -f ~/Library/Logs/Cursor/main.log  # macOS
-tail -f ~/.config/Cursor/logs/main.log  # Linux
-```
-
-**Fix:**
-
-```bash
-# Ensure proper permissions
-chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
-chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-after.sh
-
-# Verify hooks.json syntax
-cat ~/.cursor/hooks.json | jq .
-
-# Restart Cursor completely
-killall Cursor && open -a Cursor
-```
-
-#### API Token Not Set
-
-**Issue:** `AKTO_API_TOKEN is not set` in logs
-
-**Fix:**
-
-```bash
-# Verify token is set
-echo $AKTO_API_TOKEN
-
-# If not set, add to shell profile
-echo 'export AKTO_API_TOKEN="your-token"' >> ~/.zshrc
-source ~/.zshrc
-
-# Or create config file
-mkdir -p ~/.akto
-echo "AKTO_API_TOKEN=your-token" > ~/.akto/config
-chmod 600 ~/.akto/config
-```
-
-#### Slow Hook Execution
-
-**Issue:** MCP operations are noticeably slower
-
-*   **Diagnosis:**
-
-    ```bash
-    # Check hook execution time
-    time ~/.cursor/hooks/akto/akto-mcp-guard-before.sh <<< '{"jsonrpc":"2.0","method":"test","id":1}'
-    ```
-*   **Fix:**
-
-    ```bash
-    # Enable async reporting
-    export AKTO_ASYNC_REPORTING="true"
-
-    # Reduce timeout
-    export AKTO_TIMEOUT="2"
-
-    # Disable verbose logging
-    export AKTO_LOG_LEVEL="error"
-    ```
-
-#### Permission Denied Errors
-
-* **Issue:** `Permission denied: ~/.cursor/hooks/akto/akto-mcp-guard-before.sh`
-*   **Fix:**
-
-    ```bash
-    # Make scripts executable
-    chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
-    chmod +x ~/.cursor/hooks/akto/akto-mcp-guard-after.sh
-
-    # Check ownership
-    ls -la ~/.cursor/hooks/akto/
-    # If wrong owner:
-    chown $(whoami) ~/.cursor/hooks/akto/mcp-guard-*.sh
-    ```
-
-#### Hook Script Crashes
-
-* **Issue:** Hook exits with error code, MCP operations fail
-*   **Diagnosis:**
-
-    ```bash
-    # Run hook manually with test input
-    echo '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"read_file","arguments":{"path":"test.txt"}},"id":1}' | \
-      ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
-
-    # Check for syntax errors
-    bash -n ~/.cursor/hooks/akto/akto-mcp-guard-before.sh
-
-    # Check dependencies
-    which jq curl
-    ```
-*   **Fix:**
-
-    ```bash
-    # Install missing dependencies
-    brew install jq  # macOS
-    apt-get install jq  # Linux
-
-    # Update hook script to latest version
-    curl -o ~/.cursor/hooks/akto/akto-mcp-guard-before.sh \
-        https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-before.sh
-    ```
-
-#### Events Not Appearing in Dashboard
-
-* **Issue:** Hooks execute but events don't appear in Akto dashboard
-*   **Diagnosis:**
-
-    ```bash
-    # Check API connectivity
-    curl -H "Authorization: Bearer $AKTO_API_TOKEN" \
-      https://app.akto.io/api/v1/health
-
-    # Check hook logs
-    cat ~/.cursor/hooks/akto/logs/mcp-guard.log | grep ERROR
-
-    # Test manual event submission
-    curl -X POST https://app.akto.io/api/v1/mcp/events \
-      -H "Authorization: Bearer $AKTO_API_TOKEN" \
-      -H "Content-Type: application/json" \
-      -d '{"event_type":"test","timestamp":"2025-12-24T10:00:00Z"}'
-    ```
-*   **Fix:**
-
-    ```bash
-    # Verify API token is valid
-    # Login to https://app.akto.io → Settings → API Tokens
-
-    # Check firewall/proxy settings
-    export https_proxy=http://proxy.company.com:8080
-
-    # Use correct Akto endpoint
-    export AKTO_ENDPOINT="https://your-instance.akto.io"
-
-    # Disable async reporting for debugging
-    export AKTO_ASYNC_REPORTING="false"
-    ```
-
-### Comparison: Cursor Hooks vs Traditional Installation
-
-| Feature                   | Cursor Hooks                 | MCP Endpoint Shield (Installer)   |
-| ------------------------- | ---------------------------- | --------------------------------- |
-| **Installation**          | Simple script + JSON config  | Requires .pkg/.deb/.exe installer |
-| **MCP Config Changes**    | None required                | Automatic config wrapping         |
-| **IDE Support**           | Cursor only                  | Cursor, VS Code, Claude Desktop   |
-| **Updates**               | Manual script update via Git | Auto-update via agent             |
-| **Enterprise Deployment** | Via script distribution      | Via MDM (Jamf, Intune)            |
-| **Multi-IDE Protection**  | Requires separate setup      | Single agent protects all IDEs    |
-| **Offline Mode**          | Limited (requires API calls) | Full offline detection available  |
-| **Customization**         | Edit hook scripts locally    | Central policy management         |
-| **Maintenance**           | Manual script updates        | Automatic via package manager     |
-| **Reporting Coverage**    | Request + Response reporting | Request + Response reporting      |
-
-**When to use Cursor Hooks:**
-
-* You only use Cursor IDE
-* Want zero-installation security
-* Need quick setup for individual developers
-* Prefer scriptable, transparent solution
-* Want to inspect/modify hook scripts
-
-**When to use Traditional Installation:**
-
-* Multiple IDEs in use (Cursor + VS Code + Claude)
-* Enterprise-wide deployment via MDM
-* Need automatic updates and centralized management
-* Require offline/air-gapped operation
-
-### Additional Resources
-
-#### Documentation
-
-* [Cursor Hooks API Reference](https://docs.cursor.com/hooks)
-
-#### Support
-
-* **Email**: [help@akto.io](mailto:help@akto.io)
-* **Discord**: [https://www.akto.io/community](https://www.akto.io/community)
-* **Slack**: Join `#mcp-endpoint-shield` channel
-
-#### Community
-
-* [Akto Blog](https://www.akto.io/blog) - Latest security insights
-* [MCP Security Best Practices](https://www.akto.io/blog/mcp-security-best-practices)
-
-{% hint style="success" %}
-#### Akto Security Scope
-
-* **Transparency**: Safe MCP traffic is never altered or delayed
-* **Clarity**: Blocked requests return standard JSON-RPC errors with clear explanations
-* **Privacy**: All data is encrypted in transit (TLS 1.3)
-* **Compliance**: SOC 2, ISO 27001, GDPR compliant
-* **Minimal Footprint**: Hooks execute in <10ms for 99.9% of requests
-* **Reliability**: Graceful degradation - if hook fails, MCP operation proceeds
-* **Complete Coverage**: Both request and response phases protected
-* **Comprehensive Reporting**: All events logged to Akto Dashboard
-{% endhint %}
-
-## **Get Started Now**
-
-```bash
-# Quick setup (30 seconds)
-curl -o ~/.cursor/hooks/akto/akto-mcp-guard-before.sh \
-  https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-before.sh
-curl -o ~/.cursor/hooks/akto/akto-mcp-guard-after.sh \
-  https://raw.githubusercontent.com/akto-api-security/akto/refs/heads/master/apps/mcp-endpoint-shield/cursor-hooks/akto-mcp-guard-after.sh
-chmod +x ~/.cursor/hooks/akto/mcp-guard-*.sh
-
-cat > ~/.cursor/hooks.json << 'EOF'
-{
-  "version": 1,
-  "hooks": {
-    "beforeMCPExecution": [{"command": "~/.cursor/hooks/akto/akto-mcp-guard-before.sh"}],
-    "afterMCPExecution": [{"command": "~/.cursor/hooks/akto/akto-mcp-guard-after.sh"}]
-  }
-}
-EOF
-
-export AKTO_API_TOKEN="your-token"
-# Restart Cursor - Done!
-```
+* **GitHub**: [https://github.com/akto-api-security/akto](https://github.com/akto-api-security/akto)
+* **Support**: [help@akto.io](mailto:help@akto.io)
+* **Community**: [https://www.akto.io/community](https://www.akto.io/community)
