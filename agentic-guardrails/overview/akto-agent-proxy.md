@@ -54,6 +54,8 @@ sequenceDiagram
 
 ## **Docker Compose Setup**
 
+### Locally running AI Agent
+
 Create a `docker-compose.yml` file to run both the AI agent and proxy containers:
 
 ```yaml
@@ -88,6 +90,33 @@ services:
       - APPLY_GUARDRAILS_TO_SSE=true
     depends_on:
       - your-agent
+    restart: always
+```
+
+### Hosted AI Agent
+
+Alternatively, if your agent is hosted elsewhere and you want to access it locally, use this `docker-compose.yml`
+
+```yaml
+version: '3.8'
+
+services:
+  akto-ai-agent-shield:
+    image: public.ecr.aws/aktosecurity/akto-ai-agent-shield:latest
+    container_name: akto-ai-agent-shield
+    ports:
+      - "8080:8080"
+    environment:
+      - AKTO_API_TOKEN=<your-akto-api-token>
+      - AKTO_API_BASE_URL=<your-akto-data-ingestion-url>
+      - APP_URL=https://juiceshop.akto.io # Change to your Agent URL
+      - PROJECT_NAME=localhost:8080
+      - APP_SERVER_NAME=localhost:8080
+      - APP_TYPE=agent
+      - AKTO_PROXY_PORT=8080
+      - SKIP_THREAT=false
+      - REQUEST_TIMEOUT=120
+      - APPLY_GUARDRAILS_TO_SSE=true
     restart: always
 ```
 
