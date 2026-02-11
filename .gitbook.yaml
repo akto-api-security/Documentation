@@ -120,6 +120,7 @@ redirects:
   agentic-ai/kong/README: migration/agentic-ai-documentation.md
   agentic-ai/kong/agentic-guardrails-kong: migration/agentic-ai-documentation.md
   agentic-ai/aws-bedrock-agents: migration/agentic-ai-documentation.md
+  aws-bedrock-agents: migration/agentic-ai-documentation.md
   ai-agents/api-grouping-agent: migration/agentic-ai-documentation.md
   ai-agents/api-vulnerability-scanner: migration/agentic-ai-documentation.md
   ai-agents/false-positive-finder: migration/agentic-ai-documentation.md
