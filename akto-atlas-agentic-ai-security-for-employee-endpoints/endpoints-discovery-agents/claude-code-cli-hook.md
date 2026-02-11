@@ -1,8 +1,8 @@
 ---
-description: Connect Akto with Claude Code CLI
+description: Connect Akto with Claude Code CLI Hook
 ---
 
-# Claude Code CLI
+# Claude Code CLI Hook
 
 ## Overview
 

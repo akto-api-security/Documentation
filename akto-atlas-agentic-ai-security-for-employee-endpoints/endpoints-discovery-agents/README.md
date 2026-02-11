@@ -5,4 +5,5 @@ Get started immediately with endpoint-based discovery agents that require no inf
 * [Browser Extensions](browser-extensions/) - Discover agents directly from Chrome, Firefox, or Safari as you browse web applications
 * [Secure Web Networks](/broken/pages/jW9EZBXjJXi46YNhykKE) - Integrate with Zscaler or Cloudflare WARP for organization-wide visibility
 * [MCP Endpoint Shield](/broken/pages/THmqsjZFR0lsSyFDaqyk) - Specialized endpoint protection and discovery for Model Context Protocol interactions
+* [Claude Code CLI Hook](claude-code-cli-hook.md) - Monitor AI traffic from your Claude Code CLI
 * [Agentic Shield](agentic-shield.md) - Application-level shield for real-time discovery and protection of AI agent interactions
