@@ -99,3 +99,4 @@ redirects:
 # Agentic AI Security Redirects
   akto-argus-agentic-ai-security-for-homegrown-ai/connectors/mcp-proxy: agentic-guardrails/overview/akto-mcp-proxy.md
   akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-proxy: agentic-guardrails/overview/akto-agent-proxy.md
+  guardrails/concepts/threat-actors: agentic-guardrails/concepts/threat-actors.md
