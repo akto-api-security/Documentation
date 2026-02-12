@@ -607,4 +607,4 @@ tail -f /var/log/jamf.log
 * [MCP Endpoint Shield Overview](./) - General installation and manual setup
 * [Cursor Hooks](../cursor-hooks.md) - Alternative: Zero-installation hooks for Cursor IDE
 * [Claude CLI Hooks](../claude-cli-hooks.md) - Alternative: Zero-installation hooks for Claude CLI
-* MCP Security - Security concepts and best practices
+* [MCP Security](../../../readme/mcp-security.md) - Security concepts and best practices
