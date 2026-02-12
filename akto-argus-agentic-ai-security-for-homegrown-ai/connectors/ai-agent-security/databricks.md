@@ -23,7 +23,7 @@ The Databricks connector automatically:
 
 Before setting up the Databricks connector, ensure you have:
 
-1. **Akto Traffic Processor Configured** - The Akto Traffic Processor must be set up first. Follow the [Hybrid SaaS Setup Guide](https://ai-security-docs.akto.io/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas) for instructions.
+1. **Traffic Processor Configured** - Your Traffic Processor must be set up first. Follow the [Hybrid SaaS Setup Guide](https://ai-security-docs.akto.io/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas) for instructions.
 2. **Databricks Workspace** - An active Databricks workspace with Unity Catalog enabled
 3. **Service Principal** - A Databricks Service Principal with appropriate permissions:
    * `USE CATALOG` permission on the target Unity Catalog

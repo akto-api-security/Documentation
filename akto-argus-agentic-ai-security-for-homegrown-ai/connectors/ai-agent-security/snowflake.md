@@ -2,7 +2,7 @@
 
 ## Overview
 
-Snowflake is a cloud-based data platform that enables organizations to build data pipelines, analytics, and AI applications. Connect Akto Argus to your Snowflake account to discover Cortex-based agents and fetch related metadata.&#x20;
+Snowflake is a cloud-based data platform that enables organizations to build data pipelines, analytics, and AI applications. Connect Akto Argus to your Snowflake account to discover Cortex-based agents and fetch related metadata.
 
 The visibility helps you identify agentic workloads running in Snowflake and assess associated security risks. Once connected, Akto Argus automatically:
 
@@ -14,7 +14,7 @@ The visibility helps you identify agentic workloads running in Snowflake and ass
 
 Before setting up the Snowflake connector, ensure you have completed the following:
 
-1. **Akto Traffic Processor** – Configure the Akto Traffic Processor first. Follow the [Hybrid SaaS Setup Guide](../others/hybrid-saas.md) for detailed instructions.
+1. **Traffic Processor** – Configure your Traffic Processor first. Follow the [Hybrid SaaS Setup Guide](../others/hybrid-saas.md) for detailed instructions.
 2. **Snowflake Account** – Active Snowflake account with Cortex AI capabilities enabled
 3. **Authentication Credentials** – One of the following authentication methods:
    * Username and password
@@ -29,7 +29,7 @@ Before setting up the Snowflake connector, ensure you have completed the followi
 
 {% stepper %}
 {% step %}
-### Open the Snowflake Connector in Akto Argus
+#### Open the Snowflake Connector in Akto Argus
 
 1. Navigate to **Akto Argus**.
 2. Open **Connectors**.
@@ -40,7 +40,7 @@ Before setting up the Snowflake connector, ensure you have completed the followi
 {% endstep %}
 
 {% step %}
-### Enter the Snowflake Account URL
+#### Enter the Snowflake Account URL
 
 Enter the base URL of your Snowflake account in the **Snowflake Account URL** field.
 
@@ -52,7 +52,7 @@ Enter the base URL of your Snowflake account in the **Snowflake Account URL** fi
 {% endstep %}
 
 {% step %}
-### Select the Authentication Method
+#### Select the Authentication Method
 
 Select the authentication method used to access your Snowflake account from the **Authentication Method** dropdown.
 
@@ -101,7 +101,7 @@ Enter a valid Snowflake OAuth access token in the **OAuth Token** field.
 {% endstep %}
 
 {% step %}
-### Specify Warehouse, Database, and Schema(Optional)
+#### Specify Warehouse, Database, and Schema(Optional)
 
 You may optionally specify:
 
@@ -115,12 +115,12 @@ These fields control query execution context.
 {% endstep %}
 
 {% step %}
-### Enter the Data Ingestion Service URL
+#### Enter the Data Ingestion Service URL
 
 Enter the URL of your **self-hosted data ingestion service** in the **URL for Data Ingestion Service** field in order to forward agent execution and telemetry data into your environment for processing.
 
 {% hint style="warning" %}
-## Note
+### Note
 
 * The ingestion service must be deployed and exposed in your infrastructure.
 * The URL must be reachable from Akto.
@@ -129,7 +129,7 @@ Enter the URL of your **self-hosted data ingestion service** in the **URL for Da
 {% endstep %}
 
 {% step %}
-### Complete the Integration
+#### Complete the Integration
 
 1. Review all entered values.
 2. Select **Import** to finalize the connection.

@@ -18,13 +18,13 @@ The Akto Copilot Studio connector automatically:
 
 {% stepper %}
 {% step %}
-#### Configure Akto Traffic Processor
+**Configure Akto Traffic Processor**
 
-Set up and configure Akto Traffic Processor. The steps are mentioned [here](../others/hybrid-saas.md).
+Set up and configure your Traffic Processor. The steps are mentioned [here](../others/hybrid-saas.md).
 {% endstep %}
 
 {% step %}
-#### Set Up Application Insights
+**Set Up Application Insights**
 
 To monitor your Copilot Studio application, you need to configure Azure Application Insights:
 
@@ -37,7 +37,7 @@ To monitor your Copilot Studio application, you need to configure Azure Applicat
 {% endstep %}
 
 {% step %}
-#### Clone the Akto Infrastructure Repository
+**Clone the Akto Infrastructure Repository**
 
 Clone the Akto infrastructure repository:
 
@@ -51,7 +51,7 @@ wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/featur
 {% endstep %}
 
 {% step %}
-#### Configure Copilot Studio Environment Variables
+**Configure Copilot Studio Environment Variables**
 
 Update the following variables in the `copilot-cron.env` file:
 
@@ -63,7 +63,7 @@ AKTO_KAFKA_BROKER_URL=kafka1:19092
 {% endstep %}
 
 {% step %}
-#### Start the Copilot Studio Traffic Connector
+**Start the Copilot Studio Traffic Connector**
 
 Run the following command to start the Copilot Studio traffic connector:
 
