@@ -100,3 +100,4 @@ redirects:
   akto-argus-agentic-ai-security-for-homegrown-ai/connectors/mcp-proxy: agentic-guardrails/overview/akto-mcp-proxy.md
   akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-proxy: agentic-guardrails/overview/akto-agent-proxy.md
   guardrails/concepts/threat-actors: agentic-guardrails/concepts/threat-actors.md
+  akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/claude-code-cli: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/claude-cli-hooks.md

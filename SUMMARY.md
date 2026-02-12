@@ -44,7 +44,6 @@
     * [LangChain](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/langchain.md)
     * [Microsoft Copilot Studio](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/microsoft-copilot-studio.md)
     * [LiteLLM](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/litellm.md)
-    * [Claude Code CLI](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/claude-code-cli.md)
     * [Azure AI Foundry](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/azure-ai-foundry.md)
     * [Snowflake](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/snowflake.md)
   * [AI Model Security](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-model-security.md)
