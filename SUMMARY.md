@@ -46,6 +46,7 @@
     * [LiteLLM](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/litellm.md)
     * [Azure AI Foundry](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/azure-ai-foundry.md)
     * [Snowflake](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/snowflake.md)
+  * [Portkey](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/portkey.md)
   * [AI Model Security](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-model-security.md)
   * [Others](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md)
     * [Connect Akto with Hybrid SaaS](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md)
