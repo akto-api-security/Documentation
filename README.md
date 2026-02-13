@@ -2,23 +2,6 @@
 description: Welcome to Akto Agentic AI Security!
 cover: .gitbook/assets/Agentic Security Cover page (5).png
 coverY: 0
-layout:
-  width: default
-  cover:
-    visible: true
-    size: full
-  title:
-    visible: true
-  description:
-    visible: true
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
-  metadata:
-    visible: true
 ---
 
 # Akto Agentic AI Security
