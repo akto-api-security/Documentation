@@ -51,6 +51,55 @@ In the demonstration below, we have imported the API traffic data to our Akto ac
 Import Postman collection file
 {% endembed %}
 
+## Using Variables in Postman Collection File
+
+Akto supports **collection-level variables** in Postman collection files. Variables allow you to parameterize URLs, headers, request bodies, and authentication values using the `{{variableName}}` syntax.
+
+### How to Add Variables
+
+Add a `variable` array at the root level of your Postman collection JSON file. Each variable needs a `key` and a `value`:
+
+```json
+{
+  "info": {
+    "name": "My API Collection",
+    "_postman_id": "abc-123",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get Users",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/users",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "users"]
+        },
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "{{apiKey}}"
+          }
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.example.com"
+    },
+    {
+      "key": "apiKey",
+      "value": "my-secret-key"
+    }
+  ]
+}
+```
+
+To ensure all your variables are resolved correctly, define them in the collection's `variable` array before uploading. If you are using environment-specific values in Postman, copy those values into collection-level variables before exporting.
+
 ### What's next?
 
 Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.
