@@ -22,6 +22,7 @@
   * [OpenClaw (Clawdbot) Visibility](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/openclaw-clawdbot-visibility.md)
   * [Cursor Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/cursor-hooks.md)
   * [Claude CLI Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/claude-cli-hooks.md)
+  * [Gemini CLI Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/gemini-cli-hooks.md)
   * [Agentic Shield](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/agentic-shield.md)
 * [AI Agent Activity](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/README.md)
   * [Agentic Assets](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-assets/README.md)
