@@ -40,7 +40,7 @@ Enter the following information:
 The API key must have sufficient permissions to invoke the selected model.
 
 {% hint style="success" %}
-### Supported Model Providers in Add Model
+### Supported Models
 
 Akto supports the following providers when you configure a model in **Add Model**:
 
