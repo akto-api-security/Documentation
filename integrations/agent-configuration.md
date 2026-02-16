@@ -38,6 +38,22 @@ Enter the following information:
 <figure><img src="../.gitbook/assets/Screenshot 2026-01-08 at 7.30.00 PM.png" alt="" width="563"><figcaption></figcaption></figure>
 
 The API key must have sufficient permissions to invoke the selected model.
+
+{% hint style="success" %}
+### Supported Model Providers in Add Model
+
+Akto supports the following providers when you configure a model in **Add Model**:
+
+* **OpenAI**\
+  Supported models: `gpt-4o`, `gpt-4o-mini`
+* **Anthropic**\
+  Supported models: Claude 3.5 Haiku, Claude 3 Haiku, Claude 3.7 Sonnet, Claude 3.5 Sonnet
+* **Azure OpenAI**\
+  **Additional** **Requirement**: Azure OpenAI server endpoint
+* **Ollama**\
+  Supported models: `qwen2.5:0.5b`, `qwen3:8b`, `qwen3:latest`\
+  **Additional** **Requirement**: Ollama server endpoint
+{% endhint %}
 {% endstep %}
 
 {% step %}
