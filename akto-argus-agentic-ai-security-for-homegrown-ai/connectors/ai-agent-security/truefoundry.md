@@ -126,7 +126,7 @@ Fill in the guardrails form for input/output validation:
 4. **Enforcing Strategy**: Choose **Enforce**, this will block requests that fail validation
 5. **Target**: Request (for input guardrails) or Response (for output guardrails)
 6. **Config**: 
-* **URL**: Enter your Akto Data Ingestion Service URL (e.g., `https://<your-akto-host>:<port>/api/http-proxy/truefoundry?sync=true/false`)
+    * **URL**: Enter your Akto Data Ingestion Service URL (e.g., `https://<your-akto-host>:<port>/api/http-proxy/truefoundry?sync=true/false`)
 
 {% hint style="info" %}
 You can add multiple guardrails for different validation rules (e.g., one for input validation, another for output monitoring). Just click on **Add Guardrails** and repeat the above steps and change the **Operation** and **Target** accordingly.
@@ -147,15 +147,15 @@ Guardrails are only applied in the Playground and not in production traffic. You
 {% endhint %}
 
 2. **At the Controls Page**
-1. Navigate to the **Controls** tab in the TrueFoundry AI Gateway dashboard
-2. Click on Guardrails
-3. Click on **Add Rule**
-4. Fill in the form:
-* **Rule ID**: `akto-guardrail` (or your preferred name)
-* **When Request Goes To**: Select the model(s) you want to apply the guardrail to (e.g., `gpt-4`, `claude-2`, etc.)
-* **From Subjects**: Select the users/teams you want to include/exclude from the guardrail
-* **Apply on Hooks**: Select the specific LLM Hook (input/output) and choose the corresponding guardrail that you created.
-5. Click on **Submit** to save the rule.
+   1. Navigate to the **Controls** tab in the TrueFoundry AI Gateway dashboard
+   2. Click on Guardrails
+   3. Click on **Add Rule**
+   4. Fill in the form:
+      * **Rule ID**: `akto-guardrail` (or your preferred name)
+      * **When Request Goes To**: Select the model(s) you want to apply the guardrail to (e.g., `gpt-4`, `claude-2`, etc.)
+      * **From Subjects**: Select the users/teams you want to include/exclude from the guardrail
+      * **Apply on Hooks**: Select the specific LLM Hook (input/output) and choose the corresponding guardrail that you created.
+   5. Click on **Submit** to save the rule.
 {% endstep %}
 {% endstepper %}
 
