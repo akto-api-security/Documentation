@@ -113,7 +113,7 @@ curl -o ~/.gemini/hooks/akto_machine_id.py \
   "${HOOKS_BASE}/akto_machine_id.py"
 
 # Make executable
-chmod +x ~/.gemini/hooks/*.sh
+chmod +x ~/.gemini/hooks/*.py ~/.gemini/hooks/*.sh
 ```
 {% endstep %}
 
@@ -223,17 +223,6 @@ GEMINI_API_URL="https://generativelanguage.googleapis.com"
 {% endstep %}
 
 {% step %}
-**Install Python Dependencies**
-
-```bash
-pip3 install requests
-
-# Verify installation
-python3 -c "import requests; print('Requests installed successfully')"
-```
-{% endstep %}
-
-{% step %}
 **Verify Installation**
 
 Check logs to confirm hooks are working:
@@ -268,28 +257,13 @@ GEMINI_API_URL="https://generativelanguage.googleapis.com"
 
 ### Environment Variables (Optional)
 
-Override defaults via environment variables or config file:
+Override defaults via environment variables (e.g. in `~/.bashrc` or `~/.zshrc`):
 
-**Option 1: Environment variables**
 ```bash
 export MODE="atlas"
 export AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
 export AKTO_SYNC_MODE="true"
 export AKTO_TIMEOUT="5"
-```
-
-**Option 2: Config file**
-```bash
-# Create ~/.gemini/akto/config
-cat > ~/.gemini/akto/config << 'EOF'
-AKTO_DATA_INGESTION_URL=https://your-akto-instance.com
-AKTO_TIMEOUT=5
-GEMINI_API_URL=https://generativelanguage.googleapis.com
-AKTO_SYNC_MODE=true
-MODE=atlas
-EOF
-
-chmod 600 ~/.gemini/akto/config
 ```
 
 ## Managing Hooks (Gemini CLI)
@@ -312,7 +286,7 @@ cat ~/.gemini/settings.json | python3 -m json.tool
 
 # Verify scripts are executable
 ls -la ~/.gemini/hooks/
-chmod +x ~/.gemini/hooks/*.sh
+chmod +x ~/.gemini/hooks/*.py ~/.gemini/hooks/*.sh
 
 # Check Gemini CLI and hook panel
 gemini
@@ -350,16 +324,6 @@ curl -X POST "${AKTO_DATA_INGESTION_URL}/api/v1/events" \
 
 # Verify URL in wrapper scripts
 grep "AKTO_DATA_INGESTION_URL" ~/.gemini/hooks/*-wrapper.sh
-```
-
-### Python Dependencies Missing
-
-```bash
-# Install required packages
-pip3 install requests
-
-# Verify installation
-python3 -c "import requests; print(requests.__version__)"
 ```
 
 ### Hook Timing Out
@@ -452,20 +416,10 @@ curl -s "${HOOKS_BASE}/akto-validate-response.py" -o ~/.gemini/hooks/akto-valida
 curl -s "${HOOKS_BASE}/akto_machine_id.py" -o ~/.gemini/hooks/akto_machine_id.py
 
 # Make executable
-chmod +x ~/.gemini/hooks/*.sh
+chmod +x ~/.gemini/hooks/*.py ~/.gemini/hooks/*.sh
 
 # Configure URL
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.gemini/hooks/*-wrapper.sh
-
-# Create config file
-cat > ~/.gemini/akto/config << EOFCONFIG
-AKTO_DATA_INGESTION_URL=${AKTO_URL}
-AKTO_TIMEOUT=5
-GEMINI_API_URL=https://generativelanguage.googleapis.com
-AKTO_SYNC_MODE=true
-MODE=atlas
-EOFCONFIG
-chmod 600 ~/.gemini/akto/config
 
 # Create settings.json
 cat > ~/.gemini/settings.json << 'EOFSETTINGS'
@@ -502,9 +456,6 @@ cat > ~/.gemini/settings.json << 'EOFSETTINGS'
   }
 }
 EOFSETTINGS
-
-# Install dependencies
-pip3 install requests
 
 echo "✅ Installation complete!"
 echo "📍 Akto instance: ${AKTO_URL}"
@@ -545,14 +496,11 @@ AKTO_URL="https://your-akto-instance.com"
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.gemini/hooks/*-wrapper.sh
 
 # 4. Make executable
-chmod +x ~/.gemini/hooks/*.sh
+chmod +x ~/.gemini/hooks/*.py ~/.gemini/hooks/*.sh
 
 # 5. Create settings.json (see step 4 above)
 
-# 6. Install dependencies
-pip3 install requests
-
-# 7. Test
+# 6. Test
 gemini
 ```
 
