@@ -94,7 +94,7 @@ mkdir -p ~/.gemini/akto/chat-logs
 
 ```bash
 # Base URL for downloading hooks
-HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/apps/mcp-endpoint-shield/gemini-cli-hooks"
+HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/agent-hooks/apps/mcp-endpoint-shield/gemini-cli-hooks"
 
 # Download prompt validation hooks
 curl -o ~/.gemini/hooks/akto-validate-prompt-wrapper.sh \
@@ -408,7 +408,7 @@ echo "🔧 Installing Akto Guardrails for Gemini CLI..."
 mkdir -p ~/.gemini/hooks ~/.gemini/akto/chat-logs
 
 # Download hooks
-HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/apps/mcp-endpoint-shield/gemini-cli-hooks"
+HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/agent-hooks/apps/mcp-endpoint-shield/gemini-cli-hooks"
 curl -s "${HOOKS_BASE}/akto-validate-prompt-wrapper.sh" -o ~/.gemini/hooks/akto-validate-prompt-wrapper.sh
 curl -s "${HOOKS_BASE}/akto-validate-prompt.py" -o ~/.gemini/hooks/akto-validate-prompt.py
 curl -s "${HOOKS_BASE}/akto-validate-response-wrapper.sh" -o ~/.gemini/hooks/akto-validate-response-wrapper.sh
