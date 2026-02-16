@@ -54,6 +54,7 @@ sequenceDiagram
 ```
 
 **4 Hook Points:**
+
 1. `beforeSubmitPrompt` - Validates chat prompts before sending to AI
 2. `afterAgentResponse` - Validates AI responses before displaying
 3. `beforeMCPExecution` - Validates MCP tool requests before execution
@@ -85,6 +86,7 @@ sequenceDiagram
 ```
 
 **Key Files:**
+
 * **Wrapper scripts (`.sh`)**: Set environment variables, invoke Python scripts
   * ⚠️ **Contains `AKTO_DATA_INGESTION_URL` placeholder** - Must be replaced with your Akto instance URL
 * **Python scripts (`.py`)**: Core validation logic and Akto API communication
@@ -171,19 +173,23 @@ grep "AKTO_DATA_INGESTION_URL" ~/.cursor/hooks/akto/*-wrapper.sh
 **Manual replacement (alternative):**
 
 Edit each wrapper script and replace:
+
 ```bash
 AKTO_DATA_INGESTION_URL="{{AKTO_DATA_INGESTION_URL}}"
 ```
+
 With:
+
 ```bash
 AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
 ```
 
 Files to update:
-- `akto-validate-chat-prompt-wrapper.sh`
-- `akto-validate-chat-response-wrapper.sh`
-- `akto-validate-mcp-request-wrapper.sh`
-- `akto-validate-mcp-response-wrapper.sh`
+
+* `akto-validate-chat-prompt-wrapper.sh`
+* `akto-validate-chat-response-wrapper.sh`
+* `akto-validate-mcp-request-wrapper.sh`
+* `akto-validate-mcp-response-wrapper.sh`
 {% endstep %}
 
 {% step %}
@@ -241,10 +247,12 @@ AKTO_CONNECTOR="claude_code_cli"
 ```
 
 **Mode Options:**
+
 * **Argus**: Standard validation and reporting
 * **Atlas**: Includes device-specific metadata
 
 **Sync Mode:**
+
 * **true**: Blocks threats
 * **false**: Reports but allows execution
 {% endstep %}
@@ -489,22 +497,22 @@ chmod +x ~/.cursor/hooks/akto/*.sh
 
 ## Comparison with Claude CLI Hooks
 
-| Feature                | Cursor Hooks                          | Claude CLI Hooks                     |
-| ---------------------- | ------------------------------------- | ------------------------------------ |
-| **Platform**           | Cursor IDE                            | Claude CLI                           |
-| **Hook Points**        | 4 (Chat + MCP, each with req/resp)   | 2 (Prompt + Response)                |
-| **Chat Monitoring**    | ✅ Yes (beforeSubmitPrompt, afterAgentResponse) | ✅ Yes (UserPromptSubmit, Stop) |
-| **MCP Tool Monitoring**| ✅ Yes (beforeMCPExecution, afterMCPExecution) | ❌ No                          |
-| **Total Files**        | 10 files (4 wrappers, 4 Python, 1 utility, 1 config) | 6 files (2 wrappers, 2 Python, 1 utility, 1 config) |
-| **Configuration File** | `~/.cursor/hooks.json`                | `~/.claude/settings.json`            |
-| **Chat Log Location**  | `~/.cursor/akto/chat-logs/`           | `~/.claude/akto/logs/`               |
-| **MCP Log Location**   | `~/.cursor/akto/mcp-logs/`            | N/A                                  |
-| **Setup Complexity**   | More files, more comprehensive        | Fewer files, simpler                 |
+| Feature                 | Cursor Hooks                                         | Claude CLI Hooks                                    |
+| ----------------------- | ---------------------------------------------------- | --------------------------------------------------- |
+| **Platform**            | Cursor IDE                                           | Claude CLI                                          |
+| **Hook Points**         | 4 (Chat + MCP, each with req/resp)                   | 2 (Prompt + Response)                               |
+| **Chat Monitoring**     | ✅ Yes (beforeSubmitPrompt, afterAgentResponse)       | ✅ Yes (UserPromptSubmit, Stop)                      |
+| **MCP Tool Monitoring** | ✅ Yes (beforeMCPExecution, afterMCPExecution)        | ❌ No                                                |
+| **Total Files**         | 10 files (4 wrappers, 4 Python, 1 utility, 1 config) | 6 files (2 wrappers, 2 Python, 1 utility, 1 config) |
+| **Configuration File**  | `~/.cursor/hooks.json`                               | `~/.claude/settings.json`                           |
+| **Chat Log Location**   | `~/.cursor/akto/chat-logs/`                          | `~/.claude/akto/logs/`                              |
+| **MCP Log Location**    | `~/.cursor/akto/mcp-logs/`                           | N/A                                                 |
+| **Setup Complexity**    | More files, more comprehensive                       | Fewer files, simpler                                |
 
 **See also:** [Claude CLI Hooks](claude-cli-hooks.md) for Claude CLI setup
 
 ## Resources
 
 * **GitHub**: [https://github.com/akto-api-security/akto](https://github.com/akto-api-security/akto)
-* **Support**: [help@akto.io](mailto:help@akto.io)
+* **Support**: [support@akto.io](mailto:support@akto.io)
 * **Community**: [https://www.akto.io/community](https://www.akto.io/community)

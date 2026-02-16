@@ -41,6 +41,7 @@ sequenceDiagram
 ```
 
 **2 Hook Points:**
+
 1. `BeforeModel` - Validates prompts before sending to Gemini API
 2. `AfterModel` - Ingests prompt/response when Gemini finishes (final chunk)
 
@@ -60,6 +61,7 @@ sequenceDiagram
 ```
 
 **Key Files:**
+
 * **Wrapper scripts (`.sh`)**: Set environment variables, invoke Python scripts
   * ⚠️ **Contains `AKTO_DATA_INGESTION_URL` placeholder** - Must be replaced with your Akto instance URL
 * **Python scripts (`.py`)**: Core validation logic and Akto API communication
@@ -140,17 +142,21 @@ grep "AKTO_DATA_INGESTION_URL" ~/.gemini/hooks/*-wrapper.sh
 **Manual replacement (alternative):**
 
 Edit each wrapper script and replace:
+
 ```bash
 AKTO_DATA_INGESTION_URL="{{AKTO_DATA_INGESTION_URL}}"
 ```
+
 With:
+
 ```bash
 AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
 ```
 
 Files to update:
-- `akto-validate-prompt-wrapper.sh`
-- `akto-validate-response-wrapper.sh`
+
+* `akto-validate-prompt-wrapper.sh`
+* `akto-validate-response-wrapper.sh`
 {% endstep %}
 
 {% step %}
@@ -214,10 +220,12 @@ GEMINI_API_URL="https://generativelanguage.googleapis.com"
 ```
 
 **Mode Options:**
+
 * **Argus**: Standard validation and reporting
 * **Atlas**: Includes device-specific metadata
 
 **Sync Mode:**
+
 * **true**: Blocks threats
 * **false**: Reports but allows execution
 {% endstep %}
@@ -268,13 +276,13 @@ export AKTO_TIMEOUT="5"
 
 ## Managing Hooks (Gemini CLI)
 
-| Command | Description |
-|---------|-------------|
-| `/hooks panel` | View hook execution status and recent output |
-| `/hooks enable-all` | Enable all hooks |
-| `/hooks disable-all` | Disable all hooks |
-| `/hooks enable <name>` | Enable a specific hook |
-| `/hooks disable <name>` | Disable a specific hook |
+| Command                 | Description                                  |
+| ----------------------- | -------------------------------------------- |
+| `/hooks panel`          | View hook execution status and recent output |
+| `/hooks enable-all`     | Enable all hooks                             |
+| `/hooks disable-all`    | Disable all hooks                            |
+| `/hooks enable <name>`  | Enable a specific hook                       |
+| `/hooks disable <name>` | Disable a specific hook                      |
 
 ## Troubleshooting
 
@@ -470,16 +478,16 @@ curl -fsSL https://your-org.com/deploy-gemini-cli-hooks.sh | bash -s https://you
 
 ## Comparison with Cursor Hooks
 
-| Feature                | Gemini CLI Hooks                     | Cursor Hooks                          |
-| ---------------------- | ------------------------------------ | ------------------------------------- |
-| **Platform**           | Gemini CLI                           | Cursor IDE                            |
-| **Hook Points**        | 2 (Prompt + Response)                | 4 (Chat + MCP, each with req/resp)   |
-| **Chat Monitoring**    | ✅ Yes (BeforeModel, AfterModel)      | ✅ Yes (beforeSubmitPrompt, afterAgentResponse) |
-| **MCP Tool Monitoring** | ❌ No                                | ✅ Yes (beforeMCPExecution, afterMCPExecution) |
-| **Total Files**        | 6 files (2 wrappers, 2 Python, 1 utility, 1 config) | 10 files (4 wrappers, 4 Python, 1 utility, 1 config) |
-| **Configuration File** | `~/.gemini/settings.json`            | `~/.cursor/hooks.json`                |
-| **Log Location**       | `~/.gemini/akto/chat-logs/`          | `~/.cursor/akto/chat-logs/` + `~/.cursor/akto/mcp-logs/` |
-| **Setup Complexity**   | Fewer files, simpler                 | More files, more comprehensive        |
+| Feature                 | Gemini CLI Hooks                                    | Cursor Hooks                                             |
+| ----------------------- | --------------------------------------------------- | -------------------------------------------------------- |
+| **Platform**            | Gemini CLI                                          | Cursor IDE                                               |
+| **Hook Points**         | 2 (Prompt + Response)                               | 4 (Chat + MCP, each with req/resp)                       |
+| **Chat Monitoring**     | ✅ Yes (BeforeModel, AfterModel)                     | ✅ Yes (beforeSubmitPrompt, afterAgentResponse)           |
+| **MCP Tool Monitoring** | ❌ No                                                | ✅ Yes (beforeMCPExecution, afterMCPExecution)            |
+| **Total Files**         | 6 files (2 wrappers, 2 Python, 1 utility, 1 config) | 10 files (4 wrappers, 4 Python, 1 utility, 1 config)     |
+| **Configuration File**  | `~/.gemini/settings.json`                           | `~/.cursor/hooks.json`                                   |
+| **Log Location**        | `~/.gemini/akto/chat-logs/`                         | `~/.cursor/akto/chat-logs/` + `~/.cursor/akto/mcp-logs/` |
+| **Setup Complexity**    | Fewer files, simpler                                | More files, more comprehensive                           |
 
 **See also:** [Claude CLI Hooks](claude-cli-hooks.md) for Claude CLI setup · [Cursor Hooks](cursor-hooks.md) for Cursor IDE setup
 
@@ -508,5 +516,5 @@ gemini
 
 * **Gemini CLI**: [https://geminicli.com/](https://geminicli.com/)
 * **GitHub**: [https://github.com/akto-api-security/akto](https://github.com/akto-api-security/akto)
-* **Support**: [help@akto.io](mailto:help@akto.io)
+* **Support**: [support@akto.io](mailto:support@akto.io)
 * **Community**: [https://www.akto.io/community](https://www.akto.io/community)

@@ -41,6 +41,7 @@ sequenceDiagram
 ```
 
 **2 Hook Points:**
+
 1. `UserPromptSubmit` - Validates prompts before sending to Claude API
 2. `Stop` - Validates responses when Claude finishes generating
 
@@ -62,6 +63,7 @@ sequenceDiagram
 ```
 
 **Key Files:**
+
 * **Wrapper scripts (`.sh`)**: Set environment variables, invoke Python scripts
   * ⚠️ **Contains `AKTO_DATA_INGESTION_URL` placeholder** - Must be replaced with your Akto instance URL
 * **Python scripts (`.py`)**: Core validation logic and Akto API communication
@@ -140,17 +142,21 @@ grep "AKTO_DATA_INGESTION_URL" ~/.claude/hooks/*-wrapper.sh
 **Manual replacement (alternative):**
 
 Edit each wrapper script and replace:
+
 ```bash
 AKTO_DATA_INGESTION_URL="{{AKTO_DATA_INGESTION_URL}}"
 ```
+
 With:
+
 ```bash
 AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
 ```
 
 Files to update:
-- `akto-validate-prompt-wrapper.sh`
-- `akto-validate-response-wrapper.sh`
+
+* `akto-validate-prompt-wrapper.sh`
+* `akto-validate-response-wrapper.sh`
 {% endstep %}
 
 {% step %}
@@ -205,10 +211,12 @@ AKTO_CONNECTOR="claude_code_cli"
 ```
 
 **Mode Options:**
+
 * **Argus**: Standard validation and reporting
 * **Atlas**: Includes device-specific metadata
 
 **Sync Mode:**
+
 * **true**: Blocks threats
 * **false**: Reports but allows execution
 {% endstep %}
@@ -263,6 +271,7 @@ CLAUDE_API_URL="https://api.anthropic.com"             # Claude API endpoint
 Override defaults via environment variables or config file:
 
 **Option 1: Environment variables**
+
 ```bash
 export MODE="atlas"
 export AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
@@ -271,6 +280,7 @@ export AKTO_TIMEOUT="5"
 ```
 
 **Option 2: Config file**
+
 ```bash
 # Create ~/.claude/akto/config
 cat > ~/.claude/akto/config << 'EOF'
@@ -491,16 +501,16 @@ curl -fsSL https://your-org.com/deploy-claude-cli-hooks.sh | bash -s https://you
 
 ## Comparison with Cursor Hooks
 
-| Feature                | Claude CLI Hooks                     | Cursor Hooks                          |
-| ---------------------- | ------------------------------------ | ------------------------------------- |
-| **Platform**           | Claude CLI                           | Cursor IDE                            |
-| **Hook Points**        | 2 (Prompt + Response)                | 4 (Chat + MCP, each with req/resp)   |
-| **Chat Monitoring**    | ✅ Yes (UserPromptSubmit, Stop)      | ✅ Yes (beforeSubmitPrompt, afterAgentResponse) |
-| **MCP Tool Monitoring**| ❌ No                                | ✅ Yes (beforeMCPExecution, afterMCPExecution) |
-| **Total Files**        | 6 files (2 wrappers, 2 Python, 1 utility, 1 config) | 10 files (4 wrappers, 4 Python, 1 utility, 1 config) |
-| **Configuration File** | `~/.claude/settings.json`            | `~/.cursor/hooks.json`                |
-| **Log Location**       | `~/.claude/akto/logs/`               | `~/.cursor/akto/chat-logs/` + `~/.cursor/akto/mcp-logs/` |
-| **Setup Complexity**   | Fewer files, simpler                 | More files, more comprehensive        |
+| Feature                 | Claude CLI Hooks                                    | Cursor Hooks                                             |
+| ----------------------- | --------------------------------------------------- | -------------------------------------------------------- |
+| **Platform**            | Claude CLI                                          | Cursor IDE                                               |
+| **Hook Points**         | 2 (Prompt + Response)                               | 4 (Chat + MCP, each with req/resp)                       |
+| **Chat Monitoring**     | ✅ Yes (UserPromptSubmit, Stop)                      | ✅ Yes (beforeSubmitPrompt, afterAgentResponse)           |
+| **MCP Tool Monitoring** | ❌ No                                                | ✅ Yes (beforeMCPExecution, afterMCPExecution)            |
+| **Total Files**         | 6 files (2 wrappers, 2 Python, 1 utility, 1 config) | 10 files (4 wrappers, 4 Python, 1 utility, 1 config)     |
+| **Configuration File**  | `~/.claude/settings.json`                           | `~/.cursor/hooks.json`                                   |
+| **Log Location**        | `~/.claude/akto/logs/`                              | `~/.cursor/akto/chat-logs/` + `~/.cursor/akto/mcp-logs/` |
+| **Setup Complexity**    | Fewer files, simpler                                | More files, more comprehensive                           |
 
 **See also:** [Cursor Hooks](cursor-hooks.md) for Cursor IDE setup
 
@@ -532,5 +542,5 @@ claude "What is 2+2?"
 
 * **Claude CLI**: [https://github.com/anthropics/claude-cli](https://github.com/anthropics/claude-cli)
 * **GitHub**: [https://github.com/akto-api-security/akto](https://github.com/akto-api-security/akto)
-* **Support**: [help@akto.io](mailto:help@akto.io)
+* **Support**: [support@akto.io](mailto:support@akto.io)
 * **Community**: [https://www.akto.io/community](https://www.akto.io/community)
