@@ -33,7 +33,7 @@ To monitor your Copilot Studio application, you need to configure Azure Applicat
 2. **Configure Your Copilot in Copilot Studio**:
    * Follow the [Copilot Studio Application Insights integration guide](https://learn.microsoft.com/en-us/microsoft-copilot-studio/advanced-bot-framework-composer-capture-telemetry) to connect your copilot to Application Insights
 3. **Get Your Application Insights Credentials**:
-   * Follow the [API Access documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/app/api-filtering) to get your Application ID and create an API Key with "Read telemetry" permission
+   * Follow the [API Access documentation](https://learn.microsoft.com/en-us/azure/bot-service/bot-service-resources-app-insights-keys?view=azure-bot-service-4.0) to get your Application ID and create an API Key with "Read telemetry" permission
 {% endstep %}
 
 {% step %}
