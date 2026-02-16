@@ -47,6 +47,7 @@
     * [Azure AI Foundry](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/azure-ai-foundry.md)
     * [Snowflake](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/snowflake.md)
     * [Portkey](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/portkey.md)
+    * [Vertex AI Custom Deployed Model](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/vertex-ai-custom-deployed-model.md)
   * [AI Model Security](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-model-security.md)
   * [Others](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md)
     * [Connect Akto with Hybrid SaaS](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md)
