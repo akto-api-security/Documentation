@@ -319,6 +319,7 @@
   * [GitLab](integrations/ci-cd-integrations/gitlab.md)
   * [Generic CI/CD](integrations/ci-cd-integrations/docker.md)
   * [How To](integrations/ci-cd-integrations/how-to/README.md)
+    * [Implement CI/CD Best Practices](integrations/ci-cd-integrations/how-to/implement-ci-cd-best-practices.md)
     * [Run tests in CI/CD](integrations/ci-cd-integrations/how-to/run-tests-in-cicd.md)
     * [Add test to CI/CD Pipeline](integrations/ci-cd-integrations/how-to/add-test-to-ci-cd-pipeline.md)
     * [Get API Credentials](integrations/ci-cd-integrations/how-to/get-api-credentials.md)
