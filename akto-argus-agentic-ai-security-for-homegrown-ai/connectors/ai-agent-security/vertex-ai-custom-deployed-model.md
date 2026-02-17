@@ -1,12 +1,16 @@
 ---
-description: Connect Akto with Google BigQuery for Vertex AI Logs
+description: Connect Akto with Google BigQuery for Vertex AI Custom Deployed Model Logs
 ---
 
-# Google BigQuery
+# Vertex AI Custom Deployed Model Logs
 
 ## Overview
 
-Akto can automatically fetch Vertex AI model prediction logs from BigQuery and analyze them for security issues. This integration allows you to monitor your AI models deployed on Vertex AI by ingesting prediction logs into Akto.
+Akto can automatically fetch Vertex AI Custom Deployed Model prediction logs from BigQuery and analyze them for security issues. This integration allows you to monitor your AI models deployed on Vertex AI by ingesting prediction logs into Akto.
+
+{% hint style="info" %}
+This method only works for **custom models** deployed on Vertex AI. It does not support default provided models (e.g. Gemini) in the Vertex platform.
+{% endhint %}
 
 ## Prerequisites
 
@@ -19,9 +23,9 @@ Akto can automatically fetch Vertex AI model prediction logs from BigQuery and a
 
 {% stepper %}
 {% step %}
-**Enable BigQuery Logging for Vertex AI**
+**Enable BigQuery Logging for Vertex AI Custom Deployed Model**
 
-First, configure your Vertex AI endpoint to log predictions to BigQuery.
+First, configure your Vertex AI Custom Deployed Model endpoint to log predictions to BigQuery.
 
 ### Via Console
 
@@ -134,12 +138,12 @@ If Akto is running outside of GCP (e.g., On-Prem, AWS, Local Docker), use a Serv
 {% step %}
 **Configure Akto Job**
 
-In the Akto Dashboard, configure the BigQuery connector with the following fields:
+In the Akto Dashboard, configure the Vertex AI Custom Deployed Model connector with the following fields:
 
 | Field | Description | Required | Example |
 | :--- | :--- | :--- | :--- |
 | **GCP Project ID** | Your Google Cloud Platform project ID containing the BigQuery dataset. | Yes | `my-gcp-project` |
-| **BigQuery Dataset** | The BigQuery dataset name containing Vertex AI prediction logs. | Yes | `vertex_ai_logs` |
+| **BigQuery Dataset** | The BigQuery dataset name containing Vertex AI Custom Deployed Model logs. | Yes | `vertex_ai_logs` |
 | **BigQuery Table** | The BigQuery table name with Vertex AI Custom Deployed Model logs. | Yes | `predictions` |
 | **JSON Authentication File Path (Optional)** | Path to the JSON authentication file. Leave empty to use Application Default Credentials (ADC). | No | `/app/gcp-key.json` |
 | **URL for Data Ingestion Service** | URL of your Akto data ingestion service. | Yes | `http://data-ingestion:9091` |
