@@ -32,7 +32,7 @@ Get started with Akto Cloud in 5 simple steps:
 
 * Go to API Collections → Create new collection
 * Name your collection
-* Connect your [traffic source](broken-reference/) (Burp Suite/AWS/Postman) from Quick Start.
+* Connect your [traffic-data-sources.md](traffic-connector/traffic-data-sources.md "mention") (Burp Suite/AWS/Postman) from Quick Start.
 
 <figure><img src=".gitbook/assets/image (6) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
