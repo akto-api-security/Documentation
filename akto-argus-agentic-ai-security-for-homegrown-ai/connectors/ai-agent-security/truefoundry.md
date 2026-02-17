@@ -36,33 +36,23 @@ Akto acts as a **custom guardrail server** for TrueFoundry AI Gateway:
 5. LLM Provider (OpenAI, Anthropic, etc.)
 ```
 
-## Sync vs Async Mode
+## How Guardrails Work
 
-The Akto TrueFoundry integration supports two operation modes controlled by the `sync` query parameter:
+### Input Guardrails (Pre-Request Validation)
 
-### Synchronous Mode (`sync=true`)
+When you configure input guardrails with **Target: Request**:
+- User request is sent to Akto for validation **before** reaching the LLM
+- If request **passes** validation: TrueFoundry forwards it to the LLM (user receives LLM response)
+- If request **fails** validation: TrueFoundry blocks the request and returns an error to the user (LLM is never called)
+- All blocked requests appear in your Akto dashboard for monitoring
 
-**Input Guardrails (Request Only):**
-- Request is validated **before** reaching the LLM
-- If validation fails: Returns HTTP 400, request is **blocked** and data is ingested for monitoring
-- If validation passes: Returns HTTP 200, request proceeds to LLM
+### Output Guardrails (Post-Response Monitoring)
 
-**Output Monitoring (Request + Response):**
-- Data is ingested asynchronously for monitoring
-- Returns HTTP 200 immediately (non-blocking)
-- Used for logging completed interactions
-
-### Asynchronous Mode (`sync=false`)
-
-**Request Only:**
-- Returns HTTP 200 immediately (no-op)
-- No validation or ingestion performed
-
-**Request + Response:**
-- Both guardrails validation and ingestion happen asynchronously
-- Returns HTTP 200 immediately (non-blocking)
-- Violations are logged but don't block execution
-
+When you configure output guardrails with **Target: Response**:
+- Request and response are sent to Akto after the LLM has responded
+- User receives the LLM response immediately (no blocking)
+- All such interactions appear in your Akto dashboard for security analysis and compliance monitoring
+- You can review violations, sensitive data exposure, and policy compliance
 
 ## Prerequisites
 
@@ -90,7 +80,7 @@ Set up and configure your Traffic Processor. The steps are mentioned [here](../o
 Ensure your Akto Data Ingestion Service is running and accessible. Note the endpoints:
 
 ```
-https://<your-akto-host>:<port>/api/http-proxy/truefoundry?sync=true/false
+https://<your-akto-host>:<port>/api/http-proxy/truefoundry
 ```
 
 {% hint style="warning" %}
@@ -114,22 +104,26 @@ Ensure the Akto Data Ingestion Service is reachable from your TrueFoundry AI Gat
 Fill in the guardrails form for input/output validation:
 
 **Basic Settings:**
-* **Name**: `Akto Guardrails` (or your preferred name)
+* **Name**: `akto-guardrails` (or your preferred name)
 * **Access Control**: Add users/teams who should have access
 
 * **Guardrails**: This is where you configure the custom guardrails. Click on **Add Guardrail** and select **Custom** under **External Providers**.
 
 **Adding a Guardrail:**
-1. **Name**: `Akto Input Guardrail` (or your choice)
+1. **Name**: `akto-input-guardrail` (or your choice)
 2. **Description (Optional)**: `Add a description for this guardrail`
 3. **Operation**: Select **Validate**
 4. **Enforcing Strategy**: Choose **Enforce**, this will block requests that fail validation
 5. **Target**: Request (for input guardrails) or Response (for output guardrails)
 6. **Config**: 
-    * **URL**: Enter your Akto Data Ingestion Service URL (e.g., `https://<your-akto-host>:<port>/api/http-proxy/truefoundry?sync=true/false`)
+    * **URL**: Enter your Akto Data Ingestion Service URL (e.g., `https://<your-akto-host>:<port>/api/http-proxy/truefoundry`)
 
-{% hint style="info" %}
-You can add multiple guardrails for different validation rules (e.g., one for input validation, another for output monitoring). Just click on **Add Guardrails** and repeat the above steps and change the **Operation** and **Target** accordingly.
+{% hint style="warning" %}
+**Important**: You must add **both** input and output guardrails for complete security coverage:
+- **Input Guardrail** (Target: Request) - Validates and blocks malicious requests before reaching the LLM
+- **Output Guardrail** (Target: Response) - Monitors responses and ingests all interactions for compliance
+
+To add both, click on **Add Guardrail** twice and configure each with the appropriate **Target** setting.
 {% endhint %}
 
 Finally, save the Guardrails Group by clicking on **Add Guardrails Group**.
@@ -159,7 +153,7 @@ Guardrails are only applied in the Playground and not in production traffic. You
 {% endstep %}
 {% endstepper %}
 
-When Akto blocks a request (returns `allowed: false`), TrueFoundry AI Gateway will:
+When Akto blocks a request, TrueFoundry AI Gateway will:
 1. **Not forward** the request to the LLM provider
 2. Return an error response to the client
 3. Log the blocked request for audit purposes
