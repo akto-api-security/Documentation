@@ -292,6 +292,14 @@ When the Test Role runs on a collection:
 4. If no Advanced Settings match:
    * The auth configuration without any Advanced Settings acts as the default.
 
+{% hint style="warning" %}
+## **Important**
+
+If multiple auth configurations match the same request (for example, they have the same regex), Akto uses the **first configured or first discovered token** during evaluation.&#x20;
+
+The order of configuration in UI determines which token gets applied.
+{% endhint %}
+
 {% hint style="success" %}
 ## Example Scenario
 
