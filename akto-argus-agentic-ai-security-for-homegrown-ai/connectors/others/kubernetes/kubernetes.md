@@ -6,7 +6,7 @@ description: Learn how to send agent traffic data from your Kubernetes cluster t
 
 ## Introduction
 
-[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to discover agents and analyze for security issues. It does so by connecting to one of your [traffic sources](../../../homegrown-discovery-agents/traffic-data-sources.md). One such source is your Kubernetes cluster.
+[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to discover agents and analyze for security issues. It does so by connecting to one of your traffic sources. One such source is your Kubernetes cluster.
 
 `Kubernetes` is an open-source container orchestration system for automating software deployment, scaling, and management.
 

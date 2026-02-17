@@ -13,7 +13,7 @@ Discover and inventory all your AI agents, MCP servers, and tool integrations ac
 
 Navigate to **Quick Start** in your Akto dashboard and select your preferred discovery method:
 
-**[Homegrown Discovery Agents](homegrown-discovery-agents/)**
+**Homegrown Discovery Agents**
 Deploy discovery agents to continuously monitor your infrastructure. Includes API Gateways, eBPF, Kubernetes, manual import, and MCP Recon.
 
 **[Endpoints Discovery Agents](endpoints-discovery-agents/)**
