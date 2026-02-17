@@ -74,7 +74,7 @@ sequenceDiagram
 
 ### Prerequisites
 
-* Claude CLI installed ([Installation Guide](https://github.com/anthropics/claude-cli))
+* Claude CLI installed ([Installation Guide](https://code.claude.com/docs/en/setup))
 * Akto instance URL
 * Python 3.7+
 * macOS, Linux, or Windows with bash/zsh
