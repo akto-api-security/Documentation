@@ -2,23 +2,6 @@
 cover: .gitbook/assets/Gemini_Generated_Image_em1r4pem1r4pem1r.webp
 coverY: 0
 coverHeight: 366
-layout:
-  width: default
-  cover:
-    visible: true
-    size: full
-  title:
-    visible: true
-  description:
-    visible: true
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
-  metadata:
-    visible: true
 ---
 
 # What is Akto?

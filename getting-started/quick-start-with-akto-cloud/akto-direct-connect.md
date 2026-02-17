@@ -4,7 +4,7 @@
 
 This fully-managed setup is ideal for teams that want **quick onboarding**, **zero maintenance overhead**, and **fast time-to-value** with API security testing.
 
-<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Get Authentication Token
 
