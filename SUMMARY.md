@@ -200,8 +200,6 @@
     * [Contribute to Test Library](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/how-to/contribute-to-test-library.md)
 * [Prompt Hardening](akto-argus-agentic-ai-security-for-homegrown-ai/prompt-hardening/README.md)
   * [Play Around in Prompt Hardening](akto-argus-agentic-ai-security-for-homegrown-ai/prompt-hardening/play-around-in-prompt-hardening.md)
-* [Homegrown Discovery Agents](akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/README.md)
-  * [Traffic Data Sources](akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/traffic-data-sources.md)
 * [Issues](akto-argus-agentic-ai-security-for-homegrown-ai/issues/README.md)
   * [Values](akto-argus-agentic-ai-security-for-homegrown-ai/issues/values.md)
   * [Vulnerability Report](akto-argus-agentic-ai-security-for-homegrown-ai/issues/vulnerability-report.md)
