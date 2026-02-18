@@ -12,7 +12,7 @@ Secure your AI agents, MCP servers, and agentic applications with complete visib
 
 ***
 
-## [Agentic Red Teaming](/broken/pages/c044iZ07ldrsqoO0tcWa)
+## [Agentic Red Teaming](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/)
 
 Test your AI agents and MCP servers with 1000+ specialized security probes. Identify vulnerabilities like prompt injections, tool abuse, and privilege escalation before attackers do.
 
@@ -37,5 +37,5 @@ Deploy real-time protection for your production agents. Block threats as they oc
 {% hint style="success" %}
 #### Akto Support
 
-Contact our support team at **help@akto.io** or use in-app Intercom to reach out for help and guidance.
+Contact our support team at **support@akto.io** or use in-app Intercom to reach out for help and guidance.
 {% endhint %}
