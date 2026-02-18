@@ -68,7 +68,15 @@ spec:
             value: ""
           - name: AWS_REGION
             value: ""
+          - name: DATABASE_ABSTRACTOR_TOKEN
+            value: ""
+          - name: DISCOVER_OPENAPI_SPEC
+            value: "true"
+          - name: OPENAPI_DISCOVERY_INTERVAL_MINUTES
+            value: "15"
 ```
+- Replace `<DATABASE_ABSTRACTOR_TOKEN>`, with the database abstractor token from Akto dashboard.
+  - Akto Dashboard > Quick Start > Hybrid Saas (connect button) > Copy your token from `Runtime Service Command` section (e.g. `eyJhbGciO.............CFEFaQ`)
 
 Notes:
 
