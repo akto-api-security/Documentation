@@ -1,140 +1,175 @@
 # Install testing module in your Cloud
 
-## Introduction
+## Overview
 
-API Security testing involves sending malicious API requests to your (staging) server. By default, these malicious testing requests are sent from the Testing module installed within Akto Cloud.
+Agentic Security testing involves sending malicious API requests to your (staging) server. By default, these malicious testing requests are sent from the Testing module installed within Akto Cloud.
 
 There could be multiple reasons why you'd want to install testing module within your Cloud.
 
 1. Whitelisting Akto's IP in Security Group or WAF isn't an option
 2. The staging server isn't reachable from public domain
 3. The WAF would block most requests (or block Akto's IP)
-4. The API domain isn't resolvable from public domain
-5. The API is completely internal
+4. The Agentic component domain isn't resolvable from public domain
+5. The Agentic component is completely internal
 
-## Testing from Customer Cloud
+## Copy the JWT Token
 
 1. Login to Akto dashboard at [app.akto.io](https://app.akto.io)
 2. Go to Quick Start > Hybrid Saas > Click on “Connect” button
-3. Copy the JWT token (marked in red) [ Also referred as `Database Abstractor Token` later]
+3. Copy the JWT token (marked in red) \[ Also referred as `Database Abstractor Token` later]
 
-You can now use a Helm-chart to install Akto Security Testing module in your cloud or install manually
+You then have to use a Linux VM to install Akto Security Testing module in your cloud manually.
 
-### Terraform
+## Setup Linux VM
 
-1. To install using Terraform, use the Terraform script [here](https://github.com/akto-api-security/infra/blob/feature/quick-setup/templates/mini-testing.tf).
-   1. Please make sure you install it in a private subnet from your application VPC.
-   2. This private subnet should also have network connectivity (typically via NAT).
-2. For `Database Abstractor Service Token` input in the terraform script specify the JWT token copied in the earlier step.
-3. Once the terraform script has finished running, you should be able to see a new autoscaling group created with 1 Akto Testing EC2 instance running.
+{% stepper %}
+{% step %}
+### Provision a New VM
 
-### Helm-chart
+Minimum recommended configuration:
 
-#### Pre-requisites / Dependencies
-If you don't need auto-scaling, skip this section.
+* **Platform**: Amazon Linux 2023
+* **CPU:** 2 vCPUs
+* **Memory:** 4 GB RAM
+* **Disk:** 20 GB
 
-Otherwise, if auto-scaling needs to be enabled to allow parallel test runs via multiple k8s pods, we need to install few dependencies via helm charts.
-1. Install `kube-prometheus-stack`
-```bash
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo update prometheus-community
-    
-helm install prometheus prometheus-community/kube-prometheus-stack \
-	--namespace <your-namespace> \
-	--create-namespace
-```
-2. Install `keda`
-```bash
-helm repo add kedacore https://kedacore.github.io/charts  
-helm repo update kedacore
+{% hint style="warning" %}
+Don’t use burstable instances.
+{% endhint %}
 
-helm install keda kedacore/keda \
-  --namespace <your-namespace> \
-  --create-namespace
-```
-3. Upgrade `keda` to set `watchNamespace`
-   1. This restricts keda to watch/control only specific namespace(s)
-   2. Its fine if you get this error - `Error: UPGRADE FAILED: no RoleBinding with the name "keda-operator" found`
-   3. As a fix, re-run the helm upgrade command mentioned below, as the first run would create the `keda-operator` deployment in k8s.
-```bash
-helm upgrade keda kedacore/keda \
-  --namespace <your-namespace> \
-  --set watchNamespace=<your-namespace>
-```
-4. While installing / upgrading Akto's helm chart (covered in later sections) additionally set the following flag
-```
---set testing.autoScaling.enabled=true
-```
+* **Network**:
+  * Private subnet
+  * connectivity to internet (typically via NAT)
+  * connectivity to your staging service
+* **Security groups**
+  * Inbound - Open only port 22 for SSH
+  * Outbound - Open all
+{% endstep %}
 
-#### Akto's helm chart installation
-1. Add akto helm repository.
-```bash
-helm repo add akto https://akto-api-security.github.io/helm-charts/
-```
-##### Note: If you've already added akto helm repository, update the helm repository using:
-```bash
-helm repo update akto
-```
-2. Using the dashboard abstractor token saved in the above steps, deploy the helm chart below.
-```bash
-helm install akto-mini-testing akto/akto-mini-testing -n <your-namespace> --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<your-database-abstractor-token>"
-```
-##### Note: If you want to modify the helm chart according to your needs, you can clone the same from [mini-testing-helm-chart](https://github.com/akto-api-security/helm-charts/tree/master/charts/mini-testing)
+{% step %}
+### SSH into the VM
 
-### Linux VM
+1. SSH into this new instance in your Cloud
+2.  Run the following command:
 
-1. Create a new instance with the following requirements
-   1. Platform
-      1. Amazon Linux 2023
-   2. Spec
-      1. 2 vCPU
-      2. 4GB RAM
-      3. 20GB Hard disk
-      4. Don’t use burstable instances
-   3. Network
-      1. Private subnet
-      2. connectivity to internet (typically via NAT)
-      3. connectivity to your staging service
-   4. Security groups
-      1. Inbound - Open only port 22 for SSH
-      2. Outbound - Open all
-2. SSH into this new instance in your Cloud
-3. Run `sudo su -`
-4. Install [docker](https://github.com/akto-api-security/infra/blob/feature/quick-setup/get-docker.sh) and [docker-compose](https://github.com/akto-api-security/infra/blob/feature/quick-setup/get-docker-compose.sh).
-5.  Paste the following in `docker-compose-testing.yml` file. Use token from step(3) for DATABASE\_ABSTRACTOR\_SERVICE\_TOKEN value
+    ```bash
+    sudo su -
+    ```
+{% endstep %}
+
+{% step %}
+### Install Docker & Docker Compose
+
+Install the [docker](https://github.com/akto-api-security/infra/blob/feature/quick-setup/get-docker.sh) and [docker-compose](https://github.com/akto-api-security/infra/blob/feature/quick-setup/get-docker-compose.sh).
+{% endstep %}
+
+{% step %}
+### Create the Environment File
+
+1.  Create:
+
+    ```bash
+    nano docker-agentic-testing.env
+    ```
+2.  Add the following:
+
+    ```dotenv
+    ANTHROPIC_API_KEY=<key>
+    NODE_ENV=production
+    PORT=5500
+    AGENTIC_MODE=false
+    NODE_TLS_REJECT_UNAUTHORIZED=0
+    USE_SESSION_MANAGEMENT=true
 
     ```
-    version: '3.8'
-    services:
-      akto-api-security-testing:
-        image: public.ecr.aws/aktosecurity/akto-api-security-mini-testing:latest
-        environment:
-          RUNTIME_MODE: hybrid
-          DATABASE_ABSTRACTOR_SERVICE_TOKEN: <Paste_token_here>
-          PUPPETEER_REPLAY_SERVICE_URL: "http://akto-puppeteer-replay:3000"
-        restart: always
 
-      akto-api-security-puppeteer-replay:
-        image: public.ecr.aws/aktosecurity/akto-puppeteer-replay:latest
-        ports:
-          - "3000:3000"
-        environment:
-          NODE_ENV: production
-        restart: always
+{% hint style="warning" %}
+## Anthropic API Key Required
 
-      watchtower:
-        image: containrrr/watchtower
-        restart: always
-        volumes:
-          - /var/run/docker.sock:/var/run/docker.sock
-        environment:
-          WATCHTOWER_CLEANUP: true
-          WATCHTOWER_POLL_INTERVAL: 1800
-        labels:
-          com.centurylinklabs.watchtower.enable: "false"
+You **must** replace your actual **Anthropic API Key** in the env file.
+{% endhint %}
+
+You can also reference the original template [here](https://github.com/akto-api-security/infra/blob/feature/quick-setup/docker-agentic-testing.env).
+{% endstep %}
+
+{% step %}
+### Create the Docker Compose File
+
+1.  Create:
+
+    ```bash
+    nano docker-compose-mini-testing-agentic.yml
     ```
-6. Run `docker-compose -f docker-compose-testing.yml up -d`
-7. Run `systemctl enable /usr/lib/systemd/system/docker.service` to ensure Docker starts up in case of instance restarts
+
+{% hint style="danger" %}
+## I**mportant Requirements**&#x20;
+
+* You must replace `<your-database-abstractor-token>` with the actual **Database Abstractor Service Token (JWT)** copied from the Step 3 of [#copy-the-jwt-token](./#copy-the-jwt-token "mention").
+* Ensure **both files** below are in the **same directory**:
+  * `docker-compose-mini-testing-agentic.yml`
+  * `docker-agentic-testing.env`
+{% endhint %}
+
+2. Add the following configuration:
+
+```yml
+version: '3.8'
+services:
+  agent-testing:
+    container_name: agent-testing
+    image: public.ecr.aws/aktosecurity/akto-agentic-testing:latest
+    ports:
+      - "5500:5500"
+    env_file:
+      - ./docker-agentic-testing.env
+    restart: always
+
+  akto-api-security-testing:
+    image: public.ecr.aws/aktosecurity/akto-api-security-mini-testing:latest
+    environment:
+      RUNTIME_MODE: hybrid
+      DATABASE_ABSTRACTOR_SERVICE_TOKEN: <token>
+      PUPPETEER_REPLAY_SERVICE_URL: "http://akto-puppeteer-replay:3000"
+      MINI_TESTING_NAME: "akto-testing-module"
+      AGENT_BASE_URL: "http://agent-testing:5500"
+    restart: always
+
+  akto-api-security-puppeteer-replay:
+    image: public.ecr.aws/aktosecurity/akto-puppeteer-replay:latest
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+    restart: always
+
+  watchtower:
+    image: containrrr/watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      WATCHTOWER_CLEANUP: true
+      WATCHTOWER_POLL_INTERVAL: 1800
+    labels:
+      com.centurylinklabs.watchtower.enable: "false"
+```
+{% endstep %}
+
+{% step %}
+### Start the Testing Module
+
+*   Run:
+
+    ```bash
+    docker-compose -f docker-compose-mini-testing-agentic.yml up -d
+    ```
+*   Run the following command to ensure Docker starts up in case of instance restarts:
+
+    ```bash
+    systemctl enable /usr/lib/systemd/system/docker.service
+    ```
+{% endstep %}
+{% endstepper %}
 
 ## Get Support for your Akto setup
 
@@ -142,5 +177,5 @@ There are multiple ways to request support from Akto. We are 24X7 available on t
 
 1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
 2. Join our [discord channel](https://www.akto.io/community) for community support.
-3. Contact `help@akto.io` for email support.
+3. Contact `support@akto.io` for email support.
 4. Contact us [here](https://www.akto.io/contact-us).
