@@ -83,7 +83,7 @@ spec:
 
 ### Option B: Docker Compose
 
-Create a `docker-compose.yml` on your connector host:
+Create a `docker-compose.yml` and `watchtower.env` on your connector host:
 
 ```yaml
 version: "3.9"
@@ -108,6 +108,20 @@ services:
       DATABASE_ABSTRACTOR_TOKEN: ""
       DISCOVER_OPENAPI_SPEC: "true"
       OPENAPI_DISCOVERY_INTERVAL_MINUTES: "15"
+
+  watchtower:
+    image: containrrr/watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    env_file: ./watchtower.env
+    labels:
+      com.centurylinklabs.watchtower.enable: "false"
+```
+
+```
+WATCHTOWER_CLEANUP=true
+WATCHTOWER_POLL_INTERVAL=1800
 ```
 
 Run:
