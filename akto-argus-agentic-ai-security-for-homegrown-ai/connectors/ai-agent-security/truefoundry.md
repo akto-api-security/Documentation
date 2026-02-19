@@ -54,6 +54,16 @@ When you configure output guardrails with **Target: Response**:
 - All such interactions appear in your Akto dashboard for security analysis and compliance monitoring
 - You can review violations, sensitive data exposure, and policy compliance
 
+### Streaming Mode
+
+If your application streams LLM responses (token-by-token), append `?streaming=true` to the Akto TrueFoundry endpoint URL in your guardrail configuration:
+
+```
+https://<your-akto-host>:<port>/api/http-proxy/truefoundry?streaming=true
+```
+
+In streaming mode, Akto captures each turn of the conversation as it progresses and ingests it for monitoring and compliance. Input guardrail validation still runs on every new user message.
+
 ## Prerequisites
 
 Before integrating Akto with TrueFoundry AI Gateway, ensure you have:
