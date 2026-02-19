@@ -124,7 +124,7 @@ docker compose logs -f --tail=200 api-gateway-logging
 | `AKTO_BYTES_IN_THRESHOLD` | Keep default (`100`) unless tuning needed | Akto connector runtime tuning value |
 | `AKTO_TRAFFIC_BATCH_TIME_SECS` | Keep default (`10`) unless tuning needed | Akto connector runtime tuning value |
 | `AKTO_TRAFFIC_BATCH_SIZE` | Keep default (`100`) unless tuning needed | Akto connector runtime tuning value |
-| `AKTO_KAFKA_BROKER_MAL` | `<AktoNLB-DNS>:9092` | CloudFormation output `AktoNLB` from your mini-runtime stack + `:9092` |
+| `AKTO_KAFKA_BROKER_MAL` | `<AktoNLB-DNS>:9092` | If mini-runtime is deployed using CloudFormation, go to stack **Outputs**, copy `AktoNLB`, and append `:9092` |
 | `AWS_ACCESS_KEY_ID` | Access key ID | IAM user or temporary STS credentials with CloudWatch Logs read permissions |
 | `AWS_SECRET_ACCESS_KEY` | Secret access key | IAM user or temporary STS credentials with CloudWatch Logs read permissions |
 | `AWS_SESSION_TOKEN` | Session token if using temporary credentials | STS/assumed role session; leave empty for long-lived IAM user keys |
