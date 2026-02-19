@@ -85,6 +85,7 @@ spec:
 
 Create a `docker-compose.yml` and `watchtower.env` on your connector host:
 
+*docker-compose.yml:*
 ```yaml
 version: "3.9"
 
@@ -119,7 +120,8 @@ services:
       com.centurylinklabs.watchtower.enable: "false"
 ```
 
-```
+*watchtower.env:*
+```bash
 WATCHTOWER_CLEANUP=true
 WATCHTOWER_POLL_INTERVAL=1800
 ```
