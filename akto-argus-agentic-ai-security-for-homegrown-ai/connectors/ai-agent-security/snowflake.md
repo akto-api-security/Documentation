@@ -34,9 +34,7 @@ Before setting up the Snowflake connector, ensure you have completed the followi
 1. Navigate to **Akto Argus**.
 2. Open **Connectors**.
 3. Under **AI Agent Security**, locate the **Snowflake** connector card.
-4.  Select **Connect** to open setup dialog.
-
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (9).png" alt="" width="563"><figcaption></figcaption></figure></div>
+4. Select **Connect** to open setup dialog.
 {% endstep %}
 
 {% step %}
@@ -68,17 +66,13 @@ Available options:
 {% hint style="info" %}
 The password is used only for authentication. Akto Argus does not modify Snowflake configuration.
 {% endhint %}
-
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (6).png" alt="" width="375"><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="OAuth Token" %}
 Enter a valid Snowflake OAuth access token in the **OAuth Token** field.
 
 * The token must be generated using a Snowflake-configured OAuth integration.
-*   The token must grant read access to required metadata.
-
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (7).png" alt="" width="375"><figcaption></figcaption></figure></div>
+* The token must grant read access to required metadata.
 {% endtab %}
 
 {% tab title="Key Pair (RSA)" %}
@@ -93,9 +87,7 @@ Enter a valid Snowflake OAuth access token in the **OAuth Token** field.
       -----END PRIVATE KEY-----
       ```
   * The corresponding public key must already be associated with the Snowflake user.
-*   If the private key is encrypted, enter the passphrase in the **Private Key Passphrase** field.
-
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (8).png" alt="" width="375"><figcaption></figcaption></figure></div>
+* If the private key is encrypted, enter the passphrase in the **Private Key Passphrase** field.
 {% endtab %}
 {% endtabs %}
 {% endstep %}
@@ -110,8 +102,6 @@ You may optionally specify:
 * **Schema**
 
 These fields control query execution context.
-
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (5).png" alt="" width="375"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -132,7 +122,7 @@ Enter the URL of your **self-hosted data ingestion service** in the **URL for Da
 #### Complete the Integration
 
 1. Review all entered values.
-2. Select **Import** to finalize the connection.
+2. Select **Import** to finalise the connection.
 {% endstep %}
 {% endstepper %}
 
@@ -223,7 +213,7 @@ If you need assistance with the Snowflake connector:
 
 * **In-app Chat**: Use the chat widget in your Akto dashboard for instant support
 * **Discord Community**: Join our community at [discord.gg/Wpc6xVME4s](https://discord.gg/Wpc6xVME4s)
-* **Email Support**: Contact us at [help@akto.io](mailto:help@akto.io)
+* **Email Support**: Contact us at [support@akto.io](mailto:support@akto.io)
 * **Contact Form**: Submit a support request at [https://www.akto.io/contact-us](https://www.akto.io/contact-us)
 
 Our team is available 24/7 to help with setup, troubleshooting, and best practices.
