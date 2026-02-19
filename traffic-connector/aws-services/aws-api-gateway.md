@@ -20,12 +20,17 @@ To connect Akto with AWS API Gateway, follow these steps -
         ```
         { "requestId":"$context.requestId", "extendedRequestId":"$context.extendedRequestId","ip": "$context.identity.sourceIp", "caller":"$context.identity.caller", "user":"$context.identity.user", "requestTime":"$context.requestTime", "httpMethod":"$context.httpMethod", "resourcePath":"$context.resourcePath", "status":"$context.status", "protocol":"$context.protocol", "responseLength":"$context.responseLength" }
         ```
-      <figure><img src="../../.gitbook/assets/aws-api-gateway-3.png" alt=""><figcaption></figcaption></figure>
+          <figure><img src="../../.gitbook/assets/aws-api-gateway-3.png" alt=""><figcaption></figcaption></figure>
     5. Find out the `cloudwatch log group` for your API gateway for the stage which has the above logs enabled and save it. We'll need it later.
-    6. Deploy the kubernetes deployment below.
-       1. For `LOG_GROUP_NAME` and `AWS_REGION`, use the log group arn we saved earlier and the aws region it is deployed in.
-       2. For `AKTO_KAFKA_BROKER_MAL`, use the value of the `mini-runtime` service we deployed in step 1.
-       3. For `AWS_ACCESS_KEY_ID` , `AWS_SECRET_ACCESS_KEY` and `AWS_SESSION_TOKEN`, create AWS CLI keys, which have permissions to read from the cloudwatch log group which we've mentioned above.
+    6. Deploy the connector (Kubernetes or Docker Compose).
+       1. For `LOG_GROUP_NAME`, use the CloudWatch log group name (from API Gateway Stage logs).
+       2. For `AWS_REGION`, use the AWS region where that log group exists.
+       3. For `AKTO_KAFKA_BROKER_MAL`, use the Akto mini-runtime Kafka endpoint (`<AktoNLB-DNS>:9092`).
+       4. For `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_SESSION_TOKEN`, use credentials that have permission to read the above CloudWatch log group.
+       5. For `DATABASE_ABSTRACTOR_TOKEN`, copy the token from Akto dashboard.
+       6. Use one of the deployment options below.
+
+### Option A: Kubernetes deployment
 
 ```yaml
 apiVersion: apps/v1
@@ -43,7 +48,7 @@ spec:
           app: api-gateway-logging 
     spec:
       containers:
-      - image: aktosecurity/mirror-api-logging:api-gateway-logging
+      - image: aktosecurity/mirror-api-logging:api-gateway-logging-openapi
         name: api-gateway-logging 
         imagePullPolicy: Always
         resources: {}
@@ -75,8 +80,60 @@ spec:
           - name: OPENAPI_DISCOVERY_INTERVAL_MINUTES
             value: "15"
 ```
-- Replace `<DATABASE_ABSTRACTOR_TOKEN>`, with the database abstractor token from Akto dashboard.
-  - Akto Dashboard > Quick Start > Hybrid Saas (connect button) > Copy your token from `Runtime Service Command` section (e.g. `eyJhbGciO.............CFEFaQ`)
+
+### Option B: Docker Compose
+
+Create a `docker-compose.yml` on your connector host:
+
+```yaml
+version: "3.9"
+
+services:
+  api-gateway-logging:
+    image: aktosecurity/mirror-api-logging:api-gateway-logging-openapi
+    pull_policy: always
+    container_name: api-gateway-logging
+    restart: unless-stopped
+    environment:
+      AKTO_BYTES_IN_THRESHOLD: "100"
+      AKTO_TRAFFIC_BATCH_TIME_SECS: "10"
+      AKTO_TRAFFIC_BATCH_SIZE: "100"
+      AKTO_KAFKA_BROKER_MAL: ""
+      AWS_ACCESS_KEY_ID: ""
+      AWS_SECRET_ACCESS_KEY: ""
+      AWS_SESSION_TOKEN: ""
+      CLOUDWATCH_READ_BATCH_SIZE: "5"
+      LOG_GROUP_NAME: ""
+      AWS_REGION: ""
+      DATABASE_ABSTRACTOR_TOKEN: ""
+      DISCOVER_OPENAPI_SPEC: "true"
+      OPENAPI_DISCOVERY_INTERVAL_MINUTES: "15"
+```
+
+Run:
+
+```bash
+docker compose up -d
+docker compose logs -f --tail=200 api-gateway-logging
+```
+
+## Environment variables reference
+
+| Variable | What to set | Where to get it |
+| --- | --- | --- |
+| `AKTO_BYTES_IN_THRESHOLD` | Keep default (`100`) unless tuning needed | Akto connector runtime tuning value |
+| `AKTO_TRAFFIC_BATCH_TIME_SECS` | Keep default (`10`) unless tuning needed | Akto connector runtime tuning value |
+| `AKTO_TRAFFIC_BATCH_SIZE` | Keep default (`100`) unless tuning needed | Akto connector runtime tuning value |
+| `AKTO_KAFKA_BROKER_MAL` | `<AktoNLB-DNS>:9092` | CloudFormation output `AktoNLB` from your mini-runtime stack + `:9092` |
+| `AWS_ACCESS_KEY_ID` | Access key ID | IAM user or temporary STS credentials with CloudWatch Logs read permissions |
+| `AWS_SECRET_ACCESS_KEY` | Secret access key | IAM user or temporary STS credentials with CloudWatch Logs read permissions |
+| `AWS_SESSION_TOKEN` | Session token if using temporary credentials | STS/assumed role session; leave empty for long-lived IAM user keys |
+| `CLOUDWATCH_READ_BATCH_SIZE` | Keep default (`5`) unless tuning needed | Connector tuning value |
+| `LOG_GROUP_NAME` | API Gateway execution/access log group name | CloudWatch Logs console (for your API Gateway stage) |
+| `AWS_REGION` | Region of API Gateway + CloudWatch log group | AWS region (example: `ap-south-1`) |
+| `DATABASE_ABSTRACTOR_TOKEN` | Database abstractor token | Akto Dashboard > Quick Start > Hybrid SaaS > Runtime Service Command section |
+| `DISCOVER_OPENAPI_SPEC` | `"true"` to enable OpenAPI discovery | Connector feature flag |
+| `OPENAPI_DISCOVERY_INTERVAL_MINUTES` | Discovery interval (default `15`) | Connector tuning value |
 
 Notes:
 
