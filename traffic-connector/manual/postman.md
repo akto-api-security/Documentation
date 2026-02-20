@@ -48,80 +48,71 @@ Before syncing or uploading:
 * You have included the APIs you want Akto to discover.
 * Each request contains complete details (headers, body, query parameters).
 
+#### 5.You Whitelist Akto IPs
+
+You must ensure Akto’s IP addresses are whitelisted in:
+
+* Your WAF (Web Application Firewall) rules
+* Your rate limiting rules
+* Any IP-based access control lists
+
 ## Collection Requirements
 
-To ensure smooth import and accurate API discovery, your collection must meet the following requirements.
+To ensure smooth import and accurate API discovery, your collection must meet the following requirements:
 
-### 1. Add Successful API Examples (Recommended)
+### 1. If You Add API Successful Examples (Recommended)
 
-You should add at least one successful response example per API.
+If you add an **API Successful Example** for each API then Akto imports APIs directly using the request and response pairs.
 
-If you do not provide response examples:
+An API Successful Example must include:
 
-* Akto will replay the APIs.
-* The replayed request-response pairs will populate the API Inventory.
-
-Providing examples improves accuracy and reduces replay dependency.
-
-### 2. Ensure Host Header is Present
-
-Each API example must include the `Host` header.
-
-This is required for proper service identification.
+* The complete request
+* A successful response (e.g., 200, 201)
+* Request headers
+* Request body (if applicable)
 
 <details>
 
-<summary>Example</summary>
+<summary>How to Add a Successful Example</summary>
 
-**Request**
+Here are the following steps on how you can a successful response example :
 
-```json
-GET https://api.example.com/api/v1/users
-Host: api.example.com
-Authorization: Bearer {{authToken}}
-```
+#### Steps
 
-**Response**
+1. Open the request in **Postman**.
+2. Click **Send** to execute the request.
+3. In the response panel, click **Save Response**.
+4. Select **Save as Example**.
+5. Save the example (ensure status code and response body are correct).
 
-Status: `200 OK`
+Repeat this for each API where you want to provide a successful response example.
 
-```json
-{
-  "users": [
-    {
-      "id": "123",
-      "name": "John Doe"
-    }
-  ]
-}
-```
+For detailed instructions, refer to the [official Postman documentation](https://learning.postman.com/docs/design-apis/mock-apis/tutorials/mock-with-examples#save-a-response-as-an-example).
 
 </details>
 
-### 3. Include Authorisation for Authenticated APIs
+### 2. If You Do NOT Add API Successful Examples (Replay Mode)
 
-For authenticated APIs:
+If API Successful Examples are not present:
 
-* You must include the `Authorization` header.
+* Akto will replay the APIs defined in your Postman collection.
+* Akto captures live request-response pairs.
+* These captured pairs populate the API Inventory.
+
+In this case, the following are required for replay to succeed:
+
+{% tabs %}
+{% tab title="Authorization (For Authenticated APIs)" %}
+* The `Authorization` header must be present.
 * The token must be valid and active.
-* The format should follow standard conventions (e.g., Bearer token).
+* The format must follow standard conventions (e.g., Bearer token)
+{% endtab %}
 
-### 4. Define All Variables in the Collection
-
-If you use variables (e.g., `{{baseUrl}}`, `{{authToken}}`):
-
-* You must define them in the `variable` section at the root of the Postman collection JSON.
-* All variables must resolve successfully during import.
-
-Refer to the [#using-variables-in-postman-collection-file](postman.md#using-variables-in-postman-collection-file "mention") section for implementation details.
-
-### 5. Ensure Each API Has a Response Example
-
-Each API must include:
-
-* A response example
-* A valid HTTP status code
-* A response body
+{% tab title="Host Header" %}
+* The `Host` header must be present in each request.
+* This ensures proper service identification and routing.
+{% endtab %}
+{% endtabs %}
 
 {% hint style="warning" %}
 ## Common Import Errors
@@ -137,7 +128,27 @@ To prevent these:
 * Define all variables in the collection file.
 * Add at least one successful response example per API.
 * Ensure the Host header is present in each request.
-* Ensure Authorization headers are correctly configured for authenticated APIs.
+* Ensure Authorisation headers are correctly configured for authenticated APIs.
+{% endhint %}
+
+### Variables Definition References
+
+If your requests use variables (e.g., `{{baseUrl}}`, `{{authToken}}`):
+
+* All variables must be defined in the collection.
+* Variables must resolve successfully during import.
+
+Refer to [#variables-in-postman-collection-file](postman.md#variables-in-postman-collection-file "mention") for reference.
+
+{% hint style="success" %}
+## Recommendation
+
+To avoid replay dependency and configuration complexity:
+
+* Add an API Successful Example for each API.
+* Ensure variables are properly defined.
+
+If API Successful Examples are present, replay-related configuration is not required.
 {% endhint %}
 
 ## Integrating Postman
@@ -167,54 +178,59 @@ In the demonstration below, we have imported the API traffic data to our Akto ac
 Import Postman collection file
 {% endembed %}
 
-## Using Variables in Postman Collection File
+## Variables in Postman Collection File
 
-Akto supports **collection-level variables** in Postman collection files. Variables allow you to parameterize URLs, headers, request bodies, and authentication values using the `{{variableName}}` syntax.
+Akto supports Postman **collection-level variables** in your exported collection JSON file. Variables help you parameterise parts of your API requests (such as URLs, headers, auth values, and request bodies) using the `{{variableName}}` syntax. Akto will replace these variables with the values defined in the collection before resolving requests during import or replay.
 
-### How to Add Variables
+{% hint style="success" %}
+## Why Proper Variable Definition Matters
 
-Add a `variable` array at the root level of your Postman collection JSON file. Each variable needs a `key` and a `value`:
+If any variable used in the collection is not defined:
+
+* Akto may show **unresolved variables** errors on the dashboard.
+* API requests that depend on those variables may break or fail during replay.
+* Replay may substitute undefined variables as blank, leading to incorrect URLs or headers.
+{% endhint %}
+
+#### How Variables Work
+
+* Variables should be defined in the `variable` array at the root of the Postman collection JSON.
+* Each variable must have a `key` and a `value`.
+* Variables can be used in URLs, headers, body data, and authentication fields.
+
+Example of a collection variables block:
 
 ```json
-{
-  "info": {
-    "name": "My API Collection",
-    "_postman_id": "abc-123",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+"variable": [
+  {
+    "key": "baseUrl",
+    "value": "https://api.example.com"
   },
-  "item": [
-    {
-      "name": "Get Users",
-      "request": {
-        "method": "GET",
-        "url": {
-          "raw": "{{baseUrl}}/api/users",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "users"]
-        },
-        "header": [
-          {
-            "key": "x-api-key",
-            "value": "{{apiKey}}"
-          }
-        ]
-      }
-    }
-  ],
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "https://api.example.com"
-    },
-    {
-      "key": "apiKey",
-      "value": "my-secret-key"
-    }
-  ]
-}
+  {
+    "key": "apiKey",
+    "value": "my-secret-key"
+  }
+]
 ```
 
-To ensure all your variables are resolved correctly, define them in the collection's `variable` array before uploading. If you are using environment-specific values in Postman, copy those values into collection-level variables before exporting.
+You can then use these variables in your API request definitions like:
+
+```json
+{{baseUrl}}/api/v1/users
+```
+
+{% hint style="info" %}
+## Note
+
+Before exporting your collection for Akto:
+
+* Ensure all variable references (`{{…}}`) in your collection are defined in the `variable` section.
+* If you are using environment variables in Postman, copy those values into the collection’s variable array before export.
+{% endhint %}
+
+When Akto imports your collection, it will substitute these values automatically.
+
+For more details on how variables work in Postman and how to define them across scopes, see the [official Postman documentation](https://learning.postman.com/docs/sending-requests/variables/variables).
 
 ## What's next?
 
