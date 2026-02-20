@@ -16,13 +16,129 @@ Note that traffic from Postman won't be automated like the native cloud connecto
 
 Akto gives you ability to add API data through Postman integration. If you have a Postman API collection, follow the steps below to add API data to Akto:
 
-### Pre-requisites for Akto Postman connection
+## Pre-requisites
 
-* You must have an `active Akto account`. If you don't have one, sign up for an account on the Akto platform.
-  * [Cloud Signup](https://app.akto.io/)
-* Ensure you have a Postman account or have a Postman desktop app. If you have a Postman account, the integration requires access to your Postman collections through an API key. If you are using Postman desktop app, then you will have to export Postman collection to a file that you can upload to Akto.
-* `Connectivity to your URLs:` If samples responses are not saved in your Postman collection, Akto might need to hit those URLs for sample responses. Please ensure the URLs in your Postman collection are reachable from your machine.
-* Prepare the Postman collections you wish to sync or upload to Akto. Make sure these collections are organized and contain the API requests you want to work with.
+Before integrating Akto with Postman, ensure the following setup requirements are met.
+
+#### 1. You Have an Active Akto Account
+
+You must have an active Akto account. If you do not have one, [sign up on the Akto platform.](https://app.akto.io)
+
+#### 2. You Have Access to Postman
+
+You must have access to Postman in one of the following ways:
+
+* A Postman account (API key access required to fetch collections).
+* Postman Desktop App (export the collection file and upload it to Akto).
+
+#### 3. Your API URLs Are Reachable
+
+If your Postman collection does not contain saved response examples:
+
+* Akto will replay the APIs to fetch responses.
+* You must ensure the URLs in your collection are reachable from your machine or environment.
+
+If endpoints are not reachable, API replay will fail.
+
+#### 4. Your Collection Is Prepared
+
+Before syncing or uploading:
+
+* You have organised your Postman collections.
+* You have included the APIs you want Akto to discover.
+* Each request contains complete details (headers, body, query parameters).
+
+## Collection Requirements
+
+To ensure smooth import and accurate API discovery, your collection must meet the following requirements.
+
+### 1. Add Successful API Examples (Recommended)
+
+You should add at least one successful response example per API.
+
+If you do not provide response examples:
+
+* Akto will replay the APIs.
+* The replayed request-response pairs will populate the API Inventory.
+
+Providing examples improves accuracy and reduces replay dependency.
+
+### 2. Ensure Host Header is Present
+
+Each API example must include the `Host` header.
+
+This is required for proper service identification.
+
+<details>
+
+<summary>Example</summary>
+
+**Request**
+
+```json
+GET https://api.example.com/api/v1/users
+Host: api.example.com
+Authorization: Bearer {{authToken}}
+```
+
+**Response**
+
+Status: `200 OK`
+
+```json
+{
+  "users": [
+    {
+      "id": "123",
+      "name": "John Doe"
+    }
+  ]
+}
+```
+
+</details>
+
+### 3. Include Authorisation for Authenticated APIs
+
+For authenticated APIs:
+
+* You must include the `Authorization` header.
+* The token must be valid and active.
+* The format should follow standard conventions (e.g., Bearer token).
+
+### 4. Define All Variables in the Collection
+
+If you use variables (e.g., `{{baseUrl}}`, `{{authToken}}`):
+
+* You must define them in the `variable` section at the root of the Postman collection JSON.
+* All variables must resolve successfully during import.
+
+Refer to the [#using-variables-in-postman-collection-file](postman.md#using-variables-in-postman-collection-file "mention") section for implementation details.
+
+### 5. Ensure Each API Has a Response Example
+
+Each API must include:
+
+* A response example
+* A valid HTTP status code
+* A response body
+
+{% hint style="warning" %}
+## Common Import Errors
+
+You may see the following errors on the Akto dashboard:
+
+* **Unresolved variables**
+* **No response found**
+* **Unknown auth mechanism**
+
+To prevent these:
+
+* Define all variables in the collection file.
+* Add at least one successful response example per API.
+* Ensure the Host header is present in each request.
+* Ensure Authorization headers are correctly configured for authenticated APIs.
+{% endhint %}
 
 ## Integrating Postman
 
@@ -35,7 +151,7 @@ After connecting your Postman Account to Akto, you will be provided with the fol
 * Using Postman API Key
 * Using Postman Collection File
 
-## Using Postman API Key
+### 1. Using Postman API Key
 
 In the demonstration below, we have generated our **`Postman API key`** and pasted the value in the configuration setup to fetch and select the Postman workspace (containing API traffic) to import to Akto.
 
@@ -43,7 +159,7 @@ In the demonstration below, we have generated our **`Postman API key`** and past
 Import using Postman API key
 {% endembed %}
 
-## Using Postman Collection File
+### 2. Using Postman Collection File
 
 In the demonstration below, we have imported the API traffic data to our Akto account from one of our workspaces in Postman. By simply exporting the API collection from our Postman workspace, we have uploaded the same **`JSON file`** to Akto and populated the API traffic in the inventory.
 
@@ -100,7 +216,7 @@ Add a `variable` array at the root level of your Postman collection JSON file. E
 
 To ensure all your variables are resolved correctly, define them in the collection's `variable` array before uploading. If you are using environment-specific values in Postman, copy those values into collection-level variables before exporting.
 
-### What's next?
+## What's next?
 
 Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.
 
@@ -169,5 +285,5 @@ There are multiple ways to request support from Akto. We are 24X7 available on t
 
 1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
 2. Join our [discord channel](https://www.akto.io/community) for community support.
-3. Contact `help@akto.io` for email support.
+3. Contact `support@akto.io` for email support.
 4. Contact us [here](https://www.akto.io/contact-us).
