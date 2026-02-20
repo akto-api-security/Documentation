@@ -2,15 +2,15 @@
 
 Apigee is Google Cloud's full-lifecycle API management platform that helps enterprises design, secure, and scale APIs. Integrating Apigee with Akto enables automatic discovery and security testing of all APIs managed through your Apigee gateway, providing comprehensive visibility and continuous security assessment of your API infrastructure.
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
-***
-
-## Step 1: Deploy the Akto Data-Ingestion Service
+## 1. Deploy the Akto Data-Ingestion Service
 
 Before setting up the Apigee connector, deploy the Akto Data-Ingestion Service by following these steps:
 
-### 1.1 Download the Required Files
+{% stepper %}
+{% step %}
+#### Download the Required Files
 
 SSH into the instance where you want to deploy the data-ingestion service and run these commands:
 
@@ -21,42 +21,54 @@ wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/featur
 wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/watchtower.env
 
 ```
+{% endstep %}
 
-### 1.2 Retrieve the `DATABASE_ABSTRACTOR_SERVICE_TOKEN`
+{% step %}
+#### Retrieve the `DATABASE_ABSTRACTOR_SERVICE_TOKEN`
 
 * Log in to the [Akto Dashboard](https://app.akto.io/).
 *   Navigate to the **Quick Start** tab in the left panel.
 
-    <figure><img src="../../.gitbook/assets/Quick-Start.png" alt=""><figcaption></figcaption></figure>
+    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/Quick-Start.png" alt="" width="236"><figcaption></figcaption></figure></div>
 *   Select **Hybrid SaaS Connector** and copy the token from the **Runtime Service Command** section.
 
-    <figure><img src="../../.gitbook/assets/HybridSaaSConnector.png" alt=""><figcaption></figcaption></figure>
+    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/HybridSaaSConnector.png" alt="" width="375"><figcaption></figcaption></figure></div>
+{% endstep %}
 
-### 1.3 Update the `docker-mini-runtime.env` File
+{% step %}
+#### Update the `docker-mini-runtime.env` File
 
-* Open the `docker-mini-runtime.env` file and replace `token` with the `DATABASE_ABSTRACTOR_SERVICE_TOKEN` you retrieved earlier.
+*   Open the `docker-mini-runtime.env` file and replace `token` with the `DATABASE_ABSTRACTOR_SERVICE_TOKEN` you retrieved earlier.
 
-```plaintext
-DATABASE_ABSTRACTOR_SERVICE_TOKEN=token
-```
+    ```
+    DATABASE_ABSTRACTOR_SERVICE_TOKEN=token
+    ```
+{% endstep %}
 
-### 1.4 Deploy the Data-Ingestion Service
+{% step %}
+#### Deploy the Data-Ingestion Service
 
 Run the following command to start the data-ingestion service:
 
 ```bash
 docker-compose -f docker-compose-data-ingestion-runtime.yml up -d
 ```
+{% endstep %}
 
-### 1.5 Note the IP Address of the Data-Ingestion Service
+{% step %}
+#### Note the IP Address of the Data-Ingestion Service
 
 Ensure the instance is accessible from the network where your Apigee API proxy is configured. Note the instance's IP address, as it will be required by the Apigee connector to send traffic data.
+{% endstep %}
+{% endstepper %}
 
-***
+## 2. Configure Apigee to Use the Akto Data-Ingestion Service
 
-## Step 2: Configure Apigee to Use the Akto Data-Ingestion Service
+### Manual Configuration
 
-### 2.1 Create or Choose an Apigee Environment
+{% stepper %}
+{% step %}
+#### Create or Choose an Apigee Environment
 
 To configure the Akto connector, you need an **Intermediate** or **Comprehensive** environment in Apigee, as the JavaScript policy is not supported in the **Base** environment.
 
@@ -65,27 +77,29 @@ To configure the Akto connector, you need an **Intermediate** or **Comprehensive
 1. Log in to the [Apigee Management Console](https://console.cloud.google.com/apigee/overview).
 2.  Navigate to **Management → Environments** from the left-side navigation bar.
 
-    <figure><img src="../../.gitbook/assets/create-env_apigee.png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/create-env_apigee.png" alt="" width="245"><figcaption></figcaption></figure>
 3.  Click **+ Create Environment**.
 
-    <figure><img src="../../.gitbook/assets/create_env_instance_apigee.png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/create_env_instance_apigee.png" alt="" width="269"><figcaption></figcaption></figure>
 4. Provide the required details:
    * **Name**: Specify a name for your environment.
    * **Environment Type**: Choose **Intermediate** or **Comprehensive**.
 5.  Click **Create** to finalize your environment setup.
 
-    <figure><img src="../../.gitbook/assets/apigee_env_details.png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/apigee_env_details.png" alt="" width="563"><figcaption></figcaption></figure>
 
 If you already have an **Intermediate** or **Comprehensive** environment, you can skip this step and proceed to the next section.
+{% endstep %}
 
-### 2.2 Create a New API Proxy
+{% step %}
+### Create a New API Proxy
 
 1.  Navigate to **Proxy Development → API Proxies** from the left-side navigation bar.
 
-    <figure><img src="../../.gitbook/assets/create_api_proxy_apigee.png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/create_api_proxy_apigee.png" alt="" width="244"><figcaption></figcaption></figure>
 2.  Click **+ Create** to start creating a new API proxy.
 
-    <figure><img src="../../.gitbook/assets/create_apigee_proxy_button.png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/create_apigee_proxy_button.png" alt="" width="180"><figcaption></figcaption></figure>
 3. Configure the proxy with the following details:
    * **Proxy Name**: Enter a unique name for your proxy.
    * **Base Path**: Specify the base path for the proxy (e.g., `/api/v1`). This path will be used as the prefix for all API calls.
@@ -95,9 +109,11 @@ If you already have an **Intermediate** or **Comprehensive** environment, you ca
 4. Do **not deploy the proxy yet**, as you will need to configure policies before deploying.
 5.  Click **Create** to complete the proxy setup. You will then be directed to the proxy editor to configure additional settings.
 
-    <figure><img src="../../.gitbook/assets/create_api_proxy_form_apigee.png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/create_api_proxy_form_apigee.png" alt="" width="375"><figcaption></figcaption></figure>
+{% endstep %}
 
-### 2.3 Upload the JavaScript Policy
+{% step %}
+### Upload the JavaScript Policy
 
 * Copy the following JavaScript policy code and save it as `AktoPolicy.js`:
 
@@ -225,43 +241,49 @@ var exchange = httpClient.send(req);
 * Click on **Proxy Endpoints → PostFlow**.
 *   Click on the `+` symbol of **PostFlow**.
 
-    <figure><img src="../../.gitbook/assets/add_apigee_js_policy.png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/add_apigee_js_policy.png" alt="" width="563"><figcaption></figcaption></figure>
 *   Select **Create New Policy** and choose **Extensible Policies** → **JavaScript**.
 
-    <figure><img src="../../.gitbook/assets/create_js_policy_apigee.png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/create_js_policy_apigee.png" alt="" width="375"><figcaption></figcaption></figure>
 * Enter a name for your policy and, in the `JavaScript file` option, click **Create New Resource**.
 * Upload your saved `AktoPolicy.js` file and click **Add**.
 *   Select the uploaded file as your JavaScript policy and click **Add**.
 
-    <figure><img src="../../.gitbook/assets/import_js_policy_apigee.png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/import_js_policy_apigee.png" alt="" width="563"><figcaption></figcaption></figure>
+{% endstep %}
 
-### 2.4 Configure the Policy Parameters
+{% step %}
+### Configure the Policy Parameters
 
 Edit the JavaScript policy to set the ingestion URL (from Step 1.5):
 
 ```javascript
 var ingestionUrl = "https://<data-ingestion-service-ip>:9091/api/ingestData";
 ```
+{% endstep %}
 
-### 2.5 Save and Deploy the API Proxy
+{% step %}
+### Save and Deploy the API Proxy
 
 * Save your changes.
 *   Deploy the proxy to your selected environment.
 
-    <figure><img src="../../.gitbook/assets/deploy_apigee_proxy.png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/deploy_apigee_proxy.png" alt="" width="563"><figcaption></figcaption></figure>
+{% endstep %}
 
-### 2.6 Test the Integration
+{% step %}
+### Test the Integration
 
 * Make a test API call through the Apigee proxy.
 * Verify in the Akto dashboard that the traffic is being ingested correctly.
+{% endstep %}
+{% endstepper %}
 
-***
-
-### Get Support for your Akto setup
+## Get Support for your Akto setup
 
 There are multiple ways to request support from Akto. We are 24X7 available on the following:
 
 1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
 2. Join our [discord channel](https://www.akto.io/community) for community support.
-3. Contact `help@akto.io` for email support.
+3. Contact `support@akto.io` for email support.
 4. Contact us [here](https://www.akto.io/contact-us).
