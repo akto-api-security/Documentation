@@ -89,7 +89,7 @@ Install the [docker](https://github.com/akto-api-security/infra/blob/feature/qui
 You **must** replace your actual **Anthropic API Key** in the env file.
 {% endhint %}
 
-You can also reference the original template [here](https://github.com/akto-api-security/infra/blob/feature/quick-setup/docker-agentic-testing.env).
+You can also reference the original template is [here](https://github.com/akto-api-security/infra/blob/feature/quick-setup/docker-agentic-testing.env).
 {% endstep %}
 
 {% step %}
@@ -126,16 +126,20 @@ services:
 
   akto-api-security-testing:
     image: public.ecr.aws/aktosecurity/akto-api-security-mini-testing:latest
+    container_name: akto-api-security-testing
     environment:
       RUNTIME_MODE: hybrid
       DATABASE_ABSTRACTOR_SERVICE_TOKEN: <token>
       PUPPETEER_REPLAY_SERVICE_URL: "http://akto-puppeteer-replay:3000"
       MINI_TESTING_NAME: "akto-testing-module"
       AGENT_BASE_URL: "http://agent-testing:5500"
+    ports:
+      - "8001:8001"
     restart: always
 
   akto-api-security-puppeteer-replay:
     image: public.ecr.aws/aktosecurity/akto-puppeteer-replay:latest
+    container_name: akto-puppeteer-replay
     ports:
       - "3000:3000"
     environment:
@@ -153,6 +157,8 @@ services:
     labels:
       com.centurylinklabs.watchtower.enable: "false"
 ```
+
+For the reference,the original template is [here](https://github.com/akto-api-security/infra/blob/feature/quick-setup/docker-compose-mini-testing-agentic.yml).
 {% endstep %}
 
 {% step %}
