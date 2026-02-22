@@ -221,7 +221,7 @@ Use Terraform from:
 
 * **Repository:** [https://github.com/akto-api-security/infra](https://github.com/akto-api-security/infra)
 * **Branch:** `feature/quick-setup`
-* **Folder:** `api-gateway-connect-terraform`
+* **Folder:** `apigee-connect-terraform`
 
 1. Clone and switch to the required branch:
 
@@ -229,20 +229,30 @@ Use Terraform from:
 git clone https://github.com/akto-api-security/infra.git
 cd infra
 git checkout feature/quick-setup
-cd api-gateway-connect-terraform
+cd apigee-connect-terraform
 ```
 
-2. Provide the required values:
+2. Provide the required values in a `terraform.tfvars` file inside `apigee-connect-terraform`.
 
-* `project_id`
-* `apigee_environment`
-* `data_ingestion_service_url` (from Step 1)
+If the repository contains `terraform.tfvars.example`, copy it first:
+
+```bash
+cp terraform.tfvars.example terraform.tfvars
+```
+
+Otherwise create `terraform.tfvars` manually with:
+
+```hcl
+project_id                 = "your-gcp-project-id"
+apigee_environment         = "your-apigee-environment-name"
+data_ingestion_service_url = "https://<data-ingestion-service-ip>:9091/api/ingestData"
+```
 
 3. Run Terraform:
 
 ```bash
 terraform init
-terraform apply
+terraform apply -var-file="terraform.tfvars"
 ```
 
 This automation creates and deploys the Apigee shared flow and attaches it to the selected environment flow hook.
