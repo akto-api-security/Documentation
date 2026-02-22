@@ -92,13 +92,25 @@ This is the manual environment-wide setup.
 1. In Apigee, go to **Proxy development → Shared Flows** and click **+ Create**.
         <figure><img src="../../.gitbook/assets/apigee_shared_flow.png" alt=""><figcaption></figcaption></figure>
 2. Create a shared flow (for example: `akto-traffic-collector`).
-3. Open the shared flow then go to **Develop** and click add **Policies +** button and add a **JavaScript** policy (for example: `AktoJavascript`).
+3. Open the shared flow, go to **Develop → default**, and add a Step in the default shared flow that references policy name `AktoJavascript` (this ensures the policy is used in the flow).
+4. In the same shared flow, click **Policies +** and add a **JavaScript** policy named `AktoJavascript`.
     <figure><img src="../../.gitbook/assets/apigee_shared_flow_javascript.png" alt=""><figcaption></figcaption></figure>
-4. Create a JS resource file named `AktoPolicy.js` and paste the script below.
-5. Save and deploy the shared flow to your target environment.
+5. Open the JavaScript policy XML (Under Policies section) and set it as:
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Javascript continueOnError="true" enabled="true" timeLimit="1000" name="AktoJavascript">
+  <DisplayName>AktoJavascript</DisplayName>
+  <Properties/>
+  <ResourceURL>jsc://AktoJavascript.js</ResourceURL>
+</Javascript>
+```
+
+6. Create a JS resource file named `AktoJavascript.js` and paste the script below.
+7. Save and deploy the shared flow to your target environment.
     <figure><img src="../../.gitbook/assets/apigee_deploy_sharedflow.png" alt=""><figcaption></figcaption></figure>
-6. Go to **Management → Environments → your_environment → Flow Hooks**.
-7. Attach the shared flow to a hook point (recommended: `PostProxyFlowHook`).
+8. Go to **Management → Environments → your_environment → Flow Hooks**.
+9. Attach the shared flow to a hook point (recommended: `PostProxyFlowHook`).
     <figure><img src="../../.gitbook/assets/apigee_attach_sharedflow.png" alt=""><figcaption></figcaption></figure>
 
 ```javascript
@@ -218,13 +230,17 @@ var headers = {
 };
 
 var req = new Request(ingestionUrl, 'POST', headers, requestBody);
-var exchange = httpClient.send(req);
+httpClient.send(req, function(response, error) {
+  if (error) {
+    print("Akto ingestion error: " + error);
+  }
+});
 ```
 
 Important policy behavior:
 
 * Set JavaScript policy `continueOnError` to `true`.
-* Keep ingestion call asynchronous (`httpClient.send(..., callback)`).
+* Ensure `AktoJavascript` policy is added in the shared flow **default** section so it is used in execution.
 
 ### 2.3 Option B: Terraform Automation
 
