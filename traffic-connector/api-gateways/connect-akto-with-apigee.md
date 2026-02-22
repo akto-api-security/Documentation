@@ -97,89 +97,96 @@ This is the manual environment-wide setup.
 4. Create a JS resource file named `AktoPolicy.js` and paste the script below.
 5. Save and deploy the shared flow to your target environment.
     <figure><img src="../../.gitbook/assets/apigee_deploy_sharedflow.png" alt=""><figcaption></figcaption></figure>
-6. Go to **Management → Environments → <your-environment> → Flow Hooks**.
+6. Go to **Management → Environments → your_environment → Flow Hooks**.
 7. Attach the shared flow to a hook point (recommended: `PostProxyFlowHook`).
     <figure><img src="../../.gitbook/assets/apigee_attach_sharedflow.png" alt=""><figcaption></figcaption></figure>
 
 ```javascript
 var friendlyHttpStatus = {
-  "200": "OK",
-  "201": "Created",
-  "202": "Accepted",
-  "203": "Non-Authoritative Information",
-  "204": "No Content",
-  "205": "Reset Content",
-  "206": "Partial Content",
-  "300": "Multiple Choices",
-  "301": "Moved Permanently",
-  "302": "Found",
-  "303": "See Other",
-  "304": "Not Modified",
-  "305": "Use Proxy",
-  "306": "Unused",
-  "307": "Temporary Redirect",
-  "400": "Bad Request",
-  "401": "Unauthorized",
-  "402": "Payment Required",
-  "403": "Forbidden",
-  "404": "Not Found",
-  "405": "Method Not Allowed",
-  "406": "Not Acceptable",
-  "407": "Proxy Authentication Required",
-  "408": "Request Timeout",
-  "409": "Conflict",
-  "410": "Gone",
-  "411": "Length Required",
-  "412": "Precondition Required",
-  "413": "Request Entity Too Large",
-  "414": "Request-URI Too Long",
-  "415": "Unsupported Media Type",
-  "416": "Requested Range Not Satisfiable",
-  "417": "Expectation Failed",
-  "418": "I'm a teapot",
-  "429": "Too Many Requests",
-  "500": "Internal Server Error",
-  "501": "Not Implemented",
-  "502": "Bad Gateway",
-  "503": "Service Unavailable",
-  "504": "Gateway Timeout",
-  "505": "HTTP Version Not Supported"
+    '200': 'OK',
+    '201': 'Created',
+    '202': 'Accepted',
+    '203': 'Non-Authoritative Information',
+    '204': 'No Content',
+    '205': 'Reset Content',
+    '206': 'Partial Content',
+    '300': 'Multiple Choices',
+    '301': 'Moved Permanently',
+    '302': 'Found',
+    '303': 'See Other',
+    '304': 'Not Modified',
+    '305': 'Use Proxy',
+    '306': 'Unused',
+    '307': 'Temporary Redirect',
+    '400': 'Bad Request',
+    '401': 'Unauthorized',
+    '402': 'Payment Required',
+    '403': 'Forbidden',
+    '404': 'Not Found',
+    '405': 'Method Not Allowed',
+    '406': 'Not Acceptable',
+    '407': 'Proxy Authentication Required',
+    '408': 'Request Timeout',
+    '409': 'Conflict',
+    '410': 'Gone',
+    '411': 'Length Required',
+    '412': 'Precondition Required',
+    '413': 'Request Entry Too Large',
+    '414': 'Request-URI Too Long',
+    '415': 'Unsupported Media Type',
+    '416': 'Requested Range Not Satisfiable',
+    '417': 'Expectation Failed',
+    '418': 'I\'m a teapot',
+    '429': 'Too Many Requests',
+    '500': 'Internal Server Error',
+    '501': 'Not Implemented',
+    '502': 'Bad Gateway',
+    '503': 'Service Unavailable',
+    '504': 'Gateway Timeout',
+    '505': 'HTTP Version Not Supported',
 };
 
-function getHeaderMap(prefix, namesVar) {
-  var result = {};
-  var names = context.getVariable(namesVar);
-  names = (names || "") + "";
-  if (!names || names.length < 2) {
-    return result;
-  }
-  var arr = names.slice(1, -1).split(", ");
-  for (var i = 0; i < arr.length; i++) {
-    var key = arr[i];
-    if (!key) {
-      continue;
-    }
-    result[key] = context.getVariable(prefix + key);
-  }
-  return result;
+var requestPath = context.getVariable("request.uri");
+var queryString = context.getVariable("request.querystring");
+var requestHeaders = context.getVariable("request.headers.names");
+var requestPayload = context.getVariable("request.content");
+var clientIp = context.getVariable("request.header.x-forwarded-for");
+var method = context.getVariable("request.verb");
+
+var responseHeaders = context.getVariable("response.headers.names");
+var responsePayload = context.getVariable("response.content");
+var statusCode = context.getVariable("response.status.code");
+var statusText = friendlyHttpStatus[statusCode];
+if (statusText == undefined) {
+    statusText = "OK";
 }
+var httpVersion = "1.1";
 
-try {
-  var requestPath = context.getVariable("request.uri");
-  var queryString = context.getVariable("request.querystring");
-  var method = context.getVariable("request.verb");
-  var requestPayload = context.getVariable("request.content");
-  var responsePayload = context.getVariable("response.content");
-  var statusCode = context.getVariable("response.status.code");
-  var statusText = friendlyHttpStatus[statusCode] || "OK";
-  var rawTime = context.getVariable("system.timestamp");
-  var epochTimeSecond = Math.floor((rawTime || 0) / 1000);
-  var clientIp = context.getVariable("request.header.x-forwarded-for") || context.getVariable("client.ip");
+var rawTime = context.getVariable("system.timestamp");
+var epochTime = Math.floor(rawTime / 1000);
 
-  var requestHeadersRes = getHeaderMap("request.header.", "request.headers.names");
-  var responseHeadersRes = getHeaderMap("response.header.", "response.headers.names");
+var aktoAccountId = "1000000";
+var aktoVxlanId = "0";
+var isPending = "false";
+var source = "MIRRORING";
 
-  var trafficData = {
+var requestHeadersRes = {}
+requestHeaders = requestHeaders + '';
+requestHeaders = requestHeaders.slice(1, -1).split(', ');
+requestHeaders.forEach(function(x){
+  var a = context.getVariable("request.header." + x );
+  requestHeadersRes[x] = a;
+});
+
+var responseHeadersRes = {}
+responseHeaders = responseHeaders + '';
+responseHeaders = responseHeaders.slice(1, -1).split(', ');
+responseHeaders.forEach(function(x){
+  var a = context.getVariable("response.header." + x );
+  responseHeadersRes[x] = a;
+});
+
+var trafficData = {
     path: requestPath + (queryString ? "?" + queryString : ""),
     requestHeaders: JSON.stringify(requestHeadersRes, null, 2),
     responseHeaders: JSON.stringify(responseHeadersRes, null, 2),
@@ -187,27 +194,31 @@ try {
     requestPayload: requestPayload || "",
     responsePayload: responsePayload || "",
     ip: clientIp || "0.0.0.0",
-    time: "" + epochTimeSecond,
+    time: "" + epochTime,
     statusCode: "" + statusCode,
-    type: "HTTP/1.1",
+    type: "HTTP/" + httpVersion,
     status: statusText,
-    akto_account_id: "1000000",
-    akto_vxlan_id: "0",
-    is_pending: "false",
-    source: "MIRRORING"
-  };
+    akto_account_id: aktoAccountId,
+    akto_vxlan_id: aktoVxlanId,
+    is_pending: isPending,
+    source: source
+};
 
-  var payload = { batchData: [trafficData] };
-  var ingestionUrl = "https://<data-ingestion-service-ip>:9091/api/ingestData";
-  var req = new Request(ingestionUrl, "POST", { "Content-Type": "application/json" }, JSON.stringify(payload));
-  httpClient.send(req, function(response, error) {
-    if (error) {
-      print("Akto ingestion error: " + error);
-    }
-  });
-} catch (e) {
-  print("Akto policy error: " + e);
-}
+// Store the traffic data as a variable for further processing
+context.setVariable("traffic.data", JSON.stringify(trafficData));
+
+var payload = {
+    batchData: [trafficData]
+};
+
+var ingestionUrl = "http://<data-ingestion-service-ip>:9091/api/ingestData";
+var requestBody = JSON.stringify(payload);
+var headers = {
+    "Content-Type": "application/json"
+};
+
+var req = new Request(ingestionUrl, 'POST', headers, requestBody);
+var exchange = httpClient.send(req);
 ```
 
 Important policy behavior:
