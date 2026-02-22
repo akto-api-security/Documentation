@@ -2,15 +2,15 @@
 
 Apigee is Google Cloud's full-lifecycle API management platform that helps enterprises design, secure, and scale APIs. Integrating Apigee with Akto enables automatic discovery and security testing of all APIs managed through your Apigee gateway, providing comprehensive visibility and continuous security assessment of your API infrastructure.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<figure><img src="../../.gitbook/assets/image (19).png" alt=""><figcaption></figcaption></figure>
 
-## 1. Deploy the Akto Data-Ingestion Service
+***
+
+## Step 1: Deploy the Akto Data-Ingestion Service
 
 Before setting up the Apigee connector, deploy the Akto Data-Ingestion Service by following these steps:
 
-{% stepper %}
-{% step %}
-#### Download the Required Files
+### 1.1 Download the Required Files
 
 SSH into the instance where you want to deploy the data-ingestion service and run these commands:
 
@@ -21,54 +21,49 @@ wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/featur
 wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/watchtower.env
 
 ```
-{% endstep %}
 
-{% step %}
-#### Retrieve the `DATABASE_ABSTRACTOR_SERVICE_TOKEN`
+### 1.2 Retrieve the `DATABASE_ABSTRACTOR_SERVICE_TOKEN`
 
 * Log in to the [Akto Dashboard](https://app.akto.io/).
 *   Navigate to the **Quick Start** tab in the left panel.
 
-    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/Quick-Start.png" alt="" width="236"><figcaption></figcaption></figure></div>
+    <figure><img src="../../.gitbook/assets/Quick-Start.png" alt=""><figcaption></figcaption></figure>
 *   Select **Hybrid SaaS Connector** and copy the token from the **Runtime Service Command** section.
 
-    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/HybridSaaSConnector.png" alt="" width="375"><figcaption></figcaption></figure></div>
-{% endstep %}
+    <figure><img src="../../.gitbook/assets/HybridSaaSConnector.png" alt=""><figcaption></figcaption></figure>
 
-{% step %}
-#### Update the `docker-mini-runtime.env` File
+### 1.3 Update the `docker-mini-runtime.env` File
 
-*   Open the `docker-mini-runtime.env` file and replace `token` with the `DATABASE_ABSTRACTOR_SERVICE_TOKEN` you retrieved earlier.
+* Open the `docker-mini-runtime.env` file and replace `token` with the `DATABASE_ABSTRACTOR_SERVICE_TOKEN` you retrieved earlier.
 
-    ```
-    DATABASE_ABSTRACTOR_SERVICE_TOKEN=token
-    ```
-{% endstep %}
+```plaintext
+DATABASE_ABSTRACTOR_SERVICE_TOKEN=token
+```
 
-{% step %}
-#### Deploy the Data-Ingestion Service
+### 1.4 Deploy the Data-Ingestion Service
 
 Run the following command to start the data-ingestion service:
 
 ```bash
 docker-compose -f docker-compose-data-ingestion-runtime.yml up -d
 ```
-{% endstep %}
 
-{% step %}
-#### Note the IP Address of the Data-Ingestion Service
+### 1.5 Note the IP Address of the Data-Ingestion Service
 
 Ensure the instance is accessible from the network where your Apigee API proxy is configured. Note the instance's IP address, as it will be required by the Apigee connector to send traffic data.
-{% endstep %}
-{% endstepper %}
 
-## 2. Configure Apigee to Use the Akto Data-Ingestion Service
+***
 
-### Manual Configuration
+## Step 2: Configure Apigee to Use the Akto Data-Ingestion Service
 
-{% stepper %}
-{% step %}
-#### Create or Choose an Apigee Environment
+You can choose either option below for Step 2:
+
+* **Option A:** Manual setup from the GCP Apigee UI.
+* **Option B:** Automated setup using Terraform scripts from Akto's infra repository.
+
+Both options configure Akto ingestion in Apigee. Option B is recommended for repeatable CI/CD-friendly deployments.
+
+### 2.1 Create or Choose an Apigee Environment
 
 To configure the Akto connector, you need an **Intermediate** or **Comprehensive** environment in Apigee, as the JavaScript policy is not supported in the **Base** environment.
 
@@ -77,132 +72,114 @@ To configure the Akto connector, you need an **Intermediate** or **Comprehensive
 1. Log in to the [Apigee Management Console](https://console.cloud.google.com/apigee/overview).
 2.  Navigate to **Management → Environments** from the left-side navigation bar.
 
-    <figure><img src="../../.gitbook/assets/create-env_apigee.png" alt="" width="245"><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/create-env_apigee.png" alt=""><figcaption></figcaption></figure>
 3.  Click **+ Create Environment**.
 
-    <figure><img src="../../.gitbook/assets/create_env_instance_apigee.png" alt="" width="269"><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/create_env_instance_apigee.png" alt=""><figcaption></figcaption></figure>
 4. Provide the required details:
    * **Name**: Specify a name for your environment.
    * **Environment Type**: Choose **Intermediate** or **Comprehensive**.
 5.  Click **Create** to finalize your environment setup.
 
-    <figure><img src="../../.gitbook/assets/apigee_env_details.png" alt="" width="563"><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/apigee_env_details.png" alt=""><figcaption></figcaption></figure>
 
 If you already have an **Intermediate** or **Comprehensive** environment, you can skip this step and proceed to the next section.
-{% endstep %}
 
-{% step %}
-### Create a New API Proxy
+### 2.2 Option A: Manual Setup from GCP UI (Shared Flow + Flow Hook)
 
-1.  Navigate to **Proxy Development → API Proxies** from the left-side navigation bar.
+This is the manual environment-wide setup.
 
-    <figure><img src="../../.gitbook/assets/create_api_proxy_apigee.png" alt="" width="244"><figcaption></figcaption></figure>
-2.  Click **+ Create** to start creating a new API proxy.
-
-    <figure><img src="../../.gitbook/assets/create_apigee_proxy_button.png" alt="" width="180"><figcaption></figcaption></figure>
-3. Configure the proxy with the following details:
-   * **Proxy Name**: Enter a unique name for your proxy.
-   * **Base Path**: Specify the base path for the proxy (e.g., `/api/v1`). This path will be used as the prefix for all API calls.
-   * **Target (Existing API)**: Provide the URL of your backend service (e.g., `https://your-backend-service.com`).
-   * **Proxy Template**: Select **Reverse Proxy** as the proxy template.
-   * **Environment**: Select an **Intermediate** or **Comprehensive** environment where the proxy will be deployed.
-4. Do **not deploy the proxy yet**, as you will need to configure policies before deploying.
-5.  Click **Create** to complete the proxy setup. You will then be directed to the proxy editor to configure additional settings.
-
-    <figure><img src="../../.gitbook/assets/create_api_proxy_form_apigee.png" alt="" width="375"><figcaption></figcaption></figure>
-{% endstep %}
-
-{% step %}
-### Upload the JavaScript Policy
-
-* Copy the following JavaScript policy code and save it as `AktoPolicy.js`:
+1. In Apigee, go to **Proxy development → Shared Flows** and click **+ Create**.
+        <figure><img src="../../.gitbook/assets/apigee_shared_flow.png" alt=""><figcaption></figcaption></figure>
+2. Create a shared flow (for example: `akto-traffic-collector`).
+3. Open the shared flow then go to **Develop** and click add **Policies +** button and add a **JavaScript** policy (for example: `AktoJavascript`).
+    <figure><img src="../../.gitbook/assets/apigee_shared_flow_javascript.png" alt=""><figcaption></figcaption></figure>
+4. Create a JS resource file named `AktoPolicy.js` and paste the script below.
+5. Save and deploy the shared flow to your target environment.
+    <figure><img src="../../.gitbook/assets/apigee_deploy_sharedflow.png" alt=""><figcaption></figcaption></figure>
+6. Go to **Management → Environments → <your-environment> → Flow Hooks**.
+7. Attach the shared flow to a hook point (recommended: `PostProxyFlowHook`).
+    <figure><img src="../../.gitbook/assets/apigee_attach_sharedflow.png" alt=""><figcaption></figcaption></figure>
 
 ```javascript
 var friendlyHttpStatus = {
-    '200': 'OK',
-    '201': 'Created',
-    '202': 'Accepted',
-    '203': 'Non-Authoritative Information',
-    '204': 'No Content',
-    '205': 'Reset Content',
-    '206': 'Partial Content',
-    '300': 'Multiple Choices',
-    '301': 'Moved Permanently',
-    '302': 'Found',
-    '303': 'See Other',
-    '304': 'Not Modified',
-    '305': 'Use Proxy',
-    '306': 'Unused',
-    '307': 'Temporary Redirect',
-    '400': 'Bad Request',
-    '401': 'Unauthorized',
-    '402': 'Payment Required',
-    '403': 'Forbidden',
-    '404': 'Not Found',
-    '405': 'Method Not Allowed',
-    '406': 'Not Acceptable',
-    '407': 'Proxy Authentication Required',
-    '408': 'Request Timeout',
-    '409': 'Conflict',
-    '410': 'Gone',
-    '411': 'Length Required',
-    '412': 'Precondition Required',
-    '413': 'Request Entry Too Large',
-    '414': 'Request-URI Too Long',
-    '415': 'Unsupported Media Type',
-    '416': 'Requested Range Not Satisfiable',
-    '417': 'Expectation Failed',
-    '418': 'I\'m a teapot',
-    '429': 'Too Many Requests',
-    '500': 'Internal Server Error',
-    '501': 'Not Implemented',
-    '502': 'Bad Gateway',
-    '503': 'Service Unavailable',
-    '504': 'Gateway Timeout',
-    '505': 'HTTP Version Not Supported',
+  "200": "OK",
+  "201": "Created",
+  "202": "Accepted",
+  "203": "Non-Authoritative Information",
+  "204": "No Content",
+  "205": "Reset Content",
+  "206": "Partial Content",
+  "300": "Multiple Choices",
+  "301": "Moved Permanently",
+  "302": "Found",
+  "303": "See Other",
+  "304": "Not Modified",
+  "305": "Use Proxy",
+  "306": "Unused",
+  "307": "Temporary Redirect",
+  "400": "Bad Request",
+  "401": "Unauthorized",
+  "402": "Payment Required",
+  "403": "Forbidden",
+  "404": "Not Found",
+  "405": "Method Not Allowed",
+  "406": "Not Acceptable",
+  "407": "Proxy Authentication Required",
+  "408": "Request Timeout",
+  "409": "Conflict",
+  "410": "Gone",
+  "411": "Length Required",
+  "412": "Precondition Required",
+  "413": "Request Entity Too Large",
+  "414": "Request-URI Too Long",
+  "415": "Unsupported Media Type",
+  "416": "Requested Range Not Satisfiable",
+  "417": "Expectation Failed",
+  "418": "I'm a teapot",
+  "429": "Too Many Requests",
+  "500": "Internal Server Error",
+  "501": "Not Implemented",
+  "502": "Bad Gateway",
+  "503": "Service Unavailable",
+  "504": "Gateway Timeout",
+  "505": "HTTP Version Not Supported"
 };
 
-var requestPath = context.getVariable("request.uri");
-var queryString = context.getVariable("request.querystring");
-var requestHeaders = context.getVariable("request.headers.names");
-var requestPayload = context.getVariable("request.content");
-var clientIp = context.getVariable("request.header.x-forwarded-for");
-var method = context.getVariable("request.verb");
-
-var responseHeaders = context.getVariable("response.headers.names");
-var responsePayload = context.getVariable("response.content");
-var statusCode = context.getVariable("response.status.code");
-var statusText = friendlyHttpStatus[statusCode];
-if (statusText == undefined) {
-    statusText = "OK";
+function getHeaderMap(prefix, namesVar) {
+  var result = {};
+  var names = context.getVariable(namesVar);
+  names = (names || "") + "";
+  if (!names || names.length < 2) {
+    return result;
+  }
+  var arr = names.slice(1, -1).split(", ");
+  for (var i = 0; i < arr.length; i++) {
+    var key = arr[i];
+    if (!key) {
+      continue;
+    }
+    result[key] = context.getVariable(prefix + key);
+  }
+  return result;
 }
-var httpVersion = "1.1";
 
-var rawTime = context.getVariable("system.timestamp");
-var epochTime = Math.floor(rawTime / 1000);
+try {
+  var requestPath = context.getVariable("request.uri");
+  var queryString = context.getVariable("request.querystring");
+  var method = context.getVariable("request.verb");
+  var requestPayload = context.getVariable("request.content");
+  var responsePayload = context.getVariable("response.content");
+  var statusCode = context.getVariable("response.status.code");
+  var statusText = friendlyHttpStatus[statusCode] || "OK";
+  var rawTime = context.getVariable("system.timestamp");
+  var epochTimeSecond = Math.floor((rawTime || 0) / 1000);
+  var clientIp = context.getVariable("request.header.x-forwarded-for") || context.getVariable("client.ip");
 
-var aktoAccountId = "1000000";
-var aktoVxlanId = "0";
-var isPending = "false";
-var source = "MIRRORING";
+  var requestHeadersRes = getHeaderMap("request.header.", "request.headers.names");
+  var responseHeadersRes = getHeaderMap("response.header.", "response.headers.names");
 
-var requestHeadersRes = {}
-requestHeaders = requestHeaders + '';
-requestHeaders = requestHeaders.slice(1, -1).split(', ');
-requestHeaders.forEach(function(x){
-  var a = context.getVariable("request.header." + x );
-  requestHeadersRes[x] = a;
-});
-
-var responseHeadersRes = {}
-responseHeaders = responseHeaders + '';
-responseHeaders = responseHeaders.slice(1, -1).split(', ');
-responseHeaders.forEach(function(x){
-  var a = context.getVariable("response.header." + x );
-  responseHeadersRes[x] = a;
-});
-
-var trafficData = {
+  var trafficData = {
     path: requestPath + (queryString ? "?" + queryString : ""),
     requestHeaders: JSON.stringify(requestHeadersRes, null, 2),
     responseHeaders: JSON.stringify(responseHeadersRes, null, 2),
@@ -210,80 +187,88 @@ var trafficData = {
     requestPayload: requestPayload || "",
     responsePayload: responsePayload || "",
     ip: clientIp || "0.0.0.0",
-    time: "" + epochTime,
+    time: "" + epochTimeSecond,
     statusCode: "" + statusCode,
-    type: "HTTP/" + httpVersion,
+    type: "HTTP/1.1",
     status: statusText,
-    akto_account_id: aktoAccountId,
-    akto_vxlan_id: aktoVxlanId,
-    is_pending: isPending,
-    source: source
-};
+    akto_account_id: "1000000",
+    akto_vxlan_id: "0",
+    is_pending: "false",
+    source: "MIRRORING"
+  };
 
-// Store the traffic data as a variable for further processing
-context.setVariable("traffic.data", JSON.stringify(trafficData));
-
-var payload = {
-    batchData: [trafficData]
-};
-
-var ingestionUrl = "http://<data-ingestion-service-ip>:9091/api/ingestData";
-var requestBody = JSON.stringify(payload);
-var headers = {
-    "Content-Type": "application/json"
-};
-
-var req = new Request(ingestionUrl, 'POST', headers, requestBody);
-var exchange = httpClient.send(req);
+  var payload = { batchData: [trafficData] };
+  var ingestionUrl = "https://<data-ingestion-service-ip>:9091/api/ingestData";
+  var req = new Request(ingestionUrl, "POST", { "Content-Type": "application/json" }, JSON.stringify(payload));
+  httpClient.send(req, function(response, error) {
+    if (error) {
+      print("Akto ingestion error: " + error);
+    }
+  });
+} catch (e) {
+  print("Akto policy error: " + e);
+}
 ```
 
-* In the Apigee Management Console, go to your API proxy's **Develop** tab.
-* Click on **Proxy Endpoints → PostFlow**.
-*   Click on the `+` symbol of **PostFlow**.
+Important policy behavior:
 
-    <figure><img src="../../.gitbook/assets/add_apigee_js_policy.png" alt="" width="563"><figcaption></figcaption></figure>
-*   Select **Create New Policy** and choose **Extensible Policies** → **JavaScript**.
+* Set JavaScript policy `continueOnError` to `true`.
+* Keep ingestion call asynchronous (`httpClient.send(..., callback)`).
 
-    <figure><img src="../../.gitbook/assets/create_js_policy_apigee.png" alt="" width="375"><figcaption></figcaption></figure>
-* Enter a name for your policy and, in the `JavaScript file` option, click **Create New Resource**.
-* Upload your saved `AktoPolicy.js` file and click **Add**.
-*   Select the uploaded file as your JavaScript policy and click **Add**.
+### 2.3 Option B: Terraform Automation
 
-    <figure><img src="../../.gitbook/assets/import_js_policy_apigee.png" alt="" width="563"><figcaption></figcaption></figure>
-{% endstep %}
+Use Terraform from:
 
-{% step %}
-### Configure the Policy Parameters
+* **Repository:** [https://github.com/akto-api-security/infra](https://github.com/akto-api-security/infra)
+* **Branch:** `feature/quick-setup`
+* **Folder:** `apigee-connect-terraform`
 
-Edit the JavaScript policy to set the ingestion URL (from Step 1.5):
+1. Clone and switch to the required branch:
 
-```javascript
-var ingestionUrl = "https://<data-ingestion-service-ip>:9091/api/ingestData";
+```bash
+git clone https://github.com/akto-api-security/infra.git
+cd infra
+git checkout feature/quick-setup
+cd apigee-connect-terraform
 ```
-{% endstep %}
 
-{% step %}
-### Save and Deploy the API Proxy
+2. Provide the required values in a `terraform.tfvars` file inside `apigee-connect-terraform`.
 
-* Save your changes.
-*   Deploy the proxy to your selected environment.
+If the repository contains `terraform.tfvars.example`, copy it first:
 
-    <figure><img src="../../.gitbook/assets/deploy_apigee_proxy.png" alt="" width="563"><figcaption></figcaption></figure>
-{% endstep %}
+```bash
+cp terraform.tfvars.example terraform.tfvars
+```
 
-{% step %}
-### Test the Integration
+Otherwise create `terraform.tfvars` manually with:
 
-* Make a test API call through the Apigee proxy.
-* Verify in the Akto dashboard that the traffic is being ingested correctly.
-{% endstep %}
-{% endstepper %}
+```hcl
+project_id                 = "your-gcp-project-id"
+apigee_environment         = "your-apigee-environment-name"
+data_ingestion_service_url = "https://<data-ingestion-service-ip>:9091/api/ingestData"
+```
 
-## Get Support for your Akto setup
+3. Run Terraform:
+
+```bash
+terraform init
+terraform apply -var-file="terraform.tfvars"
+```
+
+This automation creates and deploys the Apigee shared flow and attaches it to the selected environment flow hook.
+
+### 2.4 Test the Integration
+
+* Send test API traffic through Apigee.
+* Verify in the Akto dashboard that traffic is being ingested.
+
+***
+
+### Get Support for your Akto setup
 
 There are multiple ways to request support from Akto. We are 24X7 available on the following:
 
 1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
 2. Join our [discord channel](https://www.akto.io/community) for community support.
-3. Contact `support@akto.io` for email support.
+3. Contact `help@akto.io` for email support.
 4. Contact us [here](https://www.akto.io/contact-us).
