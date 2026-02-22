@@ -22,7 +22,7 @@ To connect Akto with AWS API Gateway, follow these steps -
         ```
           <figure><img src="../../.gitbook/assets/aws-api-gateway-3.png" alt=""><figcaption></figcaption></figure>
     5. Find out the `cloudwatch log group` for your API gateway for the stage which has the above logs enabled and save it. We'll need it later.
-    6. Deploy the connector (Kubernetes or Docker Compose).
+    6. Deploy the connector (Kubernetes, Docker Compose, or CloudFormation).
        1. For `LOG_GROUP_NAME`, use the CloudWatch log group name (from API Gateway Stage logs).
        2. For `AWS_REGION`, use the AWS region where that log group exists.
        3. For `AKTO_KAFKA_BROKER_MAL`, use the Akto mini-runtime Kafka endpoint (`<AktoNLB-DNS>:9092`).
@@ -132,6 +132,29 @@ Run:
 docker compose up -d
 docker compose logs -f --tail=200 api-gateway-logging
 ```
+
+### Option C: CloudFormation (Automated deployment)
+
+Download the CloudFormation scripts from the Akto infra repository:
+
+- Repo path: https://github.com/akto-api-security/infra/tree/feature/quick-setup
+- Use folder: `api-gateway-connect-cloudformation`
+
+Example:
+
+```bash
+git clone -b feature/quick-setup https://github.com/akto-api-security/infra.git
+cd infra/api-gateway-connect-cloudformation
+cp parameters.example.json parameters.json
+```
+
+Update `parameters.json` with your values, then deploy:
+
+```bash
+./deploy.sh akto-api-gateway-connector ap-south-1
+```
+
+This CloudFormation option creates the connector EC2 instance and runs the API Gateway connector automatically using Docker Compose.
 
 ## Environment variables reference
 
