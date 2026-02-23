@@ -136,6 +136,7 @@ redirects:
   ai-model-import: migration/agentic-ai-documentation.md
   agent-guard: migration/agentic-ai-documentation.md
   agentic-shield: migration/agentic-ai-documentation.md
+  akto-agent-proxy: migration/agentic-ai-documentation.md
   gcp: migration/agentic-ai-documentation.md
   kong: migration/agentic-ai-documentation.md
   kong/agentic-guardrails-kong: migration/agentic-ai-documentation.md
