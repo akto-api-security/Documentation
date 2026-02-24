@@ -174,5 +174,5 @@ For assistance with your TrueFoundry integration:
 
 1. **In-app Support**: Message us via Intercom in the Akto dashboard
 2. **Community**: Join our [Discord channel](https://www.akto.io/community)
-3. **Email**: Contact `help@akto.io`
+3. **Email**: Contact [support@akto.io](mailto:support@akto.io)
 4. **Website**: Visit our [contact page](https://www.akto.io/contact-us)
