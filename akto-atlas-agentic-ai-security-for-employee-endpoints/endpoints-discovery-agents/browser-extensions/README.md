@@ -25,5 +25,3 @@ Browser extensions are ideal when you:
 * Need to quickly test a specific AI application
 * Are evaluating Akto before full deployment
 * Want to capture agent behavior during manual testing
-
-For production environments with continuous monitoring, consider [homegrown discovery agents](../../../akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/) instead.

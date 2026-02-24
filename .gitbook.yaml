@@ -101,3 +101,5 @@ redirects:
   akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-proxy: agentic-guardrails/overview/akto-agent-proxy.md
   guardrails/concepts/threat-actors: agentic-guardrails/concepts/threat-actors.md
   akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/claude-code-cli: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/claude-cli-hooks.md
+  akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/README.md
+  akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/traffic-data-sources: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md
