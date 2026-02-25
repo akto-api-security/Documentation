@@ -1,12 +1,10 @@
----
-hidden: true
----
+# MDM Deployment
 
-# MDM Deployement
+## Overview
 
 Akto MCP Endpoint Shield provides **enterprise-grade Mobile Device Management (MDM) support** for seamless deployment and centralized management across your organization's devices.
 
-#### Why MDM Integration Matters
+### Why MDM Integration Matters
 
 In enterprise environments, manually configuring security tools on hundreds or thousands of developer machines is impractical. MDM support enables:
 
@@ -16,7 +14,7 @@ In enterprise environments, manually configuring security tools on hundreds or t
 * **Compliance enforcement** and audit trails
 * **Remote monitoring** of security posture
 
-#### Supported MDM Platforms
+### Supported MDM Platforms
 
 Akto MCP Endpoint Shield integrates with leading MDM solutions:
 
@@ -29,7 +27,7 @@ Akto MCP Endpoint Shield integrates with leading MDM solutions:
 * ✅ **IBM MaaS360**
 * ✅ **Any standard MDM** supporting package deployment
 
-#### Key MDM Capabilities
+### Key MDM Capabilities
 
 **1. Automated Deployment**
 
@@ -52,20 +50,20 @@ Akto MCP Endpoint Shield integrates with leading MDM solutions:
 * **Log collection** for security audits
 * **Compliance dashboards** in Akto platform
 
-### 🚀 MDM Deployment Guide
-
-#### Prerequisites
+## Prerequisites
 
 * Active Akto account with API token
 * MDM platform with package deployment capability
 * Administrator access to MDM console
 * MCP Endpoint Shield installer package (.pkg for macOS, .msi for Windows, .deb for Linux)
 
-#### Step 1: Prepare the Installation Package
+## Step 1: Prepare the Installation Package
 
-**For macOS (Jamf Pro, Intune, Kandji)**
+### **For macOS (Jamf Pro, Intune, Kandji)**
 
-**1.1 Download the installer:**
+{% stepper %}
+{% step %}
+**Download the installer**
 
 * Contact Akto Support to get `akto-mcp-endpoint-shield.pkg`
 * The `.pkg` file is **signed and notarized** by Apple for secure installation
@@ -80,8 +78,10 @@ Akto MCP Endpoint Shield integrates with leading MDM solutions:
 * ✅ **Compatible with MDM silent installs** (no user interaction required)
 * ✅ **Trusted by Apple** - package integrity verified
 * ✅ **Meets enterprise security policies** for managed devices
+{% endstep %}
 
-**1.2 Create a configuration profile:**
+{% step %}
+**Create a configuration profile:**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -117,21 +117,29 @@ Akto MCP Endpoint Shield integrates with leading MDM solutions:
 </dict>
 </plist>
 ```
+{% endstep %}
 
-**1.3 Upload to MDM:**
+{% step %}
+**Upload to MDM:**
 
 * Navigate to **Configuration Profiles** section
 * Upload the `.plist` configuration
 * Assign to target device groups
+{% endstep %}
+{% endstepper %}
 
-**For Windows (Intune, ManageEngine)**
+### **For Windows (Intune, ManageEngine)**
 
-**1.1 Download the installer:**
+{% stepper %}
+{% step %}
+**Download the installer:**
 
 * Contact Akto Support to get `akto-mcp-endpoint-shield.msi`
 * Upload to your MDM software repository
+{% endstep %}
 
-**1.2 Create installation script:**
+{% step %}
+**Create installation script:**
 
 ```powershell
 # install-mcp-shield.ps1
@@ -155,25 +163,33 @@ if ($service.Status -eq "Running") {
     exit 1
 }
 ```
+{% endstep %}
 
-**1.3 Configure in Intune:**
+{% step %}
+**Configure in Intune:**
 
 * Go to **Apps** → **Windows apps** → **Add**
 * Select **Line-of-business app**
 * Upload the `.msi` file
 * Add the PowerShell script as a post-install action
 * Assign to device groups
+{% endstep %}
+{% endstepper %}
 
-**For Linux (Fleet, Canonical Landscape)**
+### **For Linux (Fleet, Canonical Landscape)**
 
-**1.1 Download the installer:**
+{% stepper %}
+{% step %}
+**Download the installer:**
 
 ```bash
 # Contact Akto Support for .deb or .rpm package
 wget https://akto-releases.example.com/mcp-endpoint-shield_latest_amd64.deb
 ```
+{% endstep %}
 
-**1.2 Create deployment script:**
+{% step %}
+**Create deployment script:**
 
 ```bash
 #!/bin/bash
@@ -194,18 +210,22 @@ systemctl enable mcp-endpoint-shield
 # Verify
 systemctl is-active mcp-endpoint-shield-agent
 ```
+{% endstep %}
 
-**1.3 Deploy via MDM:**
+{% step %}
+**Deploy via MDM:**
 
 * Use your MDM's script execution capability
 * Schedule deployment to target device groups
 * Set execution frequency (one-time for new devices)
+{% endstep %}
+{% endstepper %}
 
-#### Step 2: Configure Auto-Discovery Settings
+## Step 2: Configure Auto-Discovery Settings
 
 The agent will automatically discover and protect MCP servers. However, you can customize behavior via MDM-managed configuration files.
 
-**Create Custom Policy File**
+#### **Create Custom Policy File**
 
 **Location:** `/etc/akto-mcp-endpoint-shield/policy.json` (Linux/macOS) or `C:\ProgramData\Akto\mcp-endpoint-shield\policy.json` (Windows)
 
@@ -237,7 +257,7 @@ The agent will automatically discover and protect MCP servers. However, you can 
 }
 ```
 
-**Deploy Policy via MDM**
+#### **Deploy Policy via MDM**
 
 **For Jamf:**
 
@@ -260,9 +280,9 @@ chmod 644 /etc/akto-mcp-endpoint-shield/policy.json
 * Use **Custom Settings** for file deployment
 * Upload `policy.json` to target path
 
-#### Step 3: Deploy to Target Devices
+## Step 3: Deploy to Target Devices
 
-**Scope Configuration**
+#### **Scope Configuration**
 
 **Define device groups:**
 
@@ -279,7 +299,7 @@ Criteria:
 - Application Title has "Cursor" OR "Visual Studio Code"
 ```
 
-**Deployment Schedule**
+#### **Deployment Schedule**
 
 **Staged rollout recommended:**
 
@@ -289,46 +309,46 @@ Criteria:
 
 **Installation Command Examples**
 
-**Jamf:**
+*   **Jamf:**
 
-```bash
-sudo installer -pkg /path/to/akto-mcp-endpoint-shield.pkg -target /
-```
+    ```bash
+    sudo installer -pkg /path/to/akto-mcp-endpoint-shield.pkg -target /
+    ```
+*   **Intune:**
 
-**Intune:**
+    ```powershell
+    msiexec /i akto-mcp-endpoint-shield.msi /qn /norestart AKTO_API_TOKEN="YOUR-TOKEN"
+    ```
+*   **Fleet:**
 
-```powershell
-msiexec /i akto-mcp-endpoint-shield.msi /qn /norestart AKTO_API_TOKEN="YOUR-TOKEN"
-```
+    ```bash
+    dpkg -i akto-mcp-endpoint-shield.deb && systemctl enable --now mcp-endpoint-shield-agent
+    ```
 
-**Fleet:**
+## Step 4: Verify Deployment Status
 
-```bash
-dpkg -i akto-mcp-endpoint-shield.deb && systemctl enable --now mcp-endpoint-shield-agent
-```
+#### **Check Installation via MDM Console**
 
-#### Step 4: Verify Deployment Status
-
-**Check Installation via MDM Console**
-
-**For Jamf Pro:**
-
+{% tabs %}
+{% tab title="For Jamf Pro" %}
 1. Navigate to **Computers** → **Inventory**
 2. Search for application: `Akto MCP Endpoint Shield`
 3. View **Installation Status** and **Version**
+{% endtab %}
 
-**For Microsoft Intune:**
-
+{% tab title="For Microsoft Intune:" %}
 1. Go to **Apps** → **All apps** → `Akto MCP Endpoint Shield`
 2. Check **Device install status**
 3. Review **Installation errors** if any
+{% endtab %}
+{% endtabs %}
 
 **Automated Health Check Script**
 
 Deploy this script via MDM to verify installation:
 
-**macOS/Linux:**
-
+{% tabs %}
+{% tab title="macOS/Linux" %}
 ```bash
 #!/bin/bash
 # health-check-mcp-shield.sh
@@ -361,8 +381,10 @@ echo "SUCCESS: MCP Shield is properly configured"
 exit 0
 ```
 
-**Windows:**
 
+{% endtab %}
+
+{% tab title="Windows" %}
 ```powershell
 # health-check-mcp-shield.ps1
 $ErrorActionPreference = "Stop"
@@ -384,16 +406,18 @@ if ([string]::IsNullOrEmpty($token)) {
 Write-Output "SUCCESS: MCP Shield is properly configured"
 exit 0
 ```
+{% endtab %}
+{% endtabs %}
 
-**Schedule in MDM:**
+#### **Schedule in MDM:**
 
 * **Frequency:** Daily
 * **Remediation:** Auto-restart service if failed
 * **Alerting:** Notify security team on repeated failures
 
-#### Step 5: Monitor and Maintain
+## Step 5: Monitor and Maintain
 
-**Centralized Logging**
+#### **Centralized Logging**
 
 **Configure log forwarding to SIEM:**
 
@@ -419,7 +443,7 @@ sourcetype = akto:mcp:shield
 }
 ```
 
-**Update Management**
+#### **Update Management**
 
 **Automatic updates via MDM:**
 
@@ -441,7 +465,7 @@ if ($installedVersion -lt $latestVersion) {
 }
 ```
 
-**Compliance Reporting**
+#### **Compliance Reporting**
 
 **Key metrics to track:**
 
@@ -457,48 +481,7 @@ if ($installedVersion -lt $latestVersion) {
 * Filter by MDM deployment group
 * Export compliance reports for audits
 
-***
-
-### 🔐 Enterprise Best Practices for MDM Deployments
-
-#### 1. Token Management
-
-* **Use dedicated service accounts** for API tokens
-* **Rotate tokens every 90 days** via automated scripts
-* **Store tokens in MDM secrets vault** (e.g., Azure Key Vault, AWS Secrets Manager)
-* **Never hardcode tokens** in configuration files
-
-#### 2. Network Considerations
-
-* **Allow outbound HTTPS** to `*.akto.io` on port 443
-* **Whitelist proxy settings** if using corporate proxy
-* **Configure firewall rules** for HTTP proxy (port 57294)
-* **Use VPN** for remote workers
-
-#### 3. User Communication
-
-* **Pre-deployment announcement** explaining the security enhancement
-* **Documentation** with FAQs and support contact
-* **Training sessions** for power users
-* **Feedback channel** for reporting issues
-
-#### 4. Rollback Strategy
-
-* **Keep previous version** available in MDM repository
-* **Test rollback procedure** on pilot devices
-* **Document rollback steps** for IT helpdesk
-* **Monitor for issues** during first 48 hours post-deployment
-
-#### 5. Compliance & Auditing
-
-* **Enable comprehensive logging** (audit mode initially)
-* **Integrate with SIEM** for security monitoring
-* **Schedule regular compliance reviews** (monthly)
-* **Document security incidents** and response actions
-
-***
-
-### 🔍 Auto-Detection
+#### 🔍 Auto-Detection
 
 Akto MCP Endpoint Shield automatically detects MCP client configurations:
 
@@ -514,9 +497,9 @@ For each detected MCP server config:
 
 👉 You don’t need to manually edit your MCP config files — the wrapper handles this for you.
 
-***
+<details>
 
-#### 📄 Example — Cursor `mcp.json`
+<summary>📄 Example — Cursor mcp.json</summary>
 
 **Original file (before wrapping):**
 
@@ -562,19 +545,21 @@ For each detected MCP server config:
 * `mcp-endpoint-shield` is now the entry command.
 * Original server command (`npx -y chrome-devtools-mcp@latest`) is passed through `--exec`.
 
-***
+</details>
 
-### 🔧 Manual Setup
+## 🔧 Manual Setup
 
 Follow these steps to manually set up and run MCP Endpoint Shield to protect your MCP servers.
 
-#### Prerequisites
+### Prerequisites
 
 * You have the `mcp-endpoint-shield` binary available
 * You have an Akto API token
 * uninstall MCP Endpoint Shield if installed previously using installers
 
-#### Step 1: Set Your API Token
+{% stepper %}
+{% step %}
+### Set Your API Token
 
 Set the `AKTO_API_TOKEN` environment variable:
 
@@ -603,8 +588,10 @@ Verify it's set:
 ```bash
 echo $AKTO_API_TOKEN
 ```
+{% endstep %}
 
-#### Step 2: Start the Agent
+{% step %}
+### Start the Agent
 
 The agent automatically discovers and protects your MCP servers.
 
@@ -627,15 +614,23 @@ Agent mode started. Press Ctrl+C to stop...
 * Sync security policies from Akto backend
 * Watch for changes and auto-update configs
 
-**Note:** If you want the agent to run in the background, use:
+{% hint style="info" %}
+## **Note**
+
+If you want the agent to run in the background, use:
 
 ```bash
 nohup ./mcp-endpoint-shield agent > agent.log 2>&1 &
 ```
+{% endhint %}
+{% endstep %}
 
-#### Step 3: Protecting Local MCP Servers (STDIO)
+{% step %}
+### Protecting Local MCP Servers (STDIO)
 
-**Option A: Let the Agent Wrap It (Recommended)**
+{% tabs %}
+{% tab title="Option A:  Agent Wrapping (Recommended)" %}
+#### Let the Agent Wrap It (Recommended)
 
 If the agent is running (Step 2), it will **automatically** detect and wrap your config. Your MCP configuration will be automatically modified to route through the security shield.
 
@@ -678,8 +673,10 @@ After (automatic):
 ```
 
 **Restart your MCP client** (Cursor/VS Code) to apply changes.
+{% endtab %}
 
-**Option B: Manual Wrapping (If Not Using Agent)**
+{% tab title="Option B: Manual Wrapping" %}
+#### Manual Wrapping (If Not Using Agent)
 
 If you're not running the agent, manually edit your MCP config file (e.g., `~/.cursor/mcp.json`):
 
@@ -726,8 +723,12 @@ If you're not running the agent, manually edit your MCP config file (e.g., `~/.c
 3. Place the original command (`npx`) and arguments (`-y`, `chrome-devtools`) after `--exec`
 
 **Restart your MCP client** to apply changes.
+{% endtab %}
+{% endtabs %}
+{% endstep %}
 
-#### Step 4: Protecting Remote MCP Servers (HTTP)
+{% step %}
+#### Protecting Remote MCP Servers (HTTP)
 
 For HTTP-based MCP servers, run the HTTP proxy in a **new terminal**:
 
@@ -745,7 +746,9 @@ Project: default, Skip Threat: false
 
 **Keep this terminal running.**
 
+{% hint style="info" %}
 **Note:** The proxy runs on port `57294` by default.
+{% endhint %}
 
 **Configure Your Remote MCP Server**
 
@@ -795,8 +798,10 @@ The proxy will:
 * Return the response back to your client
 
 **Restart your MCP client** to apply changes.
+{% endstep %}
 
-#### Step 5: Verify Everything is Working
+{% step %}
+### Verify Everything is Working
 
 **Check Agent Status**
 
@@ -819,130 +824,83 @@ Starting MCP HTTP Proxy on 127.0.0.1:57294
 **Test Your MCP Server**
 
 Open your MCP client (Cursor, VS Code, Claude Desktop) and try using your wrapped MCP server. It should work normally, but now with security protection.
+{% endstep %}
+{% endstepper %}
 
-#### Quick Command Reference
+{% hint style="success" %}
+## ⚙️ Common Flags
 
-**Terminal 1 - Agent:**
+* `--name <project_name>` → Friendly label used in logs and insights
+* `--akto-api-token <token>` → Your Akto API token
+* `--exec <command> [args...]` → Command to start your MCP server
+* `--env KEY=VALUE` (repeatable) → Pass additional environment variables to the MCP process
+{% endhint %}
 
-```bash
-export AKTO_API_TOKEN="your-token"
-./mcp-endpoint-shield agent
-```
+## Quick Command Reference
 
-**Terminal 2 - HTTP Proxy:**
+*   **Terminal 1 - Agent:**
 
-```bash
-export AKTO_API_TOKEN="your-token"
-./mcp-endpoint-shield http
-```
+    ```bash
+    export AKTO_API_TOKEN="your-token"
+    ./mcp-endpoint-shield agent
+    ```
+*   **Terminal 2 - HTTP Proxy:**
 
-**Get Help:**
+    ```bash
+    export AKTO_API_TOKEN="your-token"
+    ./mcp-endpoint-shield http
+    ```
+*   **Get Help:**
 
-```bash
-./mcp-endpoint-shield help
-```
+    ```bash
+    ./mcp-endpoint-shield help
+    ```
 
 This protects:
 
 * **STDIO servers** (like `npx -y chrome-devtools`) via agent
 * **HTTP servers** (remote MCP servers) via proxy
 
-***
+{% hint style="info" %}
+## 🔐 Enterprise Best Practices for MDM Deployments
 
-### ⚙️ Common Flags
+#### 1. Token Management
 
-* `--name <project_name>` → Friendly label used in logs and insights
-* `--akto-api-token <token>` → Your Akto API token
-* `--exec <command> [args...]` → Command to start your MCP server
-* `--env KEY=VALUE` (repeatable) → Pass additional environment variables to the MCP process
+* **Use dedicated service accounts** for API tokens
+* **Rotate tokens every 90 days** via automated scripts
+* **Store tokens in MDM secrets vault** (e.g., Azure Key Vault, AWS Secrets Manager)
+* **Never hardcode tokens** in configuration files
 
-***
+#### 2. Network Considerations
 
-### 📜 Logging
+* **Allow outbound HTTPS** to `*.akto.io` on port 443
+* **Whitelist proxy settings** if using corporate proxy
+* **Configure firewall rules** for HTTP proxy (port 57294)
+* **Use VPN** for remote workers
 
-#### Log File Locations
+#### 3. User Communication
 
-**Manual Run**
+* **Pre-deployment announcement** explaining the security enhancement
+* **Documentation** with FAQs and support contact
+* **Training sessions** for power users
+* **Feedback channel** for reporting issues
 
-When you manually run `mcp-endpoint-shield`, logs are written to:
+#### 4. Rollback Strategy
 
-```
-~/.akto-mcp-endpoint-shield/logs/
-```
+* **Keep previous version** available in MDM repository
+* **Test rollback procedure** on pilot devices
+* **Document rollback steps** for IT helpdesk
+* **Monitor for issues** during first 48 hours post-deployment
 
-**Example:**
+#### 5. Compliance & Auditing
 
-```bash
-# If you wrapped a server with --name chrome-devtools
-tail -f ~/.akto-mcp-endpoint-shield/logs/chrome-devtools.log
+* **Enable comprehensive logging** (audit mode initially)
+* **Integrate with SIEM** for security monitoring
+* **Schedule regular compliance reviews** (monthly)
+* **Document security incidents** and response actions
+{% endhint %}
 
-# View all logs
-ls -la ~/.akto-mcp-endpoint-shield/logs/
-tail -f ~/.akto-mcp-endpoint-shield/logs/*.log
-```
-
-**MacOS System Service (LaunchDaemon)**
-
-When installed and running as a system service on macOS:
-
-**Agent logs:**
-
-```
-/var/log/akto-mcp-endpoint-shield/agent.log
-/var/log/akto-mcp-endpoint-shield/agent-error.log
-```
-
-**HTTP Proxy logs:**
-
-```
-/var/log/akto-mcp-endpoint-shield/proxy-server.log
-/var/log/akto-mcp-endpoint-shield/proxy-error.log
-```
-
-**View logs:**
-
-```bash
-sudo tail -f /var/log/akto-mcp-endpoint-shield/*.log
-```
-
-**Linux System Service (systemd)**
-
-When installed and running as a systemd service on Linux:
-
-**Agent logs:**
-
-```
-/var/log/akto-mcp-endpoint-shield/agent.log
-```
-
-**HTTP Proxy logs:**
-
-```
-/var/log/akto-mcp-endpoint-shield/proxy-server.log
-```
-
-**View logs:**
-
-```bash
-# Direct log files
-sudo tail -f /var/log/akto-mcp-endpoint-shield/*.log
-
-# Via systemd journalctl
-sudo journalctl -u mcp-endpoint-shield-agent -f
-sudo journalctl -u mcp-endpoint-shield -f
-```
-
-**STDIO Wrapped MCP servers (Manual and Installer)**
-
-Each wrapped STDIO MCP server gets its own log file named after the `--name` attribute:
-
-```
-~/.akto-mcp-endpoint-shield/logs/<name>.log
-```
-
-***
-
-### 🧩 Troubleshooting
+## 🧩 Troubleshooting
 
 **Issue:** `AKTO_API_TOKEN is not set` ➡ Cause: Environment variable not configured. ➡ Fix: Set the token with `export AKTO_API_TOKEN="your-token"` and verify with `echo $AKTO_API_TOKEN`.
 
@@ -959,21 +917,19 @@ Each wrapped STDIO MCP server gets its own log file named after the `--name` att
 
 **Issue:** `command not found: mcp-endpoint-shield` ➡ Cause: Binary not in PATH or wrong path used. ➡ Fix: Use full path (`./mcp-endpoint-shield` or `/usr/local/bin/mcp-endpoint-shield`) or add to PATH with `export PATH=$PATH:/path/to/binary/directory`.
 
-***
-
+{% hint style="success" %}
 ### 🔒 Guarantees
 
 * ✅ **Transparency**: Safe traffic is never altered.
 * ✅ **Clarity**: Unsafe traffic always results in a clear JSON-RPC error.
 * ✅ **Minimal footprint**: Designed to stay invisible unless an issue occurs.
+{% endhint %}
 
-***
-
-#### Get Support for your Akto setup
+## Get Support
 
 There are multiple ways to request support from Akto. We are 24X7 available on the following:
 
 1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
 2. Join our [discord channel](https://www.akto.io/community) for community support.
-3. Contact `help@akto.io` for email support.
+3. Contact `support@akto.io` for email support.
 4. Contact us [here](https://www.akto.io/contact-us).
