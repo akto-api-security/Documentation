@@ -227,6 +227,7 @@
   * [Test Role](api-security-testing/concepts/test-role.md)
   * [User Config](api-security-testing/concepts/user-config.md)
   * [Test Result](api-security-testing/concepts/test-result.md)
+  * [Skipped Test Cases](api-security-testing/concepts/skipped-test-cases.md)
   * [Export Summary Report](api-security-testing/concepts/export-summary-report.md)
   * [Remediation Steps for Testing Issues](api-security-testing/concepts/remediation-steps-for-testing-issues.md)
   * [Magic Operator](api-security-testing/concepts/magic-operator.md)
