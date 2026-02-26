@@ -1,6 +1,6 @@
-# GitHub Copilot CLI Hooks
+# Copilot CLI Hooks
 
-Akto Guardrails for GitHub Copilot CLI provides security validation for AI-assisted development. It intercepts prompts when submitted and tool executions before and after they run, validates against security policies, blocks risky behavior, and reports events to your Akto dashboard.
+Akto Guardrails for GitHub Copilot CLI provides security validation for AI-assisted development. It intercepts prompts when submitted and tool executions before and after they run, validates against security policies, blocks risky behavior, and reports events to your  Akto dashboard.
 
 ## Key Features
 
@@ -108,7 +108,7 @@ mkdir -p .github/hooks
 
 ```bash
 # Base URL for downloading hooks
-HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/agent-hooks/apps/mcp-endpoint-shield/github-cli-hooks"
+HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/github-cli-hooks"
 
 # Download prompt monitoring hooks
 curl -o .github/hooks/akto-validate-prompt-wrapper.sh \
@@ -305,7 +305,6 @@ export AKTO_SYNC_MODE="true"
 export AKTO_TIMEOUT="5"
 ```
 
-
 ## Troubleshooting
 
 ### Hooks Not Executing
@@ -429,7 +428,7 @@ echo "🔧 Installing Akto Guardrails for GitHub Copilot CLI..."
 mkdir -p "${PROJECT_DIR}/.github/hooks"
 
 # Download hooks
-HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/agent-hooks/apps/mcp-endpoint-shield/github-cli-hooks"
+HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/github-cli-hooks"
 for FILE in \
   akto-validate-prompt-wrapper.sh akto-validate-prompt.py \
   akto-validate-pre-tool-wrapper.sh akto-validate-pre-tool.py \
