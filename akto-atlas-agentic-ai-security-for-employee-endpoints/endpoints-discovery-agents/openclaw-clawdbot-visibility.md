@@ -64,6 +64,16 @@ For each Clawdbot asset, Akto Atlas displays:
 
 <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image.png" alt="" width="540"><figcaption></figcaption></figure></div>
 
+## Supported Operating Systems
+
+Akto Atlas supports OpenClaw visibility on enterprise-managed endpoints running:
+
+* macOS
+* Windows
+* Linux
+
+When MCP Endpoint Shield runs on any of these operating systems, Akto Atlas can observe OpenClaw connections to the local MCP endpoint and register usage metadata.
+
 ## Data Scope and Enforcement Boundaries
 
 Akto Atlas enforces strict boundaries on observed data:
