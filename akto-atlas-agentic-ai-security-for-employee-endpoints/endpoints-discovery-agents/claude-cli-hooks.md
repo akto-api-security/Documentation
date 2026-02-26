@@ -13,7 +13,7 @@ Akto Guardrails for Claude CLI provides security validation for AI interactions.
 
 ## How It Works
 
-Claude CLI's hook system executes custom scripts at two critical points:
+Claude CLI's hook system executes custom scripts at four critical points:
 
 ```mermaid
 sequenceDiagram
@@ -21,6 +21,8 @@ sequenceDiagram
     participant User
     participant PromptHook as UserPromptSubmit Hook
     participant Claude as Claude AI
+    participant PreTool as PreToolUse Hook
+    participant PostTool as PostToolUse Hook
     participant ResponseHook as Stop Hook
     participant Akto as Akto Dashboard
 
@@ -34,16 +36,33 @@ sequenceDiagram
         PromptHook-->>Akto: Report threat
     end
 
+    Claude->>PreTool: Claude invokes a tool
+    Note over PreTool: Validate tool call (all tools)
+    alt Allowed
+        PreTool->>Claude: Permit tool execution
+        PreTool-->>Akto: Report tool call event
+    else Blocked
+        PreTool-->>Claude: Block tool execution
+        PreTool-->>Akto: Report threat
+    end
+
+    Claude->>PostTool: MCP tool returns result
+    Note over PostTool: Log tool result
+    PostTool-->>Akto: Report tool result event
+    PostTool->>Claude: Forward result
+
     Claude->>ResponseHook: Claude response
     Note over ResponseHook: Validate response
     ResponseHook-->>Akto: Report event
     ResponseHook->>User: Response
 ```
 
-**2 Hook Points:**
+**4 Hook Points:**
 
 1. `UserPromptSubmit` - Validates prompts before sending to Claude API
-2. `Stop` - Validates responses when Claude finishes generating
+2. `PreToolUse` - Intercepts all tool calls before execution (Bash, Read, Write, MCP tools, etc.)
+3. `PostToolUse` - Captures all tool results after execution
+4. `Stop` - Validates responses when Claude finishes generating
 
 ## File Structure
 
@@ -174,6 +193,28 @@ cat > ~/.claude/settings.json << 'EOF'
           {
             "type": "command",
             "command": "bash ~/.claude/hooks/akto-validate-prompt-wrapper.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/akto-validate-prompt-wrapper.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/akto-validate-response-wrapper.sh",
             "timeout": 10
           }
         ]
@@ -465,6 +506,28 @@ cat > ~/.claude/settings.json << 'EOFSETTINGS'
           {
             "type": "command",
             "command": "bash ~/.claude/hooks/akto-validate-prompt-wrapper.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/akto-validate-prompt-wrapper.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/akto-validate-response-wrapper.sh",
             "timeout": 10
           }
         ]
