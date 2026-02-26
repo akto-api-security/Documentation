@@ -420,12 +420,11 @@ test -d .github/hooks && echo "⚠️  Hook scripts still exist" || echo "✅ Ho
 
 set -e
 AKTO_URL="${1:-https://your-akto-instance.com}"
-PROJECT_DIR="${2:-.}"
 
 echo "🔧 Installing Akto Guardrails for GitHub Copilot CLI..."
 
 # Create directory
-mkdir -p "${PROJECT_DIR}/.github/hooks"
+mkdir -p ~/.github/hooks
 
 # Download hooks
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/github-cli-hooks"
@@ -434,27 +433,25 @@ for FILE in \
   akto-validate-pre-tool-wrapper.sh akto-validate-pre-tool.py \
   akto-validate-post-tool-wrapper.sh akto-validate-post-tool.py \
   akto_machine_id.py hooks.json; do
-  curl -s "${HOOKS_BASE}/${FILE}" -o "${PROJECT_DIR}/.github/hooks/${FILE}"
+  curl -s "${HOOKS_BASE}/${FILE}" -o ~/.github/hooks/${FILE}
 done
 
 # Make executable
-chmod +x "${PROJECT_DIR}/.github/hooks"/*.py "${PROJECT_DIR}/.github/hooks"/*.sh
+chmod +x ~/.github/hooks/*.py ~/.github/hooks/*.sh
 
 # Configure URL
-sed -i.bak "s|http://localhost:9091|${AKTO_URL}|g" \
-  "${PROJECT_DIR}/.github/hooks"/*-wrapper.sh
+sed -i.bak "s|http://localhost:9091|${AKTO_URL}|g" ~/.github/hooks/*-wrapper.sh
 
 echo "✅ Installation complete!"
 echo "📍 Akto instance: ${AKTO_URL}"
-echo "📁 Hooks installed in: ${PROJECT_DIR}/.github/hooks/"
-echo "Test with: cd ${PROJECT_DIR} && gh copilot suggest 'list files'"
+echo "📁 Hooks installed in: ~/.github/hooks/"
+echo "Test with: gh copilot suggest 'list files'"
 ```
 
 **Deploy to developers:**
 
 ```bash
-curl -fsSL https://your-org.com/deploy-copilot-cli-hooks.sh | \
-  bash -s https://your-akto-instance.com /path/to/project
+curl -fsSL https://your-org.com/deploy-copilot-cli-hooks.sh | bash -s https://your-akto-instance.com
 ```
 
 ## Quick Setup Summary
