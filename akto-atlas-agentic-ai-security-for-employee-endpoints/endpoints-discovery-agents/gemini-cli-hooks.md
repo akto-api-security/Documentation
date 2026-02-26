@@ -77,7 +77,7 @@ sequenceDiagram
 * Gemini CLI installed and configured ([Gemini CLI](https://geminicli.com/))
 * Akto instance URL
 * Python 3
-* macOS or Linux with bash/zsh
+* macOS, Windows or Linux with bash/zsh
 
 ### Installation Steps
 
