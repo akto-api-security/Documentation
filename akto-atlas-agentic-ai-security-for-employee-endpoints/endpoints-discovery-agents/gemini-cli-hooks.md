@@ -476,21 +476,6 @@ echo "Test with: gemini"
 curl -fsSL https://your-org.com/deploy-gemini-cli-hooks.sh | bash -s https://your-akto-instance.com
 ```
 
-## Comparison with Cursor Hooks
-
-| Feature                 | Gemini CLI Hooks                                    | Cursor Hooks                                             |
-| ----------------------- | --------------------------------------------------- | -------------------------------------------------------- |
-| **Platform**            | Gemini CLI                                          | Cursor IDE                                               |
-| **Hook Points**         | 2 (Prompt + Response)                               | 4 (Chat + MCP, each with req/resp)                       |
-| **Chat Monitoring**     | ✅ Yes (BeforeModel, AfterModel)                     | ✅ Yes (beforeSubmitPrompt, afterAgentResponse)           |
-| **MCP Tool Monitoring** | ❌ No                                                | ✅ Yes (beforeMCPExecution, afterMCPExecution)            |
-| **Total Files**         | 6 files (2 wrappers, 2 Python, 1 utility, 1 config) | 10 files (4 wrappers, 4 Python, 1 utility, 1 config)     |
-| **Configuration File**  | `~/.gemini/settings.json`                           | `~/.cursor/hooks.json`                                   |
-| **Log Location**        | `~/.gemini/akto/chat-logs/`                         | `~/.cursor/akto/chat-logs/` + `~/.cursor/akto/mcp-logs/` |
-| **Setup Complexity**    | Fewer files, simpler                                | More files, more comprehensive                           |
-
-**See also:** [Claude CLI Hooks](claude-cli-hooks.md) for Claude CLI setup · [Cursor Hooks](cursor-hooks.md) for Cursor IDE setup
-
 ## Quick Setup Summary
 
 ```bash

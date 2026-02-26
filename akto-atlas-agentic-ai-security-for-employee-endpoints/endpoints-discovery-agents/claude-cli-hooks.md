@@ -499,21 +499,6 @@ echo "Test with: claude 'What is 2+2?'"
 curl -fsSL https://your-org.com/deploy-claude-cli-hooks.sh | bash -s https://your-akto-instance.com
 ```
 
-## Comparison with Cursor Hooks
-
-| Feature                 | Claude CLI Hooks                                    | Cursor Hooks                                             |
-| ----------------------- | --------------------------------------------------- | -------------------------------------------------------- |
-| **Platform**            | Claude CLI                                          | Cursor IDE                                               |
-| **Hook Points**         | 2 (Prompt + Response)                               | 4 (Chat + MCP, each with req/resp)                       |
-| **Chat Monitoring**     | ✅ Yes (UserPromptSubmit, Stop)                      | ✅ Yes (beforeSubmitPrompt, afterAgentResponse)           |
-| **MCP Tool Monitoring** | ❌ No                                                | ✅ Yes (beforeMCPExecution, afterMCPExecution)            |
-| **Total Files**         | 6 files (2 wrappers, 2 Python, 1 utility, 1 config) | 10 files (4 wrappers, 4 Python, 1 utility, 1 config)     |
-| **Configuration File**  | `~/.claude/settings.json`                           | `~/.cursor/hooks.json`                                   |
-| **Log Location**        | `~/.claude/akto/logs/`                              | `~/.cursor/akto/chat-logs/` + `~/.cursor/akto/mcp-logs/` |
-| **Setup Complexity**    | Fewer files, simpler                                | More files, more comprehensive                           |
-
-**See also:** [Cursor Hooks](cursor-hooks.md) for Cursor IDE setup
-
 ## Quick Setup Summary
 
 ```bash

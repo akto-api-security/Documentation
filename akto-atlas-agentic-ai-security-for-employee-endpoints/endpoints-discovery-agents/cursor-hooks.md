@@ -495,22 +495,6 @@ chmod +x ~/.cursor/hooks/akto/*.sh
 # 6. Restart Cursor
 ```
 
-## Comparison with Claude CLI Hooks
-
-| Feature                 | Cursor Hooks                                         | Claude CLI Hooks                                    |
-| ----------------------- | ---------------------------------------------------- | --------------------------------------------------- |
-| **Platform**            | Cursor IDE                                           | Claude CLI                                          |
-| **Hook Points**         | 4 (Chat + MCP, each with req/resp)                   | 2 (Prompt + Response)                               |
-| **Chat Monitoring**     | ✅ Yes (beforeSubmitPrompt, afterAgentResponse)       | ✅ Yes (UserPromptSubmit, Stop)                      |
-| **MCP Tool Monitoring** | ✅ Yes (beforeMCPExecution, afterMCPExecution)        | ❌ No                                                |
-| **Total Files**         | 10 files (4 wrappers, 4 Python, 1 utility, 1 config) | 6 files (2 wrappers, 2 Python, 1 utility, 1 config) |
-| **Configuration File**  | `~/.cursor/hooks.json`                               | `~/.claude/settings.json`                           |
-| **Chat Log Location**   | `~/.cursor/akto/chat-logs/`                          | `~/.claude/akto/logs/`                              |
-| **MCP Log Location**    | `~/.cursor/akto/mcp-logs/`                           | N/A                                                 |
-| **Setup Complexity**    | More files, more comprehensive                       | Fewer files, simpler                                |
-
-**See also:** [Claude CLI Hooks](claude-cli-hooks.md) for Claude CLI setup
-
 ## Resources
 
 * **GitHub**: [https://github.com/akto-api-security/akto](https://github.com/akto-api-security/akto)

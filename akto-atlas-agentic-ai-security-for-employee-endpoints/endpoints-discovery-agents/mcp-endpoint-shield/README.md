@@ -481,6 +481,16 @@ When installed and running as a systemd service on Linux:
     sudo journalctl -u mcp-endpoint-shield -f
     ```
 
+### Windows
+
+When MCP Endpoint Shield runs on Windows, agent logs are stored in the user’s local application data directory:
+
+```powershell
+%LOCALAPPDATA%\akto-mcp-endpoint-shield\logs\
+```
+
+You can use this command to verify agent startup, inspect runtime errors, and confirm connectivity from the Windows endpoint.
+
 ### STDIO Wrapped MCP servers (Manual and Installer)
 
 Each wrapped STDIO MCP server gets its own log file named after the `--name` attribute:
