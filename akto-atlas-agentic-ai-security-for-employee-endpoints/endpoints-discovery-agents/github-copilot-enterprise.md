@@ -1,12 +1,12 @@
 # Github Copilot Enterprise
 
-## Overview
+## Overview&#x20;
 
 This page explains how you can integrate **GitHub Copilot Enterprise** with Akto Atlas to enable **agent discovery, centralized guardrails, and enterprise-wide policy enforcement**.
 
 As an Akto user, you can secure Copilot Enterprise using two complementary integration layers:
 
-1. **Endpoint-level control via Copilot CLI Hooks**
+1. **Endpoint-level control via Copilot Hooks**
 2. **Model-level control via Akto Agent Proxy (custom model routing)**
 
 Together, these provide visibility and enforcement both at the developer endpoint and before requests reach the AI model.
@@ -127,7 +127,7 @@ This provides layered security across the Copilot lifecycle.
 
 ## **Best Practices**
 
-* Use **both CLI Hooks and Proxy routing** for complete coverage
+* Use **both Copilot Hooks and Proxy routing** for complete coverage
 * Disable direct access to built-in models to avoid bypass paths
 * Validate proxy connectivity before enterprise rollout
 * Test with a limited user group before full deployment
