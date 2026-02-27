@@ -26,7 +26,7 @@ The table on the Audit Data page gives you full visibility into each component.
 
 </details>
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ## Actions You Can Take
 
@@ -36,7 +36,7 @@ From the actions dropdown at the end of each row, you decide how Akto should tre
 * **Disapprove** – You want to block the component entirely.
 *   **Set Conditional Approval** – You want to allow the component, but only within limits you define.
 
-    <figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ## Setting Conditional Approval
 
@@ -68,7 +68,7 @@ You choose which endpoints the component can access.
 {% tab title="Justification" %}
 You add a mandatory justification so your team understands why you approved the component with conditions.
 
-<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endtab %}
 {% endtabs %}
 

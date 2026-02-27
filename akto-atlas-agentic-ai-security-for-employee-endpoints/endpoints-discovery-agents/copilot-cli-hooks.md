@@ -12,7 +12,7 @@ Akto Guardrails for GitHub Copilot provides security validation for AI-assisted 
 * ✅ **Configurable Behavior** - Blocking or observation modes
 * ⚠️ **Prompt Monitoring Only** - GitHub Copilot limitation prevents blocking prompts at submission
 
-## How It Works
+## How Hooks Works
 
 GitHub Copilot's hook system executes custom scripts at three critical points in both VS Code and the CLI:
 
@@ -87,7 +87,7 @@ sequenceDiagram
 
 ### Prerequisites
 
-* GitHub CLI installed ([GitHub CLI](https://github.com/features/copilot/cli))
+* GitHub CLI installed or VS Code&#x20;
 * Akto instance URL
 * Python 3
 * macOS or Linux with bash/zsh
