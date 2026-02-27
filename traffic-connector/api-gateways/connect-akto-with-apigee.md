@@ -92,7 +92,7 @@ This is the manual environment-wide setup.
 1. In Apigee, go to **Proxy development → Shared Flows** and click **+ Create**.
         <figure><img src="../../.gitbook/assets/apigee_shared_flow.png" alt=""><figcaption></figcaption></figure>
 2. Create a shared flow (for example: `akto-traffic-collector`).
-3. Open the shared flow, go to **Develop → default**, and add a Step in the default shared flow that references policy name `AktoJavascript` (this ensures the policy is used in the flow).
+3. Open the shared flow, go to **Develop → default**, and add two Steps in order: first `AktoJavascript`, then `ML-SendAktoTcpSyslog`.
 4. In the same shared flow, click **Policies +** and add a **JavaScript** policy named `AktoJavascript`.
     <figure><img src="../../.gitbook/assets/apigee_shared_flow_javascript.png" alt=""><figcaption></figcaption></figure>
 5. Open the JavaScript policy XML (Under Policies section) and set it as:
@@ -107,57 +107,29 @@ This is the manual environment-wide setup.
 ```
 
 6. Create a JS resource file named `AktoJavascript.js` and paste the script below.
-7. Save and deploy the shared flow to your target environment.
+7. Click **Policies +** again and add a **MessageLogging** policy named `ML-SendAktoTcpSyslog`. Set the policy XML as:
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MessageLogging name="ML-SendAktoTcpSyslog" continueOnError="true" enabled="true">
+  <DisplayName>ML-SendAktoTcpSyslog</DisplayName>
+  <Syslog>
+    <Message>{akto.log.payload}</Message>
+    <Host>YOUR_DATA_INGESTION_SERVICE_IP</Host>
+    <Port>5140</Port>
+    <Protocol>TCP</Protocol>
+    <FormatMessage>false</FormatMessage>
+  </Syslog>
+</MessageLogging>
+```
+
+8. Save and deploy the shared flow to your target environment.
     <figure><img src="../../.gitbook/assets/apigee_deploy_sharedflow.png" alt=""><figcaption></figcaption></figure>
-8. Go to **Management → Environments → your_environment → Flow Hooks**.
-9. Attach the shared flow to a hook point (recommended: `PostProxyFlowHook`).
+9. Go to **Management → Environments → your_environment → Flow Hooks**.
+10. Attach the shared flow to a hook point (recommended: `PostProxyFlowHook`).
     <figure><img src="../../.gitbook/assets/apigee_attach_sharedflow.png" alt=""><figcaption></figcaption></figure>
 
 ```javascript
-var friendlyHttpStatus = {
-    '200': 'OK',
-    '201': 'Created',
-    '202': 'Accepted',
-    '203': 'Non-Authoritative Information',
-    '204': 'No Content',
-    '205': 'Reset Content',
-    '206': 'Partial Content',
-    '300': 'Multiple Choices',
-    '301': 'Moved Permanently',
-    '302': 'Found',
-    '303': 'See Other',
-    '304': 'Not Modified',
-    '305': 'Use Proxy',
-    '306': 'Unused',
-    '307': 'Temporary Redirect',
-    '400': 'Bad Request',
-    '401': 'Unauthorized',
-    '402': 'Payment Required',
-    '403': 'Forbidden',
-    '404': 'Not Found',
-    '405': 'Method Not Allowed',
-    '406': 'Not Acceptable',
-    '407': 'Proxy Authentication Required',
-    '408': 'Request Timeout',
-    '409': 'Conflict',
-    '410': 'Gone',
-    '411': 'Length Required',
-    '412': 'Precondition Required',
-    '413': 'Request Entry Too Large',
-    '414': 'Request-URI Too Long',
-    '415': 'Unsupported Media Type',
-    '416': 'Requested Range Not Satisfiable',
-    '417': 'Expectation Failed',
-    '418': 'I\'m a teapot',
-    '429': 'Too Many Requests',
-    '500': 'Internal Server Error',
-    '501': 'Not Implemented',
-    '502': 'Bad Gateway',
-    '503': 'Service Unavailable',
-    '504': 'Gateway Timeout',
-    '505': 'HTTP Version Not Supported',
-};
-
 var requestPath = context.getVariable("request.uri");
 var queryString = context.getVariable("request.querystring");
 var requestHeaders = context.getVariable("request.headers.names");
@@ -168,79 +140,51 @@ var method = context.getVariable("request.verb");
 var responseHeaders = context.getVariable("response.headers.names");
 var responsePayload = context.getVariable("response.content");
 var statusCode = context.getVariable("response.status.code");
-var statusText = friendlyHttpStatus[statusCode];
-if (statusText == undefined) {
-    statusText = "OK";
-}
-var httpVersion = "1.1";
+var statusText = context.getVariable("response.reason.phrase") || "OK";
 
 var rawTime = context.getVariable("system.timestamp");
 var epochTime = Math.floor(rawTime / 1000);
 
-var aktoAccountId = "1000000";
-var aktoVxlanId = "0";
-var isPending = "false";
-var source = "MIRRORING";
-
-var requestHeadersRes = {}
-requestHeaders = requestHeaders + '';
-requestHeaders = requestHeaders.slice(1, -1).split(', ');
-requestHeaders.forEach(function(x){
-  var a = context.getVariable("request.header." + x );
-  requestHeadersRes[x] = a;
+var requestHeadersRes = {};
+requestHeaders = (requestHeaders + '').slice(1, -1).split(', ');
+requestHeaders.forEach(function(x) {
+  requestHeadersRes[x] = context.getVariable("request.header." + x);
 });
 
-var responseHeadersRes = {}
-responseHeaders = responseHeaders + '';
-responseHeaders = responseHeaders.slice(1, -1).split(', ');
-responseHeaders.forEach(function(x){
-  var a = context.getVariable("response.header." + x );
-  responseHeadersRes[x] = a;
+var responseHeadersRes = {};
+responseHeaders = (responseHeaders + '').slice(1, -1).split(', ');
+responseHeaders.forEach(function(x) {
+  responseHeadersRes[x] = context.getVariable("response.header." + x);
 });
-
-var trafficData = {
-    path: requestPath + (queryString ? "?" + queryString : ""),
-    requestHeaders: JSON.stringify(requestHeadersRes, null, 2),
-    responseHeaders: JSON.stringify(responseHeadersRes, null, 2),
-    method: method,
-    requestPayload: requestPayload || "",
-    responsePayload: responsePayload || "",
-    ip: clientIp || "0.0.0.0",
-    time: "" + epochTime,
-    statusCode: "" + statusCode,
-    type: "HTTP/" + httpVersion,
-    status: statusText,
-    akto_account_id: aktoAccountId,
-    akto_vxlan_id: aktoVxlanId,
-    is_pending: isPending,
-    source: source
-};
-
-// Store the traffic data as a variable for further processing
-context.setVariable("traffic.data", JSON.stringify(trafficData));
 
 var payload = {
-    batchData: [trafficData]
+    batchData: [{
+        path: requestPath + (queryString ? "?" + queryString : ""),
+        requestHeaders: JSON.stringify(requestHeadersRes),
+        responseHeaders: JSON.stringify(responseHeadersRes),
+        method: method,
+        requestPayload: requestPayload || "",
+        responsePayload: responsePayload || "",
+        ip: clientIp || "0.0.0.0",
+        time: "" + epochTime,
+        statusCode: "" + statusCode,
+        type: "HTTP/1.1",
+        status: statusText,
+        akto_account_id: "1000000",
+        akto_vxlan_id: "0",
+        is_pending: "false",
+        source: "MIRRORING"
+    }]
 };
 
-var ingestionUrl = "http://<data-ingestion-service-ip>:9091/api/ingestData";
-var requestBody = JSON.stringify(payload);
-var headers = {
-    "Content-Type": "application/json"
-};
-
-var req = new Request(ingestionUrl, 'POST', headers, requestBody);
-httpClient.send(req, function(response, error) {
-  if (error) {
-    print("Akto ingestion error: " + error);
-  }
-});
+context.setVariable("akto.log.payload", JSON.stringify(payload));
 ```
 
 Important policy behavior:
 
-* Set JavaScript policy `continueOnError` to `true`.
-* Ensure `AktoJavascript` policy is added in the shared flow **default** section so it is used in execution.
+* Both `AktoJavascript` and `ML-SendAktoTcpSyslog` must have `continueOnError="true"`.
+* Both policies must be added as Steps in the shared flow **default** section in order: JS first, then MessageLogging.
+* Replace `YOUR_DATA_INGESTION_SERVICE_IP` in the MessageLogging policy with the IP noted in Step 1.5.
 
 ### 2.3 Option B: Terraform Automation
 
@@ -270,9 +214,9 @@ cp terraform.tfvars.example terraform.tfvars
 Otherwise create `terraform.tfvars` manually with:
 
 ```hcl
-project_id                 = "your-gcp-project-id"
+gcp_project_id             = "your-gcp-project-id"
 apigee_environment         = "your-apigee-environment-name"
-data_ingestion_service_url = "https://<data-ingestion-service-ip>:9091/api/ingestData"
+data_ingestion_service_url = "your-data-ingestion-service-ip:5140"
 ```
 
 3. Run Terraform:
