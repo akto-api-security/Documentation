@@ -20,113 +20,81 @@ All captured data is sent securely to your Akto instance for analysis.
 The extension only captures traffic when actively enabled and only sends data to your configured Akto instance. You have full control over what gets monitored.
 {% endhint %}
 
-## Prerequsites
+## Prerequisites for Enterprise Deployment
 
-* Google Chrome browser (Version 88 or higher)
-* The Akto Security extension ZIP file (required). If you don’t have it, contact the Akto support team.
-* The extension folder (extracted from the ZIP file)
+You can gather the following information before starting deployment:
+
+* Google Workspace administrator access to `https://admin.google.com`
+* Target Organisational Unit (OU) or user group for deployment
+* Chrome extension ID provided by the Akto Support team
+* Custom extension URL provided by the Akto Support team
+* Update XML URL provided by the Akto Support team
+
+{% hint style="info" %}
+## **Support Contact**
+
+You can request the extension ID, custom extension URL, and update XML URL from the Akto Support team at [**support@akto.io**](mailto:support@akto.io).
+{% endhint %}
 
 ## Installation Steps
 
 {% stepper %}
 {% step %}
-**Get the Extension Files**
+### Navigating to Chrome Extension Management
 
-* Download the extension package you received
-* If it's a ZIP file, extract it to a folder on your computer
-* Remember where you saved this folder
+1. Sign in to `https://admin.google.com`.
+2. Navigate to **Devices**.
+3. Select **Chrome**.
+4. Select **Apps & extensions**.
+5. Open the **Users and browsers** tab.
+6.  Select the target Organisational Unit.
+
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1).webp" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
-**Open Chrome Extensions**
+### Adding the Akto Chrome Extension by ID
 
-Open Chrome and type this in the address bar:
+1. Select the yellow **+** button.
+2.  Choose **Add Chrome app or extension by ID**.
 
-```hurl
-chrome://extensions/
-```
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (2).webp" alt="" width="375"><figcaption></figcaption></figure></div>
+3. Enter the Chrome extension ID provided by the Akto Support team.
+4. Expand **From a custom URL**.
+5.  Enter the custom extension URL provided by the Akto Support team.
 
-Press Enter.
-
-**OR**
-
-Click the three dots (⋮) in Chrome → **More tools** → **Extensions**
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3).webp" alt="" width="375"><figcaption></figcaption></figure></div>
+6. Select **Save**.
 {% endstep %}
 
 {% step %}
-**Turn On Developer Mode**
+### Configuring Force Installation
 
-* Look at the top-right corner of the Extensions page
-* Find the **Developer mode** toggle switch
-* Turn it **ON** (it will turn blue)
-{% endstep %}
+1. Open the extension configuration panel.
+2.  Set **Installation policy** to **Force install**.
 
-{% step %}
-**Load the Extension**
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (4).webp" alt="" width="375"><figcaption></figcaption></figure></div>
+3.  Enter the **update XML URL** provided by the Akto Support team in the **Installation URL** space.
 
-* Click the **Load unpacked** button (appears at the top after Step 3)
-* A file browser will open
-* Find and select the Akto Security extension folder
-* Click **Select Folder**
-{% endstep %}
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (5).webp" alt="" width="375"><figcaption></figcaption></figure></div>
+4. Select **Save**.
 
-{% step %}
-**Verify It's Installed**
-
-You should now see **Akto Security** in your extensions list with:
-
-* Akto icon
-* Version number
-* Toggle switch set to ON
-{% endstep %}
-
-{% step %}
-**Pin to Toolbar (Optional but Recommended)**
-
-* Click the puzzle icon (🧩) in Chrome toolbar
-* Find **Akto Security** in the list
-* Click the pin icon (📌) next to it
-* The Akto icon will appear in your toolbar
+Now, force installation enables automatic deployment to all managed Chrome users within the selected Organisational Unit.
 {% endstep %}
 {% endstepper %}
 
-The extension is now installed and working. It will automatically monitor supported websites in the background.
+## Extension Appearance After Successful Installation
 
-{% hint style="success" %}
-#### Supported Websites
+Managed Chrome browsers install the Akto extension after policy synchronisation. The Chrome toolbar then displays the Akto extension icon once installation completes.
 
-The extension works on these platforms:
-
-* ChatGPT ([chatgpt.com](http://chatgpt.com/))
-* Claude AI ([claude.ai](http://claude.ai/))
-* Grok ([grok.com](http://grok.com/))
-* Perplexity ([perplexity.ai](http://perplexity.ai/))
-* Google Gemini ([gemini.google.com](http://gemini.google.com/))
-{% endhint %}
-
-## Troubleshooting
-
-{% tabs %}
-{% tab title="Extension not showing up" %}
-* Make sure you selected the correct folder (should contain files like manifest.json)
-* Check that Developer mode is ON
-* Refresh the Extensions page (F5)
-* Restart Chrome and try again
-{% endtab %}
-
-{% tab title="Extension shows errors" %}
-* Contact your IT administrator
-* Make sure you're using Chrome version 88 or higher
-{% endtab %}
-
-{% tab title="Extension not working" %}
-* Make sure the toggle is ON for Akto Security
-* Visit one of the supported websites (ChatGPT, Claude, etc.)
-* Refresh the webpage after installing
-* Click the Akto icon to check its status
-{% endtab %}
-{% endtabs %}
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/Feb 27 2026 Screenshot (1).webp" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ## Support
 
-If you need help, contact your IT administrator or visit[https://www.akto.io](https://www.akto.io)
+For deployment assistance or troubleshooting, you can contact the Akto Support team at [**support@akto.io**](mailto:support@akto.io).
+
+## What Next
+
+Chrome extension installation completes enterprise deployment.
+
+The next section explains how the Akto Chrome extension monitors browser activity and enforces guardrails during runtime.
