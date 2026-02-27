@@ -116,7 +116,7 @@ All Copilot Enterprise model requests will now flow through Akto Agent Proxy bef
 Once fully configured:
 
 1. User interacts with Copilot
-2. (Optional) CLI Hooks capture endpoint events
+2. (Optional) Copilot Hooks capture endpoint events
 3. Copilot sends model request
 4. Request is routed to **Akto Agent Proxy**
 5. Akto applies guardrails and validation
