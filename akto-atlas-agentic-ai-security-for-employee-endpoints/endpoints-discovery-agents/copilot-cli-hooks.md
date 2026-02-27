@@ -1,11 +1,11 @@
-# Copilot CLI Hooks
+# Copilot Hooks
 
-Akto Guardrails for GitHub Copilot CLI provides security validation for AI-assisted development. It intercepts prompts when submitted and tool executions before and after they run, validates against security policies, blocks risky behavior, and reports events to your  Akto dashboard.
+Akto Guardrails for GitHub Copilot provides security validation for AI-assisted development across VS Code and the CLI. It intercepts prompts when submitted and tool executions before and after they run, validates against security policies, blocks risky behavior, and reports events to your Akto dashboard.
 
 ## Key Features
 
 * ✅ **Zero Installation** - No standalone apps to install
-* ✅ **Transparent Integration** - Uses GitHub Copilot CLI's native hook mechanism
+* ✅ **Transparent Integration** - Uses GitHub Copilot's native hook mechanism in both VS Code and CLI
 * ✅ **Real-time Tool Blocking** - Can block dangerous tool executions before they run
 * ✅ **Centralized Monitoring** - All events reported to Akto dashboard
 * ✅ **Flexible Deployment** - Supports Argus and Atlas modes
@@ -14,7 +14,7 @@ Akto Guardrails for GitHub Copilot CLI provides security validation for AI-assis
 
 ## How It Works
 
-GitHub Copilot CLI's hook system executes custom scripts at three critical points:
+GitHub Copilot's hook system executes custom scripts at three critical points in both VS Code and the CLI:
 
 ```mermaid
 sequenceDiagram
@@ -422,7 +422,7 @@ set -e
 AKTO_URL="${1:-https://your-akto-instance.com}"
 PROJECT_DIR="${2:-.}"
 
-echo "🔧 Installing Akto Guardrails for GitHub Copilot CLI..."
+echo "🔧 Installing Akto Guardrails for GitHub Copilot..."
 
 # Create directory
 mkdir -p "${PROJECT_DIR}/.github/hooks"
