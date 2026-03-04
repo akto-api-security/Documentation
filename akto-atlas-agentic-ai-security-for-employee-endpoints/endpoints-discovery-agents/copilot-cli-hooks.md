@@ -287,7 +287,7 @@ tail -f ~/akto-main/akto/.github/akto/copilot/logs/validate-post-tool.log
 
 ```bash
 export MODE="atlas"                                  # "argus" or "atlas"
-export AKTO_DATA_INGESTION_URL="http://localhost:9091"  # ⚠️ MUST REPLACE
+export AKTO_DATA_INGESTION_URL="{{AKTO_DATA_INGESTION_URL}}"  # ⚠️ MUST REPLACE
 export AKTO_SYNC_MODE="true"                         # "true" or "false"
 export AKTO_TIMEOUT="5"                              # Timeout in seconds
 export AKTO_CONNECTOR="github_copilot_cli"           # Connector identifier
@@ -329,7 +329,7 @@ grep "AKTO_DATA_INGESTION_URL" .github/hooks/*-wrapper.sh
 
 # Replace with actual URL
 AKTO_URL="https://your-akto-instance.com"
-sed -i.bak "s|http://localhost:9091|${AKTO_URL}|g" .github/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" .github/hooks/*-wrapper.sh
 ```
 
 ### Check Logs for Errors
@@ -441,7 +441,7 @@ done
 chmod +x "${PROJECT_DIR}/.github/hooks"/*.py "${PROJECT_DIR}/.github/hooks"/*.sh
 
 # Configure URL
-sed -i.bak "s|http://localhost:9091|${AKTO_URL}|g" \
+sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" \
   "${PROJECT_DIR}/.github/hooks"/*-wrapper.sh
 
 echo "✅ Installation complete!"
