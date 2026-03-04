@@ -165,6 +165,7 @@ AKTO_URL="https://your-akto-instance.com"
 
 # Update all wrapper scripts
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.cursor/hooks/akto/*-wrapper.sh
+sed -i.bak 's|export DEVICE_ID="{{DEVICE_ID (optional)}}"||g' ~/.cursor/hooks/akto/*-wrapper.sh
 
 # Verify replacement
 grep "AKTO_DATA_INGESTION_URL" ~/.cursor/hooks/akto/*-wrapper.sh
@@ -333,6 +334,7 @@ grep "{{AKTO_DATA_INGESTION_URL}}" ~/.cursor/hooks/akto/*-wrapper.sh
 # Replace with actual URL
 AKTO_URL="https://your-akto-instance.com"
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.cursor/hooks/akto/*-wrapper.sh
+sed -i.bak 's|export DEVICE_ID="{{DEVICE_ID (optional)}}"||g' ~/.cursor/hooks/akto/*-wrapper.sh
 ```
 
 ### Check Logs for Errors
@@ -449,8 +451,9 @@ curl -s "${HOOKS_BASE}/akto_machine_id.py" -o ~/.cursor/hooks/akto/akto_machine_
 # Make executable
 chmod +x ~/.cursor/hooks/akto/*.sh
 
-# Configure URL
+# Configure URL and strip optional placeholders
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.cursor/hooks/akto/*-wrapper.sh
+sed -i.bak 's|export DEVICE_ID="{{DEVICE_ID (optional)}}"||g' ~/.cursor/hooks/akto/*-wrapper.sh
 
 # Create hooks.json
 cat > ~/.cursor/hooks.json << 'EOFHOOKS'
@@ -486,6 +489,7 @@ mkdir -p ~/.cursor/hooks/akto ~/.cursor/akto/chat-logs ~/.cursor/akto/mcp-logs
 # 3. ⚠️ Configure Akto URL (REQUIRED)
 AKTO_URL="https://your-akto-instance.com"
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.cursor/hooks/akto/*-wrapper.sh
+sed -i.bak 's|export DEVICE_ID="{{DEVICE_ID (optional)}}"||g' ~/.cursor/hooks/akto/*-wrapper.sh
 
 # 4. Make executable
 chmod +x ~/.cursor/hooks/akto/*.sh
