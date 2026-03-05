@@ -7,6 +7,10 @@
   * [Akto MCP Server](readme/akto-mcp-server.md)
 * [What is AI Agent Security?](what-is-ai-agent-security.md)
 
+## Ask Akto
+
+* [Self-Hosted Deployment](ask-akto/self-hosted-deployment.md)
+
 ## Akto Atlas: Agentic AI Security for Employee Endpoints
 
 * [Overview](akto-atlas-agentic-ai-security-for-employee-endpoints/overview.md)
