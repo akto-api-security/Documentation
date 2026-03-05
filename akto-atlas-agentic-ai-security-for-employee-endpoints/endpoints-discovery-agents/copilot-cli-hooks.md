@@ -63,11 +63,14 @@ sequenceDiagram
 <project-root>/
 └── .github/
     └── hooks/
-        ├── akto-validate-prompt-wrapper.sh       # Prompt monitoring wrapper
+        ├── akto-validate-prompt-wrapper.sh       # Prompt monitoring wrapper (macOS/Linux)
+        ├── akto-validate-prompt-wrapper.ps1      # Prompt monitoring wrapper (Windows)
         ├── akto-validate-prompt.py               # Prompt monitoring logic
-        ├── akto-validate-pre-tool-wrapper.sh     # Pre-tool validation wrapper
+        ├── akto-validate-pre-tool-wrapper.sh     # Pre-tool validation wrapper (macOS/Linux)
+        ├── akto-validate-pre-tool-wrapper.ps1    # Pre-tool validation wrapper (Windows)
         ├── akto-validate-pre-tool.py             # Pre-tool validation and blocking logic
-        ├── akto-validate-post-tool-wrapper.sh    # Post-tool ingestion wrapper
+        ├── akto-validate-post-tool-wrapper.sh    # Post-tool ingestion wrapper (macOS/Linux)
+        ├── akto-validate-post-tool-wrapper.ps1   # Post-tool ingestion wrapper (Windows)
         ├── akto-validate-post-tool.py            # Post-tool ingestion logic
         ├── akto_machine_id.py                    # Device ID utility
         └── hooks.json                            # Hook configuration
@@ -75,11 +78,12 @@ sequenceDiagram
 
 **Key Files:**
 
-* **Wrapper scripts (`.sh`)**: Set environment variables, invoke Python scripts
+* **Wrapper scripts (`.sh` / `.ps1`)**: Set environment variables, invoke Python scripts
   * ⚠️ **Contains `AKTO_DATA_INGESTION_URL` placeholder** - Must be set to your Akto instance URL
+  * `.sh` used on macOS/Linux; `.ps1` used on Windows
 * **Python scripts (`.py`)**: Core validation logic and Akto API communication
 * **`akto_machine_id.py`**: Generates unique device identifiers for Atlas mode
-* **`hooks.json`**: Links hooks to wrapper scripts
+* **`hooks.json`**: Links hooks to wrapper scripts — uses `bash` key on macOS/Linux and `powershell` key on Windows
 
 > **Note:** `hooks.json` is loaded from the project root's `.github/hooks/` directory.
 
@@ -90,7 +94,10 @@ sequenceDiagram
 * GitHub CLI installed or VS Code&#x20;
 * Akto instance URL
 * Python 3
-* macOS or Linux with bash/zsh
+
+**macOS / Linux:** bash or zsh
+
+**Windows:** PowerShell 5.1+ (built-in on Windows 10/11, including Azure Virtual Desktop pooled sessions)
 
 ### Installation Steps
 
@@ -98,14 +105,21 @@ sequenceDiagram
 {% step %}
 **Create the Hooks Directory**
 
+**macOS / Linux:**
 ```bash
 mkdir -p .github/hooks
+```
+
+**Windows (PowerShell):**
+```powershell
+New-Item -ItemType Directory -Force -Path .github\hooks
 ```
 {% endstep %}
 
 {% step %}
 **Download Hook Scripts**
 
+**macOS / Linux:**
 ```bash
 # Base URL for downloading hooks
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/github-cli-hooks"
@@ -139,6 +153,22 @@ curl -o .github/hooks/hooks.json \
 # Make executable
 chmod +x .github/hooks/*.py .github/hooks/*.sh
 ```
+
+**Windows (PowerShell):**
+```powershell
+$HOOKS_BASE = "https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/github-cli-hooks"
+
+$files = @(
+  "akto-validate-prompt-wrapper.ps1", "akto-validate-prompt.py",
+  "akto-validate-pre-tool-wrapper.ps1", "akto-validate-pre-tool.py",
+  "akto-validate-post-tool-wrapper.ps1", "akto-validate-post-tool.py",
+  "akto_machine_id.py", "hooks.json"
+)
+
+foreach ($file in $files) {
+  Invoke-WebRequest -Uri "$HOOKS_BASE/$file" -OutFile ".github\hooks\$file"
+}
+```
 {% endstep %}
 
 {% step %}
@@ -148,7 +178,7 @@ chmod +x .github/hooks/*.py .github/hooks/*.sh
 All wrapper scripts contain the variable `AKTO_DATA_INGESTION_URL` that **must be set** to your actual Akto instance URL.
 {% endhint %}
 
-**Automated replacement:**
+**macOS / Linux — automated replacement:**
 
 ```bash
 # Set your Akto ingestion URL
@@ -161,25 +191,39 @@ sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" .github/hooks/*-wrapper
 grep "AKTO_DATA_INGESTION_URL" .github/hooks/*-wrapper.sh
 ```
 
+**Windows (PowerShell) — automated replacement:**
+
+```powershell
+$AKTO_URL = "https://your-akto-instance.com"
+
+Get-ChildItem ".github\hooks\*-wrapper.ps1" | ForEach-Object {
+  (Get-Content $_.FullName) -replace '{{AKTO_DATA_INGESTION_URL}}', $AKTO_URL |
+    Set-Content $_.FullName
+}
+
+# Verify replacement
+Select-String "AKTO_DATA_INGESTION_URL" .github\hooks\*-wrapper.ps1
+```
+
 **Manual replacement (alternative):**
 
 Edit each wrapper script and replace:
 
-```bash
-export AKTO_DATA_INGESTION_URL="{{AKTO_DATA_INGESTION_URL}}"
+```
+{{AKTO_DATA_INGESTION_URL}}
 ```
 
-With:
+With your actual Akto instance URL, e.g. `https://your-akto-instance.com`.
 
-```bash
-export AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
-```
-
-Files to update:
-
+Files to update on macOS/Linux:
 * `akto-validate-prompt-wrapper.sh`
 * `akto-validate-pre-tool-wrapper.sh`
 * `akto-validate-post-tool-wrapper.sh`
+
+Files to update on Windows:
+* `akto-validate-prompt-wrapper.ps1`
+* `akto-validate-pre-tool-wrapper.ps1`
+* `akto-validate-post-tool-wrapper.ps1`
 {% endstep %}
 
 {% step %}
@@ -195,7 +239,7 @@ The `hooks.json` file should already be configured after downloading. Verify it 
       {
         "type": "command",
         "bash": "bash ./.github/hooks/akto-validate-prompt-wrapper.sh",
-        "powershell": "python .github/hooks/akto-validate-prompt.py",
+        "powershell": "powershell -File .github/hooks/akto-validate-prompt-wrapper.ps1",
         "comment": "Validate prompts against Akto Guardrails (monitoring only - cannot block per GitHub limitation)",
         "timeoutSec": 30
       }
@@ -204,7 +248,7 @@ The `hooks.json` file should already be configured after downloading. Verify it 
       {
         "type": "command",
         "bash": "bash ./.github/hooks/akto-validate-pre-tool-wrapper.sh",
-        "powershell": "python .github/hooks/akto-validate-pre-tool.py",
+        "powershell": "powershell -File .github/hooks/akto-validate-pre-tool-wrapper.ps1",
         "comment": "Validate and block tool execution based on Akto Guardrails policies",
         "timeoutSec": 30
       }
@@ -213,7 +257,7 @@ The `hooks.json` file should already be configured after downloading. Verify it 
       {
         "type": "command",
         "bash": "bash ./.github/hooks/akto-validate-post-tool-wrapper.sh",
-        "powershell": "python .github/hooks/akto-validate-post-tool.py",
+        "powershell": "powershell -File .github/hooks/akto-validate-post-tool-wrapper.ps1",
         "comment": "Ingest tool execution results to Akto for monitoring and analytics",
         "timeoutSec": 30
       }
@@ -221,6 +265,8 @@ The `hooks.json` file should already be configured after downloading. Verify it 
   }
 }
 ```
+
+> **Windows note:** The `powershell` key is used automatically on Windows. The `.ps1` wrapper sets all required environment variables before invoking the Python script — equivalent to what the `.sh` wrappers do on macOS/Linux.
 
 > **Note:** `timeoutSec` is in seconds (30 = 30 seconds). Hooks are loaded from `.github/hooks/hooks.json` in the directory you run copilot from.
 {% endstep %}
@@ -230,15 +276,24 @@ The `hooks.json` file should already be configured after downloading. Verify it 
 
 Edit wrapper scripts to customize:
 
+**macOS / Linux** — in each `*-wrapper.sh`:
 ```bash
-# In each *-wrapper.sh file:
-
 export MODE="atlas"                    # "argus" or "atlas"
 export AKTO_DATA_INGESTION_URL="..."  # Your Akto instance URL
 export AKTO_SYNC_MODE="true"          # "true" (blocking) or "false" (observe only)
 export AKTO_TIMEOUT="5"               # Timeout in seconds
 export AKTO_CONNECTOR="github_copilot_cli"
 export CONTEXT_SOURCE="ENDPOINT"
+```
+
+**Windows** — in each `*-wrapper.ps1`:
+```powershell
+$env:MODE = "atlas"
+$env:AKTO_DATA_INGESTION_URL = "..."  # Your Akto instance URL
+$env:AKTO_SYNC_MODE = "true"
+$env:AKTO_TIMEOUT = "5"
+$env:AKTO_CONNECTOR = "github_copilot_cli"
+$env:CONTEXT_SOURCE = "ENDPOINT"
 ```
 
 **Mode Options:**
@@ -255,6 +310,7 @@ export CONTEXT_SOURCE="ENDPOINT"
 {% step %}
 **Verify Installation**
 
+**macOS / Linux:**
 ```bash
 # Check hooks.json is valid JSON
 python3 -m json.tool .github/hooks/hooks.json
@@ -265,6 +321,21 @@ ls -la .github/hooks/
 # Test a hook manually
 echo '{"prompt":"test","cwd":"/test","timestamp":1704614400000}' | \
   python3 .github/hooks/akto-validate-prompt.py
+
+# Run a Copilot command from the project root
+copilot
+```
+
+**Windows (PowerShell):**
+```powershell
+# Check hooks.json is valid JSON
+python -m json.tool .github\hooks\hooks.json
+
+# List hook files
+Get-ChildItem .github\hooks\
+
+# Test a hook manually
+'{"prompt":"test","cwd":"C:\\test","timestamp":1704614400000}' | python .github\hooks\akto-validate-prompt.py
 
 # Run a Copilot command from the project root
 copilot
@@ -323,6 +394,7 @@ python3 -m json.tool .github/hooks/hooks.json
 
 ### Ingestion URL Not Configured
 
+**macOS / Linux:**
 ```bash
 # Check current URL value in wrapper scripts
 grep "AKTO_DATA_INGESTION_URL" .github/hooks/*-wrapper.sh
@@ -331,6 +403,29 @@ grep "AKTO_DATA_INGESTION_URL" .github/hooks/*-wrapper.sh
 AKTO_URL="https://your-akto-instance.com"
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" .github/hooks/*-wrapper.sh
 ```
+
+**Windows (PowerShell):**
+```powershell
+# Check current URL value
+Select-String "AKTO_DATA_INGESTION_URL" .github\hooks\*-wrapper.ps1
+
+# Replace with actual URL
+$AKTO_URL = "https://your-akto-instance.com"
+Get-ChildItem ".github\hooks\*-wrapper.ps1" | ForEach-Object {
+  (Get-Content $_.FullName) -replace '{{AKTO_DATA_INGESTION_URL}}', $AKTO_URL |
+    Set-Content $_.FullName
+}
+```
+
+### Windows: Hooks Not Running
+
+If hooks appear to do nothing on Windows, verify the `.ps1` wrapper files were downloaded (not just the `.sh` files):
+
+```powershell
+Get-ChildItem .github\hooks\*-wrapper.ps1
+```
+
+If missing, re-run the Windows download step above.
 
 ### Check Logs for Errors
 
@@ -414,6 +509,7 @@ test -d .github/hooks && echo "⚠️  Hook scripts still exist" || echo "✅ Ho
 
 ### Automated Deployment Script
 
+**macOS / Linux:**
 ```bash
 #!/bin/bash
 # deploy-copilot-cli-hooks.sh
@@ -422,7 +518,7 @@ set -e
 AKTO_URL="${1:-https://your-akto-instance.com}"
 PROJECT_DIR="${2:-.}"
 
-echo "🔧 Installing Akto Guardrails for GitHub Copilot..."
+echo "Installing Akto Guardrails for GitHub Copilot..."
 
 # Create directory
 mkdir -p "${PROJECT_DIR}/.github/hooks"
@@ -444,17 +540,48 @@ chmod +x "${PROJECT_DIR}/.github/hooks"/*.py "${PROJECT_DIR}/.github/hooks"/*.sh
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" \
   "${PROJECT_DIR}/.github/hooks"/*-wrapper.sh
 
-echo "✅ Installation complete!"
-echo "📍 Akto instance: ${AKTO_URL}"
-echo "📁 Hooks installed in: ${PROJECT_DIR}/.github/hooks/"
+echo "Installation complete! Akto instance: ${AKTO_URL}"
 echo "Test with: cd ${PROJECT_DIR} && gh copilot suggest 'list files'"
 ```
 
-**Deploy to developers:**
+**Windows (PowerShell) — works on Azure Virtual Desktop pooled sessions:**
+```powershell
+# deploy-copilot-cli-hooks.ps1
+param(
+  [string]$AktoUrl = "https://your-akto-instance.com",
+  [string]$ProjectDir = "."
+)
 
-```bash
-curl -fsSL https://your-org.com/deploy-copilot-cli-hooks.sh | \
-  bash -s https://your-akto-instance.com /path/to/project
+$HOOKS_BASE = "https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/github-cli-hooks"
+$hooksDir = Join-Path $ProjectDir ".github\hooks"
+
+New-Item -ItemType Directory -Force -Path $hooksDir | Out-Null
+
+$files = @(
+  "akto-validate-prompt-wrapper.ps1", "akto-validate-prompt.py",
+  "akto-validate-pre-tool-wrapper.ps1", "akto-validate-pre-tool.py",
+  "akto-validate-post-tool-wrapper.ps1", "akto-validate-post-tool.py",
+  "akto_machine_id.py", "hooks.json"
+)
+
+foreach ($file in $files) {
+  Invoke-WebRequest -Uri "$HOOKS_BASE/$file" -OutFile (Join-Path $hooksDir $file)
+}
+
+# Configure URL
+Get-ChildItem (Join-Path $hooksDir "*-wrapper.ps1") | ForEach-Object {
+  (Get-Content $_.FullName) -replace '{{AKTO_DATA_INGESTION_URL}}', $AktoUrl |
+    Set-Content $_.FullName
+}
+
+Write-Host "Installation complete! Akto instance: $AktoUrl"
+Write-Host "Test with: cd $ProjectDir; gh copilot suggest 'list files'"
+```
+
+**Deploy to developers (Windows):**
+```powershell
+Invoke-WebRequest -Uri https://your-org.com/deploy-copilot-cli-hooks.ps1 -OutFile deploy.ps1
+powershell -File deploy.ps1 -AktoUrl https://your-akto-instance.com -ProjectDir C:\path\to\project
 ```
 
 ## Quick Setup Summary
