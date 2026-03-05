@@ -49,7 +49,7 @@ You can request the extension ID, custom extension URL, and update XML URL from 
 5. Open the **Users and browsers** tab.
 6.  Select the target Organisational Unit.
 
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1).webp" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/image (1).webp" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -58,12 +58,12 @@ You can request the extension ID, custom extension URL, and update XML URL from 
 1. Select the yellow **+** button.
 2.  Choose **Add Chrome app or extension by ID**.
 
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (2).webp" alt="" width="375"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/image (2).webp" alt="" width="375"><figcaption></figcaption></figure></div>
 3. Enter the Chrome extension ID provided by the Akto Support team.
 4. Expand **From a custom URL**.
 5.  Enter the custom extension URL provided by the Akto Support team.
 
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3).webp" alt="" width="375"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/image (3).webp" alt="" width="375"><figcaption></figcaption></figure></div>
 6. Select **Save**.
 {% endstep %}
 
@@ -73,10 +73,10 @@ You can request the extension ID, custom extension URL, and update XML URL from 
 1. Open the extension configuration panel.
 2.  Set **Installation policy** to **Force install**.
 
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (4).webp" alt="" width="375"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/image (4).webp" alt="" width="375"><figcaption></figcaption></figure></div>
 3.  Enter the **update XML URL** provided by the Akto Support team in the **Installation URL** space.
 
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (5).webp" alt="" width="375"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/image (5).webp" alt="" width="375"><figcaption></figcaption></figure></div>
 4. Select **Save**.
 
 Now, force installation enables automatic deployment to all managed Chrome users within the selected Organisational Unit.
@@ -87,7 +87,7 @@ Now, force installation enables automatic deployment to all managed Chrome users
 
 Managed Chrome browsers install the Akto extension after policy synchronisation. The Chrome toolbar then displays the Akto extension icon once installation completes.
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/Feb 27 2026 Screenshot (1).webp" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/Feb 27 2026 Screenshot (1).webp" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ## Support
 

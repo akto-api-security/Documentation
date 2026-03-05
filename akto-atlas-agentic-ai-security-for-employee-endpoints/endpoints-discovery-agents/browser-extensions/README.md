@@ -13,7 +13,7 @@ Browser extensions monitor your AI agent interactions as you browse and automati
 
 ## Available Extensions
 
-* [Chrome Extension](chrome.md) - For Google Chrome and Chromium-based browsers
+* [Chrome Extension](chrome/) - For Google Chrome and Chromium-based browsers
 * [Firefox Extension](firefox.md) - For Mozilla Firefox
 * [Safari Extension](safari.md) - For Safari on macOS
 
