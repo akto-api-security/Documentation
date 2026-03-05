@@ -43,6 +43,16 @@ Enforcement behaviour depends on the **Bypass Guardrails** setting.
 
 Monitoring mode gives you visibility without blocking user traffic.
 
+{% hint style="warning" %}
+## **Important**
+
+End users cannot modify the **Bypass Guardrails** setting. This behaviour is controlled by administrators through the extension configuration.
+{% endhint %}
+
+This mode is commonly used when organisations want to evaluate guardrail behaviour without interrupting user workflows.&#x20;
+
+For example, during early deployment or evaluation phases, administrators may enable monitoring mode to observe how policies behave before enforcing blocking.
+
 ### Blocking Mode (Bypass Guardrails Disabled)
 
 * Policy violations are detected.
