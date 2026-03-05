@@ -239,7 +239,7 @@ The `hooks.json` file should already be configured after downloading. Verify it 
       {
         "type": "command",
         "bash": "bash ./.github/hooks/akto-validate-prompt-wrapper.sh",
-        "powershell": "powershell -File .github/hooks/akto-validate-prompt-wrapper.ps1",
+        "powershell": "powershell -ExecutionPolicy Bypass -File .github/hooks/akto-validate-prompt-wrapper.ps1",
         "comment": "Validate prompts against Akto Guardrails (monitoring only - cannot block per GitHub limitation)",
         "timeoutSec": 30
       }
@@ -248,7 +248,7 @@ The `hooks.json` file should already be configured after downloading. Verify it 
       {
         "type": "command",
         "bash": "bash ./.github/hooks/akto-validate-pre-tool-wrapper.sh",
-        "powershell": "powershell -File .github/hooks/akto-validate-pre-tool-wrapper.ps1",
+        "powershell": "powershell -ExecutionPolicy Bypass -File .github/hooks/akto-validate-pre-tool-wrapper.ps1",
         "comment": "Validate and block tool execution based on Akto Guardrails policies",
         "timeoutSec": 30
       }
@@ -257,7 +257,7 @@ The `hooks.json` file should already be configured after downloading. Verify it 
       {
         "type": "command",
         "bash": "bash ./.github/hooks/akto-validate-post-tool-wrapper.sh",
-        "powershell": "powershell -File .github/hooks/akto-validate-post-tool-wrapper.ps1",
+        "powershell": "powershell -ExecutionPolicy Bypass -File .github/hooks/akto-validate-post-tool-wrapper.ps1",
         "comment": "Ingest tool execution results to Akto for monitoring and analytics",
         "timeoutSec": 30
       }
@@ -343,11 +343,20 @@ copilot
 
 Check logs to confirm hooks are working:
 
+**macOS / Linux:**
 ```bash
-# Default log location
-tail -f ~/akto-main/akto/.github/akto/copilot/logs/validate-prompt.log
-tail -f ~/akto-main/akto/.github/akto/copilot/logs/validate-pre-tool.log
-tail -f ~/akto-main/akto/.github/akto/copilot/logs/validate-post-tool.log
+# Default log location: ~/akto/.github/akto/copilot/logs/
+tail -f ~/akto/.github/akto/copilot/logs/validate-prompt.log
+tail -f ~/akto/.github/akto/copilot/logs/validate-pre-tool.log
+tail -f ~/akto/.github/akto/copilot/logs/validate-post-tool.log
+```
+
+**Windows (PowerShell):**
+```powershell
+# Default log location: C:\Users\<username>\akto\.github\akto\copilot\logs\
+Get-Content "$env:USERPROFILE\akto\.github\akto\copilot\logs\validate-prompt.log" -Wait -Tail 20
+Get-Content "$env:USERPROFILE\akto\.github\akto\copilot\logs\validate-pre-tool.log" -Wait -Tail 20
+Get-Content "$env:USERPROFILE\akto\.github\akto\copilot\logs\validate-post-tool.log" -Wait -Tail 20
 ```
 {% endstep %}
 {% endstepper %}
@@ -419,13 +428,32 @@ Get-ChildItem ".github\hooks\*-wrapper.ps1" | ForEach-Object {
 
 ### Windows: Hooks Not Running
 
-If hooks appear to do nothing on Windows, verify the `.ps1` wrapper files were downloaded (not just the `.sh` files):
+**Step 1 — Verify `.ps1` wrapper files were downloaded:**
 
 ```powershell
 Get-ChildItem .github\hooks\*-wrapper.ps1
 ```
 
 If missing, re-run the Windows download step above.
+
+**Step 2 — Unblock downloaded files:**
+
+Files downloaded via `Invoke-WebRequest` are marked as "from the internet" by Windows. Under `RemoteSigned` execution policy (default on Windows 10/11), these are blocked. Run:
+
+```powershell
+Get-ChildItem ".github\hooks\*" | Unblock-File
+```
+
+**Step 3 — Check execution policy:**
+
+```powershell
+Get-ExecutionPolicy
+# If "Restricted", hooks cannot run at all.
+# If "RemoteSigned", unblocking files (step 2) fixes it.
+# "Bypass" or "Unrestricted" — execution policy is not the issue.
+```
+
+The `hooks.json` already includes `-ExecutionPolicy Bypass` in the `powershell` command, which overrides the policy per-invocation regardless of system settings.
 
 ### Check Logs for Errors
 
