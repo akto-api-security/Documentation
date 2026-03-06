@@ -667,7 +667,7 @@ Write-Host "Test with: cd $ProjectDir; gh copilot suggest 'list files'"
 **Deploy to developers (Windows):**
 ```powershell
 Invoke-WebRequest -Uri https://your-org.com/deploy-copilot-cli-hooks.ps1 -OutFile deploy.ps1
-powershell -ExecutionPolicy Bypass -File deploy.ps1 -AktoUrl https://your-akto-instance.com -ProjectDir C:\path\to\project
+powershell -ExecutionPolicy Bypass -File deploy.ps1 -AktoUrl https://your-akto-instance.com -AktoToken your-akto-api-token -ProjectDir C:\path\to\project
 ```
 
 ## Quick Setup Summary
