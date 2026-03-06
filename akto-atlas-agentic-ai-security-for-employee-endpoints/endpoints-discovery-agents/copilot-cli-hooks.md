@@ -96,7 +96,8 @@ sequenceDiagram
 
 ### Prerequisites
 
-* GitHub CLI installed or VS Code&#x20;
+* **GitHub Copilot CLI** installed and authenticated — run `copilot` (macOS/Linux) or `copilot.exe` (Windows) to verify
+* **VS Code** with the GitHub Copilot extension (for VS Code hook support)
 * Akto instance URL
 * Python 3
 
