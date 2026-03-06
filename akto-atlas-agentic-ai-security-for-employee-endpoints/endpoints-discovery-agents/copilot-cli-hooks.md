@@ -8,8 +8,10 @@ Akto Guardrails for GitHub Copilot provides security validation for AI-assisted 
 * ✅ **Transparent Integration** - Uses GitHub Copilot's native hook mechanism in both VS Code and CLI
 * ✅ **Real-time Tool Blocking** - Can block dangerous tool executions before they run
 * ✅ **Centralized Monitoring** - All events reported to Akto dashboard
+* ✅ **Agent Registration** - Automatically registers the device (ID + username) with Akto on first hook invocation
 * ✅ **Flexible Deployment** - Supports Argus and Atlas modes
 * ✅ **Configurable Behavior** - Blocking or observation modes
+* ✅ **Cross-platform** - Full support for macOS, Linux, and Windows (including Azure Virtual Desktop)
 * ⚠️ **Prompt Monitoring Only** - GitHub Copilot limitation prevents blocking prompts at submission
 
 ## How Hooks Works
@@ -72,7 +74,8 @@ sequenceDiagram
         ├── akto-validate-post-tool-wrapper.sh    # Post-tool ingestion wrapper (macOS/Linux)
         ├── akto-validate-post-tool-wrapper.ps1   # Post-tool ingestion wrapper (Windows)
         ├── akto-validate-post-tool.py            # Post-tool ingestion logic
-        ├── akto_machine_id.py                    # Device ID utility
+        ├── akto_machine_id.py                    # Device ID utility (macOS/Linux/Windows)
+        ├── akto_heartbeat.py                     # Agent registration heartbeat
         └── hooks.json                            # Hook configuration
 ```
 
@@ -80,9 +83,11 @@ sequenceDiagram
 
 * **Wrapper scripts (`.sh` / `.ps1`)**: Set environment variables, invoke Python scripts
   * ⚠️ **Contains `AKTO_DATA_INGESTION_URL` placeholder** - Must be set to your Akto instance URL
+  * ⚠️ **Contains `AKTO_API_TOKEN` placeholder** - Must be set for agent registration
   * `.sh` used on macOS/Linux; `.ps1` used on Windows
 * **Python scripts (`.py`)**: Core validation logic and Akto API communication
-* **`akto_machine_id.py`**: Generates unique device identifiers for Atlas mode
+* **`akto_machine_id.py`**: Generates unique device identifiers — uses Windows registry (`MachineGuid`) on Windows, IOPlatformUUID on macOS, `/etc/machine-id` on Linux
+* **`akto_heartbeat.py`**: Sends agent registration (device ID, username, OS) to Akto on each hook invocation, rate-limited to once per 30 seconds via a local timestamp cache
 * **`hooks.json`**: Links hooks to wrapper scripts — uses `bash` key on macOS/Linux and `powershell` key on Windows
 
 > **Note:** `hooks.json` is loaded from the project root's `.github/hooks/` directory.
@@ -91,7 +96,8 @@ sequenceDiagram
 
 ### Prerequisites
 
-* GitHub CLI installed or VS Code&#x20;
+* **GitHub Copilot CLI** installed and authenticated — run `copilot` (macOS/Linux) or `copilot.exe` (Windows) to verify
+* **VS Code** with the GitHub Copilot extension (for VS Code hook support)
 * Akto instance URL
 * Python 3
 
@@ -142,9 +148,11 @@ curl -o .github/hooks/akto-validate-post-tool-wrapper.sh \
 curl -o .github/hooks/akto-validate-post-tool.py \
   "${HOOKS_BASE}/akto-validate-post-tool.py"
 
-# Download utility
+# Download utilities
 curl -o .github/hooks/akto_machine_id.py \
   "${HOOKS_BASE}/akto_machine_id.py"
+curl -o .github/hooks/akto_heartbeat.py \
+  "${HOOKS_BASE}/akto_heartbeat.py"
 
 # Download hooks configuration
 curl -o .github/hooks/hooks.json \
@@ -162,7 +170,7 @@ $files = @(
   "akto-validate-prompt-wrapper.ps1", "akto-validate-prompt.py",
   "akto-validate-pre-tool-wrapper.ps1", "akto-validate-pre-tool.py",
   "akto-validate-post-tool-wrapper.ps1", "akto-validate-post-tool.py",
-  "akto_machine_id.py", "hooks.json"
+  "akto_machine_id.py", "akto_heartbeat.py", "hooks.json"
 )
 
 foreach ($file in $files) {
@@ -172,48 +180,51 @@ foreach ($file in $files) {
 {% endstep %}
 
 {% step %}
-**Configure Akto Ingestion URL** ⚠️ **CRITICAL STEP**
+**Configure URLs and API Token** ⚠️ **CRITICAL STEP**
 
 {% hint style="warning" %}
-All wrapper scripts contain the variable `AKTO_DATA_INGESTION_URL` that **must be set** to your actual Akto instance URL.
+All wrapper scripts contain two placeholders that **must be replaced** before hooks will work:
+- `{{AKTO_DATA_INGESTION_URL}}` — your Akto instance URL (required for event ingestion)
+- `{{AKTO_API_TOKEN}}` — your Akto API token (required for agent registration auth)
+
+`DATABASE_ABSTRACTOR_SERVICE_URL` is built into the hooks and defaults to `https://cyborg.akto.io` automatically — no action needed for SaaS users.
 {% endhint %}
 
 **macOS / Linux — automated replacement:**
 
 ```bash
-# Set your Akto ingestion URL
+# Set your values
 AKTO_URL="https://your-akto-instance.com"
+AKTO_TOKEN="your-akto-api-token"
 
 # Update all wrapper scripts
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" .github/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_TOKEN}|g" .github/hooks/*-wrapper.sh
 
-# Verify replacement
-grep "AKTO_DATA_INGESTION_URL" .github/hooks/*-wrapper.sh
+# Verify replacements
+grep -E "AKTO_DATA_INGESTION_URL|AKTO_API_TOKEN" .github/hooks/*-wrapper.sh
 ```
 
 **Windows (PowerShell) — automated replacement:**
 
 ```powershell
 $AKTO_URL = "https://your-akto-instance.com"
+$AKTO_TOKEN = "your-akto-api-token"
 
 Get-ChildItem ".github\hooks\*-wrapper.ps1" | ForEach-Object {
-  (Get-Content $_.FullName) -replace '{{AKTO_DATA_INGESTION_URL}}', $AKTO_URL |
+  (Get-Content $_.FullName) `
+    -replace '{{AKTO_DATA_INGESTION_URL}}', $AKTO_URL `
+    -replace '{{AKTO_API_TOKEN}}', $AKTO_TOKEN |
     Set-Content $_.FullName
 }
 
-# Verify replacement
-Select-String "AKTO_DATA_INGESTION_URL" .github\hooks\*-wrapper.ps1
+# Verify replacements
+Select-String "AKTO_DATA_INGESTION_URL|AKTO_API_TOKEN" .github\hooks\*-wrapper.ps1
 ```
 
 **Manual replacement (alternative):**
 
-Edit each wrapper script and replace:
-
-```
-{{AKTO_DATA_INGESTION_URL}}
-```
-
-With your actual Akto instance URL, e.g. `https://your-akto-instance.com`.
+Edit each wrapper script and replace the two placeholders with your actual values.
 
 Files to update on macOS/Linux:
 * `akto-validate-prompt-wrapper.sh`
@@ -278,22 +289,24 @@ Edit wrapper scripts to customize:
 
 **macOS / Linux** — in each `*-wrapper.sh`:
 ```bash
-export MODE="atlas"                    # "argus" or "atlas"
-export AKTO_DATA_INGESTION_URL="..."  # Your Akto instance URL
-export AKTO_SYNC_MODE="true"          # "true" (blocking) or "false" (observe only)
-export AKTO_TIMEOUT="5"               # Timeout in seconds
+export MODE="atlas"                                   # "argus" or "atlas"
+export AKTO_DATA_INGESTION_URL="..."                 # Your Akto instance URL
+export AKTO_SYNC_MODE="true"                          # "true" (blocking) or "false" (observe only)
+export AKTO_TIMEOUT="5"                               # Timeout in seconds
 export AKTO_CONNECTOR="github_copilot_cli"
 export CONTEXT_SOURCE="ENDPOINT"
+export AKTO_API_TOKEN="..."                           # Akto API token (for agent registration)
 ```
 
 **Windows** — in each `*-wrapper.ps1`:
 ```powershell
 $env:MODE = "atlas"
-$env:AKTO_DATA_INGESTION_URL = "..."  # Your Akto instance URL
+$env:AKTO_DATA_INGESTION_URL = "..."                 # Your Akto instance URL
 $env:AKTO_SYNC_MODE = "true"
 $env:AKTO_TIMEOUT = "5"
 $env:AKTO_CONNECTOR = "github_copilot_cli"
 $env:CONTEXT_SOURCE = "ENDPOINT"
+$env:AKTO_API_TOKEN = "..."                          # Akto API token (for agent registration)
 ```
 
 **Mode Options:**
@@ -366,13 +379,26 @@ Get-Content "$env:USERPROFILE\akto\.github\akto\copilot\logs\validate-post-tool.
 ### Wrapper Script Variables
 
 ```bash
-export MODE="atlas"                                  # "argus" or "atlas"
-export AKTO_DATA_INGESTION_URL="{{AKTO_DATA_INGESTION_URL}}"  # ⚠️ MUST REPLACE
-export AKTO_SYNC_MODE="true"                         # "true" or "false"
-export AKTO_TIMEOUT="5"                              # Timeout in seconds
-export AKTO_CONNECTOR="github_copilot_cli"           # Connector identifier
-export CONTEXT_SOURCE="ENDPOINT"                     # Context source tag
+export MODE="atlas"                                           # "argus" or "atlas"
+export AKTO_DATA_INGESTION_URL="{{AKTO_DATA_INGESTION_URL}}" # ⚠️ MUST REPLACE — Akto instance URL
+export AKTO_SYNC_MODE="true"                                  # "true" or "false"
+export AKTO_TIMEOUT="5"                                       # Timeout in seconds
+export AKTO_CONNECTOR="github_copilot_cli"                    # Connector identifier
+export CONTEXT_SOURCE="ENDPOINT"                              # Context source tag
+export AKTO_API_TOKEN="{{AKTO_API_TOKEN}}"                    # ⚠️ MUST REPLACE — API token for auth
 ```
+
+| Variable | Required | Default | Description |
+|---|---|---|---|
+| `AKTO_DATA_INGESTION_URL` | ✅ Yes | — | Your Akto instance URL for event ingestion |
+| `AKTO_API_TOKEN` | ✅ Yes | — | Akto API token used to authenticate heartbeat |
+| `MODE` | No | `argus` | `argus` or `atlas` |
+| `AKTO_SYNC_MODE` | No | `true` | `true` = blocking, `false` = observe only |
+| `AKTO_TIMEOUT` | No | `5` | Request timeout in seconds |
+| `DEVICE_ID` | No | auto-detected | Override the machine ID |
+| `LOG_DIR` | No | `~/akto/.github/akto/copilot/logs` | Log directory |
+| `LOG_LEVEL` | No | `INFO` | Log level (`DEBUG`, `INFO`, `WARNING`, `ERROR`) |
+| `DATABASE_ABSTRACTOR_SERVICE_URL` | No | `https://cyborg.akto.io` | Override cyborg URL — self-hosted deployments only |
 
 ### Environment Variables (Optional)
 
@@ -381,9 +407,35 @@ Override defaults via environment variables (e.g. in `~/.bashrc` or `~/.zshrc`):
 ```bash
 export MODE="atlas"
 export AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
+export AKTO_API_TOKEN="your-api-token"
 export AKTO_SYNC_MODE="true"
 export AKTO_TIMEOUT="5"
 ```
+
+## Agent Registration
+
+Each hook automatically registers the device with Akto on first invocation (and refreshes every 30 seconds). This mirrors the heartbeat mechanism used by the `mcp-endpoint-shield` Go agent.
+
+**What is registered:**
+
+| Field | Value |
+|---|---|
+| `moduleType` | `GITHUB_COPILOT_CLI_HOOKS` |
+| `name` | Machine ID (hardware-based, persistent) |
+| `additionalData.username` | System username |
+| `additionalData.os` | Operating system (`Windows`, `Darwin`, `Linux`) |
+| `additionalData.connector` | `github_copilot_cli` or `vscode` |
+
+**How machine ID is resolved by platform:**
+
+| Platform | Source |
+|---|---|
+| Windows | `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography\MachineGuid` (registry) |
+| macOS | `IOPlatformUUID` via `ioreg` |
+| Linux | `/etc/machine-id` |
+| Fallback | MAC address via `uuid.getnode()` |
+
+**Rate limiting:** Registration is sent at most once every 30 seconds. The timestamp is cached in `<log_dir>/last_heartbeat`. The persistent agent ID is stored in `<log_dir>/agent_id` — this ID survives across hook invocations so the device appears as a single registered agent in the Akto dashboard.
 
 ## Troubleshooting
 
@@ -557,15 +609,18 @@ for FILE in \
   akto-validate-prompt-wrapper.sh akto-validate-prompt.py \
   akto-validate-pre-tool-wrapper.sh akto-validate-pre-tool.py \
   akto-validate-post-tool-wrapper.sh akto-validate-post-tool.py \
-  akto_machine_id.py hooks.json; do
+  akto_machine_id.py akto_heartbeat.py hooks.json; do
   curl -s "${HOOKS_BASE}/${FILE}" -o "${PROJECT_DIR}/.github/hooks/${FILE}"
 done
 
 # Make executable
 chmod +x "${PROJECT_DIR}/.github/hooks"/*.py "${PROJECT_DIR}/.github/hooks"/*.sh
 
-# Configure URL
+# Configure placeholders
+AKTO_TOKEN="${3:-}"
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" \
+  "${PROJECT_DIR}/.github/hooks"/*-wrapper.sh
+sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_TOKEN}|g" \
   "${PROJECT_DIR}/.github/hooks"/*-wrapper.sh
 
 echo "Installation complete! Akto instance: ${AKTO_URL}"
@@ -577,7 +632,8 @@ echo "Test with: cd ${PROJECT_DIR} && gh copilot suggest 'list files'"
 # deploy-copilot-cli-hooks.ps1
 param(
   [string]$AktoUrl = "https://your-akto-instance.com",
-  [string]$ProjectDir = "."
+  [string]$ProjectDir = ".",
+  [string]$AktoToken = ""
 )
 
 $HOOKS_BASE = "https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/github-cli-hooks"
@@ -589,16 +645,18 @@ $files = @(
   "akto-validate-prompt-wrapper.ps1", "akto-validate-prompt.py",
   "akto-validate-pre-tool-wrapper.ps1", "akto-validate-pre-tool.py",
   "akto-validate-post-tool-wrapper.ps1", "akto-validate-post-tool.py",
-  "akto_machine_id.py", "hooks.json"
+  "akto_machine_id.py", "akto_heartbeat.py", "hooks.json"
 )
 
 foreach ($file in $files) {
   Invoke-WebRequest -Uri "$HOOKS_BASE/$file" -OutFile (Join-Path $hooksDir $file)
 }
 
-# Configure URL
+# Configure placeholders
 Get-ChildItem (Join-Path $hooksDir "*-wrapper.ps1") | ForEach-Object {
-  (Get-Content $_.FullName) -replace '{{AKTO_DATA_INGESTION_URL}}', $AktoUrl |
+  (Get-Content $_.FullName) `
+    -replace '{{AKTO_DATA_INGESTION_URL}}', $AktoUrl `
+    -replace '{{AKTO_API_TOKEN}}', $AktoToken |
     Set-Content $_.FullName
 }
 
@@ -609,7 +667,7 @@ Write-Host "Test with: cd $ProjectDir; gh copilot suggest 'list files'"
 **Deploy to developers (Windows):**
 ```powershell
 Invoke-WebRequest -Uri https://your-org.com/deploy-copilot-cli-hooks.ps1 -OutFile deploy.ps1
-powershell -File deploy.ps1 -AktoUrl https://your-akto-instance.com -ProjectDir C:\path\to\project
+powershell -ExecutionPolicy Bypass -File deploy.ps1 -AktoUrl https://your-akto-instance.com -ProjectDir C:\path\to\project
 ```
 
 ## Quick Setup Summary
@@ -620,9 +678,11 @@ mkdir -p .github/hooks
 
 # 2. Download all hook scripts from GitHub (see step 2 above)
 
-# 3. ⚠️ Configure Akto URL (REQUIRED)
+# 3. ⚠️ Configure placeholders (REQUIRED)
 AKTO_URL="https://your-akto-instance.com"
+AKTO_TOKEN="your-akto-api-token"
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" .github/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_TOKEN}|g" .github/hooks/*-wrapper.sh
 
 # 4. Make executable
 chmod +x .github/hooks/*.py .github/hooks/*.sh
