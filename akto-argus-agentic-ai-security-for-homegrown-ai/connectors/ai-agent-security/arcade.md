@@ -86,22 +86,6 @@ Enable **Tool Access** if you want Akto to control which users can see or use sp
 
     <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (131).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
-{% hint style="success" %}
-## Configure Failure Mode (Blocking vs Async)
-
-The **On Failure** setting determines whether the integration operates in enforcement (blocking) mode or monitoring (async) mode.
-
-#### Recommended Configuration
-
-For production environments requiring enforcement:
-
-* **On Failure:** `Block request`
-
-For monitoring-only deployments:
-
-* **On Failure:** `Allow request`
-{% endhint %}
-
 #### 2. Pre Tool Execution
 
 Enable **Pre tool execution** to validate and inspect tool inputs before the tool runs.
@@ -118,10 +102,11 @@ Enable **Pre tool execution** to validate and inspect tool inputs before the too
 
     <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (133).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
-{% hint style="danger" %}
-## **Important**
+{% hint style="info" %}
+## Blocking vs Async Mode
 
-If Pre tool execution is not enabled, Akto will not be able to inspect or enforce policies on tool inputs before execution. This means unsafe or malicious inputs may reach the tool without being evaluated.
+* **Blocking mode (default):** Keep **Pre Tool Execution** enabled. Akto evaluates tool inputs before execution and can block unsafe or policy-violating calls.
+* **Async / monitoring-only mode:** Disable **Pre Tool Execution** and rely solely on Post Tool Execution. Tool calls will not be intercepted — Akto will only observe and record outputs after execution. Use this when you want visibility without enforcement.
 {% endhint %}
 
 #### 3. Post Tool Execution
