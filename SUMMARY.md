@@ -50,6 +50,7 @@
     * [Databricks](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/databricks.md)
     * [N8N](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/n8n.md)
     * [LangChain](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/langchain.md)
+    * [LangGraph](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/langgraph.md)
     * [Microsoft Copilot Studio](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/microsoft-copilot-studio.md)
     * [LiteLLM](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/litellm.md)
     * [Azure AI Foundry](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/azure-ai-foundry.md)
