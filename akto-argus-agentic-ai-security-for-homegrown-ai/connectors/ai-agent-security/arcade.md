@@ -1,6 +1,5 @@
 ---
 description: Integrate arcade.dev with Akto Argus
-hidden: true
 ---
 
 # Arcade
@@ -80,7 +79,7 @@ Enable **Tool Access** if you want Akto to control which users can see or use sp
     <your-data-ingestion-url>
     ```
 * **Priority:** Leave as default (`0`) unless you need custom execution ordering.
-* **On Failure:** See explanation below.
+* **On Failure:** Controls what arcade.dev does if Akto's webhook is unreachable or returns an error. Set to `Allow request` to let the tool call proceed when Akto is unavailable, or `Block request` to deny the call if Akto cannot be reached.
 * **Timeout:** Leave default (recommended: 5 seconds).
 *   **Response Caching:** Keep disabled unless explicitly required.
 
@@ -98,7 +97,7 @@ Enable **Pre tool execution** to validate and inspect tool inputs before the too
     <your-data-ingestion-url>
     ```
 * Leave **Priority**, **Timeout**, and other fields as default unless you require custom behaviour.
-*   Configure **On Failure** based on your enforcement requirements.
+* **On Failure:** Controls what arcade.dev does if Akto's webhook is unreachable or returns an error. Set to `Allow request` to let the tool call proceed when Akto is unavailable, or `Block request` to deny the call if Akto cannot be reached.
 
     <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (133).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
@@ -121,7 +120,7 @@ Enable **Post tool execution** to inspect tool outputs after execution.
     <your-data-ingestion-url>
     ```
 * Leave **Priority**, **Timeout**, and other fields as default unless custom configuration is required.
-*   Configure **On Failure** as needed.
+* **On Failure:** Controls what arcade.dev does if Akto's webhook is unreachable or returns an error. Set to `Allow request` to let the tool call proceed when Akto is unavailable, or `Block request` to deny the call if Akto cannot be reached.
 
     <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (134).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
