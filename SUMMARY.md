@@ -146,7 +146,7 @@
     * [JSON Recording for Automated Auth Tokens](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/json-recording-for-automated-auth-tokens.md)
   * [How To](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/README.md)
     * [Run Test](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/run-test.md)
-    * [Run Bulk Testing](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/run-bulk-testing.md)
+    * [Run Bulk Scanning](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/run-bulk-scanning.md)
     * [Auto-Create Jira Tickets](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/auto-create-jira-tickets.md)
     * [Edit Test Settings](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/edit-test-settings.md)
     * [Install testing module in your Cloud](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/install-testing-module-in-your-cloud/README.md)
