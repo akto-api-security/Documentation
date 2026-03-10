@@ -204,7 +204,7 @@
     * [Edit Test](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/how-to/edit-test.md)
     * [Create a Custom Test](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/how-to/create-a-custom-test.md)
     * [Deactivate Test](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/how-to/deactivate-test.md)
-    * [Play in Test Editor Background](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/how-to/play-in-test-editor-background.md)
+    * [Play in Editor Background](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/how-to/play-in-test-editor-background.md)
     * [Copy Test Content](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/how-to/copy-test-content.md)
     * [Opening Endpoint in Test Editor](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/how-to/opening-endpoint-in-test-editor.md)
     * [Add a New Test Library](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/how-to/add-a-new-test-library.md)
