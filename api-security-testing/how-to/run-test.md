@@ -6,7 +6,7 @@ In the demonstration below, let's run tests on <mark style="color:red;">`/rest/p
 
 For example, we'll be running all the test categories on the <mark style="color:red;">`/rest/products/search`</mark> endpoint of the **demo\_collection** API.
 
-{% @arcade/embed flowId="uH7TcfV5by6oJ1L4SAvG" url="https://app.arcade.software/share/uH7TcfV5by6oJ1L4SAvG" %}
+{% @arcade/embed url="https://app.arcade.software/share/uH7TcfV5by6oJ1L4SAvG" flowId="uH7TcfV5by6oJ1L4SAvG" %}
 
 In the demonstration above, we performed tests on the <mark style="color:red;">`/rest/products/search`</mark> endpoint from the **demo\_collection** API.
 
@@ -14,4 +14,4 @@ In the demonstration above, we performed tests on the <mark style="color:red;">`
 
 Easily add, modify, or remove headers like “x-forwarded-for” or “x-no-alarm” directly from the test configuration, without editing YAML files.
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>

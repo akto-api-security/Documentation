@@ -106,7 +106,7 @@ Under **Use tokens from traffic**, configure the following:
   Example: `Bearer .*`\
   This ensures only tokens matching the defined pattern are used.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -259,7 +259,7 @@ While creating or editing a Test Role, navigate to **Advanced Settings**.
 
         Leave this empty to skip path matching.
 
-    <figure><img src="../../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/image (4).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}

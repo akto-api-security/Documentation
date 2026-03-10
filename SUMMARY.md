@@ -180,6 +180,7 @@
   * [Extract APIs from source code using our Docker based CLI](api-inventory-1/how-to/extract-apis-from-source-code-docker-cli.md)
   * [Remove Bad Endpoints](api-inventory-1/how-to/remove-bad-endpoints.md)
   * [Bulk De-Merge APIs](api-inventory/how-to/bulk-de-merge-apis.md)
+  * [Inspect API Schema of an API Collection](api-inventory/how-to/inspect-api-schema-of-an-api-collection.md)
 
 ***
 
