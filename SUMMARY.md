@@ -328,7 +328,7 @@
   * [Understand Agentic Components](agentic-guardrails/how-to/understand-agentic-components.md)
   * [Export Visualisation and Report](agentic-guardrails/how-to/export-visualisation-and-report.md)
   * [Export Activity to Custom Webhook](agentic-guardrails/how-to/export-activity-to-custom-webhook.md)
-  * [Enable/Disable Guardrails](agentic-guardrails/how-to/enable-disable-guardrails.md)
+  * [Enable or Disable Guardrails](agentic-guardrails/how-to/enable-or-disable-guardrails.md)
 
 ## Integrations
 
