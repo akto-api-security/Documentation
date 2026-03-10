@@ -1,7 +1,3 @@
----
-hidden: true
----
-
 # Run Bulk Scanning
 
 ## Overview
