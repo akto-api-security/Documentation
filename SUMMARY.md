@@ -146,6 +146,7 @@
     * [JSON Recording for Automated Auth Tokens](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/json-recording-for-automated-auth-tokens.md)
   * [How To](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/README.md)
     * [Run Test](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/run-test.md)
+    * [Run Bulk Testing](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/run-bulk-testing.md)
     * [Auto-Create Jira Tickets](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/auto-create-jira-tickets.md)
     * [Edit Test Settings](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/edit-test-settings.md)
     * [Install testing module in your Cloud](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/install-testing-module-in-your-cloud/README.md)
@@ -326,6 +327,8 @@
   * [Create Internal Workflow Item](agentic-guardrails/how-to/create-internal-workflow-item.md)
   * [Understand Agentic Components](agentic-guardrails/how-to/understand-agentic-components.md)
   * [Export Visualisation and Report](agentic-guardrails/how-to/export-visualisation-and-report.md)
+  * [Export Activity to Custom Webhook](agentic-guardrails/how-to/export-activity-to-custom-webhook.md)
+  * [Enable/Disable Guardrails](agentic-guardrails/how-to/enable-disable-guardrails.md)
 
 ## Integrations
 
