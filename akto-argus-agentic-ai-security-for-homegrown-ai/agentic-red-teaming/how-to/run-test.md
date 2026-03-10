@@ -4,24 +4,60 @@ Running security tests in Akto involves assessing agent components to evaluate t
 
 ## Running Tests on Agent Components
 
-1. Navigate to **Agentic Discovery > Collections**
-2. Select the collection containing the agent components you want to test
-3. Choose specific agent components or select all components in the collection
-4. Click **Run test**
-5. Select test categories to run (Prompt Injection, MCP Security, LLM Security, etc.)
-6. Configure test parameters if needed
-7. Click **Run Test** to start the security scan
+{% stepper %}
+{% step %}
+Navigate to **Agentic Discovery > Collections**
+{% endstep %}
+
+{% step %}
+Select the collection containing the agent components you want to test
+{% endstep %}
+
+{% step %}
+Choose specific agent components or select all components in the collection
+{% endstep %}
+
+{% step %}
+Click **Run test**
+{% endstep %}
+
+{% step %}
+Select test categories to run (Prompt Injection, MCP Security, LLM Security, etc.)
+
+{% hint style="success" %}
+The **Tests** panel displays the estimated token usage for every probe. Token estimation helps enterprise teams evaluate expected LLM consumption before starting the scan.
+{% endhint %}
+{% endstep %}
+
+{% step %}
+Configure test parameters if needed.
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (151).png" alt="" width="375"><figcaption></figcaption></figure></div>
+
+<details>
+
+<summary>Scan Execution Parameters</summary>
+
+<table><thead><tr><th width="181.08203125">Parameter</th><th>Description</th></tr></thead><tbody><tr><td><strong>Run Type</strong></td><td>Defines how the scan runs. You can run the scan <strong>once</strong> or configure scheduled execution.</td></tr><tr><td><strong>Select Date</strong></td><td>Defines the date when the scan execution starts.</td></tr><tr><td><strong>Select Time</strong></td><td>Defines the time when the scan execution begins.</td></tr><tr><td><strong>Scan Run Time</strong></td><td>Defines the maximum duration allowed for the scan execution. The scan stops automatically when the configured duration expires.</td></tr><tr><td><strong>Select Scan Role</strong></td><td>Associates a predefined scan role that defines permissions and execution behavior for the scan.</td></tr><tr><td><strong>Max Concurrent Requests</strong></td><td>Controls the number of parallel probe requests executed during the scan. Higher concurrency increases scan speed but also increases request load.</td></tr><tr><td><strong>Max Agent Tokens</strong></td><td>Defines the maximum number of tokens that the agent can consume during the scan. The <strong>No limit</strong> option allows unrestricted token usage.</td></tr><tr><td><strong>Slack Alert Integration</strong></td><td>Enables Slack notifications after scan completion. The Slack integration sends alerts for scan results.</td></tr><tr><td><strong>Microsoft Teams Alert Integration</strong></td><td>Enables Microsoft Teams notifications after scan completion. The Microsoft Teams integration sends alerts for scan results.</td></tr></tbody></table>
+
+</details>
+{% endstep %}
+
+{% step %}
+Click **Run Test** to start the security scan.
+{% endstep %}
+{% endstepper %}
 
 ## Test Categories
 
 When running tests, you can select from specialized categories:
 
-- **Prompt Injection**: Tests for direct and indirect prompt injection vulnerabilities
-- **LLM Security**: Validates model-specific security controls
-- **MCP Security**: Tests Model Context Protocol implementations
-- **Sensitive Information Disclosure**: Detects credential and PII exposure
-- **Excessive Agency**: Validates tool permission boundaries
-- **Supply Chain**: Identifies dependency vulnerabilities
+* **Prompt Injection**: Tests for direct and indirect prompt injection vulnerabilities
+* **LLM Security**: Validates model-specific security controls
+* **MCP Security**: Tests Model Context Protocol implementations
+* **Sensitive Information Disclosure**: Detects credential and PII exposure
+* **Excessive Agency**: Validates tool permission boundaries
+* **Supply Chain**: Identifies dependency vulnerabilities
 
 and more...
 
