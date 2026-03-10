@@ -235,6 +235,7 @@
   * [JSON Recording for Automated Auth Tokens](api-security-testing/concepts/json-recording-for-automated-auth-tokens.md)
 * [How To](api-security-testing/how-to/README.md)
   * [Run Test](api-security-testing/how-to/run-test.md)
+  * [Run Bulk Testing](api-security-testing/how-to/run-bulk-testing.md)
   * [Auto-Create Jira Tickets](api-security-testing/how-to/auto-create-jira-tickets.md)
   * [Edit Test Settings](api-security-testing/how-to/edit-test-settings.md)
   * [Install testing module in your Cloud](api-security-testing/how-to/install-testing-module-in-your-cloud/README.md)
@@ -265,7 +266,6 @@
   * [Secure SOAP APIs using Akto](api-security-testing/how-to/secure-soap-apis-using-akto.md)
   * [Create and Edit Auth Types](api-security-testing/how-to/create-and-edit-auth-types.md)
   * [Configure Global Test Settings](api-security-testing/how-to/configure-global-test-settings.md)
-  * [Run Bulk Testing](api-security-testing/how-to/run-bulk-testing.md)
 
 ## Issues
 

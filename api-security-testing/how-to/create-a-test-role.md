@@ -106,7 +106,7 @@ Under **Use tokens from traffic**, configure the following:
   Example: `Bearer .*`\
   This ensures only tokens matching the defined pattern are used.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}

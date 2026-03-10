@@ -38,7 +38,7 @@ Click on Run Test at the Top right. Selecting **Run Test** opens the **Test conf
 4. Select the **Testing Module** that executes the test request.
 5.  (Optional) Enable **Use different target for testing** and provide a value in **Override test app host** when the test should run against a different host.
 
-    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (2).png" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (2) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 6. Select **Save** to start the test execution.
 {% endstep %}
 
