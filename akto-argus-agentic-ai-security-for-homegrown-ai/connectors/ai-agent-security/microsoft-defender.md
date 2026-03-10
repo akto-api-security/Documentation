@@ -54,7 +54,6 @@ Finds processes associated with AI CLI tools (Claude Code, GitHub Copilot CLI, G
 
 ```kql
 DeviceProcessEvents
-| where Timestamp > ago(lookback)
 | where DeviceName contains "<your-device-name>"
 | extend fn = tolower(FileName),
          cmd = tolower(ProcessCommandLine),
@@ -163,4 +162,4 @@ Cursor IDE not detected - skipping hook installation
 
 - **Live Response requires MDE Plan 2** — it is not available on Plan 1 or Defender for Business Basic.
 - All queries above scope to a single device by default (`DeviceName contains`). Remove that filter to run fleet-wide, but expect higher result counts.
- 
+- The time frame for the KQL queries can be controlled in the portal for upto a maximum of 30 days. 
