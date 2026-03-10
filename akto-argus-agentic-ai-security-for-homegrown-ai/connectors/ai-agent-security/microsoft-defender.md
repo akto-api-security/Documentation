@@ -140,9 +140,11 @@ This is a one-time setup.
 
 Once the Live Response console is open:
 
+```text
+run install_cursor.sh -parameters "AKTO_DATA_INGESTION_URL=<your.guardrails.akto.io>"
 ```
-run install_cursor_hooks.sh
-```
+
+Note: Please download the installer scripts at  https://github.com/akto-api-security/akto/tree/master/apps/mcp-endpoint-shield/hooks_shell_scripts
 
 Type the command exactly as shown. The script name must match what you uploaded in Step 1.
 
