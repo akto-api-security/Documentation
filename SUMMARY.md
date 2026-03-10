@@ -320,6 +320,7 @@
     * [For MCP Protection Issues](agentic-guardrails/concepts/remediation-steps/for-mcp-protection-issues.md)
 * [How To](agentic-guardrails/how-to/README.md)
   * [Create Guardrail Policies](agentic-guardrails/how-to/create-guardrail-policies.md)
+  * [Enable or Disable Guardrails](agentic-guardrails/how-to/enable-or-disable-guardrails.md)
   * [Manage Guardrail Policies](agentic-guardrails/how-to/manage-guardrail-policies.md)
   * [Access A Specific Guardrail Actor](agentic-guardrails/how-to/access-a-specific-guardrail-actor.md)
   * [Guardrail Activity Detailed View](agentic-guardrails/how-to/guardrail-activity-detailed-view.md)
@@ -328,7 +329,6 @@
   * [Understand Agentic Components](agentic-guardrails/how-to/understand-agentic-components.md)
   * [Export Visualisation and Report](agentic-guardrails/how-to/export-visualisation-and-report.md)
   * [Export Activity to Custom Webhook](agentic-guardrails/how-to/export-activity-to-custom-webhook.md)
-  * [Enable or Disable Guardrails](agentic-guardrails/how-to/enable-or-disable-guardrails.md)
 
 ## Integrations
 
