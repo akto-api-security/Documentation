@@ -1,4 +1,5 @@
 ---
+title: Probes
 description: Comprehensive security Probing for AI agents and agentic systems.
 ---
 

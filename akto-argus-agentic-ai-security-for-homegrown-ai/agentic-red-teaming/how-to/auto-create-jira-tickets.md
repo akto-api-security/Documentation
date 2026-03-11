@@ -1,10 +1,10 @@
 # Auto-Create Jira Tickets
 
-Akto automates issue tracking by allowing auto-creation of Jira tickets whenever security tests are run. This ensures vulnerabilities found in agent components are automatically logged in Jira, helping teams track critical fixes without manual intervention.
+Akto automates issue tracking by allowing auto-creation of Jira tickets whenever security probe are run. This ensures vulnerabilities found in agent components are automatically logged in Jira, helping teams track critical fixes without manual intervention.
 
 ## How It Works
 
-When setting up a test run in Akto, enable the **Auto-create tickets** option. Akto will automatically create Jira tickets based on detected vulnerabilities.
+When setting up a probe run in Akto, enable the **Auto-create tickets** option. Akto will automatically create Jira tickets based on detected vulnerabilities.
 
 ## Configuration Options
 
