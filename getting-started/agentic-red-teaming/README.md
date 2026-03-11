@@ -16,17 +16,17 @@ Navigate to **Quick Start** in your Akto dashboard and import the components you
 #### Import AI Agents
 Probe agents from AWS Bedrock, Azure AI Foundry, Databricks, Google Vertex AI, IBM Watsonx, or custom agents.
 
-→ [Import AI Agents](ai-agent-import.md)
+→ [Import AI Agents](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/ai-agent-import.md)
 
 #### Import MCP Servers
 Probe Model Context Protocol tools, resources, and prompts by connecting to SSE endpoints.
 
-→ [Import MCP Servers](mcp-import.md)
+→ [Import MCP Servers](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/mcp-import.md)
 
 #### Import AI Models
 Probe large language models and custom AI implementations for security vulnerabilities.
 
-→ [Import AI Models](ai-model-import.md)
+→ [Import AI Models](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/ai-model-import.md)
 
 ### Step 3: Run Security Probes
 
