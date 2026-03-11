@@ -1,6 +1,6 @@
 # Execute
 
-After determining that an endpoint is eligible for a YAML Test, it is forwarded to the execution step. This section is used to describe actions/modifications to achieve the desired test request body.
+After determining that an endpoint is eligible for a YAML probe, it is forwarded to the execution step. This section is used to describe actions/modifications to achieve the desired probe request body.
 
 ## Syntax
 
@@ -20,9 +20,9 @@ Execute operators can be of the following types -
 | delete\_query\_param  | Delete an existing key in the query params. If the key is missing, executor engine ignores the step and moves on to next operation                             |
 | modify\_url           | Modify url to desired value. Supports entire url replacement, as well as replacing just a substring                                                            |
 | modify\_method        | Modify http method to desired method value                                                                                                                     |
-| remove\_auth\_header  | Remove Auth Headers in the request headers. If auth headers are missing, this operation throws an error and aborts the test for the endpoint                   |
+| remove\_auth\_header  | Remove Auth Headers in the request headers. If auth headers are missing, this operation throws an error and aborts the probe for the endpoint                   |
 | replace\_auth\_header | Replace the auth header by headers in `User config` section. If you are using JWT tokens, you can replace them too using JWT-specific instructions             |
-| follow\_redirect      | Specify whether the test attempt should follow redirect or not. By default follow redirect is set to $true$                                                    |
+| follow\_redirect      | Specify whether the probe attempt should follow redirect or not. By default follow redirect is set to $true$                                                    |
 | attach\_file          | Replaces the request body by the contents of the file                                                                                                          |
 | jwt\_replace\_body    | Replace JWT body with given content                                                                                                                            |
 
@@ -505,7 +505,7 @@ PUT http://xyz.com/api/v1/user
 
 ### remove\_auth\_header
 
-Used for `Removing Auth Headers in the request headers`. If auth headers are missing, this operation throws an error and aborts the test for the endpoint. (Refer to Auth section for better understanding on how auth headers are picked by yaml execution engine.)
+Used for `Removing Auth Headers in the request headers`. If auth headers are missing, this operation throws an error and aborts the probe for the endpoint. (Refer to Auth section for better understanding on how auth headers are picked by yaml execution engine.)
 
 **Example 1**
 
@@ -516,7 +516,7 @@ Content-Type: application/json
 Authorization: <Bearer-Token>
 ```
 
-Let’s say we want to remove the auth header for the test request(in this case auth header is - “Authorization”). Prerequisite: the auth has to be configured in auth types in the dashboard for the below execute section to identify authorization key.
+Let’s say we want to remove the auth header for the probe request(in this case auth header is - “Authorization”). Prerequisite: the auth has to be configured in auth types in the dashboard for the below execute section to identify authorization key.
 
 `Sample Yaml` to remove auth headers
 
@@ -586,7 +586,7 @@ Authorization: Bearer eyJewqafsd.eafsdzcx.some_invalid_signature_here
 
 ### f**ollow\_redirect**
 
-Used for specifying whether the test attempt should `follow redirect or not`, in case the response received if of redirect type. By default follow redirect is set to true. This takes a single boolean argument(true/false)
+Used for specifying whether the probe attempt should `follow redirect or not`, in case the response received if of redirect type. By default follow redirect is set to true. This takes a single boolean argument(true/false)
 
 `Sample Yaml` \*\*\*\*For Disabling Redirect
 
@@ -635,7 +635,7 @@ Authorization: ey.new_body.old_signature
 
 ## **Combining multiple conditions in Execute**
 
-Let’s see a few examples on how we can combine multiple execution operations into a test -
+Let’s see a few examples on how we can combine multiple execution operations into a probe -
 
 **Example 1**
 

@@ -1,12 +1,12 @@
 ---
-description: You can execute and compare responses from multiple API calls in YAML tests
+description: You can execute and compare responses from multiple API calls in YAML probes
 ---
 
 # Conditional flows
 
-This instruction is required when you want to fire multiple API calls and compare their responses. A simple use case is testing for **Username enumeration vulnerability** using password-reset endpoint.
+This instruction is required when you want to fire multiple API calls and compare their responses. A simple use case is probing for **Username enumeration vulnerability** using password-reset endpoint.
 
-To configure Akto test YAML for multiple requests, set `type: true`
+To configure Akto probe YAML for multiple requests, set `type: true`
 
 ```yaml
 execute: 
@@ -28,7 +28,7 @@ For each request, you can now use
 * Anywhere, you can set `success` or `failure` as `vulnerable` (to mark a vulnerability) or `exit`
 * Requests are named as `x1` `x2` etc. automatically. You can use this to jump to a node on `success` or `failure` . You can also use them in data operators (eg response payload of `x1` should have length > 80 characters)
 
-If `success` or `failure` isn't specified, we jump to the next request. If it's the last request, then we jump to the `validate` block of the test.
+If `success` or `failure` isn't specified, we jump to the next request. If it's the last request, then we jump to the `validate` block of the probe.
 
 Example - Try a wrong password. If API returns 4xx, then try with wrong usernames
 

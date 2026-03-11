@@ -2,7 +2,7 @@
 
 ## Overview
 
-You can write custom probes using Akto and automate running them in your CI/CD for agentic security testing.
+You can write custom probes using Akto and automate running them in your CI/CD for agentic AI Red Teaming.
 
 ### Step 1: Select your vulnerable agent component
 

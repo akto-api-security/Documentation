@@ -12,7 +12,7 @@ You can setup alerts for Akto scan run results by following the steps given belo
 
 ### Reminders for Scheduled Scans
 
-Akto also supports **reminder alerts** to help you stay prepared for upcoming scheduled scna. By enabling the **Pending scan alerts** option in the Webhook settings, you will receive a notification **one hour before** any scheduled scan is set to run. This ensures your team is aware and can take any necessary preparatory actions before the security scan begins.
+Akto also supports **reminder alerts** to help you stay prepared for upcoming scheduled scans. By enabling the **Pending scan alerts** option in the Webhook settings, you will receive a notification **one hour before** any scheduled scan is set to run. This ensures your team is aware and can take any necessary preparatory actions before the security scan begins.
 
 <figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 

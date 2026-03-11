@@ -1,10 +1,10 @@
 # Info
 
-This section provides information about the test's purpose, the type of vulnerability it targets, the test category and the overall impact. This section contains multiple descriptive keys that explain the test.
+This section provides information about the probe's purpose, the type of vulnerability it targets, the probe category and the overall impact. This section contains multiple descriptive keys that explain the probe.
 
 ### Name
 
-The name key shows the name or `title` of the test. It should make clear what the test does. The test name helps users quickly identify and understand the purpose of the assessment.
+The name key shows the name or `title` of the probe. It should make clear what the probe does. The probe name helps users quickly identify and understand the purpose of the assessment.
 
 Example:
 
@@ -17,7 +17,7 @@ info:
 
 ### Description
 
-The description key provides a brief explanation of the `test's objective`. This description may contain details about the target system, possible vulnerabilities, and anticipated assessment results.
+The description key provides a brief explanation of the `probe's objective`. This description may contain details about the target system, possible vulnerabilities, and anticipated assessment results.
 
 Example:
 
@@ -30,7 +30,7 @@ info:
 
 ### Details
 
-In addition to the description section, the `details` key provides a more in-depth view. It explains how the API was detected to be vulnerable and also provides information on the test category. The details section may include information about the `target system`, `potential vulnerabilities`, and the expected outcome of the assessment.
+In addition to the description section, the `details` key provides a more in-depth view. It explains how the API was detected to be vulnerable and also provides information on the probe category. The details section may include information about the `target system`, `potential vulnerabilities`, and the expected outcome of the assessment.
 
 Example:
 
@@ -54,7 +54,7 @@ info:
 
 ### Category
 
-This key represents the exact `category` to which the test belongs, for example, "Broken User Authentication" or "Broken Object Level Authorization".
+This key represents the exact `category` to which the probe belongs, for example, "Broken User Authentication" or "Broken Object Level Authorization".
 
 Example:
 

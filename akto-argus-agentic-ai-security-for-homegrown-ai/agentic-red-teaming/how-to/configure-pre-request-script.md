@@ -2,7 +2,7 @@
 
 ## Configure Pre-request Script
 
-The Pre-request script feature in Akto allows you to execute custom JavaScript code before each API test is run. This powerful functionality enables you to dynamically modify request parameters or perform any necessary pre-test operations.
+The Pre-request script feature in Akto allows you to execute custom JavaScript code before each probe is run. This powerful functionality enables you to dynamically modify request parameters or perform any necessary pre-scan operations.
 
 {% @arcade/embed url="https://app.arcade.software/share/y9rVLnnM4hZKDB4428FM" flowId="y9rVLnnM4hZKDB4428FM" %}
 
@@ -46,12 +46,12 @@ After entering your pre-request script, click the "Save" button at the bottom ri
 
 ### Usage Notes
 
-* The pre-request script runs before every API test in your Akto environment.
+* The pre-request script runs before every probe in your Akto environment.
 * You can use this feature to:
   * Add authentication tokens dynamically
   * Modify request data based on external factors
-  * Implement custom logic that needs to run before each test
-* Be cautious when modifying core request properties, as it may affect the intended behaviour of your tests.
+  * Implement custom logic that needs to run before each probe
+* Be cautious when modifying core request properties, as it may affect the intended behaviour of your scans.
 * For complex operations, consider breaking your code into functions for better readability and maintenance.
 
-By effectively using the Pre-request script feature, you can enhance the flexibility and power of your API testing process in Akto.
+By effectively using the Pre-request script feature, you can enhance the flexibility and power of your red teaming process in Akto.

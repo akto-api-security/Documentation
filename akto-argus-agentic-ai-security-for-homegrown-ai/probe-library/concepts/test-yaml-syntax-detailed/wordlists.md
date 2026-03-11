@@ -1,19 +1,19 @@
 ---
-description: You can use wordlists in Akto's YAML tests
+description: You can use wordlists in Akto's YAML probes
 ---
 
 # Wordlists
 
-Wordlists have multiple use cases in API Security testing -
+Wordlists have multiple use cases in API Security probing -
 
-1. Test API by fuzzing a parameter with different malicious values eg. SQL Injection.
-2. Test API by replacing a specific parameter (eg `user_id`) by values from other users.
+1. Probe agent component by fuzzing a parameter with different malicious values eg. SQL Injection.
+2. Probe component by replacing a specific parameter (eg `user_id`) by values from other users.
 
 You can add a `wordlists` section in your YAML file.
 
 #### Example of a static wordlist:
 
-Say, you have an API which takes `file` as a query paramter. You can use the following YAML to hit the same API with multiple malicious file paths.
+Say, you have a component which takes `file` as a query paramter. You can use the following YAML to hit the same component with multiple malicious file paths.
 
 ```yaml
 wordLists:
@@ -73,6 +73,6 @@ This will create a wordlist dynamically from your traffic data. It will resolve 
 
 ### Using Multiple Wordlists Together
 
-You can **combine multiple wordlists** in the same test to build richer, more exhaustive scenarios. This is useful when your API parameters depend on combinations of values—for instance, names with roles, paths with tokens, or header values with payloads.
+You can **combine multiple wordlists** in the same probe to build richer, more exhaustive scenarios. This is useful when your API parameters depend on combinations of values—for instance, names with roles, paths with tokens, or header values with payloads.
 
 <figure><img src="../../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (2).png" alt=""><figcaption></figcaption></figure>

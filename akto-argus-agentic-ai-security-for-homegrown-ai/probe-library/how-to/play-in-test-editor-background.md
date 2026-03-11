@@ -30,7 +30,7 @@ Click on save. You will now see your sample agent component request and response
 
 Click on Run Probe at the Top right.
 
-Selecting **Run Probe** opens the **Probe configuration** dialog. The dialog defines the execution context for the test.
+Selecting **Run Probe** opens the **Probe configuration** dialog. The dialog defines the execution context for the probe.
 
 #### Configure the Probe Execution
 

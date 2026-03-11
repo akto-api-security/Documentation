@@ -8,7 +8,7 @@ When setting up a probe run in Akto, enable the **Auto-create tickets** option. 
 
 ## Configuration Options
 
-**Environment Selection**: Choose the environment (PROD, DEV, STAGING) where the test is executed.
+**Environment Selection**: Choose the environment (PROD, DEV, STAGING) where the scan is executed.
 
 **Ticket Type**: Define the type of Jira ticket to create (Task, Bug, Story).
 
