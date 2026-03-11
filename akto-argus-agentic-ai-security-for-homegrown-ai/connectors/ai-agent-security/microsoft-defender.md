@@ -101,10 +101,7 @@ DeviceProcessEvents
 
 Replace `<your-device-name>` with the device's hostname as it appears in the Devices list. Leave the filter empty (remove the `where DeviceName` line) to scan all devices.
 
----
-### Saving a query
-
-After running a query, click **Save** → **Save query** and give it a name. It will appear under **Hunting → Saved queries** for easy reuse.
+You can edit the above queries to add or remove file names or apps to be scanned, as needed.
 
 ---
 
@@ -114,7 +111,6 @@ Live Response lets you run a pre-uploaded script on a single device directly fro
 
 ### Step 1 — Upload the script to the Live Response library
 
-This is a one-time setup.
 
 1. In the MDE portal, go to **Settings**
 2. **Endpoints** → **General** → **Live response library**
@@ -144,9 +140,9 @@ Once the Live Response console is open:
 run install_cursor.sh -parameters "AKTO_DATA_INGESTION_URL=<your.guardrails.akto.io>"
 ```
 
-Note: Please download the installer scripts at  https://github.com/akto-api-security/akto/tree/master/apps/mcp-endpoint-shield/hooks_shell_scripts
+Note: Please download the installer scripts at  https://github.com/akto-api-security/akto/tree/master/apps/mcp-endpoint-shield/hooks_shell_scripts and update the script names in the terminal command above. 
 
-Type the command exactly as shown. The script name must match what you uploaded in Step 1.
+The script name must match what you uploaded in Step 1.
 
 The console will show output lines as the script runs. A successful run ends with:
 
