@@ -1,10 +1,10 @@
-# Install testing module in your Cloud
+# Install Red Teaming module in your Cloud
 
 ## Overview
 
-Agentic Security testing involves sending malicious API requests to your (staging) server. By default, these malicious testing requests are sent from the Testing module installed within Akto Cloud.
+Red Teaming Modules involves sending malicious API requests to your (staging) server. By default, these malicious scanning requests are sent from the Red Teaming module installed within Akto Cloud.
 
-There could be multiple reasons why you'd want to install testing module within your Cloud.
+There could be multiple reasons why you'd want to install probing module within your Cloud.
 
 1. Whitelisting Akto's IP in Security Group or WAF isn't an option
 2. The staging server isn't reachable from public domain
@@ -18,7 +18,7 @@ There could be multiple reasons why you'd want to install testing module within 
 2. Go to Quick Start > Hybrid Saas > Click on “Connect” button
 3. Copy the JWT token (marked in red) \[ Also referred as `Database Abstractor Token` later]
 
-You then have to use a Linux VM to install Akto Security Testing module in your cloud manually.
+You then have to use a Linux VM to install Akto AI Red Teaming module in your cloud manually.
 
 ## Setup Linux VM
 
@@ -162,7 +162,7 @@ For the reference,the original template is [here](https://github.com/akto-api-se
 {% endstep %}
 
 {% step %}
-### Start the Testing Module
+### Start the Scanning Module
 
 *   Run:
 

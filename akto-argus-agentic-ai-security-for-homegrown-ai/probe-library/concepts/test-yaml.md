@@ -28,7 +28,7 @@ You can create and run probes to detect vulnerabilities in your autonomous syste
 
 ### Block 5: Auth \[Optional block]
 
-<table><thead><tr><th width="201.5">Name</th><th>Desciption</th></tr></thead><tbody><tr><td><code>auth</code></td><td>This section describes the conditions that serve as validation criteria for determining whether a particular endpoint is vulnerable to a given test.</td></tr></tbody></table>
+<table><thead><tr><th width="201.5">Name</th><th>Desciption</th></tr></thead><tbody><tr><td><code>auth</code></td><td>This section describes the conditions that serve as validation criteria for determining whether a particular endpoint is vulnerable to a given probe.</td></tr></tbody></table>
 
 ### Block 6: Validate
 
@@ -176,17 +176,17 @@ validate:
 
 #### Info
 
-The Info section contains metadata about the test:
+The Info section contains metadata about the probe:
 
-* <mark style="color:red;">`Name`</mark>: The name or title of the test.
-* <mark style="color:red;">`Description`</mark>: A detailed explanation of the test, including objectives, methodologies, and scope.
-* <mark style="color:red;">`Details`</mark>: Additional context about the test.
+* <mark style="color:red;">`Name`</mark>: The name or title of the probe.
+* <mark style="color:red;">`Description`</mark>: A detailed explanation of the probe, including objectives, methodologies, and scope.
+* <mark style="color:red;">`Details`</mark>: Additional context about the probe.
 * <mark style="color:red;">`Impact`</mark>: The potential risks or consequences associated with the identified vulnerabilities.
 * <mark style="color:red;">`Category`</mark>: The category or domain the probe falls into.
-* <mark style="color:red;">`SubCategory`</mark>: Further categorization of the test.
+* <mark style="color:red;">`SubCategory`</mark>: Further categorization of the probe.
 * <mark style="color:red;">`Severity`</mark>: The severity level assigned to the identified vulnerabilities.
-* <mark style="color:red;">`Tags`</mark>: Descriptive labels or keywords associated with the test.
-* <mark style="color:red;">`Reference:`</mark> A list of relevant resources, documentation, or external links related to the test.
+* <mark style="color:red;">`Tags`</mark>: Descriptive labels or keywords associated with the probe.
+* <mark style="color:red;">`Reference:`</mark> A list of relevant resources, documentation, or external links related to the probe.
 
 #### API Selection Filters
 
@@ -224,4 +224,4 @@ This section contains a set of operations that can be performed on API calls tha
 This section contains a set of validation criteria that can be used to validate the response of the API call after it has been modified by the operations specified in the "Execute" section. The validation criteria include:
 
 * <mark style="color:red;">`response_code`</mark>: Validates that the response code of the API call is 201.
-* <mark style="color:red;">`response_payload`</mark>: Validates that the response payload is not empty and contains either a key "success".
+* <mark style="color:red;">`response_payload`</mark>: Validates that the response payload is not empty and contains either a key "success". Also it checks whether probe response payload and sample response payload content are not similar(difference should be higher than 50%)

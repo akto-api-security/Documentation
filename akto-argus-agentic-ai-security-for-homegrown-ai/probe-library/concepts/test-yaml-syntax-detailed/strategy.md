@@ -1,14 +1,14 @@
 ---
-description: Overall strategy of test execution
+description: Overall strategy of probe execution
 ---
 
 # Strategy
 
 ### run\_once
 
-By default, the test will be executed for each API. You might have scenarios where you want to run the test once per API collection. (Eg you want to check if `/docker-config.yml` is accessible or not)
+By default, the probe will be executed for each API. You might have scenarios where you want to run the probe once per API collection. (Eg you want to check if `/docker-config.yml` is accessible or not)
 
-You can set this flag to `true` if you want to run the test once per API collection.
+You can set this flag to `true` if you want to run the probe once per API collection.
 
 ```yaml
 execute:
@@ -19,4 +19,4 @@ strategy:
   run_once: /
 ```
 
-Irrespective of number of APIs, this test will run once per API collection
+Irrespective of number of APIs, this probe will run once per API collection

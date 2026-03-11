@@ -41,7 +41,7 @@ Akto automatically identifies:
 
 ## Next Steps
 
-* Run [security tests](../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/) on discovered components
+* Run [Red Teaming](../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/) on discovered components
 * Enable [Guardrails](../agentic-guardrails/overview/) for real-time protection
 * Review discovered agents for shadow or zombie components
 

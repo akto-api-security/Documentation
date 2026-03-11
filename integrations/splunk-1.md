@@ -1,6 +1,6 @@
 # JFrog
 
-Akto testing results can be seamlessly uploaded into JFrog as **evidence artifacts**, enabling security validation to travel with every stage of the software lifecycle. Whether it’s a **package**, a **build**, or a **release bundle**, Akto results can be attached as evidence, ensuring that vulnerabilities and compliance checks are transparently tied to the exact artifact version being shipped. This integration provides traceability, strengthens audit readiness, and embeds API security insights directly into the DevSecOps pipeline.
+Akto scanning results can be seamlessly uploaded into JFrog as **evidence artifacts**, enabling security validation to travel with every stage of the software lifecycle. Whether it’s a **package**, a **build**, or a **release bundle**, Akto results can be attached as evidence, ensuring that vulnerabilities and compliance checks are transparently tied to the exact artifact version being shipped. This integration provides traceability, strengthens audit readiness, and embeds API security insights directly into the DevSecOps pipeline.
 
 <figure><img src="../.gitbook/assets/image (135).png" alt=""><figcaption></figcaption></figure>
 
@@ -17,7 +17,7 @@ Akto testing results can be seamlessly uploaded into JFrog as **evidence artifac
    1. key alias
    2. private key file (.pem)
 3. **X-API-KEY** : Your Akto API Key that you can get from Settings > Integrations > Akto API
-4. **Test result summary id** : You can find this from the URL
+4. **Scan result summary id** : You can find this from the URL
 
 <figure><img src="../.gitbook/assets/image (136).png" alt=""><figcaption></figcaption></figure>
 
@@ -76,7 +76,7 @@ jf evd create \
 
 ### 📥 What Data Gets Sent
 
-* **API security test findings**: Vulnerable findings only along with
+* **AI Red Teaming findings**: Vulnerable findings only along with
   * Vulnerability details
   * API Collection name + path
   * sample payload

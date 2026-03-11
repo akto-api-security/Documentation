@@ -23,7 +23,7 @@ You can create a new empty collection and then populate it with agent components
 4. Select the collection type (Agent Collection or MCP Collection)
 5. Click on the **Create** button
 
-After creating your collection, you can start monitoring agent traffic and running Agentic Security tests on your AI agents and MCP components.
+After creating your collection, you can start monitoring agent traffic and running AI Red teaming probes on your AI agents and MCP components.
 
 ## Create Automated Collection
 

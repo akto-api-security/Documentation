@@ -1,8 +1,8 @@
-# Run tests in CI/CD
+# Run Probe in CI/CD
 
 ## Introduction
 
-You can trigger Akto's API Security tests in your CI/CD pipelines too. Generate your **Akto token** and send API requests to Akto dashboard to start running tests.
+You can trigger Akto's AI Red Teaming in your CI/CD pipelines too. Generate your **Akto token** and send API requests to Akto dashboard to start running scans.
 
 ### Generate Akto token
 
@@ -17,33 +17,33 @@ You can trigger Akto's API Security tests in your CI/CD pipelines too. Generate 
 
 ### Add trigger in your CI/CD tool
 
-* Open the API collection where you want to run the tests.
-* By default, the API collection view shows all APIs. You can filter the APIs on which you want to run the tests. For example, to run tests only on `GET` endpoints, we can add a filter to show only `GET` endpoints.
+* Open the API collection where you want to run the scans.
+* By default, the API collection view shows all APIs. You can filter the agent component on which you want to run the scans. For example, to run scans only on `GET` endpoints, we can add a filter to show only `GET` endpoints.
 
-<figure><img src="../../../.gitbook/assets/cicd-3.png" alt="Running tests only on GET endpoints"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/cicd-3.png" alt="Running scans only on GET endpoints"><figcaption></figcaption></figure>
 
-* Click on the `Run test` button on the top right.
-* Select the tests you want to run as part of CI/CD pipeline. Please keep `Select time = Now` and `Run daily` should be unchecked. Feel free to edit the `Name`, `Test run time` and `Max concurrent requests`.
+* Click on the `Run scan` button on the top right.
+* Select the scans you want to run as part of CI/CD pipeline. Please keep `Select time = Now` and `Run daily` should be unchecked. Feel free to edit the `Name`, `Scan run time` and `Max concurrent requests`.
 
-<figure><img src="../../../.gitbook/assets/cicd-4.png" alt="Customise the test as you want to run it your CICD"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/cicd-4.png" alt="Customise the scan as you want to run it your CICD"><figcaption></figcaption></figure>
 
 * Click on `Run once now` (if the button name says anything else, read the previous point 🙄)
-* Observe the `Test ID` on the testing page for the test you just created.
+* Observe the `Scan ID` on the red teaming page for the probe you just created.
 
-<figure><img src="../../../.gitbook/assets/cicd-5.png" alt="Customise the test as you want to run it your CICD"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/cicd-5.png" alt="Customise the scan as you want to run it your CICD"><figcaption></figcaption></figure>
 
 ### GitHub Actions
 
 *   You can also use our plugin for Github Actions directly too:
 
     ```
-      - name: Run CI/CD tests
+      - name: Run CI/CD scans
         uses: akto-api-security/run-scan@v1.0.3
         with:
           AKTO_DASHBOARD_URL: ${{vars.AKTO_DASHBOARD_URL}}
           AKTO_API_KEY: ${{vars.AKTO_API_KEY}}
           AKTO_TEST_ID: ${{vars.AKTO_TEST_ID}}
-          START_TIME_DELAY: 180 # Delay in seconds after which testing run is started, optional, default is 0 
+          START_TIME_DELAY: 180 # Delay in seconds after which scanning run is started, optional, default is 0 
     ```
 
 ### Post deployment hook (works with any CI/CD platform)

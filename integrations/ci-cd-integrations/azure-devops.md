@@ -2,9 +2,9 @@
 
 Akto's integration with Azure DevOps allows you to maintain API security through Azure Pipelines. With this integration, you'll be able to:
 
-* Check status of Akto CICD tests directly from Azure DevOps through quality gates
-* Generate tests from live functional traffic for targeted security testing
-* Insert security seamlessly into existing functional tests with complete automation
+* Check status of Akto CICD scans directly from Azure DevOps through quality gates
+* Generate scans from live functional traffic for targeted security scanning
+* Insert security seamlessly into existing functional scans with complete automation
 
 <figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -13,7 +13,7 @@ Akto's integration with Azure DevOps allows you to maintain API security through
 * Azure DevOps project with administrator access
 * Akto dashboard access
 * [Akto API credentials](/broken/pages/fxxYPwGU1kTuZwMAksYR) (API key and dashboard URL)
-* [Valid test ID from Akto test](/broken/pages/q2Oz4FsKPEq381Pwpaws)
+* [Valid test ID from Akto Probe](/broken/pages/q2Oz4FsKPEq381Pwpaws)
 
 ### Steps to Configure Azure DevOps Pipeline
 
@@ -50,7 +50,7 @@ stages:
   displayName: 'Test Stage'
   jobs:
   - job: TestScan
-    displayName: 'Run Akto Security Test'
+    displayName: 'Run Akto Security Scan'
     container:  # Use container for this job
       image: aktosecurity/akto-testing-scan:latest
     steps:
@@ -60,7 +60,7 @@ stages:
         echo $(AKTO_API_KEY)
         echo $(AKTO_TEST_ID)
         node index.js
-      displayName: 'Running Akto Test Scan'
+      displayName: 'Running Akto Security Scan'
 ```
 
 <figure><img src="../../.gitbook/assets/image (66) (1).png" alt=""><figcaption></figcaption></figure>
@@ -76,7 +76,7 @@ stages:
 * `AKTO_DASHBOARD_URL`: Your Akto dashboard URL
 * `AKTO_API_KEY`: [Your Akto API key](/broken/pages/fxxYPwGU1kTuZwMAksYR) (mark as secret)
 * `AKTO_TEST_ID`: [Your Akto test ID](/broken/pages/q2Oz4FsKPEq381Pwpaws)
-* `WAIT_TIME_FOR_RESULT`: Time to wait for test results
+* `WAIT_TIME_FOR_RESULT`: Time to wait for scan results
 
 <figure><img src="../../.gitbook/assets/image (68) (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -96,11 +96,11 @@ Save it and then hit the run button
 
 1. Create a new pull request
 2. Verify that Akto security checks appear in the pipeline
-3. Check test results in the Azure DevOps pipeline interface
+3. Check scan results in the Azure DevOps pipeline interface
 
 ### Viewing Results
 
 1. Navigate to your pipeline run
 2. Check the 'Test Stage' logs
-3. Review security test results
+3. Review security scan results
 4. Access detailed reports in Akto dashboard

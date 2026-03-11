@@ -1,10 +1,10 @@
-# Test YAML Syntax (Detailed)
+# Probe YAML Syntax (Detailed)
 
-## Test YAML Syntax (Detailed)
+## Probe YAML Syntax (Detailed)
 
 ## Overview
 
-Every Akto test is written in Akto’s YAML format. This page details the keywords available when writing a test.
+Every Akto probe is written in Akto’s YAML format. This page details the keywords available when writing a probe.
 
 1. [ID](/broken/pages/3F2YCieMAGC9ECF7YcBs)
 2. [Info](/broken/pages/dO4SHcnWg7MWMaS49I4C)

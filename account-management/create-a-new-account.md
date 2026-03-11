@@ -16,7 +16,7 @@ That's it! Your new account is now set up and ready to use.
 
 * Separate development, staging, and production environments
 * Isolate different projects or clients
-* Create dedicated testing environments
+* Create dedicated scanning environments
 
 ### Best Practices
 

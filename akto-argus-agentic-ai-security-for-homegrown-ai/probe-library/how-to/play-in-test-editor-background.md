@@ -2,7 +2,7 @@
 
 ## Overview
 
-You can run a probe from the editor against a selected agentic component. Verify how the probe modifies requests and evaluates responses before saving the scab for execution across the agentic inventory.
+You can run a probe from the editor against a selected agentic component. Verify how the probe modifies requests and evaluates responses before saving the scan for execution across the agentic inventory.
 
 ## Steps
 
@@ -30,7 +30,7 @@ Click on save. You will now see your sample agent component request and response
 
 Click on Run Probe at the Top right.
 
-Selecting **Run Probe** opens the **Probe configuration** dialog. The dialog defines the execution context for the test.
+Selecting **Run Probe** opens the **Probe configuration** dialog. The dialog defines the execution context for the probe.
 
 #### Configure the Probe Execution
 

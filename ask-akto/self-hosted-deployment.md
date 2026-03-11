@@ -2,13 +2,13 @@
 
 ## **Overview**
 
-**Ask Akto** is an AI-powered conversational assistant integrated into Akto's security platform that enables users to have real-time conversations about Agentic vulnerabilities, test results, and security insights.
+**Ask Akto** is an AI-powered conversational assistant integrated into Akto's security platform that enables users to have real-time conversations about Agentic vulnerabilities, scan results, and security insights.
 
 ## Key Capabilities
 
-* **Interactive Vulnerability Analysis**: Ask questions about test results and vulnerabilities in natural language
+* **Interactive Vulnerability Analysis**: Ask questions about scan results and vulnerabilities in natural language
 * **Agentic and API Security Guidance**: Get AI-powered remediation suggestions and security best practices
-* **Test Result Analysis**: Deep-dive into why tests passed/failed with AI assistance
+* **Scan Result Analysis**: Deep-dive into why scans passed/failed with AI assistance
 * **Dashboard Metrics Discussion**: Analyse Agentic collections, endpoints, and risk scores
 * **Conversation History**: Track and search through past security discussions
 * **Multi-Conversation Support**: Maintain separate conversation threads for different contexts
@@ -66,7 +66,7 @@ services:
 The Docker Compose configuration defines two services:
 
 * **agent-testing** – runs the AI-driven Agentic engine.
-* **mcp-server** – provides the MCP interface used by the testing agent.
+* **mcp-server** – provides the MCP interface used by the AI agent.
 {% endstep %}
 
 {% step %}

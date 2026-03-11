@@ -24,4 +24,4 @@ Admins can grant users access to specific agent or MCP collections, providing gr
 1. Navigate to **Settings > Users & Roles**
 2. Select a user or role
 3. Assign specific agent/MCP collections
-4. Set permissions (view, edit, test, delete)
+4. Set permissions (view, edit, scan, delete)

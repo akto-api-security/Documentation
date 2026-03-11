@@ -2,7 +2,7 @@
 
 ## Overview
 
-Akto lets you seamlessly import **AI agents** such as **AWS Bedrock, Azure AI Foundry, Databricks, Google Vertex AI, IBM Watsonx**, or even your **custom agent** into **AI Agent Security**. With just the agent endpoint URL and optional configuration, you can start monitoring and testing agent activity instantly.
+Akto lets you seamlessly import **AI agents** such as **AWS Bedrock, Azure AI Foundry, Databricks, Google Vertex AI, IBM Watsonx**, or even your **custom agent** into **AI Agent Security**. With just the agent endpoint URL and optional configuration, you can start monitoring and scanning agent activity instantly.
 
 <figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2Fgit-blob-26c83f936b6d7958a5830edb6b158a31fbdd2e2a%2Fimage.png?alt=media" alt="" width="563"><figcaption></figcaption></figure>
 
@@ -69,7 +69,7 @@ Akto will now automatically:
 
 * Connect to the AI agent endpoint
 * Send sample test requests to validate the configuration
-* Register the agent into **AI Agent Security Inventory** for monitoring and testing
+* Register the agent into **AI Agent Security Inventory** for monitoring and scanning
 
 {% hint style="success" %}
 **Akto Access Scope**

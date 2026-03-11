@@ -128,12 +128,12 @@ Configure the AI Agent Proxy with the following environment variables:
 | -------- | ----------- | -------- | ------- |
 | `AKTO_API_TOKEN` | Authentication token from Akto dashboard | Yes | - |
 | `AKTO_API_BASE_URL` | URL for Akto data ingestion service (obtained from Akto dashboard) | Yes | - |
-| `APP_URL` | Base URL where your AI agent is running. For docker-compose use service name (e.g., `http://your-agent:3001`), for local testing use localhost | Yes | - |
+| `APP_URL` | Base URL where your AI agent is running. For docker-compose use service name (e.g., `http://your-agent:3001`), for local scanning use localhost | Yes | - |
 | `PROJECT_NAME` | Unique identifier for this AI agent deployment | Yes | - |
 | `APP_TYPE` | Type of application being proxied: `agent` or `mcp-server` | Yes | `agent` |
 | `APP_SERVER_NAME` | Name to identify this agent server for policy filtering. If not set, will be automatically extracted from APP_URL hostname | No | (extracted from APP_URL) |
 | `AKTO_PROXY_PORT` | Port where AI Agent Shield will listen | No | `8080` |
-| `SKIP_THREAT` | Set to true to skip sending threat reports to Akto (useful for testing) | No | `false` |
+| `SKIP_THREAT` | Set to true to skip sending threat reports to Akto (useful for scanning) | No | `false` |
 | `REQUEST_TIMEOUT` | Timeout for forwarding requests to AI agent (in seconds) | No | `120` |
 | `MAX_REQUEST_SIZE` | Maximum request body size in bytes (0 = unlimited) | No | `0` |
 | `MAX_RESPONSE_SIZE` | Maximum response body size in bytes (0 = unlimited) | No | `0` |
@@ -230,7 +230,7 @@ data:
   # Proxy Port
   AKTO_PROXY_PORT: "8080"
 
-  # Threat Reporting (set to "true" to skip for testing)
+  # Threat Reporting (set to "true" to skip for scanning)
   SKIP_THREAT: "false"
 
   # Request Timeout (seconds)

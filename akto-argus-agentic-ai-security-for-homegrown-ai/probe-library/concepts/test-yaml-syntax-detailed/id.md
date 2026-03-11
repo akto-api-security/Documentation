@@ -1,6 +1,6 @@
 # ID
 
-The ID field serves as a unique, descriptive identifier for a particular test YAML file.
+The ID field serves as a unique, descriptive identifier for a particular probe YAML file.
 
 Example:
 

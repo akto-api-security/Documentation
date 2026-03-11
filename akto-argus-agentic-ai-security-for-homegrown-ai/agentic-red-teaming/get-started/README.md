@@ -1,6 +1,6 @@
 # Get Started
 
-Test your AI agents, MCP servers, and AI models with 1000+ specialized security probes. Akto identifies vulnerabilities like prompt injections, tool abuse, and privilege escalation before attackers do.
+Probe your AI agents, MCP servers, and AI models with 1000+ specialized security probes. Akto identifies vulnerabilities like prompt injections, tool abuse, and privilege escalation before attackers do.
 
 ## Quick Start
 

@@ -98,9 +98,9 @@ Confirm deletion when prompted.
 
 Deleted endpoints are removed permanently and cannot be recovered.
 
-### 4. Mark Collection as Out of Testing Scope
+### 4. Mark Collection as Out of Scanning Scope
 
-Use this action to exclude endpoints from active testing workflows.
+Use this action to exclude endpoints from active scanning workflows.
 
 #### Steps to mark endpoints out of scope
 
@@ -114,7 +114,7 @@ Select one or more endpoints.
 {% endstep %}
 
 {% step %}
-Click **Mark collection as out of testing scope**.
+Click **Mark collection as out of scanning scope**.
 {% endstep %}
 
 {% step %}
@@ -122,7 +122,7 @@ Confirm the scope change.
 {% endstep %}
 {% endstepper %}
 
-Out-of-scope endpoints remain visible but are excluded from testing and evaluation.
+Out-of-scope endpoints remain visible but are excluded from scanning and evaluation.
 
 ### 5. Set Tags
 

@@ -22,7 +22,7 @@ MCP Recon helps you **discover and catalog MCP-compatible servers** across your 
 
 * A **catalog of MCP-compatible servers** found in your specified ranges
 * Automatic registration of discovered endpoints in Akto
-* Data ready for further testing with other MCP features (e.g., Import, Proxy Gateway, Wrapper)
+* Data ready for further scanning with other MCP features (e.g., Import, Proxy Gateway, Wrapper)
 
 ***
 

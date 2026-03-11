@@ -46,7 +46,7 @@ api_selection_filters:
 
 ## **Parent Operators**
 
-Each `condition` block begins with a parent operator. Parent Operators indicate the `property of the API` you are testing. All the conditions will apply to these parent operators. Parent Operators can have the following values:
+Each `condition` block begins with a parent operator. Parent Operators indicate the `property of the API` you are scanning. All the conditions will apply to these parent operators. Parent Operators can have the following values:
 
 <table><thead><tr><th width="212.5">Parent Operator</th><th>Description</th></tr></thead><tbody><tr><td>response_code</td><td>This denotes that the conditions will be applied on response code of the api</td></tr><tr><td>method</td><td>This denotes that the conditions will be applied on http method of the api</td></tr><tr><td>url</td><td>This denotes that the conditions will be applied on http url of the api</td></tr><tr><td>request_payload</td><td>This denotes that the conditions will be applied on request payload of the api</td></tr><tr><td>response_payload</td><td>This denotes that the conditions will be applied on response payload of the api</td></tr><tr><td>request_headers</td><td>This denotes that the condition will be applied on request headers of the api</td></tr><tr><td>response_headers</td><td>This denotes that the condition will be applied on response headers of the api</td></tr><tr><td>query_param</td><td>This denotes that the condition will be applied on query params of the api</td></tr></tbody></table>
 
@@ -537,11 +537,11 @@ execute:
 
 ## **Combining conditions using Boolean Operators**
 
-Security tests can be complex in nature. Often, a specific test requires multiple filter conditions to evaluate whether a given endpoint is eligible for the test.
+Security probes can be complex in nature. Often, a specific probe requires multiple filter conditions to evaluate whether a given endpoint is eligible for the probe.
 
 **Default Behavior**
 
-For a test to consider an endpoint valid, `all conditions` specified in the YAML template must be satisfied. By default, yaml considers `and` operator for all conditions. However, you can easily override this behavior using other boolean operators.
+For a probe to consider an endpoint valid, `all conditions` specified in the YAML template must be satisfied. By default, yaml considers `and` operator for all conditions. However, you can easily override this behavior using other boolean operators.
 
 **Boolean Operators**
 
@@ -555,7 +555,7 @@ The `and` operator requires all of the specified conditions to be satisfied, whi
 
 {% code title="Example of and" %}
 ```yaml
-#Test Description - 
+#Scan Description - 
 # condition 1: Consider only post endpoints.
 # condition 2: Status code must be between 200-205(including both)
 # condition 3: Request Headers should contain a header named origin.
@@ -603,7 +603,7 @@ The OR operator requires that at least one of the specified conditions is satisf
 
 {% code title="Example of or" %}
 ```yaml
-# Test Description 
+# Scan Description 
 # condition 1: Status code must be equal to either 200 or 302
 # condition 2: Request Headers should contain a header named origin.
 # An endpoint should either satisfy either of the above two conditions

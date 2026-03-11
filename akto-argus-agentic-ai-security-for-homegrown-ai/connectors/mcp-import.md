@@ -80,7 +80,7 @@ Akto will detect and add:
 * All **resource endpoints** (`/v1/resources/...`) → tagged as `mcp-resources`
 * All **prompt endpoints** (`/v1/prompts/...`) → tagged as `mcp-prompts`
 
-These will appear in **MCP Inventory**, ready for monitoring and testing.
+These will appear in **MCP Inventory**, ready for monitoring and scanning.
 
 {% hint style="success" %}
 #### Security

@@ -1,10 +1,10 @@
 # Validation
 
-This section describes the `conditions` that serve as validation criteria for determining whether a particular endpoint is vulnerable to a given test.
+This section describes the `conditions` that serve as validation criteria for determining whether a particular endpoint is vulnerable to a given probe.
 
 ## **Syntax**
 
-The syntax is the similar to `API Selection Filters`. The operators used for filtering or selecting APIs to run for testing are also used to validate whether the test attempt is vulnerable.
+The syntax is the similar to `API Selection Filters`. The operators used for filtering or selecting APIs to run for probing are also used to validate whether the probe attempt is vulnerable.
 
 Let’s look at few examples and understand how to write validations -
 
@@ -78,7 +78,7 @@ response_payload:
 	percentage_match:
 		gt: 90
 
-# Here we want to apply a condition, where we want to check that test response payload should be highly similar to sample response payload(i.e by more than 90%)
+# Here we want to apply a condition, where we want to check that probe response payload should be highly similar to sample response payload(i.e by more than 90%)
 # We use percentage_match operator, and combine it with data operator(gt), where we specify percentage_match to be higher than 90
  
 ```
@@ -129,7 +129,7 @@ response_payload:
 	percentage_match_schema:
 		gt: 90
 
-# Here we want to apply a condition, where we want to check that test response payload should be structurally similar to sample response payload(i.e by more than 90%)
+# Here we want to apply a condition, where we want to check that probe response payload should be structurally similar to sample response payload(i.e by more than 90%)
 # We use percentage_match_schema operator, and combine it with data operator(gt), where we specify percentage_match of the schema to be higher than 90
  
 ```

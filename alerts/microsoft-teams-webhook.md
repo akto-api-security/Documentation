@@ -1,6 +1,6 @@
 # Microsoft Teams Webhook
 
-Microsoft Teams Webhook integration allows Akto to send automated notifications about API security events, test results, and important alerts directly to your specified Teams channels. This creates a centralized location for your team to monitor and respond to API security concerns without switching between multiple platforms.
+Microsoft Teams Webhook integration allows Akto to send automated notifications about agentic security events, scan results, and important alerts directly to your specified Teams channels. This creates a centralized location for your team to monitor and respond to API security concerns without switching between multiple platforms.
 
 <figure><img src="../.gitbook/assets/image (4) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -20,7 +20,7 @@ Microsoft Teams Webhook integration allows Akto to send automated notifications 
 4.  Click on `Create Custom Webhook`.
 
     <figure><img src="../.gitbook/assets/teams-alerts-1.png" alt=""><figcaption></figcaption></figure>
-5.  Fill in the details of your webhook. Select options from `Testing options` if you want to send testing run results using this webhook and select options from `Traffic options` if you want to send traffic alerts using this webhook. Then click on save to save the webhook.
+5.  Fill in the details of your webhook. Select options from `Scanning options` if you want to send scanning run results using this webhook and select options from `Traffic options` if you want to send traffic alerts using this webhook. Then click on save to save the webhook.
 
     <figure><img src="../.gitbook/assets/teams-alerts-2.png" alt=""><figcaption></figcaption></figure>
 

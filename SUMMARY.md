@@ -342,7 +342,7 @@
   * [GitLab](integrations/ci-cd-integrations/gitlab.md)
   * [Generic CI/CD](integrations/ci-cd-integrations/docker.md)
   * [How To](integrations/ci-cd-integrations/how-to/README.md)
-    * [Run tests in CI/CD](integrations/ci-cd-integrations/how-to/run-tests-in-cicd.md)
+    * [Run Probes in CI/CD](integrations/ci-cd-integrations/how-to/run-tests-in-cicd.md)
     * [Add Probe to CI/CD Pipeline](integrations/ci-cd-integrations/how-to/add-test-to-ci-cd-pipeline.md)
     * [Get API Credentials](integrations/ci-cd-integrations/how-to/get-api-credentials.md)
     * [Test ID from Akto Probe](integrations/ci-cd-integrations/how-to/test-id-from-akto-test.md)

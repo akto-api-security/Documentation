@@ -1,6 +1,6 @@
 # Set Up JSON Recording for Auth Tokens
 
-Akto allows you to use Chrome Recordings to extract and reuse authentication data like tokens or cookies during API testing. This guide walks you through recording creation, upload, extraction, and configuration.
+Akto allows you to use Chrome Recordings to extract and reuse authentication data like tokens or cookies during red teaming. This guide walks you through recording creation, upload, extraction, and configuration.
 
 <figure><img src="../../../.gitbook/assets/image (124).png" alt=""><figcaption></figcaption></figure>
 

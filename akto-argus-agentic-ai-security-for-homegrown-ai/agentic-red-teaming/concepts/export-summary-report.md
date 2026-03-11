@@ -9,7 +9,7 @@ The report highlights vulnerability counts, severity distribution, affected cate
 ## How to Access
 
 1. Navigate to **Agentic Red Teaming > Results**
-2. Select a test run
+2. Select a scan run
 3. Click **More actions** and choose **Export summary report**
 
 ## Report Contents
@@ -18,8 +18,8 @@ The report highlights vulnerability counts, severity distribution, affected cate
 
 - **Vulnerable Components Found**: Number of agent components with security issues
 - **Vulnerable Issues**: Total vulnerability count
-- **Scan Duration**: Test execution time
-- **Test Description**: Overview of tested categories (prompt injection, tool permissions, etc.)
+- **Scan Duration**: Scan execution time
+- **Scan Description**: Overview of probe categories (prompt injection, tool permissions, etc.)
 
 **Issues by Severity**
 
@@ -40,9 +40,9 @@ Breakdown of issues by vulnerability categories such as:
 - LLM Security
 - Supply Chain
 
-**Test Configuration Details**
+**Scan Configuration Details**
 
-- Test type (one-time, scheduled, CI/CD)
-- Unique hosts tested
+- Scan type (one-time, scheduled, CI/CD)
+- Unique hosts scanned
 - Max concurrent requests
 - Start and completion timestamps

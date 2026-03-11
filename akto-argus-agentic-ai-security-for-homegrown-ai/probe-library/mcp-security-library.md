@@ -4,7 +4,7 @@ description: Probe Library for OWASP MCP Top 10 for Security in Akto
 
 # MCP Security Probe Library
 
-This section documents the **MCP Security Probe Library** built by Akto to test Model Context Protocol (MCP) servers, tools, agents, and downstream integrations.
+This section documents the **MCP Security Probe Library** built by Akto to probe Model Context Protocol (MCP) servers, tools, agents, and downstream integrations.
 
 Each probe represents a **concrete, executable security probe** that targets a specific MCP failure mode. Probes are organized by **MCP OWASP Top 10 category** and are executed using real MCP protocol flows (JSON-RPC, function calls, tool execution, session handling).
 
@@ -13,7 +13,7 @@ Each probe represents a **concrete, executable security probe** that targets a s
 
 ### MCP01: Token Mismanagement & Secret Exposure
 
-Tests in this category validate whether authentication tokens, session identifiers, and secrets are properly handled across MCP requests, tool calls, and downstream APIs.
+Probes in this category validate whether authentication tokens, session identifiers, and secrets are properly handled across MCP requests, tool calls, and downstream APIs.
 
 #### Sample Probes in Akto Probe Library
 
@@ -60,7 +60,7 @@ Validates whether MCP function calls and tools allow unauthorized privilege expa
 
 ### MCP03: Tool Poisoning
 
-Tests whether tool outputs, metadata, or execution paths can be manipulated to influence agent behavior or bypass safety controls.
+Probes whether tool outputs, metadata, or execution paths can be manipulated to influence agent behavior or bypass safety controls.
 
 #### Sample Probes in Akto Probe Library
 
@@ -78,7 +78,7 @@ Tests whether tool outputs, metadata, or execution paths can be manipulated to i
 
 Validates whether MCP implementations securely handle external resources, dependencies, SDK references, and content types.
 
-#### Covered Test Templates
+#### Covered Probe Templates
 
 * `MCP_RESOURCE_BINARY_URI_DESERIALIZATION_ATTACK`
 * `HallucinatedSdkPackageSuggestion`
@@ -91,7 +91,7 @@ Validates whether MCP implementations securely handle external resources, depend
 
 ### MCP05: Command Injection & Execution
 
-Tests whether MCP tools or resources can be abused to execute arbitrary commands or escape execution boundaries.
+Probes whether MCP tools or resources can be abused to execute arbitrary commands or escape execution boundaries.
 
 #### Sample Probes in Akto Probe Library
 
@@ -150,7 +150,7 @@ Validates whether prompts, tool parameters, resources, or metadata can be abused
 
 ### MCP07: Insufficient Authentication & Authorization
 
-Tests whether authentication and authorization are consistently enforced across MCP sessions, tools, and function calls.
+Scans whether authentication and authorization are consistently enforced across MCP sessions, tools, and function calls.
 
 #### Sample Probes in Akto Probe Library
 
@@ -200,7 +200,7 @@ Validates whether MCP implementations provide sufficient logging, error handling
 
 ### MCP09: Shadow MCP Servers
 
-Tests whether internal MCP infrastructure, models, tools, or configuration details can be discovered or fingerprinted by an attacker.
+Probes whether internal MCP infrastructure, models, tools, or configuration details can be discovered or fingerprinted by an attacker.
 
 #### Sample Probes in Akto Probe Library
 
