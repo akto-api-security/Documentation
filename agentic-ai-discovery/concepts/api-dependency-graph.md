@@ -2,11 +2,11 @@
 description: Visualize and understand relationships between agent components in your agentic system.
 ---
 
-# Agent Component Dependency Graph
+# AI Agent Context Graph
 
 ## Introduction
 
-The Agent Component Dependency Graph in Akto helps you visualize and understand the relationships between different agent components, MCP endpoints, and external services in your agentic application. The dependency graph shows how components are interconnected, making it easier to understand the flow of data and assess the impact of changes or security issues.
+The AI Agent Context Graph in Akto helps you visualize and understand the relationships between different agent components, MCP endpoints, and external services in your agentic application. The AI Agent Context Graph shows how components are interconnected, making it easier to understand the flow of data and assess the impact of changes or security issues.
 
 ## Key Features
 
@@ -20,7 +20,7 @@ The Agent Component Dependency Graph in Akto helps you visualize and understand 
 
 1. Navigate to **Agentic Discovery > Collections**
 2. Select an agent collection
-3. Click on the **Dependency Graph** tab
+3. Click on the **AI Agent Context Graph** tab
 4. Explore the visual representation of component relationships
 
 ## Understanding the Graph
@@ -48,8 +48,8 @@ The Agent Component Dependency Graph in Akto helps you visualize and understand 
 
 ## Best Practices
 
-- Review the dependency graph regularly to understand system evolution
+- Review the AI Agent Context Graph regularly to understand system evolution
 - Identify circular dependencies that might cause issues
 - Monitor third-party component dependencies for security risks
-- Use the graph to plan security testing priorities
+- Use the AI Agent Context Graph to plan security testing priorities
 - Document critical paths and dependencies for incident response

@@ -246,7 +246,7 @@
   * [Recent Changes](agentic-ai-discovery/concepts/recent-changes.md)
   * [Third Party Agents](agentic-ai-discovery/concepts/third-party-agents.md)
   * [Tags](agentic-ai-discovery/concepts/tags.md)
-  * [Agentic Component Dependency Graph](agentic-ai-discovery/concepts/api-dependency-graph.md)
+  * [AI Agent Context Graph](agentic-ai-discovery/concepts/api-dependency-graph.md)
   * [Sensitive Data](agentic-ai-discovery/concepts/sensitive-data.md)
   * [Fill Data Type](agentic-ai-discovery/concepts/fill-data-type.md)
   * [Alerts](agentic-ai-discovery/concepts/alerts.md)
