@@ -46,7 +46,7 @@ api_selection_filters:
 
 ## **Parent Operators**
 
-Each `condition` block begins with a parent operator. Parent Operators indicate the `property of the API` you are testing. All the conditions will apply to these parent operators. Parent Operators can have the following values:
+Each `condition` block begins with a parent operator. Parent Operators indicate the `property of the API` you are scanning. All the conditions will apply to these parent operators. Parent Operators can have the following values:
 
 <table><thead><tr><th width="212.5">Parent Operator</th><th>Description</th></tr></thead><tbody><tr><td>response_code</td><td>This denotes that the conditions will be applied on response code of the api</td></tr><tr><td>method</td><td>This denotes that the conditions will be applied on http method of the api</td></tr><tr><td>url</td><td>This denotes that the conditions will be applied on http url of the api</td></tr><tr><td>request_payload</td><td>This denotes that the conditions will be applied on request payload of the api</td></tr><tr><td>response_payload</td><td>This denotes that the conditions will be applied on response payload of the api</td></tr><tr><td>request_headers</td><td>This denotes that the condition will be applied on request headers of the api</td></tr><tr><td>response_headers</td><td>This denotes that the condition will be applied on response headers of the api</td></tr><tr><td>query_param</td><td>This denotes that the condition will be applied on query params of the api</td></tr></tbody></table>
 
