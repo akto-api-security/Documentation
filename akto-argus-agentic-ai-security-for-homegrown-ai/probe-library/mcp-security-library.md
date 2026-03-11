@@ -60,7 +60,7 @@ Validates whether MCP function calls and tools allow unauthorized privilege expa
 
 ### MCP03: Tool Poisoning
 
-Tests whether tool outputs, metadata, or execution paths can be manipulated to influence agent behavior or bypass safety controls.
+Probes whether tool outputs, metadata, or execution paths can be manipulated to influence agent behavior or bypass safety controls.
 
 #### Sample Probes in Akto Probe Library
 
@@ -91,7 +91,7 @@ Validates whether MCP implementations securely handle external resources, depend
 
 ### MCP05: Command Injection & Execution
 
-Tests whether MCP tools or resources can be abused to execute arbitrary commands or escape execution boundaries.
+Probes whether MCP tools or resources can be abused to execute arbitrary commands or escape execution boundaries.
 
 #### Sample Probes in Akto Probe Library
 
@@ -200,7 +200,7 @@ Validates whether MCP implementations provide sufficient logging, error handling
 
 ### MCP09: Shadow MCP Servers
 
-Tests whether internal MCP infrastructure, models, tools, or configuration details can be discovered or fingerprinted by an attacker.
+Probes whether internal MCP infrastructure, models, tools, or configuration details can be discovered or fingerprinted by an attacker.
 
 #### Sample Probes in Akto Probe Library
 

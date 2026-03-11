@@ -2,7 +2,7 @@
 
 ## Overview
 
-You can run a probe from the editor against a selected agentic component. Verify how the probe modifies requests and evaluates responses before saving the scab for execution across the agentic inventory.
+You can run a probe from the editor against a selected agentic component. Verify how the probe modifies requests and evaluates responses before saving the scan for execution across the agentic inventory.
 
 ## Steps
 
