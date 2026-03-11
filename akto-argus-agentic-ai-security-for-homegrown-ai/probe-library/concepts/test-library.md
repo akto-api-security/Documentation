@@ -15,7 +15,7 @@ The Probe Library is essential for several reasons:
 * **Agentic-Specific Coverage**: Access probes designed for autonomous system vulnerabilities that traditional API testing misses
 * **Enhanced Productivity**: Optimize security efforts with specialized probes for AI agent architectures
 
-Today we have the following probe  categories in our library, each one having multiple tests:
+Today we have the following probe categories in our library, each one having multiple probes:
 
 {% hint style="success" %}
 Check out the t[test-categories.md](test-categories.md "mention") present in our library.&#x20;
