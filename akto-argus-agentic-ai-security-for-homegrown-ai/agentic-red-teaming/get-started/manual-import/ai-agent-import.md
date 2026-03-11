@@ -10,7 +10,7 @@ Akto lets you seamlessly import **AI agents** such as **AWS Bedrock, Azure AI Fo
 
 * **AI Endpoint URL** (e.g., `https://api.example.com/ai-agent`)
 * **(Optional) Custom Request Body** – for agents requiring specific input JSON
-* **(Optional) Test Role for Authentication** – for agents with role-based access
+* **(Optional) Scan Role for Authentication** – for agents with role-based access
 
 <figure><img src="../../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -28,14 +28,14 @@ Akto lets you seamlessly import **AI agents** such as **AWS Bedrock, Azure AI Fo
        ```json
        { "key": "value" }
        ```
-   * _(Optional)_ Enable **Use test role for authentication** and select a role (e.g., `ATTACKER_TOKEN_ALL`)
+   * _(Optional)_ Enable **Use scan role for authentication** and select a role (e.g., `ATTACKER_TOKEN_ALL`)
 5. **Click Import**
 
 Akto will automatically:
 
 * Connect to the AI agent endpoint
-* Send sample test requests to validate the configuration
-* Register the agent into **AI Agent Security Inventory** for monitoring and testing
+* Send sample probe requests to validate the configuration
+* Register the agent into **AI Agent Security Inventory** for monitoring and probing
 
 ***
 
@@ -52,7 +52,7 @@ Akto will automatically:
 
 ### 🔒 Security
 
-* Auth/test roles (if any) are used **only during import** and are **not stored**
+* Auth/scan roles (if any) are used **only during import** and are **not stored**
 * Akto uses **read-only access** to interact with your AI agent
 
 ***

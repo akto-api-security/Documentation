@@ -1,23 +1,23 @@
-# Test Categories
+# Probe Categories
 
 ## Overview
 
-AI Red Teaming test categories in Akto group security tests by the primary failure mode or control gap being validated. This structure helps you analyze coverage, prioritize remediation, and align AI security testing with established MCP, Agents and LLM risk models.
+AI Red Teaming test categories in Akto group security probes by the primary failure mode or control gap being validated. This structure helps you analyze coverage, prioritize remediation, and align AI security testing with established MCP, Agents and LLM risk models.
 
 Each category represents a distinct class of vulnerability that can affect LLM-backed APIs, agent workflows, or supporting infrastructure.
 
-## How Akto Uses Test Categories
+## How Akto Uses Probe Categories
 
 Akto assigns every AI Red Teaming test to exactly one category. Category assignment determines how test results are grouped, counted, and reported across scans and dashboards.
 
 Category-based organization supports:
 
-* Risk-focused navigation of large test sets
+* Risk-focused navigation of large probe sets
 * Aggregated visibility into recurring security weaknesses
 * Consistent mapping to OWASP API and LLM security concepts
 * Trend analysis across AI-enabled endpoints
 
-## Available AI Red Teaming Test Categories
+## Available AI Red Teaming Probe Categories
 
 Here is the list of all test categories currently available in Akto Probe Library:
 
@@ -25,8 +25,8 @@ Here is the list of all test categories currently available in Akto Probe Librar
 
 ## Expected Outcome
 
-Using AI Red Teaming test categories, you gain structured visibility into security risks across LLMs, and agents. Category-level organisation supports risk-based prioritisation, clearer reporting, and consistent governance for AI-enabled systems.
+Using AI Red Teaming probe categories, you gain structured visibility into security risks across LLMs, and agents. Category-level organisation supports risk-based prioritisation, clearer reporting, and consistent governance for AI-enabled systems.
 
 ## What Next
 
-To create customised tests as per your requirement: [Learn how to create custom tests](../how-to/create-a-custom-test.md)
+To create customised probes  as per your requirement: [Learn how to create custom probes](../how-to/create-a-custom-test.md)

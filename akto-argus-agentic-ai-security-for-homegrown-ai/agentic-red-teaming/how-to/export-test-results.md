@@ -1,13 +1,13 @@
 ---
-description: Export vulnerability reports from agentic security test results.
+description: Export vulnerability reports from agentic security Scan results.
 ---
 
-# Export Vulnerability Report from Test Results
+# Export Vulnerability Report from Scan Results
 
 ## Steps to Export
 
-1. Navigate to **Agentic Red Teaming > Results**
-2. Select your test run
+1. Navigate to **AI Red Teaming > Results**
+2. Select your Scan run
 3. View results showing vulnerabilities, severity levels, and scan details
 4. Click **More actions** in the top-right
 5. Select **Export vulnerability report**

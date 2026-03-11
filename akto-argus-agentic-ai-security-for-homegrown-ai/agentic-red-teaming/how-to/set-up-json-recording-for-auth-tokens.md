@@ -29,7 +29,7 @@ To extract **auth tokens or cookies** from API calls:
 
 ### 2. How to Upload Chrome Recording
 
-1. Go to **Akto Dashboard > Testing > Test Roles**.
+1. Go to **Akto Dashboard > AI Red Teaming > Scan Roles**.
 2. Paste a **Token Fetch Command** to extract the token or cookie (see below).
 3. Click **Upload JSON Recording**.
 4. Akto will extract and verify the token/cookie within a couple of minutes.

@@ -1,6 +1,6 @@
 # Get Started with Agentic Red Teaming
 
-Test your AI agents, MCP servers, and AI models with 1000+ specialized security probes. Akto identifies vulnerabilities like prompt injections, tool abuse, and privilege escalation before attackers do.
+Probe your AI agents, MCP servers, and AI models with 1000+ specialized security probes. Akto identifies vulnerabilities like prompt injections, tool abuse, and privilege escalation before attackers do.
 
 ## Quick Start
 
@@ -11,42 +11,42 @@ Test your AI agents, MCP servers, and AI models with 1000+ specialized security 
 
 ### Step 2: Import Your Components
 
-Navigate to **Quick Start** in your Akto dashboard and import the components you want to test:
+Navigate to **Quick Start** in your Akto dashboard and import the components you want to probe:
 
 #### Import AI Agents
-Test agents from AWS Bedrock, Azure AI Foundry, Databricks, Google Vertex AI, IBM Watsonx, or custom agents.
+Probe agents from AWS Bedrock, Azure AI Foundry, Databricks, Google Vertex AI, IBM Watsonx, or custom agents.
 
 → [Import AI Agents](ai-agent-import.md)
 
 #### Import MCP Servers
-Test Model Context Protocol tools, resources, and prompts by connecting to SSE endpoints.
+Probe Model Context Protocol tools, resources, and prompts by connecting to SSE endpoints.
 
 → [Import MCP Servers](mcp-import.md)
 
 #### Import AI Models
-Test large language models and custom AI implementations for security vulnerabilities.
+Probe large language models and custom AI implementations for security vulnerabilities.
 
 → [Import AI Models](ai-model-import.md)
 
-### Step 3: Run Security Tests
+### Step 3: Run Security Probes
 
 Once imported:
-1. Navigate to **Agentic Red Teaming** in your dashboard
-2. Select the components you want to test
+1. Navigate to **AI Red Teaming** in your dashboard
+2. Select the components you want to probe
 3. Choose from 1000+ specialized security probes
-4. Click **Run Tests** to start scanning
+4. Click **Run Probes** to start probing
 
 ### Step 4: Review Results
 
-After tests complete:
+After probes complete:
 1. View all identified vulnerabilities
 2. See detailed exploit scenarios
 3. Get remediation guidance for each issue
 4. Export reports for your team
 
-## What Gets Tested
+## What Gets Probed
 
-Akto tests for:
+Akto probes for:
 - Prompt injection attacks
 - Tool permission escalation
 - Data leakage vulnerabilities
@@ -56,7 +56,7 @@ Akto tests for:
 
 ## Next Steps
 
-- [Set up continuous testing](../agentic-discovery/) with discovery agents
+- [Set up continuous probing](../agentic-discovery/) with discovery agents
 - [Enable Guardrails](../agentic-guardrails/) to block threats in production
 - Review compliance posture against security frameworks
 

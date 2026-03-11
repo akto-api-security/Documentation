@@ -1,24 +1,24 @@
 ---
-description: Conduct role-based security testing for agentic systems.
+description: Conduct role-based security probing for agentic systems.
 ---
 
-# Conduct Role-Based Testing
+# Conduct Role-Based Probing
 
-Akto enables role-based testing for agentic systems, aligning with Role-Based Access Control (RBAC) principles. This verifies that each role can only access authorized agent components and tools.
+Akto enables role-based probing for agentic systems, aligning with Role-Based Access Control (RBAC) principles. This verifies that each role can only access authorized agent components and tools.
 
-This testing approach is essential for maintaining system integrity by reducing risks of unauthorized access and data breaches, especially in environments where agent roles are diverse and complex.
+This probing approach is essential for maintaining system integrity by reducing risks of unauthorized access and data breaches, especially in environments where agent roles are diverse and complex.
 
-## Conducting Role-Based Tests
+## Conducting Role-Based Probes
 
-When you [run a test](run-test.md), you can select a test role to ensure the test reflects the permissions and access levels associated with that role.
+When you [run a probe](run-test.md), you can select a probe role to ensure the probe reflects the permissions and access levels associated with that role.
 
 1. Navigate to **Agentic Discovery > Collections**
 2. Select the collection containing agent components
-3. Click **Run Test**
-4. Select test categories
-5. Choose a **Test Role** (e.g., Member, Admin, Viewer)
-6. Click **Run Test**
+3. Click **Run Probe**
+4. Select probe categories
+5. Choose a **Scan Role** (e.g., Member, Admin, Viewer)
+6. Click **Run Probe**
 
-## Reviewing Role-Based Test Results
+## Reviewing Role-Based Probe Results
 
-Navigate to **Agentic Red Teaming > Results** to view findings. If no vulnerabilities are found in the vulnerable section, it indicates that access control for that role is properly configured and the role cannot access unauthorized components or tools.
+Navigate to **AI Red Teaming > Results** to view findings. If no vulnerabilities are found in the vulnerable section, it indicates that access control for that role is properly configured and the role cannot access unauthorized components or tools.

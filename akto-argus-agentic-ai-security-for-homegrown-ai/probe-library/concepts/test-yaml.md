@@ -1,10 +1,10 @@
-# Test YAML
+# Probe YAML
 
 YAML probes are a powerful tool to identify security vulnerabilities in your AI agents, MCP endpoints, and LLM components. Using Akto YAML format, you can define probes with metadata, component filters, execution details, and validation checks. These probes can be customized to target agentic-specific vulnerabilities including prompt injections, tool abuse, and permission escalation. Akto Probe Library provides a user-friendly interface to create and edit these probes, making it easy to integrate them into your agentic security workflow.
 
 ### What is YAML Probe?
 
-A YAML probe in Akto is a configuration file written in YAML (YAML Ain't Markup Language) that defines a set of instructions for testing agent components to find security vulnerabilities. It includes details about the probe, how to select which components to test, how to execute the probe, and how to validate the results. The probe is executed against agent components and MCP endpoints, and the results are used to identify any agentic security issues.
+A YAML probe in Akto is a configuration file written in YAML (YAML Ain't Markup Language) that defines a set of instructions for probing agent components to find security vulnerabilities. It includes details about the probe, how to select which components to test, how to execute the probe, and how to validate the results. The probe is executed against agent components and MCP endpoints, and the results are used to identify any agentic security issues.
 
 You can create and run probes to detect vulnerabilities in your autonomous systems. Probes are written in Akto's YAML format, which includes sections for metadata, selection filters, execution details, and validation checks.
 
@@ -12,7 +12,7 @@ You can create and run probes to detect vulnerabilities in your autonomous syste
 
 ### Block 1: ID
 
-<table><thead><tr><th width="201.5">Name</th><th>Desciption</th></tr></thead><tbody><tr><td><code>id</code></td><td>The ID field serves as a unique, descriptive identifier for a particular test YAML file.</td></tr></tbody></table>
+<table><thead><tr><th width="201.5">Name</th><th>Desciption</th></tr></thead><tbody><tr><td><code>id</code></td><td>The ID field serves as a unique, descriptive identifier for a particular probe YAML file.</td></tr></tbody></table>
 
 ### Block 2: Info
 
@@ -32,7 +32,7 @@ You can create and run probes to detect vulnerabilities in your autonomous syste
 
 ### Block 6: Validate
 
-<table><thead><tr><th width="266.5">Name</th><th>Description</th></tr></thead><tbody><tr><td>validate</td><td>This section describes the conditions that serve as validation criteria for determining whether a particular endpoint is vulnerable to a given test.</td></tr><tr><td>Parent Operators</td><td><mark style="color:red;"><code>response_code</code></mark>, <mark style="color:red;"><code>method</code></mark>, <mark style="color:red;"><code>url</code></mark>, <mark style="color:red;"><code>request_payload</code></mark>, <mark style="color:red;"><code>response_payload</code></mark>, <mark style="color:red;"><code>request_headers</code></mark>, <mark style="color:red;"><code>response_headers</code></mark>, <mark style="color:red;"><code>query_param</code></mark></td></tr><tr><td>Data Operators</td><td><mark style="color:red;"><code>regex</code></mark>, <mark style="color:red;"><code>eq</code></mark>, <mark style="color:red;"><code>neq</code></mark>, <mark style="color:red;"><code>gt</code></mark>, <mark style="color:red;"><code>gte</code></mark>, <mark style="color:red;"><code>lt</code></mark>, <mark style="color:red;"><code>lte</code></mark><br><br><mark style="color:red;"><code>not_contains</code></mark>, <mark style="color:red;"><code>not_contains_either</code></mark>, <mark style="color:red;"><code>contains_jwt</code></mark>, <mark style="color:red;"><code>contains_all</code></mark>, <mark style="color:red;"><code>contains_either</code></mark></td></tr><tr><td>Collection Operators</td><td><mark style="color:red;"><code>for_one</code></mark></td></tr><tr><td>Combining Conditions using Boolean Operators</td><td><mark style="color:red;"><code>or</code></mark>, <mark style="color:red;"><code>and</code></mark></td></tr></tbody></table>
+<table><thead><tr><th width="266.5">Name</th><th>Description</th></tr></thead><tbody><tr><td>validate</td><td>This section describes the conditions that serve as validation criteria for determining whether a particular endpoint is vulnerable to a given probe.</td></tr><tr><td>Parent Operators</td><td><mark style="color:red;"><code>response_code</code></mark>, <mark style="color:red;"><code>method</code></mark>, <mark style="color:red;"><code>url</code></mark>, <mark style="color:red;"><code>request_payload</code></mark>, <mark style="color:red;"><code>response_payload</code></mark>, <mark style="color:red;"><code>request_headers</code></mark>, <mark style="color:red;"><code>response_headers</code></mark>, <mark style="color:red;"><code>query_param</code></mark></td></tr><tr><td>Data Operators</td><td><mark style="color:red;"><code>regex</code></mark>, <mark style="color:red;"><code>eq</code></mark>, <mark style="color:red;"><code>neq</code></mark>, <mark style="color:red;"><code>gt</code></mark>, <mark style="color:red;"><code>gte</code></mark>, <mark style="color:red;"><code>lt</code></mark>, <mark style="color:red;"><code>lte</code></mark><br><br><mark style="color:red;"><code>not_contains</code></mark>, <mark style="color:red;"><code>not_contains_either</code></mark>, <mark style="color:red;"><code>contains_jwt</code></mark>, <mark style="color:red;"><code>contains_all</code></mark>, <mark style="color:red;"><code>contains_either</code></mark></td></tr><tr><td>Collection Operators</td><td><mark style="color:red;"><code>for_one</code></mark></td></tr><tr><td>Combining Conditions using Boolean Operators</td><td><mark style="color:red;"><code>or</code></mark>, <mark style="color:red;"><code>and</code></mark></td></tr></tbody></table>
 
 ## Learn with Example
 
@@ -87,20 +87,20 @@ Let’s have a comprehensive look at all the possible operators in 1 single yaml
 ```yaml
 id: Vulnerable_Test
 info:
-  name: ""                           # specifies the name or title of the test
-  description: ""                    # provides a detailed explanation of the test. describes objectives, methodologies, and scope of the test
-  details: ""                        # allows inclusion of additional information and context about the test
+  name: ""                           # specifies the name or title of the probe
+  description: ""                    # provides a detailed explanation of the probe. describes objectives, methodologies, and scope of the probe
+  details: ""                        # allows inclusion of additional information and context about the probe
   impact: ""                         # describes the potential risks or consequences associated with the identified vulnerabilities
-  category:                          # classifies the test into a specific category or domain
+  category:                          # classifies the probe into a specific category or domain
     name: ""                          
     shortName: ""
     displayName: ""
-  subCategory: ""                    # this key also specifies the name or title of the test. should always contain the same value as id key
+  subCategory: ""                    # this key also specifies the name or title of the probe. should always contain the same value as id key
   severity: ""                       # indicates the severity level assigned to the identified vulnerabilities
-  tags: ""                           # provides descriptive labels or keywords associated with the test
-  references: ""                     # contains a list of relevant resources, documentation, or external links related to the test
+  tags: ""                           # provides descriptive labels or keywords associated with the probe
+  references: ""                     # contains a list of relevant resources, documentation, or external links related to the probe
 auth:
-  authenticated: true               # makes sure that only authentiated api's get considered for a test.
+  authenticated: true               # makes sure that only authentiated api's get considered for a probe.
 api_selection_filters:  
   response_code:                    # Filters API calls that return a response code between 200 and 300 (inclusive).      
     gte: 200                        
@@ -161,7 +161,7 @@ execute:
 validate:
   response_code:                   # Validates that the response code of the API call is 201.
     eq: 201
-  response_payload:                # Validates that the response payload is not empty and contains atleast one key named "success". Also it checks whether test response payload and sample response payload content are not similar(difference should be higher than 50%)
+  response_payload:                # Validates that the response payload is not empty and contains atleast one key named "success". Also it checks whether probe response payload and sample response payload content are not similar(difference should be higher than 50%)
     length:
       gt: 0
     percentage_match:
@@ -182,7 +182,7 @@ The Info section contains metadata about the test:
 * <mark style="color:red;">`Description`</mark>: A detailed explanation of the test, including objectives, methodologies, and scope.
 * <mark style="color:red;">`Details`</mark>: Additional context about the test.
 * <mark style="color:red;">`Impact`</mark>: The potential risks or consequences associated with the identified vulnerabilities.
-* <mark style="color:red;">`Category`</mark>: The category or domain the test falls into.
+* <mark style="color:red;">`Category`</mark>: The category or domain the probe falls into.
 * <mark style="color:red;">`SubCategory`</mark>: Further categorization of the test.
 * <mark style="color:red;">`Severity`</mark>: The severity level assigned to the identified vulnerabilities.
 * <mark style="color:red;">`Tags`</mark>: Descriptive labels or keywords associated with the test.

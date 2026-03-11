@@ -1,24 +1,24 @@
 ---
-description: Comprehensive security testing for AI agents and agentic systems.
+description: Comprehensive security Probing for AI agents and agentic systems.
 ---
 
-# Test
+# Probe
 
-Akto provides specialized security testing for AI agents, LLM applications, and agentic systems. The platform includes pre-built test suites covering OWASP Top 10 for LLMs, prompt injection attacks, MCP security, tool misuse, and other agentic-specific vulnerabilities.
+Akto provides specialized security probing for AI agents, LLM applications, and agentic systems. The platform includes pre-built probe suites covering OWASP Top 10 for LLMs, prompt injection attacks, MCP security, tool misuse, and other agentic-specific vulnerabilities.
 
-You can schedule tests to run at times that fit your workflow, ensuring continuous security validation without disrupting operations. For scheduling information, refer to [Schedule Test](../how-to/schedule-tests.md).
+You can schedule probes to run at times that fit your workflow, ensuring continuous security validation without disrupting operations. For scheduling information, refer to [Schedule Probes](../how-to/schedule-tests.md).
 
-## Test Categories
+## Probe Categories
 
-Akto organizes agentic security tests into specialized categories:
+Akto organizes agentic security probes into specialized categories:
 
-**LLM Security**: Tests for model-specific vulnerabilities including prompt injection, jailbreaking, and output manipulation.
+**LLM Security**: Probes for model-specific vulnerabilities including prompt injection, jailbreaking, and output manipulation.
 
-**Prompt Injection**: Comprehensive testing for direct and indirect prompt injection attacks across various agent workflows.
+**Prompt Injection**: Comprehensive probing for direct and indirect prompt injection attacks across various agent workflows.
 
 **MCP Security**: Validates Model Context Protocol implementations, tool authorization, and resource access controls.
 
-**Agent Identity**: Tests for agent impersonation, role escalation, and identity validation bypasses.
+**Agent Identity**: Probes for agent impersonation, role escalation, and identity validation bypasses.
 
 **Sensitive Information Disclosure**: Detects exposure of credentials, PII, internal system details, and training data leakage.
 
@@ -26,26 +26,26 @@ Akto organizes agentic security tests into specialized categories:
 
 **Excessive Agency**: Validates tool permissions, autonomous action limits, and guardrail effectiveness.
 
-**Data Poisoning**: Tests for manipulation of agent memory, context windows, and retrieval systems.
+**Data Poisoning**: Probes for manipulation of agent memory, context windows, and retrieval systems.
 
 ## Akto's Approach
 
-Akto uses real agent traffic to enhance testing effectiveness:
+Akto uses real agent traffic to enhance probing effectiveness:
 
-**Real-World Context**: Tests use actual agent interactions, tool calls, and conversation patterns to identify vulnerabilities that static analysis would miss.
+**Real-World Context**: Probes use actual agent interactions, tool calls, and conversation patterns to identify vulnerabilities that static analysis would miss.
 
 **Shadow Agent Detection**: Discovers undocumented agents, unauthorized LLM integrations, and rogue tool usage across your infrastructure.
 
-**Dynamic Test Coverage**: Adapts tests based on observed agent behaviors, tool chains, and conversation flows.
+**Dynamic Probe Coverage**: Adapts probes based on observed agent behaviors, tool chains, and conversation flows.
 
 ## Protocol Support
 
-Akto supports testing across multiple protocols used in agentic systems:
+Akto supports probing across multiple protocols used in agentic systems:
 
-**REST & GraphQL**: Tests HTTP-based agent endpoints and tool integrations.
+**REST & GraphQL**: Probe HTTP-based agent endpoints and tool integrations.
 
 **gRPC**: Validates agent-to-agent communication and microservice interactions.
 
-**WebSocket**: Tests real-time agent streams and persistent connections.
+**WebSocket**: Probe real-time agent streams and persistent connections.
 
-**MCP (Model Context Protocol)**: Specialized testing for MCP server implementations and tool definitions.
+**MCP (Model Context Protocol)**: Specialized probing for MCP server implementations and tool definitions.

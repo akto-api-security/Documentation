@@ -1,18 +1,18 @@
 ---
-description: Explore about how to test multiple APIs.
+description: Explore about how to probe multiple components.
 ---
 
-# Test Multiple APIs
+# Probe Multiple Components
 
-Akto allows you to test multiple APIs of your collection (at once) as it enhances efficiency by saving time compared to conducting separate tests for each API.
+Akto allows you to probe multiple components of your collection (at once) as it enhances efficiency by saving time compared to conducting separate probes for each API.
 
-In the demonstration below, we run tests for multiple APIs within the **"juice\_shop\_demo"** collection and then check for any vulnerabilities within the endpoints.
+In the demonstration below, we run probes for multiple components within the **"juice\_shop\_demo"** collection and then check for any vulnerabilities within the endpoints.
 
-Go to **API Discovery > API Collection**. Select the **API Collection** and click on the **Run Test.** Select the **Test Categories** and **Tests** you want to test by specifying different parameters like **Time duration, Test Role,** etc, then click on **Run Test** to execute the tests.
+Go to **API Discovery > API Collection**. Select the **API Collection** and click on the **Run Probe.** Select the **Probe Categories** and **Probes** you want to probe by specifying different parameters like **Time duration, Scan Role,** etc, then click on **Run Probe** to execute the probes.
 
 {% embed url="https://demo.arcade.software/KLEQQ4y0CfgAzMkE3JdQ?embed=" %}
 
-In the above demonstration, we have run **`Lack of Resources & Rate Limiting`** the test for all the endpoints of the **"juice\_shop\_demo"** collection. Now, let's review the outcomes of these tests.
+In the above demonstration, we have run **`Lack of Resources & Rate Limiting`** the probe for all the endpoints of the **"juice\_shop\_demo"** collection. Now, let's review the outcomes of these probes.
 
 {% @arcade/embed flowId="hmTC34aUsrpA7FSNWlkS" url="https://app.arcade.software/share/hmTC34aUsrpA7FSNWlkS" %}
 
