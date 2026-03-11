@@ -1,12 +1,12 @@
-# Run Tests in CLI Using Akto
+# Run Probes in CLI Using Akto
 
-You can run Akto testing module via CLI for local testing of agent components.
+You can run Akto probing module via CLI for local probing of agent components.
 
 ## When to Use
 
-- Run Akto tests locally on any agent collection
+- Run Akto probes locally on any agent collection
 - Results from CLI are NOT saved in Akto dashboard
-- Best used when developers want to run tests locally before committing code
+- Best used when developers want to run probes locally before committing code
 - Override application host URL to localhost or different staging URL
 
 ## How to Use
@@ -22,8 +22,8 @@ Prepare the following environment variables:
 7. `OVERRIDE_APP_URL` - Change the application host for testing
 8. `OUTPUT_LEVEL` - Output level:
    - `NONE` - No output file
-   - `SUMMARY` - [Default] Tests executed and list of vulnerable components
-   - `DETAILED` - Summary plus test descriptions and impact
+   - `SUMMARY` - [Default] Probes executed and list of vulnerable components
+   - `DETAILED` - Summary plus probe descriptions and impact
    - `DEBUG` - Detailed output with original and attempt request/response
 
 Example CLI:
@@ -41,10 +41,10 @@ docker run -v ${PWD}:/out \
 ## Results
 
 1. Short summary (Component, Vulnerability, Severity) printed on command line
-2. File `output.txt` contains test details based on output level
-3. If you see version mismatch error, match release version of dashboard vs testing-cli
+2. File `output.txt` contains probe details based on output level
+3. If you see version mismatch error, match release version of dashboard vs probing-cli
 
 ## Limitations
 
 1. Results are not saved in Akto dashboard
-2. Tests which use context will be skipped
+2. Probes which use context will be skipped

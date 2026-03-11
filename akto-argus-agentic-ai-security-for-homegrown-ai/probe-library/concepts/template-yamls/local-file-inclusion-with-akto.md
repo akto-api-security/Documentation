@@ -1,6 +1,6 @@
 ---
 description: >-
-  This page is about testing for Local File Inclusion using Akto's custom test
+  This page is about probing for Local File Inclusion using Akto's custom probe
   templates
 ---
 
@@ -10,17 +10,17 @@ description: >-
 
 Local File Inclusion (LFI) is a vulnerability that allows an attacker to include files, usually residing on the server, within the output of a given application. LFI attacks can lead to full server compromise if configured with improper permissions. Such vulnerabilities are typically found in applications that do not properly validate user-supplied input for file inclusion functionalities.
 
-## **The Importance of Local file inclusion Testing**
+## **The Importance of Local file inclusion Probing**
 
-For organizations, LFI vulnerabilities can lead to sensitive information exposure, unauthorized system access, and even potential server compromises. Therefore, conducting LFI tests as part of a regular security audit is crucial to ensure the safety and integrity of web applications.
+For organizations, LFI vulnerabilities can lead to sensitive information exposure, unauthorized system access, and even potential server compromises. Therefore, conducting LFI probes as part of a regular security audit is crucial to ensure the safety and integrity of web applications.
 
-## **Local file inclusion Test Examples in Akto**
+## **Local file inclusion Probe  Examples in Akto**
 
-Akto offers an array of pre-configured LFI tests designed for comprehensive coverage against potential vulnerabilities.
+Akto offers an array of pre-configured LFI probes designed for comprehensive coverage against potential vulnerabilities.
 
 ### **Pre-configured Local File Inclusion Tests:**
 
-1. **Local File Inclusion in Parameter:** You can try this test in [Akto’s API Security playground](https://www.akto.io/test/lfi-in-parameter).
+1. **Local File Inclusion in Parameter:** You can try this probe  in [Akto’s API Security playground](https://www.akto.io/test/lfi-in-parameter).
 
 ```yaml
 id: LFI_IN_PARAMETER
@@ -28,7 +28,7 @@ info:
   name: "LFI in parameter"
   description: "File path fuzzing in query parameters and request body to identify potential Local File Inclusion vulnerabilities." 
   details: >
-            "This test examines the presence of file path names in query parameters or request bodies, fuzzing them to identify potential Local File Inclusion vulnerabilities."
+            "This probe  examines the presence of file path names in query parameters or request bodies, fuzzing them to identify potential Local File Inclusion vulnerabilities."
             "If exploited, LFI can lead to unauthorized access, information disclosure, server compromise, and execution of malicious code, posing significant risks to the application and its users."
   impact: "Successful exploitation allows an attacker to read arbitrary files on a web server, potentially leading to unauthorized access, information disclosure, server compromise, and execution of malicious code."
   category:
@@ -106,16 +106,16 @@ validate:
     regex: "root:.*:0:0:"
 ```
 
-2. **Local File Inclusion by adding new parameter:** You can try this test in [Akto’s API Security playground](https://www.akto.io/test/lfi-by-adding-new-parameter).
+2. **Local File Inclusion by adding new parameter:** You can try this probe  in [Akto’s API Security playground](https://www.akto.io/test/lfi-by-adding-new-parameter).
 
 ```yaml
 id: FILE_INCLUSION_NEW_PARAM
 info:
   name: "LFI by adding new parameter"
-  description: "This test evaluates the vulnerability of a web application to Local File Inclusion by introducing new parameters for potential file path manipulation" 
+  description: "This probe  evaluates the vulnerability of a web application to Local File Inclusion by introducing new parameters for potential file path manipulation" 
   details: >
             "Assesses the vulnerability of a web application to Local File Inclusion by introducing additional parameters for potential file path manipulation."
-            "This test aims to identify any weaknesses that may allow an attacker to access sensitive files, leading to unauthorized data disclosure, server compromise, and potential execution of malicious code. It helps ensure the application's security and protect against LFI attacks"
+            "This probe  aims to identify any weaknesses that may allow an attacker to access sensitive files, leading to unauthorized data disclosure, server compromise, and potential execution of malicious code. It helps ensure the application's security and protect against LFI attacks"
   impact: "Successful exploitation allows an attacker to read arbitrary files on a web server, potentially leading to unauthorized access, information disclosure, server compromise, and execution of malicious code."
   category:
     name: LFI
@@ -206,16 +206,16 @@ validate:
     regex: "root:.*:0:0:"
 ```
 
-3. **Local File Inclusion in path.yaml:** You can try this test in the [Akto’s API Security playground](https://www.akto.io/test/lfi-in-path).
+3. **Local File Inclusion in path.yaml:** You can try this probe  in the [Akto’s API Security playground](https://www.akto.io/test/lfi-in-path).
 
 ```yaml
 id: FILE_INCLUSION_NEW_PARAM
 info:
   name: "LFI by adding new parameter"
-  description: "This test evaluates the vulnerability of a web application to Local File Inclusion by introducing new parameters for potential file path manipulation" 
+  description: "This probe  evaluates the vulnerability of a web application to Local File Inclusion by introducing new parameters for potential file path manipulation" 
   details: >
             "Assesses the vulnerability of a web application to Local File Inclusion by introducing additional parameters for potential file path manipulation."
-            "This test aims to identify any weaknesses that may allow an attacker to access sensitive files, leading to unauthorized data disclosure, server compromise, and potential execution of malicious code. It helps ensure the application's security and protect against LFI attacks"
+            "This probe  aims to identify any weaknesses that may allow an attacker to access sensitive files, leading to unauthorized data disclosure, server compromise, and potential execution of malicious code. It helps ensure the application's security and protect against LFI attacks"
   impact: "Successful exploitation allows an attacker to read arbitrary files on a web server, potentially leading to unauthorized access, information disclosure, server compromise, and execution of malicious code."
   category:
     name: LFI
@@ -306,18 +306,18 @@ validate:
     regex: "root:.*:0:0:"
 ```
 
-**3. How to Write Your Own LFI Test in Akto**
+**3. How to Write Your Own LFI Probe  in Akto**
 
-Creating a custom LFI test in Akto not only allows for tailored security checks but also ensures that specific behaviors of your application are evaluated. Here's a detailed guide with an example:
+Creating a custom LFI probe  in Akto not only allows for tailored security checks but also ensures that specific behaviors of your application are evaluated. Here's a detailed guide with an example:
 
-Step 1: Navigate to test editor
+Step 1: Navigate to probe  editor
 
 Step 2: Start with a base template:
 
 ```yaml
 id: CUSTOM_TEST_ID
 info:
-  name: "Your Test Name"
+  name: "Your Probe  Name"
   description: "Brief description of your test." 
 details: >
         "Detailed description or logic behind your test."
@@ -344,7 +344,7 @@ Step 3: Customizing the Base Template
 
 ### **Example: Local File Inclusion Using Backup Files**
 
-We'll create a test that detects if backup files are accessible, a common oversight leading to LFI:
+We'll create a probe  that detects if backup files are accessible, a common oversight leading to LFI:
 
 ```yaml
 id: LFI_BACKUP_FILES
@@ -352,7 +352,7 @@ info:
   name: "LFI via Backup Files"
   description: "Checks for accessible backup files which can be exploited for LFI." 
 details: >
-        "Backup files, if improperly secured, can be used by attackers to extract information or compromise a server. This test attempts to access popular backup file formats."
+        "Backup files, if improperly secured, can be used by attackers to extract information or compromise a server. This probe  attempts to access popular backup file formats."
 impact: "Exposure of sensitive information and potential system compromise."
 category:
     name: LFI
@@ -395,6 +395,6 @@ Step 4: **Save & Execute.** After customizing the base template for your test, c
 
 Step 5: Enter the API you want to test. Click **`Run Test`**
 
-Step 6: Refine your custom test as necessary based on the outcomes.
+Step 6: Refine your custom probe  as necessary based on the outcomes.
 
-Using Akto's powerful customization capabilities, you can now confidently construct and run bespoke LFI tests tailored to your application's unique behaviors and potential vulnerabilities. Always ensure tests are run in safe environments to avoid unintended impacts.
+Using Akto's powerful customization capabilities, you can now confidently construct and run bespoke LFI probes tailored to your application's unique behaviors and potential vulnerabilities. Always ensure probes are run in safe environments to avoid unintended impacts.

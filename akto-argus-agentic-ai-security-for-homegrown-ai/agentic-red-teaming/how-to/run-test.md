@@ -1,8 +1,8 @@
-# Run Test
+# Run Probe
 
-Running security tests in Akto involves assessing agent components to evaluate their security posture. You can run tests instantly or schedule them for later, making it useful for planning testing sessions or implementing regular security validation.
+Running security probes in Akto involves assessing agent components to evaluate their security posture. You can run probes instantly or schedule them for later, making it useful for planning probing sessions or implementing regular security validation.
 
-## Running Tests on Agent Components
+## Running Probes on Agent Components
 
 {% stepper %}
 {% step %}
@@ -10,7 +10,7 @@ Navigate to **Agentic Discovery > Collections**
 {% endstep %}
 
 {% step %}
-Select the collection containing the agent components you want to test
+Select the collection containing the agent components you want to probe
 {% endstep %}
 
 {% step %}
@@ -18,19 +18,19 @@ Choose specific agent components or select all components in the collection
 {% endstep %}
 
 {% step %}
-Click **Run test**
+Click **Run probe**
 {% endstep %}
 
 {% step %}
-Select test categories to run (Prompt Injection, MCP Security, LLM Security, etc.)
+Select probe categories to run (Prompt Injection, MCP Security, LLM Security, etc.)
 
 {% hint style="success" %}
-The **Tests** panel displays the estimated token usage for every probe. Token estimation helps enterprise teams evaluate expected LLM consumption before starting the scan.
+The **Probes** panel displays the estimated token usage for every probe. Token estimation helps enterprise teams evaluate expected LLM consumption before starting the scan.
 {% endhint %}
 {% endstep %}
 
 {% step %}
-Configure test parameters if needed.
+Configure probe parameters if needed.
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (151).png" alt="" width="375"><figcaption></figcaption></figure></div>
 
@@ -44,23 +44,23 @@ Configure test parameters if needed.
 {% endstep %}
 
 {% step %}
-Click **Run Test** to start the security scan.
+Click **Run Probe** to start the security scan.
 {% endstep %}
 {% endstepper %}
 
-## Test Categories
+## Probe Categories
 
-When running tests, you can select from specialized categories:
+When running probes, you can select from specialized categories:
 
-* **Prompt Injection**: Tests for direct and indirect prompt injection vulnerabilities
+* **Prompt Injection**: Probes for direct and indirect prompt injection vulnerabilities
 * **LLM Security**: Validates model-specific security controls
-* **MCP Security**: Tests Model Context Protocol implementations
+* **MCP Security**: Probes Model Context Protocol implementations
 * **Sensitive Information Disclosure**: Detects credential and PII exposure
 * **Excessive Agency**: Validates tool permission boundaries
 * **Supply Chain**: Identifies dependency vulnerabilities
 
 and more...
 
-## Modify Test Parameters
+## Modify Probe Parameters
 
-You can add, modify, or remove headers and parameters directly from the test configuration without editing YAML files. This allows you to customize tests for specific agent behaviors or authentication requirements.
+You can add, modify, or remove headers and parameters directly from the probe configuration without editing YAML files. This allows you to customize probes for specific agent behaviors or authentication requirements.

@@ -1,16 +1,16 @@
 ---
-description: Stop running or scheduled security tests.
+description: Stop running or scheduled security probes.
 ---
 
-# Stop Tests
+# Stop Probes
 
-You can stop tests in Akto at any time if there are changes in agent components, parameters, authentication methods, or the test environment. Stopping tests allows you to make necessary adjustments to ensure accurate and meaningful results.
+You can stop probes in Akto at any time if there are changes in agent components, parameters, authentication methods, or the probing environment. Stopping probes allows you to make necessary adjustments to ensure accurate and meaningful results.
 
-## Stopping a Running Test
+## Stopping a Running Probe
 
-1. Navigate to **Agentic Red Teaming > Results**
-2. Locate the running test you want to stop
-3. Click the menu icon (**...**) next to the test
-4. Select **Stop** to halt the test execution
+1. Navigate to **AI Red Teaming > Results**
+2. Locate the running probe you want to stop
+3. Click the menu icon (**...**) next to the probe
+4. Select **Stop** to halt the probe execution
 
-Tests can be stopped immediately without affecting previously collected results. This is useful when agent configurations change or when you need to adjust test parameters.
+Probes can be stopped immediately without affecting previously collected results. This is useful when agent configurations change or when you need to adjust probe parameters.

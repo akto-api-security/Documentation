@@ -1,25 +1,25 @@
 ---
-description: You can use information from all of your Akto dashboard in your YAML test.
+description: You can use information from all of your Akto dashboard in your YAML probe.
 ---
 
 # Contexts
 
-Simple API Security testing involves fuzzing API with standard wordlists. However, to make testing really powerful, you'd need real data from your application. Eg. instead of trying incremental user\_id=1, user\_id=2, user\_id=3, etc., you would want to try with user\_ids that actually exist in your system eg. user\_id=3489, user\_id=3259.
+Simple AI Red Teaming involves fuzzing components with standard wordlists. However, to make probing really powerful, you'd need real data from your application. Eg. instead of trying incremental user\_id=1, user\_id=2, user\_id=3, etc., you would want to try with user\_ids that actually exist in your system eg. user\_id=3489, user\_id=3259.
 
-Contexts will help you query all your data from Akto dashboard - which you can then use in your YAML tests.
+Contexts will help you query all your data from Akto dashboard - which you can then use in your YAML probes.
 
 Akto supports 4 types of contexts -
 
-1. [Roles](contexts.md#roles-access-context) (`roles_access_context`) - You can access tokens from [Test roles](../../../agentic-red-teaming/concepts/test-role.md) that you have configured in the dashboard
+1. [Roles](contexts.md#roles-access-context) (`roles_access_context`) - You can access tokens from [Scan roles](../../../agentic-red-teaming/concepts/test-role.md) that you have configured in the dashboard
 2. [API Inventory](contexts.md#api-inventory-context) (`endpoint_in_traffic_context`) - You can use this context to check if an endpoint already exists in API Inventory. This is useful while discovering shadow APIs. An endpoint is a shadow endpoint only if it exists and is NOT being used by the application.
-3. [Parameters](contexts.md#parameters-context) (`param_context`) - You can use this context to query all parameters (JSON/form-data etc.). For example, you want to run a BOLA test that tries to access `cart` details by changing `cart_id` parameter in the request body. You can use `param_context` to query all keys that match `.*cart_id.*` and use this wordlist in your BOLA test.
+3. [Parameters](contexts.md#parameters-context) (`param_context`) - You can use this context to query all parameters (JSON/form-data etc.). For example, you want to run a BOLA probe that tries to access `cart` details by changing `cart_id` parameter in the request body. You can use `param_context` to query all keys that match `.*cart_id.*` and use this wordlist in your BOLA probe.
 4. [Private variable](contexts.md#private-variable-context) (`private_variable_context)` - You can use this context to find out if a particular value is being used by exactly 1 user or multiple users. A `cart_id` or a `transaction_id` is particular to a user, whereas `product_id` can be queried by multiple users
 
 ### Roles access context
 
-Once you [create a Test role](../../../agentic-red-teaming/how-to/create-a-test-role.md) in Akto dashboard and [configure auth tokens](../../../agentic-red-teaming/how-to/create-a-test-role.md#adding-auth-token-for-role) for that role, you can use the auth tokens in your YAML test.
+Once you [create a Scan Role](../../../agentic-red-teaming/how-to/create-a-test-role.md) in Akto dashboard and [configure auth tokens](../../../agentic-red-teaming/how-to/create-a-test-role.md#adding-auth-token-for-role) for that role, you can use the auth tokens in your YAML test.
 
-**Example** - You want to test each admin API if they can be accessed using a member token. To carry out this test, you can create a role called `MEMBER_TOLE` . You would also have to add auth token to the role (eg `Authorization: Bearer member.role.token`) . You can now use it in your YAML to replace the auth token header.
+**Example** - You want to probe each admin component if they can be accessed using a member token. To carry out this probe, you can create a role called `MEMBER_TOLE` . You would also have to add auth token to the role (eg `Authorization: Bearer member.role.token`) . You can now use it in your YAML to replace the auth token header.
 
 Sample YAML -
 
@@ -44,9 +44,9 @@ This YAML runs only on endpoints that contain `/admin` (assuming these are admin
 
 ### API Inventory context
 
-You can use this context to find out if an endpoint exists in API Inventory.
+You can use this context to find out if an endpoint exists in Agentic Inventory.
 
-**Example** - You want to fuzz and find out all shadow endpoints which are NOT a part of API Inventory already.
+**Example** - You want to fuzz and find out all shadow endpoints which are NOT a part of Agentic Inventory already.
 
 {% code overflow="wrap" %}
 ```yaml
@@ -71,7 +71,7 @@ validate:
 
 ### Parameters context
 
-You can query all if your API traffic to extract list of `user_id`. You can extract this info in a variable (eg `user_context`). Say your API traffic contains the following parameters (across payloads, query params etc.) -
+You can query all if your agentic traffic to extract list of `user_id`. You can extract this info in a variable (eg `user_context`). Say your agentic traffic contains the following parameters (across payloads, query params etc.) -
 
 * `user: 23`
 * `user: 89`
@@ -93,7 +93,7 @@ execute:
           user_context.key: ${user_context.value} # add query param user=123 
 ```
 
-This will fire 4 API calls - with the following query param one by one -
+This will fire 4 agentic calls - with the following query param one by one -
 
 * `user=23`
 * `user=89`
@@ -114,7 +114,7 @@ Akto can differentiate between the usage behavior of cart\_id and product\_id. A
 Note that private vs public variable depends a lot on traffic. These work very well if you are using automated traffic connectors. If you connect your staging or prod server, Akto will receive traffic from multiple users across several sessions that really improves this private vs public classification. If you are using BurpSuite, Postman etc., it is very likely that they contain only 1 user's data. The result in that case aren't good.
 {% endhint %}
 
-Say, you want to test APIs that use private variables (eg /api/v1/cart/123, /api/v1/order/78 etc.) for BOLA vulnerability. Simply replace the auth header by an attacker token (note that running the same test on /api/v1/product/9 will give a false positive and should NOT be tested for BOLA)
+Say, you want to probe agentic components that use private variables (eg /api/v1/cart/123, /api/v1/order/78 etc.) for BOLA vulnerability. Simply replace the auth header by an attacker token (note that running the same probe on /api/v1/product/9 will give a false positive and should NOT be probed for BOLA)
 
 ```yaml
 api_selection_filters:

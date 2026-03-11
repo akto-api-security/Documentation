@@ -1,6 +1,6 @@
 # AI Model Import
 
-Akto lets you seamlessly import AI models like **Gemini, OpenAI, Claude, DeepSeek, Llama, Grok**, or even your **custom model** into **AI Model Security**. With just your model’s endpoint URL and optional authentication, you can start monitoring and testing instantly.
+Akto lets you seamlessly import AI models like **Gemini, OpenAI, Claude, DeepSeek, Llama, Grok**, or even your **custom model** into **AI Model Security**. With just your model’s endpoint URL and optional authentication, you can start monitoring and probing instantly.
 
 <figure><img src="../../../../.gitbook/assets/image (139).png" alt=""><figcaption></figcaption></figure>
 
@@ -24,14 +24,14 @@ Akto lets you seamlessly import AI models like **Gemini, OpenAI, Claude, DeepSee
 4. **Fill in model details**:
    * **AI Endpoint URL**: e.g., `https://api.example.com/ai-agent`
    * _(Optional)_ Enable **custom request body** if the model requires non-default payloads
-   * _(Optional)_ Use **test role for authentication** if your AI model enforces role-based access
+   * _(Optional)_ Use **scan role for authentication** if your AI model enforces role-based access
 5. **Click Import**
 
 Akto will automatically:
 
 * Connect to the AI model endpoint
 * Validate request/response format
-* Add the model into **AI Model Security Inventory** for monitoring and testing
+* Add the model into **AI Model Security Inventory** for monitoring and probing
 
 ***
 
