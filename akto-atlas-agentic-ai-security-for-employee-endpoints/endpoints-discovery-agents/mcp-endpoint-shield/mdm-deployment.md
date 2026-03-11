@@ -380,8 +380,6 @@ fi
 echo "SUCCESS: MCP Shield is properly configured"
 exit 0
 ```
-
-
 {% endtab %}
 
 {% tab title="Windows" %}
@@ -559,7 +557,7 @@ Follow these steps to manually set up and run MCP Endpoint Shield to protect you
 
 {% stepper %}
 {% step %}
-### Set Your API Token
+#### Set Your API Token
 
 Set the `AKTO_API_TOKEN` environment variable:
 
@@ -591,7 +589,7 @@ echo $AKTO_API_TOKEN
 {% endstep %}
 
 {% step %}
-### Start the Agent
+#### Start the Agent
 
 The agent automatically discovers and protects your MCP servers.
 
@@ -615,7 +613,7 @@ Agent mode started. Press Ctrl+C to stop...
 * Watch for changes and auto-update configs
 
 {% hint style="info" %}
-## **Note**
+### **Note**
 
 If you want the agent to run in the background, use:
 
@@ -626,11 +624,11 @@ nohup ./mcp-endpoint-shield agent > agent.log 2>&1 &
 {% endstep %}
 
 {% step %}
-### Protecting Local MCP Servers (STDIO)
+#### Protecting Local MCP Servers (STDIO)
 
 {% tabs %}
 {% tab title="Option A:  Agent Wrapping (Recommended)" %}
-#### Let the Agent Wrap It (Recommended)
+**Let the Agent Wrap It (Recommended)**
 
 If the agent is running (Step 2), it will **automatically** detect and wrap your config. Your MCP configuration will be automatically modified to route through the security shield.
 
@@ -676,7 +674,7 @@ After (automatic):
 {% endtab %}
 
 {% tab title="Option B: Manual Wrapping" %}
-#### Manual Wrapping (If Not Using Agent)
+**Manual Wrapping (If Not Using Agent)**
 
 If you're not running the agent, manually edit your MCP config file (e.g., `~/.cursor/mcp.json`):
 
@@ -728,7 +726,7 @@ If you're not running the agent, manually edit your MCP config file (e.g., `~/.c
 {% endstep %}
 
 {% step %}
-#### Protecting Remote MCP Servers (HTTP)
+**Protecting Remote MCP Servers (HTTP)**
 
 For HTTP-based MCP servers, run the HTTP proxy in a **new terminal**:
 
@@ -801,7 +799,7 @@ The proxy will:
 {% endstep %}
 
 {% step %}
-### Verify Everything is Working
+#### Verify Everything is Working
 
 **Check Agent Status**
 
@@ -828,7 +826,7 @@ Open your MCP client (Cursor, VS Code, Claude Desktop) and try using your wrappe
 {% endstepper %}
 
 {% hint style="success" %}
-## ⚙️ Common Flags
+### ⚙️ Common Flags
 
 * `--name <project_name>` → Friendly label used in logs and insights
 * `--akto-api-token <token>` → Your Akto API token
@@ -862,37 +860,37 @@ This protects:
 * **HTTP servers** (remote MCP servers) via proxy
 
 {% hint style="info" %}
-## 🔐 Enterprise Best Practices for MDM Deployments
+### 🔐 Enterprise Best Practices for MDM Deployments
 
-#### 1. Token Management
+**1. Token Management**
 
 * **Use dedicated service accounts** for API tokens
 * **Rotate tokens every 90 days** via automated scripts
 * **Store tokens in MDM secrets vault** (e.g., Azure Key Vault, AWS Secrets Manager)
 * **Never hardcode tokens** in configuration files
 
-#### 2. Network Considerations
+**2. Network Considerations**
 
 * **Allow outbound HTTPS** to `*.akto.io` on port 443
 * **Whitelist proxy settings** if using corporate proxy
 * **Configure firewall rules** for HTTP proxy (port 57294)
 * **Use VPN** for remote workers
 
-#### 3. User Communication
+**3. User Communication**
 
 * **Pre-deployment announcement** explaining the security enhancement
 * **Documentation** with FAQs and support contact
 * **Training sessions** for power users
 * **Feedback channel** for reporting issues
 
-#### 4. Rollback Strategy
+**4. Rollback Strategy**
 
 * **Keep previous version** available in MDM repository
 * **Test rollback procedure** on pilot devices
 * **Document rollback steps** for IT helpdesk
 * **Monitor for issues** during first 48 hours post-deployment
 
-#### 5. Compliance & Auditing
+**5. Compliance & Auditing**
 
 * **Enable comprehensive logging** (audit mode initially)
 * **Integrate with SIEM** for security monitoring
@@ -918,7 +916,7 @@ This protects:
 **Issue:** `command not found: mcp-endpoint-shield` ➡ Cause: Binary not in PATH or wrong path used. ➡ Fix: Use full path (`./mcp-endpoint-shield` or `/usr/local/bin/mcp-endpoint-shield`) or add to PATH with `export PATH=$PATH:/path/to/binary/directory`.
 
 {% hint style="success" %}
-### 🔒 Guarantees
+#### 🔒 Guarantees
 
 * ✅ **Transparency**: Safe traffic is never altered.
 * ✅ **Clarity**: Unsafe traffic always results in a clear JSON-RPC error.

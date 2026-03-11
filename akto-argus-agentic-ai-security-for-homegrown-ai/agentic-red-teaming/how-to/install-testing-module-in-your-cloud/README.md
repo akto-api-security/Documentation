@@ -1,4 +1,4 @@
-# Install Red Teaming module in your Cloud
+# Install probing module in your Cloud
 
 ## Overview
 
@@ -24,7 +24,7 @@ You then have to use a Linux VM to install Akto AI Red Teaming module in your cl
 
 {% stepper %}
 {% step %}
-### Provision a New VM
+#### Provision a New VM
 
 Minimum recommended configuration:
 
@@ -47,7 +47,7 @@ Don’t use burstable instances.
 {% endstep %}
 
 {% step %}
-### SSH into the VM
+#### SSH into the VM
 
 1. SSH into this new instance in your Cloud
 2.  Run the following command:
@@ -58,13 +58,13 @@ Don’t use burstable instances.
 {% endstep %}
 
 {% step %}
-### Install Docker & Docker Compose
+#### Install Docker & Docker Compose
 
 Install the [docker](https://github.com/akto-api-security/infra/blob/feature/quick-setup/get-docker.sh) and [docker-compose](https://github.com/akto-api-security/infra/blob/feature/quick-setup/get-docker-compose.sh).
 {% endstep %}
 
 {% step %}
-### Create the Environment File
+#### Create the Environment File
 
 1.  Create:
 
@@ -84,7 +84,7 @@ Install the [docker](https://github.com/akto-api-security/infra/blob/feature/qui
     ```
 
 {% hint style="warning" %}
-## Anthropic API Key Required
+### Anthropic API Key Required
 
 You **must** replace your actual **Anthropic API Key** in the env file.
 {% endhint %}
@@ -93,7 +93,7 @@ You can also reference the original template is [here](https://github.com/akto-a
 {% endstep %}
 
 {% step %}
-### Create the Docker Compose File
+#### Create the Docker Compose File
 
 1.  Create:
 
@@ -102,7 +102,7 @@ You can also reference the original template is [here](https://github.com/akto-a
     ```
 
 {% hint style="danger" %}
-## I**mportant Requirements**&#x20;
+### I**mportant Requirements**
 
 * You must replace `<your-database-abstractor-token>` with the actual **Database Abstractor Service Token (JWT)** copied from the Step 3 of [#copy-the-jwt-token](./#copy-the-jwt-token "mention").
 * Ensure **both files** below are in the **same directory**:
@@ -162,7 +162,7 @@ For the reference,the original template is [here](https://github.com/akto-api-se
 {% endstep %}
 
 {% step %}
-### Start the Scanning Module
+#### Start the Scanning Module
 
 *   Run:
 
