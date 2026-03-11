@@ -11,16 +11,16 @@ MCP Groups are a feature in Akto that allow you to organize and categorize relat
 An MCP Group is a logical collection of MCP components that share common attributes. Unlike collections, which are primarily for discovery and organization, groups enable you to:
 
 - Apply bulk security policies to MCP servers
-- Run targeted security tests on MCP tools
+- Run targeted security probes on MCP tools
 - Monitor related MCP components together
 - Manage access control at the group level
 - Track metrics across similar MCP servers
 
 ## Use Cases
 
-### Security Testing by MCP Group
+### AI Red Teaming by MCP Group
 
-Run comprehensive security tests on:
+Run comprehensive security probes on:
 - All MCP servers with write permissions
 - All MCP servers accessing databases
 - All MCP servers handling PII
@@ -65,4 +65,4 @@ Group MCP servers by prompt template categories:
 - **Action Prompts**: Operation and task templates
 - **Transformation Prompts**: Data processing templates
 
-MCP groups are a powerful tool for organizing your Model Context Protocol inventory, enabling more efficient management, security testing, and analysis of your MCP server ecosystem.
+MCP groups are a powerful tool for organizing your Model Context Protocol inventory, enabling more efficient management, AI Red Teaming, and analysis of your MCP server ecosystem.

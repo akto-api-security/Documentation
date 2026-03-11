@@ -6,7 +6,7 @@ coverY: 0
 
 # Akto Agentic AI Security
 
-Secure your AI agents, MCP servers, and agentic applications with complete visibility, automated testing, and real-time protection. Get started in minutes by choosing what you need.
+Secure your AI agents, MCP servers, and agentic applications with complete visibility, automated scanning, and real-time protection. Get started in minutes by choosing what you need.
 
 <table data-card-size="large" data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Akto Atlas : Agentic AI Security For Employee Endpoints</strong></td><td>Browser extensions, secure web networks, MCP endpoint shield, and agentic shield</td><td><a href="/broken/pages/WFusT0tNpWX5VAT3cUEh">Broken link</a></td></tr><tr><td><strong>Akto Argus: Agentic AI Security For Homegrown AI</strong></td><td>Browser extensions, secure web networks, MCP endpoint shield, and agentic shield</td><td><a href="/broken/pages/FVjtSz2WygwVQWQKAiZW">Broken link</a></td></tr></tbody></table>
 
@@ -14,9 +14,9 @@ Secure your AI agents, MCP servers, and agentic applications with complete visib
 
 ## [Agentic Red Teaming](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/)
 
-Test your AI agents and MCP servers with 1000+ specialized security probes. Identify vulnerabilities like prompt injections, tool abuse, and privilege escalation before attackers do.
+Probe your AI agents and MCP servers with 1000+ specialized security probes. Identify vulnerabilities like prompt injections, tool abuse, and privilege escalation before attackers do.
 
-**Import your components to start testing**
+**Import your components to start Red Teaming**
 
 <table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>AI Agents</strong></td><td>AWS Bedrock, Azure AI, Databricks, Vertex AI, Watsonx, or custom agents</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/ai-agent-import.md">ai-agent-import.md</a></td></tr><tr><td><strong>MCP Servers</strong></td><td>Model Context Protocol tools, resources, and prompts</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/mcp-import.md">mcp-import.md</a></td></tr><tr><td><strong>AI Models</strong></td><td>Large language models and custom AI implementations</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/ai-model-import.md">ai-model-import.md</a></td></tr></tbody></table>
 

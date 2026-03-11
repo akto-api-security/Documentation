@@ -1,18 +1,18 @@
 ---
-description: Categorize agent and MCP collections by environment for better security management and testing prioritization.
+description: Categorize agent and MCP collections by environment for better security management and scanning prioritization.
 ---
 
 # Environment Type
 
-The Environment Type feature in Akto allows users to tag agent and MCP collections as Development, Staging, or Production. This helps teams prioritize security testing and triage alerts based on the environment's criticality.
+The Environment Type feature in Akto allows users to tag agent and MCP collections as Development, Staging, or Production. This helps teams prioritize AI Red Teaming and triage alerts based on the environment's criticality.
 
 ## What is Environment Type?
 
-Environment Type is a classification that helps you organize your agentic systems by deployment stage. This distinction is crucial for applying appropriate security policies and managing testing efforts effectively.
+Environment Type is a classification that helps you organize your agentic systems by deployment stage. This distinction is crucial for applying appropriate security policies and managing scanning efforts effectively.
 
 ### Available Environment Types
 
-- **Development**: Agent components under active development and testing
+- **Development**: Agent components under active development and scanning
 - **Staging**: Pre-production agents being validated before release
 - **Production**: Live, customer-facing agent systems
 
@@ -22,17 +22,17 @@ Environment Type is a classification that helps you organize your agentic system
 
 Label agent and MCP collections by environment for better organization:
 - Quickly identify which agents are in production
-- Separate testing and development systems
+- Separate scanning and development systems
 - Track agent lifecycle across environments
 
-### 2. Environment-Specific Testing
+### 2. Environment-Specific Scanning
 
-Adjust security testing efforts based on the environment:
-- **Production**: Prioritize critical security tests, limit intrusive testing
-- **Staging**: Run comprehensive security test suites
-- **Development**: Enable aggressive testing and experimentation
+Adjust AI Red Teaming efforts based on the environment:
+- **Production**: Prioritize critical security probes, limit intrusive scanning
+- **Staging**: Run comprehensive security scan suites
+- **Development**: Enable aggressive scanning and experimentation
 
-This prevents unnecessary or risky tests in production while ensuring thorough security validation in pre-production environments.
+This prevents unnecessary or risky probe in production while ensuring thorough security validation in pre-production environments.
 
 ### 3. Efficient Alert Triaging
 
@@ -49,7 +49,7 @@ For example, a prompt injection vulnerability detected in a production agent tri
 
 - Focus red teaming efforts on production agents first
 - Validate fixes in staging before production deployment
-- Experiment with new security tests in development
+- Experiment with new security probes in development
 
 ### Compliance Management
 
@@ -60,8 +60,8 @@ For example, a prompt injection vulnerability detected in a production agent tri
 ### Resource Optimization
 
 - Allocate security resources based on environment criticality
-- Reduce testing overhead in production
-- Increase test coverage in pre-production environments
+- Reduce scanning overhead in production
+- Increase probe coverage in pre-production environments
 
 ### Change Management
 
@@ -73,13 +73,13 @@ For example, a prompt injection vulnerability detected in a production agent tri
 
 ### For AI Agents
 
-- Development agents can test experimental prompts and tools
+- Development agents can probe experimental prompts and tools
 - Staging agents validate security before customer exposure
 - Production agents have stricter monitoring and controls
 
 ### For MCP Servers
 
-- Development MCP servers can have relaxed permissions for testing
+- Development MCP servers can have relaxed permissions for probing
 - Staging MCP servers mirror production configuration
 - Production MCP servers have strict access controls and auditing
 

@@ -51,5 +51,5 @@ The AI Agent Context Graph in Akto helps you visualize and understand the relati
 - Review the AI Agent Context Graph regularly to understand system evolution
 - Identify circular dependencies that might cause issues
 - Monitor third-party component dependencies for security risks
-- Use the AI Agent Context Graph to plan security testing priorities
+- Use the AI Agent Context Graph to plan AI Red Teaming priorities
 - Document critical paths and dependencies for incident response

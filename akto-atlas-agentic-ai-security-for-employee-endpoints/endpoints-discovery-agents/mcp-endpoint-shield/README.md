@@ -371,7 +371,7 @@ The proxy will:
     ```
     Starting MCP HTTP Proxy on 127.0.0.1:57294
     ```
-*   **Test Your MCP Server**
+*   **Probe Your MCP Server**
 
     Open your MCP client (Cursor, VS Code, Claude Desktop) and try using your wrapped MCP server. It should work normally, but now with security protection.Step 4:
 {% endstep %}

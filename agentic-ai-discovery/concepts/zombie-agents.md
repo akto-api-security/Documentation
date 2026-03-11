@@ -24,7 +24,7 @@ Since these agent components are not in active use or visible to developers, the
 
 Akto automatically flags outdated and unused agent components by identifying those with little or no traffic over a significant period — marking them as **Zombie Agents**.
 
-You can monitor and test your agent collections for these stale components using Akto's built-in detection logic under the **Zombie Agent** tag. This uses behavioral analysis and component activity tracking to highlight potential zombie endpoints.
+You can monitor and probe your agent collections for these stale components using Akto's built-in detection logic under the **Zombie Agent** tag. This uses behavioral analysis and component activity tracking to highlight potential zombie endpoints.
 
 ### How to Detect Zombie Agents
 

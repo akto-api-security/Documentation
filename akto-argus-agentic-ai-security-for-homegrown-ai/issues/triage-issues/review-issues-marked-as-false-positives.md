@@ -2,7 +2,7 @@
 
 ### Introduction
 
-You can use Akto to review and manage issues marked as **False Positive** during agentic security testing. This lets you revisit ignored issues in your agent components, check their details, and reopen them if needed.
+You can use Akto to review and manage issues marked as **False Positive** during AI Red Teaming. This lets you revisit ignored issues in your agent components, check their details, and reopen them if needed.
 
 Here’s what you can do:
 
@@ -25,7 +25,7 @@ Click on any issue to open its details, including:
 
 * **Overview**: Description, severity, agent component endpoint, authentication, sensitive data, and impact
 * **Timeline**: When the issue was detected and when it was marked as a false positive
-* **Values**: Request and response data showing the agent component interactions and payloads tested
+* **Values**: Request and response data showing the agent component interactions and payloads scanned
 * **Remediation**: Suggested steps to fix the issue in your agent components (with code examples where applicable)
 
 Use these tabs to verify why an issue was marked as false positive and if it needs action.

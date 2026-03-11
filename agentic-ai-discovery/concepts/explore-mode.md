@@ -78,6 +78,6 @@ Once you've filtered your results, you can:
 1. Click **Create Collection** from filtered results
 2. Name your collection descriptively
 3. The collection is created with all filtered components
-4. Use this collection for targeted security testing
+4. Use this collection for targeted AI Red Teaming
 
 Explore Mode streamlines the process of discovering and organizing agent components within your inventory, enabling more efficient agentic system management and security workflows.

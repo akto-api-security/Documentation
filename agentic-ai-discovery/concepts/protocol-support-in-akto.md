@@ -4,7 +4,7 @@ description: Comprehensive protocol support for agentic systems and AI agent com
 
 # Protocol Support in Akto
 
-Akto provides comprehensive support for modern agentic architectures and AI agent communication protocols, ensuring you can discover, test, and secure your entire agentic ecosystem regardless of the protocol or framework. Our platform seamlessly handles:
+Akto provides comprehensive support for modern agentic architectures and AI agent communication protocols, ensuring you can discover, probe, and secure your entire agentic ecosystem regardless of the protocol or framework. Our platform seamlessly handles:
 
 ## Supported Protocols
 
@@ -13,7 +13,7 @@ Complete support for the Model Context Protocol including:
 - MCP server discovery and tool enumeration
 - MCP resource access monitoring
 - MCP prompt template analysis
-- Security testing for MCP endpoints
+- Security probing for MCP endpoints
 
 ### RESTful APIs
 Full support for REST-based agent endpoints including:
@@ -23,13 +23,13 @@ Full support for REST-based agent endpoints including:
 - API-based agent integrations
 
 ### GraphQL
-Complete testing capabilities for GraphQL-based agentic systems:
+Complete probing capabilities for GraphQL-based agentic systems:
 - GraphQL queries and mutations for agent operations
 - Schema introspection for agent capabilities
 - GraphQL subscriptions for real-time agent updates
 
 ### gRPC
-Testing for high-performance RPC frameworks commonly used in agentic systems:
+Probing for high-performance RPC frameworks commonly used in agentic systems:
 - gRPC service definitions for agents
 - Streaming agent communications
 - Binary protocol support for efficient agent-to-agent communication

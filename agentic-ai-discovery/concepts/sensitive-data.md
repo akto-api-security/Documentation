@@ -99,7 +99,7 @@ For more information: [Set Sensitivity of a Data Type](../how-to/set-sensitivity
 Akto can automatically redact sensitive data from:
 - Agent logs and monitoring
 - Context window snapshots
-- Security testing reports
+- Security probing reports
 - Exported data
 
 For more information: [Redact Sensitive Data](../how-to/redact-sensitive-data.md)
@@ -128,7 +128,7 @@ MCP servers often have access to highly sensitive resources:
 
 **GitHub MCP**: Access to code repositories
 - API keys in code
-- Customer data in test fixtures
+- Customer data in probe fixtures
 - Internal credentials in config files
 
 **Web MCP**: Can fetch any URL

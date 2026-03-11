@@ -1,10 +1,10 @@
 ---
-description: Copy MCP endpoint data for testing, debugging, and analysis.
+description: Copy MCP endpoint data for scanning, debugging, and analysis.
 ---
 
 # Copy MCP Component Data
 
-You can copy MCP endpoint request/response data in `curl` format or for use in testing tools. This helps with troubleshooting MCP server integrations and security testing.
+You can copy MCP endpoint request/response data in `curl` format or for use in scanning tools. This helps with troubleshooting MCP server integrations and AI Red Teaming.
 
 ## How to Copy
 
@@ -12,8 +12,8 @@ You can copy MCP endpoint request/response data in `curl` format or for use in t
 2. Select your MCP collection and click on an endpoint
 3. Click the **Copy** button in the endpoint details panel
 4. Choose format:
-   - **curl**: For terminal testing
-   - **Burp**: For Burp Suite testing
+   - **curl**: For terminal scanning
+   - **Burp**: For Burp Suite scanning
    - **Raw**: For custom analysis
 
 ## What Gets Copied
@@ -26,8 +26,8 @@ You can copy MCP endpoint request/response data in `curl` format or for use in t
 
 ## Use Cases
 
-- **Testing**: Validate MCP tool behavior
+- **Scanning**: Validate MCP tool behavior
 - **Debugging**: Analyze MCP server responses
-- **Security Testing**: Test tool permission bypasses
+- **Security Probing**: Probe tool permission bypasses
 - **Documentation**: Create MCP integration examples
 - **Monitoring**: Track MCP tool performance

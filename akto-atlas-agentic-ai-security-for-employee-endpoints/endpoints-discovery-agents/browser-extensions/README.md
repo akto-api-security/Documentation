@@ -1,12 +1,12 @@
 # Browser Extensions
 
-Discover and test your AI agents and MCP servers directly from your browser. Akto's browser extensions capture agent interactions in real-time as you use your AI applications, making it easy to discover and secure your agentic components without complex setup.
+Discover and probe your AI agents and MCP servers directly from your browser. Akto's browser extensions capture agent interactions in real-time as you use your AI applications, making it easy to discover and secure your agentic components without complex setup.
 
 ## How It Works
 
 Browser extensions monitor your AI agent interactions as you browse and automatically send the traffic to Akto for discovery and analysis. This approach is perfect for:
 
-* Testing AI applications during development
+* Probing AI applications during development
 * Discovering shadow agents in your organization
 * Quick security validation without infrastructure changes
 * Capturing MCP server interactions from web applications
@@ -22,6 +22,6 @@ Browser extensions monitor your AI agent interactions as you browse and automati
 Browser extensions are ideal when you:
 
 * Want to discover agents without deploying infrastructure
-* Need to quickly test a specific AI application
+* Need to quickly probe a specific AI application
 * Are evaluating Akto before full deployment
-* Want to capture agent behavior during manual testing
+* Want to capture agent behavior during manual scanning

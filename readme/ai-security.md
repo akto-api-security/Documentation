@@ -20,15 +20,15 @@ The first step in securing your APIs is knowing what you have. Akto continuously
 
 ***
 
-### **2. LLM Security Testing**
+### **2. LLM Security Probing**
 
-Akto enables proactive security by running automated tests to uncover vulnerabilities in APIs behind LLMs and chatbots. With over 1000 test templates modeled on OWASP’s Top 10 for LLM applications, Akto detects issues like prompt injection, system prompt leakage, vector embedding weaknesses, and data poisoning.
+Akto enables proactive security by running automated probes to uncover vulnerabilities in APIs behind LLMs and chatbots. With over 1000 probe templates modeled on OWASP’s Top 10 for LLM applications, Akto detects issues like prompt injection, system prompt leakage, vector embedding weaknesses, and data poisoning.
 
 **Key Capabilities:**
 
-* 1000+ test templates based on real-world LLM attack scenarios
-* Prebuilt and custom test suites for LLM-specific APIs
-* Integration with CI/CD pipelines for shift-left testing
+* 1000+ probe templates based on real-world LLM attack scenarios
+* Prebuilt and custom scan suites for LLM-specific APIs
+* Integration with CI/CD pipelines for shift-left scanning
 
 ***
 
@@ -45,7 +45,7 @@ With APIs behind LLMs facing unique threats such as misinformation, unbounded co
 
 ### **4. LLM Security Posture**
 
-API Security Posture serves as a unified overview of all the above pillars—Discovery, Testing, and Threat Protection. It helps security teams understand the overall security health of LLM-integrated APIs. Akto provides visibility into risks, trends, severities and coverage gaps, and enforces security policies aligned with OWASP GenAI Security standards.
+API Security Posture serves as a unified overview of all the above pillars—Discovery, scanning, and Threat Protection. It helps security teams understand the overall security health of LLM-integrated APIs. Akto provides visibility into risks, trends, severities and coverage gaps, and enforces security policies aligned with OWASP GenAI Security standards.
 
 **Key Capabilities:**
 

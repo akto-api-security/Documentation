@@ -1,22 +1,22 @@
 # Play Around in Prompt Hardening
 
-This page focuses on **hands-on testing workflows** using Prompt Hardening. You can configure tests, execute prompts, and evaluate AI agent responses in real time.
+This page focuses on **hands-on probing workflows** using Prompt Hardening. You can configure probes, execute prompts, and evaluate AI agent responses in real time.
 
-## Editing Prompt Injection Tests
+## Editing Prompt Injection Probes
 
-The Test Editor allows you to configure prompt injection tests using a YAML-based definition.
+The Probe Editor allows you to configure prompt injection probes using a YAML-based definition.
 
-You can use the Test Editor to:
+You can use the Probe Editor to:
 
 * Define prompt injection and adversarial attack patterns.
 * Configure detection rules for unsafe or non-compliant responses.
 * Assign severity levels to classify identified risks.
 
-The YAML-based configuration enables iterative testing without redeploying AI agents, which helps maintain rapid feedback during security validation.
+The YAML-based configuration enables iterative probing without redeploying AI agents, which helps maintain rapid feedback during security validation.
 
-## Testing Prompts
+## Probing Prompts
 
-The Playground provides an interactive environment for executing prompt hardening tests against AI agents.
+The Playground provides an interactive environment for executing prompt hardening probes against AI agents.
 
 #### Navigating to the Playground
 
@@ -30,11 +30,11 @@ The Playground supports real-time prompt execution and response inspection.
 
 ### Playground Input Areas
 
-Each Playground session separates trusted instructions from adversarial input to support controlled testing.
+Each Playground session separates trusted instructions from adversarial input to support controlled probing.
 
 {% tabs %}
 {% tab title="System Prompts" %}
-System Prompts define the baseline instructions provided to the AI agent. System Prompts represent the trusted control layer under test.
+System Prompts define the baseline instructions provided to the AI agent. System Prompts represent the trusted control layer under probe.
 
 <figure><img src="../../.gitbook/assets/image (2) (2).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endtab %}
@@ -48,13 +48,13 @@ The **Auto-generate prompt** option creates adversarial input using predefined a
 {% endtab %}
 
 {% tab title="Auto Generate Prompt" %}
-Auto Generate Prompt uses Akto-defined attack patterns to create custom malicious prompts. This option supports rapid testing without manual prompt design.
+Auto Generate Prompt uses Akto-defined attack patterns to create custom malicious prompts. This option supports rapid scanning without manual prompt design.
 {% endtab %}
 {% endtabs %}
 
-### Executing Prompt Tests
+### Executing Prompt Probes
 
-After configuring System Prompts and User Input, you can start testing by selecting **Test System Prompt**.
+After configuring System Prompts and User Input, you can start scanning by selecting **Probe System Prompt**.
 
 The Playground sends the combined prompt to the AI agent and captures the response for analysis.
 
@@ -70,4 +70,4 @@ Each result includes:
 
 <figure><img src="../../.gitbook/assets/image (39).png" alt="" width="563"><figcaption></figcaption></figure>
 
-Response visibility helps you quickly identify prompt injection risks and unsafe AI agent behaviour during testing.
+Response visibility helps you quickly identify prompt injection risks and unsafe AI agent behaviour during scanning.
