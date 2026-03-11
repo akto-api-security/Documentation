@@ -10,15 +10,15 @@ You can run a probe from the editor against a selected agentic component. Verify
 {% step %}
 ### Select a Probe YAML
 
-Select any default probe of your choice and replace the 3 sections (api\_selection\_filters, execute, validate) with the above YAML text. Please refer the [edit-test.md](edit-test.md "mention") section for a better understanding of how to edit a probe YAML.
+Select any default probe of your choice and replace the 3 sections (api\_selection\_filters, execute, validate) with the above YAML text. Please refer the [edit-test.md](edit-test.md "mention") section for a better understanding of how to edit a probe YAML. (Note: link refers to the Probe Editor page)
 
 You can change the Probe YAML. [Learn here](../concepts/template-yamls/).
 {% endstep %}
 
 {% step %}
-### **Select your Sample Agent Component For Testing**
+### **Select your Sample Agent Component For Probing**
 
-Click on the agent component endpoint to select the component you want to check for testing the above YAML.
+Click on the agent component endpoint to select the component you want to check for probing the above YAML.
 
 Select your desired agent collection and then select the desired component endpoint.
 
@@ -32,16 +32,16 @@ Click on Run Probe at the Top right.
 
 Selecting **Run Probe** opens the **Probe configuration** dialog. The dialog defines the execution context for the test.
 
-#### Configure the Test Execution
+#### Configure the Probe Execution
 
-1. Select the **Agentic collection** that contains the endpoint used for testing.
-2. Select the **Agentic Component** that Akto will use to execute the test request.
+1. Select the **Agentic collection** that contains the endpoint used for probing.
+2. Select the **Agentic Component** that Akto will use to execute the probe request.
 3. Select the **Role** that defines the authorisation context for the request.
-4. Select the **Testing Module** that executes the test request.
-5.  (Optional) Enable **Use different target for scanning** and provide a value in **Override test app host** when the test should run against a different host.
+4. Select the **Probing Module** that executes the probe request.
+5.  (Optional) Enable **Use different target for scanning** and provide a value in **Override probe app host** when the probe should run against a different host.
 
     <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (146).png" alt="" width="563"><figcaption></figcaption></figure></div>
-6. Select **Save** to start the test execution.
+6. Select **Save** to start the probe execution.
 {% endstep %}
 
 {% step %}

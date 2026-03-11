@@ -6,7 +6,7 @@ description: Probe Library for OWASP MCP Top 10 for Security in Akto
 
 This section documents the **MCP Security Probe Library** built by Akto to test Model Context Protocol (MCP) servers, tools, agents, and downstream integrations.
 
-Each probe represents a **concrete, executable security test** that targets a specific MCP failure mode. Probes are organized by **MCP OWASP Top 10 category** and are executed using real MCP protocol flows (JSON-RPC, function calls, tool execution, session handling).
+Each probe represents a **concrete, executable security probe** that targets a specific MCP failure mode. Probes are organized by **MCP OWASP Top 10 category** and are executed using real MCP protocol flows (JSON-RPC, function calls, tool execution, session handling).
 
 > **Note**\
 > The lists below show representative probes for each category. The full library contains **4,000+ MCP and agentic security probes** and continues to expand.

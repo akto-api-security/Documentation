@@ -6,10 +6,10 @@ description: Probe Library for AI Agent OWASP Top 10 for Security
 
 This section documents Akto’s **Agentic AI Security (ASI) probe library**, mapped to the **ASI Agentic Top 10** risk categories.
 
-Each entry below is an **executable test template**. Templates are grouped by:
+Each entry below is an **executable probe template**. Templates are grouped by:
 
-* **ASI category** (what risk is being tested)
-* **attack family / technique** (how the test is delivered: base64, leetspeak, roleplay, etc.)
+* **ASI category** (what risk is being probed)
+* **attack family / technique** (how the probe is delivered: base64, leetspeak, roleplay, etc.)
 * **execution template** (single-shot, sequential, crescendo, tree, linear, judge)
 
 > **Note**\

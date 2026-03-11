@@ -1,4 +1,4 @@
-# Add a New Test Library
+# Add a New Probe Library
 
 Probe libraries in Akto allow you to expand and customize your agentic security testing capabilities. This guide will walk you through the process of adding a new probe library to your Akto instance.
 
