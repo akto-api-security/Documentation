@@ -15,7 +15,7 @@ Redact sensitive data to comply with privacy regulations and prevent unauthorize
 ## Important Note
 
 {% hint style="warning" %}
-Redacting data affects security testing. Without stored values, agent requests can't be replayed and tested.
+Redacting data affects AI Red Teaming. Without stored values, agent requests can't be replayed and scanned.
 {% endhint %}
 
 ## How Redaction Works

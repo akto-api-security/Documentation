@@ -1,13 +1,13 @@
 # Manual Import
 
-Manual import allows you to directly import your AI agents, MCP servers, and AI models into Akto for security testing without setting up continuous discovery agents. This is perfect for quick testing, CI/CD pipelines, or when you only need to test specific components.
+Manual import allows you to directly import your AI agents, MCP servers, and AI models into Akto for AI Red Teaming without setting up continuous discovery agents. This is perfect for quick probing, CI/CD pipelines, or when you only need to probe specific components.
 
 ## When to Use Manual Import
 
 Manual import is ideal when you:
 
-* Want to test specific AI agents or MCP servers without full infrastructure setup
-* Need to run security tests in your CI/CD pipeline
+* Want to probe specific AI agents or MCP servers without full infrastructure setup
+* Need to run security probes in your CI/CD pipeline
 * Have standalone AI models or agents to validate
 * Prefer a quick start without deploying discovery agents
 
@@ -15,19 +15,19 @@ Manual import is ideal when you:
 
 ### Import AI Agents
 
-Import AI agents from AWS Bedrock, Azure AI Foundry, Databricks, Google Vertex AI, IBM Watsonx, or your custom agents directly into Akto for security testing.
+Import AI agents from AWS Bedrock, Azure AI Foundry, Databricks, Google Vertex AI, IBM Watsonx, or your custom agents directly into Akto for AI Red Teaming.
 
 → [Import AI Agents](../../agentic-red-teaming/get-started/manual-import/ai-agent-import.md)
 
 ### Import MCP Servers
 
-Import MCP servers by connecting to their SSE endpoints. Akto will automatically discover all tools, resources, and prompts for testing.
+Import MCP servers by connecting to their SSE endpoints. Akto will automatically discover all tools, resources, and prompts for probing.
 
 → [Import MCP Servers](../../agentic-red-teaming/get-started/manual-import/mcp-import.md)
 
 ### Import AI Models
 
-Import large language models and custom AI implementations for comprehensive security testing.
+Import large language models and custom AI implementations for comprehensive AI Red Teaming.
 
 → [Import AI Models](../../agentic-red-teaming/get-started/manual-import/ai-model-import.md)
 
@@ -36,7 +36,7 @@ Import large language models and custom AI implementations for comprehensive sec
 Once you import your components:
 
 1. They appear in your Akto inventory immediately
-2. You can run security tests right away
+2. You can run security probes right away
 3. Akto identifies vulnerabilities specific to your agent or model
 4. You get detailed remediation guidance for any issues found
 

@@ -9,7 +9,7 @@ Managing your agent and MCP collections effectively helps ensure optimal perform
 
 ## Deactivating a Collection
 
-Deactivating a collection halts data ingestion, monitoring, and security testing for that specific collection.
+Deactivating a collection halts data ingestion, monitoring, and AI Red Teaming for that specific collection.
 
 ### Steps to Deactivate
 
@@ -32,7 +32,7 @@ Consider deactivating a collection when:
 
 ## Reactivating a Collection
 
-To resume ingestion, monitoring, and security testing, you can reactivate a previously deactivated collection.
+To resume ingestion, monitoring, and AI Red Teaming, you can reactivate a previously deactivated collection.
 
 ### Steps to Reactivate
 
@@ -46,5 +46,5 @@ To resume ingestion, monitoring, and security testing, you can reactivate a prev
 Once reactivated:
 - Agent component discovery will resume
 - Traffic analysis will restart
-- Security testing will be enabled again
+- AI Red Teaming will be enabled again
 - Historical data (if retained) will become accessible

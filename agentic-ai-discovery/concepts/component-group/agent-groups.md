@@ -11,7 +11,7 @@ Agent Groups are a feature in Akto that allow you to organize and categorize rel
 An Agent Group is a logical collection of agent components that share common attributes. Unlike collections, which are primarily for discovery and organization, groups enable you to:
 
 - Apply bulk security policies
-- Run targeted security tests
+- Run targeted security probes
 - Monitor related components together
 - Manage access control at the group level
 - Track metrics across similar agents
@@ -45,7 +45,7 @@ Group agents by security risk:
 
 Group agents by deployment environment:
 - **Production Agents**: Live, customer-facing systems
-- **Staging Agents**: Pre-production testing
+- **Staging Agents**: Pre-production probing
 - **Development Agents**: Development and experimentation
 
 ### By LLM Provider
@@ -58,9 +58,9 @@ Group agents by the AI provider they use:
 
 ## Use Cases
 
-### Security Testing by Group
+### AI Red Teaming by Group
 
-Run comprehensive security tests on:
+Run comprehensive security probes on:
 - All customer-facing agents
 - All agents with database access
 - All agents handling PII
@@ -80,4 +80,4 @@ Monitor and improve:
 - Token efficiency for similar agents
 - Tool invocation patterns by group
 
-Agent groups are a powerful tool for organizing your agentic inventory, enabling more efficient management, security testing, and analysis of your AI agent systems.
+Agent groups are a powerful tool for organizing your agentic inventory, enabling more efficient management, AI Red Teaming, and analysis of your AI agent systems.

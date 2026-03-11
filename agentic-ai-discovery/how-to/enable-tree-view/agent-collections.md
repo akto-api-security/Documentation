@@ -58,7 +58,7 @@ Once enabled, the Tree View will organize your agent collections hierarchically:
 View all agents by business function to understand your agentic capabilities and identify redundancies or gaps.
 
 ### Security Assessment
-Group agents by risk level, data sensitivity, or public exposure to prioritize security testing and monitoring.
+Group agents by risk level, data sensitivity, or public exposure to prioritize AI Red Teaming and monitoring.
 
 ### Framework Migration
 Organize agents by framework to plan migrations or consolidations (e.g., moving from LangChain to LlamaIndex).

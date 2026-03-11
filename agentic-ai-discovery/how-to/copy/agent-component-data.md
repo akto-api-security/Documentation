@@ -1,10 +1,10 @@
 ---
-description: Copy agent component data for testing, debugging, and analysis.
+description: Copy agent component data for probing, debugging, and analysis.
 ---
 
 # Copy Agent Component Data
 
-You can copy agent component request/response data in `curl` format or for use in testing tools. This helps with troubleshooting, debugging, and security testing.
+You can copy agent component request/response data in `curl` format or for use in scanning tools. This helps with troubleshooting, debugging, and AI Red Teaming.
 
 ## How to Copy
 
@@ -13,7 +13,7 @@ You can copy agent component request/response data in `curl` format or for use i
 3. Click the **Copy** button in the component details panel
 4. Choose format:
    - **curl**: For terminal replay
-   - **Burp**: For Burp Suite testing
+   - **Burp**: For Burp Suite Probing
    - **Raw**: For custom tools
 
 ## What Gets Copied
@@ -26,8 +26,8 @@ You can copy agent component request/response data in `curl` format or for use i
 
 ## Use Cases
 
-- **Testing**: Replay agent requests for validation
+- **Probing**: Replay agent requests for validation
 - **Debugging**: Analyze agent behavior with specific inputs
-- **Security Testing**: Test prompt injection with copied requests
+- **Security Probing**: Probe prompt injection with copied requests
 - **Documentation**: Create examples for team reference
 - **Version Control**: Track agent behavior changes over time

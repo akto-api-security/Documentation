@@ -30,8 +30,8 @@ The tags interface shows:
 
 ## Use Cases
 
-### Security Testing
-Tag agents for targeted security testing:
+### Security Probing
+Tag agents for targeted AI Red Teaming:
 ```
 - #prompt-injection-tested
 - #red-team-approved

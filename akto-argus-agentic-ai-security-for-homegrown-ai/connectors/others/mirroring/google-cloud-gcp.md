@@ -76,10 +76,6 @@ us-west4-a
 11. Copy and paste this IP in your browser and add port 8080 to it ( http://yourip:8080)
 12. You can now signup on Akto dashboard.
 
-### What's next?
-
-You can now go to your API Inventory to see all the API traffic Akto has captured. Head to [API Discovery](../../../../agentic-ai-discovery/concepts/collections/mcp-collection.md) to learn more. Once you start seeing inventory, you can run API Security tests on your APIs. See [Akto's test library](https://www.akto.io/test-library) to select tests you want to run on your APIs.
-
 ## Steps to Uninstall and delete Akto resources
 
 In case you are done using Akto and want to uninstall, follow these steps:

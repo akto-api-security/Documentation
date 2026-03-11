@@ -39,26 +39,26 @@ Understanding your AI attack surface is the foundation of security. Akto automat
 
 ***
 
-### **2. AI Security Testing**
+### **2. AI Red Teaming**
 
-Proactive vulnerability assessment specifically designed for AI systems. Akto performs comprehensive security testing aligned with OWASP GenAI Security standards and real-world attack patterns.
+Proactive vulnerability assessment specifically designed for AI systems. Akto performs comprehensive AI Red Teaming aligned with OWASP GenAI Security standards and real-world attack patterns.
 
 **Key Capabilities:**
 
-* 1000+ AI-specific test templates covering OWASP Top 10 for LLMs
+* 1000+ AI-specific probe templates covering OWASP Top 10 for LLMs
 * Automated red-teaming with adversarial prompt generation
-* Testing for prompt injection, jailbreaking, and system prompt extraction
+* Scanning for prompt injection, jailbreaking, and system prompt extraction
 * Supply chain vulnerability scanning for models and dependencies
 * Data poisoning and model manipulation detection
 * Excessive agency and unauthorized tool usage validation
-* CI/CD integration for continuous AI security testing
+* CI/CD integration for continuous AI Red Teaming
 
-**Advanced Testing Scenarios:**
+**Advanced Scanning Scenarios:**
 
 * **Prompt Injection Attacks**: Direct, indirect, and multi-turn injection attempts
 * **Model Extraction**: Attempts to steal model weights or training data
 * **Adversarial Inputs**: Crafted inputs designed to cause misclassification
-* **Resource Exhaustion**: Testing for unbounded token consumption
+* **Resource Exhaustion**: Scanning for unbounded token consumption
 * **Cross-Plugin Request Forgery**: Exploiting agent tool interactions
 * **Training Data Leakage**: Extracting memorized sensitive information
 
