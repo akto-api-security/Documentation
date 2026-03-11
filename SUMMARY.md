@@ -135,7 +135,7 @@
     * [MCP Red Teaming](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/mcp-red-teaming.md)
     * [Agentic Red Teaming](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/ai-agent-security.md)
     * [Severity Levels](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/severity-levels.md)
-    * [Test](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/test.md)
+    * [Probe](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/test.md)
     * [Result types](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/result-types.md)
     * [Scan Roles](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/test-role.md)
     * [User Config](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/user-config.md)
