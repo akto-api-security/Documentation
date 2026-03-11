@@ -33,7 +33,7 @@ The tags interface shows:
 ### Security Probing
 Tag agents for targeted AI Red Teaming:
 ```
-- #prompt-injection-tested
+- #prompt-injection-scanned
 - #red-team-approved
 - #security-review-pending
 ```

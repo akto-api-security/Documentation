@@ -4,7 +4,7 @@ description: Mark agent and MCP collections as Development, Staging, or Producti
 
 # Set Environment Type
 
-Mark your agent and MCP collections with an environment type to help prioritize testing and triage alerts.
+Mark your agent and MCP collections with an environment type to help prioritize scanning and triage alerts.
 
 ## How to Set Environment Type
 

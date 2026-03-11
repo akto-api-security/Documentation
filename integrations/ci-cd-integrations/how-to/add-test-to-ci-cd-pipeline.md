@@ -1,5 +1,5 @@
-# Add test to CI/CD Pipeline
+# Add probe to CI/CD Pipeline
 
-The "Add to CI/CD Pipeline" feature allows you to integrate Akto's security tests directly into your continuous integration and deployment workflow. This enables automated security testing as part of your development lifecycle, ensuring that vulnerabilities are caught before reaching production.
+The "Add to CI/CD Pipeline" feature allows you to integrate Akto's red teaming directly into your continuous integration and deployment workflow. This enables automated red teaming as part of your development lifecycle, ensuring that vulnerabilities are caught before reaching production.
 
 <figure><img src="../../../.gitbook/assets/image (45) (1).png" alt=""><figcaption></figcaption></figure>

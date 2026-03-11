@@ -11,7 +11,7 @@ Reset data types when you need to revert changes or refresh detection settings.
 - Custom data type configuration errors
 - Troubleshooting detection issues
 - Starting fresh with data type configs
-- Reverting test changes
+- Reverting scan changes
 
 ## How to Reset
 

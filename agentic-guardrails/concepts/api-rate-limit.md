@@ -96,7 +96,7 @@ You can create custom rules for specific agent components or collections:
 2. Click **Add Rule**
 3. Select agent collection or specific components
 4. Configure parameters based on component characteristics
-5. Enable monitoring mode to test before enforcement
+5. Enable monitoring mode to scan before enforcement
 
 ## Monitoring and Alerts
 

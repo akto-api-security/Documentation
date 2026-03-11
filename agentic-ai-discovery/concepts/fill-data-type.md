@@ -97,7 +97,7 @@ You may improve long-term accuracy and governance by following these practices:
 
 * Run **Fill Data Types** quarterly or after major Akto releases
 * Review newly added data types and adjust priorities as needed
-* Validate detection behaviour with a targeted test scan after updates
+* Validate detection behaviour with a targeted probe scan after updates
 * Maintain internal documentation for any custom data types
 
 ## Support and Additional Resources

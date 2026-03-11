@@ -1,10 +1,10 @@
-# Remediation Steps for Testing Issues
+# Remediation Steps for Scanning Issues
 
-Akto provides actionable remediation guidance for every vulnerability identified during agentic security testing. This helps teams quickly understand and fix security issues within their workflow.
+Akto provides actionable remediation guidance for every vulnerability identified during AI red teaming. This helps teams quickly understand and fix security issues within their workflow.
 
 ## Accessing Remediation Details
 
-After running a test:
+After running a scan:
 
 1. Navigate to **Agentic Red Teaming** in the sidebar
 2. Click on **Results**
@@ -19,4 +19,4 @@ After running a test:
 
 **Explanation of risk**: Description outlines the security impact, helping developers and security teams understand the issue's severity and implications for agentic systems.
 
-**Next actions**: Take immediate action from within the tab, such as retesting the fix, updating issue status, or creating a Jira ticket for tracking.
+**Next actions**: Take immediate action from within the tab, such as rescanning the fix, updating issue status, or creating a Jira ticket for tracking.

@@ -1,10 +1,10 @@
 # GitLab
 
-Akto integrates with GitLab to add automated API security testing to your CI/CD pipeline. This integration enables you to:
+Akto integrates with GitLab to add automated AI Red Teaming to your CI/CD pipeline. This integration enables you to:
 
-* Run API security tests during your GitLab pipelines
-* View security test results directly in merge requests
-* Block merges based on security test results
+* Run API security scans during your GitLab pipelines
+* View security scan results directly in merge requests
+* Block merges based on security scan results
 
 <figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -15,7 +15,7 @@ Akto integrates with GitLab to add automated API security testing to your CI/CD 
 * Docker runner configured in GitLab
 * [Akto dashboard access](https://app.akto.io/)
 * [Akto API credentials](/broken/pages/fxxYPwGU1kTuZwMAksYR) (API key and dashboard URL)
-* [Valid test ID from your Akto test](/broken/pages/q2Oz4FsKPEq381Pwpaws)
+* [Valid test ID from your Akto Probe](/broken/pages/q2Oz4FsKPEq381Pwpaws)
 
 ### Steps to Configure GitLab
 
@@ -64,7 +64,7 @@ test_scan:
 
 1. Create a merge request
 2. Pipeline will automatically run
-3. Check "CI/CD > Pipelines" for test results
+3. Check "CI/CD > Pipelines" for scan results
 
 <figure><img src="../../.gitbook/assets/image (75).png" alt=""><figcaption></figcaption></figure>
 

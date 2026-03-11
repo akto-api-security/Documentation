@@ -70,7 +70,7 @@ Akto Guardrails defends against:
 ## Next Steps
 
 - [Discover your agents](../agentic-discovery/) to get full visibility
-- [Run security tests](../agentic-red-teaming/) to identify vulnerabilities
+- [Run security probes](../agentic-red-teaming/) to identify vulnerabilities
 - Configure custom blocking policies for your use case
 
 Need help? Contact support@akto.io or use in-app Intercom.

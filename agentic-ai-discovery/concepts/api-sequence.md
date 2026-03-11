@@ -10,7 +10,7 @@ description: Understand agent component sequences and workflow patterns in your 
 Agent component sequences are chains of component invocations that represent user or agent workflows. Identifying these sequences is critical for:
 
 - Detecting logic-based vulnerabilities in agentic workflows
-- Improving security testing coverage
+- Improving red teaming coverage
 - Understanding agent usage patterns and behavior
 - Identifying potential security risks in multi-step operations
 

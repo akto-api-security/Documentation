@@ -201,7 +201,7 @@ The playground allows your team to validate guardrail behaviour before updating 
 
 <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
-Playground testing helps your security team verify that guardrail conditions correctly detect violations and return the expected blocked response message before the policy is finalized.
+Playground probing helps your security team verify that guardrail conditions correctly detect violations and return the expected blocked response message before the policy is finalized.
 
 ## What’s Next
 

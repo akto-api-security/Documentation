@@ -1,18 +1,18 @@
-# Setup alerts for Akto test run results
+# Setup alerts for Akto Scan run results
 
-You can setup alerts for Akto test run results by following the steps given below:
+You can setup alerts for Akto scan run results by following the steps given below:
 
 1. Configure alerts. You can configure [Slack Webhook](slack-webhook.md) or [Microsoft Teams Webhook](microsoft-teams-webhook.md) according to your requirement.
-2.  Once configured, in the `Run test` dialog box, select the option to send alerts for test results.
+2.  Once configured, in the `Run Scan` dialog box, select the option to send alerts for scan results.
 
     <figure><img src="../.gitbook/assets/test-alerts-1.png" alt=""><figcaption></figcaption></figure>
-3.  Voila you have configured test alerts. Once the tests are completed, you will receive test run summary directly in your preferred medium.
+3.  Voila you have configured scan alerts. Once the scan are completed, you will receive scan run summary directly in your preferred medium.
 
     <figure><img src="../.gitbook/assets/test-alerts-2.png" alt=""><figcaption></figcaption></figure>
 
-### Reminders for Scheduled Tests
+### Reminders for Scheduled Scans
 
-Akto also supports **reminder alerts** to help you stay prepared for upcoming scheduled tests. By enabling the **Pending tests alerts** option in the Webhook settings, you will receive a notification **one hour before** any scheduled test is set to run. This ensures your team is aware and can take any necessary preparatory actions before the security test begins.
+Akto also supports **reminder alerts** to help you stay prepared for upcoming scheduled scna. By enabling the **Pending scan alerts** option in the Webhook settings, you will receive a notification **one hour before** any scheduled scan is set to run. This ensures your team is aware and can take any necessary preparatory actions before the security scan begins.
 
 <figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
