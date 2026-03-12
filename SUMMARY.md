@@ -383,17 +383,17 @@
 
 ## API reference
 
-* [API reference](api-reference/api-reference.md)
-* [Discovery](api-reference/discovery/README.md)
+* [Akto API reference](api-reference/api-reference.md)
+* [Agentic Discovery](api-reference/discovery/README.md)
   * [Fetch Data](api-reference/discovery/fetch-data.md)
   * [Modify Data](api-reference/discovery/modify-data.md)
-* [Security Testing](api-reference/security-testing/README.md)
+* [AI Red Teaming](api-reference/security-testing/README.md)
   * [Fetch Data](api-reference/security-testing/fetch-data.md)
   * [Modify Data](api-reference/security-testing/modify-data.md)
 * [Scan results](api-reference/scan-results/README.md)
   * [Fetch Data](api-reference/scan-results/fetch-data.md)
   * [Modify Data](api-reference/scan-results/modify-data.md)
-* [Threat Protection](api-reference/threat-protection/README.md)
+* [Guardrails Activity](api-reference/threat-protection/README.md)
   * [Fetch Data](api-reference/threat-protection/fetch-data.md)
   * [Modify Data](api-reference/threat-protection/modify-data.md)
 
