@@ -28,7 +28,7 @@ Before setting up the Databricks connector, ensure you have completed the follow
 
 {% stepper %}
 {% step %}
-#### Open the Databricks Connector in Akto Argus
+**Open the Databricks Connector in Akto Argus**
 
 1. Navigate to **Akto Argus**.
 2. Open **Connectors**.
@@ -37,7 +37,7 @@ Before setting up the Databricks connector, ensure you have completed the follow
 {% endstep %}
 
 {% step %}
-#### Enter the Databricks Host
+**Enter the Databricks Host**
 
 Enter the base URL of your Databricks workspace in the **Databricks Host** field.
 
@@ -46,32 +46,31 @@ Enter the base URL of your Databricks workspace in the **Databricks Host** field
 {% endstep %}
 
 {% step %}
-#### Enter the Service Principal Credentials
+**Enter the Service Principal Credentials**
 
 Create a Databricks Service Principal and enter its credentials:
 
 1. In your Databricks workspace, go to **Settings** > **Identity and Access** > **Service Principals**.
 2. Click **Add Service Principal**, then note the **Application (Client) ID**.
 3. Generate a **Client Secret** and save it securely.
-4. Grant the Service Principal the required permissions:
+4.  Grant the Service Principal the required permissions:
 
-   ```sql
-   -- Grant catalog access
-   GRANT USE CATALOG ON CATALOG <your_catalog> TO `<service_principal_id>`;
+    ```sql
+    -- Grant catalog access
+    GRANT USE CATALOG ON CATALOG <your_catalog> TO `<service_principal_id>`;
 
-   -- Grant schema access
-   GRANT USE SCHEMA ON SCHEMA <your_catalog>.<your_schema> TO `<service_principal_id>`;
+    -- Grant schema access
+    GRANT USE SCHEMA ON SCHEMA <your_catalog>.<your_schema> TO `<service_principal_id>`;
 
-   -- Grant read access to tables
-   GRANT SELECT ON SCHEMA <your_catalog>.<your_schema> TO `<service_principal_id>`;
-   ```
-
+    -- Grant read access to tables
+    GRANT SELECT ON SCHEMA <your_catalog>.<your_schema> TO `<service_principal_id>`;
+    ```
 5. Enter the **Application (Client) ID** in the **Databricks Client ID (Service Principal)** field.
 6. Enter the generated secret in the **Databricks Client Secret** field.
 {% endstep %}
 
 {% step %}
-#### Specify the Unity Catalog Name and Schema
+**Specify the Unity Catalog Name and Schema**
 
 Enter the Unity Catalog and schema that contain your agent definitions:
 
@@ -82,7 +81,7 @@ These fields control which catalog and schema Akto Argus queries for agent disco
 {% endstep %}
 
 {% step %}
-#### Specify a Table Prefix (Optional)
+**Specify a Table Prefix (Optional)**
 
 Optionally enter a value in the **Table Prefix (Optional)** field to scope agent discovery to tables matching a specific prefix.
 
@@ -91,12 +90,12 @@ Optionally enter a value in the **Table Prefix (Optional)** field to scope agent
 {% endstep %}
 
 {% step %}
-#### Enter the Data Ingestion Service URL
+**Enter the Data Ingestion Service URL**
 
 Enter the URL of your **self-hosted data ingestion service** in the **URL for Data Ingestion Service** field in order to forward agent execution and telemetry data into your environment for processing.
 
 {% hint style="warning" %}
-### Note
+#### Note
 
 * The ingestion service must be deployed and exposed in your infrastructure.
 * The URL must be reachable from Akto.
@@ -105,7 +104,7 @@ Enter the URL of your **self-hosted data ingestion service** in the **URL for Da
 {% endstep %}
 
 {% step %}
-#### Complete the Integration
+**Complete the Integration**
 
 1. Review all entered values.
 2. Select **Import** to finalise the connection.
@@ -160,13 +159,12 @@ The Databricks connector captures two categories of information:
 
 **Solutions**:
 
-* Verify the Service Principal has the required permissions:
+*   Verify the Service Principal has the required permissions:
 
-  ```sql
-  SHOW GRANTS ON CATALOG <catalog_name>;
-  SHOW GRANTS ON SCHEMA <catalog_name>.<schema_name>;
-  ```
-
+    ```sql
+    SHOW GRANTS ON CATALOG <catalog_name>;
+    SHOW GRANTS ON SCHEMA <catalog_name>.<schema_name>;
+    ```
 * Grant any missing permissions as described in the setup steps above
 * Ensure Unity Catalog is enabled in your workspace
 

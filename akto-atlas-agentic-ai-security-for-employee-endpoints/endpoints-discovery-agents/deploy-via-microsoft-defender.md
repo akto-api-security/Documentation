@@ -1,12 +1,10 @@
-# Deploy via Microsoft Defender
+# Deploy via Microsoft Defender Endpoint
 
 ## Overview
 
-Microsoft Defender for Endpoint (MDE) provides endpoint telemetry across enterprise devices. Microsoft Defender Advanced Hunting queries allow you to identify AI developer tools, CLI agents, and Model Context Protocol (MCP) configurations running on enterprise endpoints.
+Microsoft Defender for Endpoint provides centralized visibility and remote management for enterprise devices. Microsoft Defender Live Response allows you to run scripts remotely on managed devices.
 
-Microsoft Defender telemetry helps you determine where AI agents operate inside the environment. MCP Endpoint Shield hooks from Akto can then be deployed on those devices.
-
-Visibility queries help you understand AI usage across developer machines. Visibility queries are **optional** and are not required for MCP Endpoint Shield deployment.
+You can use Microsoft Defender Live Response to deploy the Akto MCP Endpoint Shield hook on developer machines. Hook installation enables Akto to monitor agent interactions from tools such as Cursor, Claude, or Gemini.
 
 ## Prerequisites
 
@@ -164,7 +162,7 @@ Microsoft Defender Live Response allows you to run scripts remotely on enterpris
 3. Select **Endpoints → General → Live response library**.
 4.  Click **Upload file**.
 
-    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/i3 (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/i3.png" alt="" width="563"><figcaption></figcaption></figure></div>
 5. Upload the hook script received from the Akto support team.
 
 Example script files include:
