@@ -315,6 +315,7 @@
   * [Threat Dashboard](agentic-guardrails/concepts/threat-dashboard.md)
   * [Guardrail Activity](agentic-guardrails/concepts/guardrail-activity.md)
   * [Dynamic Agent Rate Limiting](agentic-guardrails/concepts/api-rate-limit.md)
+  * [Guardrail Schema](agentic-guardrails/concepts/guardrail-schema.md)
   * [Guardrail Policy](agentic-guardrails/concepts/threat-policy.md)
   * [Successful Exploits](agentic-guardrails/concepts/successful-exploits.md)
   * [Remediation Steps](agentic-guardrails/concepts/remediation-steps/README.md)
