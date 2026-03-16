@@ -21,14 +21,76 @@ Follow the steps in the [LangChain connector guide](langchain.md) to configure t
 {% hint style="info" %}
 **When to use this**
 
-Use this method if you want passive observability — collecting execution traces and API traffic after the fact without intercepting live requests.
+Use this method if you want passive observability; collecting execution traces and API traffic after the fact without intercepting live requests.
 {% endhint %}
 
 ### 2. Via Proxy
 
-Route your LangGraph agent's outbound LLM and tool calls through Akto's AI Agent Proxy. This gives you real-time inspection, guardrails enforcement, and response filtering on every request your agent makes — without modifying your application logic.
+Route your LangGraph agent's outbound LLM and tool calls through Akto's AI Agent Proxy. This gives you real-time inspection, guardrails enforcement, and response filtering on every request your agent makes, without modifying your application logic.
+
+#### 1. Set Up the AI Agent Proxy
+
+Configure an **AI Agent Proxy** in your environment so LangGraph agent requests can pass through the proxy before reaching the upstream LLM or tool APIs.
+
+```mermaid
+graph LR
+    A[LangGraph Agent] --> B[Akto AI Agent Proxy]
+    B --> C[LLM Provider / Tool APIs]
+```
+
+Akto Argus inspects prompts, evaluates guardrail policies, and filters responses before forwarding traffic to the upstream services.
 
 Refer to the [AI Agent Proxy guide](../../../agentic-guardrails/overview/akto-agent-proxy.md) for setup instructions.
+
+An enterprise platform team can deploy and manage the proxy within internal infrastructure. The deployed proxy endpoint becomes the `{PROXY_URL}` used in model routing configuration.
+
+#### 2. Route Model Requests Through the Proxy
+
+Update the model endpoint used by the LangGraph agent so requests pass through the proxy before reaching the model provider.
+
+General model endpoint format:
+
+```
+https://{MODEL_HOST}/{MODEL_PATH}
+```
+
+Proxy endpoint format:
+
+```
+https://{PROXY_URL}/{MODEL_PATH}?openai_url=https://{MODEL_HOST}
+```
+
+| Configuration Element | Value                                                              |
+| --------------------- | ------------------------------------------------------------------ |
+| Model URL             | `https://{MODEL_HOST}/{MODEL_PATH}`                                |
+| Proxy URL Format      | `https://{PROXY_URL}/{MODEL_PATH}?openai_url=https://{MODEL_HOST}` |
+
+Akto Argus evaluates prompts, applies guardrail policies, and forwards the request to the upstream model provider.
+
+<details>
+
+<summary><strong>Example: Azure AI Foundry endpoint</strong></summary>
+
+Azure AI Foundry model endpoint:
+
+```
+https://{AZURE_MODEL_URL}/openai/v1/
+```
+
+Proxy endpoint format:
+
+```
+https://{PROXY_URL}/openai/v1/?openai_url=https://{AZURE_MODEL_URL}
+```
+
+</details>
+
+{% hint style="warning" %}
+## **Proxy URL usage**
+
+If your team deployed an AI Agent Proxy in the previous step, use the proxy endpoint from that deployment as `{PROXY_URL}`.\
+If your team prefers not to deploy a proxy, request a **managed proxy URL from the Akto support team** and use the provided endpoint as `{PROXY_URL}`.
+{% endhint %}
 
 {% hint style="info" %}
 **When to use this**
