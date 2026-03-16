@@ -180,6 +180,7 @@
   * [Extract APIs from source code using our Docker based CLI](api-inventory-1/how-to/extract-apis-from-source-code-docker-cli.md)
   * [Remove Bad Endpoints](api-inventory-1/how-to/remove-bad-endpoints.md)
   * [Bulk De-Merge APIs](api-inventory/how-to/bulk-de-merge-apis.md)
+  * [Inspect Schema of an API Collection](api-inventory/how-to/inspect-schema-of-an-api-collection.md)
 
 ***
 
@@ -234,6 +235,7 @@
   * [JSON Recording for Automated Auth Tokens](api-security-testing/concepts/json-recording-for-automated-auth-tokens.md)
 * [How To](api-security-testing/how-to/README.md)
   * [Run Test](api-security-testing/how-to/run-test.md)
+  * [Run Bulk Testing](api-security-testing/how-to/run-bulk-testing.md)
   * [Auto-Create Jira Tickets](api-security-testing/how-to/auto-create-jira-tickets.md)
   * [Edit Test Settings](api-security-testing/how-to/edit-test-settings.md)
   * [Install testing module in your Cloud](api-security-testing/how-to/install-testing-module-in-your-cloud/README.md)
@@ -309,6 +311,7 @@
   * [Take Actions on Threats](api-protection/how-to/take-actions-on-threats.md)
   * [Export Visualisation and Report](api-protection/how-to/export-visualisation-and-report.md)
   * [Create Internal Workflow Item](api-protection/how-to/create-internal-workflow-item.md)
+  * [Export Activity to Custom Webhook](api-protection/how-to/export-activity-to-custom-webhook.md)
 
 ## Integrations
 

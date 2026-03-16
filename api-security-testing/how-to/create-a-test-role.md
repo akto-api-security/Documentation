@@ -106,7 +106,7 @@ Under **Use tokens from traffic**, configure the following:
   Example: `Bearer .*`\
   This ensures only tokens matching the defined pattern are used.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -218,6 +218,42 @@ openssl pkcs12 -in ./client.p12 -out client.key -nocerts -nodes
 You can now limit visibility of a Test Role using RBAC. Use the **"Scope Role"** dropdown while creating or editing a Test Role. For details, see [Restrict Access to a Test Role Using RBAC](restrict-test-role-rbac.md).
 {% endhint %}
 
+### 5. Digest Authentication
+
+Digest Authentication allows API Security Testing to authenticate with APIs that require HTTP digest-based authentication. Digest authentication uses a challenge-response mechanism where credentials are hashed before transmission, preventing passwords from being sent in plain text.
+
+#### How Digest Authentication Works
+
+1. The client sends an initial request to the server without credentials.
+2. The server responds with **401 Unauthorised** and returns a challenge containing parameters such as **nonce** and **realm**.
+3. The client computes a digest hash using the username, password, and challenge parameters.
+4. The client sends the request again with the computed digest in the **Authorisation** header.
+5. API Security Testing automatically performs the digest authentication flow for each test request.
+
+#### Setup Guide
+
+{% stepper %}
+{% step %}
+Navigate to **API Security Testing → Test Roles**.
+{% endstep %}
+
+{% step %}
+Click **Add Authentication** and select **Digest Authentication**.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (192).png" alt="" width="563"><figcaption></figcaption></figure></div>
+{% endstep %}
+
+{% step %}
+Enter the required configuration details:
+
+<table><thead><tr><th width="159.35546875">Field</th><th>Description</th></tr></thead><tbody><tr><td><strong>Username</strong></td><td>Username represents the identity used during digest authentication.</td></tr><tr><td><strong>Password</strong></td><td>Password participates in the digest hash computation and is not transmitted in plain text.</td></tr><tr><td><strong>Target URL</strong></td><td>Target URL represents the endpoint that returns the digest authentication challenge.</td></tr><tr><td><strong>HTTP Method</strong></td><td>HTTP method defines the request method used for the initial challenge request. Default value is <strong>GET</strong>.</td></tr><tr><td><strong>Algorithm</strong></td><td>Algorithm defines the hashing algorithm used for digest computation. Supported algorithms include <strong>SHA-256</strong> and <strong>MD5</strong>.</td></tr></tbody></table>
+{% endstep %}
+
+{% step %}
+Click **Save** to store the authentication configuration.
+{% endstep %}
+{% endstepper %}
+
 ## Advance Settings
 
 ### API Header Conditions
@@ -259,7 +295,7 @@ While creating or editing a Test Role, navigate to **Advanced Settings**.
 
         Leave this empty to skip path matching.
 
-    <figure><img src="../../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/image (4).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
