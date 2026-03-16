@@ -30,9 +30,9 @@ Follow the steps mentioned [here](https://docs.akto.io/getting-started/traffic-p
 
 ----------
 
-## Step 2: Set Up Cross-Account IAM Role for CloudWatch Logs
+## Step 2: Set Up Cross-Account IAM Role for Cloudwatch Logs and API Specs
 
-If your EKS cluster and CloudWatch log groups are in different AWS accounts, follow these steps to enable access using IAM roles with temporary credentials.
+If your EKS cluster and CloudWatch log groups are in different AWS accounts, follow these steps to enable access using IAM roles with temporary credentials. This role allows Akto to read API Gateway logs and to discover your API specs for the dashboard.
 
 ### 2.1 Create IAM Role in CloudWatch Account
 
@@ -55,6 +55,18 @@ If your EKS cluster and CloudWatch log groups are in different AWS accounts, fol
             "logs:FilterLogEvents"
           ],
           "Resource": "arn:aws:logs:<region>:<cloudwatch-account-id>:log-group:*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+              "apigateway:GET"
+          ],
+          "Resource": [
+              "arn:aws:apigateway:*::/restapis",
+              "arn:aws:apigateway:*::/restapis/*",
+              "arn:aws:apigateway:*::/apis",
+              "arn:aws:apigateway:*::/apis/*"
+          ]
         }
       ]
     }
@@ -214,14 +226,20 @@ spec:
             value: ""
           - name: DATABASE_ABSTRACTOR_TOKEN
             value: ""
+          - name: DISCOVER_OPENAPI_SPEC
+            value: "true"
+          - name: OPENAPI_DISCOVERY_INTERVAL_MINUTES
+            value: "15"
 ```
 
 - Replace `<namespace>` with the Kubernetes namespace used in Steps 3.3 and 4.  
 - For `AKTO_KAFKA_BROKER_MAL`, use the value of the `mini-runtime` service deployed in Step 1.1.  
-- For `<LOG_GROUP_ARN>`, enter the value obtained in Step 1.2.5. (This is optional if you want to use multiple CloudWatch log groups)
-- Replace `<DATABASE_ABSTRACTOR_TOKEN>`, with the database abstractor token from Akto dashboard.
-- For `<SESSION_NAME>`, use any name you want for the session.  
-- Replace `<AWS_REGION>` with the AWS region where your EKS cluster is located.
+- For `LOG_GROUP_PREFIX`, the default is `API-Gateway-Execution-Logs`; change it only if your log groups use a different prefix.
+- Replace `DATABASE_ABSTRACTOR_TOKEN` with the database abstractor token from the Akto dashboard (needed for fetching role ARNs and for API spec discovery).
+- For `SESSION_NAME`, use any name you want for the session.  
+- Replace `AWS_REGION` with the AWS region where your EKS cluster is located.
+- **DISCOVER_OPENAPI_SPEC**: Set to `"true"` to have Akto discover and sync your API Gateway API specs to the dashboard; set to `"false"` to only mirror traffic from logs.
+- **OPENAPI_DISCOVERY_INTERVAL_MINUTES**: How often (in minutes) Akto checks for new or updated API specs when discovery is enabled (default: 15).
 
 ## Note:
 
@@ -230,7 +248,7 @@ spec:
 
 ----------
 
-With this setup, Akto can fetch CloudWatch logs from API Gateway across AWS accounts using temporary credentials.
+With this setup, Akto can fetch CloudWatch logs from API Gateway across AWS accounts and, when enabled, discover and sync your API specs to the dashboard—all using temporary credentials.
 
 ----------
 
