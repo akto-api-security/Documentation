@@ -101,7 +101,7 @@ redirects:
   api-inventory/how-to/edit-tags: api-inventory/how-to/set-tags.md
 # Agentic AI migration - all paths redirect to migration landing page
 # agentic-ai: migration/agentic-ai-documentation.md
-  agentic-ai/mcp-import: migration/agentic-ai-documentation.md
+  agentic-ai/mcp-import: "/migration/agentic-ai-documentation"
   agentic-ai/akto-mcp-server: migration/agentic-ai-documentation.md
   agentic-ai/mcp-security: migration/agentic-ai-documentation.md
   agentic-ai/mcp-recon: migration/agentic-ai-documentation.md
