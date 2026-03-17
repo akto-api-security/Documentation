@@ -8,7 +8,7 @@ coverHeight: 366
 
 
 
-[**API Security**](./#api-security) • [**DAST**](/broken/pages/P0xcGHMlFVFYeUtvKyep) • [**Akto Atlas**](https://ai-security-docs.akto.io/akto-atlas-agentic-ai-security-for-employee-endpoints/overview) • [**Akto Argus**](https://ai-security-docs.akto.io/akto-argus-agentic-ai-security-for-homegrown-ai/overview) • [**Join Discord Community**](https://discord.com/invite/Wpc6xVME4s)
+[**API Security**](./#api-security) • [**DAST**](dast/akto-dast.md) • [**Akto Atlas**](https://ai-security-docs.akto.io/akto-atlas-agentic-ai-security-for-employee-endpoints/overview) • [**Akto Argus**](https://ai-security-docs.akto.io/akto-argus-agentic-ai-security-for-homegrown-ai/overview) • [**Join Discord Community**](https://discord.com/invite/Wpc6xVME4s)
 
 Akto is a **unified Agentic AI, MCP, and API security platform** built to secure autonomous AI workflows and modern APIs in production.
 

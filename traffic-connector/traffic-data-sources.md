@@ -38,7 +38,6 @@
 
 ### Workflow Automation
 
-<table data-view="cards"><thead><tr><th></th><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th><th data-hidden data-card-cover data-type="files"></th></tr></thead><tbody><tr><td><strong>N8N</strong></td><td>Monitor API traffic from your N8N workflows and ensure your automated processes maintain security standards.</td><td></td><td><a href="/broken/pages/aGOXjBTNg1BnYB1S2XZT">Broken link</a></td><td></td></tr></tbody></table>
 
 ### Manual
 
