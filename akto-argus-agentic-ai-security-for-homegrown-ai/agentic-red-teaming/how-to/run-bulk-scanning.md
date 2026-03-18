@@ -2,13 +2,13 @@
 
 ## Overview
 
-Bulk Probing for Agentic Collections allows enterprise security and platform teams to execute security probes across multiple APIs generated or discovered through agentic workflows. Bulk execution helps evaluate the security posture of an entire agentic API set without running probes for each endpoint individually.
+Bulk Probing for Agentic Collections allows enterprise security and platform teams to execute security probes across multiple agentic components discovered through agentic workflows. Bulk execution helps evaluate the security posture of an entire agentic component set without running probes for each endpoint individually.
 
 Akto executes the selected probes against all endpoints in the Agentic Collection and records results in the probing results view.
 
 ## Access Bulk Probing from Agentic Collections
 
-Bulk Probing is available inside the API Collections view.
+Bulk Probing is available inside the Agentic Collections view.
 
 **Steps**
 
@@ -41,7 +41,7 @@ The **Configure Scan** panel allows enterprise security teams to define probe ca
 You can configure the following parameters:
 
 * **Probe Categories and Probes**\
-  Select MCP security categories and individual probes that should run across the selected APIs.
+  Select MCP security categories and individual probes that should run across the selected components.
 * **Run Type**\
   Choose whether the scan runs **once** or on a **scheduled date and time**.
 * **Scan Runtime**\
@@ -70,8 +70,8 @@ Akto aggregates results from all probed endpoints and displays findings in the *
 
 Enterprise security teams can:
 
-* Identify vulnerabilities across multiple agentic APIs.
+* Identify vulnerabilities across multiple agentic components.
 * Investigate results for individual endpoints.
 * Prioritise remediation based on severity.
 
-Bulk Probing helps security teams evaluate security coverage across large agent-generated API inventories efficiently.
+Bulk Probing helps security teams evaluate security coverage across large agent-generated inventories efficiently.
