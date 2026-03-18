@@ -525,7 +525,6 @@ claude "What is 2+2?"
 
 ## Resources
 
-* **Claude CLI**: [https://github.com/anthropics/claude-cli](https://github.com/anthropics/claude-cli)
 * **GitHub**: [https://github.com/akto-api-security/akto](https://github.com/akto-api-security/akto)
 * **Support**: [support@akto.io](mailto:support@akto.io)
 * **Community**: [https://www.akto.io/community](https://www.akto.io/community)
