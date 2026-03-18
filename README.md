@@ -6,8 +6,6 @@ coverHeight: 366
 
 # What is Akto?
 
-
-
 [**API Security**](./#api-security) • [**DAST**](dast/akto-dast.md) • [**Akto Atlas**](https://ai-security-docs.akto.io/akto-atlas-agentic-ai-security-for-employee-endpoints/overview) • [**Akto Argus**](https://ai-security-docs.akto.io/akto-argus-agentic-ai-security-for-homegrown-ai/overview) • [**Join Discord Community**](https://discord.com/invite/Wpc6xVME4s)
 
 Akto is a **unified Agentic AI, MCP, and API security platform** built to secure autonomous AI workflows and modern APIs in production.
@@ -56,7 +54,7 @@ Akto’s API Security platform helps teams **discover, test, and monitor APIs co
 
 It consists of **two tightly integrated components**:
 
-### API Security&#x20;
+### API Security
 
 **Discovery & Runtime**
 
@@ -72,7 +70,7 @@ It consists of **two tightly integrated components**:
 📘 Start here: [Getting Started with API Security](readme-1.md)
 {% endhint %}
 
-### DAST&#x20;
+### DAST
 
 **Dynamic API Security Testing**
 
@@ -89,7 +87,7 @@ It consists of **two tightly integrated components**:
 {% endhint %}
 
 {% hint style="warning" %}
-## Scope of This Documentation
+### Scope of This Documentation
 
 This documentation site **only covers:** API Security & DAST
 

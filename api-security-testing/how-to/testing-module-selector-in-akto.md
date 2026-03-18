@@ -7,25 +7,42 @@ You can use the selector to:
 * Choose which module will execute the test
 * Run tests using a specific configured module
 
-***
+## How to Use the Testing Module Selector
 
-### How to Use the Testing Module Selector
+{% stepper %}
+{% step %}
+Go to **Testing > API Collections**.
+{% endstep %}
 
-1. Go to **Testing > API Collections**.
-2. Click **Run test** to open the Configure Test window.
-3. In **Select Testing Module**, use the dropdown to pick the module you want (e.g., `Default_b5f3`).
-4. Complete the other test configurations.
-5. Click **Run once now** to start the test.
+{% step %}
+Click **Run test** to open the Configure Test window.
+{% endstep %}
+
+{% step %}
+In **Select Testing Module**, use the dropdown to pick the modules you want (e.g., `Default_b5f3`).
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (194).png" alt="" width="563"><figcaption></figcaption></figure></div>
+{% endstep %}
+
+{% step %}
+Complete the other test configurations.
+{% endstep %}
+
+{% step %}
+Click **Run once now** to start the test.
+{% endstep %}
+{% endstepper %}
 
 {% hint style="info" %}
-If unsure, leave the default module selected—Akto will use the active testing module automatically.
+## Note
+
+* If unsure, leave the default module selected, Akto will use the active testing module automatically.
+* You can also choose multiple modules. Akto will run the tests on the first available module it finds from your selected options.
 {% endhint %}
 
-<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-***
 
-### Viewing Available Modules
+## Viewing Available Modules
 
 You can see a list of available modules under:
 
@@ -40,9 +57,7 @@ This section shows:
 
 <figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-***
-
-### How to Set a Custom Testing Module Name
+## How to Set a Custom Testing Module Name
 
 In your `docker-compose-testing.yml` file, add the environment variable `MINI_TESTING_NAME` under the `akto-api-security-testing` service.
 
