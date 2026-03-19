@@ -14,7 +14,7 @@ High severity issues indicate significant security risks requiring prompt remedi
 
 Examples include partial prompt injection success, improper output handling, or excessive tool permissions.
 
-Akto classifies API security vulnerabilities into four severity levels to help teams prioritize their remediation efforts. Each level indicates the potential impact on your API security posture and guides response timing.
+Akto classifies Agentic AI Security vulnerabilities into four severity levels to help teams prioritize their remediation efforts. Each level indicates the potential impact on your agentic AI security posture and guides response timing.
 
 ## Medium Severity
 

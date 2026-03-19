@@ -7,7 +7,7 @@
 ## Key Capabilities
 
 * **Interactive Vulnerability Analysis**: Ask questions about scan results and vulnerabilities in natural language
-* **Agentic and Agentic AI Security Guidance**: Get AI-powered remediation suggestions and security best practices
+* **Agentic and agentic AI security Guidance**: Get AI-powered remediation suggestions and security best practices
 * **Scan Result Analysis**: Deep-dive into why scans passed/failed with AI assistance
 * **Dashboard Metrics Discussion**: Analyse Agentic collections, endpoints, and risk scores
 * **Conversation History**: Track and search through past security discussions

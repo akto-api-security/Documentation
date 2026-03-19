@@ -1,6 +1,6 @@
 # Probing Module Selector in Akto
 
-The **Probing Module Selector** in Akto allows you to choose which probing module (engine) to use when running API security probes. This is useful when multiple modules are available or when targeting a specific deployment.
+The **Probing Module Selector** in Akto allows you to choose which probing module (engine) to use when running agentic AI security probes. This is useful when multiple modules are available or when targeting a specific deployment.
 
 You can use the selector to:
 

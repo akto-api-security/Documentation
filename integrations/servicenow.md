@@ -1,6 +1,6 @@
 # ServiceNow
 
-Integrate Akto with ServiceNow to streamline your API security workflow by creating tickets for vulnerabilities directly from Akto into your ServiceNow instance.
+Integrate Akto with ServiceNow to streamline your agentic AI security workflow by creating tickets for vulnerabilities directly from Akto into your ServiceNow instance.
 
 ## Quick Setup Steps
 

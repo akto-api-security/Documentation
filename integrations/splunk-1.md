@@ -1,6 +1,6 @@
 # JFrog
 
-Akto scanning results can be seamlessly uploaded into JFrog as **evidence artifacts**, enabling security validation to travel with every stage of the software lifecycle. Whether it’s a **package**, a **build**, or a **release bundle**, Akto results can be attached as evidence, ensuring that vulnerabilities and compliance checks are transparently tied to the exact artifact version being shipped. This integration provides traceability, strengthens audit readiness, and embeds API security insights directly into the DevSecOps pipeline.
+Akto scanning results can be seamlessly uploaded into JFrog as **evidence artifacts**, enabling security validation to travel with every stage of the software lifecycle. Whether it’s a **package**, a **build**, or a **release bundle**, Akto results can be attached as evidence, ensuring that vulnerabilities and compliance checks are transparently tied to the exact artifact version being shipped. This integration provides traceability, strengthens audit readiness, and embeds agentic AI security insights directly into the DevSecOps pipeline.
 
 <figure><img src="../.gitbook/assets/image (135).png" alt=""><figcaption></figcaption></figure>
 

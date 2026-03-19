@@ -1,6 +1,6 @@
 # GitHub Actions
 
-Akto integrates with GitHub Actions to add automated API security scanning to your workflows. This integration enables you to:
+Akto integrates with GitHub Actions to add automated agentic AI security scanning to your workflows. This integration enables you to:
 
 * Run AI Red Teaming as part of your GitHub workflow
 * Automate security scanning on pull requests

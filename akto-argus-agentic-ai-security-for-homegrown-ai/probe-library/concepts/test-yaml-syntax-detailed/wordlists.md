@@ -4,7 +4,7 @@ description: You can use wordlists in Akto's YAML probes
 
 # Wordlists
 
-Wordlists have multiple use cases in Agentic AI Security probing -
+Wordlists have multiple use cases in agentic AI security probing -
 
 1. Probe agent component by fuzzing a parameter with different malicious values eg. SQL Injection.
 2. Probe component by replacing a specific parameter (eg `user_id`) by values from other users.

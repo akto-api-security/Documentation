@@ -6,7 +6,7 @@ hidden: true
 
 #### **What is Model Context Protocol?**
 
-The Model Context Protocol (MCP) is a standardized protocol that enables AI models to interact with external tools and services. In the context of Akto, the MCP server acts as a bridge between AI-powered tools (like Claude, Cursor, etc.) and Akto's API security platform, allowing these tools to access and analyze your API security data.
+The Model Context Protocol (MCP) is a standardized protocol that enables AI models to interact with external tools and services. In the context of Akto, the MCP server acts as a bridge between AI-powered tools (like Claude, Cursor, etc.) and Akto's Agentic AI Security platform, allowing these tools to access and analyze your agentic AI security data.
 
 {% embed url="https://www.youtube.com/watch?v=QXdGqadpos4" %}
 
@@ -102,13 +102,13 @@ For detailed information about generating and managing API keys, refer to the [A
 {% endtab %}
 {% endtabs %}
 
-Each tool is designed to work seamlessly with AI models to provide comprehensive access to your API security data and analysis capabilities.
+Each tool is designed to work seamlessly with AI models to provide comprehensive access to your agentic AI security data and analysis capabilities.
 
 ***
 
 #### **Feature Highlights**
 
-The MCP server provides easy access to Akto's powerful API security features through AI tools. Here's what you can do:
+The MCP server provides easy access to Akto's powerful agentic AI security features through AI tools. Here's what you can do:
 
 1. **View Your APIs**: Get a complete list of all your APIs and their details in one place
 2. **Track API Changes**: Monitor new endpoints and changes in your API landscape
@@ -119,7 +119,7 @@ The MCP server provides easy access to Akto's powerful API security features thr
 7. **Get Security Insights**: Receive AI-powered analysis and recommendations for your APIs
 8. **View Risk Scores**: Access risk scores for your APIs to understand their security posture
 
-Each of these capabilities is designed to work seamlessly with AI tools like Claude and Cursor, making API security management more intuitive and efficient.
+Each of these capabilities is designed to work seamlessly with AI tools like Claude and Cursor, making agentic AI security management more intuitive and efficient.
 
 ***
 

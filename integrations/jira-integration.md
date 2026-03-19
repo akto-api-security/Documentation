@@ -1,6 +1,6 @@
 # Jira
 
-Integrate Akto with Jira to streamline your API security workflow by creating tickets for vulnerabilities directly from Akto.
+Integrate Akto with Jira to streamline your agentic AI security workflow by creating tickets for vulnerabilities directly from Akto.
 
 <figure><img src="../.gitbook/assets/image (109).png" alt="" width="563"><figcaption></figcaption></figure>
 

@@ -33,7 +33,7 @@ Akto supports integration with Splunk SIEM to help you streamline the process of
 
 ### 📥 What Data Gets Sent
 
-* **API security alerts**: Vulnerabilities, suspicious activity, misconfigurations, etc.
+* **agentic AI security alerts**: Vulnerabilities, suspicious activity, misconfigurations, etc.
 * **Audit logs**: User activity and critical changes.
 * **Traffic insights**: HTTP logs tied to security incidents.
 
