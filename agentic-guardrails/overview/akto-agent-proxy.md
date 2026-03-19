@@ -38,7 +38,7 @@ sequenceDiagram
 ### **Traffic Flow:**
 
 1. End user sends request to AI Agent Proxy endpoint
-2. Proxy performs threat detection and applies request guardrails
+2. Proxy performs guardrail detection and applies request guardrails
 3. Valid requests are forwarded to AI agent container
 4. AI agent processes request and returns response to proxy
 5. Proxy receives response and applies response guardrails and redaction rules

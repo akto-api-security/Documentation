@@ -17,8 +17,8 @@ You can trigger Akto's AI Red Teaming in your CI/CD pipelines too. Generate your
 
 ### Add trigger in your CI/CD tool
 
-* Open the API collection where you want to run the scans.
-* By default, the API collection view shows all APIs. You can filter the agent component on which you want to run the scans. For example, to run scans only on `GET` endpoints, we can add a filter to show only `GET` endpoints.
+* Open the Agentic Collection where you want to run the scans.
+* By default, the Agentic Collection view shows all Agentic components. You can filter the agent component on which you want to run the scans. For example, to run scans only on `GET` endpoints, we can add a filter to show only `GET` endpoints.
 
 <figure><img src="../../../.gitbook/assets/cicd-3.png" alt="Running scans only on GET endpoints"><figcaption></figcaption></figure>
 

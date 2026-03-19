@@ -2,7 +2,7 @@
 
 ## Overview
 
-Akto enables you to quickly respond to malicious behavior by blocking the IP addresses of threat actors. When you block an IP address, Akto prevents all incoming requests from that source, helping you protect your agentic component in real time.
+Akto enables you to quickly respond to malicious behavior by blocking the IP addresses of guardrail actors. When you block an IP address, Akto prevents all incoming requests from that source, helping you protect your agentic component in real time.
 
 You can block an IP address from two areas within Agentic Guardrails: **Guardrails Actors** and **Guardrails Activity**.
 

@@ -63,7 +63,7 @@ Proactive vulnerability assessment specifically designed for AI systems. Akto pe
 
 ### **3. Runtime AI Protection**
 
-Real-time threat detection and prevention specifically engineered for AI workloads. Akto monitors and protects against AI-specific attacks while maintaining system performance.
+Real-time security detection and prevention specifically engineered for AI workloads. Akto monitors and protects against AI-specific attacks while maintaining system performance.
 
 **Key Capabilities:**
 - Instant blocking of prompt injection and jailbreak attempts

@@ -6,7 +6,7 @@ hidden: true
 
 ## Overview
 
-Akto integrates with **Portkey AI Gateway** to provide comprehensive security guardrails for AI applications. This integration enables automatic threat detection and prevention at both the request and response stages of LLM interactions.
+Akto integrates with **Portkey AI Gateway** to provide comprehensive security guardrails for AI applications. This integration enables automatic guardrail detection and prevention at both the request and response stages of LLM interactions.
 
 ### What is Portkey?
 
@@ -89,7 +89,7 @@ Ensure the following requirements are available:
 {% step %}
 ### Obtain Guardrail IDs from Our Support
 
-Guardrails are pre-configured and managed by the Akto team. To get the guardrail IDs for your specific threat detection needs:
+Guardrails are pre-configured and managed by the Akto team. To get the guardrail IDs for your specific guardrail detection needs:
 
 1. Contact **Akto Support** at [support@akto.io](mailto:support@akto.io) or through your account manager,
 2. Our team will provide you with:

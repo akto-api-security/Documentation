@@ -3,7 +3,7 @@
 {% @arcade/embed flowId="N2zsZyKkhAhBvKOxc5AX" url="https://app.arcade.software/share/N2zsZyKkhAhBvKOxc5AX" %}
 
 1. Navigate to Agentic AI Discovery > Agentic Collections
-2. Select the desired API collection
+2. Select the desired agentic collection
 3. Find the specific endpoint in the list
 4. Click the "Run probe" button next to the endpoint
 

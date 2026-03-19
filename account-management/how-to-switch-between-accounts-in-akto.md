@@ -11,7 +11,7 @@ If you have access to multiple accounts or workspaces in Akto, you can easily sw
 3. A list of available accounts will appear.
 4. Select the account you want to switch to.
 
-✅ The dashboard will refresh and load data for the selected account, including API collections, probes, and reports.
+✅ The dashboard will refresh and load data for the selected account, including agentic collections, probes, and reports.
 
 <figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 

@@ -149,7 +149,7 @@ Once your Lambda extension is connected, Akto automatically tags Agentic Collect
 ## Step 3: Verify the Setup
 
 1. Invoke your Lambda function manually or through an event.
-2. Confirm that API traffic data (requests and responses) are captured on the Akto dashboard under the respective api collection.
+2. Confirm that API traffic data (requests and responses) are captured on the Akto dashboard under the respective Agentic Collection.
 3. Check logs of your Lambda function for any initialization messages from the extension.
 
 If you face any issues, ensure:

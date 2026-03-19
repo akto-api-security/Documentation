@@ -15,7 +15,7 @@ Akto's Agent Guard operates on a dual-layer approach:
 * **Input Layer**: Scanners validate user messages before they reach your AI models, blocking malicious prompts, credential leaks, and policy violations
 * **Output Layer**: Scanners verify AI-generated responses before delivery to users, preventing data exposure, harmful content, and compliance violations
 
-Each scanner specializes in detecting specific threat categories, from credential exposure and prompt injection attacks to toxic content and sensitive data leaks. Scanners can be combined to create custom security policies tailored to your application's needs.
+Each scanner specializes in detecting specific guardrail categories, from credential exposure and prompt injection attacks to toxic content and sensitive data leaks. Scanners can be combined to create custom security policies tailored to your application's needs.
 
 ## When to Use Which Scanners
 

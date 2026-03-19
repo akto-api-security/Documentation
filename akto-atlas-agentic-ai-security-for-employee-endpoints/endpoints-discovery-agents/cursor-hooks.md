@@ -34,7 +34,7 @@ sequenceDiagram
         ChatHook-->>Akto: Report event
     else Malicious
         ChatHook-->>User: Block
-        ChatHook-->>Akto: Report threat
+        ChatHook-->>Akto: Report security event
     end
 
     Agent->>ChatResponseHook: Agent response

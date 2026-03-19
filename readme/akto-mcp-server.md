@@ -125,7 +125,7 @@ Each of these capabilities is designed to work seamlessly with AI tools like Cla
 
 #### Prompt Examples
 
-1. List active API collections.
+1. List active agentic collections.
 2. How many endpoints in `Collection_Name`? Show the one with the highest risk.
 3. List top 5 high severity issues.
 4. Get schema for API: `API_Path`

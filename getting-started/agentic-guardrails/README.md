@@ -52,7 +52,7 @@ Once your proxy is configured:
 ### Step 5: Monitor & Respond
 
 From your Guardrails dashboard:
-1. View real-time threat detection
+1. View real-time guardrail detection
 2. See blocked attacks and patterns
 3. Configure blocking rules
 4. Set up alerts for critical threats

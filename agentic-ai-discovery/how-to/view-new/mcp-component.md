@@ -4,7 +4,7 @@ Akto automatically updates your API inventory whenever new APIs are detected and
 
 This includes details of header & response data and payloads, which show how data is structured when interacting with the API. You can also identify any sensitive parameters that the endpoint has, such as passwords or personal identification numbers, ensuring that they are handled securely.
 
-In the demonstration below, we will view all the new Agentic components populated in your API collections over the last two months.
+In the demonstration below, we will view all the new Agentic components populated in your agentic collections over the last two months.
 
 {% embed url="https://demo.arcade.software/smf0ozOUvdhT10BmlGaq?embed=" %}
 View New Endpoint

@@ -23,7 +23,7 @@ Each configuration specifies:
 
 The extension retrieves active configurations from the dashboard settings and evaluates only matching hosts and paths.
 
-For guardrail policy configuration details, see: [threat-policy.md](../../../../agentic-guardrails/concepts/threat-policy.md "mention")
+For guardrail policy configuration details, see: [guardrail-policy.md](../../../../agentic-guardrails/concepts/threat-policy.md "mention")
 
 ## Real-Time Guardrail Enforcement in the Browser
 

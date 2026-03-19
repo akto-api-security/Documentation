@@ -21,7 +21,7 @@ flowchart LR
 
 ✅ **Automated Bedrock Monitoring**: Capture all AWS Bedrock agent conversations\
 ✅ **Real-time Processing**: Process logs every 5 minutes automatically\
-✅ **Security Analysis**: Send conversation data to AKTO for threat detection\
+✅ **Security Analysis**: Send conversation data to AKTO for guardrail detection\
 ✅ **Multi-Model Support**: Works with Amazon Nova, Claude, and other Bedrock models\
 ✅ **Client-Side Deployment**: Complete data isolation in your AWS account
 

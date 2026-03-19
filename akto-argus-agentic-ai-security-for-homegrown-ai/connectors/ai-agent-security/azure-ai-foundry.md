@@ -14,7 +14,7 @@ The Azure AI Foundry connector automatically:
   * Prompt injection detection
   * Sensitive data exposure
   * Policy violations
-  * Runtime threat detection
+  * Runtime guardrail detection
 * **Multi-Agent Workflow Visibility**: Tracks interactions across multi-agent workflows and stateful processes
 * **Unified Security Dashboard**: Provides centralized monitoring of all Azure AI Foundry agents alongside your other AI infrastructure
 

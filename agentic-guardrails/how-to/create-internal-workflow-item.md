@@ -54,7 +54,7 @@ Open **Guardrail Activity** under **API Guardrails**.
 {% endstep %}
 
 {% step %}
-Select the threat activity that requires internal follow-up.
+Select the guardrail activity that requires internal follow-up.
 {% endstep %}
 
 {% step %}

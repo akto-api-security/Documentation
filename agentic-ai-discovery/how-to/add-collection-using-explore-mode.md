@@ -1,6 +1,6 @@
 # Add collection using Explore Mode
 
-The Explore Mode in Akto allows you to browse through your Agentic components and create new collections for better organization and management. Here’s how to add a new API collection:
+The Explore Mode in Akto allows you to browse through your Agentic components and create new collections for better organization and management. Here’s how to add a new Agentic Collection:
 
 <figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 

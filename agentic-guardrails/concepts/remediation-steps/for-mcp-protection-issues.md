@@ -12,7 +12,7 @@ Akto not only detects malicious behavior in real time through its Guardrails eng
 
 ### What the Remediation Tab Includes
 
-1. **Description of the threat:** Provides context on the observed behavior, such as prompt injection attempts, tool abuse, data exfiltration through MCP endpoints, schema violations, or authentication misuse
+1. **Description of the violation:** Provides context on the observed behavior, such as prompt injection attempts, tool abuse, data exfiltration through MCP endpoints, schema violations, or authentication misuse
 2. **Example implementation:** In many cases, guidance includes example code or configuration templates to help you apply the fix to your MCP servers
 3. **Built-in response options:** Actions such as blocking IP addresses, restricting tool access, or creating Jira tickets can be triggered directly from the interface
 
