@@ -1,6 +1,6 @@
 # Connect Akto with Cloudflare Worker Proxy
 
-Cloudflare is a global network security platform that provides CDN, DDoS protection, and API security services. Integrating Cloudflare with Akto enables automatic discovery of all APIs passing through your Cloudflare infrastructure, helping you maintain continuous visibility and protection of your edge-distributed APIs.
+Cloudflare is a global network security platform that provides CDN, DDoS protection, and agentic AI security services. Integrating Cloudflare with Akto enables automatic discovery of all APIs passing through your Cloudflare infrastructure, helping you maintain continuous visibility and protection of your edge-distributed APIs.
 
 <figure><img src="../../.gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
 

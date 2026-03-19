@@ -2,7 +2,7 @@
 
 Akto integrates with GitLab to add automated AI Red Teaming to your CI/CD pipeline. This integration enables you to:
 
-* Run API security scans during your GitLab pipelines
+* Run red teaming scans during your GitLab pipelines
 * View security scan results directly in merge requests
 * Block merges based on security scan results
 
