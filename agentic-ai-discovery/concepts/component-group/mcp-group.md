@@ -55,7 +55,7 @@ Group MCP servers by the permissions their tools require:
 Group by MCP resource types provided:
 - **Documents**: File-based resources
 - **Database Records**: Structured data resources
-- **API Endpoints**: External service resources
+- **Agentic Components**: External service resources
 - **Search Results**: Query-based resources
 
 ### Prompt Templates

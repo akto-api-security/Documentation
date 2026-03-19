@@ -312,7 +312,7 @@
   * [Agent Guard](agentic-guardrails/concepts/agent-guard.md)
   * [Schema Conformance](agentic-guardrails/concepts/schema-conformance.md)
   * [Guardrail Actors](agentic-guardrails/concepts/threat-actors.md)
-  * [Threat Dashboard](agentic-guardrails/concepts/threat-dashboard.md)
+  * [Guardrail Dashboard](agentic-guardrails/concepts/threat-dashboard.md)
   * [Guardrail Activity](agentic-guardrails/concepts/guardrail-activity.md)
   * [Dynamic Agent Rate Limiting](agentic-guardrails/concepts/api-rate-limit.md)
   * [Guardrail Schema](agentic-guardrails/concepts/guardrail-schema.md)

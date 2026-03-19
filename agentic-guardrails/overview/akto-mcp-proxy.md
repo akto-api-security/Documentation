@@ -6,7 +6,7 @@ Akto MCP Proxy is a security and governance layer that sits between MCP (Model C
 
 ## Key Features
 
-* **Threat Protection**: Real-time scanning and blocking of malicious requests
+* **Guardrail Protection**: Real-time scanning and blocking of malicious requests
 * **Security Guardrails**: Enforce organizational security policies and compliance requirements
 * **Request Monitoring**: Complete visibility into all MCP communications
 * **Transparent Proxying**: Zero-configuration changes required on MCP servers
@@ -21,7 +21,7 @@ Akto MCP Proxy is a security and governance layer that sits between MCP (Model C
                               │
                               ▼
                        ┌──────────────────┐
-                       │ Threat Detection │
+                       │ Guardrail Detection │
                        │   & Guardrails   │
                        └──────────────────┘
 ```
@@ -148,7 +148,7 @@ guardrails:
         per_client: true
 ```
 
-#### Threat Detection Profiles
+#### Guardrails Profiles
 
 Configure threat detection sensitivity and rules:
 
@@ -168,7 +168,7 @@ threat_detection:
 
 ## Security Features
 
-### 1. Threat Detection
+### 1. Guardrails
 
 * **SQL Injection Prevention**: Detects and blocks SQL injection attempts
 * **Command Injection Protection**: Prevents malicious command execution
@@ -194,7 +194,7 @@ threat_detection:
 ### Dashboard Metrics
 
 * Request volume and trends
-* Threat detection statistics
+* Guardrail detection statistics
 * Blocked request analysis
 * Performance metrics (latency, throughput)
 * Error rates and patterns

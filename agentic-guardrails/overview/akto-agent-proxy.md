@@ -2,11 +2,11 @@
 
 ## Overview
 
-AI Agent Proxy is a security layer that protects AI agent applications by intercepting, analyzing, and securing communications between end users and AI agents. It provides real-time threat detection, guardrails enforcement, and response filtering for AI agent deployments running in customer environments.
+AI Agent Proxy is a security layer that protects AI agent applications by intercepting, analyzing, and securing communications between end users and AI agents. It provides real-time guardrail detection, guardrails enforcement, and response filtering for AI agent deployments running in customer environments.
 
 ## Key Features
 
-* **Threat Detection**: Real-time scanning and blocking of malicious requests before they reach your AI agent
+* **Guardrails**: Real-time scanning and blocking of malicious requests before they reach your AI agent
 * **Request Guardrails**: Enforce security policies on incoming requests to prevent attacks and policy violations
 * **Response Guardrails**: Scan and filter AI agent responses for sensitive data, policy violations, and security issues
 * **Response Redaction**: Automatically redact sensitive information from AI agent responses
@@ -25,7 +25,7 @@ sequenceDiagram
 
     U ->> P: 1.Send request
 
-    Note over P: 2. Request Guardrails & Threat<br>detection<br>(Prompt injection<br>SQL or command injection<br>PII input validation)
+    Note over P: 2. Request Guardrails & Guardrail<br>detection<br>(Prompt injection<br>SQL or command injection<br>PII input validation)
 
     P ->> A: 3. Forward if valid
     A -->> P: 4. Return response
@@ -230,7 +230,7 @@ data:
   # Proxy Port
   AKTO_PROXY_PORT: "8080"
 
-  # Threat Reporting (set to "true" to skip for scanning)
+  # Guardrail Reporting (set to "true" to skip for scanning)
   SKIP_THREAT: "false"
 
   # Request Timeout (seconds)
@@ -424,7 +424,7 @@ kubectl top pods -n your-namespace
 All guardrails and security policies are configured through the Akto dashboard at [app.akto.io](https://app.akto.io). You can define:
 * Request guardrails (rate limiting, pattern matching, PII detection)
 * Response guardrails (PII redaction, sensitive data blocking, content filtering)
-* Threat detection rules (prompt injection, SQL injection, command injection, etc.)
+* Guardrail detection rules (prompt injection, SQL injection, command injection, etc.)
 * Custom security policies specific to your organization
 
 Navigate to **Akto Argus Dashboard → Settings → Guardrails** to configure your security policies.
@@ -454,7 +454,7 @@ Connect to Akto dashboard for centralized monitoring:
 2. Navigate to Akto Argus Dashboard -> Connectors -> AI Agent Proxy
 3. View real-time metrics:
    * Request volume and trends
-   * Threat detection statistics
+   * Guardrail detection statistics
    * Blocked request analysis
    * Top guardrails triggered
    * Response redaction statistics

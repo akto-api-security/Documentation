@@ -71,7 +71,7 @@ This is the path of image to be configured in wrangler.jsonc - registry.cloudfla
         
 ```
 
-2. Below changes in src/index.ts to connect the Akto Mini-Runtime Service with Cloudflare Worker and to call the API endpoint in the docker image.
+2. Below changes in src/index.ts to connect the Akto Mini-Runtime Service with Cloudflare Worker and to call the Agentic component in the docker image.
 
 ```javascript
 import { Container, loadBalance, getContainer, getRandom } from "@cloudflare/containers";

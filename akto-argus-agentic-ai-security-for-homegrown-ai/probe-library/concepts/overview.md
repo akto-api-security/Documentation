@@ -12,4 +12,4 @@ Probe Library consists of three blocks:
 2. [YAML probe](/broken/pages/BjSVcpZldqHcKBVqo1Ln) editor for custom probe creation
 3. Sample agent component requests and responses for scanning
 
-<figure><img src="../../../.gitbook/assets/Test Editor.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Agentic Playground.png" alt=""><figcaption></figcaption></figure>

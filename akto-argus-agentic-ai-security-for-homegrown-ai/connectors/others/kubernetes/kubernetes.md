@@ -86,7 +86,7 @@ If you have installed on _GCP_, _Kubernetes_ or _OpenShift_ -
 
 6. Go to `Agent Discovery` on Akto dashboard to see your discovered agents
 
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832509-8e8c84ff-633e-4ffe-b11b-344d02ca6e74.png" alt="Check API Discovery"><figcaption><p>Check API Discovery</p></figcaption></figure>
+<figure><img src="https://user-images.githubusercontent.com/91221068/236832509-8e8c84ff-633e-4ffe-b11b-344d02ca6e74.png" alt="Check Agentic AI Discovery"><figcaption><p>Check Agentic AI Discovery</p></figcaption></figure>
 
 ## Frequently Asked Questions (FAQs)
 

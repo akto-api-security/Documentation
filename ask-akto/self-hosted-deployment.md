@@ -7,7 +7,7 @@
 ## Key Capabilities
 
 * **Interactive Vulnerability Analysis**: Ask questions about scan results and vulnerabilities in natural language
-* **Agentic and API Security Guidance**: Get AI-powered remediation suggestions and security best practices
+* **Agentic and Agentic AI Security Guidance**: Get AI-powered remediation suggestions and security best practices
 * **Scan Result Analysis**: Deep-dive into why scans passed/failed with AI assistance
 * **Dashboard Metrics Discussion**: Analyse Agentic collections, endpoints, and risk scores
 * **Conversation History**: Track and search through past security discussions
@@ -17,7 +17,7 @@
 
 * Docker and Docker Compose installed
 * Anthropic API Key
-* Akto API Security Dashboard running (self-hosted instance)
+* Akto Agentic AI Security Dashboard running (self-hosted instance)
 
 ## Deployment Setup
 
@@ -117,7 +117,7 @@ DEBUG=true
 
 **Environment variables**
 
-<table><thead><tr><th width="160.5078125">Variable</th><th>Purpose</th></tr></thead><tbody><tr><td><code>AKTO_BASE_URL</code></td><td>Base URL of the Akto API Security Dashboard.<br>Replace <code>&#x3C;YOUR_AKTO_DASHBOARD_HOST></code> and <code>&#x3C;PORT></code> with the hostname and port configured in the on-prem deployment.</td></tr><tr><td><code>MCP_MODE</code></td><td>Deployment mode of the MCP server. Value <code>internal</code> is used for on-prem environments.</td></tr><tr><td><code>MCP_API_KEY</code></td><td>Authentication key used for MCP server access.</td></tr></tbody></table>
+<table><thead><tr><th width="160.5078125">Variable</th><th>Purpose</th></tr></thead><tbody><tr><td><code>AKTO_BASE_URL</code></td><td>Base URL of the Akto Agentic AI Security Dashboard.<br>Replace <code>&#x3C;YOUR_AKTO_DASHBOARD_HOST></code> and <code>&#x3C;PORT></code> with the hostname and port configured in the on-prem deployment.</td></tr><tr><td><code>MCP_MODE</code></td><td>Deployment mode of the MCP server. Value <code>internal</code> is used for on-prem environments.</td></tr><tr><td><code>MCP_API_KEY</code></td><td>Authentication key used for MCP server access.</td></tr></tbody></table>
 {% endstep %}
 
 {% step %}

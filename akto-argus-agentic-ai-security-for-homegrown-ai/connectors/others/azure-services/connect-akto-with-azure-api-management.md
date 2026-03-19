@@ -275,7 +275,7 @@ Ensure the instance is accessible from the network where your Azure APIM is conf
 
 ## Step 5: Verify the Integration
 
-1. Send test requests to the configured API endpoint.
+1. Send test requests to the configured Agentic component.
 2. Check the Akto Data-Ingestion Service logs to verify that the traffic data is being ingested correctly.
 
 ### Get Support for your Akto setup

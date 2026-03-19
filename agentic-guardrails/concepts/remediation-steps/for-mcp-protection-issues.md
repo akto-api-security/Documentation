@@ -4,7 +4,7 @@ Akto not only detects malicious behavior in real time through its Guardrails eng
 
 ### Accessing Remediation for MCP Protection Issues
 
-1. Go to the Guardrails → Threat Activity section in the Akto sidebar
+1. Go to the Guardrails → Guardrail Activity section in the Akto sidebar
 2. Select the relevant attack or flagged event targeting your MCP endpoints
 3. Click on the payload or alert to open its detailed view
 4. Open the Remediation tab to view suggested next steps

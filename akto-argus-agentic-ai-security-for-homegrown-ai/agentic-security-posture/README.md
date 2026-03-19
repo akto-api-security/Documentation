@@ -1,6 +1,6 @@
 # Agentic Security Posture
 
-Akto's Agentic Security Posture provides a comprehensive view of critical security information across your AI agents, MCP endpoints, and LLM components. Track identified vulnerabilities, data exposure risks through agent interactions, and test coverage across autonomous systems, enabling proactive management of agentic security risks.
+Akto's Agentic Security Posture provides a comprehensive view of critical security information across your AI agents, MCP endpoints, and LLM components. Track identified vulnerabilities, data exposure risks through agent interactions, and scan coverage across autonomous systems, enabling proactive management of agentic security risks.
 
 ### Key Capabilities
 

@@ -74,7 +74,7 @@ This will process your API traffic data and populate APIs on the dashboard. This
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/236832493-35b27843-dce9-482a-803a-033999c55aef.png" alt=""><figcaption></figcaption></figure>
 
-7\. Go to `API Discovery` on Akto dashboard to see your new APIs
+7\. Go to `Agentic AI Discovery` on Akto dashboard to see your new APIs
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/236832509-8e8c84ff-633e-4ffe-b11b-344d02ca6e74.png" alt=""><figcaption></figcaption></figure>
 

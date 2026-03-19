@@ -1,6 +1,6 @@
 # API reference
 
-You will need the following inputs for each of the API endpoints:
+You will need the following inputs for each of the Agentic components:
 
 * <mark style="color:purple;">`YOUR_API_KEY`</mark> : Go to My account > Settings > Integrations and fetch API key under Akto API. You should pass it with the header `X-API-KEY`.
 * <mark style="color:purple;">`URL`</mark> : This is the url of your Akto dashboard.

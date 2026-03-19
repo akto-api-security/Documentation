@@ -80,7 +80,7 @@ Akto Guardrails defends against:
 
 ## Key Features
 
-* **Real-Time Threat Detection**: Identify and respond to agentic security threats as they occur
+* **Real-Time Guardrails**: Identify and respond to agentic security threats as they occur
 * **OWASP Core Rule Set Support**: Detect common attack patterns including XSS and SQL injection in agent interactions
 * **Prompt Injection Protection**: Block malicious prompts attempting to manipulate agent behavior
 * **Tool Permission Enforcement**: Prevent unauthorized tool access and permission escalation

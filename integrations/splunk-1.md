@@ -78,7 +78,7 @@ jf evd create \
 
 * **AI Red Teaming findings**: Vulnerable findings only along with
   * Vulnerability details
-  * API Collection name + path
+  * Agentic Collection name + path
   * sample payload
   * severity details
 

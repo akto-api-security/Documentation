@@ -14,7 +14,7 @@ Portkey is an AI gateway that routes requests to various LLM providers (OpenAI, 
 
 ### Key Benefits
 
-* **Threat Detection**: Identify prompt injection, data leakage, and other LLM-specific attacks
+* **Guardrails**: Identify prompt injection, data leakage, and other LLM-specific attacks
 * **Flexible Response Actions**: Block, sanitize, alert, or log suspicious activity
 * **Transparent Integration**: Works seamlessly with existing Portkey configurations
 * **Centralized Management**: Configure guardrails from Portkey's admin dashboard
@@ -82,7 +82,7 @@ Ensure the following requirements are available:
 3. Find the **Akto** plugin section
 4. Enter the following credentials:
    * **Akto API Key**: Your Akto API key from the dashboard
-   * **Akto API Domain**: Your Akto API endpoint domain (e.g., `api.akto.io`)
+   * **Akto API Domain**: Your Akto Agentic component domain (e.g., `api.akto.io`)
 5. Click **Save** to activate the plugin.
 {% endstep %}
 

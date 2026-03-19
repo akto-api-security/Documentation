@@ -11,7 +11,7 @@ You can use the selector to:
 
 ### How to Use the Probing Module Selector
 
-1. Go to **AI Red Teaming > API Collections**.
+1. Go to **AI Red Teaming > Agentic Collections**.
 2. Click **Run probe** to open the Configure Probe window.
 3. In **Select Probing Module**, use the dropdown to pick the module you want (e.g., `Default_b5f3`).
 4. Complete the other probe configurations.

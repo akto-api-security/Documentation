@@ -37,7 +37,7 @@ Before creating the OAuth integration, ensure the client credentials grant type 
 2. Click **New integration** to create a new integration
 3. Choose **OAuth - Client credentials grant type**
 4. Fill in the following details:
-   * **Name:** Enter a descriptive name (e.g., "Akto API Security Integration")
+   * **Name:** Enter a descriptive name (e.g., "Akto Agentic AI Security Integration")
    * **User:** Select a user account that has all required roles to create and manage tickets
      * Ensure this user has permissions to access and create records in the tables you want to integrate
    * **Active:** Make sure the **Active** checkbox is **enabled**

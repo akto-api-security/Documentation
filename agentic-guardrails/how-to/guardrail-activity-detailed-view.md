@@ -64,7 +64,7 @@ You can copy the request in two formats:
 Use **Event Actions** option to update the status of an activity:
 
 * **Mark for Review** – Move the activity into the review workflow.
-*   **Ignore** – Remove the activity from the active threat list.
+*   **Ignore** – Remove the activity from the active guardrail list.
 
     <figure><img src="../../.gitbook/assets/image (63).png" alt="" width="563"><figcaption></figcaption></figure>
 
@@ -80,6 +80,6 @@ For more details, continue to the [#block-an-ip-from-guardrail-activity-page](ta
 
 ### Create Internal Workflow Item
 
-You can create a **Jira ticket** or a **Work Item** directly from the threat activity view to support internal tracking, ticketing, and coordinated remediation.
+You can create a **Jira ticket** or a **Work Item** directly from the guardrail activity view to support internal tracking, ticketing, and coordinated remediation.
 
 To learn more about creating and configuring these items, head to the [create-internal-workflow-item.md](create-internal-workflow-item.md "mention")**.**

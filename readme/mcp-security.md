@@ -8,7 +8,7 @@ hidden: true
 
 The Akto MCP Security Module is designed for teams working with LLMs, agent frameworks, or AI-based orchestration systems. As MCPs become a new layer in modern application stacks, they also introduce new attack surfaces — often unmonitored and untested. Akto brings complete visibility and protection with zero friction.
 
-Akto automatically identifies MCP servers, discovers associated API endpoints, runs targeted red teaming, and continuously monitors for misconfigurations, threats, and data leaks — all in real time.
+Akto automatically identifies MCP servers, discovers associated Agentic components, runs targeted red teaming, and continuously monitors for misconfigurations, threats, and data leaks — all in real time.
 
 {% embed url="https://www.youtube.com/watch?t=1s&v=RLjKVXTSEr8" %}
 
@@ -37,7 +37,7 @@ Each probe simulates real-world attack paths and highlights risk with contextual
 
 <figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2Fgit-blob-e3eb7d855cdbefa143f1eb3a26d1cad0c3c8e202%2Fimage.png?alt=media" alt=""><figcaption></figcaption></figure>
 
-3. **Continuous Monitoring & Threat Detection**
+3. **Continuous Monitoring & Guardrails**
 
 Stay ahead of evolving threats with intelligent real-time monitoring:
 

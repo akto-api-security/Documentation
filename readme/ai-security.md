@@ -32,7 +32,7 @@ Akto enables proactive security by running automated probes to uncover vulnerabi
 
 ***
 
-### **3. LLM Threat Protection**
+### **3. LLM Guardrail Protection**
 
 With APIs behind LLMs facing unique threats such as misinformation, unbounded consumption, and improper output handling, Akto provides real-time protection against these and more. It monitors for anomalies specific to AI workloads, blocks malicious traffic, and flags abuses like repeated prompt probing or excessive API usage.
 
@@ -45,7 +45,7 @@ With APIs behind LLMs facing unique threats such as misinformation, unbounded co
 
 ### **4. LLM Security Posture**
 
-API Security Posture serves as a unified overview of all the above pillars—Discovery, scanning, and Threat Protection. It helps security teams understand the overall security health of LLM-integrated APIs. Akto provides visibility into risks, trends, severities and coverage gaps, and enforces security policies aligned with OWASP GenAI Security standards.
+Agentic Security Posture serves as a unified overview of all the above pillars—Discovery, scanning, and Guardrail Protection. It helps security teams understand the overall security health of LLM-integrated APIs. Akto provides visibility into risks, trends, severities and coverage gaps, and enforces security policies aligned with OWASP GenAI Security standards.
 
 **Key Capabilities:**
 

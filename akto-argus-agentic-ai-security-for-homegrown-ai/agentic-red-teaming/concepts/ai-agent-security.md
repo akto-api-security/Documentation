@@ -18,7 +18,7 @@ Agentic AI systems expand the attack surface through:
 
 ## Akto's Four Pillars of AI Security
 
-### **1. AI Agent & API Discovery**
+### **1. AI Agent & Agentic AI Discovery**
 
 Understanding your AI attack surface is the foundation of security. Akto automatically discovers and inventories all AI-related endpoints, agent workflows, and LLM integrations across your infrastructure.
 
