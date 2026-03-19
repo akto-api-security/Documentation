@@ -31,7 +31,7 @@ Understanding your AI attack surface is the foundation of security. Akto automat
 
 **What It Detects:**
 
-* OpenAI, Anthropic, Google AI, and custom LLM API endpoints
+* OpenAI, Anthropic, Google AI, and custom LLM agentic endpoints
 * RAG (Retrieval-Augmented Generation) system components
 * Agent orchestration platforms and tool registries
 * Vector stores and embedding services

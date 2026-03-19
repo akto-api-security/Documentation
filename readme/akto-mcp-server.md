@@ -129,7 +129,7 @@ Each of these capabilities is designed to work seamlessly with AI tools like Cla
 2. How many endpoints in `Collection_Name`? Show the one with the highest risk.
 3. List top 5 high severity issues.
 4. Get schema for API: `API_Path`
-5. How many test runs in the last 48 hours?
+5. How many scan runs in the last 48 hours?
 6. Summarize issues by status (open, ignored, fixed) and severity.
 7. List sensitive parameters for `API_Path`
 

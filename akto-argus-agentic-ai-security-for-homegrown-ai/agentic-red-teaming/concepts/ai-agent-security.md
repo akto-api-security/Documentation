@@ -30,7 +30,7 @@ Understanding your AI attack surface is the foundation of security. Akto automat
 - Identification of shadow AI implementations and unauthorized LLM usage
 
 **What It Detects:**
-- OpenAI, Anthropic, Google AI, and custom LLM API endpoints
+- OpenAI, Anthropic, Google AI, and custom LLM agentic components 
 - RAG (Retrieval-Augmented Generation) system components
 - Agent orchestration platforms and tool registries
 - Vector stores and embedding services
