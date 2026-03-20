@@ -18,7 +18,7 @@ Akto automatically identifies MCP servers, discovers associated Agentic componen
 
 Gain instant visibility into every MCP server running in your environment:
 
-* Automatically detects MCP servers and the APIs they expose.
+* Automatically detects MCP servers and the Agentic components they expose.
 * Works across cloud, hybrid, and on-prem environments.
 
 <figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2Fgit-blob-23d841a29953fac209cc51d91d4b049b8501916e%2Fimage.png?alt=media" alt=""><figcaption></figcaption></figure>
@@ -41,7 +41,7 @@ Each probe simulates real-world attack paths and highlights risk with contextual
 
 Stay ahead of evolving threats with intelligent real-time monitoring:
 
-* Detects unusual tool activity, malicious actor behavior, and abnormal API patterns.
+* Detects unusual tool activity, malicious actor behavior, and abnormal Agentic component patterns.
 * Visualizes threats by actor, IP address, country, and reputation.
 * Enables early detection of misuse and lateral movement.
 

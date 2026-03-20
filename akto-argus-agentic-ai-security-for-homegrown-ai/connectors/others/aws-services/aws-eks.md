@@ -8,7 +8,7 @@ description: >-
 
 ## Introduction
 
-[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover APIs and analyze for AP misconfiguration. It does so by connecting to one of your traffic sources. One such source is AWS EKS.
+[Akto](https://www.akto.io/) needs your staging, production or other environment's traffic to Discover Agentic components and analyze for agentic misconfiguration. It does so by connecting to one of your traffic sources. One such source is AWS EKS.
 
 <figure><img src="../../../../.gitbook/assets/image (18).png" alt=""><figcaption></figcaption></figure>
 
@@ -49,7 +49,7 @@ Follow these steps to add daemonset config to your Kubernetes setup -
 1\. You should now see a `Setup daemonset stack` button. `Click` on this button to setup a traffic processing stack.
 
 {% hint style="info" %}
-This will process your API traffic data and populate APIs on the dashboard. This might take a few minutes to complete.
+This will process your agentic traffic data and populate Agentic components on the dashboard. This might take a few minutes to complete.
 {% endhint %}
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/236832351-220ee84e-5d34-4a82-8819-a11bdeeefb5b.png" alt=""><figcaption></figcaption></figure>

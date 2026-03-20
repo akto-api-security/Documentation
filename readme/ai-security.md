@@ -4,17 +4,17 @@ hidden: true
 
 # AI Security
 
-With the rise of large language models (LLMs), securing the APIs behind LLMs and chatbots is critical. Akto protects these APIs through four key pillars, with deep coverage of OWASP Top 10 LLM vulnerabilities.
+With the rise of large language models (LLMs), securing the Agentic components behind LLMs and chatbots is critical. Akto protects these Agentic components through four key pillars, with deep coverage of OWASP Top 10 LLM vulnerabilities.
 
 ***
 
 ### **1. LLM API Discovery**
 
-The first step in securing your APIs is knowing what you have. Akto continuously scans your environments to discover all active and shadow APIs, including those interacting with LLMs. It maps endpoints, classifies sensitive data, and maintains an up-to-date inventory. This visibility is essential to managing risk in dynamic AI environments where APIs frequently evolve.
+The first step in securing your Agentic components is knowing what you have. Akto continuously scans your environments to discover all active and shadow Agentic components, including those interacting with LLMs. It maps Agentic components, classifies sensitive data, and maintains an up-to-date inventory. This visibility is essential to managing risk in dynamic AI environments where Agentic components frequently evolve.
 
 **Key Capabilities:**
 
-* Automated detection of APIs, including internal, third-party, and LLM endpoints
+* Automated detection of Agentic components, including internal, third-party, and LLM endpoints
 * Classification of data and identification of PII, secrets, and LLM-specific payloads
 * Real-time inventory and change tracking
 
@@ -34,7 +34,7 @@ Akto enables proactive security by running automated probes to uncover vulnerabi
 
 ### **3. LLM Guardrail Protection**
 
-With APIs behind LLMs facing unique threats such as misinformation, unbounded consumption, and improper output handling, Akto provides real-time protection against these and more. It monitors for anomalies specific to AI workloads, blocks malicious traffic, and flags abuses like repeated prompt probing or excessive API usage.
+With Agentic components behind LLMs facing unique threats such as misinformation, unbounded consumption, and improper output handling, Akto provides real-time protection against these and more. It monitors for anomalies specific to AI workloads, blocks malicious traffic, and flags abuses like repeated prompt probing or excessive Agentic component usage.
 
 **Key Capabilities:**
 

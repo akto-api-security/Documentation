@@ -84,7 +84,7 @@ After creating the integration:
 
 * After entering the credentials, click **Fetch Tables**
 * Akto will retrieve all available tables from your ServiceNow instance
-* Select the tables where you want to create tickets for API vulnerabilities
+* Select the tables where you want to create tickets for Agentic component vulnerabilities
   * Common choices include: `incident`, `problem`, `change_request`, or custom tables
   * You can select multiple tables based on your workflow requirements
 {% endstep %}

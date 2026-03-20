@@ -110,14 +110,14 @@ Each tool is designed to work seamlessly with AI models to provide comprehensive
 
 The MCP server provides easy access to Akto's powerful agentic AI security features through AI tools. Here's what you can do:
 
-1. **View Your APIs**: Get a complete list of all your APIs and their details in one place
-2. **Track API Changes**: Monitor new endpoints and changes in your API landscape
-3. **Find Security Issues**: Automatically detect vulnerabilities and security risks in your APIs
-4. **Analyze Sensitive Data**: Identify and track sensitive information in your API responses
-5. **Monitor API Health**: Keep track of API performance and security status
+1. **View Your Agentic Components**: Get a complete list of all your Agentic components and their details in one place
+2. **Track Agentic Component Changes**: Monitor new Agentic components and changes in your Agentic component landscape
+3. **Find Security Issues**: Automatically detect vulnerabilities and security risks in your Agentic components
+4. **Analyze Sensitive Data**: Identify and track sensitive information in your Agentic component responses
+5. **Monitor Agentic Component Health**: Keep track of Agentic component performance and security status
 6. **Track Issues**: View and monitor the status of security issues
-7. **Get Security Insights**: Receive AI-powered analysis and recommendations for your APIs
-8. **View Risk Scores**: Access risk scores for your APIs to understand their security posture
+7. **Get Security Insights**: Receive AI-powered analysis and recommendations for your Agentic components
+8. **View Risk Scores**: Access risk scores for your Agentic components to understand their security posture
 
 Each of these capabilities is designed to work seamlessly with AI tools like Claude and Cursor, making agentic AI security management more intuitive and efficient.
 

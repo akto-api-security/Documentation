@@ -6,7 +6,7 @@ Integrate Akto with Jira to streamline your agentic AI security workflow by crea
 
 ## Benefits
 
-* Instantly create Jira tickets for API vulnerabilities.
+* Instantly create Jira tickets for Agentic component vulnerabilities.
 * Manage multiple Jira projects from a single integration.
 * Enable **bi-directional sync** to ensure full alignment between Akto and Jira.
 * Maintain a centralized view of security issues.

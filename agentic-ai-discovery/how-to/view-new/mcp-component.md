@@ -1,6 +1,6 @@
-# View New API Endpoint
+# View New Agentic Component
 
-Akto automatically updates your API inventory whenever new APIs are detected and allows you to view the new Agentic components. By viewing new endpoints, you get a detailed overview of the new API's capabilities.&#x20;
+Akto automatically updates your Agentic Inventory whenever new Agentic components are detected and allows you to view the new Agentic components. By viewing new Agentic components, you get a detailed overview of the new component's capabilities.&#x20;
 
 This includes details of header & response data and payloads, which show how data is structured when interacting with the API. You can also identify any sensitive parameters that the endpoint has, such as passwords or personal identification numbers, ensuring that they are handled securely.
 
