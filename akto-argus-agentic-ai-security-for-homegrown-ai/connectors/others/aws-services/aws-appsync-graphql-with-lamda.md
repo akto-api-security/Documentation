@@ -127,7 +127,7 @@ This will:
   * `AWS_LAMBDA_EXEC_WRAPPER=/opt/wrapper-script.sh`
   * `AKTO_MIRRORING_URL=https://<your-ingestion-service-address>/api/ingestData`
 
-### 2.6 API Inventory with Source Location
+### 2.6 Agentic Inventory with Source Location
 
 Once your Lambda extension is connected, Akto automatically tags Agentic Collection with the source, like `service=lambda`. This helps you easily track and filter Agentic Collection based on their origin. You can view this under **Agentic AI Discovery > Agentic Collections**.
 

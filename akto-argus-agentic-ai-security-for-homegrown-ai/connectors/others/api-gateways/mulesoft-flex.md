@@ -69,7 +69,7 @@ make build
 
 6\. Publish the policy to mulesoft exchange by running `make publish`
 
-7\. Select your APIs on which you want to apply Akto Policy.
+7\. Select your Agentic components on which you want to apply Akto Policy.
 
 8\. Copy the instance ip where Akto Runtime was deployed, and replace \<url> in the below string and use it as input param `ingestionUrl` to the policy
 

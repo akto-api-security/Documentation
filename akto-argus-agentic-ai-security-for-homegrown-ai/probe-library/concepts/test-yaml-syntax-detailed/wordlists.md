@@ -44,7 +44,7 @@ You can also create a wordlist of your own from the traffic data.
 
 For example, you have a profile data API `/api/v1/user-info?user_id=834cc2de-050b-4a2f-8b54-67b1847d3591`. You want to carry a BOLA attack where you want to replace user\_id `834cc2de-050b-4a2f-8b54-67b1847d3591` by other value user ids. These valid user ids are present in other APIs in your Akto dashboard.
 
-You can create a wordlist of all values from all your APIs in the following manner -
+You can create a wordlist of all values from all your Agentic components in the following manner -
 
 ```yaml
 wordLists:

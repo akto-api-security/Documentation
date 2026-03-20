@@ -138,7 +138,7 @@ make updateFunctionConfiguration FUNCTION_NAME=my-production-lambda AKTO_MIRRORI
 
 > **Note:** Before running this command, make sure **jq** is installed on your system. You can install it using your package manager, e.g., `sudo apt install jq` on Debian-based systems, `brew install jq` on macOS, or `winget install jqlang.jq` on Windows.
 
-### 2.6 API Inventory with Source Location
+### 2.6 Agentic Inventory with Source Location
 
 Once your Lambda extension is connected, Akto automatically tags Agentic Collection with the source, like `service=lambda`. This helps you easily track and filter Agentic Collection based on their origin. You can view this under **Agentic AI Discovery > Agentic Collections**.
 

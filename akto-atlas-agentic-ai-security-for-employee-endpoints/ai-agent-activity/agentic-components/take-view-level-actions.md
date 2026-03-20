@@ -246,7 +246,7 @@ When redaction is enabled:
 
 * Existing sample payload values for the collection are deleted
 * All future payload values for the collection are redacted
-* API Inventory data remains unchanged
+* Agentic Inventory data remains unchanged
 * Sensitive data detection remains intact
 
 Only sample payload values are affected by this action
