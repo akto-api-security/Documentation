@@ -11,7 +11,7 @@ Contexts will help you query all your data from Akto dashboard - which you can t
 Akto supports 4 types of contexts -
 
 1. [Roles](contexts.md#roles-access-context) (`roles_access_context`) - You can access tokens from [Scan roles](../../../agentic-red-teaming/concepts/test-role.md) that you have configured in the dashboard
-2. [API Inventory](contexts.md#api-inventory-context) (`endpoint_in_traffic_context`) - You can use this context to check if an endpoint already exists in API Inventory. This is useful while discovering shadow APIs. An endpoint is a shadow endpoint only if it exists and is NOT being used by the application.
+2. [Agentic Inventory](contexts.md#agentic-inventory-context) (`endpoint_in_traffic_context`) - You can use this context to check if an Agentic component already exists in Agentic Inventory. This is useful while discovering shadow Agentic components. An Agentic component is a shadow Agentic component only if it exists and is NOT being used by the application.
 3. [Parameters](contexts.md#parameters-context) (`param_context`) - You can use this context to query all parameters (JSON/form-data etc.). For example, you want to run a BOLA probe that tries to access `cart` details by changing `cart_id` parameter in the request body. You can use `param_context` to query all keys that match `.*cart_id.*` and use this wordlist in your BOLA probe.
 4. [Private variable](contexts.md#private-variable-context) (`private_variable_context)` - You can use this context to find out if a particular value is being used by exactly 1 user or multiple users. A `cart_id` or a `transaction_id` is particular to a user, whereas `product_id` can be queried by multiple users
 
@@ -42,11 +42,11 @@ validate:
 
 This YAML runs only on endpoints that contain `/admin` (assuming these are admin APIs). It replaces the auth token in the original request by `MEMBER` auth token. If the response is 2xx, it is a vulnerability
 
-### API Inventory context
+### Agentic Inventory context
 
-You can use this context to find out if an endpoint exists in Agentic Inventory.
+You can use this context to find out if an Agentic component exists in Agentic Inventory.
 
-**Example** - You want to fuzz and find out all shadow endpoints which are NOT a part of Agentic Inventory already.
+**Example** - You want to fuzz and find out all shadow Agentic components which are NOT a part of Agentic Inventory already.
 
 {% code overflow="wrap" %}
 ```yaml
@@ -64,8 +64,8 @@ validate:
   response_code:
     gt: 200
     lt: 300
-  endpoint_in_traffic_context: false   
-  # raise Shadow-endpoint-found vuln only if the fuzzed endpoint is NOT in API Inventory
+  endpoint_in_traffic_context: false
+  # raise Shadow-endpoint-found vuln only if the fuzzed Agentic component is NOT in Agentic Inventory
 ```
 {% endcode %}
 
