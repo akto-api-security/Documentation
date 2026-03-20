@@ -6,13 +6,13 @@ description: Connect Akto with N8N
 
 ## Overview
 
-N8N is a workflow automation platform that connects various services and automates tasks. This setup is recommended if you want to monitor API traffic from your N8N workflows and ensure your automated processes maintain security standards.
+N8N is a workflow automation platform that connects various services and automates tasks. This setup is recommended if you want to monitor agentic traffic from your N8N workflows and ensure your automated processes maintain security standards.
 
 The Akto N8N connector automatically:
 
 * Fetches all workflow metadata from your N8N instance
 * Monitors workflow executions
-* Sends API traffic data to Akto for security analysis
+* Sends agentic traffic data to Akto for security analysis
 
 ## Steps to Connect
 
@@ -58,7 +58,7 @@ Run the following command to start the N8N traffic connector:
 docker compose -f docker-compose-n8n-cron.yaml up
 ```
 
-This will start monitoring your N8N workflows and send API traffic data to Akto for analysis.
+This will start monitoring your N8N workflows and send the traffic data to Akto for analysis.
 {% endstep %}
 {% endstepper %}
 
