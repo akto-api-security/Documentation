@@ -141,6 +141,130 @@ Hook-based visibility depends on OpenClaw providing those hooks. Akto Atlas can 
 
 When OpenClaw triggers the message send or message receive hook, interaction metadata can be sent to Akto Atlas to record OpenClaw activity associated with enterprise users.
 
+### Through MS Defender for Endpoint
+
+In addition to **Proxy-based** and **Hook-based** visibility, OpenClaw also supports discovery via **Microsoft Defender for Endpoint**.
+
+This method enables endpoint-level visibility by integrating Defender with Akto Atlas.
+
+#### Steps
+
+{% stepper %}
+{% step %}
+Navigate to **Akto Atlas** dashboard and go to **Connectors.**
+{% endstep %}
+
+{% step %}
+Select Microsoft Defender for Endpoint
+{% endstep %}
+
+{% step %}
+Fill in the required fields:
+
+* Tenant ID → Your Azure AD tenant ID
+* Client ID → App registration client ID
+* Client Secret → App secret for authentication
+* Data Ingestion Service URL → Defender API ingestion endpoint
+* Polling Interval → Frequency (in seconds) to fetch data
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (154).png" alt="" width="375"><figcaption></figcaption></figure></div>
+{% endstep %}
+
+{% step %}
+Click Save.
+{% endstep %}
+{% endstepper %}
+
+#### How it Works
+
+* Akto connects to Defender using the configured credentials
+* Defender provides endpoint-level telemetry
+* This enables:
+  * Detection of AI tools
+  * Visibility into OpenClaw activity
+  * Integration with guardrail enforcement workflows
+
+## Enable Guardrail via MS Defender for Endpoint
+
+To enable OpenClaw guardrails on endpoints using Microsoft Defender:
+
+{% stepper %}
+{% step %}
+Follow the steps from:\
+[**Deploy via Microsoft Defender** ](deploy-via-microsoft-defender.md#steps-to-deploy)**→ up to Step 3**
+{% endstep %}
+
+{% step %}
+For OpenClaw:
+
+* Request the appropriate script from the **Akto support team**
+  * macOS / Linux → `.sh` script
+  * Windows → `.ps1` script
+{% endstep %}
+
+{% step %}
+After completing the setup run Script via Live Response:
+
+1. Navigate to:
+   * **Microsoft Defender → Assets → Devices**
+2. Select the target device
+3. Click **Initiate live response session**
+4. Once connected, run the script:
+
+{% code overflow="wrap" %}
+```shell
+run update_openclaw_wsl_clean.ps1 -parameters "AKTO_PROXY_URL=https:your-guardrails-url.akto.io OPENAI_API_KEY=sk-xxxxx ORIGINAL_PROVIDER=<your provider eg: openai> /<model eg: gpt-4o-mini> MODEL_API=openai-completions MODEL_ID=<your model eg: gpt-40-mini> "
+```
+{% endcode %}
+
+Wait for the script to complete execution.
+{% endstep %}
+{% endstepper %}
+
+<details>
+
+<summary>🐧 WSL (Additional Setup)</summary>
+
+If you are using WSL, complete the following before running the script
+
+{% hint style="info" %}
+Live Response and updates must be executed on the **Windows host** (not inside WSL)
+{% endhint %}
+
+#### 1. Update Script Variables
+
+* Open the script in a text editor
+* Update required environment variables (API key, model, etc.)
+
+{% hint style="info" %}
+The script runs on the Windows host and connects to WSL using this path.
+{% endhint %}
+
+#### 2. Verify or Install `jq`
+
+Check if installed:
+
+```bash
+which jq
+jq --version
+```
+
+If not installed:
+
+```bash
+sudo apt update && sudo apt install jq -y
+```
+
+#### 3. Run The Script
+
+Run the script from the Live Response session:
+
+```bash
+run script.ps1
+```
+
+</details>
+
 ## Observability Location in Akto Atlas
 
 ### Assets Inventory

@@ -60,7 +60,7 @@ sequenceDiagram
 
 {% stepper %}
 {% step %}
-### Prerequisites
+#### Prerequisites
 
 Ensure the following requirements are available:
 
@@ -71,7 +71,7 @@ Ensure the following requirements are available:
 {% endstep %}
 
 {% step %}
-### Configure Akto Credentials in Portkey
+#### Configure Akto Credentials in Portkey
 
 1. Log in to your Portkey dashboard
 2. Navigate to **Admin Settings** → **Plugins**
@@ -83,7 +83,7 @@ Ensure the following requirements are available:
 {% endstep %}
 
 {% step %}
-### Obtain Guardrail IDs from Our Support
+#### Obtain Guardrail IDs from Our Support
 
 Guardrails are pre-configured and managed by the Akto team. To get the guardrail IDs for your specific guardrail detection needs:
 
@@ -95,7 +95,7 @@ Guardrails are pre-configured and managed by the Akto team. To get the guardrail
 {% endstep %}
 
 {% step %}
-### Create a Portkey Configuration with Akto Guardrails
+#### Create a Portkey Configuration with Akto Guardrails
 
 Define a reusable configuration that includes guardrails and model settings.
 
@@ -113,7 +113,7 @@ Portkey generates a **config ID**.
 {% endstep %}
 
 {% step %}
-### Use Config ID in API Requests
+#### Use Config ID in API Requests
 
 You now attach the Portkey configuration at the client level using the generated config ID.\
 The config ID encapsulates Akto guardrails and model settings.
@@ -179,8 +179,6 @@ curl https://api.portkey.ai/v1/chat/completions \
       }]
   }'
 ```
-
-
 {% endtab %}
 {% endtabs %}
 
