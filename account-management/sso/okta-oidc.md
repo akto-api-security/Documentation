@@ -6,7 +6,7 @@ Okta SSO integration with Akto enables centralized authentication using your exi
 
 This integration allows your enterprise teams to manage authentication and authorization through Okta while Akto enforces role-based access during login.
 
-## End-to-End Okta SSO Setup
+## Configure Okta Account for Akto SSO
 
 You can configure Okta SSO and role mapping in a single flow that connects Okta identity, group claims, and Akto role enforcement.
 
@@ -61,24 +61,35 @@ Entering a valid Okta API token enables automatic group name suggestions in the 
 
 Copy the generated API token.
 {% endstep %}
+{% endstepper %}
 
-{% step %}
-### Configure Okta SSO in Akto Dashboard
+## Setup Okta SSO in Akto Dashboard
 
 Use the following configuration screen in Akto:
 
-1. Navigate to **Integrations → Okta SSO** in the Akto dashboard.
-2. You can see the same [#create-okta-application-for-akto](okta-oidc.md#create-okta-application-for-akto "mention") steps here too. Click on the **Next**.
-3.  Enter the following fields:
+{% stepper %}
+{% step %}
+Navigate to **Integrations → Okta SSO** in the Akto dashboard.
+{% endstep %}
 
-    * **Client ID**: Okta application client ID
-    * **Client Secret**: Okta application client secret
-    * **Authorisation Server ID**: Okta authorisation server identifier
-    * **Domain Name**: Okta domain (for example: `your-org.okta.com`)
-    * **API Token**: Okta API token
+{% step %}
+You can see the same [#create-okta-application-for-akto](okta-oidc.md#create-okta-application-for-akto "mention") steps here too. Click on the **Next**.
+{% endstep %}
 
-    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (155).png" alt="" width="563"><figcaption></figcaption></figure></div>
-4. Submit the configuration to enable SSO.
+{% step %}
+Enter the following fields:
+
+* **Client ID**: Okta application client ID
+* **Client Secret**: Okta application client secret
+* **Authorisation Server ID**: Okta authorisation server identifier
+* **Domain Name**: Okta domain (for example: `your-org.okta.com`)
+* **API Token**: Okta API token
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (155).png" alt="" width="563"><figcaption></figcaption></figure></div>
+{% endstep %}
+
+{% step %}
+Submit the configuration to enable SSO.
 {% endstep %}
 {% endstepper %}
 

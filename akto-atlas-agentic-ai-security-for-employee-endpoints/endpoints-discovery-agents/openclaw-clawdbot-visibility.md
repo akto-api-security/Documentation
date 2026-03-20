@@ -203,7 +203,7 @@ For OpenClaw:
 {% endstep %}
 
 {% step %}
-After completing the setup run Script via Live Response:
+After completing the setup run the script via Live Response:
 
 1. Navigate to:
    * **Microsoft Defender → Assets → Devices**
