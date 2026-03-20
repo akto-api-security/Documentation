@@ -1,6 +1,6 @@
 # ServiceNow
 
-Integrate Akto with ServiceNow to streamline your API security workflow by creating tickets for vulnerabilities directly from Akto into your ServiceNow instance.
+Integrate Akto with ServiceNow to streamline your agentic AI security workflow by creating tickets for vulnerabilities directly from Akto into your ServiceNow instance.
 
 ## Quick Setup Steps
 
@@ -37,7 +37,7 @@ Before creating the OAuth integration, ensure the client credentials grant type 
 2. Click **New integration** to create a new integration
 3. Choose **OAuth - Client credentials grant type**
 4. Fill in the following details:
-   * **Name:** Enter a descriptive name (e.g., "Akto API Security Integration")
+   * **Name:** Enter a descriptive name (e.g., "Akto Agentic AI Security Integration")
    * **User:** Select a user account that has all required roles to create and manage tickets
      * Ensure this user has permissions to access and create records in the tables you want to integrate
    * **Active:** Make sure the **Active** checkbox is **enabled**
@@ -84,7 +84,7 @@ After creating the integration:
 
 * After entering the credentials, click **Fetch Tables**
 * Akto will retrieve all available tables from your ServiceNow instance
-* Select the tables where you want to create tickets for API vulnerabilities
+* Select the tables where you want to create tickets for Agentic component vulnerabilities
   * Common choices include: `incident`, `problem`, `change_request`, or custom tables
   * You can select multiple tables based on your workflow requirements
 {% endstep %}

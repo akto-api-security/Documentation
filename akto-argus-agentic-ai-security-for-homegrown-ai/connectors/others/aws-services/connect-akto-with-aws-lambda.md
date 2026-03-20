@@ -140,7 +140,7 @@ make updateFunctionConfiguration FUNCTION_NAME=my-production-lambda AKTO_MIRRORI
 
 ### 2.6 API Inventory with Source Location
 
-Once your Lambda extension is connected, Akto automatically tags API Collection with the source, like `service=lambda`. This helps you easily track and filter API Collection based on their origin. You can view this under **API Discovery > API Collections**.
+Once your Lambda extension is connected, Akto automatically tags Agentic Collection with the source, like `service=lambda`. This helps you easily track and filter Agentic Collection based on their origin. You can view this under **Agentic AI Discovery > Agentic Collections**.
 
 <figure><img src="../../../../.gitbook/assets/image (115) (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -149,7 +149,7 @@ Once your Lambda extension is connected, Akto automatically tags API Collection 
 ## Step 3: Verify the Setup
 
 1. Invoke your Lambda function manually or through an event.
-2. Confirm that API traffic data (requests and responses) are captured on the Akto dashboard under the respective api collection.
+2. Confirm that API traffic data (requests and responses) are captured on the Akto dashboard under the respective Agentic Collection.
 3. Check logs of your Lambda function for any initialization messages from the extension.
 
 If you face any issues, ensure:

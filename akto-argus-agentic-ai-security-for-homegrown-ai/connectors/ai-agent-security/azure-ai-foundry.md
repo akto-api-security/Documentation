@@ -14,13 +14,13 @@ The Azure AI Foundry connector automatically:
   * Prompt injection detection
   * Sensitive data exposure
   * Policy violations
-  * Runtime threat detection
+  * Runtime guardrail detection
 * **Multi-Agent Workflow Visibility**: Tracks interactions across multi-agent workflows and stateful processes
 * **Unified Security Dashboard**: Provides centralized monitoring of all Azure AI Foundry agents alongside your other AI infrastructure
 
 ## Azure AI Foundry APIs Queried by Akto
 
-The following table lists the Azure AI Foundry API endpoints queried by Akto and the data collected from each endpoint.
+The following table lists the Azure AI Foundry agentic components queried by Akto and the data collected from each endpoint.
 
 | API Endpoint                                                              | What Akto Ingests                      |
 | ------------------------------------------------------------------------- | -------------------------------------- |
@@ -39,7 +39,7 @@ Before setting up the Azure AI Foundry connector, ensure you have:
    * Managed Identity
    * Azure AD authentication token
 4. **Network Access** – The connector service must have access to:
-   * Azure AI Foundry API endpoints
+   * Azure AI Foundry agentic endpoints
    * Akto Data Ingestion Service
    * Your deployed agents' endpoints
 5. **Permissions** – Required Azure permissions:

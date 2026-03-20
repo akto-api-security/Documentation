@@ -18,7 +18,7 @@ Agentic AI systems expand the attack surface through:
 
 ## Akto's Four Pillars of AI Security
 
-### **1. AI Agent & API Discovery**
+### **1. AI Agent & Agentic AI Discovery**
 
 Understanding your AI attack surface is the foundation of security. Akto automatically discovers and inventories all AI-related endpoints, agent workflows, and LLM integrations across your infrastructure.
 
@@ -30,7 +30,7 @@ Understanding your AI attack surface is the foundation of security. Akto automat
 - Identification of shadow AI implementations and unauthorized LLM usage
 
 **What It Detects:**
-- OpenAI, Anthropic, Google AI, and custom LLM API endpoints
+- OpenAI, Anthropic, Google AI, and custom LLM agentic components 
 - RAG (Retrieval-Augmented Generation) system components
 - Agent orchestration platforms and tool registries
 - Vector stores and embedding services
@@ -63,7 +63,7 @@ Proactive vulnerability assessment specifically designed for AI systems. Akto pe
 
 ### **3. Runtime AI Protection**
 
-Real-time threat detection and prevention specifically engineered for AI workloads. Akto monitors and protects against AI-specific attacks while maintaining system performance.
+Real-time security detection and prevention specifically engineered for AI workloads. Akto monitors and protects against AI-specific attacks while maintaining system performance.
 
 **Key Capabilities:**
 - Instant blocking of prompt injection and jailbreak attempts

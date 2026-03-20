@@ -1,6 +1,6 @@
 # Azure DevOps
 
-Akto's integration with Azure DevOps allows you to maintain API security through Azure Pipelines. With this integration, you'll be able to:
+Akto's integration with Azure DevOps allows you to maintain agentic AI security through Azure Pipelines. With this integration, you'll be able to:
 
 * Check status of Akto CICD scans directly from Azure DevOps through quality gates
 * Generate scans from live functional traffic for targeted security scanning

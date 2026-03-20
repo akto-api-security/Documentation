@@ -29,9 +29,9 @@ Agent traffic varies significantly by component type (e.g., `/chat-agent` vs `/d
 
 ## How to Configure
 
-By default, Akto Threat Protection applies a global rate limit rule to all agent components.
+By default, Akto Guardrail Protection applies a global rate limit rule to all agent components.
 
-To change settings, go to **Settings → Threat Configuration → Agent Rate Limits**.
+To change settings, go to **Settings → Guardrail Configuration → Agent Rate Limits**.
 
 ### Default Configuration
 
@@ -92,7 +92,7 @@ For MCP tool invocations:
 
 You can create custom rules for specific agent components or collections:
 
-1. Navigate to **Settings → Threat Configuration → Custom Rate Limits**
+1. Navigate to **Settings → Guardrail Configuration → Custom Rate Limits**
 2. Click **Add Rule**
 3. Select agent collection or specific components
 4. Configure parameters based on component characteristics

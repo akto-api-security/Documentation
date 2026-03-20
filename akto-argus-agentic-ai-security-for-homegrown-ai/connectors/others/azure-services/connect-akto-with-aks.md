@@ -62,9 +62,9 @@ If you have installed on _GCP_, _Kubernetes_ or _OpenShift_ -
 3. Create a file `akto-daemonset-config.yaml` with the above YAML config
 4. Call `kubectl apply -f akto-daemonset-config.yaml -n <NAMESPACE>` on your _kubectl_ terminal
 5. Run the command `kubectl get daemonsets` in terminal. It should show _akto-k8s_ daemonset.
-6. Go to `API Discovery` on Akto dashboard to see your new APIs
+6. Go to `Agentic AI Discovery` on Akto dashboard to see your new APIs
 
-<figure><img src="https://user-images.githubusercontent.com/91221068/236832509-8e8c84ff-633e-4ffe-b11b-344d02ca6e74.png" alt="Check API Discovery"><figcaption><p>Check API Discovery</p></figcaption></figure>
+<figure><img src="https://user-images.githubusercontent.com/91221068/236832509-8e8c84ff-633e-4ffe-b11b-344d02ca6e74.png" alt="Check Agentic AI Discovery"><figcaption><p>Check Agentic AI Discovery</p></figcaption></figure>
 
 ## Frequently Asked Questions (FAQs)
 

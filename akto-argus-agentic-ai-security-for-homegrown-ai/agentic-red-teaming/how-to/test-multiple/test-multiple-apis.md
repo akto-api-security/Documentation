@@ -8,7 +8,7 @@ Akto allows you to probe multiple components of your collection (at once) as it 
 
 In the demonstration below, we run probes for multiple components within the **"juice\_shop\_demo"** collection and then check for any vulnerabilities within the endpoints.
 
-Go to **API Discovery > API Collection**. Select the **API Collection** and click on the **Run Probe.** Select the **Probe Categories** and **Probes** you want to probe by specifying different parameters like **Time duration, Scan Role,** etc, then click on **Run Probe** to execute the probes.
+Go to **Agentic AI Discovery > Agentic Collection**. Select the **Agentic Collection** and click on the **Run Probe.** Select the **Probe Categories** and **Probes** you want to probe by specifying different parameters like **Time duration, Scan Role,** etc, then click on **Run Probe** to execute the probes.
 
 {% embed url="https://demo.arcade.software/KLEQQ4y0CfgAzMkE3JdQ?embed=" %}
 

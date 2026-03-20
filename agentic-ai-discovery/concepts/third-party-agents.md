@@ -14,7 +14,7 @@ Third-party agent components include:
 
 - **External MCP Servers**: Model Context Protocol servers hosted by third parties (e.g., GitHub MCP, Slack MCP, external database connectors)
 - **Third-Party AI Models**: OpenAI, Anthropic, Google, or other LLM providers accessed by your agents
-- **External Tools**: APIs and services invoked by your AI agents that you don't control
+- **External Tools**: Agentic components and services invoked by your AI agents that you don't control
 - **Managed Agent Services**: SaaS-based agentic platforms and frameworks
 
 ## Why Track Third-Party Components?

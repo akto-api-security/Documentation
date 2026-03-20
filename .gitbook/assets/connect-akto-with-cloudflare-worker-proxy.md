@@ -1,6 +1,6 @@
 # Connect Akto with Cloudflare Worker Proxy
 
-Cloudflare is a global network security platform that provides CDN, DDoS protection, and API security services. Integrating Cloudflare with Akto enables automatic discovery of all APIs passing through your Cloudflare infrastructure, helping you maintain continuous visibility and protection of your edge-distributed APIs.
+Cloudflare is a global network security platform that provides CDN, DDoS protection, and agentic AI security services. Integrating Cloudflare with Akto enables automatic discovery of all APIs passing through your Cloudflare infrastructure, helping you maintain continuous visibility and protection of your edge-distributed APIs.
 
 <figure><img src="../../.gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
 
@@ -203,10 +203,10 @@ This ensures all traffic matching the route is intercepted and mirrored to Akto.
 
 ## Step 4: Verify the Setup
 
-1. Confirm that API traffic data (requests and responses) are captured on the Akto dashboard under the respective API collection.
+1. Confirm that API traffic data (requests and responses) are captured on the Akto dashboard under the respective agentic collection.
 2. Check logs of your Worker for any initialization or forwarding messages.
 3. Go back to the [Akto Dashboard](https://app.akto.io/).
-4. Navigate to **API Collections** > **Hostname**.
+4. Navigate to **Agentic Collections** > **Hostname**.
 5. You should start seeing the traffic from your Cloudflare Worker.
 
 ---

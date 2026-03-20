@@ -31,7 +31,7 @@ sequenceDiagram
         PromptHook-->>Akto: Report event
     else Malicious
         PromptHook-->>User: Block
-        PromptHook-->>Akto: Report threat
+        PromptHook-->>Akto: Report security event
     end
 
     Claude->>ResponseHook: Claude response

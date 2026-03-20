@@ -1,5 +1,5 @@
 ---
-description: Real-time threat protection for AI agents and MCP endpoints
+description: Real-time guardrail protection for AI agents and MCP endpoints
 ---
 
 # Get Started
@@ -62,10 +62,10 @@ Once your proxy is configured:
 
 From your Guardrails dashboard:
 
-1. View real-time threat detection
+1. View real-time guardrail detection
 2. See blocked attacks and patterns
 3. Configure blocking rules
-4. Set up alerts for critical threats
+4. Set up alerts for critical violations
 
 ## What Gets Protected
 
@@ -80,7 +80,7 @@ Akto Guardrails defends against:
 
 ## Key Features
 
-* **Real-Time Threat Detection**: Identify and respond to agentic security threats as they occur
+* **Real-Time Guardrails**: Identify and respond to agentic security threats as they occur
 * **OWASP Core Rule Set Support**: Detect common attack patterns including XSS and SQL injection in agent interactions
 * **Prompt Injection Protection**: Block malicious prompts attempting to manipulate agent behavior
 * **Tool Permission Enforcement**: Prevent unauthorized tool access and permission escalation

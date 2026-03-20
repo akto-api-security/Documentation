@@ -17,7 +17,7 @@ You can now include specific collections when managing a role. Follow the steps 
 
 1. Go to your **Settings > Roles.**
 2. Find and click the role you want to update (e.g., **JUICE\_SHOP\_APIS**).
-3. Search and select the list of API Collections you want to include in the role.
+3. Search and select the list of Agentic Collections you want to include in the role.
 
 #### **2. Assign a Permission Level (Optional)**
 

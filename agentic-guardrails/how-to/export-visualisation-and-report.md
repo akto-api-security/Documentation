@@ -2,7 +2,7 @@
 
 ## **Overview**
 
-Akto enables you to export visualisations and reports from the Agentic Guardrails dashboards. You can download charts, metrics, and threat activity records for audits, reporting, or internal analysis.
+Akto enables you to export visualisations and reports from the Agentic Guardrails dashboards. You can download charts, metrics, and guardrail activity records for audits, reporting, or internal analysis.
 
 ## **Download Visualisation**
 
@@ -33,7 +33,7 @@ Each format allows you to save the selected visualisation exactly as displayed o
 
 ## **Download Guardrail Activity Data**
 
-You can export the complete threat activity dataset from the Guardrail Activity page.
+You can export the complete guardrail activity dataset from the Guardrail Activity page.
 
 {% stepper %}
 {% step %}

@@ -30,7 +30,7 @@ sequenceDiagram
 
     User->>PromptHook: User submits prompt
     Note over PromptHook: Validate guardrail policies (monitor only)
-    PromptHook-->>Akto: Report event / flag threat
+    PromptHook-->>Akto: Report event / flag security issue
     PromptHook->>Copilot: Forward to Copilot (cannot block)
 
     Copilot->>PreToolHook: Copilot requests tool execution
@@ -40,7 +40,7 @@ sequenceDiagram
         PreToolHook-->>Akto: Report event
     else Policy Violation
         PreToolHook-->>User: Block tool execution
-        PreToolHook-->>Akto: Report threat
+        PreToolHook-->>Akto: Report security event
     end
 
     Copilot->>PostToolHook: Tool execution completes

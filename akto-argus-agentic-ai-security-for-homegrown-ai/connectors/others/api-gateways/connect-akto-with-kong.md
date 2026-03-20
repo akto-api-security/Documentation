@@ -170,7 +170,7 @@ Replace `<DATABASE_ABSTRACTOR_SERVICE_TOKEN>` with the token retrieved from Char
 
 **Chart 3: Threat Backend**
 
-This chart deploys the threat analysis and security scanning backend.
+This chart deploys the security analysis and security scanning backend.
 
 ```bash
 helm install akto-threat-backend akto/akto-threat-backend \
@@ -264,7 +264,7 @@ After all four Helm charts are successfully deployed, you will have:
 
 1. **Database Abstractor (Cyborg)** - Database access layer
 2. **Data Ingestion + Mini-Runtime** - Traffic processing pipeline
-3. **Threat Backend** - Security scanning and threat analysis
+3. **Security Backend** - Security scanning and security analysis
 4. **AI Guardrails** - AI agent validation and monitoring with Agent Guard Executor
 
 {% hint style="info" %}

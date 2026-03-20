@@ -59,4 +59,4 @@ Configured webhook integration allows security teams to stream Guardrail activit
 * Security automation pipelines
 * Incident response tooling
 
-Webhook export ensures external monitoring platforms receive threat activity data without manual exports.
+Webhook export ensures external monitoring platforms receive guardrail activity data without manual exports.

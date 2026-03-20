@@ -1,6 +1,6 @@
-# API Selection Filters
+# Agentic Component Selection Filters
 
-This section describes the `conditions` that act as selection criteria for choosing APIs that are eligible for a particular test. It also filters out APIs that are not eligible.
+This section describes the `conditions` that act as selection criteria for choosing Agentic components that are eligible for a particular probe. It also filters out Agentic components that are not eligible.
 
 Example:
 
@@ -46,7 +46,7 @@ api_selection_filters:
 
 ## **Parent Operators**
 
-Each `condition` block begins with a parent operator. Parent Operators indicate the `property of the API` you are scanning. All the conditions will apply to these parent operators. Parent Operators can have the following values:
+Each `condition` block begins with a parent operator. Parent Operators indicate the `property of the Agentic component` you are probing. All the conditions will apply to these parent operators. Parent Operators can have the following values:
 
 <table><thead><tr><th width="212.5">Parent Operator</th><th>Description</th></tr></thead><tbody><tr><td>response_code</td><td>This denotes that the conditions will be applied on response code of the api</td></tr><tr><td>method</td><td>This denotes that the conditions will be applied on http method of the api</td></tr><tr><td>url</td><td>This denotes that the conditions will be applied on http url of the api</td></tr><tr><td>request_payload</td><td>This denotes that the conditions will be applied on request payload of the api</td></tr><tr><td>response_payload</td><td>This denotes that the conditions will be applied on response payload of the api</td></tr><tr><td>request_headers</td><td>This denotes that the condition will be applied on request headers of the api</td></tr><tr><td>response_headers</td><td>This denotes that the condition will be applied on response headers of the api</td></tr><tr><td>query_param</td><td>This denotes that the condition will be applied on query params of the api</td></tr></tbody></table>
 
@@ -106,7 +106,7 @@ url:
 {% endcode %}
 
 {% hint style="info" %}
-👉🏻 **In simple language:** The above yaml syntax is filtering APIs with url containing the keywords ‘https’ or ‘login’
+👉🏻 **In simple language:** The above yaml syntax is filtering Agentic components with url containing the keywords ‘https’ or ‘login’
 {% endhint %}
 
 ### <mark style="color:red;">`contains_all`</mark>
@@ -140,7 +140,7 @@ url:
 {% endcode %}
 
 {% hint style="info" %}
-👉🏻 In simple language: The above yaml syntax is filtering APIs with url containing the keywords ‘https’ **and** ‘login’
+👉🏻 In simple language: The above yaml syntax is filtering Agentic components with url containing the keywords ‘https’ **and** ‘login’
 {% endhint %}
 
 ### <mark style="color:red;">`regex`</mark>
@@ -411,7 +411,7 @@ request_payload:
 	length:
 		gt: 0
 
-# Here we want to apply a condition, where api's should have a non-empty request payload.
+# Here we want to apply a condition, where Agentic component's should have a non-empty request payload.
 # We use length operator, and combine it with data operator(gt), where we specify length to be greater than 0
  
 #Example 2
@@ -419,7 +419,7 @@ response_payload:
 	length:
 		gte: 10
 
-# Here we want to apply a condition, where api's should have a non-empty response payload.
+# Here we want to apply a condition, where Agentic component's should have a non-empty response payload.
 # We use length operator, and combine it with data operator(gt), where we specify length to be greater than equal to 10 
 ```
 {% endcode %}
@@ -537,7 +537,7 @@ execute:
 
 ## **Combining conditions using Boolean Operators**
 
-Security probes can be complex in nature. Often, a specific probe requires multiple filter conditions to evaluate whether a given endpoint is eligible for the probe.
+Security probes can be complex in nature. Often, a specific probe requires multiple filter conditions to evaluate whether a given Agentic component is eligible for the probe.
 
 **Default Behavior**
 

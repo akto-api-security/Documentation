@@ -2,11 +2,11 @@
 
 ## Overview
 
-Akto MCP Proxy is a security and governance layer that sits between MCP (Model Context Protocol) clients and MCP servers. It enables organizations to implement threat protection, security policies, and guardrails for all MCP server requests while maintaining seamless connectivity to the original MCP servers.
+Akto MCP Proxy is a security and governance layer that sits between MCP (Model Context Protocol) clients and MCP servers. It enables organizations to implement guardrail protection, security policies, and guardrails for all MCP server requests while maintaining seamless connectivity to the original MCP servers.
 
 ## Key Features
 
-* **Threat Protection**: Real-time scanning and blocking of malicious requests
+* **Guardrail Protection**: Real-time scanning and blocking of malicious requests
 * **Security Guardrails**: Enforce organizational security policies and compliance requirements
 * **Request Monitoring**: Complete visibility into all MCP communications
 * **Transparent Proxying**: Zero-configuration changes required on MCP servers
@@ -21,7 +21,7 @@ Akto MCP Proxy is a security and governance layer that sits between MCP (Model C
                               │
                               ▼
                        ┌──────────────────┐
-                       │ Threat Detection │
+                       │ Guardrail Detection │
                        │   & Guardrails   │
                        └──────────────────┘
 ```
@@ -33,7 +33,7 @@ Akto MCP Proxy is a security and governance layer that sits between MCP (Model C
 ## How It Works
 
 1. **Request Interception**: MCP clients send requests to the Akto proxy endpoint instead of directly to MCP servers
-2. **Security Analysis**: Each request undergoes threat detection and policy validation
+2. **Security Analysis**: Each request undergoes guardrail detection and policy validation
 3. **Policy Enforcement**: Requests are evaluated against configured guardrails
 4. **Request Forwarding**: Validated requests are forwarded to the original MCP server
 5. **Response Processing**: Server responses are analyzed and returned to the client
@@ -148,9 +148,9 @@ guardrails:
         per_client: true
 ```
 
-#### Threat Detection Profiles
+#### Guardrails Profiles
 
-Configure threat detection sensitivity and rules:
+Configure guardrail detection sensitivity and rules:
 
 ```yaml
 threat_detection:
@@ -168,7 +168,7 @@ threat_detection:
 
 ## Security Features
 
-### 1. Threat Detection
+### 1. Guardrails
 
 * **SQL Injection Prevention**: Detects and blocks SQL injection attempts
 * **Command Injection Protection**: Prevents malicious command execution
@@ -194,7 +194,7 @@ threat_detection:
 ### Dashboard Metrics
 
 * Request volume and trends
-* Threat detection statistics
+* Guardrail detection statistics
 * Blocked request analysis
 * Performance metrics (latency, throughput)
 * Error rates and patterns
@@ -260,7 +260,7 @@ Authorization: Bearer {api_key}
 
 ### Request Blocked
 
-* Review threat detection logs for specific violations
+* Review security detection logs for specific violations
 * Check guardrail configurations
 * Verify request content against security policies
 

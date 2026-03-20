@@ -116,7 +116,7 @@ kubectl get svc -n <namespace>
    wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-compose-mini-runtime.yml
    wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/watchtower.env
    wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-mini-runtime.env
-   wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-threat-detection.env
+   wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker--detection.env
 ```
 
 6. Modify ${AKTO\_KAFKA\_IP} in the `docker-compose-mini-runtime.yml` with the ip of your instance on which runtime will be deployed

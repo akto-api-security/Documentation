@@ -1,6 +1,6 @@
 # Connect Akto with AWS API Gateway
 
-AWS API Gateway is a fully managed service from AWS that helps developers create, publish, monitor, and secure APIs at scale. By integrating AWS API Gateway with Akto, you'll automatically discover and test the security of all your REST APIs, HTTP APIs, and WebSocket APIs deployed through API Gateway, ensuring comprehensive API security across your AWS infrastructure.
+AWS API Gateway is a fully managed service from AWS that helps developers create, publish, monitor, and secure APIs at scale. By integrating AWS API Gateway with Akto, you'll automatically discover and test the security of all your REST APIs, HTTP APIs, and WebSocket APIs deployed through API Gateway, ensuring comprehensive agentic AI security across your AWS infrastructure.
 
 <figure><img src="../../../../.gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
 

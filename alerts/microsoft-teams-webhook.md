@@ -1,6 +1,6 @@
 # Microsoft Teams Webhook
 
-Microsoft Teams Webhook integration allows Akto to send automated notifications about agentic security events, scan results, and important alerts directly to your specified Teams channels. This creates a centralized location for your team to monitor and respond to API security concerns without switching between multiple platforms.
+Microsoft Teams Webhook integration allows Akto to send automated notifications about agentic security events, scan results, and important alerts directly to your specified Teams channels. This creates a centralized location for your team to monitor and respond to agentic AI security concerns without switching between multiple platforms.
 
 <figure><img src="../.gitbook/assets/image (4) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 

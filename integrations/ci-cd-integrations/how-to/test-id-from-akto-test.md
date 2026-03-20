@@ -1,9 +1,9 @@
-# Test ID from Akto test
+# Scan ID from Akto Scan
 
 1. Go to Akto Dashboard
 2. Navigate to Red Teaming > Results in the left sidebar
 3. Find your scan run in the list
-4. Copy the test ID from the URL when you click on a specific scan
+4. Copy the scan ID from the URL when you click on a specific scan
    * The URL format will be: `https://app.akto.io/dashboard/testing/<test-id>`
    * Example: In `https://app.akto.io/dashboard/testing/6640c63bc03e1b7d1808a1d3`, the test ID is `6640c63bc03e1b7d1808a1d3`
 

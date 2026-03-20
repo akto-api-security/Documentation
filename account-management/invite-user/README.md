@@ -1,6 +1,6 @@
 # Invite User
 
-Inviting new team members to your Akto workspace allows for collaborative API security management. Here's a step-by-step guide on how to add new members to your team:
+Inviting new team members to your Akto workspace allows for collaborative agentic AI security management. Here's a step-by-step guide on how to add new members to your team:
 
 {% @arcade/embed flowId="fy0didkl3VI4D3iJqbWw" url="https://app.arcade.software/share/fy0didkl3VI4D3iJqbWw" %}
 

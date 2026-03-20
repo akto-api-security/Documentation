@@ -1,8 +1,8 @@
-# Configure alerts on API changes
+# Configure alerts on Agentic component changes
 
-You can configure and enable webhook alerts in Akto to receive real-time notifications whenever the system detects the occurrence of specific events like identification of a new sensitive endpoint in your API collection.
+You can configure and enable webhook alerts in Akto to receive real-time notifications whenever the system detects the occurrence of specific events like identification of a new sensitive Agentic component in your agentic collection.
 
-You can set up webhook alerts to instantly notify you of key events, such as new sensitive endpoints, via platforms like Slack channel, Microsoft Teams, Google Chat, PagerDuty, Datadog, Opsgenie, Splunk, Trello, and many more. This keeps you updated on API changes, enabling quick problem resolution and improved system efficiency.
+You can set up webhook alerts to instantly notify you of key events, such as new sensitive Agentic components, via platforms like Slack channel, Microsoft Teams, Google Chat, PagerDuty, Datadog, Opsgenie, Splunk, Trello, and many more. This keeps you updated on Agentic component changes, enabling quick problem resolution and improved system efficiency.
 
 In the demonstration below, we have configured a webhook alert in Akto to keep you informed of API changes. For example, we've set up an alert to send notifications to a request catcher, ensuring you receive updates whenever relevant events occur.
 

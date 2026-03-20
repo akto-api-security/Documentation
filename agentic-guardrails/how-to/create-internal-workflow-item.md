@@ -50,11 +50,11 @@ Before creating Jira tickets from Akto, ensure that your Azure DevOps Board is i
 
 {% stepper %}
 {% step %}
-Open **Threat Activity** under **API Threat Detection**.
+Open **Guardrail Activity** under **Agentic Guardrails**.
 {% endstep %}
 
 {% step %}
-Select the threat activity that requires internal follow-up.
+Select the guardrail activity that requires internal follow-up.
 {% endstep %}
 
 {% step %}
