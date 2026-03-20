@@ -22,7 +22,7 @@ You can configure Okta SSO and role mapping in a single flow that connects Okta 
 4. In **Sign-in redirect URIs**, add:\
    `https://app.akto.io/authorization-code/callback`
 5. In **Initiate login URI**, add the following URL if you use login initiated by Okta:\
-   `https://app.akto.io/okta-initiate-login?accountId=1669322524`
+   `https://app.akto.io/okta-initiate-login?accountId=<your-akto-accountId>`
 6. In **Assignments**, select required users or groups.\
    Save the application.
 7. Copy **CLIENT\_ID** and **CLIENT\_SECRET** from the application.
@@ -52,6 +52,12 @@ Navigate to:
 *   Configure IP restrictions: `Any IP`
 
     <div data-with-frame="true"><figure><img src="../../.gitbook/assets/Screenshot 2026-03-20 at 6.57.36 PM.png" alt="" width="375"><figcaption></figcaption></figure></div>
+
+{% hint style="info" %}
+## **Note**
+
+Entering a valid Okta API token enables automatic group name suggestions in the mapping interface. Akto retrieves available groups from Okta, which helps reduce manual errors while defining mappings.
+{% endhint %}
 
 Copy the generated API token.
 {% endstep %}
