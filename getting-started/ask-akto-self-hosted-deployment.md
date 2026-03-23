@@ -4,6 +4,8 @@
 
 **Ask Akto** is an AI-powered conversational assistant integrated into Akto's security platform that enables users to have real-time conversations about API vulnerabilities, test results, and security insights.
 
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (195).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 ## Key Capabilities
 
 * **Interactive Vulnerability Analysis**: Ask questions about test results and vulnerabilities in natural language
