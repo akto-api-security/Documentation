@@ -57,7 +57,7 @@
     * [Azure AI Foundry](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/azure-ai-foundry.md)
     * [Snowflake](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/snowflake.md)
     * [Portkey](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/portkey.md)
-    * [Truefoundry](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/truefoundry.md)
+    * [TrueFoundry](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/truefoundry.md)
     * [Vertex AI](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/vertex-ai.md)
     * [Arcade](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/arcade.md)
     * [Salesforce](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/salesforce.md)

@@ -2,13 +2,13 @@
 description: Connect Akto with TrueFoundry AI Gateway
 ---
 
-# Truefoundry
+# TrueFoundry
 
 ## Overview
 
 TrueFoundry is a comprehensive ML platform that helps you deploy and manage LLM-powered applications at scale. The **TrueFoundry AI Gateway** routes all LLM traffic through a centralized gateway, enabling security, monitoring, and cost management.
 
-Akto integrates with TrueFoundry AI Gateway as a **custom guardrail server**, providing real-time security validation and comprehensive traffic monitoring for all your LLM interactions. Once configured, TrueFoundry AI Gateway automatically sends requests to Akto for security analysis.
+Akto integrates with TrueFoundry AI Gateway as a **external guardrail server**, providing real-time security validation and comprehensive traffic monitoring for all your LLM interactions. Once configured, TrueFoundry AI Gateway automatically sends requests to Akto for security analysis.
 
 The Akto TrueFoundry integration automatically:
 
@@ -129,8 +129,10 @@ Fill in the required fields:
   *   Example:
 
       ```
-      https://<your-akto-instance>-guardrails.akto.io
+      https://<your-akto-instanceID>-guardrails.akto.io
       ```
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/Screenshot 2026-03-23 at 4.25.12 PM.png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
