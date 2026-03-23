@@ -105,6 +105,10 @@ You will need the following inputs for each of the API endpoints:
 [AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
 {% endswagger %}
 
+{% swagger src="../.gitbook/assets/AktoSwagger.json" path="/api/fetchIssuesFromCollections" method="post" %}
+[AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
+{% endswagger %}
+
 {% swagger src="../.gitbook/assets/AktoSwagger.json" path="/api/addTestRoles" method="post" %}
 [AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
 {% endswagger %}
