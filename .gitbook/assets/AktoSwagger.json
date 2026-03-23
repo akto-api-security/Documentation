@@ -3582,6 +3582,174 @@
           }
         } ]
     },
+    "/api/fetchIssuesFromCollections" : {
+      "description" : "description",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchIssuesFromCollections",
+        "operationId" : "/api/fetchIssuesFromCollections-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "filterCollectionNames" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string",
+                      "example" : "juice_shop_demo"
+                    }
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "description",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "issueDetails" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "apiUrl" : {
+                            "type" : "string",
+                            "example" : "https://juiceshop.akto.io/redirect"
+                          },
+                          "apiMethod" : {
+                            "type" : "string",
+                            "example" : "GET"
+                          },
+                          "apiCollectionId" : {
+                            "type" : "integer",
+                            "format" : "int32",
+                            "example" : 1770879436
+                          },
+                          "testSubCategory" : {
+                            "type" : "string",
+                            "example" : "OPEN_REDIRECT"
+                          },
+                          "status" : {
+                            "type" : "string",
+                            "example" : "OPEN"
+                          },
+                          "severity" : {
+                            "type" : "string",
+                            "example" : "HIGH"
+                          },
+                          "creationTime" : {
+                            "type" : "integer",
+                            "format" : "int32",
+                            "example" : 1773741082
+                          },
+                          "lastSeen" : {
+                            "type" : "integer",
+                            "format" : "int32",
+                            "example" : 1773741082
+                          },
+                          "issueUrl" : {
+                            "type" : "string",
+                            "example" : "https://app.akto.io/dashboard/reports/issues?result=69b9241a1f07a41b7a9653fe"
+                          },
+                          "testName" : {
+                            "type" : "string",
+                            "example" : "Open redirect"
+                          },
+                          "testDescription" : {
+                            "type" : "string",
+                            "example" : "An attacker can construct a URL within the application that causes a redirection to an arbitrary external domain."
+                          },
+                          "testDetails" : {
+                            "type" : "string",
+                            "example" : "Open redirection vulnerabilities arise when an application incorporates user-controllable data into the target of a redirection in an unsafe way."
+                          },
+                          "testImpact" : {
+                            "type" : "string",
+                            "example" : "This behavior can be leveraged to facilitate phishing attacks against users of the application."
+                          },
+                          "testRemediation" : {
+                            "type" : "string",
+                            "example" : "null"
+                          },
+                          "testSeverityFromTemplate" : {
+                            "type" : "string",
+                            "example" : "HIGH"
+                          },
+                          "testTags" : {
+                            "type" : "array",
+                            "items" : {
+                              "type" : "string",
+                              "example" : "Business logic"
+                            }
+                          },
+                          "testReferences" : {
+                            "type" : "array",
+                            "items" : {
+                              "type" : "string",
+                              "example" : "https://portswigger.net/kb/issues/00500100_open-redirection-reflected"
+                            }
+                          },
+                          "testCwe" : {
+                            "type" : "string",
+                            "example" : "null"
+                          },
+                          "testCve" : {
+                            "type" : "string",
+                            "example" : "null"
+                          },
+                          "testCategory" : {
+                            "type" : "string",
+                            "example" : "Security Misconfiguration (SM)"
+                          }
+                        }
+                      }
+                    },
+                    "openIssuesCount" : {
+                      "type" : "integer",
+                      "format" : "int32",
+                      "example" : 21
+                    },
+                    "fixedIssuesCount" : {
+                      "type" : "integer",
+                      "format" : "int32",
+                      "example" : 0
+                    },
+                    "ignoredIssuesCount" : {
+                      "type" : "integer",
+                      "format" : "int32",
+                      "example" : 0
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
     "/api/addTestRoles" : {
       "description" : "description",
       "post" : {
