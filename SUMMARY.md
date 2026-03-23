@@ -30,6 +30,7 @@
   * [GCP Deploy](getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md)
 * [Local Deploy](getting-started/local-deploy.md)
 * [FAQs on data concerns](getting-started/faqs-on-data-concerns.md)
+* [Ask Akto Self-Hosted Deployment](getting-started/ask-akto-self-hosted-deployment.md)
 
 ## DAST
 
