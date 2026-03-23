@@ -3630,6 +3630,7 @@
                     "example" : 0
                   }
                 },
+                "required" : [ "filterCollectionNames" ],
                 "description" : "Sample description"
               }
             }
