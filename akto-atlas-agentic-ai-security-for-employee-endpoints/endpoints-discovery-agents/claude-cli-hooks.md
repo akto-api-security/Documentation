@@ -526,5 +526,5 @@ claude "What is 2+2?"
 ## Resources
 
 * **GitHub**: [https://github.com/akto-api-security/akto](https://github.com/akto-api-security/akto)
-* **Support**: [support@akto.io](mailto:support@akto.io)
+* **Support**: [<!--email_off-->support@akto.io<!--/email_off-->](mailto:<!--email_off-->support@akto.io<!--/email_off-->)
 * **Community**: [https://www.akto.io/community](https://www.akto.io/community)

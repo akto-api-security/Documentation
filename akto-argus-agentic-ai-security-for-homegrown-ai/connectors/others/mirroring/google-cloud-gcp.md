@@ -132,7 +132,7 @@ If accessing Akto IP from a public network, allow HTTP traffic on the akto dashb
 1. Check if mirroring sessions have been created for the desired instances. You can check this at VPC > Packet mirroring
 2. Check if the VM ports at which your traffic is being generated is open in the Akto runtime machines. Say, if the traffic is being generated at port 3000 on the VM, open the same port on the akto runtime machine.
 3. The Akto runtime processes traffic data every 15-20 minutes, so the traffic logged may not be visible instantly on the akto dashboard.
-4. If this doesn’t solve your issue, contact our support at help@akto.io
+4. If this doesn’t solve your issue, contact our support at <!--email_off-->help@akto.io<!--/email_off-->
 
 ### Get Support for your Akto setup
 
@@ -140,5 +140,5 @@ There are multiple ways to request support from Akto. We are 24X7 available on t
 
 1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
 2. Join our [discord channel](https://www.akto.io/community) for community support.
-3. Contact `help@akto.io` for email support.
+3. Contact `<!--email_off-->help@akto.io<!--/email_off-->` for email support.
 4. Contact us [here](https://www.akto.io/contact-us).

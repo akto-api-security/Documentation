@@ -224,5 +224,5 @@ If you run into any issues or want help with customizing your integration:
 
 1. Reach out via in-app `intercom` on the Akto Dashboard.
 2. Join our [Discord community](https://www.akto.io/community).
-3. Email us at [help@akto.io](mailto:help@akto.io).
+3. Email us at [<!--email_off-->help@akto.io<!--/email_off-->](mailto:<!--email_off-->help@akto.io<!--/email_off-->).
 4. Visit [akto.io/contact-us](https://www.akto.io/contact-us) for further assistance.

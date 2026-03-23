@@ -148,7 +148,7 @@ You can modify the query to add or remove file names depending on the MCP config
 MCP Endpoint Shield deployment requires a hook installation script provided by Akto.
 
 {% hint style="info" %}
-Contact the **Akto support team at** [**support@akto.io**](mailto:support@akto.io) to obtain the required hook script.
+Contact the **Akto support team at** [**<!--email_off-->support@akto.io<!--/email_off-->**](mailto:<!--email_off-->support@akto.io<!--/email_off-->) to obtain the required hook script.
 {% endhint %}
 {% endstep %}
 
@@ -227,4 +227,4 @@ There are multiple ways to request support from Akto. We are 24X7 available on t
 
 1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
 2. Join our [discord channel](https://www.akto.io/community) for community support.
-3. Contact `support@akto.io` for email support.
+3. Contact `<!--email_off-->support@akto.io<!--/email_off-->` for email support.

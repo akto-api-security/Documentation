@@ -33,7 +33,7 @@ You can gather the following information before starting deployment:
 {% hint style="info" %}
 ## **Support Contact**
 
-You can request the extension ID, custom extension URL, and update XML URL from the Akto Support team at [**support@akto.io**](mailto:support@akto.io).
+You can request the extension ID, custom extension URL, and update XML URL from the Akto Support team at [**<!--email_off-->support@akto.io<!--/email_off-->**](mailto:<!--email_off-->support@akto.io<!--/email_off-->).
 {% endhint %}
 
 ## Installation Steps
@@ -91,7 +91,7 @@ Managed Chrome browsers install the Akto extension after policy synchronisation.
 
 ## Support
 
-For deployment assistance or troubleshooting, you can contact the Akto Support team at [**support@akto.io**](mailto:support@akto.io).
+For deployment assistance or troubleshooting, you can contact the Akto Support team at [**<!--email_off-->support@akto.io<!--/email_off-->**](mailto:<!--email_off-->support@akto.io<!--/email_off-->).
 
 ## What Next
 
