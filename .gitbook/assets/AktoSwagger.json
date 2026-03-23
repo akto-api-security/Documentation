@@ -3599,6 +3599,35 @@
                       "type" : "string",
                       "example" : "juice_shop_demo"
                     }
+                  },
+                  "limit" : {
+                    "type" : "integer",
+                    "format" : "int32",
+                    "example" : 20
+                  },
+                  "filterStatus" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string",
+                      "example" : "OPEN"
+                    }
+                  },
+                  "filterSeverity" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string",
+                      "example" : "CRITICAL"
+                    }
+                  },
+                  "skip" : {
+                    "type" : "integer",
+                    "format" : "int32",
+                    "example" : 0
+                  },
+                  "startEpoch" : {
+                    "type" : "integer",
+                    "format" : "int32",
+                    "example" : 0
                   }
                 },
                 "description" : "Sample description"
