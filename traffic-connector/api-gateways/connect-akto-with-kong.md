@@ -13,4 +13,4 @@ To connect Akto with Kong, follow these steps -
 
 <figure><img src="../../.gitbook/assets/image (43).png" alt=""><figcaption></figcaption></figure>
 
-To enable this premium connector for your account, please reach out to our team at [help@akto.io](mailto:help@akto.io) for pricing and setup information.
+To enable this premium connector for your account, please reach out to our team at [<!--email_off-->help@akto.io<!--/email_off-->](mailto:<!--email_off-->help@akto.io<!--/email_off-->) for pricing and setup information.

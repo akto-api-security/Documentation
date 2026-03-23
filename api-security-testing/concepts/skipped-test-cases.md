@@ -113,4 +113,4 @@ Consistent monitoring of skipped results improves test coverage accuracy and red
 
 If skipped test cases do not align with expected behaviour, you can review [test case configuration](../../test-editor/concepts/overview.md).
 
-For additional assistance, contact the Akto support team at [**support@akto.io**](mailto:support@akto.io).
+For additional assistance, contact the Akto support team at [**<!--email_off-->support@akto.io<!--/email_off-->**](mailto:<!--email_off-->support@akto.io<!--/email_off-->).

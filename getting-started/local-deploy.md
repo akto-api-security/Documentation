@@ -68,4 +68,4 @@ Once you've added your API traffic, you can start running security tests:
 
 Our support team is ready to assist you in maximizing your API security with Akto Cloud.
 
-[Contact Support](mailto:support@akto.io)
+[Contact Support](mailto:<!--email_off-->support@akto.io<!--/email_off-->)
