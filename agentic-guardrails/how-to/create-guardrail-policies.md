@@ -43,7 +43,7 @@ This section defines identifying metadata and user-facing enforcement messages.
 This section is required to create a guardrail policy.
 {% endhint %}
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 </details>
 
@@ -189,17 +189,17 @@ After completing the required and optional configurations:
 
 *   Click on **Create Policy** to save the policy and applies enforcement to the selected scope.
 
-    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (2).png" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (2) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ## Test guardrail behaviour in the playground
 
 The playground allows your team to validate guardrail behaviour before updating the policy.
 
-* Enter a prompt in the **Test your guardrail policy** field to simulate a request against the configured guardrail policy.&#x20;
+* Enter a prompt in the **Test your guardrail policy** field to simulate a request against the configured guardrail policy.
 * The playground evaluates the prompt using the selected guardrail configuration and displays the enforcement result.
 * You can also use the **Quick Test Prompts** provided in the playground to test common scenarios such as sensitive data exposure, prompt injection attempts, or abusive language.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 Playground probing helps your security team verify that guardrail conditions correctly detect violations and return the expected blocked response message before the policy is finalized.
 

@@ -86,7 +86,7 @@ https://{PROXY_URL}/openai/v1/?openai_url=https://{AZURE_MODEL_URL}
 </details>
 
 {% hint style="warning" %}
-## **Proxy URL usage**
+### **Proxy URL usage**
 
 If your team deployed an AI Agent Proxy in the previous step, use the proxy endpoint from that deployment as `{PROXY_URL}`.\
 If your team prefers not to deploy a proxy, request a **managed proxy URL from the Akto support team** and use the provided endpoint as `{PROXY_URL}`.
@@ -176,7 +176,7 @@ LOG_PAYLOADS=false         # Log full payloads — privacy-sensitive (default: "
 ```
 
 {% hint style="warning" %}
-#### **Note**
+**Note**
 
 `AKTO_SYNC_MODE` determines behavior:
 
@@ -223,15 +223,15 @@ Then verify in the Akto dashboard:
 
 #### Configuration Reference
 
-| Variable                | Required | Default              | Description                                        |
-| ----------------------- | -------- | -------------------- | -------------------------------------------------- |
-| `AKTO_DATA_INGESTION_URL` | Yes   |                      | Akto service base URL                              |
-| `AKTO_SYNC_MODE`        | No       | `true`               | `true` to block on violation, `false` for log-only |
-| `AKTO_TIMEOUT`          | No       | `5`                  | HTTP timeout in seconds                            |
-| `LOG_LEVEL`             | No       | `INFO`               | Logging level                                      |
-| `LOG_PAYLOADS`          | No       | `false`              | Log full request/response payloads (privacy-sensitive) |
-| `LANGCHAIN_API_HOST`    | No       | `api.langchain.com`  | Host header used in the proxy payload              |
-| `LANGCHAIN_API_PATH`    | No       | `/langchain/chat`    | Path used in the proxy payload                     |
+| Variable                  | Required | Default             | Description                                            |
+| ------------------------- | -------- | ------------------- | ------------------------------------------------------ |
+| `AKTO_DATA_INGESTION_URL` | Yes      |                     | Akto service base URL                                  |
+| `AKTO_SYNC_MODE`          | No       | `true`              | `true` to block on violation, `false` for log-only     |
+| `AKTO_TIMEOUT`            | No       | `5`                 | HTTP timeout in seconds                                |
+| `LOG_LEVEL`               | No       | `INFO`              | Logging level                                          |
+| `LOG_PAYLOADS`            | No       | `false`             | Log full request/response payloads (privacy-sensitive) |
+| `LANGCHAIN_API_HOST`      | No       | `api.langchain.com` | Host header used in the proxy payload                  |
+| `LANGCHAIN_API_PATH`      | No       | `/langchain/chat`   | Path used in the proxy payload                         |
 
 #### Handling Blocked Requests
 

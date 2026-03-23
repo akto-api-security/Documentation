@@ -11,7 +11,7 @@ This page is the starting point for navigating into agentic collections and indi
 An **agentic asset** represents a logical agentic system such as an AI agent, MCP server, or LLM endpoint.\
 Each asset groups all observed endpoints and execution contexts associated with that system.
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (2) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ### Agentic Assets Summary
 

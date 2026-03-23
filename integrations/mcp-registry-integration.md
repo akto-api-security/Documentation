@@ -40,7 +40,7 @@ Enter the following information:
 * **Registry Name**: A descriptive identifier for the registry within Akto.
 *   **Registry URL**: The full MCP Registry API endpoint, typically ending with `/v0/servers`.
 
-    <figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+    <figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 The registry URL must follow the MCP Registry API specification and must be reachable from the Akto instance.
 {% endstep %}
@@ -64,7 +64,7 @@ The connection test validates:
 * API responsiveness of the registry endpoint.
 * Basic compatibility with the MCP Registry API format.
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 Only registries that respond successfully are used for MCP server discovery and validation. This testing step helps confirm registry readiness before relying on registry data in agentic workflows.
 

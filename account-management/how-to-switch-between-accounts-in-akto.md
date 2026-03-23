@@ -13,5 +13,4 @@ If you have access to multiple accounts or workspaces in Akto, you can easily sw
 
 ✅ The dashboard will refresh and load data for the selected account, including agentic collections, probes, and reports.
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
-
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (2).png" alt="" width="563"><figcaption></figcaption></figure></div>

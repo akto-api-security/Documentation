@@ -2,8 +2,6 @@
 
 Akto scanning results can be seamlessly uploaded into JFrog as **evidence artifacts**, enabling security validation to travel with every stage of the software lifecycle. Whether it’s a **package**, a **build**, or a **release bundle**, Akto results can be attached as evidence, ensuring that vulnerabilities and compliance checks are transparently tied to the exact artifact version being shipped. This integration provides traceability, strengthens audit readiness, and embeds agentic AI security insights directly into the DevSecOps pipeline.
 
-<figure><img src="../.gitbook/assets/image (135).png" alt=""><figcaption></figcaption></figure>
-
 ***
 
 ### 🔧 Steps to upload Akto results as Evidence on JFrog
@@ -16,10 +14,9 @@ Akto scanning results can be seamlessly uploaded into JFrog as **evidence artifa
 2. **JFrog key details**
    1. key alias
    2. private key file (.pem)
-3. **X-API-KEY** : Your Akto API Key that you can get from Settings > Integrations > Akto API
-4. **Scan result summary id** : You can find this from the URL
+3.  **X-API-KEY** : Your Akto API Key that you can get from Settings > Integrations > Akto API
 
-<figure><img src="../.gitbook/assets/image (136).png" alt=""><figcaption></figcaption></figure>
+    <div data-with-frame="true"><figure><img src="../.gitbook/assets/Screenshot 2026-03-23 at 6.47.46 PM.png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 #### 2. Run the following script -
 
@@ -92,7 +89,7 @@ To verify evidence got uploaded:
 2. Go to Evidence tab
 3. Look for Akto evidence
 
-<figure><img src="../.gitbook/assets/image (137).png" alt=""><figcaption></figcaption></figure>
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (137).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ***
 
