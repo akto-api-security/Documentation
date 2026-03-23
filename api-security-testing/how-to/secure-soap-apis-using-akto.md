@@ -41,4 +41,4 @@ Here are a few SOAP-specific test instructions you can use:
 
 You can automate SOAP API Security Testing by using our [GitHub action](run-test.md) or [pre-deployment hook](run-tests-in-cli-using-akto.md) to trigger tests in your CI/CD pipeline.
 
-Feel free to write us at support@akto.io for any help.
+Feel free to write us at <!--email_off-->support@akto.io<!--/email_off--> for any help.

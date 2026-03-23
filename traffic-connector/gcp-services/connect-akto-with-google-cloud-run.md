@@ -14,4 +14,4 @@ To connect Akto with Google Cloud Run, follow these steps -
 
 <figure><img src="../../.gitbook/assets/image (58) (1).png" alt=""><figcaption></figcaption></figure>
 
-To enable this premium connector for your account, please reach out to our team at [help@akto.io](mailto:help@akto.io) for pricing and setup information.
+To enable this premium connector for your account, please reach out to our team at [<!--email_off-->help@akto.io<!--/email_off-->](mailto:<!--email_off-->help@akto.io<!--/email_off-->) for pricing and setup information.

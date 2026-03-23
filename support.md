@@ -33,7 +33,7 @@
 ping www.google.com
 ```
 
-3. Contact us at support@akto.io and we will respond back to you as soon as possible.
+3. Contact us at <!--email_off-->support@akto.io<!--/email_off--> and we will respond back to you as soon as possible.
 
 ## Get Support for your Akto setup
 
@@ -41,4 +41,4 @@ There are multiple ways to request support from Akto. We are 24X7 available on t
 
 1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
 2. Join our [discord channel](https://www.akto.io/community) for community support.
-3. Contact `help@akto.io` for email support.
+3. Contact `<!--email_off-->help@akto.io<!--/email_off-->` for email support.
