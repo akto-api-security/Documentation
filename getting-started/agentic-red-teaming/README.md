@@ -60,4 +60,4 @@ Akto probes for:
 - [Enable Guardrails](../agentic-guardrails/) to block threats in production
 - Review compliance posture against security frameworks
 
-Need help? Contact support@akto.io or use in-app Intercom.
+Need help? Contact <!--email_off-->support@akto.io<!--/email_off--> or use in-app Intercom.

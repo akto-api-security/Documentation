@@ -44,4 +44,4 @@
 ping www.google.com
 ```
 
-3. Contact us at support@akto.io and we will respond back to you as soon as possible.
+3. Contact us at <!--email_off-->support@akto.io<!--/email_off--> and we will respond back to you as soon as possible.

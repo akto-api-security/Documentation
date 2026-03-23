@@ -600,7 +600,7 @@ tail -f /var/log/jamf.log
 * **Jamf Issues**: IT Helpdesk
 * **MCP Shield Issues**: Security Team
 * **Token Issues**: Security Team
-* **Akto Platform**: support@akto.io
+* **Akto Platform**: <!--email_off-->support@akto.io<!--/email_off-->
 
 ### Related Documentation
 

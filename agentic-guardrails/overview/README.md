@@ -94,4 +94,4 @@ Akto Guardrails defends against:
 * [Run Red Teaming Probes](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/) to identify vulnerabilities
 * [Configure custom blocking policies for your use case](../how-to/create-guardrail-policies.md)
 
-Need help? Contact support@akto.io or use in-app Intercom.
+Need help? Contact <!--email_off-->support@akto.io<!--/email_off--> or use in-app Intercom.
