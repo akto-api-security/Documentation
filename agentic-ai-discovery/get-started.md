@@ -45,4 +45,4 @@ Akto automatically identifies:
 * Enable [Guardrails](../agentic-guardrails/overview/) for real-time protection
 * Review discovered agents for shadow or zombie components
 
-Need help? Contact <!--email_off-->support@akto.io<!--/email_off--> or use in-app Intercom.
+Need help? Contact support@akto.io or use in-app Intercom.

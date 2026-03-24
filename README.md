@@ -37,5 +37,5 @@ Deploy real-time protection for your production agents. Block threats as they oc
 {% hint style="success" %}
 #### Akto Support
 
-Contact our support team at **<!--email_off-->support@akto.io<!--/email_off-->** or use in-app Intercom to reach out for help and guidance.
+Contact our support team at **support@akto.io** or use in-app Intercom to reach out for help and guidance.
 {% endhint %}

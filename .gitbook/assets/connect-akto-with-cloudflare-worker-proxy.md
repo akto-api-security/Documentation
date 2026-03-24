@@ -217,5 +217,5 @@ There are multiple ways to request support from Akto. We are 24x7 available on t
 
 1. In-app `intercom` support — message us inside the Akto dashboard and someone will reply.
 2. Join our [discord channel](https://www.akto.io/community) for community support.
-3. Contact `<!--email_off-->help@akto.io<!--/email_off-->` for email support.
+3. Contact `help@akto.io` for email support.
 4. Reach us [here](https://www.akto.io/contact-us).

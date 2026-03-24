@@ -87,7 +87,7 @@ Ensure the following requirements are available:
 
 Guardrails are pre-configured and managed by the Akto team. To get the guardrail IDs for your specific guardrail detection needs:
 
-1. Contact **Akto Support** at [<!--email_off-->support@akto.io<!--/email_off-->](mailto:<!--email_off-->support@akto.io<!--/email_off-->) or through your account manager,
+1. Contact **Akto Support** at [support@akto.io](mailto:support@akto.io) or through your account manager,
 2. Our team will provide you with:
    * **Input Guardrail IDs**: For request-level scanning
    * **Output Guardrail IDs**: For response-level scanning
@@ -240,5 +240,5 @@ There are multiple ways to request support from Akto. We are 24X7 available on t
 
 1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
 2. Join our [discord channel](https://www.akto.io/community) for community support.
-3. Contact [<!--email_off-->support@akto.io<!--/email_off-->](mailto:<!--email_off-->support@akto.io<!--/email_off-->) for email support.
+3. Contact [support@akto.io](mailto:support@akto.io) for email support.
 4. Contact us [here](https://www.akto.io/contact-us).

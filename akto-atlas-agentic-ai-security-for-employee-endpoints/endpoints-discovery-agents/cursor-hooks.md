@@ -502,5 +502,5 @@ chmod +x ~/.cursor/hooks/akto/*.sh
 ## Resources
 
 * **GitHub**: [https://github.com/akto-api-security/akto](https://github.com/akto-api-security/akto)
-* **Support**: [<!--email_off-->support@akto.io<!--/email_off-->](mailto:<!--email_off-->support@akto.io<!--/email_off-->)
+* **Support**: [support@akto.io](mailto:support@akto.io)
 * **Community**: [https://www.akto.io/community](https://www.akto.io/community)
