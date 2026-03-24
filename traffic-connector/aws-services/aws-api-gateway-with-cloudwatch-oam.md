@@ -247,5 +247,5 @@ Notes:
 
 -   **In-app support**: Message us in the Akto dashboard.
 -   **Join our** **[Discord channel](https://www.akto.io/community)** **for community support.**
--   **Email**: Contact `<!--email_off-->help@akto.io<!--/email_off-->`.
+-   **Email**: Contact `help@akto.io`.
 -   **Contact us** **[here](https://www.akto.io/contact-us)**.

@@ -14,7 +14,7 @@ Steps to get Akto running on your Openshift cluster -
 
 Add the following to the Daemonset connector -
 
-> They listen to `any` interface by default - which might NOT be allowed in some Openshift clusters. If that's the case, contact <!--email_off-->support@akto.io<!--/email_off--> - we can help listen traffic on `br-ex` interface.
+> They listen to `any` interface by default - which might NOT be allowed in some Openshift clusters. If that's the case, contact support@akto.io - we can help listen traffic on `br-ex` interface.
 
 ```yaml
      containers:
@@ -101,5 +101,5 @@ There are multiple ways to request support from Akto. We are 24X7 available on t
 
 1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
 2. Join our [discord channel](https://www.akto.io/community) for community support.
-3. Contact `<!--email_off-->help@akto.io<!--/email_off-->` for email support.
+3. Contact `help@akto.io` for email support.
 4. Contact us [here](https://www.akto.io/contact-us).

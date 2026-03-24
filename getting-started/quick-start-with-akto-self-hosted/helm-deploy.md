@@ -160,7 +160,7 @@ The connection string would then be `mongodb://mongo-0.mongo.default.svc.cluster
 3.  **AWS Document DB** If you are on AWS, you can use AWS Document DB too. You can find the connection string on the Cluster page itself.
 
     <figure><img src="https://github.com/akto-api-security/Documentation/assets/91221068/4ce4d84d-6e8a-4d4d-bc0b-e5d03e3f824a" alt=""><figcaption></figcaption></figure>
-4. **Existing Akto setup** If you have previously installed Akto via CloudFormation template, and you want to move to Helm, please execute the following steps. This guide should be used only if you are NOT using AWS Traffic Mirroring. If you are indeed using AWS Traffic Mirroring, please contact us at <!--email_off-->support@akto.io<!--/email_off-->.
+4. **Existing Akto setup** If you have previously installed Akto via CloudFormation template, and you want to move to Helm, please execute the following steps. This guide should be used only if you are NOT using AWS Traffic Mirroring. If you are indeed using AWS Traffic Mirroring, please contact us at support@akto.io.
    1. Go to AWS > EC2 > Auto Scaling Groups and search for `Akto`.
    2. Edit all autoscaling groups and set min/max/desired to 0.
    3. This shuts down all existing Akto infra and just leaves Akto-Mongo running.

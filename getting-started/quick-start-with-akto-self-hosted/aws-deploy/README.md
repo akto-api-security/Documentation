@@ -65,7 +65,7 @@ Choose the option that best fits your infrastructure needs. If you're proceeding
 
 After successful deployment, free plan users will be able to see up to 25 APIs. To access more APIs and additional features, consider upgrading to a paid plan. [View our pricing options](https://www.akto.io/pricing).
 
-Need help? [Contact](mailto:<!--email_off-->support@akto.io<!--/email_off-->) our support team for assistance.
+Need help? [Contact](mailto:support@akto.io) our support team for assistance.
 
 ### Optional -
 
