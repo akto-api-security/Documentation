@@ -13,4 +13,4 @@ To connect Akto with HAProxy, follow these steps -
 
 <figure><img src="../../.gitbook/assets/image (7) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>HA Proxy connector in Akto</p></figcaption></figure>
 
-To enable this premium connector for your account, please reach out to our team at [<!--email_off-->help@akto.io<!--/email_off-->](mailto:<!--email_off-->help@akto.io<!--/email_off-->) for pricing and setup information.
+To enable this premium connector for your account, please reach out to our team at [help@akto.io](mailto:help@akto.io) for pricing and setup information.

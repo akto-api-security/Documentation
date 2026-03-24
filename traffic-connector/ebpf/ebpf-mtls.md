@@ -6,7 +6,7 @@ If your kubernetes system, has mTLS ( say using istio proxy or similar setup ) a
 
 If your proxy/service acts as a passthrough and the SSL termination happens at the end application itself, then please continue with the current setup.
 
-Please note, both these setups have `different docker images`. In case of any queries, please reach out to us at `<!--email_off-->help@akto.io<!--/email_off-->` .
+Please note, both these setups have `different docker images`. In case of any queries, please reach out to us at `help@akto.io` .
 
 Connecting with Akto's eBPF traffic collector is recommended mTLS systems where TLS termination occurs at application ( a system where your services are just passing the traffic directly to the application ).
 
@@ -171,7 +171,7 @@ Zero impact on latency. The DaemonSet doesn't sit like a proxy. It works on eBPF
 
 **I don't see my error on this list here.**
 
-Please send us all details at <!--email_off-->support@akto.io<!--/email_off--> or reach out via Intercom on your Akto dashboard. We will definitely help you out.
+Please send us all details at support@akto.io or reach out via Intercom on your Akto dashboard. We will definitely help you out.
 
 ### Get Support for your Akto setup
 
@@ -179,5 +179,5 @@ There are multiple ways to request support from Akto. We are 24X7 available on t
 
 1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
 2. Join our [discord channel](https://www.akto.io/community) for community support.
-3. Contact `<!--email_off-->help@akto.io<!--/email_off-->` for email support.
+3. Contact `help@akto.io` for email support.
 4. Contact us [here](https://www.akto.io/contact-us).

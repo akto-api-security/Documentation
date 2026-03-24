@@ -36,4 +36,4 @@ Using Akto's unique test editor, you can also write your own security tests for 
 
 You can also automate GraphQL Security Testing by using our [GitHub action](run-test.md) or [pre-deployment hook](run-tests-in-cli-using-akto.md) to trigger tests in your CI/CD pipeline.
 
-Feel free to write us at <!--email_off-->support@akto.io<!--/email_off--> for any help.
+Feel free to write us at support@akto.io for any help.

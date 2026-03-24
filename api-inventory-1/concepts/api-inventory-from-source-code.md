@@ -25,4 +25,4 @@ The following web application frameworks are currently supported:
 3. ExpressJS
 4. Mux
 
-If your application is using a framework not listed above, please reach out to `<!--email_off-->help@akto.io<!--/email_off-->`.
+If your application is using a framework not listed above, please reach out to `help@akto.io`.

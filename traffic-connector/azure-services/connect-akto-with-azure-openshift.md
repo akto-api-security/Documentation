@@ -11,7 +11,7 @@ Azure Red Hat OpenShift provides highly available, fully managed OpenShift clust
 
 Add the following to the Daemonset connector -&#x20;
 
-> They listen to `any` interface by default - which might NOT be allowed in some Openshift clusters. If that's the case, contact <!--email_off-->support@akto.io<!--/email_off--> - we can help listen traffic on `br-ex` interface.
+> They listen to `any` interface by default - which might NOT be allowed in some Openshift clusters. If that's the case, contact support@akto.io - we can help listen traffic on `br-ex` interface.
 
 ```yaml
      containers:
