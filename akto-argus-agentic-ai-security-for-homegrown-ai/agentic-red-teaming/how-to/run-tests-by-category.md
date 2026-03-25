@@ -2,7 +2,7 @@
 description: Run security probes by category for comprehensive vulnerability evaluation.
 ---
 
-# Run Probes by Category
+# Run Scan by Category
 
 Akto's probing module allows you to conduct specialized security probes on agentic systems. You can select individual probes or organize and run probes by category, allowing targeted evaluation of specific security domains.
 
@@ -28,10 +28,10 @@ Akto's probing module allows you to conduct specialized security probes on agent
 
 1. Navigate to **Agentic Discovery > Collections**
 2. Select the collection containing agent components
-3. Click **Run Probe**
+3. Click **Run Scan**
 4. Select one or more probe categories
 5. Choose specific probes within the category or select all
-6. Click **Run Probe** to execute
+6. Click **Run Scan** to execute
 
 ## Reviewing Category Probe Results
 

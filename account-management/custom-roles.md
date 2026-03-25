@@ -7,7 +7,7 @@ You can now include specific collections when managing a role. Follow the steps 
 1. Go to **Settings** > **Roles**
 2.  Click on `Create new role` button
 
-    <div data-with-frame="true"><figure><img src="../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 #### Modify access for a custom role
 

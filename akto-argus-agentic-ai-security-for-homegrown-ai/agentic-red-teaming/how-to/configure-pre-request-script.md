@@ -19,30 +19,32 @@ The Pre-request script feature in Akto allows you to execute custom JavaScript c
 
 ### Example Pre-request Script
 
-Here's an example of a pre-request script that modifies the payload and method of a request:
+Here's an example of a pre-request script This pre-request script is an example of **conditional request modification based on url content**.:
 
 ```javascript
+var body;
 var method;
-var headers;
+var requestHeaders;
 var url;
 var payload;
 var queryParams;
+var parsedPayloadTemp;
 
-function modifyRequestPayload() {
-    payload = "test payload"
-    method = "POST";
+try {
+    if (url.indexOf("prompt") > -1) {
+        method = "PATCH";
+    }
+} catch (e) {
+    print("[agent] Pre-request script error: " + e);
+    print(e);
 }
-
-modifyRequestPayload();
 ```
-
-This script sets the `payload` to "test payload" and changes the `method` to "POST" for every request.
 
 ### Saving Your Configuration
 
 After entering your pre-request script, click the "Save" button at the bottom right of the page to apply your changes.
 
-<figure><img src="../../../.gitbook/assets/image (35) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ### Usage Notes
 

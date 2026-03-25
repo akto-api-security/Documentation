@@ -1,4 +1,4 @@
-# Run Probe
+# Run Scan
 
 Running security probes in Akto involves assessing agent components to evaluate their security posture. You can run probes instantly or schedule them for later, making it useful for planning probing sessions or implementing regular security validation.
 
@@ -18,14 +18,14 @@ Choose specific agent components or select all components in the collection
 {% endstep %}
 
 {% step %}
-Click **Run probe**
+Click **Run Scan**
 {% endstep %}
 
 {% step %}
 Select probe categories to run (Prompt Injection, MCP Security, LLM Security, etc.)
 
 {% hint style="success" %}
-The **Probes** panel displays the estimated token usage for every probe. Token estimation helps enterprise teams evaluate expected LLM consumption before starting the scan.
+The **Scan** panel displays the estimated token usage for every probe. Token estimation helps enterprise teams evaluate expected LLM consumption before starting the scan.
 {% endhint %}
 {% endstep %}
 
@@ -44,13 +44,13 @@ Configure probe parameters if needed.
 {% endstep %}
 
 {% step %}
-Click **Run Probe** to start the security scan.
+Click **Run once now** to start the security scan.
 {% endstep %}
 {% endstepper %}
 
 ## Probe Categories
 
-When running probes, you can select from specialized categories:
+When running probes, you can select from specialised categories:
 
 * **Prompt Injection**: Probes for direct and indirect prompt injection vulnerabilities
 * **LLM Security**: Validates model-specific security controls

@@ -1,8 +1,8 @@
-# Install probing module in your Cloud
+# Install Scanning module in your Cloud
 
 ## Overview
 
-Red Teaming Modules involves sending malicious API requests to your (staging) server. By default, these malicious scanning requests are sent from the Red Teaming module installed within Akto Cloud.
+Red Teaming Modules involves sending malicious agentic requests to your (staging) server. By default, these malicious scanning requests are sent from the Red Teaming module installed within Akto Cloud.
 
 There could be multiple reasons why you'd want to install probing module within your Cloud.
 
