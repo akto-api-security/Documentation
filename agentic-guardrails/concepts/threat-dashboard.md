@@ -1,10 +1,10 @@
-# Guardrail Dashboard
+# Threat Dashboard
 
 ## Overview
 
 The Guardrails dashboard provides a centralised view of security threats detected across **AI agents, prompts, and tool invocations**. The Guardrails dashboard focuses on **runtime agentic security risks**, including prompt injection, unauthorised tool access, sensitive data leakage, and malicious agent behaviour.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (123).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 
 ## Guardrail States and Lifecycle
 
