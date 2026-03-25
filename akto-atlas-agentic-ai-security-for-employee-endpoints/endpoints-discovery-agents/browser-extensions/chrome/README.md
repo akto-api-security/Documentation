@@ -15,7 +15,7 @@ The Chrome extension monitors:
 All captured data is sent securely to your Akto instance for analysis.
 
 {% hint style="info" %}
-#### Privacy & Security
+**Privacy & Security**
 
 The extension only captures traffic when actively enabled and only sends data to your configured Akto instance. You have full control over what gets monitored.
 {% endhint %}
@@ -31,7 +31,7 @@ You can gather the following information before starting deployment:
 * Update XML URL provided by the Akto Support team
 
 {% hint style="info" %}
-## **Support Contact**
+### **Support Contact**
 
 You can request the extension ID, custom extension URL, and update XML URL from the Akto Support team at [**support@akto.io**](mailto:support@akto.io).
 {% endhint %}
@@ -40,7 +40,7 @@ You can request the extension ID, custom extension URL, and update XML URL from 
 
 {% stepper %}
 {% step %}
-### Navigating to Chrome Extension Management
+#### Navigating to Chrome Extension Management
 
 1. Sign in to `https://admin.google.com`.
 2. Navigate to **Devices**.
@@ -53,7 +53,7 @@ You can request the extension ID, custom extension URL, and update XML URL from 
 {% endstep %}
 
 {% step %}
-### Adding the Akto Chrome Extension by ID
+#### Adding the Akto Chrome Extension by ID
 
 1. Select the yellow **+** button.
 2.  Choose **Add Chrome app or extension by ID**.
@@ -68,7 +68,7 @@ You can request the extension ID, custom extension URL, and update XML URL from 
 {% endstep %}
 
 {% step %}
-### Configuring Force Installation
+#### Configuring Force Installation
 
 1. Open the extension configuration panel.
 2.  Set **Installation policy** to **Force install**.

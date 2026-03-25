@@ -13,7 +13,7 @@ Akto Atlas does not require direct integration with Clawdbot services, APIs, or 
 
 Akto Atlas observes OpenClaw interactions through request and response guardrail validation.
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 Requests originating from OpenClaw channels such as AI models, chat applications, productivity tools, and automation platforms first pass through **Akto Endpoint Shield** for input guardrail validation before reaching **OpenClaw (Clawdbot)**.
 
@@ -67,7 +67,7 @@ Enterprise teams must configure OpenClaw to route model traffic through the prox
 
 {% stepper %}
 {% step %}
-#### **Set Up the AI Agent Proxy**
+**Set Up the AI Agent Proxy**
 
 Deploy the Akto AI Agent Proxy in the environment where OpenClaw sends model requests. The proxy acts as the intermediary between OpenClaw and the actual model provider.
 
@@ -77,7 +77,7 @@ After completing the proxy deployment, note the proxy endpoint URL. OpenClaw use
 {% endstep %}
 
 {% step %}
-#### **Update the `openclaw.json` Configuration File**
+**Update the `openclaw.json` Configuration File**
 
 OpenClaw uses the `openclaw.json` configuration file to define model providers. Add a provider entry that routes model requests to the Akto AI Agent Proxy.
 
@@ -106,7 +106,7 @@ Example configuration:
 {% endstep %}
 
 {% step %}
-#### **Register the Provider in the Authentication Profile**
+**Register the Provider in the Authentication Profile**
 
 OpenClaw requires an authentication profile entry for every configured provider. The authentication profile allows OpenClaw to activate the configured model provider.
 
@@ -231,7 +231,7 @@ If you are using WSL, complete the following before running the script
 Live Response and updates must be executed on the **Windows host** (not inside WSL)
 {% endhint %}
 
-#### 1. Update Script Variables
+**1. Update Script Variables**
 
 * Open the script in a text editor
 * Update required environment variables (API key, model, etc.)
@@ -240,7 +240,7 @@ Live Response and updates must be executed on the **Windows host** (not inside W
 The script runs on the Windows host and connects to WSL using this path.
 {% endhint %}
 
-#### 2. Verify or Install `jq`
+**2. Verify or Install `jq`**
 
 Check if installed:
 
@@ -255,7 +255,7 @@ If not installed:
 sudo apt update && sudo apt install jq -y
 ```
 
-#### 3. Run The Script
+**3. Run The Script**
 
 Run the script from the Live Response session:
 
@@ -280,7 +280,7 @@ For each Clawdbot asset, Akto Atlas displays:
 * First seen timestamp
 * Last seen timestamp
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (5).png" alt="" width="540"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (5) (1).png" alt="" width="540"><figcaption></figcaption></figure></div>
 
 ## Supported Operating Systems
 

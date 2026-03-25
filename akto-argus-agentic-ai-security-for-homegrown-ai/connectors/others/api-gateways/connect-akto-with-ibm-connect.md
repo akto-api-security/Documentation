@@ -2,7 +2,7 @@
 
 IBM API Connect is IBM's comprehensive API management solution designed specifically for enterprises running hybrid cloud environments. By integrating IBM API Connect with Akto, you'll be able to automatically discover and test the security of all agentic components across your IBM Cloud and on-premise environments, helping you maintain consistent security standards across your entire infrastructure.
 
-<figure><img src="../../../../.gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (10) (1).png" alt=""><figcaption></figcaption></figure>
 
 To connect Akto with IBM API Connect, follow the steps below.
 

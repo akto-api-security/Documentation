@@ -557,7 +557,7 @@ Follow these steps to manually set up and run MCP Endpoint Shield to protect you
 
 {% stepper %}
 {% step %}
-#### Set Your API Token
+**Set Your API Token**
 
 Set the `AKTO_API_TOKEN` environment variable:
 
@@ -589,7 +589,7 @@ echo $AKTO_API_TOKEN
 {% endstep %}
 
 {% step %}
-#### Start the Agent
+**Start the Agent**
 
 The agent automatically discovers and protects your MCP servers.
 
@@ -613,7 +613,7 @@ Agent mode started. Press Ctrl+C to stop...
 * Watch for changes and auto-update configs
 
 {% hint style="info" %}
-### **Note**
+#### **Note**
 
 If you want the agent to run in the background, use:
 
@@ -624,7 +624,7 @@ nohup ./mcp-endpoint-shield agent > agent.log 2>&1 &
 {% endstep %}
 
 {% step %}
-#### Protecting Local MCP Servers (STDIO)
+**Protecting Local MCP Servers (STDIO)**
 
 {% tabs %}
 {% tab title="Option A:  Agent Wrapping (Recommended)" %}
@@ -799,7 +799,7 @@ The proxy will:
 {% endstep %}
 
 {% step %}
-#### Verify Everything is Working
+**Verify Everything is Working**
 
 **Check Agent Status**
 
@@ -826,7 +826,7 @@ Open your MCP client (Cursor, VS Code, Claude Desktop) and try using your wrappe
 {% endstepper %}
 
 {% hint style="success" %}
-### ⚙️ Common Flags
+#### ⚙️ Common Flags
 
 * `--name <project_name>` → Friendly label used in logs and insights
 * `--akto-api-token <token>` → Your Akto API token
@@ -860,7 +860,7 @@ This protects:
 * **HTTP servers** (remote MCP servers) via proxy
 
 {% hint style="info" %}
-### 🔐 Enterprise Best Practices for MDM Deployments
+#### 🔐 Enterprise Best Practices for MDM Deployments
 
 **1. Token Management**
 
@@ -916,7 +916,7 @@ This protects:
 **Issue:** `command not found: mcp-endpoint-shield` ➡ Cause: Binary not in PATH or wrong path used. ➡ Fix: Use full path (`./mcp-endpoint-shield` or `/usr/local/bin/mcp-endpoint-shield`) or add to PATH with `export PATH=$PATH:/path/to/binary/directory`.
 
 {% hint style="success" %}
-#### 🔒 Guarantees
+**🔒 Guarantees**
 
 * ✅ **Transparency**: Safe traffic is never altered.
 * ✅ **Clarity**: Unsafe traffic always results in a clear JSON-RPC error.

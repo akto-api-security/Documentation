@@ -5,8 +5,8 @@
 3. Find your scan run in the list
 4. Copy the scan ID from the URL when you click on a specific scan
    * The URL format will be: `https://app.akto.io/dashboard/testing/<test-id>`
-   * Example: In `https://app.akto.io/dashboard/testing/6640c63bc03e1b7d1808a1d3`, the test ID is `6640c63bc03e1b7d1808a1d3`
+   * Example: In `https://app.akto.io/dashboard/testing/69844a94fcad425c86b110e4?filters=#vulnerable`, the Scan ID is `69844a94fcad425c86b110e4`
 
-<figure><img src="../../../.gitbook/assets/image (72) (2).png" alt=""><figcaption></figcaption></figure>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/Screenshot 2026-03-25 at 12.40.49 PM.png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 Note: Each scan has a unique ID that you'll need to use in your CI/CD configuration

@@ -346,9 +346,9 @@
   * [Generic CI/CD](integrations/ci-cd-integrations/docker.md)
   * [How To](integrations/ci-cd-integrations/how-to/README.md)
     * [Run Probes in CI/CD](integrations/ci-cd-integrations/how-to/run-tests-in-cicd.md)
-    * [Add Probe to CI/CD Pipeline](integrations/ci-cd-integrations/how-to/add-test-to-ci-cd-pipeline.md)
+    * [Add Scan to CI/CD Pipeline](integrations/ci-cd-integrations/how-to/add-test-to-ci-cd-pipeline.md)
     * [Get API Credentials](integrations/ci-cd-integrations/how-to/get-api-credentials.md)
-    * [Test ID from Akto Probe](integrations/ci-cd-integrations/how-to/test-id-from-akto-test.md)
+    * [Scan ID from Akto Scan](integrations/ci-cd-integrations/how-to/test-id-from-akto-test.md)
 * [Web Application Firewall (WAF)](integrations/waf/README.md)
   * [AWS WAF](integrations/waf/aws-waf.md)
   * [Cloudflare WAF](integrations/waf/cloudflare-waf.md)
@@ -381,7 +381,7 @@
 * [Gmail Webhook](alerts/gmail-webhook.md)
 * [Slack Webhook](alerts/slack-webhook.md)
 * [Microsoft Teams Webhook](alerts/microsoft-teams-webhook.md)
-* [Setup alerts for Akto Probe run results](alerts/alerts-testing-results.md)
+* [Setup alerts for Scan run results](alerts/alerts-testing-results.md)
 
 ## API reference
 

@@ -29,7 +29,7 @@ Before setting up the Snowflake connector, ensure you have completed the followi
 
 {% stepper %}
 {% step %}
-#### Open the Snowflake Connector in Akto Argus
+**Open the Snowflake Connector in Akto Argus**
 
 1. Navigate to **Akto Argus**.
 2. Open **Connectors**.
@@ -38,7 +38,7 @@ Before setting up the Snowflake connector, ensure you have completed the followi
 {% endstep %}
 
 {% step %}
-#### Enter the Snowflake Account URL
+**Enter the Snowflake Account URL**
 
 Enter the base URL of your Snowflake account in the **Snowflake Account URL** field.
 
@@ -50,7 +50,7 @@ Enter the base URL of your Snowflake account in the **Snowflake Account URL** fi
 {% endstep %}
 
 {% step %}
-#### Select the Authentication Method
+**Select the Authentication Method**
 
 Select the authentication method used to access your Snowflake account from the **Authentication Method** dropdown.
 
@@ -93,7 +93,7 @@ Enter a valid Snowflake OAuth access token in the **OAuth Token** field.
 {% endstep %}
 
 {% step %}
-#### Specify Warehouse, Database, and Schema(Optional)
+**Specify Warehouse, Database, and Schema(Optional)**
 
 You may optionally specify:
 
@@ -105,12 +105,12 @@ These fields control query execution context.
 {% endstep %}
 
 {% step %}
-#### Enter the Data Ingestion Service URL
+**Enter the Data Ingestion Service URL**
 
 Enter the URL of your **self-hosted data ingestion service** in the **URL for Data Ingestion Service** field in order to forward agent execution and telemetry data into your environment for processing.
 
 {% hint style="warning" %}
-### Note
+#### Note
 
 * The ingestion service must be deployed and exposed in your infrastructure.
 * The URL must be reachable from Akto.
@@ -119,7 +119,7 @@ Enter the URL of your **self-hosted data ingestion service** in the **URL for Da
 {% endstep %}
 
 {% step %}
-#### Complete the Integration
+**Complete the Integration**
 
 1. Review all entered values.
 2. Select **Import** to finalise the connection.

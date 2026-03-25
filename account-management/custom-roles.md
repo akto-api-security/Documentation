@@ -5,9 +5,9 @@ You can now include specific collections when managing a role. Follow the steps 
 #### Create a new Role
 
 1. Go to **Settings** > **Roles**
-2. Click on `Create new role` button
+2.  Click on `Create new role` button
 
-<figure><img src="../.gitbook/assets/image (27) (1).png" alt=""><figcaption></figcaption></figure>
+    <div data-with-frame="true"><figure><img src="../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 #### Modify access for a custom role
 
@@ -16,7 +16,7 @@ You can now include specific collections when managing a role. Follow the steps 
 #### **1. Change the Role Settings**
 
 1. Go to your **Settings > Roles.**
-2. Find and click the role you want to update (e.g., **JUICE\_SHOP\_APIS**).
+2. Find and click the role you want to update (e.g., **Staging\_Agentic\_Team**).
 3. Search and select the list of Agentic Collections you want to include in the role.
 
 #### **2. Assign a Permission Level (Optional)**
@@ -32,9 +32,9 @@ You can now include specific collections when managing a role. Follow the steps 
 
 #### **Best Practices & Tips**
 
-* **Review Permissions**: Before finalizing, confirm that the permission level is correct for each collection to avoid granting excessive access.
-* **Name Roles Clearly**: If you manage multiple roles, use a clear naming convention (e.g., **API-Only**, **View-Only**, etc.) to distinguish them easily.
-* **Default Role**: Be cautious when setting a default invite role—any newly invited user will automatically inherit those permissions.
+* **Review Permissions**: Before finalising, confirm that the permission level is correct for each collection to avoid granting excessive access.
+* **Name Roles Clearly**: If you manage multiple roles, use a clear naming convention (e.g., **Agentic-Only**, **View-Only**, etc.) to distinguish them easily.
+* **Default Role**: Be cautious when setting a default invite role, any newly invited user will automatically inherit those permissions.
 
 This new feature streamlines role management by allowing you to pick exactly which collections each role can access.
 

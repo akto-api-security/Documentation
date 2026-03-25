@@ -86,7 +86,7 @@ https://{PROXY_URL}/openai/v1/?openai_url=https://{AZURE_MODEL_URL}
 </details>
 
 {% hint style="warning" %}
-### **Proxy URL usage**
+#### **Proxy URL usage**
 
 If your team deployed an AI Agent Proxy in the previous step, use the proxy endpoint from that deployment as `{PROXY_URL}`.\
 If your team prefers not to deploy a proxy, request a **managed proxy URL from the Akto support team** and use the provided endpoint as `{PROXY_URL}`.

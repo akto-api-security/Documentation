@@ -1,6 +1,6 @@
 # Github Copilot Enterprise
 
-## Overview&#x20;
+## Overview
 
 This page explains how you can integrate **GitHub Copilot Enterprise** with Akto Atlas to enable **agent discovery, centralized guardrails, and enterprise-wide policy enforcement**.
 
@@ -13,7 +13,7 @@ Together, these provide visibility and enforcement both at the developer endpoin
 
 ## **1.** Endpoint Enforcement (CLI Hooks)
 
-You can secure Copilot usage using the **Copilot  Hooks integration** (refer to the [copilot-cli-hooks.md](copilot-cli-hooks.md "mention") page for complete setup details).
+You can secure Copilot usage using the **Copilot Hooks integration** (refer to the [copilot-cli-hooks.md](copilot-cli-hooks.md "mention") page for complete setup details).
 
 This integration allows you to:
 
@@ -48,7 +48,7 @@ Before configuring GitHub:
 * Validate that the proxy endpoint is functioning correctly
 
 {% hint style="warning" %}
-## **Important**
+### **Important**
 
 The Agent Proxy must already be connected to the target model backend before you configure it in GitHub. Misconfiguration will cause Copilot requests to fail.
 {% endhint %}
@@ -101,7 +101,7 @@ Enter the **Akto Agent Proxy URL** as the model endpoint
     <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (3) (2).png" alt="" width="563"><figcaption></figcaption></figure></div>
 *   For Microsoft Foundry
 
-    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (4).png" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (4) (2).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}

@@ -1,18 +1,20 @@
-# Setup alerts for Akto Probe run results
+# Setup alerts for Scan run results
 
 You can setup alerts for Akto scan run results by following the steps given below:
 
 1. Configure alerts. You can configure [Slack Webhook](slack-webhook.md) or [Microsoft Teams Webhook](microsoft-teams-webhook.md) according to your requirement.
 2.  Once configured, in the `Run Scan` dialog box, select the option to send alerts for scan results.
 
-    <div data-with-frame="true"><figure><img src="../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure></div>
-3. Voila you have configured scan alerts. Once the scan are completed, you will receive scan run summary directly in your preferred medium.
+    <div data-with-frame="true"><figure><img src="../.gitbook/assets/image (11).png" alt="" width="563"><figcaption></figcaption></figure></div>
+3.  Voila you have configured scan alerts. Once the scan are completed, you will receive scan run summary directly in your preferred medium.
+
+    <figure><img src="../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ### Reminders for Scheduled Scans
 
 Akto also supports **reminder alerts** to help you stay prepared for upcoming scheduled scans. By enabling the **Pending scan alerts** option in the Webhook settings, you will receive a notification **one hour before** any scheduled scan is set to run. This ensures your team is aware and can take any necessary preparatory actions before the security scan begins.
 
-<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ## Get Support for your Akto setup
 
