@@ -59,7 +59,7 @@ execute:
 {% endcode %}
 
 1. Here, we use the operator `modify_query_param` to update the value of the limit. We provide the key (limitKey) and the value (limitValue).
-   1. `limitKey` resolves to the key name **"limit"**, which was extracted in the API selection filters above.
+   1. `limitKey` resolves to the key name **"limit"**, which was extracted in the selection filters above.
    2. `limitValue` resolves to **10**. We append an additional 0 to modify its value to **100**.
    3. The new test URL will now look something like this. `GET http://localhost:8000/api/articles?limit=100&offset=0`
 

@@ -10,7 +10,7 @@ You can run a probe from the editor against a selected agentic component. Verify
 {% step %}
 #### Select a Probe YAML
 
-Select any default probe of your choice and replace the 3 sections (api\_selection\_filters, execute, validate) with the above YAML text. Please refer the [edit-test.md](edit-test.md "mention") section for a better understanding of how to edit a probe YAML. (Note: link refers to the Probe Editor page)
+Select any default probe of your choice and replace the 3 sections (selection\_filters, execute, validate) with the above YAML text. Please refer the [edit-test.md](edit-test.md "mention") section for a better understanding of how to edit a probe YAML. (Note: link refers to the Probe Editor page)
 
 You can change the Probe YAML. [Learn here](../concepts/template-yamls/).
 {% endstep %}

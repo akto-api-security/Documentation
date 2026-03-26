@@ -194,7 +194,7 @@
       * [Info](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/concepts/test-yaml-syntax-detailed/info.md)
       * [Wordlists](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/concepts/test-yaml-syntax-detailed/wordlists.md)
       * [Auth](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/concepts/test-yaml-syntax-detailed/auth.md)
-      * [API Selection Filters](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/concepts/test-yaml-syntax-detailed/api-selection-filters.md)
+      * [Agent Component Selection Filters](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/concepts/test-yaml-syntax-detailed/api-selection-filters.md)
       * [Execute](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/concepts/test-yaml-syntax-detailed/execute.md)
       * [Validation](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/concepts/test-yaml-syntax-detailed/validation.md)
       * [Contexts](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/concepts/test-yaml-syntax-detailed/contexts.md)
