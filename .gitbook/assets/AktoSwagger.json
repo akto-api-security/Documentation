@@ -6694,6 +6694,239 @@
             "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
           }
         } ]
+    },
+    "/api/getTeamData" : {
+      "description" : "Fetch all users and pending invitations in the account",
+      "post" : {
+        "summary" : "POST request for endpoint /api/getTeamData",
+        "operationId" : "/api/getTeamData-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {},
+                "description" : "No request parameters required"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successfully fetched team data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "id" : {
+                        "type" : "integer",
+                        "format" : "int32",
+                        "example" : 1001
+                      },
+                      "login" : {
+                        "type" : "string",
+                        "example" : "john.doe@example.com"
+                      },
+                      "name" : {
+                        "type" : "string",
+                        "example" : "John Doe"
+                      },
+                      "role" : {
+                        "type" : "string",
+                        "example" : "ADMIN",
+                        "description" : "User role in the account (ADMIN, MEMBER, VIEWER, etc.)"
+                      },
+                      "isInvitation" : {
+                        "type" : "boolean",
+                        "example" : false,
+                        "description" : "True if this is a pending invitation, false if active user"
+                      }
+                    }
+                  },
+                  "description" : "List of users and pending invitations"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/inviteUsers" : {
+      "description" : "Send an invitation to a new user with a specific role. Validates email domain and role hierarchy before creating invite.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/inviteUsers",
+        "operationId" : "/api/inviteUsers-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "inviteeEmail" : {
+                    "type" : "string",
+                    "example" : "newuser@example.com",
+                    "description" : "Email address of the user to invite. Must be valid email format and belong to same organization domain"
+                  },
+                  "inviteeRole" : {
+                    "type" : "string",
+                    "example" : "MEMBER",
+                    "description" : "Role to assign to invited user. Valid values: ADMIN, MEMBER, VIEWER, or custom role names. Must be within current user's role hierarchy"
+                  }
+                },
+                "required" : [ "inviteeEmail", "inviteeRole" ],
+                "description" : "User invitation request with email and role"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Invitation sent successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "finalInviteCode" : {
+                      "type" : "string",
+                      "example" : "https://app.akto.io/addUserToAccount?signupInvitationCode=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...&signupEmailId=newuser@example.com",
+                      "description" : "Complete invitation link to be sent to the invitee. Contains JWT code valid for 1 week"
+                    }
+                  },
+                  "description" : "Successful invitation response containing the invite link"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invitation request validation failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "string",
+                      "example" : "Invalid email",
+                      "description" : "Error message. Possible values: 'Invalid email', 'Email must belong to same organisation', 'User already exists', 'Invalid role', 'User not allowed to invite for this role', 'Inviting new users is not allowed for this account'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/removeUser" : {
+      "description" : "Remove an existing user from the account, or delete a pending invitation if user hasn't accepted yet",
+      "post" : {
+        "summary" : "POST request for endpoint /api/removeUser",
+        "operationId" : "/api/removeUser-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "email" : {
+                    "type" : "string",
+                    "example" : "user.to.remove@example.com",
+                    "description" : "Email address of the user to remove from the account"
+                  }
+                },
+                "required" : [ "email" ],
+                "description" : "User removal request with email"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "User removed or invitation deleted successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "SUCCESS",
+                      "description" : "Indicates successful user removal or invitation deletion"
+                    }
+                  },
+                  "description" : "Successful removal response"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "User removal failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "error" : {
+                      "type" : "string",
+                      "example" : "User not found",
+                      "description" : "Error message. Possible values: 'User not found' (if user doesn't exist in account and no pending invitation)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
     }
   }
 }
