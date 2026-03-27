@@ -375,6 +375,7 @@
 ## API reference
 
 * [API reference](api-reference/api-reference.md)
+* [User Management](api-reference/user-management.md)
 * [Discovery](api-reference/discovery/README.md)
   * [Fetch Data](api-reference/discovery/fetch-data.md)
   * [Modify Data](api-reference/discovery/modify-data.md)
