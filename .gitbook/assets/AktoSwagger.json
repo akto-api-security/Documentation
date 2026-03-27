@@ -6737,12 +6737,7 @@
                       "role" : {
                         "type" : "string",
                         "example" : "ADMIN",
-                        "description" : "User role in the account (ADMIN, MEMBER, VIEWER, etc.)"
-                      },
-                      "isInvitation" : {
-                        "type" : "boolean",
-                        "example" : false,
-                        "description" : "True if this is a pending invitation, false if active user"
+                        "description" : "User role in the account"
                       }
                     }
                   },
@@ -6785,10 +6780,20 @@
                     "example" : "newuser@example.com",
                     "description" : "Email address of the user to invite. Must be valid email format and belong to same organization domain"
                   },
+                  "inviteeName" : {
+                    "type" : "string",
+                    "example" : "there",
+                    "description" : "Name of the user being invited"
+                  },
                   "inviteeRole" : {
                     "type" : "string",
-                    "example" : "MEMBER",
-                    "description" : "Role to assign to invited user. Valid values: ADMIN, MEMBER, VIEWER, or custom role names. Must be within current user's role hierarchy"
+                    "example" : "DEVELOPER",
+                    "description" : "Role to assign to invited user. Valid values: ADMIN, MEMBER, DEVELOPER, VIEWER, or custom role names. Must be within current user's role hierarchy"
+                  },
+                  "websiteHostName" : {
+                    "type" : "string",
+                    "example" : "https://app.akto.io",
+                    "description" : "Website host name for the invitation link"
                   }
                 },
                 "required" : [ "inviteeEmail", "inviteeRole" ],
@@ -6809,9 +6814,14 @@
                       "type" : "string",
                       "example" : "https://app.akto.io/addUserToAccount?signupInvitationCode=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...&signupEmailId=newuser@example.com",
                       "description" : "Complete invitation link to be sent to the invitee. Contains JWT code valid for 1 week"
+                    },
+                    "inviteeRole" : {
+                      "type" : "string",
+                      "example" : "DEVELOPER",
+                      "description" : "Role assigned to the invited user"
                     }
                   },
-                  "description" : "Successful invitation response containing the invite link"
+                  "description" : "Successful invitation response containing the invite link and role"
                 }
               }
             }
@@ -6882,10 +6892,33 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
-                    "status" : {
+                    "email" : {
                       "type" : "string",
-                      "example" : "SUCCESS",
-                      "description" : "Indicates successful user removal or invitation deletion"
+                      "example" : ""
+                    },
+                    "id" : {
+                      "type" : "integer",
+                      "format" : "int32",
+                      "example" : 0
+                    },
+                    "passwordResetToken" : {
+                      "type" : "null",
+                      "example" : null
+                    },
+                    "roleHierarchy" : {
+                      "type" : "string",
+                      "example" : "SUCCESS"
+                    },
+                    "userRoleHierarchy" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "string"
+                      },
+                      "example" : [ "ADMIN", "MEMBER", "DEVELOPER", "GUEST" ]
+                    },
+                    "users" : {
+                      "type" : "null",
+                      "example" : null
                     }
                   },
                   "description" : "Successful removal response"
