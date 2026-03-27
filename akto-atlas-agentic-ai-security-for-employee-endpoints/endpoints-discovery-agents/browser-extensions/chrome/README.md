@@ -20,7 +20,9 @@ All captured data is sent securely to your Akto instance for analysis.
 The extension only captures traffic when actively enabled and only sends data to your configured Akto instance. You have full control over what gets monitored.
 {% endhint %}
 
-## Prerequisites for Enterprise Deployment
+## Enterprise Deployment Using Google Workspace
+
+### Prerequisites
 
 You can gather the following information before starting deployment:
 
@@ -36,7 +38,7 @@ You can gather the following information before starting deployment:
 You can request the extension ID, custom extension URL, and update XML URL from the Akto Support team at [**support@akto.io**](mailto:support@akto.io).
 {% endhint %}
 
-## Installation Steps
+### Installation Steps
 
 {% stepper %}
 {% step %}
@@ -80,6 +82,84 @@ You can request the extension ID, custom extension URL, and update XML URL from 
 4. Select **Save**.
 
 Now, force installation enables automatic deployment to all managed Chrome users within the selected Organisational Unit.
+{% endstep %}
+{% endstepper %}
+
+## Deployment using ZIP File
+
+### Prerequisites
+
+* Google Chrome browser (Version 88 or higher)
+* The Akto Security extension ZIP file (required).&#x20;
+* The extension folder (extracted from the ZIP file)
+
+{% hint style="warning" %}
+Contact the Akto support team for the required extension ZIP file.
+{% endhint %}
+
+### Steps
+
+{% stepper %}
+{% step %}
+#### **Get the Extension Files**
+
+* Download the extension package you received
+* If it's a ZIP file, extract it to a folder on your computer
+* Remember where you saved this folder
+{% endstep %}
+
+{% step %}
+#### **Open Chrome Extensions**
+
+Open Chrome and type this in the address bar:
+
+{% code overflow="wrap" %}
+```
+chrome://extensions/
+```
+{% endcode %}
+
+Press Enter.
+
+**OR**
+
+Click the three dots (⋮) in Chrome → **More tools** → **Extensions**
+{% endstep %}
+
+{% step %}
+#### **Turn On Developer Mode**
+
+* Look at the top-right corner of the Extensions page
+* Find the **Developer mode** toggle switch
+* Turn it **ON** (it will turn blue)
+{% endstep %}
+
+{% step %}
+#### **Load the Extension**
+
+* Click the **Load unpacked** button (appears at the top after Step 3)
+* A file browser will open
+* Find and select the Akto Security extension folder
+* Click **Select Folder**
+{% endstep %}
+
+{% step %}
+#### **Verify It's Installed**
+
+You should now see **Akto Security** in your extensions list with:
+
+* Akto icon
+* Version number
+* Toggle switch set to ON
+{% endstep %}
+
+{% step %}
+#### **Pin to Toolbar (Optional but Recommended)**
+
+* Click the puzzle icon (🧩) in Chrome toolbar
+* Find **Akto Security** in the list
+* Click the pin icon (📌) next to it
+* The Akto icon will appear in your toolbar
 {% endstep %}
 {% endstepper %}
 
