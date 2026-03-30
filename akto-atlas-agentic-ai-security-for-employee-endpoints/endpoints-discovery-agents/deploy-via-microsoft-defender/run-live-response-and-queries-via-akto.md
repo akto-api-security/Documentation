@@ -19,9 +19,9 @@ Both methods help you uncover API usage, shadow endpoints, and external services
 
 ### What You Use This For in Akto
 
-From an Akto perspective, this feature has two clear purposes:
+This feature has two clear purposes:
 
-<table><thead><tr><th width="250.984375">Option</th><th width="489.26953125">Usecase</th></tr></thead><tbody><tr><td><a href="run-live-response-and-queries-via-akto.md#option-1-run-live-response-scripts"><strong>Deploy Guardrails (Live Response)</strong></a></td><td>You remotely install Akto guardrails on endpoint devices.</td></tr><tr><td><a href="run-live-response-and-queries-via-akto.md#option-2-run-kql-queries"><strong>Detect Agentic Applications (KQL Queries)</strong></a></td><td>You identify AI tools like Cursor, Claude, and similar applications running on endpoints.</td></tr></tbody></table>
+<table><thead><tr><th width="250.984375">Option</th><th width="489.26953125">Usecase</th></tr></thead><tbody><tr><td><a href="run-live-response-and-queries-via-akto.md#option-1-run-live-response-scripts"><strong>Deploy Guardrails (Live Response)</strong></a></td><td>Remotely install Akto scripts for guardrails on endpoint devices.</td></tr><tr><td><a href="run-live-response-and-queries-via-akto.md#option-2-run-kql-queries"><strong>Detect Agentic Applications (KQL Queries)</strong></a></td><td>Identify AI tools like Cursor, Claude, and similar applications running on endpoints.</td></tr></tbody></table>
 
 ## 1. **Set Up Microsoft Defender Connector**
 
@@ -201,7 +201,7 @@ Now that you’ve configured and used Microsoft Defender Run Queries, you can pr
 *   **Deploy via Microsoft Defender Endpoints**\
     Continue setting up endpoint-level integration and guardrail deployment:
 
-    [.](./ "mention")
+    [deploy-via-microsoft-defender.md](../deploy-via-microsoft-defender.md "mention")
 *   **Need Help?**\
     Reach out to the Akto team or explore support resources:
 

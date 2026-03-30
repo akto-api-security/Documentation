@@ -191,7 +191,7 @@ To enable OpenClaw guardrails on endpoints using Microsoft Defender:
 {% stepper %}
 {% step %}
 Follow the steps from:\
-[**Deploy via Microsoft Defender** ](deploy-via-microsoft-defender/#steps-to-deploy)**→ up to Step 3**
+[**Deploy via Microsoft Defender** ](deploy-via-microsoft-defender.md#steps-to-deploy)**→ up to Step 3**
 {% endstep %}
 
 {% step %}
