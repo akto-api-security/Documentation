@@ -44,7 +44,7 @@ try {
 
 After entering your pre-request script, click the "Save" button at the bottom right of the page to apply your changes.
 
-<figure><img src="../../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ### Usage Notes
 

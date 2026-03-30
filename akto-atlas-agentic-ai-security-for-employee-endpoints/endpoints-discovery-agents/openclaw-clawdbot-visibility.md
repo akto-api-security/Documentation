@@ -13,7 +13,7 @@ Akto Atlas does not require direct integration with Clawdbot services, APIs, or 
 
 Akto Atlas observes OpenClaw interactions through request and response guardrail validation.
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 Requests originating from OpenClaw channels such as AI models, chat applications, productivity tools, and automation platforms first pass through **Akto Endpoint Shield** for input guardrail validation before reaching **OpenClaw (Clawdbot)**.
 
@@ -191,7 +191,7 @@ To enable OpenClaw guardrails on endpoints using Microsoft Defender:
 {% stepper %}
 {% step %}
 Follow the steps from:\
-[**Deploy via Microsoft Defender** ](deploy-via-microsoft-defender.md#steps-to-deploy)**→ up to Step 3**
+[**Deploy via Microsoft Defender** ](deploy-via-microsoft-defender/#steps-to-deploy)**→ up to Step 3**
 {% endstep %}
 
 {% step %}

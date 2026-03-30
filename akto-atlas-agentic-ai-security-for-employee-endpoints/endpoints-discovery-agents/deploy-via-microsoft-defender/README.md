@@ -15,7 +15,7 @@ Microsoft Defender integration requires the following environment configuration.
 * Devices onboarded to **Microsoft Defender for Endpoint**
 * Supported operating systems: **macOS, Windows, Linux**
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/i (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/i (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 Devices must be onboarded using one of the supported onboarding methods:
 
@@ -46,7 +46,7 @@ Software inventory queries help you identify which AI development tools exist ac
 1. Open the **Microsoft Defender portal**.
 2.  Navigate to **Investigation & response → Hunting → Advanced hunting**.
 
-    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/i2.png" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/i2.png" alt="" width="563"><figcaption></figcaption></figure></div>
 3. Paste the following query into the query editor.
 4. Replace `<your-device-name>` with a hostname from the **Devices** inventory.
 5. Click **Run query**.
@@ -162,7 +162,7 @@ Microsoft Defender Live Response allows you to run scripts remotely on enterpris
 3. Select **Endpoints → General → Live response library**.
 4.  Click **Upload file**.
 
-    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/i3.png" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/i3.png" alt="" width="563"><figcaption></figcaption></figure></div>
 5. Upload the hook script received from the Akto support team.
 
 Example script files include:
@@ -199,7 +199,7 @@ The script name must match the file uploaded to the Live Response library.
 
 The console displays execution output as the script runs.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/i4.png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/i4.png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 *   Successful execution ends with:
 
