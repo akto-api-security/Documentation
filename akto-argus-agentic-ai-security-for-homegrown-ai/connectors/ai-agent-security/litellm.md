@@ -257,10 +257,11 @@ The hook intercepts two points of the LiteLLM proxy lifecycle:
 
 ```
 1. Client → LiteLLM Proxy
-2. Hook starts background validation task (non-blocking)
-3. Request immediately forwarded to LLM Provider
-4. Response returned to client
-5. Validation completes in background (violations logged only)
+2. Request immediately forwarded to LLM Provider (no pre-validation)
+3. LLM response received and returned to client
+4. Hook intercepts response (post-call hook)
+5. Full interaction sent to Akto for validation and ingestion
+   └─ If flagged: violation logged (not blocked)
 ```
 
 ### Steps to Connect
@@ -293,6 +294,7 @@ DATA_INGESTION_SERVICE_URL=http://data-ingestion-service-url
 
 # Optional: Operation Mode
 SYNC_MODE=true              # true = block violations, false = async logging only, default true
+TIMEOUT=5                   # timeout in seconds for Akto API calls, default 5
 ```
 
 {% hint style="warning" %}
@@ -301,7 +303,7 @@ SYNC_MODE=true              # true = block violations, false = async logging onl
 `SYNC_MODE` determines behavior:
 
 * `SYNC_MODE=true`: Requests are validated BEFORE being sent to the LLM. Violations block the request immediately.
-* `SYNC_MODE=false`: Requests proceed immediately, validation happens in background.
+* `SYNC_MODE=false`: Requests proceed immediately, validation and ingestion happen after the response (violations are logged only, not blocked).
 {% endhint %}
 {% endstep %}
 
@@ -339,6 +341,7 @@ The critical change is adding `callbacks: [custom_hooks.proxy_handler_instance]`
 export LITELLM_URL=http://your-litellm-instance-url
 export DATA_INGESTION_SERVICE_URL=http://data-ingestion-service-url
 export SYNC_MODE=true
+export TIMEOUT=5
 
 # Start LiteLLM
 litellm --config config.yaml
@@ -346,7 +349,18 @@ litellm --config config.yaml
 {% endtab %}
 
 {% tab title="Using Docker" %}
-**If using Docker**, mount the hook file in your docker-compose.yaml:
+**If using Docker**, mount the hook file and use a `.env` file for environment variables:
+
+Create a `.env` file in the same directory as your `docker-compose.yaml`:
+
+```bash
+LITELLM_URL=http://your-litellm-instance-url
+DATA_INGESTION_SERVICE_URL=http://data-ingestion-service-url
+SYNC_MODE=true
+TIMEOUT=5
+```
+
+Then reference it in your `docker-compose.yaml`:
 
 ```yaml
 services:
@@ -355,10 +369,8 @@ services:
     volumes:
       - ./config.yaml:/app/config.yaml
       - ./custom_hooks.py:/app/custom_hooks.py
-    environment:
-      - LITELLM_URL=${LITELLM_URL}
-      - DATA_INGESTION_SERVICE_URL=${DATA_INGESTION_SERVICE_URL}
-      - SYNC_MODE=${SYNC_MODE}
+    env_file:
+      - .env
     # ... rest of config ...
 ```
 {% endtab %}
@@ -370,10 +382,7 @@ services:
 
 ```bash
 # If using Docker Compose
-docker-compose restart litellm
-
-# If using Docker run
-docker restart litellm-container
+docker compose up -d
 
 # If running directly
 # Stop LiteLLM (Ctrl+C) and restart:
@@ -388,10 +397,10 @@ Check that LiteLLM starts successfully with the hook:
 
 ```bash
 # Check logs for hook initialization
-docker-compose logs litellm | grep GuardrailsHandler
+docker compose logs litellm | grep GuardrailsHandler
 
 # Expected output:
-# GuardrailsHandler initialized | sync_mode=True, timeout=5
+# GuardrailsHandler initialized | sync_mode=True
 ```
 
 Send a test request:
