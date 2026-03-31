@@ -25,7 +25,7 @@
 
 {% stepper %}
 {% step %}
-### **Create the Deployment Directory**
+#### **Create the Deployment Directory**
 
 Create a directory that stores the Docker Compose configuration and environment files.
 
@@ -38,7 +38,7 @@ The directory acts as the working location for the deployment.
 {% endstep %}
 
 {% step %}
-### **Create Docker Compose File**
+#### **Create Docker Compose File**
 
 Create a `docker-compose.yml` file with the following configuration:
 
@@ -72,11 +72,11 @@ The Docker Compose configuration defines two services:
 {% endstep %}
 
 {% step %}
-### **Create Environment Files**
+#### **Create Environment Files**
 
 Two environment files configure runtime behavior for the containers.
 
-#### **Environment File for Agent Testing Service**
+**Environment File for Agent Testing Service**
 
 Create a file named: `docker-agentic-testing-dashboard.env`
 
@@ -101,7 +101,7 @@ MCP_SERVER_URL=http://<YOUR_MCP_SERVER_HOST>:<YOUR_MCP_SERVER_PORT>
 
 <table><thead><tr><th width="197.41796875">Variable</th><th>Purpose</th></tr></thead><tbody><tr><td><code>ANTHROPIC_API_KEY</code></td><td>API key used for accessing Anthropic Claude models.</td></tr><tr><td><code>PORT</code></td><td>Port exposed by the agent-testing service. Default value: <code>5500</code>.</td></tr><tr><td><code>MCP_SERVER_URL</code></td><td>URL used by the agent-testing service to communicate with the MCP server.<br>Replace <code>&#x3C;YOUR_MCP_SERVER_HOST></code> and <code>&#x3C;YOUR_MCP_SERVER_PORT></code> with the MCP server host and port configured in the deployment environment.</td></tr></tbody></table>
 
-#### **Environment File for MCP Server**
+**Environment File for MCP Server**
 
 Create a file named: `docker-mcp-server.env`
 
@@ -123,7 +123,7 @@ DEBUG=true
 {% endstep %}
 
 {% step %}
-### **Start the Services**
+#### **Start the Services**
 
 ```bash
 # From the deployment directory
@@ -143,7 +143,7 @@ mcp-server        Up ...        0.0.0.0:4000->4000/tcp
 {% endstep %}
 
 {% step %}
-### **Verify Connectivity**
+#### **Verify Connectivity**
 
 You can verify that both services started successfully by checking the health endpoints.
 

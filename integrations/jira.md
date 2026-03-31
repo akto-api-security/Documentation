@@ -16,7 +16,7 @@ Integrate Akto with Jira to streamline your API security workflow by creating ti
 
 {% stepper %}
 {% step %}
-### **Access Integrations**
+#### **Access Integrations**
 
 * Go to **Settings > Integrations**.
 *   Find and click **"Configure"** next to Jira.
@@ -25,7 +25,7 @@ Integrate Akto with Jira to streamline your API security workflow by creating ti
 {% endstep %}
 
 {% step %}
-### **Enter Jira Details**
+#### **Enter Jira Details**
 
 Akto supports integration with both **Jira Cloud** and **Jira Data Center**.
 
@@ -49,7 +49,7 @@ Akto supports integration with both **Jira Cloud** and **Jira Data Center**.
 {% endstep %}
 
 {% step %}
-### **Add Projects**
+#### **Add Projects**
 
 You can configure **one or multiple Jira projects**. For each project:
 
@@ -70,7 +70,7 @@ You can configure **one or multiple Jira projects**. For each project:
 {% endstep %}
 
 {% step %}
-### Priority Field Selection
+#### Priority Field Selection
 
 Akto allows you to map its vulnerability severity levels to Jira field values for automatic ticket creation.
 
@@ -87,7 +87,7 @@ The selected field must be a **select / dropdown field** in Jira for severity ma
 {% endstep %}
 
 {% step %}
-### **Save Configuration**
+#### **Save Configuration**
 
 * Click **"Save"** to finalise.
 {% endstep %}

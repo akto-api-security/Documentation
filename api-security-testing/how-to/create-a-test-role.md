@@ -30,14 +30,14 @@ In the above demonstration, we created a test role with the condition that it **
 
 There are multiple ways you can Auth token with in Akto:
 
-* You can [add a hard-coded token](create-a-test-role.md#hard-coded-auth-token) for quickly executing a test.&#x20;
+* You can [add a hard-coded token](create-a-test-role.md#hard-coded-auth-token) for quickly executing a test.
 * However, for daily tests or setting up tests in CI/CD, we highly recommend that you use [Automated Auth setup](create-a-test-role.md#automated-auth-token-generation).
 * And, If you have a TLS based authentication, you can configure that using [TLS Authentication](create-a-test-role.md#tls-authentication)
 
 {% hint style="success" %}
 You can configure **multiple authentication methods within a single Test Role**.
 
-And using [**Advanced Settings**](create-a-test-role.md#advance-settings), you can control exactly which token should be applied to which API requests.&#x20;
+And using [**Advanced Settings**](create-a-test-role.md#advance-settings), you can control exactly which token should be applied to which API requests.
 {% endhint %}
 
 ### 1. Hard-coded Auth token
@@ -67,9 +67,9 @@ Click on `Save` button and verify that the auth is created.
 {% endstepper %}
 
 {% hint style="info" %}
-## Note
+### Note
 
-If you want to use the auth token only for a specific account, you can add `API Header condition`.&#x20;
+If you want to use the auth token only for a specific account, you can add `API Header condition`.
 
 For example, `X-Account-Id: 10000` would mean the the auth token will be used only if the API request has `X-Account-Id: 10000` in its headers.
 {% endhint %}
@@ -128,7 +128,7 @@ To add an auth token automatically while performing API testing, you need to fol
 
 {% stepper %}
 {% step %}
-#### Configure API Call Details
+**Configure API Call Details**
 
 Configuring API call details ensures that the server knows how to process the request and can generate and return a new auth token. This is key for keeping tests current and valid, as it allows the system to automatically get a fresh token before each test run.
 
@@ -138,7 +138,7 @@ In the demonstration, we're setting up the details for an API call, including th
 {% endstep %}
 
 {% step %}
-#### **Execute the API Call**
+**Execute the API Call**
 
 After configuring the details, execute the API call. If successful, the server will respond with an auth token.
 
@@ -148,7 +148,7 @@ In the demonstration below, we make an API call and receive an authentication to
 {% endstep %}
 
 {% step %}
-#### **Extract Token**
+**Extract Token**
 
 After testing the API call, you need to extract the auth token from the response. This typically involves identifying the header or body parameter where the token is located. For example, if the token is returned in a header named Authorization, you would extract it.
 
@@ -203,7 +203,7 @@ Click on `Save`
 {% endstepper %}
 
 {% hint style="warning" %}
-## **Notes**
+### **Notes**
 
 1. Please enter the keys only in the format shown in the images. Do not enter any additional details.
 2. If you have a `P12` type key you can convert it to a `PEM` key using the commands given below. Here `client.p12` is your original key, `client.crt` is the client certificate and `client.key` is the client private key. While running these commands, you may be asked for an `Import Password`. You can leave that blank.
@@ -263,7 +263,7 @@ Advanced Settings allow you to control **which authentication configuration is a
 Since a Test Role can have multiple auth setups (Hard-coded token, Automated token, TLS Authentication, Tokens from Traffic, etc.), Advanced Settings help Akto determine **which token should be used for a specific request**.
 
 {% hint style="info" %}
-## Use case
+### Use case
 
 * The same role is used across multiple accounts.
 * You want to apply an auth token only for specific tenants.
@@ -304,7 +304,7 @@ Click on **Save** to apply the configuration.
 {% endstepper %}
 
 {% hint style="warning" %}
-## Important Behaviour
+### Important Behaviour
 
 * Advanced Settings act as conditional routing for auth configurations.
 * An auth configuration without Advanced Settings behaves as a fallback/default.
@@ -329,15 +329,15 @@ When the Test Role runs on a collection:
    * The auth configuration without any Advanced Settings acts as the default.
 
 {% hint style="warning" %}
-## **Important**
+### **Important**
 
-If multiple auth configurations match the same request (for example, they have the same regex), Akto uses the **first configured or first discovered token** during evaluation.&#x20;
+If multiple auth configurations match the same request (for example, they have the same regex), Akto uses the **first configured or first discovered token** during evaluation.
 
 The order of configuration in UI determines which token gets applied.
 {% endhint %}
 
 {% hint style="success" %}
-## Example Scenario
+### Example Scenario
 
 A Test Role has two auth configurations:
 
@@ -362,4 +362,3 @@ There are multiple ways to request support from Akto. We are 24X7 available on t
 2. Join our [discord channel](https://www.akto.io/community) for community support.
 3. Contact [support@akto.io](mailto:support@akto.io) for email support.
 4. Contact us [here](https://www.akto.io/contact-us).
-

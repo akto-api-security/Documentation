@@ -77,7 +77,7 @@ An API Successful Example must include:
 
 Here are the following steps on how you can a successful response example :
 
-#### Steps
+**Steps**
 
 1. Open the request in **Postman**.
 2. Click **Send** to execute the request.
@@ -115,7 +115,7 @@ In this case, the following are required for replay to succeed:
 {% endtabs %}
 
 {% hint style="warning" %}
-## Common Import Errors
+### Common Import Errors
 
 You may see the following errors on the Akto dashboard:
 
@@ -141,7 +141,7 @@ If your requests use variables (e.g., `{{baseUrl}}`, `{{authToken}}`):
 Refer to [#variables-in-postman-collection-file](postman.md#variables-in-postman-collection-file "mention") for reference.
 
 {% hint style="success" %}
-## Recommendation
+### Recommendation
 
 To avoid replay dependency and configuration complexity:
 
@@ -183,7 +183,7 @@ Import Postman collection file
 Akto supports Postman **collection-level variables** in your exported collection JSON file. Variables help you parameterise parts of your API requests (such as URLs, headers, auth values, and request bodies) using the `{{variableName}}` syntax. Akto will replace these variables with the values defined in the collection before resolving requests during import or replay.
 
 {% hint style="success" %}
-## Why Proper Variable Definition Matters
+### Why Proper Variable Definition Matters
 
 If any variable used in the collection is not defined:
 
@@ -220,7 +220,7 @@ You can then use these variables in your API request definitions like:
 ```
 
 {% hint style="info" %}
-## Note
+### Note
 
 Before exporting your collection for Akto:
 

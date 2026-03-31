@@ -3,7 +3,7 @@
 This guide will help you set up DevRev Integration in Akto to automatically create and track security issues in your DevRev workspace.
 
 {% hint style="info" %}
-## Prerequisites
+### Prerequisites
 
 Before setting up the DevRev Integration, ensure you have:
 
@@ -18,7 +18,7 @@ Before setting up the DevRev Integration, ensure you have:
 
 {% stepper %}
 {% step %}
-#### Navigate to Integrations Settings
+**Navigate to Integrations Settings**
 
 1. Log in to your Akto dashboard
 2. Click on **Settings** in the main navigation menu
@@ -26,7 +26,7 @@ Before setting up the DevRev Integration, ensure you have:
 {% endstep %}
 
 {% step %}
-#### Select DevRev Integration
+**Select DevRev Integration**
 
 1. On the Integrations page, locate the **DevRev** card
 2. Click on the DevRev card to open the configuration page
@@ -35,7 +35,7 @@ Before setting up the DevRev Integration, ensure you have:
 {% endstep %}
 
 {% step %}
-#### Enter DevRev Organization URL
+**Enter DevRev Organization URL**
 
 1. In the **DevRev Organization URL** field, enter your complete DevRev organization URL
    * Example: `https://app.devrev.ai/your-org-slug`
@@ -43,14 +43,14 @@ Before setting up the DevRev Integration, ensure you have:
 {% endstep %}
 
 {% step %}
-#### Enter Personal Access Token
+**Enter Personal Access Token**
 
 1. In the **Personal Access Token** field, paste the PAT you generated from DevRev
 2. Keep this token secure and do not share it
 {% endstep %}
 
 {% step %}
-#### Fetch DevRev Parts&#x20;
+**Fetch DevRev Parts**
 
 1. Select the **part type** filter to limit results to specific DevRev part categories.
 2. Enter **part names** to restrict results to specific DevRev parts.
@@ -70,14 +70,14 @@ You can enter multiple part names by typing each part name exactly as defined, i
 {% endstep %}
 
 {% step %}
-#### Save Configuration
+**Save Configuration**
 
 1. Click the **Save** button to store your DevRev integration configuration.
 2. You'll see a success notification confirming the integration has been set up.
 {% endstep %}
 
 {% step %}
-#### Verify Integration
+**Verify Integration**
 
 1. The page will now show your configured DevRev integration.
 2.  You should see the organisation URL and selected parts displayed.
@@ -92,14 +92,14 @@ You can update your DevRev integration settings at any time.
 
 {% stepper %}
 {% step %}
-#### Return to DevRev Settings
+**Return to DevRev Settings**
 
 1. Navigate to **Settings** > **Integrations** > **DevRev.**
 2. Your current configuration will be displayed.
 {% endstep %}
 
 {% step %}
-#### Modify Settings
+**Modify Settings**
 
 1. Update the **Organization URL** as required.
 2. To update the **Personal Access Token**:
@@ -110,7 +110,7 @@ You can update your DevRev integration settings at any time.
 {% endstep %}
 
 {% step %}
-#### Save Changes
+**Save Changes**
 
 1. Click the **Update** button.
 2. You'll see a confirmation that your integration has been updated.
@@ -123,13 +123,13 @@ If you need to remove the DevRev integration:
 
 {% stepper %}
 {% step %}
-#### Access DevRev Settings
+**Access DevRev Settings**
 
 1. Go to **Settings** > **Integrations** > **DevRev**
 {% endstep %}
 
 {% step %}
-#### Remove Integration
+**Remove Integration**
 
 1. Click the **Remove** button at the bottom of the page.
 2. Confirm the removal when prompted.
@@ -137,7 +137,7 @@ If you need to remove the DevRev integration:
 {% endstep %}
 
 {% step %}
-#### Verify Removal
+**Verify Removal**
 
 1. You'll be redirected back to the Integrations page.
 2. The DevRev integration will no longer show as configured.
