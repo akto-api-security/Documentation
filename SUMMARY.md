@@ -31,6 +31,7 @@
   * [Github Copilot Enterprise](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/github-copilot-enterprise.md)
   * [Gemini CLI Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/gemini-cli-hooks.md)
   * [Deploy via Microsoft Defender Endpoint](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/deploy-via-microsoft-defender.md)
+  * [Deploy via SentinelOne](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/deploy-via-sentinelone.md)
   * [Agentic Shield](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/agentic-shield.md)
 * [AI Agent Activity](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/README.md)
   * [Agentic Assets](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-assets/README.md)
