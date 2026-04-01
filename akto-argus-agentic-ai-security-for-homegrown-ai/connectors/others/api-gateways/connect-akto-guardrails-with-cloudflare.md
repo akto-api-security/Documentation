@@ -6,9 +6,11 @@ Cloudflare sits in front of your APIs at the edge. This integration uses a Cloud
 
 <figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2Fgit-blob-a9d941b3e4abe2bf3ba452ff79360db8d9a6d084%2Fimage.png?alt=media" alt=""><figcaption></figcaption></figure>
 
-Akto provides the **Guardrails service URL** and the **data ingestion base URL** you configure on the Worker. Use the steps below to deploy the Worker and attach it to your zones.
+Akto provides the **Guardrails service URL** and the **data ingestion base URL** you configure on the Worker.
 
 ## Steps to Deploy
+
+Use the steps below to deploy the Worker and attach it to your zones.
 
 {% stepper %}
 {% step %}
