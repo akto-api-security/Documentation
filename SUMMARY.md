@@ -85,6 +85,7 @@
       * [Connect Akto with IBM Connect](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/api-gateways/connect-akto-with-ibm-connect.md)
       * [Connect Akto with Mulesoft Flex Gateway](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/api-gateways/mulesoft-flex.md)
       * [Connect Akto with Apigee](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/api-gateways/connect-akto-with-apigee.md)
+      * [Connect Akto Guardrails with Cloudflare](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/api-gateways/connect-akto-guardrails-with-cloudflare.md)
     * [Virtual Machines](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/virtual-machines/README.md)
       * [Connect Akto with Docker](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/virtual-machines/docker.md)
       * [Connect Akto on TLS service](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/virtual-machines/docker-ssl.md)
