@@ -12,7 +12,8 @@ Akto provides the **Guardrails service URL** and the **data ingestion base URL**
 
 Use the Worker script from Akto’s published source:
 
-**Worker code:** [akto-cloudflare-proxy-guardrails `index.js`](https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/akto-cloudflare-proxy-guardrails/src/index.js)
+**Worker code:** 
+https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/akto-cloudflare-proxy-guardrails/src/index.js
 
 Deploy using the Cloudflare dashboard and the steps below.
 
