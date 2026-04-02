@@ -398,7 +398,7 @@
 * [Scan results](api-reference/scan-results/README.md)
   * [Fetch Data](api-reference/scan-results/fetch-data.md)
   * [Modify Data](api-reference/scan-results/modify-data.md)
-* [Guardrails Activity](api-reference/threat-protection/README.md)
+* [Agentic Guardrails](api-reference/threat-protection/README.md)
   * [Fetch Data](api-reference/threat-protection/fetch-data.md)
   * [Modify Data](api-reference/threat-protection/modify-data.md)
 
