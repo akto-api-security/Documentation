@@ -1,0 +1,1562 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Akto Guardrail Threat API",
+    "version": "1.0.0",
+    "description": "Complete OpenAPI 3.0.1 specification for all 28 Guardrail and Threat Detection APIs"
+  },
+  "servers": [
+    {
+      "url": "https://api.akto.io"
+    }
+  ],
+  "paths": {
+    "/api/createGuardrailPolicy": {
+      "post": {
+        "tags": ["Guardrail"],
+        "summary": "Create a new guardrail policy",
+        "operationId": "createGuardrailPolicy",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "rules": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["name"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Policy created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "policyId": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchGuardrailPolicies": {
+      "get": {
+        "tags": ["Guardrail"],
+        "summary": "Fetch all guardrail policies",
+        "operationId": "fetchGuardrailPolicies",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of guardrail policies",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "policies": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "policyId": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/deleteGuardrailPolicies": {
+      "post": {
+        "tags": ["Guardrail"],
+        "summary": "Delete guardrail policies",
+        "operationId": "deleteGuardrailPolicies",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "policyIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": ["policyIds"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Policies deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deletedCount": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/guardrailPlayground": {
+      "post": {
+        "tags": ["Guardrail"],
+        "summary": "Test guardrail policies in playground",
+        "operationId": "guardrailPlayground",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "policyId": {
+                    "type": "string"
+                  },
+                  "testData": {
+                    "type": "object"
+                  }
+                },
+                "required": ["policyId"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Playground test results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string"
+                    },
+                    "matched": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchSuspectSampleData": {
+      "get": {
+        "tags": ["Guardrail"],
+        "summary": "Fetch suspect sample data",
+        "operationId": "fetchSuspectSampleData",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Suspect sample data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "samples": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchFiltersThreatTable": {
+      "get": {
+        "tags": ["Guardrail"],
+        "summary": "Fetch filters for threat table",
+        "operationId": "fetchFiltersThreatTable",
+        "responses": {
+          "200": {
+            "description": "Threat table filters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "filters": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "values": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchAggregateMaliciousRequests": {
+      "get": {
+        "tags": ["Guardrail"],
+        "summary": "Fetch aggregate malicious requests",
+        "operationId": "fetchAggregateMaliciousRequests",
+        "parameters": [
+          {
+            "name": "contextSource",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["AGENTIC", "ENDPOINT"]
+            }
+          },
+          {
+            "name": "startTime",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Aggregate malicious requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "endpoint": {
+                            "type": "string"
+                          },
+                          "count": {
+                            "type": "integer"
+                          },
+                          "contextSource": {
+                            "type": "string",
+                            "enum": ["AGENTIC", "ENDPOINT"]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchSessionContext": {
+      "get": {
+        "tags": ["Guardrail"],
+        "summary": "Fetch session context",
+        "operationId": "fetchSessionContext",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Session context data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sessionId": {
+                      "type": "string"
+                    },
+                    "context": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchGuardrailData": {
+      "get": {
+        "tags": ["Guardrail"],
+        "summary": "Fetch guardrail data",
+        "operationId": "fetchGuardrailData",
+        "parameters": [
+          {
+            "name": "timeRange",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Guardrail data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchMcpdata": {
+      "get": {
+        "tags": ["Guardrail"],
+        "summary": "Fetch MCP data",
+        "operationId": "fetchMcpdata",
+        "responses": {
+          "200": {
+            "description": "MCP data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mcpData": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchBrowserExtensionConfigs": {
+      "get": {
+        "tags": ["Guardrail"],
+        "summary": "Fetch browser extension configurations",
+        "operationId": "fetchBrowserExtensionConfigs",
+        "responses": {
+          "200": {
+            "description": "Browser extension configurations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "configs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "configId": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/saveBrowserExtensionConfig": {
+      "post": {
+        "tags": ["Guardrail"],
+        "summary": "Save browser extension configuration",
+        "operationId": "saveBrowserExtensionConfig",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "config": {
+                    "type": "object"
+                  }
+                },
+                "required": ["name"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Configuration saved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "configId": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/apiInfo/bulkAgentProxyGuardrail": {
+      "post": {
+        "tags": ["Guardrail"],
+        "summary": "Bulk agent proxy guardrail operations",
+        "operationId": "bulkAgentProxyGuardrail",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "operations": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "required": ["operations"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bulk operations completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchThreatActors": {
+      "get": {
+        "tags": ["Threat Detection"],
+        "summary": "Fetch threat actors",
+        "operationId": "fetchThreatActors",
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "label",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["GUARDRAIL", "THREAT"]
+            }
+          },
+          {
+            "name": "contextSource",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["AGENTIC", "ENDPOINT"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of threat actors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "actorId": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "severity": {
+                            "type": "string"
+                          },
+                          "label": {
+                            "type": "string",
+                            "enum": ["GUARDRAIL", "THREAT"]
+                          },
+                          "contextSource": {
+                            "type": "string",
+                            "enum": ["AGENTIC", "ENDPOINT"]
+                          }
+                        }
+                      }
+                    },
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "hasMore": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchThreatCategoryCount": {
+      "get": {
+        "tags": ["Threat Detection"],
+        "summary": "Fetch threat category count",
+        "operationId": "fetchThreatCategoryCount",
+        "parameters": [
+          {
+            "name": "label",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["GUARDRAIL", "THREAT"]
+            }
+          },
+          {
+            "name": "contextSource",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["AGENTIC", "ENDPOINT"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Threat category counts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "categories": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "category": {
+                            "type": "string"
+                          },
+                          "count": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchCountBySeverity": {
+      "get": {
+        "tags": ["Threat Detection"],
+        "summary": "Fetch threat count by severity",
+        "operationId": "fetchCountBySeverity",
+        "parameters": [
+          {
+            "name": "label",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["GUARDRAIL", "THREAT"]
+            }
+          },
+          {
+            "name": "contextSource",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["AGENTIC", "ENDPOINT"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Count by severity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "displayName": {
+                        "type": "string"
+                      },
+                      "count": {
+                        "type": "integer"
+                      },
+                      "severity": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchThreatApis": {
+      "get": {
+        "tags": ["Threat Detection"],
+        "summary": "Fetch threat APIs",
+        "operationId": "fetchThreatApis",
+        "parameters": [
+          {
+            "name": "label",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["GUARDRAIL", "THREAT"]
+            }
+          },
+          {
+            "name": "contextSource",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["AGENTIC", "ENDPOINT"]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of threat APIs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apis": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "endpoint": {
+                            "type": "string"
+                          },
+                          "method": {
+                            "type": "string"
+                          },
+                          "threatCount": {
+                            "type": "integer"
+                          },
+                          "label": {
+                            "type": "string",
+                            "enum": ["GUARDRAIL", "THREAT"]
+                          },
+                          "contextSource": {
+                            "type": "string",
+                            "enum": ["AGENTIC", "ENDPOINT"]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/getActorsCountPerCounty": {
+      "get": {
+        "tags": ["Threat Detection"],
+        "summary": "Get threat actors count per country",
+        "operationId": "getActorsCountPerCounty",
+        "parameters": [
+          {
+            "name": "label",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["GUARDRAIL", "THREAT"]
+            }
+          },
+          {
+            "name": "contextSource",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["AGENTIC", "ENDPOINT"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Actors count per country",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "countryData": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "country": {
+                            "type": "string"
+                          },
+                          "count": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/getThreatActivityTimeline": {
+      "get": {
+        "tags": ["Threat Detection"],
+        "summary": "Get threat activity timeline",
+        "operationId": "getThreatActivityTimeline",
+        "parameters": [
+          {
+            "name": "startTime",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "label",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["GUARDRAIL", "THREAT"]
+            }
+          },
+          {
+            "name": "contextSource",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["AGENTIC", "ENDPOINT"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Threat activity timeline",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timeline": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "timestamp": {
+                            "type": "integer"
+                          },
+                          "activity": {
+                            "type": "string"
+                          },
+                          "count": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/getDailyThreatActorsCount": {
+      "get": {
+        "tags": ["Threat Detection"],
+        "summary": "Get daily threat actors count",
+        "operationId": "getDailyThreatActorsCount",
+        "parameters": [
+          {
+            "name": "days",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "label",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["GUARDRAIL", "THREAT"]
+            }
+          },
+          {
+            "name": "contextSource",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["AGENTIC", "ENDPOINT"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Daily threat actors count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "daily": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "date": {
+                            "type": "string"
+                          },
+                          "count": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchThreatTopNData": {
+      "get": {
+        "tags": ["Threat Detection"],
+        "summary": "Fetch top N threat data",
+        "operationId": "fetchThreatTopNData",
+        "parameters": [
+          {
+            "name": "n",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "label",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["GUARDRAIL", "THREAT"]
+            }
+          },
+          {
+            "name": "contextSource",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["AGENTIC", "ENDPOINT"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Top N threat data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "topThreats": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "rank": {
+                            "type": "integer"
+                          },
+                          "threat": {
+                            "type": "string"
+                          },
+                          "count": {
+                            "type": "integer"
+                          },
+                          "label": {
+                            "type": "string",
+                            "enum": ["GUARDRAIL", "THREAT"]
+                          },
+                          "contextSource": {
+                            "type": "string",
+                            "enum": ["AGENTIC", "ENDPOINT"]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchThreatComplianceInfos": {
+      "get": {
+        "tags": ["Threat Detection"],
+        "summary": "Fetch threat compliance information",
+        "operationId": "fetchThreatComplianceInfos",
+        "parameters": [
+          {
+            "name": "label",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["GUARDRAIL", "THREAT"]
+            }
+          },
+          {
+            "name": "contextSource",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["AGENTIC", "ENDPOINT"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Threat compliance information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "compliance": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "standard": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "details": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/updateMaliciousEventStatus": {
+      "post": {
+        "tags": ["Shared"],
+        "summary": "Update malicious event status",
+        "operationId": "updateMaliciousEventStatus",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "eventId": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["ACTIVE", "IGNORED", "TRAINING", "UNDER_REVIEW"]
+                  }
+                },
+                "required": ["eventId", "status"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Event status updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "eventId": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/deleteMaliciousEvents": {
+      "post": {
+        "tags": ["Shared"],
+        "summary": "Delete malicious events",
+        "operationId": "deleteMaliciousEvents",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "eventIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": ["eventIds"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Events deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deletedCount": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/getIpReputationScore": {
+      "get": {
+        "tags": ["Shared"],
+        "summary": "Get IP reputation score",
+        "operationId": "getIpReputationScore",
+        "parameters": [
+          {
+            "name": "ip",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "IP reputation score",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ip": {
+                      "type": "string"
+                    },
+                    "score": {
+                      "type": "number"
+                    },
+                    "reputation": {
+                      "type": "string"
+                    },
+                    "lastUpdated": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/modifyThreatActorStatus": {
+      "post": {
+        "tags": ["Shared"],
+        "summary": "Modify threat actor status",
+        "operationId": "modifyThreatActorStatus",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "actorId": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["blocked", "unblocked"]
+                  }
+                },
+                "required": ["actorId", "status"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Threat actor status modified",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actorId": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/modifyThreatActorStatusCloudflare": {
+      "post": {
+        "tags": ["Shared"],
+        "summary": "Modify threat actor status in Cloudflare",
+        "operationId": "modifyThreatActorStatusCloudflare",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "actorId": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["blocked", "unblocked"]
+                  },
+                  "cloudflareConfig": {
+                    "type": "object"
+                  }
+                },
+                "required": ["actorId", "status"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Threat actor status modified in Cloudflare",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actorId": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "cloudflareStatus": {
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bulkModifyThreatActorStatusCloudflare": {
+      "post": {
+        "tags": ["Shared"],
+        "summary": "Bulk modify threat actor status in Cloudflare",
+        "operationId": "bulkModifyThreatActorStatusCloudflare",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "actors": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "actorId": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": ["blocked", "unblocked"]
+                        }
+                      }
+                    }
+                  },
+                  "cloudflareConfig": {
+                    "type": "object"
+                  }
+                },
+                "required": ["actors"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bulk threat actor status modified in Cloudflare",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "actorId": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "success": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    },
+                    "totalProcessed": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchThreatData": {
+      "get": {
+        "tags": ["Shared"],
+        "summary": "Fetch consolidated threat data for dashboard",
+        "operationId": "fetchThreatData",
+        "parameters": [
+          {
+            "name": "startTime",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "label",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["GUARDRAIL", "THREAT"]
+            }
+          },
+          {
+            "name": "contextSource",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["AGENTIC", "ENDPOINT"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consolidated threat data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "dashboard": {
+                      "type": "object",
+                      "properties": {
+                        "totalThreats": {
+                          "type": "integer"
+                        },
+                        "threatsByCategory": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "threatsBySeverity": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "recentThreats": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "threatId": {
+                                "type": "string"
+                              },
+                              "endpoint": {
+                                "type": "string"
+                              },
+                              "detectedAt": {
+                                "type": "integer"
+                              },
+                              "severity": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string",
+                                "enum": ["GUARDRAIL", "THREAT"]
+                              },
+                              "contextSource": {
+                                "type": "string",
+                                "enum": ["AGENTIC", "ENDPOINT"]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
