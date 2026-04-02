@@ -1,15 +1,10 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Akto Guardrail Threat API",
-    "version": "1.0.0",
-    "description": "Complete OpenAPI 3.0.1 specification for all 28 Guardrail and Threat Detection APIs"
+    "title": "Akto Agentic Guardrails APIs",
+    "description": "Akto generated openAPI file",
+    "version": "1.0.0"
   },
-  "servers": [
-    {
-      "url": "https://api.akto.io"
-    }
-  ],
   "paths": {
     "/api/createGuardrailPolicy": {
       "post": {
