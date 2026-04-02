@@ -6496,6 +6496,2633 @@
             "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
           }
         } ]
+    },
+    "/api/createGuardrailPolicy" : {
+      "description" : "Create a new guardrail policy or update existing",
+      "post" : {
+        "summary" : "POST request for endpoint /api/createGuardrailPolicy",
+        "operationId" : "/api/createGuardrailPolicy-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "policy" : {
+                    "type" : "object",
+                    "properties" : {
+                      "name" : {
+                        "type" : "string",
+                        "example" : "PII Detection Policy"
+                      },
+                      "description" : {
+                        "type" : "string",
+                        "example" : "Detect and block requests containing sensitive PII"
+                      },
+                      "blockedMessage" : {
+                        "type" : "string",
+                        "example" : "Request blocked: Sensitive data detected"
+                      },
+                      "severity" : {
+                        "type" : "string",
+                        "enum" : [ "LOW", "MEDIUM", "HIGH", "CRITICAL" ],
+                        "example" : "HIGH"
+                      },
+                      "selectedCollection" : {
+                        "type" : "string",
+                        "example" : "null"
+                      },
+                      "selectedModel" : {
+                        "type" : "string",
+                        "example" : "null"
+                      },
+                      "contextSource" : {
+                        "type" : "string",
+                        "enum" : [ "API", "MCP", "GEN_AI", "AGENTIC", "DAST", "ENDPOINT" ],
+                        "example" : "API"
+                      },
+                      "piiTypes" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "string"
+                        },
+                        "example" : [ "SSN", "CREDIT_CARD", "EMAIL" ]
+                      },
+                      "regexPatternsV2" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "pattern" : {
+                              "type" : "string",
+                              "example" : "\\b\\d{3}-\\d{2}-\\d{4}\\b"
+                            },
+                            "category" : {
+                              "type" : "string",
+                              "example" : "SSN"
+                            }
+                          }
+                        }
+                      },
+                      "applyOnRequest" : {
+                        "type" : "boolean",
+                        "example" : true
+                      },
+                      "applyOnResponse" : {
+                        "type" : "boolean",
+                        "example" : true
+                      },
+                      "confidenceScore" : {
+                        "type" : "number",
+                        "format" : "double",
+                        "example" : 0.85
+                      },
+                      "active" : {
+                        "type" : "boolean",
+                        "example" : true
+                      }
+                    }
+                  },
+                  "hexId" : {
+                    "type" : "string",
+                    "example" : "null"
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Policy created/updated successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "enum" : [ "SUCCESS", "ERROR" ],
+                      "example" : "SUCCESS"
+                    },
+                    "policyId" : {
+                      "type" : "string",
+                      "example" : "507f1f77bcf86cd799439011"
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "Policy created successfully"
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/fetchGuardrailPolicies" : {
+      "description" : "Retrieve all guardrail policies in the account",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchGuardrailPolicies",
+        "operationId" : "/api/fetchGuardrailPolicies-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "List of guardrail policies",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "guardrailPolicies" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "_id" : {
+                            "type" : "string",
+                            "example" : "507f1f77bcf86cd799439011"
+                          },
+                          "name" : {
+                            "type" : "string",
+                            "example" : "PII Detection Policy"
+                          },
+                          "description" : {
+                            "type" : "string",
+                            "example" : "Detect and block requests containing sensitive PII"
+                          },
+                          "severity" : {
+                            "type" : "string",
+                            "enum" : [ "LOW", "MEDIUM", "HIGH", "CRITICAL" ],
+                            "example" : "HIGH"
+                          },
+                          "active" : {
+                            "type" : "boolean",
+                            "example" : true
+                          },
+                          "contextSource" : {
+                            "type" : "string",
+                            "enum" : [ "API", "MCP", "GEN_AI", "AGENTIC", "DAST", "ENDPOINT" ],
+                            "example" : "API"
+                          },
+                          "createdBy" : {
+                            "type" : "string",
+                            "example" : "admin@example.com"
+                          },
+                          "createdTimestamp" : {
+                            "type" : "integer",
+                            "format" : "int32",
+                            "example" : 1712000000
+                          },
+                          "updatedTimestamp" : {
+                            "type" : "integer",
+                            "format" : "int32",
+                            "example" : 1712100000
+                          },
+                          "piiTypes" : {
+                            "type" : "array",
+                            "items" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "total" : {
+                      "type" : "integer",
+                      "format" : "int32",
+                      "example" : 5
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/deleteGuardrailPolicies" : {
+      "description" : "Bulk delete one or multiple guardrail policies",
+      "post" : {
+        "summary" : "POST request for endpoint /api/deleteGuardrailPolicies",
+        "operationId" : "/api/deleteGuardrailPolicies-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "policyIds" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    },
+                    "example" : [ "507f1f77bcf86cd799439011", "507f1f77bcf86cd799439012" ]
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Policies deleted successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "SUCCESS"
+                    },
+                    "deletedCount" : {
+                      "type" : "integer",
+                      "example" : 2
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/guardrailPlayground" : {
+      "description" : "Test a guardrail policy against sample input in real-time",
+      "post" : {
+        "summary" : "POST request for endpoint /api/guardrailPlayground",
+        "operationId" : "/api/guardrailPlayground-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "policy" : {
+                    "type" : "object",
+                    "properties" : {
+                      "name" : {
+                        "type" : "string",
+                        "example" : "PII Detection Policy"
+                      },
+                      "piiTypes" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "string"
+                        }
+                      },
+                      "regexPatternsV2" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "object"
+                        }
+                      },
+                      "confidenceScore" : {
+                        "type" : "number",
+                        "example" : 0.85
+                      }
+                    }
+                  },
+                  "testInput" : {
+                    "type" : "string",
+                    "example" : "My SSN is 123-45-6789"
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Policy evaluation result",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "playgroundResult" : {
+                      "type" : "object",
+                      "properties" : {
+                        "blocked" : {
+                          "type" : "boolean",
+                          "example" : true
+                        },
+                        "reason" : {
+                          "type" : "string",
+                          "example" : "PII detected"
+                        },
+                        "detectedTypes" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "string"
+                          }
+                        },
+                        "confidenceScore" : {
+                          "type" : "number",
+                          "format" : "double",
+                          "example" : 0.95
+                        }
+                      }
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/fetchSuspectSampleData" : {
+      "description" : "Get paginated guardrail activity events with filters",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchSuspectSampleData",
+        "operationId" : "/api/fetchSuspectSampleData-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "skip" : {
+                    "type" : "integer",
+                    "default" : 0,
+                    "example" : 0
+                  },
+                  "limit" : {
+                    "type" : "integer",
+                    "default" : 50,
+                    "example" : 20
+                  },
+                  "label" : {
+                    "type" : "string",
+                    "enum" : [ "GUARDRAIL" ],
+                    "example" : "GUARDRAIL"
+                  },
+                  "statusFilter" : {
+                    "type" : "string",
+                    "enum" : [ "ACTIVE", "IGNORED", "TRAINING", "UNDER_REVIEW" ],
+                    "example" : "ACTIVE"
+                  },
+                  "severity" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    },
+                    "example" : [ "HIGH", "CRITICAL" ]
+                  },
+                  "ips" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  },
+                  "urls" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  },
+                  "hosts" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  },
+                  "startTimestamp" : {
+                    "type" : "integer",
+                    "example" : 1712000000
+                  },
+                  "endTimestamp" : {
+                    "type" : "integer",
+                    "example" : 1712100000
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Paginated guardrail activity events",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "maliciousEvents" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "id" : {
+                            "type" : "string",
+                            "example" : "507f1f77bcf86cd799439011"
+                          },
+                          "endpoint" : {
+                            "type" : "string",
+                            "example" : "/api/users"
+                          },
+                          "method" : {
+                            "type" : "string",
+                            "example" : "POST"
+                          },
+                          "ip" : {
+                            "type" : "string",
+                            "example" : "192.168.1.1"
+                          },
+                          "country" : {
+                            "type" : "string",
+                            "example" : "US"
+                          },
+                          "host" : {
+                            "type" : "string",
+                            "example" : "api.example.com"
+                          },
+                          "detectedAt" : {
+                            "type" : "integer",
+                            "format" : "int32",
+                            "example" : 1712000000
+                          },
+                          "status" : {
+                            "type" : "string",
+                            "enum" : [ "ACTIVE", "IGNORED", "TRAINING", "UNDER_REVIEW" ],
+                            "example" : "ACTIVE"
+                          },
+                          "severity" : {
+                            "type" : "string",
+                            "enum" : [ "LOW", "MEDIUM", "HIGH", "CRITICAL" ],
+                            "example" : "HIGH"
+                          },
+                          "subCategory" : {
+                            "type" : "string",
+                            "example" : "PII_DETECTED"
+                          }
+                        }
+                      }
+                    },
+                    "total" : {
+                      "type" : "integer",
+                      "format" : "int32",
+                      "example" : 150
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/fetchThreatActors" : {
+      "description" : "Get list of threat actors with cursor-based pagination",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchThreatActors",
+        "operationId" : "/api/fetchThreatActors-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "skip" : {
+                    "type" : "integer",
+                    "default" : 0,
+                    "example" : 0
+                  },
+                  "cursor" : {
+                    "type" : "string",
+                    "example" : "507f1f77bcf86cd799439011"
+                  },
+                  "startTs" : {
+                    "type" : "integer",
+                    "example" : 1712000000
+                  },
+                  "endTs" : {
+                    "type" : "integer",
+                    "example" : 1712100000
+                  },
+                  "country" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  },
+                  "host" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "List of threat actors",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "actors" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "id" : {
+                            "type" : "string",
+                            "example" : "507f1f77bcf86cd799439011"
+                          },
+                          "objectId" : {
+                            "type" : "string",
+                            "example" : "507f1f77bcf86cd799439012"
+                          },
+                          "latestApiEndpoint" : {
+                            "type" : "string",
+                            "example" : "/api/users"
+                          },
+                          "latestApiIp" : {
+                            "type" : "string",
+                            "example" : "203.0.113.5"
+                          },
+                          "latestApiMethod" : {
+                            "type" : "string",
+                            "example" : "POST"
+                          },
+                          "country" : {
+                            "type" : "string",
+                            "example" : "US"
+                          },
+                          "latestSubcategory" : {
+                            "type" : "string",
+                            "example" : "SQL_INJECTION"
+                          },
+                          "discoveredAt" : {
+                            "type" : "integer",
+                            "example" : 1712000000
+                          }
+                        }
+                      }
+                    },
+                    "total" : {
+                      "type" : "integer",
+                      "example" : 25
+                    },
+                    "cursor" : {
+                      "type" : "string",
+                      "example" : "507f1f77bcf86cd799439013"
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/fetchThreatCategoryCount" : {
+      "description" : "Get threat counts aggregated by category and subcategory",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchThreatCategoryCount",
+        "operationId" : "/api/fetchThreatCategoryCount-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "startTs" : {
+                    "type" : "integer",
+                    "example" : 1712000000
+                  },
+                  "endTs" : {
+                    "type" : "integer",
+                    "example" : 1712100000
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Threat counts by category",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "categoryCounts" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "displayName" : {
+                            "type" : "string",
+                            "example" : "SQL Injection"
+                          },
+                          "subCategory" : {
+                            "type" : "string",
+                            "example" : "SQL_INJECTION"
+                          },
+                          "count" : {
+                            "type" : "integer",
+                            "example" : 15
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/fetchCountBySeverity" : {
+      "description" : "Get threat counts aggregated by severity level",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchCountBySeverity",
+        "operationId" : "/api/fetchCountBySeverity-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "startTs" : {
+                    "type" : "integer",
+                    "example" : 1712000000
+                  },
+                  "endTs" : {
+                    "type" : "integer",
+                    "example" : 1712100000
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Threat counts by severity",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "categoryCounts" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "displayName" : {
+                            "type" : "string",
+                            "enum" : [ "CRITICAL", "HIGH", "MEDIUM", "LOW" ],
+                            "example" : "CRITICAL"
+                          },
+                          "count" : {
+                            "type" : "integer",
+                            "example" : 12
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/updateMaliciousEventStatus" : {
+      "description" : "Update status of guardrail or threat event",
+      "post" : {
+        "summary" : "POST request for endpoint /api/updateMaliciousEventStatus",
+        "operationId" : "/api/updateMaliciousEventStatus-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "eventId" : {
+                    "type" : "string",
+                    "example" : "507f1f77bcf86cd799439011"
+                  },
+                  "eventIds" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    },
+                    "example" : [ "507f1f77bcf86cd799439011", "507f1f77bcf86cd799439012" ]
+                  },
+                  "status" : {
+                    "type" : "string",
+                    "enum" : [ "ACTIVE", "IGNORED", "TRAINING", "UNDER_REVIEW" ],
+                    "example" : "UNDER_REVIEW"
+                  },
+                  "label" : {
+                    "type" : "string",
+                    "enum" : [ "GUARDRAIL", "THREAT" ],
+                    "example" : "GUARDRAIL"
+                  },
+                  "jiraTicketUrl" : {
+                    "type" : "string",
+                    "example" : "null"
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Status updated successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "updateSuccess" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "updatedCount" : {
+                      "type" : "integer",
+                      "example" : 1
+                    },
+                    "updateMessage" : {
+                      "type" : "string",
+                      "example" : "Status updated successfully"
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/deleteMaliciousEvents" : {
+      "description" : "Bulk delete guardrail or threat events permanently",
+      "post" : {
+        "summary" : "POST request for endpoint /api/deleteMaliciousEvents",
+        "operationId" : "/api/deleteMaliciousEvents-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "eventId" : {
+                    "type" : "string",
+                    "example" : "507f1f77bcf86cd799439011"
+                  },
+                  "eventIds" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    },
+                    "example" : [ "507f1f77bcf86cd799439011", "507f1f77bcf86cd799439012" ]
+                  },
+                  "label" : {
+                    "type" : "string",
+                    "enum" : [ "GUARDRAIL", "THREAT" ],
+                    "example" : "GUARDRAIL"
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Events deleted successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "deleteSuccess" : {
+                      "type" : "boolean",
+                      "example" : true
+                    },
+                    "deletedCount" : {
+                      "type" : "integer",
+                      "example" : 2
+                    },
+                    "deleteMessage" : {
+                      "type" : "string",
+                      "example" : "Events deleted successfully"
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/getIpReputationScore" : {
+      "description" : "Get reputation/threat score for an IP address",
+      "post" : {
+        "summary" : "POST request for endpoint /api/getIpReputationScore",
+        "operationId" : "/api/getIpReputationScore-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "ip" : {
+                    "type" : "string",
+                    "example" : "203.0.113.5"
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "IP reputation information",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "ip" : {
+                      "type" : "string",
+                      "example" : "203.0.113.5"
+                    },
+                    "reputationScore" : {
+                      "type" : "number",
+                      "format" : "double",
+                      "example" : 7.5
+                    },
+                    "threatLevel" : {
+                      "type" : "string",
+                      "enum" : [ "LOW", "MEDIUM", "HIGH", "CRITICAL" ],
+                      "example" : "HIGH"
+                    },
+                    "isBlacklisted" : {
+                      "type" : "boolean",
+                      "example" : false
+                    },
+                    "country" : {
+                      "type" : "string",
+                      "example" : "US"
+                    },
+                    "isp" : {
+                      "type" : "string",
+                      "example" : "Example ISP"
+                    },
+                    "threatTypes" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "string"
+                      }
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/fetchThreatData" : {
+      "description" : "Get consolidated threat dashboard metrics",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchThreatData",
+        "operationId" : "/api/fetchThreatData-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "startTimestamp" : {
+                    "type" : "integer",
+                    "example" : 1712000000
+                  },
+                  "endTimestamp" : {
+                    "type" : "integer",
+                    "example" : 1712100000
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Consolidated threat metrics",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "type" : "object",
+                      "properties" : {
+                        "threatsBySeverity" : {
+                          "type" : "object",
+                          "properties" : {
+                            "critical" : {
+                              "type" : "integer",
+                              "example" : 5
+                            },
+                            "high" : {
+                              "type" : "integer",
+                              "example" : 12
+                            },
+                            "medium" : {
+                              "type" : "integer",
+                              "example" : 8
+                            },
+                            "low" : {
+                              "type" : "integer",
+                              "example" : 3
+                            },
+                            "total" : {
+                              "type" : "integer",
+                              "example" : 28
+                            }
+                          }
+                        },
+                        "topThreatsByCategory" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object"
+                          }
+                        },
+                        "topAttackHosts" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object"
+                          }
+                        },
+                        "topBadActors" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/fetchGuardrailData" : {
+      "description" : "Get consolidated guardrail dashboard metrics and posture",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchGuardrailData",
+        "operationId" : "/api/fetchGuardrailData-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "startTimestamp" : {
+                    "type" : "integer",
+                    "example" : 1712000000
+                  },
+                  "endTimestamp" : {
+                    "type" : "integer",
+                    "example" : 1712100000
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Consolidated guardrail metrics",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "type" : "object",
+                      "properties" : {
+                        "topGuardrailPolicies" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object"
+                          }
+                        },
+                        "dataProtectionTrends" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object"
+                          }
+                        },
+                        "avgThreatScore" : {
+                          "type" : "number",
+                          "format" : "double",
+                          "example" : 6.5
+                        },
+                        "sensitiveCount" : {
+                          "type" : "integer",
+                          "example" : 45
+                        },
+                        "successfulExploits" : {
+                          "type" : "integer",
+                          "example" : 3
+                        },
+                        "complianceAtRisks" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object"
+                          }
+                        },
+                        "attackFlows" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/fetchFiltersThreatTable" : {
+      "description" : "Get available filter dropdown options for guardrail activity table",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchFiltersThreatTable",
+        "operationId" : "/api/fetchFiltersThreatTable-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "label" : {
+                    "type" : "string",
+                    "enum" : [ "GUARDRAIL" ],
+                    "example" : "GUARDRAIL"
+                  },
+                  "startTimestamp" : {
+                    "type" : "integer",
+                    "example" : 1712000000
+                  },
+                  "endTimestamp" : {
+                    "type" : "integer",
+                    "example" : 1712100000
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Filter options for activity table",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "ips" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "string"
+                      }
+                    },
+                    "urls" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "string"
+                      }
+                    },
+                    "hosts" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "string"
+                      }
+                    },
+                    "subCategory" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "string"
+                      }
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/fetchAggregateMaliciousRequests" : {
+      "description" : "Get full payload details of a specific guardrail event",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchAggregateMaliciousRequests",
+        "operationId" : "/api/fetchAggregateMaliciousRequests-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "eventId" : {
+                    "type" : "string",
+                    "example" : "507f1f77bcf86cd799439011"
+                  },
+                  "label" : {
+                    "type" : "string",
+                    "enum" : [ "GUARDRAIL" ],
+                    "example" : "GUARDRAIL"
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Event details with full payload",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "maliciousPayloadsResponses" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "eventId" : {
+                            "type" : "string",
+                            "example" : "507f1f77bcf86cd799439011"
+                          },
+                          "endpoint" : {
+                            "type" : "string",
+                            "example" : "/api/users"
+                          },
+                          "method" : {
+                            "type" : "string",
+                            "example" : "POST"
+                          },
+                          "requestPayload" : {
+                            "type" : "string",
+                            "example" : "null"
+                          },
+                          "responsePayload" : {
+                            "type" : "string",
+                            "example" : "null"
+                          },
+                          "blockedBy" : {
+                            "type" : "string",
+                            "example" : "PII_DETECTION"
+                          },
+                          "detectedThreats" : {
+                            "type" : "array",
+                            "items" : {
+                              "type" : "string"
+                            }
+                          },
+                          "timestamp" : {
+                            "type" : "integer",
+                            "example" : 1712000000
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/fetchSessionContext" : {
+      "description" : "Get session context for session-based guardrail events",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchSessionContext",
+        "operationId" : "/api/fetchSessionContext-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "sessionId" : {
+                    "type" : "string",
+                    "example" : "session-uuid-12345"
+                  },
+                  "eventId" : {
+                    "type" : "string",
+                    "example" : "507f1f77bcf86cd799439011"
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Session context and related events",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "sessionId" : {
+                      "type" : "string",
+                      "example" : "session-uuid-12345"
+                    },
+                    "userId" : {
+                      "type" : "string",
+                      "example" : "user-123"
+                    },
+                    "startTime" : {
+                      "type" : "integer",
+                      "example" : 1712000000
+                    },
+                    "endTime" : {
+                      "type" : "integer",
+                      "example" : 1712003600
+                    },
+                    "relatedEvents" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object"
+                      }
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/fetchMcpdata" : {
+      "description" : "Get count of API endpoints protected by guardrail policies",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchMcpdata",
+        "operationId" : "/api/fetchMcpdata-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "filter" : {
+                    "type" : "string",
+                    "enum" : [ "POLICY_GUARDRAIL_APIS" ],
+                    "example" : "POLICY_GUARDRAIL_APIS"
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Count of protected endpoints",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "protectedApisCount" : {
+                      "type" : "integer",
+                      "example" : 42
+                    },
+                    "totalApisCount" : {
+                      "type" : "integer",
+                      "example" : 100
+                    },
+                    "percentageProtected" : {
+                      "type" : "number",
+                      "format" : "double",
+                      "example" : 42.0
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/fetchBrowserExtensionConfigs" : {
+      "description" : "List all browser extension configurations",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchBrowserExtensionConfigs",
+        "operationId" : "/api/fetchBrowserExtensionConfigs-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Browser extension configurations",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "configs" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "hexId" : {
+                            "type" : "string",
+                            "example" : "507f1f77bcf86cd799439011"
+                          },
+                          "name" : {
+                            "type" : "string",
+                            "example" : "Extension Config"
+                          },
+                          "enabled" : {
+                            "type" : "boolean",
+                            "example" : true
+                          },
+                          "extensionId" : {
+                            "type" : "string",
+                            "example" : "ext-id-123"
+                          },
+                          "apiKey" : {
+                            "type" : "string",
+                            "example" : "api-key-***"
+                          },
+                          "createdAt" : {
+                            "type" : "integer",
+                            "example" : 1712000000
+                          },
+                          "updatedAt" : {
+                            "type" : "integer",
+                            "example" : 1712100000
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/saveBrowserExtensionConfig" : {
+      "description" : "Create or update a browser extension configuration",
+      "post" : {
+        "summary" : "POST request for endpoint /api/saveBrowserExtensionConfig",
+        "operationId" : "/api/saveBrowserExtensionConfig-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "hexId" : {
+                    "type" : "string",
+                    "example" : "null"
+                  },
+                  "name" : {
+                    "type" : "string",
+                    "example" : "Extension Config"
+                  },
+                  "enabled" : {
+                    "type" : "boolean",
+                    "example" : true
+                  },
+                  "extensionId" : {
+                    "type" : "string",
+                    "example" : "ext-id-123"
+                  },
+                  "apiKey" : {
+                    "type" : "string",
+                    "example" : "api-key-value"
+                  },
+                  "configuration" : {
+                    "type" : "object",
+                    "example" : {}
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Configuration saved",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "enum" : [ "SUCCESS", "ERROR" ],
+                      "example" : "SUCCESS"
+                    },
+                    "configId" : {
+                      "type" : "string",
+                      "example" : "507f1f77bcf86cd799439011"
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/apiInfo/bulkAgentProxyGuardrail" : {
+      "description" : "Bulk enable/disable guardrails on multiple API endpoints",
+      "post" : {
+        "summary" : "POST request for endpoint /api/apiInfo/bulkAgentProxyGuardrail",
+        "operationId" : "/api/apiInfo/bulkAgentProxyGuardrail-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "apiIds" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    },
+                    "example" : [ "api-1", "api-2" ]
+                  },
+                  "enabled" : {
+                    "type" : "boolean",
+                    "example" : true
+                  },
+                  "policies" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  },
+                  "schemaConfig" : {
+                    "type" : "object",
+                    "properties" : {
+                      "enforceSchema" : {
+                        "type" : "boolean",
+                        "example" : true
+                      },
+                      "strictMode" : {
+                        "type" : "boolean",
+                        "example" : false
+                      }
+                    }
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Guardrails updated on endpoints",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "enum" : [ "SUCCESS", "ERROR" ],
+                      "example" : "SUCCESS"
+                    },
+                    "updatedCount" : {
+                      "type" : "integer",
+                      "example" : 2
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/fetchThreatApis" : {
+      "description" : "Get list of APIs affected by threats",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchThreatApis",
+        "operationId" : "/api/fetchThreatApis-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "skip" : {
+                    "type" : "integer",
+                    "default" : 0,
+                    "example" : 0
+                  },
+                  "startTs" : {
+                    "type" : "integer",
+                    "example" : 1712000000
+                  },
+                  "endTs" : {
+                    "type" : "integer",
+                    "example" : 1712100000
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "List of threatened APIs",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "apis" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "endpoint" : {
+                            "type" : "string",
+                            "example" : "/api/users"
+                          },
+                          "method" : {
+                            "type" : "string",
+                            "example" : "POST"
+                          },
+                          "host" : {
+                            "type" : "string",
+                            "example" : "api.example.com"
+                          },
+                          "actorsCount" : {
+                            "type" : "integer",
+                            "example" : 5
+                          },
+                          "requestsCount" : {
+                            "type" : "integer",
+                            "example" : 25
+                          },
+                          "discoveredAt" : {
+                            "type" : "integer",
+                            "example" : 1712000000
+                          }
+                        }
+                      }
+                    },
+                    "total" : {
+                      "type" : "integer",
+                      "example" : 15
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/getActorsCountPerCounty" : {
+      "description" : "Get threat actor distribution by country",
+      "post" : {
+        "summary" : "POST request for endpoint /api/getActorsCountPerCounty",
+        "operationId" : "/api/getActorsCountPerCounty-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "startTs" : {
+                    "type" : "integer",
+                    "example" : 1712000000
+                  },
+                  "endTs" : {
+                    "type" : "integer",
+                    "example" : 1712100000
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Threat actor counts per country",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "actorsCountPerCountry" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "code" : {
+                            "type" : "string",
+                            "example" : "US"
+                          },
+                          "count" : {
+                            "type" : "integer",
+                            "example" : 15
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/getThreatActivityTimeline" : {
+      "description" : "Get threat activity by subcategory over time",
+      "post" : {
+        "summary" : "POST request for endpoint /api/getThreatActivityTimeline",
+        "operationId" : "/api/getThreatActivityTimeline-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "startTs" : {
+                    "type" : "integer",
+                    "example" : 1712000000
+                  },
+                  "endTs" : {
+                    "type" : "integer",
+                    "example" : 1712100000
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Threat activity timeline",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "threatActivityTimelines" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "ts" : {
+                            "type" : "integer",
+                            "example" : 1712000000
+                          },
+                          "subCategoryWiseDataList" : {
+                            "type" : "array",
+                            "items" : {
+                              "type" : "object",
+                              "properties" : {
+                                "subCategory" : {
+                                  "type" : "string",
+                                  "example" : "SQL_INJECTION"
+                                },
+                                "activityCount" : {
+                                  "type" : "integer",
+                                  "example" : 5
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/getDailyThreatActorsCount" : {
+      "description" : "Get daily unique threat actor counts with summary aggregates",
+      "post" : {
+        "summary" : "POST request for endpoint /api/getDailyThreatActorsCount",
+        "operationId" : "/api/getDailyThreatActorsCount-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "startTs" : {
+                    "type" : "integer",
+                    "example" : 1712000000
+                  },
+                  "endTs" : {
+                    "type" : "integer",
+                    "example" : 1712100000
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Daily threat actor counts",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "actorsCounts" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "ts" : {
+                            "type" : "integer",
+                            "example" : 1712000000
+                          },
+                          "totalActors" : {
+                            "type" : "integer",
+                            "example" : 10
+                          },
+                          "criticalActors" : {
+                            "type" : "integer",
+                            "example" : 3
+                          }
+                        }
+                      }
+                    },
+                    "totalAnalysed" : {
+                      "type" : "integer",
+                      "example" : 50
+                    },
+                    "totalAttacks" : {
+                      "type" : "integer",
+                      "example" : 75
+                    },
+                    "totalCriticalActors" : {
+                      "type" : "integer",
+                      "example" : 8
+                    },
+                    "totalActiveStatus" : {
+                      "type" : "integer",
+                      "example" : 5
+                    },
+                    "totalIgnoredStatus" : {
+                      "type" : "integer",
+                      "example" : 2
+                    },
+                    "totalUnderReviewStatus" : {
+                      "type" : "integer",
+                      "example" : 1
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/fetchThreatTopNData" : {
+      "description" : "Get top 5 APIs and hosts by threat count/severity",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchThreatTopNData",
+        "operationId" : "/api/fetchThreatTopNData-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "startTs" : {
+                    "type" : "integer",
+                    "example" : 1712000000
+                  },
+                  "endTs" : {
+                    "type" : "integer",
+                    "example" : 1712100000
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Top N threatened resources",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "topApis" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "endpoint" : {
+                            "type" : "string",
+                            "example" : "/api/users"
+                          },
+                          "method" : {
+                            "type" : "string",
+                            "example" : "POST"
+                          },
+                          "attacks" : {
+                            "type" : "integer",
+                            "example" : 25
+                          },
+                          "severity" : {
+                            "type" : "string",
+                            "example" : "HIGH"
+                          }
+                        }
+                      }
+                    },
+                    "topHosts" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "host" : {
+                            "type" : "string",
+                            "example" : "api.example.com"
+                          },
+                          "attacks" : {
+                            "type" : "integer",
+                            "example" : 45
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/fetchThreatComplianceInfos" : {
+      "description" : "Get compliance-related threat data",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchThreatComplianceInfos",
+        "operationId" : "/api/fetchThreatComplianceInfos-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "startTs" : {
+                    "type" : "integer",
+                    "example" : 1712000000
+                  },
+                  "endTs" : {
+                    "type" : "integer",
+                    "example" : 1712100000
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Compliance-related threat data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "threatComplianceInfos" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "description" : "Compliance threat mapping data"
+                      }
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/modifyThreatActorStatus" : {
+      "description" : "Block/unblock threat actor in AWS WAF",
+      "post" : {
+        "summary" : "POST request for endpoint /api/modifyThreatActorStatus",
+        "operationId" : "/api/modifyThreatActorStatus-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "actorIp" : {
+                    "type" : "string",
+                    "example" : "203.0.113.5"
+                  },
+                  "status" : {
+                    "type" : "string",
+                    "enum" : [ "blocked", "unblocked" ],
+                    "example" : "blocked"
+                  },
+                  "reason" : {
+                    "type" : "string",
+                    "example" : "Suspicious activity detected"
+                  },
+                  "duration" : {
+                    "type" : "integer",
+                    "example" : 0
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Threat actor status updated",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "enum" : [ "SUCCESS", "ERROR" ],
+                      "example" : "SUCCESS"
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "Actor blocked successfully"
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/modifyThreatActorStatusCloudflare" : {
+      "description" : "Block/unblock threat actor in Cloudflare WAF",
+      "post" : {
+        "summary" : "POST request for endpoint /api/modifyThreatActorStatusCloudflare",
+        "operationId" : "/api/modifyThreatActorStatusCloudflare-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "actorIp" : {
+                    "type" : "string",
+                    "example" : "203.0.113.5"
+                  },
+                  "status" : {
+                    "type" : "string",
+                    "enum" : [ "blocked", "unblocked" ],
+                    "example" : "blocked"
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Cloudflare WAF rule updated",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "enum" : [ "SUCCESS", "ERROR" ],
+                      "example" : "SUCCESS"
+                    },
+                    "ruleId" : {
+                      "type" : "string",
+                      "example" : "rule-123"
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
+    },
+    "/api/bulkModifyThreatActorStatusCloudflare" : {
+      "description" : "Bulk block/unblock threat actors in Cloudflare WAF",
+      "post" : {
+        "summary" : "POST request for endpoint /api/bulkModifyThreatActorStatusCloudflare",
+        "operationId" : "/api/bulkModifyThreatActorStatusCloudflare-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "actorIps" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string"
+                    },
+                    "example" : [ "203.0.113.5", "198.51.100.2" ]
+                  },
+                  "status" : {
+                    "type" : "string",
+                    "enum" : [ "blocked", "unblocked" ],
+                    "example" : "blocked"
+                  },
+                  "reason" : {
+                    "type" : "string",
+                    "example" : "Bulk threat mitigation"
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Bulk update completed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "enum" : [ "SUCCESS", "ERROR" ],
+                      "example" : "SUCCESS"
+                    },
+                    "processedCount" : {
+                      "type" : "integer",
+                      "example" : 2
+                    },
+                    "succeededCount" : {
+                      "type" : "integer",
+                      "example" : 2
+                    },
+                    "failedCount" : {
+                      "type" : "integer",
+                      "example" : 0
+                    }
+                  },
+                  "description" : "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
     }
   }
 }
