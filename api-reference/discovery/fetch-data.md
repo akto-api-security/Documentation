@@ -4,70 +4,70 @@
 
 
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/getAllCollectionsBasic" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/getAllCollectionsBasic" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/getSeverityInfoForCollections" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/getSeverityInfoForCollections" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/getLastSeenTrafficInfoForCollections" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/getLastSeenTrafficInfoForCollections" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/getSensitiveInfoForCollections" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/getSensitiveInfoForCollections" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/getRiskScoreInfo" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/getRiskScoreInfo" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/getCoverageInfoForCollections" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/getCoverageInfoForCollections" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/getAllCollections" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/getAllCollections" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/getAllUsersCollections" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/getAllUsersCollections" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/getSeveritiesCountPerCollection" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/getSeveritiesCountPerCollection" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/fetchCollectionWiseApiEndpoints" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchCollectionWiseApiEndpoints" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/fetchIpLevelApiCallStats" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchIpLevelApiCallStats" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/fetchApiInfosForCollection" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchApiInfosForCollection" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/fetchApiCallStats" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchApiCallStats" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/fetchApiInfosFromSTIs" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchApiInfosFromSTIs" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/fetchEndpointsCount" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchEndpointsCount" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/fetchSampleData" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchSampleData" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="discoveryfinallatest" path="/api/generateOpenApiFile" method="post" %}
-[OpenAPI discoveryfinallatest](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/cdb9de608c24b16eb079373197e6abd65e876ed802ebf1b8ab3515048c11fb94.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250906%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250906T051536Z&X-Amz-Expires=172800&X-Amz-Signature=a6de9efd0be4e810bc46310a674b336e6908b4da6e8066cd4781d5621d506958&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-operation spec="akto-agentic-security-api" path="/api/generateOpenApiFile" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
