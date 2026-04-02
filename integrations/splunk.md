@@ -2,7 +2,7 @@
 
 Akto supports integration with Splunk SIEM to help you streamline the process of detecting vulnerabilities, monitoring API traffic, and enhancing your web application security. This integration allows Akto to forward alert data directly to your Splunk instance for deeper analysis and correlation.
 
-<figure><img src="../.gitbook/assets/image (108).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (108).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ***
 

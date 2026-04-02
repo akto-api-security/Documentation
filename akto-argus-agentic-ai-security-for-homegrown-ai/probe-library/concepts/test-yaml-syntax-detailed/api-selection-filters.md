@@ -1,4 +1,4 @@
-# Agentic Component Selection Filters
+# Agent Component Selection Filters
 
 This section describes the `conditions` that act as selection criteria for choosing Agentic components that are eligible for a particular probe. It also filters out Agentic components that are not eligible.
 
@@ -6,7 +6,7 @@ Example:
 
 {% code title="Example of API Selection filter" fullWidth="true" %}
 ```yaml
-# THIS IS API SELECTION FILTER
+# THIS IS AGENT COMPONENT SELECTION FILTER
 api_selection_filters:
   response_code:
     gte: 200
@@ -48,17 +48,17 @@ api_selection_filters:
 
 Each `condition` block begins with a parent operator. Parent Operators indicate the `property of the Agentic component` you are probing. All the conditions will apply to these parent operators. Parent Operators can have the following values:
 
-<table><thead><tr><th width="212.5">Parent Operator</th><th>Description</th></tr></thead><tbody><tr><td>response_code</td><td>This denotes that the conditions will be applied on response code of the api</td></tr><tr><td>method</td><td>This denotes that the conditions will be applied on http method of the api</td></tr><tr><td>url</td><td>This denotes that the conditions will be applied on http url of the api</td></tr><tr><td>request_payload</td><td>This denotes that the conditions will be applied on request payload of the api</td></tr><tr><td>response_payload</td><td>This denotes that the conditions will be applied on response payload of the api</td></tr><tr><td>request_headers</td><td>This denotes that the condition will be applied on request headers of the api</td></tr><tr><td>response_headers</td><td>This denotes that the condition will be applied on response headers of the api</td></tr><tr><td>query_param</td><td>This denotes that the condition will be applied on query params of the api</td></tr></tbody></table>
+<table><thead><tr><th width="212.5">Parent Operator</th><th>Description</th></tr></thead><tbody><tr><td>response_code</td><td>This denotes that the conditions will be applied on response code of the component</td></tr><tr><td>method</td><td>This denotes that the conditions will be applied on http method</td></tr><tr><td>url</td><td>This denotes that the conditions will be applied on http url</td></tr><tr><td>request_payload</td><td>This denotes that the conditions will be applied on request payload</td></tr><tr><td>response_payload</td><td>This denotes that the conditions will be applied on response payload of the component</td></tr><tr><td>request_headers</td><td>This denotes that the condition will be applied on request headers of the component</td></tr><tr><td>response_headers</td><td>This denotes that the condition will be applied on response headers of the component</td></tr><tr><td>query_param</td><td>This denotes that the condition will be applied on query params of the component</td></tr></tbody></table>
 
 ## Data Operators
 
 Each Parent Operator should contain one or more `Data Operators` that describe the exact condition to be applied to the Parent Property. Data Operators can have the following values:
 
-<table><thead><tr><th width="199">Data Operator</th><th width="183">Expected Arguments</th><th>Description</th></tr></thead><tbody><tr><td>belongs_to_collections</td><td>List</td><td>Checks whether the parent property belongs to one of the specified collections in the list. The API must be part of at least one of the collections specified to satisfy this condition.</td></tr><tr><td>contains_either</td><td>List/Non List</td><td>Checks whether the parent property contains the specified input. If input is an array, any one of the input element should satisfy this condition.</td></tr><tr><td>contains_all</td><td>List/Non List</td><td>Checks whether the parent property contains the specified input. If input is an array, all of the input element should satisfy this condition.</td></tr><tr><td>regex</td><td>List/Non List</td><td>Checks whether the parent property contains a match for the regex specified in the specified input. If input is an array, one of the regex input should have a match</td></tr><tr><td>eq</td><td>Non List</td><td>Checks whether the parent property is equal to the specified input.</td></tr><tr><td>neq</td><td>Non List</td><td>Checks whether the parent property is not equal equal to the specified input.</td></tr><tr><td>gt</td><td>Non List</td><td>Checks whether the parent property is greater than to the specified input.</td></tr><tr><td>gte</td><td>Non List</td><td>Checks whether the parent property is greater than equal to the specified input.</td></tr><tr><td>lt</td><td>Non List</td><td>Checks whether the parent property is lesser than the specified input.</td></tr><tr><td>lte</td><td>Non List</td><td>Checks whether the parent property is lesser than equal to to the specified input.</td></tr><tr><td>not_contains</td><td>List/Non List</td><td>Checks whether the parent property does not contain the specified input. If input is an array, all of the input element should satisfy this condition.</td></tr><tr><td>not_contains_either</td><td>List/Non List</td><td>Checks whether the parent property does not contain the specified input. If input is an array, any one of the input element should satisfy this condition.</td></tr><tr><td>contains_jwt</td><td>boolean</td><td>Checks whether the parent property contains/not contains a jwt token</td></tr><tr><td>cookie_expire_filter</td><td>boolean</td><td>Checks if the cookie expires in next 30 days</td></tr></tbody></table>
+<table><thead><tr><th width="199">Data Operator</th><th width="183">Expected Arguments</th><th>Description</th></tr></thead><tbody><tr><td>belongs_to_collections</td><td>List</td><td>Checks whether the parent property belongs to one of the specified collections in the list. The compnent must be part of at least one of the collections specified to satisfy this condition.</td></tr><tr><td>contains_either</td><td>List/Non List</td><td>Checks whether the parent property contains the specified input. If input is an array, any one of the input element should satisfy this condition.</td></tr><tr><td>contains_all</td><td>List/Non List</td><td>Checks whether the parent property contains the specified input. If input is an array, all of the input element should satisfy this condition.</td></tr><tr><td>regex</td><td>List/Non List</td><td>Checks whether the parent property contains a match for the regex specified in the specified input. If input is an array, one of the regex input should have a match</td></tr><tr><td>eq</td><td>Non List</td><td>Checks whether the parent property is equal to the specified input.</td></tr><tr><td>neq</td><td>Non List</td><td>Checks whether the parent property is not equal equal to the specified input.</td></tr><tr><td>gt</td><td>Non List</td><td>Checks whether the parent property is greater than to the specified input.</td></tr><tr><td>gte</td><td>Non List</td><td>Checks whether the parent property is greater than equal to the specified input.</td></tr><tr><td>lt</td><td>Non List</td><td>Checks whether the parent property is lesser than the specified input.</td></tr><tr><td>lte</td><td>Non List</td><td>Checks whether the parent property is lesser than equal to to the specified input.</td></tr><tr><td>not_contains</td><td>List/Non List</td><td>Checks whether the parent property does not contain the specified input. If input is an array, all of the input element should satisfy this condition.</td></tr><tr><td>not_contains_either</td><td>List/Non List</td><td>Checks whether the parent property does not contain the specified input. If input is an array, any one of the input element should satisfy this condition.</td></tr><tr><td>contains_jwt</td><td>boolean</td><td>Checks whether the parent property contains/not contains a jwt token</td></tr><tr><td>cookie_expire_filter</td><td>boolean</td><td>Checks if the cookie expires in next 30 days</td></tr></tbody></table>
 
 ### <mark style="color:red;">`belongs_to_collections`</mark>
 
-Checks whether the parent property belongs to one of the specified collections in the list. The API must be part of at least one of the collections specified to satisfy this condition.
+Checks whether the parent property belongs to one of the specified collections in the list. The component must be part of at least one of the collections specified to satisfy this condition.
 
 **Example 1**
 
@@ -69,9 +69,9 @@ url:
     - payment
     - checkout
 
-# APIs that belong to either the payment or checkout collection would match the above condition.
-# Match Example - An API categorized as part of the payment collection
-# Invalid Example - An API that belongs only to the auth collection
+# Components that belong to either the payment or checkout collection would match the above condition.
+# Match Example - A component categorized as part of the payment collection
+# Invalid Example - A component that belongs only to the auth collection
 ```
 {% endcode %}
 
@@ -356,7 +356,7 @@ api_selection_filters:
 {% endcode %}
 
 {% hint style="info" %}
-👉🏻 In simple language: The above yaml syntax is filtering APIs with any key of the request payload containing the keyword ‘name’
+👉🏻 In simple language: The above yaml syntax is filtering component with any key of the request payload containing the keyword ‘name’
 {% endhint %}
 
 **Example 2**
@@ -381,7 +381,7 @@ api_selection_filters:
 {% endcode %}
 
 {% hint style="info" %}
-👉🏻 In simple language: The above yaml syntax is filtering APIs with any key of the request payload equal to ‘status’ and the same key having value which matches specified regex.
+👉🏻 In simple language: The above yaml syntax is filtering component with any key of the request payload equal to ‘status’ and the same key having value which matches specified regex.
 {% endhint %}
 
 **Matching Payloads**
@@ -428,7 +428,7 @@ response_payload:
 
 ### <mark style="color:red;">`extract`</mark>
 
-These operators can be used to save parent entity’s value into a variable at any point during the api\_selection\_filters phase, which can be used later on in the test template yaml using `${}` notation. Let’s see it in action in the below example -
+These operators can be used to save parent entity’s value into a variable at any point during the selection\_filters phase, which can be used later on in the test template yaml using `${}` notation. Let’s see it in action in the below example -
 
 {% code title="Example of extract" %}
 ```yaml
@@ -513,7 +513,7 @@ validate:
 
 ### <mark style="color:red;">`extractMultiple`</mark>
 
-This is similar to [`extract`](api-selection-filters.md#extract), except it can extract a list of values. For example, if you need a list of all keys in the API request JSON, you can use `extractMultiple` operator. Using `extract` will just extract the first key. #Example 1
+This is similar to [`extract`](api-selection-filters.md#extract), except it can extract a list of values. For example, if you need a list of all keys in the request JSON, you can use `extractMultiple` operator. Using `extract` will just extract the first key. #Example 1
 
 {% code title="" %}
 ```yaml

@@ -1,4 +1,4 @@
-# Probing Module Selector in Akto
+# Scanning Module Selector in Akto
 
 The **Probing Module Selector** in Akto allows you to choose which probing module (engine) to use when running agentic AI security probes. This is useful when multiple modules are available or when targeting a specific deployment.
 
@@ -12,8 +12,8 @@ You can use the selector to:
 ### How to Use the Probing Module Selector
 
 1. Go to **AI Red Teaming > Agentic Collections**.
-2. Click **Run probe** to open the Configure Probe window.
-3. In **Select Probing Module**, use the dropdown to pick the module you want (e.g., `Default_b5f3`).
+2. Click **Run scan** to open the Configure Probe window.
+3. In **Select scanning Module**, use the dropdown to pick the module you want (e.g., `Default_b5f3`).
 4. Complete the other probe configurations.
 5. Click **Run once now** to start the probe.
 
@@ -21,7 +21,7 @@ You can use the selector to:
 If unsure, leave the default module selected—Akto will use the active probing module automatically.
 {% endhint %}
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ***
 
@@ -38,7 +38,7 @@ This section shows:
 * Start time
 * Last heartbeat (to verify module is active)
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ***
 

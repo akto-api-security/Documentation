@@ -1,6 +1,6 @@
-# Restrict Access to a Probe Role Using RBAC
+# Restrict Access to a Scan Role Using RBAC
 
-> 📖 If you’re new to Probe Roles, start with [Create a Probe Role](create-a-test-role.md).
+> 📖 If you’re new to Probe Roles, start with [Create a Scan Role](create-a-test-role.md).
 
 You can now **restrict access to probe roles** based on user roles (RBAC). This gives you fine-grained control over who can view or use a particular probe role.
 
@@ -10,7 +10,7 @@ This is especially useful in collaborative environments where different teams (e
 
 ## 📘 Prerequisite
 
-Make sure you’ve already created [Custom Roles](../../../../account-management/custom-roles.md) for your team members.
+Make sure you’ve already created [Custom Roles](../../../account-management/custom-roles.md) for your team members.
 
 ***
 
@@ -18,7 +18,7 @@ Make sure you’ve already created [Custom Roles](../../../../account-management
 
 1. **Go to Scan Roles**
    * Navigate to **AI Red Teaming → Scan Roles**.
-2. **Create or Edit a Probe Role**
+2. **Create or Edit a Scan Role**
    * You can either create a new Probe Role or edit an existing one.
 3. **Set Scope Role**
    * In the Probe Role configuration form, locate the dropdown labeled **”Scope Role”**.
@@ -47,4 +47,4 @@ Make sure you’ve already created [Custom Roles](../../../../account-management
 ## 📎 Related Documentation
 
 * [Create a Probe Role](create-a-test-role.md)
-* [Custom Roles](../../../../account-management/custom-roles.md)
+* [Custom Roles](../../../account-management/custom-roles.md)

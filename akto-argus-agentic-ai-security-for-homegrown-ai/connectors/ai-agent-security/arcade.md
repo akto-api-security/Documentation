@@ -18,7 +18,7 @@ The Arcade Integration automatically:
 
 {% stepper %}
 {% step %}
-#### Configure Akto Traffic Processor
+**Configure Akto Traffic Processor**
 
 Set up and configure your Traffic Processor. The steps are mentioned [here](../others/hybrid-saas.md).
 
@@ -30,7 +30,7 @@ Keep the your Data ingestion URL ready. It will be required in the next steps.
 {% endstep %}
 
 {% step %}
-#### Navigate to Contextual Access in Arcade
+**Navigate to Contextual Access in Arcade**
 
 1. Log in to your Arcade Dashboard.
 2. From the left navigation panel, select **Contextual Access**.
@@ -40,7 +40,7 @@ Keep the your Data ingestion URL ready. It will be required in the next steps.
 {% endstep %}
 
 {% step %}
-#### Create a New Webhook Extension
+**Create a New Webhook Extension**
 
 In the **Add Extension** screen enter the Basic Information such as:
 
@@ -55,12 +55,12 @@ In the **Add Extension** screen enter the Basic Information such as:
 {% endstep %}
 
 {% step %}
-#### Configure Webhook Endpoints
+**Configure Webhook Endpoints**
 
 Under **Webhook Endpoints**, configure the execution stages that should be intercepted.
 
 {% hint style="warning" %}
-### Note
+#### Note
 
 You must enter your Akto Traffic Processor ingestion URL in each enabled stage.\
 All other fields can be left as default unless you require a custom configuration.
@@ -102,7 +102,7 @@ Enable **Pre tool execution** to validate and inspect tool inputs before the too
     <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (133).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 {% hint style="info" %}
-### Blocking vs Async Mode
+#### Blocking vs Async Mode
 
 * **Blocking mode (default):** Keep **Pre Tool Execution** enabled. Akto evaluates tool inputs before execution and can block unsafe or policy-violating calls.
 * **Async / monitoring-only mode:** Disable **Pre Tool Execution** and rely solely on Post Tool Execution. Tool calls will not be intercepted — Akto will only observe and record outputs after execution. Use this when you want visibility without enforcement.
@@ -126,7 +126,7 @@ Enable **Post tool execution** to inspect tool outputs after execution.
 {% endstep %}
 
 {% step %}
-#### Save and Enable the Extension
+**Save and Enable the Extension**
 
 After configuring all required webhook stages:
 

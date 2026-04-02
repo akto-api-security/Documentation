@@ -23,11 +23,11 @@ This method only works for **custom models** deployed on Vertex AI. It does not 
 
 {% stepper %}
 {% step %}
-### **Enable BigQuery Logging**
+#### **Enable BigQuery Logging**
 
 First, configure your Vertex AI Custom Deployed Model endpoint to log predictions to BigQuery.
 
-#### Via Console
+**Via Console**
 
 1. Go to **Vertex AI → Endpoints** in GCP Console.
 2. Select your deployed model endpoint.
@@ -37,7 +37,7 @@ First, configure your Vertex AI Custom Deployed Model endpoint to log prediction
 6. Choose or create a dataset (e.g., `vertex_ai_logs`).
 7. Save.
 
-#### Via gcloud CLI
+**Via gcloud CLI**
 
 ```bash
 gcloud ai endpoints update ENDPOINT_ID \
@@ -47,11 +47,11 @@ gcloud ai endpoints update ENDPOINT_ID \
 {% endstep %}
 
 {% step %}
-### **Create IAM Service Account**
+#### **Create IAM Service Account**
 
 Create a dedicated Service Account for Akto (e.g., `akto-bq-reader`). This account will need permissions to read from your BigQuery dataset and execute query jobs.
 
-#### **1. Create Service Account**
+**1. Create Service Account**
 
 Via Console:
 
@@ -68,7 +68,7 @@ gcloud iam service-accounts create akto-bq-reader \
     --display-name="Akto BigQuery Reader"
 ```
 
-#### **2. Grant BigQuery Permissions**
+**2. Grant BigQuery Permissions**
 
 You must grant two key roles:
 
@@ -98,11 +98,11 @@ gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
 {% endstep %}
 
 {% step %}
-### **Configure Authentication**
+#### **Configure Authentication**
 
 Choose an authentication method based on your deployment. Akto supports **Application Default Credentials (ADC)** and **Service Account Key Files**.
 
-#### Option A: Use Application Default Credentials (Recommended for GKE/Cloud Run)
+**Option A: Use Application Default Credentials (Recommended for GKE/Cloud Run)**
 
 If Akto is running on GCP (GKE, Cloud Run, Compute Engine), you can use ADC. This is more secure as it avoids managing long-lived keys.
 
@@ -121,7 +121,7 @@ If Akto is running on GCP (GKE, Cloud Run, Compute Engine), you can use ADC. Thi
     ```
 2. **No Configuration Needed**: When configuring the job in Akto, leave the `JSON Authentication File Path` field empty. Akto acts as the service account automatically.
 
-#### Option B: Use a Service Account Key File (External Deployment)
+**Option B: Use a Service Account Key File (External Deployment)**
 
 If Akto is running outside of GCP (e.g., On-Prem, AWS, Local Docker), use a Service Account Key.
 
@@ -139,7 +139,7 @@ If Akto is running outside of GCP (e.g., On-Prem, AWS, Local Docker), use a Serv
 {% endstep %}
 
 {% step %}
-#### **Configure Akto Job**
+**Configure Akto Job**
 
 In the Akto Dashboard, configure the Vertex AI Custom Deployed Model connector with the following fields:
 

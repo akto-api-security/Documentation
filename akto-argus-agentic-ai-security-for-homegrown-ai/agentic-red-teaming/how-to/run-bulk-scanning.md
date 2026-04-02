@@ -26,13 +26,13 @@ Select the collection containing the component you want to probe.
 {% endstep %}
 
 {% step %}
-Click **Run Probes** from the bulk actions menu.
+Click **Run Scan** from the bulk actions menu.
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (147).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 {% endstepper %}
 
-Akto opens the **Bulk Probe configuration panel**.
+Akto opens the **Bulk Scan configuration panel**.
 
 ## Configure Scan Parameters for Bulk Execution
 

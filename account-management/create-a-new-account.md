@@ -1,10 +1,10 @@
 # Create a New Account
 
-Creating a new account in Akto allows you to manage multiple API environments or projects separately. Here's a streamlined guide to set up a new account:
+Creating a new account in Akto allows you to manage multiple agentic environments or projects separately. Here's a streamlined guide to set up a new account:
 
 ### Quick Steps to Create a New Account
 
-{% @arcade/embed flowId="SqCIAKRkPhLg5h1Uax14" url="https://app.arcade.software/share/SqCIAKRkPhLg5h1Uax14" %}
+{% @arcade/embed url="https://app.arcade.software/share/SqCIAKRkPhLg5h1Uax14" flowId="SqCIAKRkPhLg5h1Uax14" %}
 
 That's it! Your new account is now set up and ready to use.
 

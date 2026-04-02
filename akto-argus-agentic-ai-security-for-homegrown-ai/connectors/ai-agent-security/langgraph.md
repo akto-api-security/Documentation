@@ -86,7 +86,7 @@ https://{PROXY_URL}/openai/v1/?openai_url=https://{AZURE_MODEL_URL}
 </details>
 
 {% hint style="warning" %}
-## **Proxy URL usage**
+#### **Proxy URL usage**
 
 If your team deployed an AI Agent Proxy in the previous step, use the proxy endpoint from that deployment as `{PROXY_URL}`.\
 If your team prefers not to deploy a proxy, request a **managed proxy URL from the Akto support team** and use the provided endpoint as `{PROXY_URL}`.
@@ -98,14 +98,163 @@ If your team prefers not to deploy a proxy, request a **managed proxy URL from t
 Use this method if you want active enforcement — intercepting and inspecting requests in real time before they reach the LLM or tool.
 {% endhint %}
 
-### 3. Via Hooks
+### 3. Via Hooks (Recommended)
+
+Akto provides `AktoGuardrailsMiddleware` — a class-based `AgentMiddleware` that hooks directly into the LangGraph agent lifecycle to enforce Akto guardrails on every model call. This requires no proxy and no external telemetry pipeline.
+
+The middleware intercepts two points in the agent lifecycle:
+
+* **`before_model`** — Validates the prompt against Akto guardrails _before_ the LLM is called. In sync mode, a policy violation blocks the request immediately.
+* **`after_model`** — Ingests the completed interaction (prompt + response) into Akto for audit and dashboard visibility.
+
+Both synchronous and asynchronous agent execution modes are supported.
+
+#### Request Flow (AKTO\_SYNC\_MODE=true)
+
+```
+1. Agent invokes model call
+2. before_model hook intercepts the request
+3. Prompt sent to Akto Data Ingestion Service for validation
+   ├─ If BLOCKED: ValueError raised, LLM never called
+   └─ If ALLOWED: Continue to step 4
+4. Request forwarded to LLM provider
+5. LLM response received
+6. after_model hook intercepts the response
+7. Full interaction sent to Akto for audit and dashboard display
+```
+
+#### Request Flow (AKTO\_SYNC\_MODE=false)
+
+```
+1. Agent invokes model call
+2. Request forwarded to LLM provider immediately (no pre-validation)
+3. LLM response received
+4. after_model hook sends the interaction to Akto asynchronously (log-only)
+```
+
+#### Steps to Connect
+
+{% stepper %}
+{% step %}
+**Install Dependencies**
+
+Ensure the required packages are installed:
+
+```bash
+pip install httpx langchain langgraph
+```
+{% endstep %}
+
+{% step %}
+**Download the Middleware**
+
+Download the `akto_middleware.py` file into your project:
+
+```bash
+curl -O https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/langchain-hooks/akto_middleware.py
+```
+{% endstep %}
+
+{% step %}
+**Configure Environment Variables**
+
+Set the following environment variables in your shell or `.env` file:
+
+```bash
+# Required: Akto Data Ingestion Service URL
+AKTO_DATA_INGESTION_URL=https://<YOUR_AKTO_INSTANCE_URL>
+
+# Optional: Operation mode (default: "true")
+AKTO_SYNC_MODE=true        # true = block violations, false = async log-only
+
+# Optional: HTTP timeout in seconds (default: "5")
+AKTO_TIMEOUT=5
+
+# Optional: Logging
+LOG_LEVEL=INFO             # Logging level (default: "INFO")
+LOG_PAYLOADS=false         # Log full payloads — privacy-sensitive (default: "false")
+```
 
 {% hint style="warning" %}
-**Coming Soon**
+**Note**
 
-Native LangGraph hook-based integration is coming soon in Akto. This will allow you to instrument your LangGraph graphs directly using lifecycle hooks, enabling deep visibility into node-level execution, state transitions, and tool calls without routing traffic through a proxy.
+`AKTO_SYNC_MODE` determines behavior:
 
-Reach out to us at [support@akto.io](mailto:support@akto.io) to register your interest.
+* `AKTO_SYNC_MODE=true`: Prompts are validated **before** being sent to the LLM. Policy violations raise a `ValueError` and block the request.
+* `AKTO_SYNC_MODE=false`: All requests proceed immediately. Interactions are ingested after the fact for logging and audit only.
+{% endhint %}
+{% endstep %}
+
+{% step %}
+**Integrate the Middleware into Your LangGraph Agent**
+
+Import `AktoGuardrailsMiddleware` and pass it to your LangGraph agent's middleware list:
+
+```python
+from akto_middleware import AktoGuardrailsMiddleware
+from langgraph.prebuilt import create_react_agent
+
+agent = create_react_agent(
+    model="gpt-4.1",
+    tools=[...],
+    middleware=[AktoGuardrailsMiddleware()],
+)
+```
+
+The middleware automatically handles both sync and async execution paths — no additional configuration is needed.
+{% endstep %}
+
+{% step %}
+**Verify Integration**
+
+Run your agent and check the logs for middleware initialization:
+
+```
+AktoGuardrailsMiddleware initialized | connector=langchain sync_mode=True url=https://<YOUR_AKTO_INSTANCE_URL>
+```
+
+Then verify in the Akto dashboard:
+
+* Log into your Akto dashboard
+* Navigate to the Collections section
+* Verify you see requests from your LangGraph application appearing
+{% endstep %}
+{% endstepper %}
+
+#### Configuration Reference
+
+| Variable                  | Required | Default             | Description                                            |
+| ------------------------- | -------- | ------------------- | ------------------------------------------------------ |
+| `AKTO_DATA_INGESTION_URL` | Yes      |                     | Akto service base URL                                  |
+| `AKTO_SYNC_MODE`          | No       | `true`              | `true` to block on violation, `false` for log-only     |
+| `AKTO_TIMEOUT`            | No       | `5`                 | HTTP timeout in seconds                                |
+| `LOG_LEVEL`               | No       | `INFO`              | Logging level                                          |
+| `LOG_PAYLOADS`            | No       | `false`             | Log full request/response payloads (privacy-sensitive) |
+| `LANGCHAIN_API_HOST`      | No       | `api.langchain.com` | Host header used in the proxy payload                  |
+| `LANGCHAIN_API_PATH`      | No       | `/langchain/chat`   | Path used in the proxy payload                         |
+
+#### Handling Blocked Requests
+
+When `AKTO_SYNC_MODE=true` and a request is blocked by guardrails, the middleware raises a `ValueError`:
+
+```
+ValueError: Blocked by Akto Guardrails: <reason>
+```
+
+You can catch this in your application to handle blocked requests gracefully:
+
+```python
+try:
+    result = agent.invoke({"messages": [{"role": "user", "content": user_input}]})
+except ValueError as e:
+    if "Blocked by Akto Guardrails" in str(e):
+        print(f"Request blocked: {e}")
+```
+
+{% hint style="info" %}
+**When to use this**
+
+Use this method if you want guardrails enforcement directly inside your LangGraph agent without deploying a separate proxy. It provides the same validation and blocking capabilities as the proxy approach, with a simpler setup.
 {% endhint %}
 
 ## Get Support

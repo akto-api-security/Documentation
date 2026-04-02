@@ -1,5 +1,5 @@
 ---
-description: Learn how to send API traffic data to Akto SaaS from your cloud setup.
+description: Learn how to send agentic traffic data to Akto SaaS from your cloud setup.
 ---
 
 # Connect Akto with Hybrid SaaS
@@ -9,8 +9,6 @@ description: Learn how to send API traffic data to Akto SaaS from your cloud set
 2\. Login/Signup into your account.
 
 3\. Click on Quick Start tab in left nav.
-
-<figure><img src="../../../.gitbook/assets/Quick-Start.png" alt=""><figcaption></figcaption></figure>
 
 4\. Search for Hybrid SaaS Connector and click connect.
 

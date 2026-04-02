@@ -18,7 +18,7 @@ You can create and run probes to detect vulnerabilities in your autonomous syste
 
 <table><thead><tr><th width="176.5">Name</th><th>Desciption</th></tr></thead><tbody><tr><td><code>info</code></td><td><mark style="color:red;"><code>Name</code></mark>, <mark style="color:red;"><code>Description</code></mark>, <mark style="color:red;"><code>Details</code></mark>, <mark style="color:red;"><code>Impact</code></mark>, <mark style="color:red;"><code>Category</code></mark>, <mark style="color:red;"><code>SubCategory</code></mark>, <mark style="color:red;"><code>Severity</code></mark>, <mark style="color:red;"><code>Tags</code></mark>, <mark style="color:red;"><code>Reference</code></mark></td></tr></tbody></table>
 
-### Block 3: API Selection Filters
+### Block 3: Agentic Component Selection Filters
 
 <table><thead><tr><th width="228.5">Name</th><th>Desciption</th></tr></thead><tbody><tr><td>api_selection_filters</td><td>This section describes the conditions that act as selection criteria for choosing APIs that are eligible for a particular test. It also filters out APIs that are not eligible.</td></tr><tr><td>Parent Operators</td><td><mark style="color:red;"><code>response_code</code></mark>, <mark style="color:red;"><code>method</code></mark>, <mark style="color:red;"><code>url</code></mark>, <mark style="color:red;"><code>request_payload</code></mark>, <mark style="color:red;"><code>response_payload</code></mark>, <mark style="color:red;"><code>request_headers</code></mark>, <mark style="color:red;"><code>response_headers</code></mark>, <mark style="color:red;"><code>query_param</code></mark></td></tr><tr><td>Data Operators</td><td><mark style="color:red;"><code>regex</code></mark>, <mark style="color:red;"><code>eq</code></mark>, <mark style="color:red;"><code>neq</code></mark>, <mark style="color:red;"><code>gt</code></mark>, <mark style="color:red;"><code>gte</code></mark>, <mark style="color:red;"><code>lt</code></mark>, <mark style="color:red;"><code>lte</code></mark><br><br><mark style="color:red;"><code>not_contains</code></mark>, <mark style="color:red;"><code>not_contains_either</code></mark>, <mark style="color:red;"><code>contains_jwt</code></mark>, <mark style="color:red;"><code>contains_all</code></mark>, <mark style="color:red;"><code>contains_either</code></mark></td></tr><tr><td>Collection Operators</td><td><mark style="color:red;"><code>for_one</code></mark></td></tr><tr><td>Combining Conditions using Boolean Operators</td><td><mark style="color:red;"><code>or</code></mark>, <mark style="color:red;"><code>and</code></mark></td></tr></tbody></table>
 
@@ -36,9 +36,9 @@ You can create and run probes to detect vulnerabilities in your autonomous syste
 
 ## Learn with Example
 
-### **Example API**
+### **Example Agentic Component**
 
-{% code title="Example API" lineNumbers="true" %}
+{% code title="Example Agentic Component" lineNumbers="true" %}
 ```json
 POST https://xyz.abc.com/api/v1/users?userId=500&creationFlow=true
 Request Payload
@@ -102,19 +102,19 @@ info:
 auth:
   authenticated: true               # makes sure that only authentiated api's get considered for a probe.
 api_selection_filters:  
-  response_code:                    # Filters API calls that return a response code between 200 and 300 (inclusive).      
+  response_code:                    # Filters agentic component calls that return a response code between 200 and 300 (inclusive).      
     gte: 200                        
     lte: 300 
-  url:       
-    contains_all:                   # Filters API calls that contain the word "user" in the URL.
+  url:
+    contains_all:                   # Filters agentic component calls that contain the word "user" in the URL.
       - user
     extract: urlVar                 # extracts the url value into a variable named urlVar
-  method:    
-    contains_either:                # Filters API calls that use either the POST, PATCH, or PUT HTTP methods
+  method:
+    contains_either:                # Filters agentic component calls that use either the POST, PATCH, or PUT HTTP methods
       - POST
       - PATCH
       - PUT
-  request_payload:                  # Filters API calls whose request payload contains a key-value pair where the key matches the regex ".*age*." and the value is between 15 and 40 (inclusive)
+  request_payload:                  # Filters agentic component calls whose request payload contains a key-value pair where the key matches the regex ".*age*." and the value is between 15 and 40 (inclusive)
     for_one:      
       key:
         regex: .*age*. 
@@ -122,13 +122,13 @@ api_selection_filters:
       value:
         gt: 15  
         lt: 40  
-  response_payload:                 # Filters API calls whose response payload does not contain the string "user2."
+  response_payload:                 # Filters agentic component calls whose response payload does not contain the string "user2."
     not_contains: user2
-  request_headers:                  # Filters API calls whose request header contains a whose value has a JWT token in it.
+  request_headers:                  # Filters agentic component calls whose request header contains a whose value has a JWT token in it.
     for_one:
       key:
         contains_jwt: true          
-  response_headers:                 # Filters API calls whose response header contains a key that exactly matches "server" and a value that matches the regex "nginx/1.8.0."
+  response_headers:                 # Filters agentic component calls whose response header contains a key that exactly matches "server" and a value that matches the regex "nginx/1.8.0."
     for_one:
       key:
         eq: server
@@ -138,8 +138,8 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: https://xyz.abc.com/api/v2/users    # Changes the URL of the API call to "[https://xyz.abc.com/api/v2/users."](https://xyz.abc.com/api/v2/users.%22)
-      - modify_method: PATCH        # Changes the HTTP method of the API call to PATCH.
+      - modify_url: https://xyz.abc.com/api/v2/users    # Changes the URL of the agentic component call to "[https://xyz.abc.com/api/v2/users."](https://xyz.abc.com/api/v2/users.%22)
+      - modify_method: PATCH        # Changes the HTTP method of the agentic component call to PATCH.
       - add_body_param:             # Adds a key-value pair "k1: v1" to the request body.
           k1: v1
       - modify_body_param:          # Changes the value of the "status" key in the request body to "admin."
@@ -157,9 +157,9 @@ execute:
       - delete_query_param: creationFlow # Deletes the "creationFlow" key-value pair from the query string.
       - replace_body: '{"user": "newUser", "status": "admin"}'
       - remove_auth_header: true   # Replaces the entire request body with the JSON object 
-      - follow_redirect: true      # Follows any HTTP redirects returned by the API call.
+      - follow_redirect: true      # Follows any HTTP redirects returned by the agentic component call.
 validate:
-  response_code:                   # Validates that the response code of the API call is 201.
+  response_code:                   # Validates that the response code of the agentic component call is 201.
     eq: 201
   response_payload:                # Validates that the response payload is not empty and contains atleast one key named "success". Also it checks whether probe response payload and sample response payload content are not similar(difference should be higher than 50%)
     length:
@@ -188,23 +188,23 @@ The Info section contains metadata about the probe:
 * <mark style="color:red;">`Tags`</mark>: Descriptive labels or keywords associated with the probe.
 * <mark style="color:red;">`Reference:`</mark> A list of relevant resources, documentation, or external links related to the probe.
 
-#### API Selection Filters
+#### Agentic Component Selection Filters
 
-This section contains a set of filters that can be used to select specific API calls based on various criteria. The filters include:
+This section contains a set of filters that can be used to select specific agentic component calls based on various criteria. The filters include:
 
-* <mark style="color:red;">`response_code`</mark>: Filters API calls that return a response code between 200 and 300 (inclusive).
-* <mark style="color:red;">`url`</mark>: Filters API calls that contain the word "user" in the URL.
-* <mark style="color:red;">`method`</mark>: Filters API calls that use either the POST, PATCH, or PUT HTTP methods.
-* <mark style="color:red;">`request_payload`</mark>: Filters API calls whose request payload contains a key-value pair where the key matches the regex "._age_." and the value is between 15 and 40 (inclusive).
-* <mark style="color:red;">`response_payload`</mark>: Filters API calls whose response payload does not contain the string "user2."
-* <mark style="color:red;">`request_headers`</mark>: Filters API calls whose request header contains a key that matches "contains\_jwt."
-* <mark style="color:red;">`response_headers`</mark>: Filters API calls whose response header contains a key that exactly matches "server" and a value that matches the regex "nginx/1.8.0."
+* <mark style="color:red;">`response_code`</mark>: Filters agentic component calls that return a response code between 200 and 300 (inclusive).
+* <mark style="color:red;">`url`</mark>: Filters agentic component calls that contain the word "user" in the URL.
+* <mark style="color:red;">`method`</mark>: Filters agentic component calls that use either the POST, PATCH, or PUT HTTP methods.
+* <mark style="color:red;">`request_payload`</mark>: Filters agentic component calls whose request payload contains a key-value pair where the key matches the regex "._age_." and the value is between 15 and 40 (inclusive).
+* <mark style="color:red;">`response_payload`</mark>: Filters agentic component calls whose response payload does not contain the string "user2."
+* <mark style="color:red;">`request_headers`</mark>: Filters agentic component calls whose request header contains a key that matches "contains\_jwt."
+* <mark style="color:red;">`response_headers`</mark>: Filters agentic component calls whose response header contains a key that exactly matches "server" and a value that matches the regex "nginx/1.8.0."
 
 #### Execute
 
-This section contains a set of operations that can be performed on API calls that match the selection criteria specified above. The operations include:
+This section contains a set of operations that can be performed on agentic component calls that match the selection criteria specified above. The operations include:
 
-* <mark style="color:red;">`modify_url`</mark>: Changes the URL of the API call to "`https://xyz.abc.com/api/v2/users.`"
+* <mark style="color:red;">`modify_url`</mark>: Changes the URL of the agentic component call to "`https://xyz.abc.com/api/v2/users.`"
 * <mark style="color:red;">`modify_method`</mark>: Changes the HTTP method of the API call to PATCH.
 * <mark style="color:red;">`add_body_param`</mark>: Adds a key-value pair "k1: v1" to the request body.
 * <mark style="color:red;">`modify_body_param`</mark>: Changes the value of the "status" key in the request body to "admin."
@@ -221,7 +221,7 @@ This section contains a set of operations that can be performed on API calls tha
 
 #### Validate
 
-This section contains a set of validation criteria that can be used to validate the response of the API call after it has been modified by the operations specified in the "Execute" section. The validation criteria include:
+This section contains a set of validation criteria that can be used to validate the response of the agentic component call after it has been modified by the operations specified in the "Execute" section. The validation criteria include:
 
-* <mark style="color:red;">`response_code`</mark>: Validates that the response code of the API call is 201.
+* <mark style="color:red;">`response_code`</mark>: Validates that the response code of the agentic component call is 201.
 * <mark style="color:red;">`response_payload`</mark>: Validates that the response payload is not empty and contains either a key "success". Also it checks whether probe response payload and sample response payload content are not similar(difference should be higher than 50%)

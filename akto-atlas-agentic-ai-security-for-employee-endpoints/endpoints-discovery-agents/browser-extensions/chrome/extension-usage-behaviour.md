@@ -23,7 +23,7 @@ Each configuration specifies:
 
 The extension retrieves active configurations from the dashboard settings and evaluates only matching hosts and paths.
 
-For guardrail policy configuration details, see: [guardrail-policy.md](../../../../agentic-guardrails/concepts/threat-policy.md "mention")
+For guardrail policy configuration details, see: [threat-policy.md](../../../../agentic-guardrails/concepts/threat-policy.md "mention")
 
 ## Real-Time Guardrail Enforcement in the Browser
 
@@ -44,12 +44,12 @@ Enforcement behaviour depends on the **Bypass Guardrails** setting.
 Monitoring mode gives you visibility without blocking user traffic.
 
 {% hint style="warning" %}
-## **Important**
+### **Important**
 
 End users cannot modify the **Bypass Guardrails** setting. This behaviour is controlled by administrators through the extension configuration.
 {% endhint %}
 
-This mode is commonly used when organisations want to evaluate guardrail behaviour without interrupting user workflows.&#x20;
+This mode is commonly used when organisations want to evaluate guardrail behaviour without interrupting user workflows.
 
 For example, during early deployment or evaluation phases, administrators may enable monitoring mode to observe how policies behave before enforcing blocking.
 
@@ -69,11 +69,11 @@ Every flagged request, whether blocked or allowed, is recorded in Akto Atlas.
 For guardrail behaviour and event lifecycle details, see: [guardrail-activity.md](../../../../agentic-guardrails/concepts/guardrail-activity.md "mention")
 
 {% hint style="info" %}
-## **Export Capability**
+### **Export Capability**
 
 You can export guardrail events using the **Export to JSON** option in the browser extension.
 
-<p align="center"><img src="../../../../.gitbook/assets/Screenshot 2026-03-05 at 11.12.46 AM.webp" alt=""></p>
+<img src="../../../../.gitbook/assets/Screenshot 2026-03-05 at 11.12.46 AM.webp" alt="" data-size="original">
 {% endhint %}
 
 ## Endpoint Discovery in Akto Atlas

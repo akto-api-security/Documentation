@@ -31,11 +31,7 @@ To start capturing traffic from your staging, production ( or any other environm
 
 1. Navigate to the `Quick Start` page on dashboard.
 
-<figure><img src="../../../../.gitbook/assets/Frame 10 (1).png" alt="Click on Quickstart"><figcaption><p>Click on Quickstart</p></figcaption></figure>
-
 2\. Click `connect traffic data`.
-
-<figure><img src="../../../../.gitbook/assets/Frame 11 (1).png" alt="Click on connect traffic data"><figcaption><p>Click on connect traffic data</p></figcaption></figure>
 
 ### Creating AWS Policy
 

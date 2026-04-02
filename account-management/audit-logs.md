@@ -2,7 +2,7 @@
 
 Audit Logs in Akto provide a comprehensive tracking system for all user actions and system events within your agentic AI security environment. This feature enables teams to monitor, track, and review all activities performed on the platform, ensuring accountability and maintaining security compliance.
 
-<figure><img src="../.gitbook/assets/image (44) (1).png" alt=""><figcaption></figcaption></figure>
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (2) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 #### Key Features
 

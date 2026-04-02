@@ -39,7 +39,7 @@ The deployment workflow consists of two stages:
 
 {% stepper %}
 {% step %}
-### (Optional) Identify AI Agent Software Installed on Devices
+#### (Optional) Identify AI Agent Software Installed on Devices
 
 Software inventory queries help you identify which AI development tools exist across enterprise devices.
 
@@ -72,7 +72,7 @@ Remove the `DeviceName` filter to scan the entire device fleet.
 {% endstep %}
 
 {% step %}
-### (Optional) Identify AI CLI Activity on Devices
+#### (Optional) Identify AI CLI Activity on Devices
 
 Process telemetry queries help you determine which devices actively run AI CLI agents.
 
@@ -108,7 +108,7 @@ Query results show which CLI tools run on enterprise devices, including **Claude
 {% endstep %}
 
 {% step %}
-### (Optional) Detect MCP Configuration File Usage
+#### (Optional) Detect MCP Configuration File Usage
 
 MCP configuration files often define agent integrations and tool execution paths. Process telemetry queries help you detect devices referencing MCP configuration files.
 
@@ -143,7 +143,7 @@ You can modify the query to add or remove file names depending on the MCP config
 {% endstep %}
 
 {% step %}
-### Request the MCP Endpoint Shield Hook Script from Akto
+#### Request the MCP Endpoint Shield Hook Script from Akto
 
 MCP Endpoint Shield deployment requires a hook installation script provided by Akto.
 
@@ -153,7 +153,7 @@ Contact the **Akto support team at** [**support@akto.io**](mailto:support@akto.i
 {% endstep %}
 
 {% step %}
-### Upload the Hook Script to the Microsoft Defender Live Response Library
+#### Upload the Hook Script to the Microsoft Defender Live Response Library
 
 Microsoft Defender Live Response allows you to run scripts remotely on enterprise devices.
 
@@ -177,7 +177,7 @@ The script must exist in the Live Response library before execution. Upload the 
 {% endstep %}
 
 {% step %}
-### Run the Hook Script on a Device Using Live Response
+#### Run the Hook Script on a Device Using Live Response
 
 Microsoft Defender Live Response allows script execution on individual devices.
 

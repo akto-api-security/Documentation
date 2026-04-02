@@ -20,7 +20,7 @@ Akto offers an array of pre-configured LFI probes designed for comprehensive cov
 
 ### **Pre-configured Local File Inclusion Probes:**
 
-1. **Local File Inclusion in Parameter:** You can try this probe  in [Akto’s Agentic AI Security playground](https://www.akto.io/test/lfi-in-parameter).
+1. **Local File Inclusion in Parameter:** You can try this probe in [Akto’s Agentic AI Security playground](https://www.akto.io/test/lfi-in-parameter).
 
 ```yaml
 id: LFI_IN_PARAMETER
@@ -106,7 +106,7 @@ validate:
     regex: "root:.*:0:0:"
 ```
 
-2. **Local File Inclusion by adding new parameter:** You can try this probe  in [Akto’s Agentic AI Security playground](https://www.akto.io/test/lfi-by-adding-new-parameter).
+2. **Local File Inclusion by adding new parameter:** You can try this probe in [Akto’s Agentic AI Security playground](https://www.akto.io/test/lfi-by-adding-new-parameter).
 
 ```yaml
 id: FILE_INCLUSION_NEW_PARAM
@@ -206,7 +206,7 @@ validate:
     regex: "root:.*:0:0:"
 ```
 
-3. **Local File Inclusion in path.yaml:** You can try this probe  in the [Akto’s Agentic AI Security playground](https://www.akto.io/test/lfi-in-path).
+3. **Local File Inclusion in path.yaml:** You can try this probe in the [Akto’s Agentic AI Security playground](https://www.akto.io/test/lfi-in-path).
 
 ```yaml
 id: FILE_INCLUSION_NEW_PARAM
@@ -393,7 +393,7 @@ validate:
 
 Step 4: **Save & Execute.** After customizing the base template for your probe, click **`Save`**.
 
-Step 5: Enter the API you want to probe. Click **`Run Probe`**
+Step 5: Enter the componente you want to probe. Click **`Run Probe`**
 
 Step 6: Refine your custom probe as necessary based on the outcomes.
 

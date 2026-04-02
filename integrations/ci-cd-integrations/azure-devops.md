@@ -74,8 +74,8 @@ stages:
 2. Add the following required variables:
 
 * `AKTO_DASHBOARD_URL`: Your Akto dashboard URL
-* `AKTO_API_KEY`: [Your Akto API key](/broken/pages/fxxYPwGU1kTuZwMAksYR) (mark as secret)
-* `AKTO_TEST_ID`: [Your Akto test ID](/broken/pages/q2Oz4FsKPEq381Pwpaws)
+* `AKTO_API_KEY`: Your Akto API key (mark as secret)
+* `AKTO_TEST_ID`: Your Akto test ID
 * `WAIT_TIME_FOR_RESULT`: Time to wait for scan results
 
 <figure><img src="../../.gitbook/assets/image (68) (1).png" alt=""><figcaption></figcaption></figure>

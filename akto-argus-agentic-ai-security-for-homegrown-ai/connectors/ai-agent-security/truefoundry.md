@@ -8,7 +8,7 @@ description: Connect Akto with TrueFoundry AI Gateway
 
 TrueFoundry is a comprehensive ML platform that helps you deploy and manage LLM-powered applications at scale. The **TrueFoundry AI Gateway** routes all LLM traffic through a centralized gateway, enabling security, monitoring, and cost management.
 
-Akto integrates with TrueFoundry AI Gateway as a **custom guardrail server**, providing real-time security validation and comprehensive traffic monitoring for all your LLM interactions. Once configured, TrueFoundry AI Gateway automatically sends requests to Akto for security analysis.
+Akto integrates with TrueFoundry AI Gateway as a **external guardrail server**, providing real-time security validation and comprehensive traffic monitoring for all your LLM interactions. Once configured, TrueFoundry AI Gateway automatically sends requests to Akto for security analysis.
 
 The Akto TrueFoundry integration automatically:
 
@@ -20,20 +20,22 @@ The Akto TrueFoundry integration automatically:
 
 ## How It Works
 
-Akto acts as a **custom guardrail server** for TrueFoundry AI Gateway:
+Akto acts as an **external guardrail plugin** for TrueFoundry AI Gateway:
 
 ### Architecture Flow
 
-```
-1. Client Application
-   ↓
-2. TrueFoundry AI Gateway
-   ↓
-3. Akto Guardrail Server (validates/monitors)
-   ↓
-4. TrueFoundry AI Gateway
-   ↓
-5. LLM Provider (OpenAI, Anthropic, etc.)
+```mermaid
+flowchart TD
+    A[Client Application]
+    B[TrueFoundry AI Gateway]
+    C[Akto Guardrail Server - Validation and Monitoring]
+    D[TrueFoundry AI Gateway]
+    E[LLM Provider - OpenAI, Anthropic]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
 ```
 
 ## How Guardrails Work
@@ -41,18 +43,20 @@ Akto acts as a **custom guardrail server** for TrueFoundry AI Gateway:
 ### Input Guardrails (Pre-Request Validation)
 
 When you configure input guardrails with **Target: Request**:
-- User request is sent to Akto for validation **before** reaching the LLM
-- If request **passes** validation: TrueFoundry forwards it to the LLM (user receives LLM response)
-- If request **fails** validation: TrueFoundry blocks the request and returns an error to the user (LLM is never called)
-- All blocked requests appear in your Akto dashboard for monitoring
+
+* User request is sent to Akto for validation **before** reaching the LLM
+* If request **passes** validation: TrueFoundry forwards it to the LLM (user receives LLM response)
+* If request **fails** validation: TrueFoundry blocks the request and returns an error to the user (LLM is never called)
+* All blocked requests appear in your Akto dashboard for monitoring
 
 ### Output Guardrails (Post-Response Monitoring)
 
 When you configure output guardrails with **Target: Response**:
-- Request and response are sent to Akto after the LLM has responded
-- User receives the LLM response immediately (no blocking)
-- All such interactions appear in your Akto dashboard for security analysis and compliance monitoring
-- You can review violations, sensitive data exposure, and policy compliance
+
+* Request and response are sent to Akto after the LLM has responded
+* User receives the LLM response immediately (no blocking)
+* All such interactions appear in your Akto dashboard for security analysis and compliance monitoring
+* You can review violations, sensitive data exposure, and policy compliance
 
 ### Streaming Mode
 
@@ -69,35 +73,94 @@ In streaming mode, Akto captures each turn of the conversation as it progresses 
 Before integrating Akto with TrueFoundry AI Gateway, ensure you have:
 
 * **TrueFoundry AI Gateway**: Active TrueFoundry AI Gateway instance (v1.0+)
-* **Admin Access**: Permissions to configure guardrails in TrueFoundry dashboard
-* **Akto Setup**: Running Akto instance with Data Ingestion Service
-* **Network Access**: TrueFoundry AI Gateway can reach Akto Data Ingestion Service endpoint
-* **HTTPS Recommended**: Secure communication between TrueFoundry and Akto
-
-## Integration Steps
-
-{% stepper %}
-
-{% step %}
-**Configure Akto Traffic Processor**
-
-Set up and configure your Traffic Processor. The steps are mentioned [here](../others/hybrid-saas.md).
-{% endstep %}
-
-{% step %}
-**Get your Akto TrueFoundry Service URL**
-
-Ensure your Akto Data Ingestion Service is running and accessible. Note the endpoints:
-
-```
-https://<your-akto-host>:<port>/api/http-proxy/truefoundry
-```
+* **Admin Access**: Permissions to configure routing and model settings in the TrueFoundry dashboard
+* **Akto Traffic Processor**: Configured [Traffic Processor](../others/hybrid-saas.md) to receive and analyse LLM traffic
+* **Akto Data Ingestion Service**: Running Akto instance with accessible proxy endpoint as:\
+  `https://<your-akto-host>:<port>/api/http-proxy/truefoundry`
+* **Network Access**: TrueFoundry AI Gateway can reach the Akto Data Ingestion Service endpoint
+* **HTTPS Recommended**: Secure communication between TrueFoundry and Akto helps protect data in transit
 
 {% hint style="warning" %}
 Ensure the Akto Data Ingestion Service is reachable from your TrueFoundry AI Gateway instance. Test connectivity before proceeding.
 {% endhint %}
+
+## Integration Steps
+
+You can integrate Akto with TrueFoundry in two ways:
+
+* **Option 1:** [Use Akto as an External Provider](truefoundry.md#option-1-use-akto-as-an-external-provider-recommended) (recommended)
+* **Option 2:** [Use a Custom Guardrail Group ](truefoundry.md#option-2-use-a-custom-guardrail-group)(manual setup)
+
+### **Option 1: Use Akto as an External Provider (recommended)**
+
+Use this for a simpler and faster setup:
+
+{% stepper %}
+{% step %}
+#### Go to External Providers
+
+* Open **AI Gateway**
+* Navigate to **External Providers / Guardrails**
+* Choose **Akto** from the provider list
 {% endstep %}
 
+{% step %}
+#### Configure Akto
+
+Fill in the required fields:
+
+* **Name**
+  * Provide a unique identifier for this integration
+* **Description (optional)**
+  * Add context (e.g., LLM security, prompt injection detection)
+* **Akto Token Auth**
+  * Enter your **Akto JWT token**
+* **Operation**
+  * Set to `Validate`
+  * _(Akto supports validation-only guardrails)_
+* **Enforcing Strategy**
+  * Choose one:
+    * `Enforce` → block on failure
+    * `Enforce but ignore on error` → fail-open on errors
+    * `Audit` → log only, no blocking
+* **Base URL**
+  * Enter your Akto guardrail service url.&#x20;
+  * Contact the **Akto Support Team** to get this URL.
+  *   Example:
+
+      ```
+      https://<your-akto-instanceID>-guardrails.akto.io
+      ```
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/Screenshot 2026-03-23 at 4.25.12 PM.png" alt="" width="563"><figcaption></figcaption></figure></div>
+{% endstep %}
+
+{% step %}
+#### Save the Provider
+
+* Click **Save**
+* Akto is now available as a selectable guardrail provider
+{% endstep %}
+
+{% step %}
+#### Attach to Your Gateway Flow
+
+* Select Akto while configuring:
+  * Model routes, or
+  * Guardrail rules (input/output)
+{% endstep %}
+
+{% step %}
+#### Validate
+
+* Send test requests through the gateway
+* Confirm Akto is enforcing policies&#x20;
+{% endstep %}
+{% endstepper %}
+
+### **Option 2: Use a Custom Guardrail Group**
+
+{% stepper %}
 {% step %}
 **Navigate to TrueFoundry AI Gateway Dashboard**
 
@@ -105,7 +168,6 @@ Ensure the Akto Data Ingestion Service is reachable from your TrueFoundry AI Gat
 2. Navigate to **AI Gateway** in the sidebar
 3. Click on **Guardrails** tab
 4. Click **Add New Guardrails Group**
-
 {% endstep %}
 
 {% step %}
@@ -114,24 +176,26 @@ Ensure the Akto Data Ingestion Service is reachable from your TrueFoundry AI Gat
 Fill in the guardrails form for input/output validation:
 
 **Basic Settings:**
+
 * **Name**: `akto-guardrails` (or your preferred name)
 * **Access Control**: Add users/teams who should have access
-
 * **Guardrails**: This is where you configure the custom guardrails. Click on **Add Guardrail** and select **Custom** under **External Providers**.
 
 **Adding a Guardrail:**
+
 1. **Name**: `akto-input-guardrail` (or your choice)
 2. **Description (Optional)**: `Add a description for this guardrail`
 3. **Operation**: Select **Validate**
 4. **Enforcing Strategy**: Choose **Enforce**, this will block requests that fail validation
 5. **Target**: Request (for input guardrails) or Response (for output guardrails)
-6. **Config**: 
-    * **URL**: Enter your Akto Data Ingestion Service URL (e.g., `https://<your-akto-host>:<port>/api/http-proxy/truefoundry`)
+6. **Config**:
+   * **URL**: Enter your Akto Data Ingestion Service URL (e.g., `https://<your-akto-host>:<port>/api/http-proxy/truefoundry`)
 
 {% hint style="warning" %}
 **Important**: You must add **both** input and output guardrails for complete security coverage:
-- **Input Guardrail** (Target: Request) - Validates and blocks malicious requests before reaching the LLM
-- **Output Guardrail** (Target: Response) - Monitors responses and ingests all interactions for compliance
+
+* **Input Guardrail** (Target: Request) - Validates and blocks malicious requests before reaching the LLM
+* **Output Guardrail** (Target: Response) - Monitors responses and ingests all interactions for compliance
 
 To add both, click on **Add Guardrail** twice and configure each with the appropriate **Target** setting.
 {% endhint %}
@@ -140,9 +204,7 @@ Finally, save the Guardrails Group by clicking on **Add Guardrails Group**.
 {% endstep %}
 
 {% step %}
-
-**Add Guardrails to model:**
-You can add the saved guardrails to the model in one of the two ways:
+**Add Guardrails to model:** You can add the saved guardrails to the model in one of the two ways:
 
 1. **In the Playground**: When testing your model in the TrueFoundry Playground, you can add guardrails by clicking on the plus icon next to Input/Output Guardrails in the left panel, and adding the desired guardrails from the list.
 
@@ -163,10 +225,15 @@ Guardrails are only applied in the Playground and not in production traffic. You
 {% endstep %}
 {% endstepper %}
 
+## What happens when Akto blocks a request
+
 When Akto blocks a request, TrueFoundry AI Gateway will:
+
 1. **Not forward** the request to the LLM provider
 2. Return an error response to the client
 3. Log the blocked request for audit purposes
+
+You can review these events in the [guardrail-activity.md](../../../agentic-guardrails/concepts/guardrail-activity.md "mention") page in Ako Argus Dashboard.
 
 ## Get Support
 
