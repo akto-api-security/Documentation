@@ -28,17 +28,34 @@ You can select any Agent ID to view deeper information.
 
 When you click an **Agent ID**, you see two tabs that help you understand what is running on that endpoint.
 
+### User Analysis
+
+The **User Analysis** helps you understand how a specific user is interacting with an AI agent on their endpoint. It gives you deeper visibility into user behaviour so you can quickly identify unusual activity and assess potential risks.
+
+Here, you can:
+
+* **View User Analysis Summary**\
+  Get a high-level, AI-generated summary of how the user is leveraging the agent. This includes the tools being used (e.g., MCP servers), the nature of tasks performed, and an inferred user profile based on activity patterns.
+* **Track Token Usage**\
+  See the total **Input Tokens** and **Output Tokens**, helping you understand the scale and intensity of agent usage.
+* **Identify Dominant Topics**\
+  View key areas the user is working on (e.g., automation, scraping, testing). This helps you quickly understand the primary use cases of the agent.
+* **Monitor Emerging Risk Signals**\
+  The **Queries Flagged** section (when available) highlights potentially risky or policy-violating interactions for further investigation.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (161).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 ### MCP Servers
 
 This tab shows you the MCP servers associated with the selected agent. You can review server details and the specific endpoints or commands that are shielded on that device.
 
-<figure><img src="../../.gitbook/assets/image (5) (3).png" alt="" width="563"><figcaption></figcaption></figure>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (162).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ### Agent Logs
 
 This tab provides a chronological log of the agent’s activity. You can track what the agent executed, when it checked in, and how enforcement behaved on that endpoint.
 
-<figure><img src="../../.gitbook/assets/image (17).png" alt="" width="563"><figcaption></figcaption></figure>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (163).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ## Learn More
 
