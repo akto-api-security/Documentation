@@ -43,3 +43,51 @@
 {% openapi-operation spec="akto-agentic-security-api" path="/api/getActorsCountPerCounty" method="post" %}
 [OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchRemediationInfo" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchFilterYamlTemplate" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchFiltersForThreatActors" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchGuardrailPolicies" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchSessionContext" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchMcpdata" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchBrowserExtensionConfigs" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchThreatData" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchGuardrailData" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchThreatTopNData" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchThreatComplianceInfos" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/getIpReputationScore" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}

@@ -6,6 +6,10 @@
 [OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
+{% openapi-operation spec="akto-agentic-security-api" path="/api/saveFilterYamlTemplate" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
 {% openapi-operation spec="akto-agentic-security-api" path="/api/createGuardrailPolicy" method="post" %}
 [OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
