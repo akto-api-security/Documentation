@@ -53,6 +53,10 @@ Akto supports the following providers when you configure a model in **Add Model*
 * **Ollama**\
   Supported models: `qwen2.5:0.5b`, `qwen3:8b`, `qwen3:latest`\
   **Additional** **Requirement**: Ollama server endpoint
+*   **Databricks**
+
+    Supported models:  GPT 5.4, GPT 5, GPT 5 Nano, Opus 4.6, Sonnet 4.6, Gemini 2.5 Pro, Gemini 2.5 Flash, BGE Large EN, Meta Llama 3.1 8B Instruct, Gemma 3 12B, Qwen3 Next 80B A3B Instruct\
+    **Additional Requirement:** Databricks Model Serving endpoint or AI Gateway endpoint
 {% endhint %}
 {% endstep %}
 
