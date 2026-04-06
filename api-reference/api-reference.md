@@ -21,19 +21,7 @@ You will need the following inputs for each of the Agentic components:
 [AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
 {% endswagger %}
 
-{% swagger src="../.gitbook/assets/AktoSwagger.json" path="/api/loadContent" method="post" %}
-[AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
-{% endswagger %}
-
 {% swagger src="../.gitbook/assets/AktoSwagger.json" path="/api/retrieveAllCollectionTests" method="post" %}
-[AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
-{% endswagger %}
-
-{% swagger src="../.gitbook/assets/AktoSwagger.json" path="/api/fetchPostmanWorkspaces" method="post" %}
-[AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
-{% endswagger %}
-
-{% swagger src="../.gitbook/assets/AktoSwagger.json" path="/api/fetchQuickStartPageState" method="post" %}
 [AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
 {% endswagger %}
 
@@ -89,10 +77,6 @@ You will need the following inputs for each of the Agentic components:
 [AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
 {% endswagger %}
 
-{% swagger src="../.gitbook/assets/AktoSwagger.json" path="/api/fetchAktoGptConfig" method="post" %}
-[AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
-{% endswagger %}
-
 {% swagger src="../.gitbook/assets/AktoSwagger.json" path="/api/fetchDataTypeNames" method="post" %}
 [AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
 {% endswagger %}
@@ -113,15 +97,7 @@ You will need the following inputs for each of the Agentic components:
 [AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
 {% endswagger %}
 
-{% swagger src="../.gitbook/assets/AktoSwagger.json" path="/api/fetchAllMarketplaceSubcategories" method="post" %}
-[AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
-{% endswagger %}
-
 {% swagger src="../.gitbook/assets/AktoSwagger.json" path="/api/fetchSensitiveParamsForEndpoints" method="post" %}
-[AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
-{% endswagger %}
-
-{% swagger src="../.gitbook/assets/AktoSwagger.json" path="/api/getPostmanCredential" method="post" %}
 [AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
 {% endswagger %}
 
@@ -181,6 +157,3 @@ You will need the following inputs for each of the Agentic components:
 [AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
 {% endswagger %}
 
-{% swagger src="../.gitbook/assets/AktoSwagger.json" path="/api/fetchActiveLoaders" method="post" %}
-[AktoSwagger.json](../.gitbook/assets/AktoSwagger.json)
-{% endswagger %}
