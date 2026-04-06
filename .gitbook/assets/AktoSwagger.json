@@ -746,58 +746,6 @@
           }
         } ]
     },
-    "/api/loadContent" : {
-      "description" : "description",
-      "post" : {
-        "summary" : "POST request for endpoint /api/loadContent",
-        "operationId" : "/api/loadContent-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "apiCollectionId" : {
-                    "type" : "integer",
-                    "format" : "int32",
-                    "example" : 1684477780
-                  }
-                },
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "description",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
     "/api/retrieveAllCollectionTests" : {
       "description" : "description",
       "post" : {
@@ -969,117 +917,42 @@
           }
         } ]
     },
-    "/api/fetchPostmanWorkspaces" : {
-      "description" : "description",
-      "post" : {
-        "summary" : "POST request for endpoint /api/fetchPostmanWorkspaces",
-        "operationId" : "/api/fetchPostmanWorkspaces-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "api_key" : {
-                    "type" : "string",
-                    "example" : "PMAK-646733223asdasas579bbdd-dca753sdufhgy98erhwui245f12102"
+    "/api/importDataFromPostmanFile": {
+      "description": "description",
+      "post": {
+        "summary": "POST request for endpoint /api/importDataFromPostmanFile",
+        "operationId": "/api/importDataFromPostmanFile-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "postmanCollectionFile": {
+                    "type": "string",
+                    "example": "{\n\t\"info\": {\n\t\t\"_postman_id\": \"c144967f-ca7f-4d01-a2a3-b171512d11e7\",\n\t\t\"name\": \"test01\",\n\t\t\"schema\": \"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\",\n\t\t\"_exporter_id\": \"16638923\"\n\t},\n\t\"item\": [\n\t\t{\n\t\t\t\"name\": \"req01\",\n\t\t\t\"request\": {\n\t\t\t\t\"method\": \"GET\",\n\t\t\t\t\"header\": [],\n\t\t\t\t\"url\": {\n\t\t\t\t\t\"raw\": \"url01?p01=v01&p02&p03\",\n\t\t\t\t\t\"host\": [\n\t\t\t\t\t\t\"url01\"\n\t\t\t\t\t],\n\t\t\t\t\t\"query\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"p01\",\n\t\t\t\t\t\t\t\"value\": \"v01\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"p02\",\n\t\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"p03\",\n\t\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"response\": []\n\t\t},\n\t\t{\n\t\t\t\"name\": \"re02\",\n\t\t\t\"request\": {\n\t\t\t\t\"auth\": {\n\t\t\t\t\t\"type\": \"apikey\",\n\t\t\t\t\t\"apikey\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"value\",\n\t\t\t\t\t\t\t\"value\": \"\",\n\t\t\t\t\t\t\t\"type\": \"string\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"key\",\n\t\t\t\t\t\t\t\"value\": \"k01\",\n\t\t\t\t\t\t\t\"type\": \"string\"\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t},\n\t\t\t\t\"method\": \"POST\",\n\t\t\t\t\"header\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"h01\",\n\t\t\t\t\t\t\"value\": \"\",\n\t\t\t\t\t\t\"type\": \"default\"\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"h02\",\n\t\t\t\t\t\t\"value\": \"\",\n\t\t\t\t\t\t\"type\": \"default\"\n\t\t\t\t\t}\n\t\t\t\t],\n\t\t\t\t\"url\": {\n\t\t\t\t\t\"raw\": \"re102?p01&p02&p03&p04\",\n\t\t\t\t\t\"host\": [\n\t\t\t\t\t\t\"re102\"\n\t\t\t\t\t],\n\t\t\t\t\t\"query\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"p01\",\n\t\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"p02\",\n\t\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"p03\",\n\t\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"p04\",\n\t\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"response\": []\n\t\t},\n\t\t{\n\t\t\t\"name\": \"r03\",\n\t\t\t\"request\": {\n\t\t\t\t\"method\": \"DELETE\",\n\t\t\t\t\"header\": [],\n\t\t\t\t\"url\": {\n\t\t\t\t\t\"raw\": \"d01?p01\",\n\t\t\t\t\t\"host\": [\n\t\t\t\t\t\t\"d01\"\n\t\t\t\t\t],\n\t\t\t\t\t\"query\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"p01\",\n\t\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"response\": []\n\t\t}\n\t]\n}"
+                  },
+                  "allowReplay": {
+                    "type": "boolean",
+                    "example": true
                   }
                 },
-                "description" : "Sample description"
+                "description": "Sample description"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "description",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "postmanCred" : {
-                      "type" : "string",
-                      "example" : "{}"
-                    },
-                    "workspaces" : {
-                      "type" : "array",
-                      "items" : {
-                        "type" : "object",
-                        "properties" : {
-                          "name" : {
-                            "type" : "string",
-                            "example" : "My Workspace"
-                          },
-                          "id" : {
-                            "type" : "string",
-                            "example" : "48dada0a-f1c4-499d-8d4b-0bcbc2ff016f"
-                          },
-                          "type" : {
-                            "type" : "string",
-                            "example" : "personal"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/api/fetchQuickStartPageState" : {
-      "description" : "description",
-      "post" : {
-        "summary" : "POST request for endpoint /api/fetchQuickStartPageState",
-        "operationId" : "/api/fetchQuickStartPageState-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "description",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "aktoMirroringStackName" : {
-                      "type" : "string",
-                      "example" : "null"
-                    },
-                    "awsRegion" : {
-                      "type" : "string",
-                      "example" : "null"
-                    },
-                    "awsAccountId" : {
-                      "type" : "string",
-                      "example" : "null"
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "postmanCred": {
+                      "type": "string",
+                      "example": "{}"
                     },
                     "aktoDashboardStackName" : {
                       "type" : "string",
@@ -1120,117 +993,52 @@
           }
         } ]
     },
-    "/api/importDataFromPostmanFile" : {
-      "description" : "description",
-      "post" : {
-        "summary" : "POST request for endpoint /api/importDataFromPostmanFile",
-        "operationId" : "/api/importDataFromPostmanFile-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "postmanCollectionFile" : {
-                    "type" : "string",
-                    "example" : "{\n\t\"info\": {\n\t\t\"_postman_id\": \"c144967f-ca7f-4d01-a2a3-b171512d11e7\",\n\t\t\"name\": \"test01\",\n\t\t\"schema\": \"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\",\n\t\t\"_exporter_id\": \"16638923\"\n\t},\n\t\"item\": [\n\t\t{\n\t\t\t\"name\": \"req01\",\n\t\t\t\"request\": {\n\t\t\t\t\"method\": \"GET\",\n\t\t\t\t\"header\": [],\n\t\t\t\t\"url\": {\n\t\t\t\t\t\"raw\": \"url01?p01=v01&p02&p03\",\n\t\t\t\t\t\"host\": [\n\t\t\t\t\t\t\"url01\"\n\t\t\t\t\t],\n\t\t\t\t\t\"query\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"p01\",\n\t\t\t\t\t\t\t\"value\": \"v01\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"p02\",\n\t\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"p03\",\n\t\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"response\": []\n\t\t},\n\t\t{\n\t\t\t\"name\": \"re02\",\n\t\t\t\"request\": {\n\t\t\t\t\"auth\": {\n\t\t\t\t\t\"type\": \"apikey\",\n\t\t\t\t\t\"apikey\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"value\",\n\t\t\t\t\t\t\t\"value\": \"\",\n\t\t\t\t\t\t\t\"type\": \"string\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"key\",\n\t\t\t\t\t\t\t\"value\": \"k01\",\n\t\t\t\t\t\t\t\"type\": \"string\"\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t},\n\t\t\t\t\"method\": \"POST\",\n\t\t\t\t\"header\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"h01\",\n\t\t\t\t\t\t\"value\": \"\",\n\t\t\t\t\t\t\"type\": \"default\"\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"h02\",\n\t\t\t\t\t\t\"value\": \"\",\n\t\t\t\t\t\t\"type\": \"default\"\n\t\t\t\t\t}\n\t\t\t\t],\n\t\t\t\t\"url\": {\n\t\t\t\t\t\"raw\": \"re102?p01&p02&p03&p04\",\n\t\t\t\t\t\"host\": [\n\t\t\t\t\t\t\"re102\"\n\t\t\t\t\t],\n\t\t\t\t\t\"query\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"p01\",\n\t\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"p02\",\n\t\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"p03\",\n\t\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"p04\",\n\t\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"response\": []\n\t\t},\n\t\t{\n\t\t\t\"name\": \"r03\",\n\t\t\t\"request\": {\n\t\t\t\t\"method\": \"DELETE\",\n\t\t\t\t\"header\": [],\n\t\t\t\t\"url\": {\n\t\t\t\t\t\"raw\": \"d01?p01\",\n\t\t\t\t\t\"host\": [\n\t\t\t\t\t\t\"d01\"\n\t\t\t\t\t],\n\t\t\t\t\t\"query\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"key\": \"p01\",\n\t\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"response\": []\n\t\t}\n\t]\n}"
+    "/api/fetchAPICollection": {
+      "description": "description",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchAPICollection",
+        "operationId": "/api/fetchAPICollection-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "useHost": {
+                    "type": "boolean",
+                    "example": false
                   },
-                  "allowReplay" : {
-                    "type" : "boolean",
-                    "example" : true
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 1684477780
                   }
                 },
-                "description" : "Sample description"
+                "description": "Sample description"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "description",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "postmanCred" : {
-                      "type" : "string",
-                      "example" : "{}"
-                    },
-                    "workspaces" : {
-                      "type" : "string",
-                      "example" : "null"
-                    }
-                  },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/api/fetchAPICollection" : {
-      "description" : "description",
-      "post" : {
-        "summary" : "POST request for endpoint /api/fetchAPICollection",
-        "operationId" : "/api/fetchAPICollection-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "useHost" : {
-                    "type" : "boolean",
-                    "example" : false
-                  },
-                  "apiCollectionId" : {
-                    "type" : "integer",
-                    "format" : "int32",
-                    "example" : 1684477780
-                  }
-                },
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "description",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "data" : {
-                      "type" : "object",
-                      "properties" : {
-                        "endpoints" : {
-                          "type" : "array",
-                          "items" : {
-                            "type" : "object",
-                            "properties" : {
-                              "startTs" : {
-                                "type" : "integer",
-                                "format" : "int32",
-                                "example" : 1684477861
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "endpoints": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "startTs": {
+                                "type": "integer",
+                                "format": "int32",
+                                "example": 1684477861
                               },
                               "changesCount" : {
                                 "type" : "integer",
@@ -1538,245 +1346,6 @@
                           }
                         }
                       }
-                    }
-                  },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/api/fetchTestRoles" : {
-      "description" : "description",
-      "post" : {
-        "summary" : "POST request for endpoint /api/fetchTestRoles",
-        "operationId" : "/api/fetchTestRoles-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "description",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "testRoles" : {
-                      "type" : "array",
-                      "items" : {
-                        "type" : "object",
-                        "properties" : {
-                          "authMechanism" : {
-                            "type" : "object",
-                            "properties" : {
-                              "authParams" : {
-                                "type" : "array",
-                                "items" : {
-                                  "type" : "object",
-                                  "properties" : {
-                                    "showHeader" : {
-                                      "type" : "boolean",
-                                      "example" : true
-                                    },
-                                    "where" : {
-                                      "type" : "string",
-                                      "example" : "HEADER"
-                                    },
-                                    "value" : {
-                                      "type" : "string",
-                                      "example" : "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBa3RvIiwic3ViIjoibG9naW4iLCJzaWduZWRVcCI6InRydWUiLCJ1c2VybmFtZSI6ImFua3VzaEBha3RvLmlvIiwiaWF0IjoxNjc5NDY3MjQxLCJleHAiOjE2Nzk0NjgxNDF9.HAK__lPJUyeGIFCqNPdstCDAYZYzIQTMmJfRLKWTYRKGnZDX6TF2XWs756SflLJYLRl9vE8LONPB5D1ij2LZpokP1rtYGDVe7e2PtgPqlEumoK4xMutucT6i42QStBTaSimVXcU4k9lwr3n4thL-lZt1KNctcsdG4cXvdOoMV6oAClQEJpgAChbO8WAHunIgQQ3vsCUXTOEEqy0atJEeed4UnXut3810g1QuCbJtKGn1I7lqh99MrQnE_T33TNIIpWJ_VeZgunroURFCMTaMJSyc8h2UiM8Bx60SGyDE6G7kwODYBRx_OKWTW-V0jV9GTTzhIYcDNBqkZ3O0uADO1w"
-                                    },
-                                    "key" : {
-                                      "type" : "string",
-                                      "example" : "access-token"
-                                    }
-                                  }
-                                }
-                              },
-                              "id" : {
-                                "type" : "string",
-                                "example" : "null"
-                              },
-                              "requestData" : {
-                                "type" : "string",
-                                "example" : "null"
-                              },
-                              "type" : {
-                                "type" : "string",
-                                "example" : "HARDCODED"
-                              },
-                              "uuid" : {
-                                "type" : "string",
-                                "example" : "25edec4b-b739-468c-9517-7869ce6bddbf"
-                              }
-                            }
-                          },
-                          "createdBy" : {
-                            "type" : "string",
-                            "format" : "email",
-                            "example" : "ankush@akto.io"
-                          },
-                          "name" : {
-                            "type" : "string",
-                            "example" : "ADMIN"
-                          },
-                          "lastUpdatedTs" : {
-                            "type" : "integer",
-                            "format" : "int32",
-                            "example" : 1679467896
-                          },
-                          "endpointLogicalGroupId" : {
-                            "type" : "object",
-                            "properties" : {
-                              "date" : {
-                                "type" : "string",
-                                "example" : "2023-03-22T11:43:13"
-                              },
-                              "timestamp" : {
-                                "type" : "integer",
-                                "format" : "int32",
-                                "example" : 1679465559
-                              }
-                            }
-                          },
-                          "id" : {
-                            "type" : "object",
-                            "properties" : {
-                              "date" : {
-                                "type" : "string",
-                                "example" : "2023-03-22T11:43:13"
-                              },
-                              "timestamp" : {
-                                "type" : "integer",
-                                "format" : "int32",
-                                "example" : 1679465559
-                              }
-                            }
-                          },
-                          "createdTs" : {
-                            "type" : "integer",
-                            "format" : "int32",
-                            "example" : 1679465559
-                          },
-                          "endpointLogicalGroup" : {
-                            "type" : "object",
-                            "properties" : {
-                              "groupName" : {
-                                "type" : "string",
-                                "example" : "MEMBER_endpoint-logical-group"
-                              },
-                              "createdBy" : {
-                                "type" : "string",
-                                "format" : "email",
-                                "example" : "ankush@akto.io"
-                              },
-                              "testingEndpoints" : {
-                                "type" : "object",
-                                "properties" : {
-                                  "andConditions" : {
-                                    "type" : "string",
-                                    "example" : "null"
-                                  },
-                                  "type" : {
-                                    "type" : "string",
-                                    "example" : "LOGICAL_GROUP"
-                                  },
-                                  "orConditions" : {
-                                    "type" : "object",
-                                    "properties" : {
-                                      "predicates" : {
-                                        "type" : "array",
-                                        "items" : {
-                                          "type" : "object",
-                                          "properties" : {
-                                            "type" : {
-                                              "type" : "string",
-                                              "example" : "CONTAINS"
-                                            },
-                                            "value" : {
-                                              "type" : "string",
-                                              "example" : "api"
-                                            }
-                                          }
-                                        }
-                                      },
-                                      "operator" : {
-                                        "type" : "string",
-                                        "example" : "OR"
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              "id" : {
-                                "type" : "object",
-                                "properties" : {
-                                  "date" : {
-                                    "type" : "string",
-                                    "example" : "2023-03-22T11:43:13"
-                                  },
-                                  "timestamp" : {
-                                    "type" : "integer",
-                                    "format" : "int32",
-                                    "example" : 1679465559
-                                  }
-                                }
-                              },
-                              "updatedTs" : {
-                                "type" : "integer",
-                                "format" : "int32",
-                                "example" : 1679467896
-                              },
-                              "createdTs" : {
-                                "type" : "integer",
-                                "format" : "int32",
-                                "example" : 1679465559
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "roleName" : {
-                      "type" : "string",
-                      "example" : "null"
-                    },
-                    "andConditions" : {
-                      "type" : "string",
-                      "example" : "null"
-                    },
-                    "selectedRole" : {
-                      "type" : "string",
-                      "example" : "null"
-                    },
-                    "orConditions" : {
-                      "type" : "string",
-                      "example" : "null"
                     }
                   },
                   "description" : "Sample description"
@@ -3033,113 +2602,33 @@
           }
         } ]
     },
-    "/api/fetchAktoGptConfig" : {
-      "description" : "description",
-      "post" : {
-        "summary" : "POST request for endpoint /api/fetchAktoGptConfig",
-        "operationId" : "/api/fetchAktoGptConfig-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "apiCollectionId" : {
-                    "type" : "integer",
-                    "format" : "int32",
-                    "example" : 1684477780
-                  }
-                },
-                "description" : "Sample description"
+    "/api/fetchDataTypeNames": {
+      "description": "description",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchDataTypeNames",
+        "operationId": "/api/fetchDataTypeNames-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Sample description"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "description",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "apiCollectionId" : {
-                      "type" : "integer",
-                      "format" : "int32",
-                      "example" : 1684477780
-                    },
-                    "currentState" : {
-                      "type" : "array",
-                      "items" : {
-                        "type" : "object",
-                        "properties" : {
-                          "state" : {
-                            "type" : "string",
-                            "example" : "ENABLED"
-                          },
-                          "id" : {
-                            "type" : "integer",
-                            "format" : "int32",
-                            "example" : 1684477780
-                          },
-                          "collectionName" : {
-                            "type" : "string",
-                            "example" : "AktoSwagger"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/api/fetchDataTypeNames" : {
-      "description" : "description",
-      "post" : {
-        "summary" : "POST request for endpoint /api/fetchDataTypeNames",
-        "operationId" : "/api/fetchDataTypeNames-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "description",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "totalSampleDataCount" : {
-                      "type" : "integer",
-                      "format" : "int32",
-                      "example" : 0
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "totalSampleDataCount": {
+                      "type": "integer",
+                      "format": "int32",
+                      "example": 0
                     },
                     "dataTypes" : {
                       "type" : "string",
@@ -4061,51 +3550,6 @@
           }
         } ]
     },
-    "/api/fetchAllMarketplaceSubcategories" : {
-      "description" : "description",
-      "post" : {
-        "summary" : "POST request for endpoint /api/fetchAllMarketplaceSubcategories",
-        "operationId" : "/api/fetchAllMarketplaceSubcategories-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "description",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "description" : "AKTO_ERROR while building schema"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
     "/api/fetchSensitiveParamsForEndpoints" : {
       "description" : "description",
       "post" : {
@@ -4264,61 +3708,6 @@
                           }
                         }
                       }
-                    }
-                  },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/api/getPostmanCredential" : {
-      "description" : "description",
-      "post" : {
-        "summary" : "POST request for endpoint /api/getPostmanCredential",
-        "operationId" : "/api/getPostmanCredential-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "description",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "postmanCred" : {
-                      "type" : "string",
-                      "example" : "{}"
-                    },
-                    "workspaces" : {
-                      "type" : "string",
-                      "example" : "null"
                     }
                   },
                   "description" : "Sample description"
@@ -5335,135 +4724,6 @@
           }
         } ]
     },
-    "/api/fetchAuthMechanismData" : {
-      "description" : "description",
-      "post" : {
-        "summary" : "POST request for endpoint /api/fetchAuthMechanismData",
-        "operationId" : "/api/fetchAuthMechanismData-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "description",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "workflowTestingRun" : {
-                      "type" : "string",
-                      "example" : "null"
-                    },
-                    "authParamData" : {
-                      "type" : "string",
-                      "example" : "null"
-                    },
-                    "authMechanism" : {
-                      "type" : "object",
-                      "properties" : {
-                        "authParams" : {
-                          "type" : "array",
-                          "items" : {
-                            "type" : "object",
-                            "properties" : {
-                              "showHeader" : {
-                                "type" : "boolean",
-                                "example" : true
-                              },
-                              "where" : {
-                                "type" : "string",
-                                "example" : "HEADER"
-                              },
-                              "value" : {
-                                "type" : "string"
-                              },
-                              "key" : {
-                                "type" : "string",
-                                "example" : "access-token"
-                              }
-                            }
-                          }
-                        },
-                        "id" : {
-                          "type" : "object",
-                          "properties" : {
-                            "date" : {
-                              "type" : "string",
-                              "example" : "2023-03-22T12:11:33"
-                            },
-                            "timestamp" : {
-                              "type" : "integer",
-                              "format" : "int32",
-                              "example" : 1679467293
-                            }
-                          }
-                        },
-                        "type" : {
-                          "type" : "string",
-                          "example" : "HARDCODED"
-                        },
-                        "uuid" : {
-                          "type" : "string",
-                          "example" : "83c47038-0770-4f7c-946c-539b5927a97f"
-                        }
-                      }
-                    },
-                    "responses" : {
-                      "type" : "string",
-                      "example" : "null"
-                    },
-                    "type" : {
-                      "type" : "string",
-                      "example" : "null"
-                    },
-                    "workflowTestResult" : {
-                      "type" : "string",
-                      "example" : "null"
-                    },
-                    "requestData" : {
-                      "type" : "string",
-                      "example" : "null"
-                    },
-                    "uuid" : {
-                      "type" : "string",
-                      "example" : "null"
-                    },
-                    "nodeId" : {
-                      "type" : "string",
-                      "example" : "null"
-                    }
-                  },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
     "/api/stopAllTests" : {
       "description" : "description",
       "post" : {
@@ -6302,191 +5562,74 @@
                     "example" : "BFLA"
                   }
                 },
-                "description" : "Sample description"
+                "description": "Sample description"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "description",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "severity" : {
-                      "type" : "string",
-                      "example" : "null"
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "severity": {
+                      "type": "string",
+                      "example": "null"
                     },
-                    "searchText" : {
-                      "type" : "string",
-                      "example" : "null"
+                    "searchText": {
+                      "type": "string",
+                      "example": "null"
                     },
-                    "defaultCreator" : {
-                      "type" : "boolean",
-                      "example" : true
+                    "defaultCreator": {
+                      "type": "boolean",
+                      "example": true
                     },
-                    "description" : {
-                      "type" : "string",
-                      "example" : "null"
+                    "description": {
+                      "type": "string",
+                      "example": "null"
                     },
-                    "categories" : {
-                      "type" : "string",
-                      "example" : "null"
+                    "categories": {
+                      "type": "string",
+                      "example": "null"
                     },
-                    "inbuiltTests" : {
-                      "type" : "string",
-                      "example" : "null"
+                    "inbuiltTests": {
+                      "type": "string",
+                      "example": "null"
                     },
-                    "category" : {
-                      "type" : "string",
-                      "example" : "null"
+                    "category": {
+                      "type": "string",
+                      "example": "null"
                     },
-                    "subcategory" : {
-                      "type" : "string",
-                      "example" : "BFLA"
+                    "subcategory": {
+                      "type": "string",
+                      "example": "BFLA"
                     },
-                    "url" : {
-                      "type" : "string",
-                      "example" : "null"
+                    "url": {
+                      "type": "string",
+                      "example": "null"
                     },
-                    "tags" : {
-                      "type" : "string",
-                      "example" : "null"
+                    "tags": {
+                      "type": "string",
+                      "example": "null"
                     }
                   },
-                  "description" : "Sample description"
+                  "description": "Sample description"
                 }
               }
             }
           }
         }
       },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/api/fetchActiveLoaders" : {
-      "description" : "description",
-      "post" : {
-        "summary" : "POST request for endpoint /api/fetchActiveLoaders",
-        "operationId" : "/api/fetchActiveLoaders-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "description",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "loaderList" : {
-                      "type" : "array",
-                      "items" : {
-                        "type" : "object",
-                        "properties" : {
-                          "percentage" : {
-                            "type" : "integer",
-                            "format" : "int32",
-                            "example" : 100
-                          },
-                          "currentCount" : {
-                            "type" : "integer",
-                            "format" : "int32",
-                            "example" : 4
-                          },
-                          "show" : {
-                            "type" : "boolean",
-                            "example" : true
-                          },
-                          "id" : {
-                            "type" : "object",
-                            "properties" : {
-                              "date" : {
-                                "type" : "string",
-                                "example" : "2023-05-19T13:58:42"
-                              },
-                              "timestamp" : {
-                                "type" : "integer",
-                                "format" : "int32",
-                                "example" : 1684484922
-                              }
-                            }
-                          },
-                          "type" : {
-                            "type" : "object",
-                            "properties" : {
-                              "_name" : {
-                                "type" : "string",
-                                "example" : "POSTMAN_UPLOAD"
-                              },
-                              "subTitle" : {
-                                "type" : "string",
-                                "example" : "Please wait while we upload your file."
-                              },
-                              "name" : {
-                                "type" : "string",
-                                "example" : "Postman"
-                              },
-                              "title" : {
-                                "type" : "string",
-                                "example" : "Importing postman collection"
-                              }
-                            }
-                          },
-                          "totalCount" : {
-                            "type" : "integer",
-                            "format" : "int32",
-                            "example" : 4
-                          },
-                          "userId" : {
-                            "type" : "integer",
-                            "format" : "int32",
-                            "example" : 1684300087
-                          },
-                          "hexId" : {
-                            "type" : "string",
-                            "example" : "6467333a0c847a110354cd8d"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
           }
         }, {
           "name" : "X-API-KEY",
@@ -6760,131 +5903,32 @@
                     "items" : {
                       "type" : "string"
                     },
-                    "example" : [ "507f1f77bcf86cd799439011", "507f1f77bcf86cd799439012" ]
+                    "example": [
+                      "507f1f77bcf86cd799439011",
+                      "507f1f77bcf86cd799439012"
+                    ]
                   }
                 },
-                "description" : "Sample description"
+                "description": "Sample description"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Policies deleted successfully",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "status" : {
-                      "type" : "string",
-                      "example" : "SUCCESS"
+        "responses": {
+          "200": {
+            "description": "Policies deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "SUCCESS"
                     },
-                    "deletedCount" : {
-                      "type" : "integer",
-                      "example" : 2
-                    }
-                  },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/api/guardrailPlayground" : {
-      "description" : "Test a guardrail policy against sample input in real-time",
-      "post" : {
-        "summary" : "POST request for endpoint /api/guardrailPlayground",
-        "operationId" : "/api/guardrailPlayground-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "policy" : {
-                    "type" : "object",
-                    "properties" : {
-                      "name" : {
-                        "type" : "string",
-                        "example" : "PII Detection Policy"
-                      },
-                      "piiTypes" : {
-                        "type" : "array",
-                        "items" : {
-                          "type" : "string"
-                        }
-                      },
-                      "regexPatternsV2" : {
-                        "type" : "array",
-                        "items" : {
-                          "type" : "object"
-                        }
-                      },
-                      "confidenceScore" : {
-                        "type" : "number",
-                        "example" : 0.85
-                      }
-                    }
-                  },
-                  "testInput" : {
-                    "type" : "string",
-                    "example" : "My SSN is 123-45-6789"
-                  }
-                },
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "Policy evaluation result",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "playgroundResult" : {
-                      "type" : "object",
-                      "properties" : {
-                        "blocked" : {
-                          "type" : "boolean",
-                          "example" : true
-                        },
-                        "reason" : {
-                          "type" : "string",
-                          "example" : "PII detected"
-                        },
-                        "detectedTypes" : {
-                          "type" : "array",
-                          "items" : {
-                            "type" : "string"
-                          }
-                        },
-                        "confidenceScore" : {
-                          "type" : "number",
-                          "format" : "double",
-                          "example" : 0.95
-                        }
-                      }
+                    "deletedCount": {
+                      "type": "integer",
+                      "example": 2
                     }
                   },
                   "description" : "Sample description"
@@ -7781,105 +6825,21 @@
           }
         }
       },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/api/fetchFiltersThreatTable" : {
-      "description" : "Get available filter dropdown options for guardrail activity table",
-      "post" : {
-        "summary" : "POST request for endpoint /api/fetchFiltersThreatTable",
-        "operationId" : "/api/fetchFiltersThreatTable-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "label" : {
-                    "type" : "string",
-                    "enum" : [ "GUARDRAIL" ],
-                    "example" : "GUARDRAIL"
-                  },
-                  "startTimestamp" : {
-                    "type" : "integer",
-                    "example" : 1712000000
-                  },
-                  "endTimestamp" : {
-                    "type" : "integer",
-                    "example" : 1712100000
-                  }
-                },
-                "description" : "Sample description"
-              }
-            }
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Filter options for activity table",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "ips" : {
-                      "type" : "array",
-                      "items" : {
-                        "type" : "string"
-                      }
-                    },
-                    "urls" : {
-                      "type" : "array",
-                      "items" : {
-                        "type" : "string"
-                      }
-                    },
-                    "hosts" : {
-                      "type" : "array",
-                      "items" : {
-                        "type" : "string"
-                      }
-                    },
-                    "subCategory" : {
-                      "type" : "array",
-                      "items" : {
-                        "type" : "string"
-                      }
-                    }
-                  },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
           }
         } ]
     },
@@ -7998,85 +6958,25 @@
                     "type" : "string",
                     "example" : "session-uuid-12345"
                   },
-                  "eventId" : {
-                    "type" : "string",
-                    "example" : "507f1f77bcf86cd799439011"
-                  }
-                },
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "Session context and related events",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "sessionId" : {
-                      "type" : "string",
-                      "example" : "session-uuid-12345"
-                    },
-                    "userId" : {
-                      "type" : "string",
-                      "example" : "user-123"
-                    },
-                    "startTime" : {
-                      "type" : "integer",
-                      "example" : 1712000000
-                    },
-                    "endTime" : {
-                      "type" : "integer",
-                      "example" : 1712003600
-                    },
-                    "relatedEvents" : {
-                      "type" : "array",
-                      "items" : {
-                        "type" : "object"
-                      }
-                    }
+                  "name": {
+                    "type": "string",
+                    "example": "Extension Config"
                   },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/api/fetchMcpdata" : {
-      "description" : "Get count of API endpoints protected by guardrail policies",
-      "post" : {
-        "summary" : "POST request for endpoint /api/fetchMcpdata",
-        "operationId" : "/api/fetchMcpdata-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "filter" : {
-                    "type" : "string",
-                    "enum" : [ "POLICY_GUARDRAIL_APIS" ],
-                    "example" : "POLICY_GUARDRAIL_APIS"
+                  "enabled": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "extensionId": {
+                    "type": "string",
+                    "example": "ext-id-123"
+                  },
+                  "apiKey": {
+                    "type": "string",
+                    "example": "api-key-value"
+                  },
+                  "configuration": {
+                    "type": "object",
+                    "example": {}
                   }
                 },
                 "description" : "Sample description"
@@ -8129,332 +7029,79 @@
           }
         } ]
     },
-    "/api/fetchBrowserExtensionConfigs" : {
-      "description" : "List all browser extension configurations",
-      "post" : {
-        "summary" : "POST request for endpoint /api/fetchBrowserExtensionConfigs",
-        "operationId" : "/api/fetchBrowserExtensionConfigs-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "Browser extension configurations",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "configs" : {
-                      "type" : "array",
-                      "items" : {
-                        "type" : "object",
-                        "properties" : {
-                          "hexId" : {
-                            "type" : "string",
-                            "example" : "507f1f77bcf86cd799439011"
-                          },
-                          "name" : {
-                            "type" : "string",
-                            "example" : "Extension Config"
-                          },
-                          "enabled" : {
-                            "type" : "boolean",
-                            "example" : true
-                          },
-                          "extensionId" : {
-                            "type" : "string",
-                            "example" : "ext-id-123"
-                          },
-                          "apiKey" : {
-                            "type" : "string",
-                            "example" : "api-key-***"
-                          },
-                          "createdAt" : {
-                            "type" : "integer",
-                            "example" : 1712000000
-                          },
-                          "updatedAt" : {
-                            "type" : "integer",
-                            "example" : 1712100000
-                          }
-                        }
-                      }
-                    }
+    "/api/fetchThreatApis": {
+      "description": "Get list of APIs affected by threats",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchThreatApis",
+        "operationId": "/api/fetchThreatApis-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "skip": {
+                    "type": "integer",
+                    "default": 0,
+                    "example": 0
                   },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/api/saveBrowserExtensionConfig" : {
-      "description" : "Create or update a browser extension configuration",
-      "post" : {
-        "summary" : "POST request for endpoint /api/saveBrowserExtensionConfig",
-        "operationId" : "/api/saveBrowserExtensionConfig-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "hexId" : {
-                    "type" : "string",
-                    "example" : "null"
+                  "startTs": {
+                    "type": "integer",
+                    "example": 1712000000
                   },
-                  "name" : {
-                    "type" : "string",
-                    "example" : "Extension Config"
-                  },
-                  "enabled" : {
-                    "type" : "boolean",
-                    "example" : true
-                  },
-                  "extensionId" : {
-                    "type" : "string",
-                    "example" : "ext-id-123"
-                  },
-                  "apiKey" : {
-                    "type" : "string",
-                    "example" : "api-key-value"
-                  },
-                  "configuration" : {
-                    "type" : "object",
-                    "example" : {}
+                  "endTs": {
+                    "type": "integer",
+                    "example": 1712100000
                   }
                 },
-                "description" : "Sample description"
+                "description": "Sample description"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Configuration saved",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "status" : {
-                      "type" : "string",
-                      "enum" : [ "SUCCESS", "ERROR" ],
-                      "example" : "SUCCESS"
-                    },
-                    "configId" : {
-                      "type" : "string",
-                      "example" : "507f1f77bcf86cd799439011"
-                    }
-                  },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/api/apiInfo/bulkAgentProxyGuardrail" : {
-      "description" : "Bulk enable/disable guardrails on multiple API endpoints",
-      "post" : {
-        "summary" : "POST request for endpoint /api/apiInfo/bulkAgentProxyGuardrail",
-        "operationId" : "/api/apiInfo/bulkAgentProxyGuardrail-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "apiIds" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "string"
-                    },
-                    "example" : [ "api-1", "api-2" ]
-                  },
-                  "enabled" : {
-                    "type" : "boolean",
-                    "example" : true
-                  },
-                  "policies" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "string"
-                    }
-                  },
-                  "schemaConfig" : {
-                    "type" : "object",
-                    "properties" : {
-                      "enforceSchema" : {
-                        "type" : "boolean",
-                        "example" : true
-                      },
-                      "strictMode" : {
-                        "type" : "boolean",
-                        "example" : false
-                      }
-                    }
-                  }
-                },
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "Guardrails updated on endpoints",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "status" : {
-                      "type" : "string",
-                      "enum" : [ "SUCCESS", "ERROR" ],
-                      "example" : "SUCCESS"
-                    },
-                    "updatedCount" : {
-                      "type" : "integer",
-                      "example" : 2
-                    }
-                  },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/api/fetchThreatApis" : {
-      "description" : "Get list of APIs affected by threats",
-      "post" : {
-        "summary" : "POST request for endpoint /api/fetchThreatApis",
-        "operationId" : "/api/fetchThreatApis-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "skip" : {
-                    "type" : "integer",
-                    "default" : 0,
-                    "example" : 0
-                  },
-                  "startTs" : {
-                    "type" : "integer",
-                    "example" : 1712000000
-                  },
-                  "endTs" : {
-                    "type" : "integer",
-                    "example" : 1712100000
-                  }
-                },
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "List of threatened APIs",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "apis" : {
-                      "type" : "array",
-                      "items" : {
-                        "type" : "object",
-                        "properties" : {
-                          "endpoint" : {
-                            "type" : "string",
-                            "example" : "/api/users"
+        "responses": {
+          "200": {
+            "description": "List of threatened APIs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apis": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "endpoint": {
+                            "type": "string",
+                            "example": "/api/users"
                           },
-                          "method" : {
-                            "type" : "string",
-                            "example" : "POST"
+                          "method": {
+                            "type": "string",
+                            "example": "POST"
                           },
-                          "host" : {
-                            "type" : "string",
-                            "example" : "api.example.com"
+                          "host": {
+                            "type": "string",
+                            "example": "api.example.com"
                           },
-                          "actorsCount" : {
-                            "type" : "integer",
-                            "example" : 5
+                          "actorsCount": {
+                            "type": "integer",
+                            "example": 5
                           },
-                          "requestsCount" : {
-                            "type" : "integer",
-                            "example" : 25
+                          "requestsCount": {
+                            "type": "integer",
+                            "example": 25
                           },
-                          "discoveredAt" : {
-                            "type" : "integer",
-                            "example" : 1712000000
+                          "discoveredAt": {
+                            "type": "integer",
+                            "example": 1712000000
                           }
                         }
                       }
                     },
-                    "total" : {
-                      "type" : "integer",
-                      "example" : 15
+                    "total": {
+                      "type": "integer",
+                      "example": 15
                     }
                   },
                   "description" : "Sample description"
@@ -8480,133 +7127,60 @@
           }
         } ]
     },
-    "/api/getActorsCountPerCounty" : {
-      "description" : "Get threat actor distribution by country",
-      "post" : {
-        "summary" : "POST request for endpoint /api/getActorsCountPerCounty",
-        "operationId" : "/api/getActorsCountPerCounty-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "startTs" : {
-                    "type" : "integer",
-                    "example" : 1712000000
+    "/api/getActorsCountPerCounty": {
+      "description": "Get threat actor distribution by country",
+      "post": {
+        "summary": "POST request for endpoint /api/getActorsCountPerCounty",
+        "operationId": "/api/getActorsCountPerCounty-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startTs": {
+                    "type": "integer",
+                    "example": 1712000000
                   },
-                  "endTs" : {
-                    "type" : "integer",
-                    "example" : 1712100000
+                  "endTs": {
+                    "type": "integer",
+                    "example": 1712100000
                   }
                 },
-                "description" : "Sample description"
+                "description": "Sample description"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Threat actor counts per country",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "actorsCountPerCountry" : {
-                      "type" : "array",
-                      "items" : {
-                        "type" : "object",
-                        "properties" : {
-                          "code" : {
-                            "type" : "string",
-                            "example" : "US"
+        "responses": {
+          "200": {
+            "description": "Threat actor counts per country",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actorsCountPerCountry": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "example": "US"
                           },
-                          "count" : {
-                            "type" : "integer",
-                            "example" : 15
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/api/getThreatActivityTimeline" : {
-      "description" : "Get threat activity by subcategory over time",
-      "post" : {
-        "summary" : "POST request for endpoint /api/getThreatActivityTimeline",
-        "operationId" : "/api/getThreatActivityTimeline-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "startTs" : {
-                    "type" : "integer",
-                    "example" : 1712000000
-                  },
-                  "endTs" : {
-                    "type" : "integer",
-                    "example" : 1712100000
-                  }
-                },
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "Threat activity timeline",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "threatActivityTimelines" : {
-                      "type" : "array",
-                      "items" : {
-                        "type" : "object",
-                        "properties" : {
-                          "ts" : {
-                            "type" : "integer",
-                            "example" : 1712000000
-                          },
-                          "subCategoryWiseDataList" : {
-                            "type" : "array",
-                            "items" : {
-                              "type" : "object",
-                              "properties" : {
-                                "subCategory" : {
-                                  "type" : "string",
-                                  "example" : "SQL_INJECTION"
+                          "subCategoryWiseDataList": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "subCategory": {
+                                  "type": "string",
+                                  "example": "SQL_INJECTION"
                                 },
-                                "activityCount" : {
-                                  "type" : "integer",
-                                  "example" : 5
+                                "activityCount": {
+                                  "type": "integer",
+                                  "example": 5
                                 }
                               }
                             }
@@ -8615,19 +7189,20 @@
                       }
                     }
                   },
-                  "description" : "Sample description"
+                  "description": "Sample description"
                 }
               }
             }
           }
         }
       },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
           }
         }, {
           "name" : "X-API-KEY",
@@ -8820,285 +7395,63 @@
           }
         }
       },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
           }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
           }
         } ]
     },
-    "/api/fetchThreatComplianceInfos" : {
-      "description" : "Get compliance-related threat data",
-      "post" : {
-        "summary" : "POST request for endpoint /api/fetchThreatComplianceInfos",
-        "operationId" : "/api/fetchThreatComplianceInfos-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "startTs" : {
-                    "type" : "integer",
-                    "example" : 1712000000
+    "/api/fetchThreatComplianceInfos": {
+      "description": "Get compliance-related threat data",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchThreatComplianceInfos",
+        "operationId": "/api/fetchThreatComplianceInfos-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startTs": {
+                    "type": "integer",
+                    "example": 1712000000
                   },
-                  "endTs" : {
-                    "type" : "integer",
-                    "example" : 1712100000
+                  "endTs": {
+                    "type": "integer",
+                    "example": 1712100000
                   }
                 },
-                "description" : "Sample description"
+                "description": "Sample description"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Compliance-related threat data",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "threatComplianceInfos" : {
-                      "type" : "array",
-                      "items" : {
-                        "type" : "object",
-                        "description" : "Compliance threat mapping data"
+        "responses": {
+          "200": {
+            "description": "Compliance-related threat data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "threatComplianceInfos": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "Compliance threat mapping data"
                       }
-                    }
-                  },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/api/modifyThreatActorStatus" : {
-      "description" : "Block/unblock threat actor in AWS WAF",
-      "post" : {
-        "summary" : "POST request for endpoint /api/modifyThreatActorStatus",
-        "operationId" : "/api/modifyThreatActorStatus-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "actorIp" : {
-                    "type" : "string",
-                    "example" : "203.0.113.5"
-                  },
-                  "status" : {
-                    "type" : "string",
-                    "enum" : [ "blocked", "unblocked" ],
-                    "example" : "blocked"
-                  },
-                  "reason" : {
-                    "type" : "string",
-                    "example" : "Suspicious activity detected"
-                  },
-                  "duration" : {
-                    "type" : "integer",
-                    "example" : 0
-                  }
-                },
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "Threat actor status updated",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "status" : {
-                      "type" : "string",
-                      "enum" : [ "SUCCESS", "ERROR" ],
-                      "example" : "SUCCESS"
-                    },
-                    "message" : {
-                      "type" : "string",
-                      "example" : "Actor blocked successfully"
-                    }
-                  },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/api/modifyThreatActorStatusCloudflare" : {
-      "description" : "Block/unblock threat actor in Cloudflare WAF",
-      "post" : {
-        "summary" : "POST request for endpoint /api/modifyThreatActorStatusCloudflare",
-        "operationId" : "/api/modifyThreatActorStatusCloudflare-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "actorIp" : {
-                    "type" : "string",
-                    "example" : "203.0.113.5"
-                  },
-                  "status" : {
-                    "type" : "string",
-                    "enum" : [ "blocked", "unblocked" ],
-                    "example" : "blocked"
-                  }
-                },
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "Cloudflare WAF rule updated",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "status" : {
-                      "type" : "string",
-                      "enum" : [ "SUCCESS", "ERROR" ],
-                      "example" : "SUCCESS"
-                    },
-                    "ruleId" : {
-                      "type" : "string",
-                      "example" : "rule-123"
-                    }
-                  },
-                  "description" : "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters" : [ {
-          "name" : "content-type",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "application/json"
-          }
-        }, {
-          "name" : "X-API-KEY",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        } ]
-    },
-    "/api/bulkModifyThreatActorStatusCloudflare" : {
-      "description" : "Bulk block/unblock threat actors in Cloudflare WAF",
-      "post" : {
-        "summary" : "POST request for endpoint /api/bulkModifyThreatActorStatusCloudflare",
-        "operationId" : "/api/bulkModifyThreatActorStatusCloudflare-POST",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "actorIps" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "string"
-                    },
-                    "example" : [ "203.0.113.5", "198.51.100.2" ]
-                  },
-                  "status" : {
-                    "type" : "string",
-                    "enum" : [ "blocked", "unblocked" ],
-                    "example" : "blocked"
-                  },
-                  "reason" : {
-                    "type" : "string",
-                    "example" : "Bulk threat mitigation"
-                  }
-                },
-                "description" : "Sample description"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "Bulk update completed",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "status" : {
-                      "type" : "string",
-                      "enum" : [ "SUCCESS", "ERROR" ],
-                      "example" : "SUCCESS"
-                    },
-                    "processedCount" : {
-                      "type" : "integer",
-                      "example" : 2
-                    },
-                    "succeededCount" : {
-                      "type" : "integer",
-                      "example" : 2
-                    },
-                    "failedCount" : {
-                      "type" : "integer",
-                      "example" : 0
                     }
                   },
                   "description" : "Sample description"
@@ -9837,74 +8190,6 @@
         }
       ]
     },
-    "/api/fetchApiInfosFromSTIs": {
-      "description": "description",
-      "post": {
-        "summary": "POST request for endpoint /api/fetchApiInfosFromSTIs",
-        "operationId": "/api/fetchApiInfosFromSTIs-POST",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "apiCollectionId": {
-                    "type": "integer",
-                    "format": "int32",
-                    "example": 1
-                  }
-                },
-                "description": "Sample description"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "description",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "response": {
-                      "type": "object",
-                      "properties": {
-                        "list": {
-                          "type": "array",
-                          "items": {
-                            "type": "object"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "description": "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters": [
-        {
-          "name": "content-type",
-          "in": "header",
-          "schema": {
-            "type": "string",
-            "example": "application/json"
-          }
-        },
-        {
-          "name": "X-API-KEY",
-          "in": "header",
-          "schema": {
-            "type": "string",
-            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        }
-      ]
-    },
     "/api/fetchApiCallStats": {
       "description": "description",
       "post": {
@@ -10453,169 +8738,6 @@
         }
       ]
     },
-    "/api/fetchMcpToolsApiCalls": {
-      "description": "description",
-      "post": {
-        "summary": "POST request for endpoint /api/fetchMcpToolsApiCalls",
-        "operationId": "/api/fetchMcpToolsApiCalls-POST",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "startTimestamp": {
-                    "type": "integer",
-                    "format": "int32",
-                    "example": 1712000000
-                  },
-                  "endTimestamp": {
-                    "type": "integer",
-                    "format": "int32",
-                    "example": 1712100000
-                  }
-                },
-                "description": "Sample description"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "description",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "toolApiCalls": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "toolName": {
-                            "type": "string",
-                            "example": "null"
-                          },
-                          "callCount": {
-                            "type": "integer",
-                            "format": "int32",
-                            "example": 0
-                          },
-                          "lastCalled": {
-                            "type": "integer",
-                            "format": "int32",
-                            "example": 0
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "description": "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters": [
-        {
-          "name": "content-type",
-          "in": "header",
-          "schema": {
-            "type": "string",
-            "example": "application/json"
-          }
-        },
-        {
-          "name": "X-API-KEY",
-          "in": "header",
-          "schema": {
-            "type": "string",
-            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        }
-      ]
-    },
-    "/api/fetchMcpAuditInfoByCollection": {
-      "description": "description",
-      "post": {
-        "summary": "POST request for endpoint /api/fetchMcpAuditInfoByCollection",
-        "operationId": "/api/fetchMcpAuditInfoByCollection-POST",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "apiCollectionId": {
-                    "type": "integer",
-                    "format": "int32",
-                    "example": 1
-                  }
-                },
-                "description": "Sample description"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "description",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "auditInfo": {
-                      "type": "object",
-                      "properties": {
-                        "toolsUsed": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "apiEndpoints": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "executionCount": {
-                          "type": "integer",
-                          "format": "int32",
-                          "example": 0
-                        }
-                      }
-                    }
-                  },
-                  "description": "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters": [
-        {
-          "name": "content-type",
-          "in": "header",
-          "schema": {
-            "type": "string",
-            "example": "application/json"
-          }
-        },
-        {
-          "name": "X-API-KEY",
-          "in": "header",
-          "schema": {
-            "type": "string",
-            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        }
-      ]
-    },
     "/api/fetchTestRunResultsCount": {
       "description": "description",
       "post": {
@@ -10948,61 +9070,6 @@
                   "type": "object",
                   "properties": {
                     "reportUrl": {
-                      "type": "string",
-                      "example": "null"
-                    }
-                  },
-                  "description": "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters": [
-        {
-          "name": "content-type",
-          "in": "header",
-          "schema": {
-            "type": "string",
-            "example": "application/json"
-          }
-        },
-        {
-          "name": "X-API-KEY",
-          "in": "header",
-          "schema": {
-            "type": "string",
-            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        }
-      ]
-    },
-    "/api/fetchFilterYamlTemplate": {
-      "description": "description",
-      "post": {
-        "summary": "POST request for endpoint /api/fetchFilterYamlTemplate",
-        "operationId": "/api/fetchFilterYamlTemplate-POST",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {},
-                "description": "Sample description"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "description",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "content": {
                       "type": "string",
                       "example": "null"
                     }
@@ -11883,130 +9950,6 @@
                             "example": {}
                           }
                         }
-                      }
-                    }
-                  },
-                  "description": "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters": [
-        {
-          "name": "content-type",
-          "in": "header",
-          "schema": {
-            "type": "string",
-            "example": "application/json"
-          }
-        },
-        {
-          "name": "X-API-KEY",
-          "in": "header",
-          "schema": {
-            "type": "string",
-            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        }
-      ]
-    },
-    "/api/fetchSlackWebhooks": {
-      "description": "description",
-      "post": {
-        "summary": "POST request for endpoint /api/fetchSlackWebhooks",
-        "operationId": "/api/fetchSlackWebhooks-POST",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {},
-                "description": "Sample description"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "description",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "slackWebhooks": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "webhook": {
-                            "type": "string",
-                            "example": "null"
-                          },
-                          "channel": {
-                            "type": "string",
-                            "example": "null"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "description": "Sample description"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters": [
-        {
-          "name": "content-type",
-          "in": "header",
-          "schema": {
-            "type": "string",
-            "example": "application/json"
-          }
-        },
-        {
-          "name": "X-API-KEY",
-          "in": "header",
-          "schema": {
-            "type": "string",
-            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
-          }
-        }
-      ]
-    },
-    "/api/fetchMiniTestingServiceNames": {
-      "description": "description",
-      "post": {
-        "summary": "POST request for endpoint /api/fetchMiniTestingServiceNames",
-        "operationId": "/api/fetchMiniTestingServiceNames-POST",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {},
-                "description": "Sample description"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "description",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "miniTestingServices": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
                       }
                     }
                   },
@@ -13025,6 +10968,194 @@
                       },
                       "description": "Non-fatal warnings during HAR parsing",
                       "example": []
+                    }
+                  },
+                  "description": "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchAuthMechanismData": {
+      "description": "Retrieve authentication mechanism details configured for testing",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchAuthMechanismData",
+        "operationId": "/api/fetchAuthMechanismData-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "collectionId": {
+                    "type": "integer",
+                    "example": 1770879436
+                  }
+                },
+                "description": "Sample description"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authentication mechanism details retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "authMechanisms": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  },
+                  "description": "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchTestRoles": {
+      "description": "Fetch probe roles and their configurations for testing",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchTestRoles",
+        "operationId": "/api/fetchTestRoles-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {},
+                "description": "Sample description"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Test roles retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "testRoles": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  },
+                  "description": "Sample description"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/modifyThreatActorStatus": {
+      "description": "Update the status of a threat actor for SOAR/SIEM integration",
+      "post": {
+        "summary": "POST request for endpoint /api/modifyThreatActorStatus",
+        "operationId": "/api/modifyThreatActorStatus-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "threatActorId": {
+                    "type": "string",
+                    "example": "actor_123"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "active",
+                      "inactive",
+                      "mitigated"
+                    ],
+                    "example": "active"
+                  }
+                },
+                "description": "Sample description"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Threat actor status updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "SUCCESS"
                     }
                   },
                   "description": "Sample description"
