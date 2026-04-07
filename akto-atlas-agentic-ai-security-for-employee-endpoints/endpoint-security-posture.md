@@ -1,7 +1,3 @@
----
-hidden: true
----
-
 # Endpoint Security Posture
 
 The **Endpoint Security Posture** dashboard gives you a high-level, executive view of AI security across your organization’s endpoints. It is designed to help you quickly understand risk exposure, AI usage, threat activity, and compliance gaps, without needing to dive into operational details.

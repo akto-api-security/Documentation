@@ -37,13 +37,17 @@ The integration flow has two stages:
 1. Open **Akto ATLAS Dashboard**.
 2. Go to Connectors.
 3. Go to **Endpoint Management**.
-4. Select **SentinelOne** and click **Connect**.
+4.  Select **SentinelOne** and click **Connect**.
+
+    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure></div>
 5. Fill in the following fields:
 
 * **SentinelOne Console URL**: `https://<your-tenant>.sentinelone.net`
 * **API Token**: SentinelOne admin API token
 * **Data Ingestion Service URL**: your Akto ingestion endpoint (`AKTO_DATA_INGESTION_URL`)
-* **Polling Interval (seconds)**: keep default or set based on your monitoring preference
+*   **Polling Interval (seconds)**: keep default or set based on your monitoring preference
+
+    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
 
 6. Click **Save**.
 
@@ -68,7 +72,9 @@ You can then:
 1. Open the SentinelOne integration setup in Akto.
 2. In **Guardrails Installation**, choose the guardrails you want to deploy.
 3. Select specific devices, or use **Run on all devices**.
-4. Click **Save & Run Guardrails**.
+4.  Click **Save & Run Guardrails**.
+
+    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (2).png" alt="" width="375"><figcaption></figcaption></figure></div>
 
 **Cursor Guardrails**
 
