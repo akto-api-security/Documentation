@@ -6,4 +6,4 @@ You can write probes in YAML to scan various aspects of your agent components, i
 
 The Probe Library in Akto includes over 1000 built-in probes for agentic security, a YAML-based editor for creating custom probes, and features to scan probes on sample agent components. This streamlines the AI Red Teaming process for autonomous systems.
 
-For more information on creating custom probes, please refer to this documentation- [Create a Custom Probe](/broken/pages/IFwx1BIVVVK4uM4f3Ibt).
+For more information on creating custom probes, please refer to this documentation- [Create a Custom Probe](../how-to/create-a-custom-test.md).
