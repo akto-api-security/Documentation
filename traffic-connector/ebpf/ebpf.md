@@ -18,24 +18,16 @@ Setup Akto data processor using the guide [here](../../getting-started/quick-sta
 {% step %}
 Apply the Daemonset configuration given below using `kubectl apply -f akto-daemonset-config.yaml -n <NAMESPACE>`. You will find `AKTO_NLB_IP` after setting up Akto data processor, as mentioned above.
 
-{% hint style="info" %}
-## Image Option
+{% hint style="success" %}
+## eBPF CO-RE Image Option
 
-You can choose between two supported image variants based on your environment:
+Alternatively, you can use the eBPF CO-RE image for environments where kernel headers are unavailable or kernel versions vary across nodes.
 
-*   **Standard eBPF image** → existing default image
+```
+public.ecr.aws/aktosecurity/mirror-api-logging:k8s_ebpf_core
+```
 
-    ```
-    public.ecr.aws/aktosecurity/mirror-api-logging:k8s_ebpf
-    ```
-*   **eBPF CO-RE image** → portable option which uses eBPF CO-RE to run across kernel versions without requiring headers.
-
-    ```
-    public.ecr.aws/aktosecurity/mirror-api-logging:k8s_ebpf_core
-    ```
-
-\
-**Update the `image` field in below YAML if you want to use the CO-RE variant.**
+Just update the `image` field in the YAML below with the CO-RE image URL to use this variant.
 {% endhint %}
 
 ```yaml
