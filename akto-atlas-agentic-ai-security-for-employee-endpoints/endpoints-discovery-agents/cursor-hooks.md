@@ -1,6 +1,7 @@
 # Cursor Hooks
 
-Akto Guardrails for Cursor provides comprehensive security monitoring and validation for both **chat interactions** and **MCP tool executions**. It intercepts all agent operations, validates against security policies, blocks risky behavior, and reports events to your Akto dashboard.
+Akto Guardrails for Cursor provides comprehensive security monitoring and validation for both **chat interactions** and **MCP tool executions**. 
+Additionally, it supports monitoring for other miscellaneous hooks. It intercepts all agent operations, validates against security policies, blocks risky behavior, and reports events to your Akto dashboard.
 
 ## Key Features
 
@@ -53,12 +54,20 @@ sequenceDiagram
     MCPAfterHook->>Agent: Response
 ```
 
-**4 Hook Points:**
+**Hook Points:**
 
 1. `beforeSubmitPrompt` - Validates chat prompts before sending to AI
 2. `afterAgentResponse` - Validates AI responses before displaying
 3. `beforeMCPExecution` - Validates MCP tool requests before execution
 4. `afterMCPExecution` - Validates MCP tool responses
+5. `sessionStart / sessionEnd` - Session lifecycle management
+6. `preToolUse / postToolUse / postToolUseFailure` - Generic tool use hooks (fires for all tools)
+7. `subagentStart / subagentStop` - Subagent (Task tool) lifecycle
+8. `beforeShellExecution / afterShellExecution` - Control shell commands
+9. `beforeReadFile / afterFileEdit` - Control file access and edits
+10. `preCompact` - Observe context window compaction
+11. `stop` - Handle agent completion
+12. `afterAgentThought` - Track agent thoughts
 
 ## File Structure
 
@@ -74,7 +83,10 @@ sequenceDiagram
 │       ├── akto-validate-mcp-request.py               # MCP request validation
 │       ├── akto-validate-mcp-response-wrapper.sh      # MCP response wrapper
 │       ├── akto-validate-mcp-response.py              # MCP response validation
-│       └── akto_machine_id.py                         # Device ID utility
+│       |── akto_machine_id.py                         # Device ID utility
+|       |-- akto_ingestion_utility.py                  # Ingestion Utility
+|       |-- akto-hook-wrapper.sh                       # Wrapper for all the Misc hooks
+|       |-- akto-hooks.py                              # Hooks validation
 ├── akto/
 │   ├── chat-logs/
 │   │   ├── akto-validate-chat-prompt.log
@@ -82,6 +94,8 @@ sequenceDiagram
 │   └── mcp-logs/
 │       ├── akto-validate-request.log
 │       └── akto-validate-response.log
+|   |-- logs/
+|       |-- *.log                                       # separate log files for others
 └── hooks.json                                          # Hook configuration
 ```
 
@@ -111,6 +125,7 @@ sequenceDiagram
 mkdir -p ~/.cursor/hooks/akto
 mkdir -p ~/.cursor/akto/chat-logs
 mkdir -p ~/.cursor/akto/mcp-logs
+mkdir -p ~/.cursor/akto/logs
 ```
 {% endstep %}
 
@@ -120,6 +135,9 @@ mkdir -p ~/.cursor/akto/mcp-logs
 ```bash
 # Base URL for downloading hooks
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/cursor-hooks"
+
+# Base URL for utility files
+HOOKS_UTILITY_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
 
 # Download chat validation hooks
 curl -o ~/.cursor/hooks/akto/akto-validate-chat-prompt-wrapper.sh \
@@ -141,9 +159,21 @@ curl -o ~/.cursor/hooks/akto/akto-validate-mcp-response-wrapper.sh \
 curl -o ~/.cursor/hooks/akto/akto-validate-mcp-response.py \
   "${HOOKS_BASE}/akto-validate-mcp-response.py"
 
+# Other Hooks
+curl -o ~/.cursor/hooks/akto/akto-hook-wrapper.sh \
+  "${HOOKS_BASE}/akto-hook-wrapper.sh"
+curl -o ~/.cursor/hooks/akto/akto-hooks.py \
+  "${HOOKS_BASE}/akto-hooks.py"
+curl -o ~/.cursor/hooks/akto/akto-subagent-start.py \
+  "${HOOKS_BASE}/akto-subagent-start.py"
+curl -o ~/.cursor/hooks/akto/akto-subagent-stop.py \
+  "${HOOKS_BASE}/akto-subagent-stop.py"
+
 # Download utility
 curl -o ~/.cursor/hooks/akto/akto_machine_id.py \
-  "${HOOKS_BASE}/akto_machine_id.py"
+  "${HOOKS_UTILITY_BASE}/akto_machine_id.py"
+curl -o ~/.cursor/hooks/akto/akto_ingestion_utility.py \
+  "${HOOKS_UTILITY_BASE}/akto_ingestion_utility.py"
 
 # Make executable
 chmod +x ~/.cursor/hooks/akto/*.sh
@@ -191,6 +221,7 @@ Files to update:
 * `akto-validate-chat-response-wrapper.sh`
 * `akto-validate-mcp-request-wrapper.sh`
 * `akto-validate-mcp-response-wrapper.sh`
+* `akto-hook-wrapper`
 {% endstep %}
 
 {% step %}
@@ -280,6 +311,10 @@ tail -f ~/.cursor/akto/chat-logs/akto-validate-chat-response.log
 # View MCP logs
 tail -f ~/.cursor/akto/mcp-logs/akto-validate-request.log
 tail -f ~/.cursor/akto/mcp-logs/akto-validate-response.log
+
+# logs for other hooks are stored in directory ~/.cursor/akto/logs
+
+tail -f ~/.cursor/akto/logs/*.log
 ```
 
 Test by typing a message in Cursor's chat or using an MCP tool. You should see log entries indicating validation occurred.
