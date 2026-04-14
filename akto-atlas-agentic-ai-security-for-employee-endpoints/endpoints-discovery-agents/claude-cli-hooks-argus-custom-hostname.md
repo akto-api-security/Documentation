@@ -7,8 +7,6 @@ This guide covers running Claude CLI hooks in **Argus mode** with a custom hostn
 Use Argus mode with a custom hostname when:
 
 * You are running Claude CLI on a **server or shared environment** (not an individual endpoint)
-* Your Akto instance routes traffic through a **custom domain or internal hostname**
-* You want to label all hook traffic as `contextSource: AGENTIC` (agentic AI, not employee endpoint)
 * You do **not** need device-specific identity — hooks run under a shared or service account
 
 ## How It Works
