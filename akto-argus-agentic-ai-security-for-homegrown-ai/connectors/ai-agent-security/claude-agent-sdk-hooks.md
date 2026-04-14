@@ -142,7 +142,7 @@ options = ClaudeAgentOptions(
 ```bash
 export AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
 export AKTO_SYNC_MODE="true"          # "true" = block; "false" = observe only
-export AGENT_ID="my-agent-service"    # Stable name for this agent (pod name, service name)
+export AKTO_HOST="api.anthropic.com"  # Hostname written into request headers for Akto's HTTP proxy
 ```
 
 See [Environment Variables](#environment-variables) for the full reference.
@@ -217,8 +217,7 @@ The Stop hook fires after the agent has finished generating. In streaming deploy
 |---|---|---|
 | `AKTO_DATA_INGESTION_URL` | *(required)* | Base URL for Akto's data ingestion service |
 | `AKTO_SYNC_MODE` | `true` | `true` = block on violations; `false` = observe-only |
-| `AGENT_ID` | `""` | Stable identifier for this server/agent instance (pod name, service name). Used as `akto_vxlan_id` in payloads. |
-| `AKTO_HOST` | `api.anthropic.com` | Hostname written into request headers for Akto's HTTP proxy |
+| `AKTO_HOST` | `api.anthropic.com` | Hostname written into request headers sent to Akto's HTTP proxy |
 | `AKTO_TIMEOUT` | `5` | HTTP request timeout in seconds |
 | `AKTO_TOKEN` | `""` | Authorization header value sent to `AKTO_DATA_INGESTION_URL` |
 | `MODE` | `argus` | `argus` (default) or `atlas` |
