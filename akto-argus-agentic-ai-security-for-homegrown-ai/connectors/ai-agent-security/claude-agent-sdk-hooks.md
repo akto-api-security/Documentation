@@ -225,7 +225,6 @@ The Stop hook fires after the agent has finished generating. In streaming deploy
 | `LOG_DIR` | `~/.claude/akto/logs` | Directory for log files |
 | `LOG_LEVEL` | `INFO` | Logging level (`DEBUG`, `INFO`, `WARNING`, `ERROR`) |
 | `LOG_PAYLOADS` | `false` | Set to `true` to log full request/response bodies |
-| `SSL_CERT_PATH` | *(unset)* | Path to custom CA certificate bundle |
 
 ## Logging
 
