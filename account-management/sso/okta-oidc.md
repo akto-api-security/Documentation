@@ -139,6 +139,12 @@ Save the configuration.
 {% endstep %}
 {% endstepper %}
 
+{% hint style="warning" %}
+## Role Override on Okta SSO Login
+
+When you sign in using Okta SSO, your role in Akto is based on your current Okta group. If your group (and role) has changed in Okta, your role in Akto will automatically update and override your previous role the next time you log in.
+{% endhint %}
+
 ## Role Assignment During Login
 
 Akto evaluates group membership during user login and assigns roles based on configured mappings.
