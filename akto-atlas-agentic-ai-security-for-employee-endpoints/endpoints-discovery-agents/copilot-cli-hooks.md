@@ -260,11 +260,13 @@ Select-String "AKTO_DATA_INGESTION_URL|AKTO_API_TOKEN" .github\hooks\*-wrapper.p
 Edit each wrapper script and replace the two placeholders with your actual values.
 
 Files to update on macOS/Linux:
+* `akto-hook-wrapper.sh`
 * `akto-validate-prompt-wrapper.sh`
 * `akto-validate-pre-tool-wrapper.sh`
 * `akto-validate-post-tool-wrapper.sh`
 
 Files to update on Windows:
+* `akto-hook-wrapper.ps1`
 * `akto-validate-prompt-wrapper.ps1`
 * `akto-validate-pre-tool-wrapper.ps1`
 * `akto-validate-post-tool-wrapper.ps1`
