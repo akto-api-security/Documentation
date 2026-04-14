@@ -64,6 +64,7 @@
     * [Vertex AI](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/vertex-ai.md)
     * [Arcade](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/arcade.md)
     * [Salesforce](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/salesforce.md)
+    * [Claude Agent SDK](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/claude-agent-sdk-hooks.md)
   * [AI Model Security](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-model-security.md)
   * [Others](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md)
     * [Connect Akto with Hybrid SaaS](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md)
