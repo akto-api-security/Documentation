@@ -100,15 +100,8 @@ To update all at once:
 AKTO_URL="https://your-akto-instance.com"
 AKTO_HOST_VALUE="my-proxy.corp.example.com"
 
-for f in ~/.claude/hooks/*-wrapper.sh; do
-  sed -i.bak \
-    -e "s|MODE=.*|MODE=\"argus\"|" \
-    -e "s|AKTO_HOST=.*|AKTO_HOST=\"${AKTO_HOST_VALUE}\"|" \
-    "$f"
-done
-
-# Apply ingestion URL if placeholder still present
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.claude/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_HOST}}|${AKTO_HOST_VALUE}|g" ~/.claude/hooks/*-wrapper.sh
 ```
 {% endstep %}
 
@@ -116,14 +109,13 @@ sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.claude/hooks/*-wrapp
 **Verify the configuration**
 
 ```bash
-grep -E "^export MODE|^export AKTO_HOST|^export AKTO_DATA_INGESTION_URL" \
+grep -E "^export AKTO_HOST|^export AKTO_DATA_INGESTION_URL" \
   ~/.claude/hooks/*-wrapper.sh
 ```
 
 Expected output (one line per wrapper script per variable):
 
 ```
-akto-validate-prompt-wrapper.sh:        export MODE="argus"
 akto-validate-prompt-wrapper.sh:        export AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
 akto-validate-prompt-wrapper.sh:        export AKTO_HOST="my-proxy.corp.example.com"
 ...
