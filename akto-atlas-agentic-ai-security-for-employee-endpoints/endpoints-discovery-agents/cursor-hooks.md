@@ -6,7 +6,7 @@ Additionally, it supports monitoring for other miscellaneous hooks. It intercept
 ## Key Features
 
 * ✅ **Zero Installation** - No standalone apps or packages to install
-* ✅ **Comprehensive Coverage** - Monitors both chat prompts/responses and MCP requests/responses
+* ✅ **Comprehensive Coverage** - Monitors chat prompts/responses, MCP requests/responses, shell commands, file access, subagent lifecycle, and more
 * ✅ **Transparent Integration** - Uses Cursor's native hook mechanism
 * ✅ **Real-time Protection** - Intercepts every interaction before execution
 * ✅ **Centralized Monitoring** - All events reported to Akto dashboard
@@ -14,7 +14,7 @@ Additionally, it supports monitoring for other miscellaneous hooks. It intercept
 
 ## How It Works
 
-Cursor's hook system executes custom scripts at four critical points:
+Cursor's hook system executes custom scripts at key points across the agent lifecycle:
 
 ```mermaid
 sequenceDiagram
@@ -54,7 +54,7 @@ sequenceDiagram
     MCPAfterHook->>Agent: Response
 ```
 
-**Hook Points:**
+**4 Hook Points:**
 
 1. `beforeSubmitPrompt` - Validates chat prompts before sending to AI
 2. `afterAgentResponse` - Validates AI responses before displaying
@@ -83,19 +83,21 @@ sequenceDiagram
 │       ├── akto-validate-mcp-request.py               # MCP request validation
 │       ├── akto-validate-mcp-response-wrapper.sh      # MCP response wrapper
 │       ├── akto-validate-mcp-response.py              # MCP response validation
+│       |── akto-hook-wrapper.sh                       # Wrapper for all misc hooks
+│       |── akto-hooks.py                              # Misc hooks validation (sessionStart/End, preToolUse, shell, file, preCompact, stop, afterAgentThought)
+│       |── akto-subagent-start.py                     # subagentStart hook
+│       |── akto-subagent-stop.py                      # subagentStop hook
 │       |── akto_machine_id.py                         # Device ID utility
 |       |-- akto_ingestion_utility.py                  # Ingestion Utility
-|       |-- akto-hook-wrapper.sh                       # Wrapper for all the Misc hooks
-|       |-- akto-hooks.py                              # Hooks validation
 ├── akto/
 │   ├── chat-logs/
 │   │   ├── akto-validate-chat-prompt.log
 │   │   └── akto-validate-chat-response.log
-│   └── mcp-logs/
-│       ├── akto-validate-request.log
-│       └── akto-validate-response.log
+│   ├── mcp-logs/
+│   │   ├── akto-validate-request.log
+│   │   └── akto-validate-response.log
 |   |-- logs/
-|       |-- *.log                                       # separate log files for others
+|       |-- *.log                                       # logs for misc hooks (sessionStart, shell, file, etc.)
 └── hooks.json                                          # Hook configuration
 ```
 
@@ -255,6 +257,90 @@ cat > ~/.cursor/hooks.json << 'EOF'
     "afterMCPExecution": [
       {
         "command": "bash ~/.cursor/hooks/akto/akto-validate-mcp-response-wrapper.sh",
+        "timeout": 10
+      }
+    ],
+    "sessionStart": [
+      {
+        "command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py sessionStart",
+        "timeout": 10
+      }
+    ],
+    "sessionEnd": [
+      {
+        "command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py sessionEnd",
+        "timeout": 10
+      }
+    ],
+    "preToolUse": [
+      {
+        "command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py preToolUse",
+        "timeout": 10
+      }
+    ],
+    "postToolUse": [
+      {
+        "command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py postToolUse",
+        "timeout": 10
+      }
+    ],
+    "postToolUseFailure": [
+      {
+        "command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py postToolUseFailure",
+        "timeout": 10
+      }
+    ],
+    "subagentStart": [
+      {
+        "command": "python3 ~/.cursor/hooks/akto/akto-subagent-start.py",
+        "timeout": 10
+      }
+    ],
+    "subagentStop": [
+      {
+        "command": "python3 ~/.cursor/hooks/akto/akto-subagent-stop.py",
+        "timeout": 10
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py beforeShellExecution",
+        "timeout": 10
+      }
+    ],
+    "afterShellExecution": [
+      {
+        "command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py afterShellExecution",
+        "timeout": 10
+      }
+    ],
+    "beforeReadFile": [
+      {
+        "command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py beforeReadFile",
+        "timeout": 10
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py afterFileEdit",
+        "timeout": 10
+      }
+    ],
+    "preCompact": [
+      {
+        "command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py preCompact",
+        "timeout": 10
+      }
+    ],
+    "stop": [
+      {
+        "command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py stop",
+        "timeout": 10
+      }
+    ],
+    "afterAgentThought": [
+      {
+        "command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py afterAgentThought",
         "timeout": 10
       }
     ]
@@ -469,10 +555,12 @@ AKTO_URL="${1:-https://your-akto-instance.com}"
 echo "🔧 Installing Akto Guardrails for Cursor..."
 
 # Create directories
-mkdir -p ~/.cursor/hooks/akto ~/.cursor/akto/chat-logs ~/.cursor/akto/mcp-logs
+mkdir -p ~/.cursor/hooks/akto ~/.cursor/akto/chat-logs ~/.cursor/akto/mcp-logs ~/.cursor/akto/logs
 
 # Download hooks
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/cursor-hooks"
+HOOKS_UTILITY_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
+
 curl -s "${HOOKS_BASE}/akto-validate-chat-prompt-wrapper.sh" -o ~/.cursor/hooks/akto/akto-validate-chat-prompt-wrapper.sh
 curl -s "${HOOKS_BASE}/akto-validate-chat-prompt.py" -o ~/.cursor/hooks/akto/akto-validate-chat-prompt.py
 curl -s "${HOOKS_BASE}/akto-validate-chat-response-wrapper.sh" -o ~/.cursor/hooks/akto/akto-validate-chat-response-wrapper.sh
@@ -481,7 +569,12 @@ curl -s "${HOOKS_BASE}/akto-validate-mcp-request-wrapper.sh" -o ~/.cursor/hooks/
 curl -s "${HOOKS_BASE}/akto-validate-mcp-request.py" -o ~/.cursor/hooks/akto/akto-validate-mcp-request.py
 curl -s "${HOOKS_BASE}/akto-validate-mcp-response-wrapper.sh" -o ~/.cursor/hooks/akto/akto-validate-mcp-response-wrapper.sh
 curl -s "${HOOKS_BASE}/akto-validate-mcp-response.py" -o ~/.cursor/hooks/akto/akto-validate-mcp-response.py
-curl -s "${HOOKS_BASE}/akto_machine_id.py" -o ~/.cursor/hooks/akto/akto_machine_id.py
+curl -s "${HOOKS_BASE}/akto-hook-wrapper.sh" -o ~/.cursor/hooks/akto/akto-hook-wrapper.sh
+curl -s "${HOOKS_BASE}/akto-hooks.py" -o ~/.cursor/hooks/akto/akto-hooks.py
+curl -s "${HOOKS_BASE}/akto-subagent-start.py" -o ~/.cursor/hooks/akto/akto-subagent-start.py
+curl -s "${HOOKS_BASE}/akto-subagent-stop.py" -o ~/.cursor/hooks/akto/akto-subagent-stop.py
+curl -s "${HOOKS_UTILITY_BASE}/akto_machine_id.py" -o ~/.cursor/hooks/akto/akto_machine_id.py
+curl -s "${HOOKS_UTILITY_BASE}/akto_ingestion_utility.py" -o ~/.cursor/hooks/akto/akto_ingestion_utility.py
 
 # Make executable
 chmod +x ~/.cursor/hooks/akto/*.sh
@@ -498,7 +591,21 @@ cat > ~/.cursor/hooks.json << 'EOFHOOKS'
     "beforeSubmitPrompt": [{"command": "bash ~/.cursor/hooks/akto/akto-validate-chat-prompt-wrapper.sh", "timeout": 10}],
     "afterAgentResponse": [{"command": "bash ~/.cursor/hooks/akto/akto-validate-chat-response-wrapper.sh", "timeout": 10}],
     "beforeMCPExecution": [{"command": "bash ~/.cursor/hooks/akto/akto-validate-mcp-request-wrapper.sh", "timeout": 10}],
-    "afterMCPExecution": [{"command": "bash ~/.cursor/hooks/akto/akto-validate-mcp-response-wrapper.sh", "timeout": 10}]
+    "afterMCPExecution": [{"command": "bash ~/.cursor/hooks/akto/akto-validate-mcp-response-wrapper.sh", "timeout": 10}],
+    "sessionStart": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py sessionStart", "timeout": 10}],
+    "sessionEnd": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py sessionEnd", "timeout": 10}],
+    "preToolUse": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py preToolUse", "timeout": 10}],
+    "postToolUse": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py postToolUse", "timeout": 10}],
+    "postToolUseFailure": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py postToolUseFailure", "timeout": 10}],
+    "subagentStart": [{"command": "python3 ~/.cursor/hooks/akto/akto-subagent-start.py", "timeout": 10}],
+    "subagentStop": [{"command": "python3 ~/.cursor/hooks/akto/akto-subagent-stop.py", "timeout": 10}],
+    "beforeShellExecution": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py beforeShellExecution", "timeout": 10}],
+    "afterShellExecution": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py afterShellExecution", "timeout": 10}],
+    "beforeReadFile": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py beforeReadFile", "timeout": 10}],
+    "afterFileEdit": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py afterFileEdit", "timeout": 10}],
+    "preCompact": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py preCompact", "timeout": 10}],
+    "stop": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py stop", "timeout": 10}],
+    "afterAgentThought": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py afterAgentThought", "timeout": 10}]
   }
 }
 EOFHOOKS
@@ -517,9 +624,10 @@ curl -fsSL https://your-org.com/deploy-cursor-hooks.sh | bash -s https://your-ak
 
 ```bash
 # 1. Create directories
-mkdir -p ~/.cursor/hooks/akto ~/.cursor/akto/chat-logs ~/.cursor/akto/mcp-logs
+mkdir -p ~/.cursor/hooks/akto ~/.cursor/akto/chat-logs ~/.cursor/akto/mcp-logs ~/.cursor/akto/logs
 
 # 2. Download all hook scripts from GitHub (see step 2 above)
+#    Includes: chat, MCP, misc hooks (akto-hook-wrapper.sh, akto-hooks.py, akto-subagent-*.py)
 
 # 3. ⚠️ Configure Akto URL (REQUIRED)
 AKTO_URL="https://your-akto-instance.com"
@@ -529,7 +637,7 @@ sed -i.bak 's|export DEVICE_ID="{{DEVICE_ID (optional)}}"||g' ~/.cursor/hooks/ak
 # 4. Make executable
 chmod +x ~/.cursor/hooks/akto/*.sh
 
-# 5. Create hooks.json (see step 4 above)
+# 5. Create hooks.json (see step 4 above — includes all 18 hook points)
 
 # 6. Restart Cursor
 ```
