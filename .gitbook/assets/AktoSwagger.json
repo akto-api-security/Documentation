@@ -14713,15 +14713,5563 @@
           }
         }
       },
-      "parameters" : [ {
-        "name" : "content-type",
-        "in" : "header",
-        "schema" : { "type" : "string", "example" : "application/json" }
-      }, {
-        "name" : "X-API-KEY",
-        "in" : "header",
-        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
-      } ]
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getMcpServersByAgent": {
+      "description": "Retrieves MCP servers configured for a specific agent or device, including server name, URL, and last seen timestamp.",
+      "post": {
+        "summary": "POST request for endpoint /api/getMcpServersByAgent",
+        "operationId": "/api/getMcpServersByAgent-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "agentId": {
+                    "type": "string",
+                    "description": "Optional agent ID to filter MCP servers by.",
+                    "example": "agent-abc123"
+                  },
+                  "deviceId": {
+                    "type": "string",
+                    "description": "Optional device ID to filter MCP servers by.",
+                    "example": "device-xyz789"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns MCP servers for the specified agent/device.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mcpServers": {
+                      "type": "array",
+                      "description": "List of EndpointShieldServer objects.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "server-001"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Production MCP Server"
+                          },
+                          "url": {
+                            "type": "string",
+                            "example": "https://mcp.example.com"
+                          },
+                          "lastSeen": {
+                            "type": "integer",
+                            "example": 1712300000
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getAgentLogs": {
+      "description": "Fetches agent logs for a specific agent within a time range, sorted by timestamp (newest first), capped at 10,000 logs.",
+      "post": {
+        "summary": "POST request for endpoint /api/getAgentLogs",
+        "operationId": "/api/getAgentLogs-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "agentId"
+                ],
+                "properties": {
+                  "agentId": {
+                    "type": "string",
+                    "description": "Required agent ID to fetch logs for.",
+                    "example": "agent-abc123"
+                  },
+                  "startTime": {
+                    "type": "integer",
+                    "description": "Optional start timestamp in seconds (defaults to 24 hours ago).",
+                    "example": 1712214000
+                  },
+                  "endTime": {
+                    "type": "integer",
+                    "description": "Optional end timestamp in seconds (defaults to current time).",
+                    "example": 1712300000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns agent logs for the specified time range.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agentLogs": {
+                      "type": "array",
+                      "description": "List of agent log entries, sorted by timestamp (newest first).",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "timestamp": {
+                            "type": "integer",
+                            "example": 1712299500
+                          },
+                          "level": {
+                            "type": "string",
+                            "example": "INFO"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Agent processing MCP tool request"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getMcpdata": {
+      "description": "Fetches MCP-related metrics and data based on filter type, including API counts, audit alerts, and traffic analysis.",
+      "post": {
+        "summary": "POST request for endpoint /api/getMcpdata",
+        "operationId": "/api/getMcpdata-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "filterType"
+                ],
+                "properties": {
+                  "filterType": {
+                    "type": "string",
+                    "description": "Type of filter. One of: TOTAL_APIS, NEW_APIS_7_DAYS, THIRD_PARTY_APIS, RECENT_OPEN_ALERTS, CRITICAL_APIS, TOOLS, PROMPTS, RESOURCES, MCP_SERVER, TOP_3_APPLICATIONS_BY_TRAFFIC, POLICY_GUARDRAIL_APIS.",
+                    "example": "TOTAL_APIS"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns MCP data matching the filter type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mcpDataCount": {
+                      "type": "integer",
+                      "description": "Count of data matching the filter type.",
+                      "example": 127
+                    },
+                    "auditAlerts": {
+                      "type": "array",
+                      "description": "List of McpAuditInfo (only for RECENT_OPEN_ALERTS filter).",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "response": {
+                      "type": "object",
+                      "description": "Additional response data (alertDetails or topApplications depending on filter type).",
+                      "properties": {
+                        "alertDetails": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "topApplications": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/addMcpRegistryIntegration": {
+      "description": "Adds or updates MCP registry integrations with validation for duplicate names/URLs and maximum limits (10 registries max).",
+      "post": {
+        "summary": "POST request for endpoint /api/addMcpRegistryIntegration",
+        "operationId": "/api/addMcpRegistryIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "registries"
+                ],
+                "properties": {
+                  "registries": {
+                    "type": "array",
+                    "description": "List of MCP registries to add or update.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "registry-001"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "My MCP Registry"
+                        },
+                        "url": {
+                          "type": "string",
+                          "example": "https://registry.example.com"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Registry integrations added. Returns the current configuration.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mcpRegistryConfig": {
+                      "type": "object",
+                      "description": "Current MCP registry configuration with all registries.",
+                      "properties": {
+                        "registries": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "url": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/initiateMCPScan": {
+      "description": "Initiates an MCP server scan by creating an API collection and scheduling a MCP tools sync job.",
+      "post": {
+        "summary": "POST request for endpoint /api/initiateMCPScan",
+        "operationId": "/api/initiateMCPScan-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "serverUrl",
+                  "dashboardUrl"
+                ],
+                "properties": {
+                  "serverUrl": {
+                    "type": "string",
+                    "description": "Required MCP server URL to scan.",
+                    "example": "https://mcp-server.example.com"
+                  },
+                  "dashboardUrl": {
+                    "type": "string",
+                    "description": "Dashboard URL for callbacks and result reporting.",
+                    "example": "https://app.akto.io/dashboard"
+                  },
+                  "authKey": {
+                    "type": "string",
+                    "description": "Optional authentication header key.",
+                    "example": "Authorization"
+                  },
+                  "authValue": {
+                    "type": "string",
+                    "description": "Optional authentication header value.",
+                    "example": "Bearer token123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "MCP scan initiated. Returns the created or updated API collection.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "createdCollection": {
+                      "type": "object",
+                      "description": "The created or updated ApiCollection for the MCP server.",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1005
+                        },
+                        "displayName": {
+                          "type": "string",
+                          "example": "MCP Server"
+                        },
+                        "startTs": {
+                          "type": "integer",
+                          "example": 1712300000
+                        }
+                      }
+                    },
+                    "apiCollectionId": {
+                      "type": "string",
+                      "description": "ID of the created collection.",
+                      "example": "1005"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/initiateMCPRecon": {
+      "description": "Initiates MCP reconnaissance for specified IP ranges, creating a pending reconnaissance request.",
+      "post": {
+        "summary": "POST request for endpoint /api/initiateMCPRecon",
+        "operationId": "/api/initiateMCPRecon-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "ipRange"
+                ],
+                "properties": {
+                  "ipRange": {
+                    "type": "string",
+                    "description": "Required IP range(s) to perform reconnaissance on. Can be single IP or CIDR notation.",
+                    "example": "192.168.1.0/24"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "MCP reconnaissance initiated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchMcpToolsApiCalls": {
+      "description": "Fetches API calls made by MCP tools in a collection, grouping them by parent tool names.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchMcpToolsApiCalls",
+        "operationId": "/api/fetchMcpToolsApiCalls-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "apiCollectionId"
+                ],
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "description": "API collection ID containing MCP tools.",
+                    "example": 1005
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns tool API calls grouped by tool.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "description": "Map of tool name to list of API calls made by that tool.",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "object"
+                        }
+                      },
+                      "example": {
+                        "tool_1": [
+                          {
+                            "url": "/api/users",
+                            "method": "GET"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchMcpAuditInfoByCollection": {
+      "description": "Fetches MCP audit information for a specific API collection by extracting the MCP server name from hostname.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchMcpAuditInfoByCollection",
+        "operationId": "/api/fetchMcpAuditInfoByCollection-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "apiCollectionId"
+                ],
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "description": "API collection ID to fetch audit info for.",
+                    "example": 1005
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns MCP audit information for the collection.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mcpAuditInfoList": {
+                      "type": "array",
+                      "description": "List of McpAuditInfo records (max 1,000 records).",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "audit-001"
+                          },
+                          "server": {
+                            "type": "string",
+                            "example": "mcp-server"
+                          },
+                          "timestamp": {
+                            "type": "integer",
+                            "example": 1712300000
+                          },
+                          "action": {
+                            "type": "string",
+                            "example": "API_CALL"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/createAgentRun": {
+      "description": "Creates a new agent run with initialization data, checking for existing running agents and validating the model.",
+      "post": {
+        "summary": "POST request for endpoint /api/createAgentRun",
+        "operationId": "/api/createAgentRun-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "agent",
+                  "data"
+                ],
+                "properties": {
+                  "agent": {
+                    "type": "string",
+                    "description": "Required agent type/name. Must be a valid Agent enum value.",
+                    "example": "DISCOVERY_AGENT"
+                  },
+                  "data": {
+                    "type": "object",
+                    "description": "Agent initialization document with configuration.",
+                    "example": {
+                      "apiCollectionId": 1001,
+                      "depth": 2
+                    }
+                  },
+                  "modelName": {
+                    "type": "string",
+                    "description": "Optional AI model name to use. Defaults to AKTO_AGENT_MODEL.",
+                    "example": "gpt-4o"
+                  },
+                  "githubAccessToken": {
+                    "type": "string",
+                    "description": "Optional GitHub token for source code agents.",
+                    "example": "ghp_xxxxxx"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent run created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agentRun": {
+                      "type": "object",
+                      "description": "Created AgentRun object.",
+                      "properties": {
+                        "processId": {
+                          "type": "string",
+                          "example": "proc-12345"
+                        },
+                        "agent": {
+                          "type": "string",
+                          "example": "DISCOVERY_AGENT"
+                        },
+                        "state": {
+                          "type": "string",
+                          "example": "SCHEDULED"
+                        },
+                        "createdTs": {
+                          "type": "integer",
+                          "example": 1712300000
+                        },
+                        "startedTs": {
+                          "type": "integer",
+                          "example": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/updateAgentRun": {
+      "description": "Updates the state of an agent run, setting appropriate timestamps for RUNNING and COMPLETED states.",
+      "post": {
+        "summary": "POST request for endpoint /api/updateAgentRun",
+        "operationId": "/api/updateAgentRun-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId",
+                  "state"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Process ID of agent run to update.",
+                    "example": "proc-12345"
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "New state for the agent.",
+                    "example": "RUNNING"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent run state updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agentRun": {
+                      "type": "object",
+                      "description": "Updated AgentRun object with new state and timestamps.",
+                      "properties": {
+                        "processId": {
+                          "type": "string",
+                          "example": "proc-12345"
+                        },
+                        "state": {
+                          "type": "string",
+                          "example": "RUNNING"
+                        },
+                        "startedTs": {
+                          "type": "integer",
+                          "example": 1712300100
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/deleteAgentRun": {
+      "description": "Deletes an agent run (only allowed for SCHEDULED, RUNNING, or STOPPED states) and associated subprocesses.",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteAgentRun",
+        "operationId": "/api/deleteAgentRun-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Process ID of agent run to delete.",
+                    "example": "proc-12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent run deleted successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getAllAgentRuns": {
+      "description": "Fetches all currently running agent runs, with special handling for discovery agents.",
+      "post": {
+        "summary": "POST request for endpoint /api/getAllAgentRuns",
+        "operationId": "/api/getAllAgentRuns-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "agent": {
+                    "type": "string",
+                    "description": "Optional agent type to filter by (e.g., DISCOVERY_AGENT uses different DAO).",
+                    "example": "DISCOVERY_AGENT"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns all running agent runs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agentRuns": {
+                      "type": "array",
+                      "description": "Running agent runs with excluded model and private data.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "processId": {
+                            "type": "string",
+                            "example": "proc-12345"
+                          },
+                          "agent": {
+                            "type": "string",
+                            "example": "DISCOVERY_AGENT"
+                          },
+                          "state": {
+                            "type": "string",
+                            "example": "RUNNING"
+                          },
+                          "createdTs": {
+                            "type": "integer",
+                            "example": 1712300000
+                          }
+                        }
+                      }
+                    },
+                    "discoveryAgentRuns": {
+                      "type": "array",
+                      "description": "For discovery agents only; empty for other agent types.",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getAllAgentRunsObject": {
+      "description": "Fetches all agent runs (any state) for a specific agent type.",
+      "post": {
+        "summary": "POST request for endpoint /api/getAllAgentRunsObject",
+        "operationId": "/api/getAllAgentRunsObject-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "agent"
+                ],
+                "properties": {
+                  "agent": {
+                    "type": "string",
+                    "description": "Required agent type to filter by.",
+                    "example": "DISCOVERY_AGENT"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns all agent runs for the specified type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agentRuns": {
+                      "type": "array",
+                      "description": "All agent runs (any state) of specified type.",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getMemberAgents": {
+      "description": "Returns all available agent types/modules from the Agent enum.",
+      "post": {
+        "summary": "POST request for endpoint /api/getMemberAgents",
+        "operationId": "/api/getMemberAgents-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "No request body required."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns all available agent types.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agents": {
+                      "type": "array",
+                      "description": "Array of all available Agent enum values.",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "DISCOVERY_AGENT",
+                        "CODE_ANALYSIS_AGENT",
+                        "THREAT_MODELING_AGENT"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getAgentModels": {
+      "description": "Fetches all configured AI models for agents, excluding sensitive parameter data.",
+      "post": {
+        "summary": "POST request for endpoint /api/getAgentModels",
+        "operationId": "/api/getAgentModels-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "No request body required."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns all configured AI models.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "models": {
+                      "type": "array",
+                      "description": "Custom models plus the default AKTO_AGENT_MODEL.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "example": "gpt-4o"
+                          },
+                          "model": {
+                            "type": "string",
+                            "example": "gpt-4o"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "OPENAI"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getAllSubProcesses": {
+      "description": "Fetches all subprocesses for an agent run, with special handling for discovery agents.",
+      "post": {
+        "summary": "POST request for endpoint /api/getAllSubProcesses",
+        "operationId": "/api/getAllSubProcesses-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId",
+                  "agent"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Process ID of agent run.",
+                    "example": "proc-12345"
+                  },
+                  "agent": {
+                    "type": "string",
+                    "description": "Agent type to determine which DAO to use.",
+                    "example": "DISCOVERY_AGENT"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns all subprocesses for the agent run.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subProcesses": {
+                      "type": "array",
+                      "description": "List of AgentSubProcessSingleAttempt objects.",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "discoverySubProcesses": {
+                      "type": "array",
+                      "description": "For discovery agents only.",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getSubProcess": {
+      "description": "Fetches details of a specific subprocess attempt.",
+      "post": {
+        "summary": "POST request for endpoint /api/getSubProcess",
+        "operationId": "/api/getSubProcess-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId",
+                  "subProcessId",
+                  "attemptId"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Process ID of agent run.",
+                    "example": "proc-12345"
+                  },
+                  "subProcessId": {
+                    "type": "string",
+                    "description": "Sub-process ID.",
+                    "example": "sub-001"
+                  },
+                  "attemptId": {
+                    "type": "integer",
+                    "description": "Attempt ID.",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns subprocess details.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subprocess": {
+                      "type": "object",
+                      "description": "AgentSubProcessSingleAttempt object with details of the subprocess.",
+                      "properties": {
+                        "processId": {
+                          "type": "string",
+                          "example": "proc-12345"
+                        },
+                        "subProcessId": {
+                          "type": "string",
+                          "example": "sub-001"
+                        },
+                        "attemptId": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "state": {
+                          "type": "string",
+                          "example": "COMPLETED"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/updateAgentSubprocess": {
+      "description": "Updates subprocess state, heading, and user input with upsert behavior and validation. RE_ATTEMPT state is only allowed if current state is COMPLETED.",
+      "post": {
+        "summary": "POST request for endpoint /api/updateAgentSubprocess",
+        "operationId": "/api/updateAgentSubprocess-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId",
+                  "subProcessId",
+                  "attemptId",
+                  "state"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Process ID of agent run.",
+                    "example": "proc-12345"
+                  },
+                  "subProcessId": {
+                    "type": "string",
+                    "description": "Sub-process ID.",
+                    "example": "sub-001"
+                  },
+                  "attemptId": {
+                    "type": "integer",
+                    "description": "Attempt ID.",
+                    "example": 1
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "New state. Allowed: ACCEPTED, DISCARDED, RE_ATTEMPT (only if current is COMPLETED).",
+                    "example": "ACCEPTED"
+                  },
+                  "subProcessHeading": {
+                    "type": "string",
+                    "description": "Optional subprocess heading to update.",
+                    "example": "Validate API endpoints"
+                  },
+                  "data": {
+                    "type": "object",
+                    "description": "Optional user input data.",
+                    "example": {
+                      "feedback": "approved"
+                    }
+                  },
+                  "agent": {
+                    "type": "string",
+                    "description": "Agent type (for discovery agent handling).",
+                    "example": "DISCOVERY_AGENT"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Subprocess updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subprocess": {
+                      "type": "object",
+                      "description": "Updated AgentSubProcessSingleAttempt.",
+                      "properties": {
+                        "state": {
+                          "type": "string",
+                          "example": "ACCEPTED"
+                        },
+                        "subProcessHeading": {
+                          "type": "string",
+                          "example": "Validate API endpoints"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/updateStateOfDiscoveryAgentRun": {
+      "description": "Updates state and optionally results for a discovery agent run.",
+      "post": {
+        "summary": "POST request for endpoint /api/updateStateOfDiscoveryAgentRun",
+        "operationId": "/api/updateStateOfDiscoveryAgentRun-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId",
+                  "state"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Discovery agent run process ID.",
+                    "example": "proc-12345"
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "New state for the discovery agent run.",
+                    "example": "COMPLETED"
+                  },
+                  "results": {
+                    "type": "object",
+                    "description": "Optional discovery results to store.",
+                    "example": {
+                      "findings": 5,
+                      "status": "success"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Discovery agent run state updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "success"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/createSubProcessNew": {
+      "description": "Creates a new discovery subprocess with user input data for hostname and auth token.",
+      "post": {
+        "summary": "POST request for endpoint /api/createSubProcessNew",
+        "operationId": "/api/createSubProcessNew-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId",
+                  "hostname",
+                  "authToken"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Discovery agent run process ID.",
+                    "example": "proc-12345"
+                  },
+                  "hostname": {
+                    "type": "string",
+                    "description": "Target hostname to discover.",
+                    "example": "api.example.com"
+                  },
+                  "authToken": {
+                    "type": "string",
+                    "description": "Authentication token for the hostname.",
+                    "example": "Bearer token123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Discovery subprocess created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "success"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchAllResponsesForApiCollectionOrdered": {
+      "description": "Fetches sample response data for APIs in a collection with pagination, ordered by ID descending.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchAllResponsesForApiCollectionOrdered",
+        "operationId": "/api/fetchAllResponsesForApiCollectionOrdered-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "apiCollectionId"
+                ],
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "description": "API collection ID.",
+                    "example": 1001
+                  },
+                  "skip": {
+                    "type": "integer",
+                    "description": "Skip count for pagination (clamped to >= 0).",
+                    "example": 0
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "description": "Result limit (clamped to 1-10).",
+                    "example": 5
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns sample response data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sample": {
+                      "type": "object",
+                      "description": "First sample from paginated results ordered by ID descending.",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "sample-001"
+                        },
+                        "responseCode": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "responseBody": {
+                          "type": "string",
+                          "example": "{\"data\":[]}"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getFileForDiscovery": {
+      "description": "Retrieves compressed file content for discovery agent, validating it's referenced in agent init document.",
+      "post": {
+        "summary": "POST request for endpoint /api/getFileForDiscovery",
+        "operationId": "/api/getFileForDiscovery-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "agentProcessId",
+                  "fileId"
+                ],
+                "properties": {
+                  "agentProcessId": {
+                    "type": "string",
+                    "description": "Discovery agent run process ID.",
+                    "example": "proc-12345"
+                  },
+                  "fileId": {
+                    "type": "string",
+                    "description": "File ID to retrieve.",
+                    "example": "file-xyz"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns compressed file content.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "compressedContent": {
+                      "type": "string",
+                      "description": "Compressed file content (gzip format).",
+                      "example": "H4sIAERAJGYC/zWPwQqCQBCGXzVcvRskLYmibmFBEUgX6QhFCSlopGYpLYmibvPn7ot06isI33wz00CJxplQaxzidYtQZaLsTppGtf0AAAD//wMAUZN82FAAAAA="
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/saveVulnerabilities": {
+      "description": "Saves source code vulnerabilities found by agent to the database.",
+      "post": {
+        "summary": "POST request for endpoint /api/saveVulnerabilities",
+        "operationId": "/api/saveVulnerabilities-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "vulnerabilities",
+                  "agentProcessId",
+                  "totalApisScanned"
+                ],
+                "properties": {
+                  "vulnerabilities": {
+                    "type": "array",
+                    "description": "List of vulnerabilities with id and output fields.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "vuln-001"
+                        },
+                        "output": {
+                          "type": "string",
+                          "example": "SQL injection vulnerability found"
+                        }
+                      }
+                    }
+                  },
+                  "agentProcessId": {
+                    "type": "string",
+                    "description": "Agent process ID.",
+                    "example": "proc-12345"
+                  },
+                  "totalApisScanned": {
+                    "type": "integer",
+                    "description": "Total APIs scanned.",
+                    "example": 250
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Vulnerabilities saved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/createSensitiveResponseDataTypes": {
+      "description": "Asynchronously creates custom sensitive data types from detected data keys.",
+      "post": {
+        "summary": "POST request for endpoint /api/createSensitiveResponseDataTypes",
+        "operationId": "/api/createSensitiveResponseDataTypes-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "dataTypeKeys"
+                ],
+                "properties": {
+                  "dataTypeKeys": {
+                    "type": "array",
+                    "description": "List of data type keys to create as custom data types.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "ssn",
+                      "credit_card",
+                      "email"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data types creation scheduled asynchronously.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Empty response body on success; processing happens asynchronously."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/feedDataToAgent": {
+      "description": "Polling endpoint for agent to get initialization data or next subprocess task.",
+      "post": {
+        "summary": "POST request for endpoint /api/feedDataToAgent",
+        "operationId": "/api/feedDataToAgent-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "No request body required."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns initialization data or next subprocess task for the agent.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "description": "Response containing type and data for agent.",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "description": "Either 'init' or 'subTask'.",
+                          "example": "init"
+                        },
+                        "data": {
+                          "type": "object",
+                          "description": "Initialization or subprocess task data.",
+                          "example": {
+                            "apiCollectionId": 1001
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/feedDiscoveryDataToAgent": {
+      "description": "Polling endpoint for discovery agent to get initialization or next discovery subprocess task.",
+      "post": {
+        "summary": "POST request for endpoint /api/feedDiscoveryDataToAgent",
+        "operationId": "/api/feedDiscoveryDataToAgent-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Optional discovery agent process ID.",
+                    "example": "proc-12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns initialization or discovery subprocess task data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "description": "Response containing type, data, and optional apiToken.",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "init"
+                        },
+                        "data": {
+                          "type": "object",
+                          "example": {
+                            "hostname": "api.example.com"
+                          }
+                        },
+                        "apiToken": {
+                          "type": "string",
+                          "description": "Optional API token for discovery.",
+                          "example": "token123"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getAllAgentRunningDetails": {
+      "description": "Fetches complete agent run and all its subprocesses for reboot/recovery scenarios.",
+      "post": {
+        "summary": "POST request for endpoint /api/getAllAgentRunningDetails",
+        "operationId": "/api/getAllAgentRunningDetails-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Agent run process ID.",
+                    "example": "proc-12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns complete agent run details for reboot.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "initForReboot"
+                        },
+                        "data": {
+                          "type": "object",
+                          "description": "Complete agentRun object."
+                        },
+                        "allSubProcesses": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          },
+                          "description": "All subprocesses for the run."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/receiveDataFromAgent": {
+      "description": "Receives various types of data updates from running agents, handling logs, state changes, HAR data, and API dependencies.",
+      "post": {
+        "summary": "POST request for endpoint /api/receiveDataFromAgent",
+        "operationId": "/api/receiveDataFromAgent-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId",
+                  "subProcessId",
+                  "attemptId",
+                  "type",
+                  "agent"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Process ID.",
+                    "example": "proc-12345"
+                  },
+                  "subProcessId": {
+                    "type": "string",
+                    "description": "Sub-process ID.",
+                    "example": "sub-001"
+                  },
+                  "attemptId": {
+                    "type": "integer",
+                    "description": "Attempt ID.",
+                    "example": 1
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "Data type. One of: logs, stateChange, subProcessHeading, batchedData, logs_discovery, error_request, increment_processed_apis, metadata_discovery, harData, api_dependencies.",
+                    "example": "logs"
+                  },
+                  "agent": {
+                    "type": "string",
+                    "description": "Agent type.",
+                    "example": "DISCOVERY_AGENT"
+                  },
+                  "logs": {
+                    "type": "array",
+                    "description": "Agent logs (for type 'logs').",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "New state (for type 'stateChange').",
+                    "example": "COMPLETED"
+                  },
+                  "data": {
+                    "type": "object",
+                    "description": "Type-specific data.",
+                    "example": {
+                      "key": "value"
+                    }
+                  },
+                  "subProcessHeading": {
+                    "type": "string",
+                    "description": "Heading (for type 'subProcessHeading').",
+                    "example": "Scanning APIs"
+                  },
+                  "currentProcessingUrlInDiscoveryFromAgent": {
+                    "type": "string",
+                    "description": "Current URL being processed.",
+                    "example": "https://api.example.com/users"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data received and processed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "string",
+                          "example": "200 ok"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/updateAgentHealthCheck": {
+      "description": "Updates agent health check status with instance ID, version, and process information.",
+      "post": {
+        "summary": "POST request for endpoint /api/updateAgentHealthCheck",
+        "operationId": "/api/updateAgentHealthCheck-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "instanceId",
+                  "version",
+                  "processId"
+                ],
+                "properties": {
+                  "instanceId": {
+                    "type": "string",
+                    "description": "Agent instance ID.",
+                    "example": "instance-001"
+                  },
+                  "version": {
+                    "type": "string",
+                    "description": "Agent version.",
+                    "example": "1.0.0"
+                  },
+                  "processId": {
+                    "type": "string",
+                    "description": "Process ID being executed.",
+                    "example": "proc-12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Health check status updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/checkAgentRunModule": {
+      "description": "Checks if an agent process is currently running on any module.",
+      "post": {
+        "summary": "POST request for endpoint /api/checkAgentRunModule",
+        "operationId": "/api/checkAgentRunModule-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Process ID to check.",
+                    "example": "proc-12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns whether the agent is running.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agentRunningOnModule": {
+                      "type": "boolean",
+                      "description": "Whether the agent is running on any module.",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/saveAgentModel": {
+      "description": "Saves a new AI model configuration with type-specific validation.",
+      "post": {
+        "summary": "POST request for endpoint /api/saveAgentModel",
+        "operationId": "/api/saveAgentModel-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "model",
+                  "type"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Model name (required, must be unique).",
+                    "example": "gpt-4o"
+                  },
+                  "model": {
+                    "type": "string",
+                    "description": "Model identifier (e.g., 'gpt-4o', 'claude-3').",
+                    "example": "gpt-4o"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "Model type. One of: OPENAI, AZURE_OPENAI, ANTHROPIC, OLLAMA, DATABRICKS.",
+                    "example": "OPENAI"
+                  },
+                  "apiKey": {
+                    "type": "string",
+                    "description": "API key (not required for OLLAMA).",
+                    "example": "sk-xxxxxxx"
+                  },
+                  "azureOpenAIEndpoint": {
+                    "type": "string",
+                    "description": "Required for AZURE_OPENAI type.",
+                    "example": "https://myresource.openai.azure.com"
+                  },
+                  "ollamaAIEndpoint": {
+                    "type": "string",
+                    "description": "Required for OLLAMA type.",
+                    "example": "http://localhost:11434"
+                  },
+                  "databricksEndpoint": {
+                    "type": "string",
+                    "description": "Required for DATABRICKS type.",
+                    "example": "https://mybricks.databricks.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Model saved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/deleteAgentModel": {
+      "description": "Deletes an agent model by name with audit logging.",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteAgentModel",
+        "operationId": "/api/deleteAgentModel-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Model name to delete (must exist).",
+                    "example": "gpt-4o"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Model deleted successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/initiateAIAgentConnectorImport": {
+      "description": "Initiates a recurring import job for AI agent connector data with connector-specific validation and configuration.",
+      "post": {
+        "summary": "POST request for endpoint /api/initiateAIAgentConnectorImport",
+        "operationId": "/api/initiateAIAgentConnectorImport-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "connectorType",
+                  "dataIngestionUrl"
+                ],
+                "properties": {
+                  "connectorType": {
+                    "type": "string",
+                    "description": "Connector type. One of: N8N, LANGCHAIN, COPILOT_STUDIO, SNOWFLAKE, DATABRICKS, VERTEX_AI_CUSTOM_DEPLOYED_MODEL, SALESFORCE.",
+                    "example": "N8N"
+                  },
+                  "dataIngestionUrl": {
+                    "type": "string",
+                    "description": "Required data ingestion service URL.",
+                    "example": "https://ingest.example.com"
+                  },
+                  "recurringIntervalSeconds": {
+                    "type": "integer",
+                    "description": "Optional recurring interval in seconds (defaults to 3600).",
+                    "example": 3600
+                  },
+                  "n8nUrl": {
+                    "type": "string",
+                    "description": "Required for N8N connector.",
+                    "example": "https://n8n.example.com"
+                  },
+                  "n8nApiKey": {
+                    "type": "string",
+                    "description": "Required for N8N connector.",
+                    "example": "n8n_key_xxxxxxx"
+                  },
+                  "langsmithUrl": {
+                    "type": "string",
+                    "description": "Required for LANGCHAIN connector.",
+                    "example": "https://api.smith.langchain.com"
+                  },
+                  "langsmithApiKey": {
+                    "type": "string",
+                    "description": "Required for LANGCHAIN connector.",
+                    "example": "ls_key_xxxxxxx"
+                  },
+                  "dataverseEnvironmentUrl": {
+                    "type": "string",
+                    "description": "Required for COPILOT_STUDIO connector.",
+                    "example": "https://org.crm.dynamics.com"
+                  },
+                  "dataverseTenantId": {
+                    "type": "string",
+                    "description": "Required for COPILOT_STUDIO connector."
+                  },
+                  "dataverseClientId": {
+                    "type": "string",
+                    "description": "Required for COPILOT_STUDIO connector."
+                  },
+                  "dataverseClientSecret": {
+                    "type": "string",
+                    "description": "Required for COPILOT_STUDIO connector."
+                  },
+                  "snowflakeAccountUrl": {
+                    "type": "string",
+                    "description": "Required for SNOWFLAKE connector.",
+                    "example": "https://xy12345.us-east-1.snowflakecomputing.com"
+                  },
+                  "snowflakeAuthType": {
+                    "type": "string",
+                    "description": "SNOWFLAKE auth type: PASSWORD, TOKEN, KEYPAIR.",
+                    "example": "PASSWORD"
+                  },
+                  "snowflakeUsername": {
+                    "type": "string",
+                    "description": "SNOWFLAKE username."
+                  },
+                  "snowflakePassword": {
+                    "type": "string",
+                    "description": "SNOWFLAKE password (for PASSWORD auth)."
+                  },
+                  "snowflakeToken": {
+                    "type": "string",
+                    "description": "SNOWFLAKE token (for TOKEN auth)."
+                  },
+                  "snowflakePrivateKey": {
+                    "type": "string",
+                    "description": "SNOWFLAKE private key (for KEYPAIR auth)."
+                  },
+                  "snowflakePrivateKeyPassphrase": {
+                    "type": "string",
+                    "description": "SNOWFLAKE private key passphrase (for KEYPAIR auth)."
+                  },
+                  "snowflakeWarehouse": {
+                    "type": "string",
+                    "description": "SNOWFLAKE warehouse name."
+                  },
+                  "snowflakeDatabase": {
+                    "type": "string",
+                    "description": "SNOWFLAKE database name."
+                  },
+                  "snowflakeSchema": {
+                    "type": "string",
+                    "description": "SNOWFLAKE schema name."
+                  },
+                  "databricksHost": {
+                    "type": "string",
+                    "description": "Required for DATABRICKS connector.",
+                    "example": "https://xy12345.cloud.databricks.com"
+                  },
+                  "databricksClientId": {
+                    "type": "string",
+                    "description": "Required for DATABRICKS connector."
+                  },
+                  "databricksClientSecret": {
+                    "type": "string",
+                    "description": "Required for DATABRICKS connector."
+                  },
+                  "databricksCatalog": {
+                    "type": "string",
+                    "description": "DATABRICKS catalog name."
+                  },
+                  "databricksSchema": {
+                    "type": "string",
+                    "description": "DATABRICKS schema name."
+                  },
+                  "databricksPrefix": {
+                    "type": "string",
+                    "description": "DATABRICKS table prefix."
+                  },
+                  "vertexAIProjectId": {
+                    "type": "string",
+                    "description": "Required for VERTEX_AI_CUSTOM_DEPLOYED_MODEL.",
+                    "example": "my-gcp-project"
+                  },
+                  "vertexAIBigQueryDataset": {
+                    "type": "string",
+                    "description": "VERTEX_AI BigQuery dataset."
+                  },
+                  "vertexAIBigQueryTable": {
+                    "type": "string",
+                    "description": "VERTEX_AI BigQuery table."
+                  },
+                  "vertexAIJsonAuthFilePath": {
+                    "type": "string",
+                    "description": "Path to VERTEX_AI JSON auth file."
+                  },
+                  "salesforceUrl": {
+                    "type": "string",
+                    "description": "Required for SALESFORCE connector.",
+                    "example": "https://my-org.salesforce.com"
+                  },
+                  "salesforceConsumerKey": {
+                    "type": "string",
+                    "description": "Required for SALESFORCE connector."
+                  },
+                  "salesforceConsumerSecret": {
+                    "type": "string",
+                    "description": "Required for SALESFORCE connector."
+                  },
+                  "ingestionApiKey": {
+                    "type": "string",
+                    "description": "API key for data ingestion service."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Import job created and scheduled.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jobId": {
+                      "type": "string",
+                      "description": "Created job ID in hex format.",
+                      "example": "64b1f2c3a4e5d6f7b8c9d0e1"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getMcpServersByAgent": {
+      "description": "Retrieves MCP servers configured for a specific agent or device, including server name, URL, and last seen timestamp.",
+      "post": {
+        "summary": "POST request for endpoint /api/getMcpServersByAgent",
+        "operationId": "/api/getMcpServersByAgent-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "agentId": {
+                    "type": "string",
+                    "description": "Optional agent ID to filter MCP servers by.",
+                    "example": "agent-abc123"
+                  },
+                  "deviceId": {
+                    "type": "string",
+                    "description": "Optional device ID to filter MCP servers by.",
+                    "example": "device-xyz789"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns MCP servers for the specified agent/device.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mcpServers": {
+                      "type": "array",
+                      "description": "List of EndpointShieldServer objects.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "server-001"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Production MCP Server"
+                          },
+                          "url": {
+                            "type": "string",
+                            "example": "https://mcp.example.com"
+                          },
+                          "lastSeen": {
+                            "type": "integer",
+                            "example": 1712300000
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getAgentLogs": {
+      "description": "Fetches agent logs for a specific agent within a time range, sorted by timestamp (newest first), capped at 10,000 logs.",
+      "post": {
+        "summary": "POST request for endpoint /api/getAgentLogs",
+        "operationId": "/api/getAgentLogs-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "agentId"
+                ],
+                "properties": {
+                  "agentId": {
+                    "type": "string",
+                    "description": "Required agent ID to fetch logs for.",
+                    "example": "agent-abc123"
+                  },
+                  "startTime": {
+                    "type": "integer",
+                    "description": "Optional start timestamp in seconds (defaults to 24 hours ago).",
+                    "example": 1712214000
+                  },
+                  "endTime": {
+                    "type": "integer",
+                    "description": "Optional end timestamp in seconds (defaults to current time).",
+                    "example": 1712300000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns agent logs for the specified time range.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agentLogs": {
+                      "type": "array",
+                      "description": "List of agent log entries, sorted by timestamp (newest first).",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "timestamp": {
+                            "type": "integer",
+                            "example": 1712299500
+                          },
+                          "level": {
+                            "type": "string",
+                            "example": "INFO"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Agent processing MCP tool request"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getMcpdata": {
+      "description": "Fetches MCP-related metrics and data based on filter type, including API counts, audit alerts, and traffic analysis.",
+      "post": {
+        "summary": "POST request for endpoint /api/getMcpdata",
+        "operationId": "/api/getMcpdata-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "filterType"
+                ],
+                "properties": {
+                  "filterType": {
+                    "type": "string",
+                    "description": "Type of filter. One of: TOTAL_APIS, NEW_APIS_7_DAYS, THIRD_PARTY_APIS, RECENT_OPEN_ALERTS, CRITICAL_APIS, TOOLS, PROMPTS, RESOURCES, MCP_SERVER, TOP_3_APPLICATIONS_BY_TRAFFIC, POLICY_GUARDRAIL_APIS.",
+                    "example": "TOTAL_APIS"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns MCP data matching the filter type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mcpDataCount": {
+                      "type": "integer",
+                      "description": "Count of data matching the filter type.",
+                      "example": 127
+                    },
+                    "auditAlerts": {
+                      "type": "array",
+                      "description": "List of McpAuditInfo (only for RECENT_OPEN_ALERTS filter).",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "response": {
+                      "type": "object",
+                      "description": "Additional response data (alertDetails or topApplications depending on filter type).",
+                      "properties": {
+                        "alertDetails": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "topApplications": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/addMcpRegistryIntegration": {
+      "description": "Adds or updates MCP registry integrations with validation for duplicate names/URLs and maximum limits (10 registries max).",
+      "post": {
+        "summary": "POST request for endpoint /api/addMcpRegistryIntegration",
+        "operationId": "/api/addMcpRegistryIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "registries"
+                ],
+                "properties": {
+                  "registries": {
+                    "type": "array",
+                    "description": "List of MCP registries to add or update.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "registry-001"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "My MCP Registry"
+                        },
+                        "url": {
+                          "type": "string",
+                          "example": "https://registry.example.com"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Registry integrations added. Returns the current configuration.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mcpRegistryConfig": {
+                      "type": "object",
+                      "description": "Current MCP registry configuration with all registries.",
+                      "properties": {
+                        "registries": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "url": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/initiateMCPScan": {
+      "description": "Initiates an MCP server scan by creating an API collection and scheduling a MCP tools sync job.",
+      "post": {
+        "summary": "POST request for endpoint /api/initiateMCPScan",
+        "operationId": "/api/initiateMCPScan-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "serverUrl",
+                  "dashboardUrl"
+                ],
+                "properties": {
+                  "serverUrl": {
+                    "type": "string",
+                    "description": "Required MCP server URL to scan.",
+                    "example": "https://mcp-server.example.com"
+                  },
+                  "dashboardUrl": {
+                    "type": "string",
+                    "description": "Dashboard URL for callbacks and result reporting.",
+                    "example": "https://app.akto.io/dashboard"
+                  },
+                  "authKey": {
+                    "type": "string",
+                    "description": "Optional authentication header key.",
+                    "example": "Authorization"
+                  },
+                  "authValue": {
+                    "type": "string",
+                    "description": "Optional authentication header value.",
+                    "example": "Bearer token123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "MCP scan initiated. Returns the created or updated API collection.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "createdCollection": {
+                      "type": "object",
+                      "description": "The created or updated ApiCollection for the MCP server.",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1005
+                        },
+                        "displayName": {
+                          "type": "string",
+                          "example": "MCP Server"
+                        },
+                        "startTs": {
+                          "type": "integer",
+                          "example": 1712300000
+                        }
+                      }
+                    },
+                    "apiCollectionId": {
+                      "type": "string",
+                      "description": "ID of the created collection.",
+                      "example": "1005"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/initiateMCPRecon": {
+      "description": "Initiates MCP reconnaissance for specified IP ranges, creating a pending reconnaissance request.",
+      "post": {
+        "summary": "POST request for endpoint /api/initiateMCPRecon",
+        "operationId": "/api/initiateMCPRecon-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "ipRange"
+                ],
+                "properties": {
+                  "ipRange": {
+                    "type": "string",
+                    "description": "Required IP range(s) to perform reconnaissance on. Can be single IP or CIDR notation.",
+                    "example": "192.168.1.0/24"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "MCP reconnaissance initiated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchMcpToolsApiCalls": {
+      "description": "Fetches API calls made by MCP tools in a collection, grouping them by parent tool names.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchMcpToolsApiCalls",
+        "operationId": "/api/fetchMcpToolsApiCalls-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "apiCollectionId"
+                ],
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "description": "API collection ID containing MCP tools.",
+                    "example": 1005
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns tool API calls grouped by tool.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "description": "Map of tool name to list of API calls made by that tool.",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "object"
+                        }
+                      },
+                      "example": {
+                        "tool_1": [
+                          {
+                            "url": "/api/users",
+                            "method": "GET"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchMcpAuditInfoByCollection": {
+      "description": "Fetches MCP audit information for a specific API collection by extracting the MCP server name from hostname.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchMcpAuditInfoByCollection",
+        "operationId": "/api/fetchMcpAuditInfoByCollection-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "apiCollectionId"
+                ],
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "description": "API collection ID to fetch audit info for.",
+                    "example": 1005
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns MCP audit information for the collection.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mcpAuditInfoList": {
+                      "type": "array",
+                      "description": "List of McpAuditInfo records (max 1,000 records).",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "audit-001"
+                          },
+                          "server": {
+                            "type": "string",
+                            "example": "mcp-server"
+                          },
+                          "timestamp": {
+                            "type": "integer",
+                            "example": 1712300000
+                          },
+                          "action": {
+                            "type": "string",
+                            "example": "API_CALL"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/createAgentRun": {
+      "description": "Creates a new agent run with initialization data, checking for existing running agents and validating the model.",
+      "post": {
+        "summary": "POST request for endpoint /api/createAgentRun",
+        "operationId": "/api/createAgentRun-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "agent",
+                  "data"
+                ],
+                "properties": {
+                  "agent": {
+                    "type": "string",
+                    "description": "Required agent type/name. Must be a valid Agent enum value.",
+                    "example": "DISCOVERY_AGENT"
+                  },
+                  "data": {
+                    "type": "object",
+                    "description": "Agent initialization document with configuration.",
+                    "example": {
+                      "apiCollectionId": 1001,
+                      "depth": 2
+                    }
+                  },
+                  "modelName": {
+                    "type": "string",
+                    "description": "Optional AI model name to use. Defaults to AKTO_AGENT_MODEL.",
+                    "example": "gpt-4o"
+                  },
+                  "githubAccessToken": {
+                    "type": "string",
+                    "description": "Optional GitHub token for source code agents.",
+                    "example": "ghp_xxxxxx"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent run created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agentRun": {
+                      "type": "object",
+                      "description": "Created AgentRun object.",
+                      "properties": {
+                        "processId": {
+                          "type": "string",
+                          "example": "proc-12345"
+                        },
+                        "agent": {
+                          "type": "string",
+                          "example": "DISCOVERY_AGENT"
+                        },
+                        "state": {
+                          "type": "string",
+                          "example": "SCHEDULED"
+                        },
+                        "createdTs": {
+                          "type": "integer",
+                          "example": 1712300000
+                        },
+                        "startedTs": {
+                          "type": "integer",
+                          "example": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/updateAgentRun": {
+      "description": "Updates the state of an agent run, setting appropriate timestamps for RUNNING and COMPLETED states.",
+      "post": {
+        "summary": "POST request for endpoint /api/updateAgentRun",
+        "operationId": "/api/updateAgentRun-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId",
+                  "state"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Process ID of agent run to update.",
+                    "example": "proc-12345"
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "New state for the agent.",
+                    "example": "RUNNING"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent run state updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agentRun": {
+                      "type": "object",
+                      "description": "Updated AgentRun object with new state and timestamps.",
+                      "properties": {
+                        "processId": {
+                          "type": "string",
+                          "example": "proc-12345"
+                        },
+                        "state": {
+                          "type": "string",
+                          "example": "RUNNING"
+                        },
+                        "startedTs": {
+                          "type": "integer",
+                          "example": 1712300100
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/deleteAgentRun": {
+      "description": "Deletes an agent run (only allowed for SCHEDULED, RUNNING, or STOPPED states) and associated subprocesses.",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteAgentRun",
+        "operationId": "/api/deleteAgentRun-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Process ID of agent run to delete.",
+                    "example": "proc-12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent run deleted successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getAllAgentRuns": {
+      "description": "Fetches all currently running agent runs, with special handling for discovery agents.",
+      "post": {
+        "summary": "POST request for endpoint /api/getAllAgentRuns",
+        "operationId": "/api/getAllAgentRuns-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "agent": {
+                    "type": "string",
+                    "description": "Optional agent type to filter by (e.g., DISCOVERY_AGENT uses different DAO).",
+                    "example": "DISCOVERY_AGENT"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns all running agent runs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agentRuns": {
+                      "type": "array",
+                      "description": "Running agent runs with excluded model and private data.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "processId": {
+                            "type": "string",
+                            "example": "proc-12345"
+                          },
+                          "agent": {
+                            "type": "string",
+                            "example": "DISCOVERY_AGENT"
+                          },
+                          "state": {
+                            "type": "string",
+                            "example": "RUNNING"
+                          },
+                          "createdTs": {
+                            "type": "integer",
+                            "example": 1712300000
+                          }
+                        }
+                      }
+                    },
+                    "discoveryAgentRuns": {
+                      "type": "array",
+                      "description": "For discovery agents only; empty for other agent types.",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getAllAgentRunsObject": {
+      "description": "Fetches all agent runs (any state) for a specific agent type.",
+      "post": {
+        "summary": "POST request for endpoint /api/getAllAgentRunsObject",
+        "operationId": "/api/getAllAgentRunsObject-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "agent"
+                ],
+                "properties": {
+                  "agent": {
+                    "type": "string",
+                    "description": "Required agent type to filter by.",
+                    "example": "DISCOVERY_AGENT"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns all agent runs for the specified type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agentRuns": {
+                      "type": "array",
+                      "description": "All agent runs (any state) of specified type.",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getMemberAgents": {
+      "description": "Returns all available agent types/modules from the Agent enum.",
+      "post": {
+        "summary": "POST request for endpoint /api/getMemberAgents",
+        "operationId": "/api/getMemberAgents-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "No request body required."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns all available agent types.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agents": {
+                      "type": "array",
+                      "description": "Array of all available Agent enum values.",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "DISCOVERY_AGENT",
+                        "CODE_ANALYSIS_AGENT",
+                        "THREAT_MODELING_AGENT"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getAgentModels": {
+      "description": "Fetches all configured AI models for agents, excluding sensitive parameter data.",
+      "post": {
+        "summary": "POST request for endpoint /api/getAgentModels",
+        "operationId": "/api/getAgentModels-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "No request body required."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns all configured AI models.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "models": {
+                      "type": "array",
+                      "description": "Custom models plus the default AKTO_AGENT_MODEL.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "example": "gpt-4o"
+                          },
+                          "model": {
+                            "type": "string",
+                            "example": "gpt-4o"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "OPENAI"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getAllSubProcesses": {
+      "description": "Fetches all subprocesses for an agent run, with special handling for discovery agents.",
+      "post": {
+        "summary": "POST request for endpoint /api/getAllSubProcesses",
+        "operationId": "/api/getAllSubProcesses-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId",
+                  "agent"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Process ID of agent run.",
+                    "example": "proc-12345"
+                  },
+                  "agent": {
+                    "type": "string",
+                    "description": "Agent type to determine which DAO to use.",
+                    "example": "DISCOVERY_AGENT"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns all subprocesses for the agent run.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subProcesses": {
+                      "type": "array",
+                      "description": "List of AgentSubProcessSingleAttempt objects.",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "discoverySubProcesses": {
+                      "type": "array",
+                      "description": "For discovery agents only.",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getSubProcess": {
+      "description": "Fetches details of a specific subprocess attempt.",
+      "post": {
+        "summary": "POST request for endpoint /api/getSubProcess",
+        "operationId": "/api/getSubProcess-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId",
+                  "subProcessId",
+                  "attemptId"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Process ID of agent run.",
+                    "example": "proc-12345"
+                  },
+                  "subProcessId": {
+                    "type": "string",
+                    "description": "Sub-process ID.",
+                    "example": "sub-001"
+                  },
+                  "attemptId": {
+                    "type": "integer",
+                    "description": "Attempt ID.",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns subprocess details.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subprocess": {
+                      "type": "object",
+                      "description": "AgentSubProcessSingleAttempt object with details of the subprocess.",
+                      "properties": {
+                        "processId": {
+                          "type": "string",
+                          "example": "proc-12345"
+                        },
+                        "subProcessId": {
+                          "type": "string",
+                          "example": "sub-001"
+                        },
+                        "attemptId": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "state": {
+                          "type": "string",
+                          "example": "COMPLETED"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/updateAgentSubprocess": {
+      "description": "Updates subprocess state, heading, and user input with upsert behavior and validation. RE_ATTEMPT state is only allowed if current state is COMPLETED.",
+      "post": {
+        "summary": "POST request for endpoint /api/updateAgentSubprocess",
+        "operationId": "/api/updateAgentSubprocess-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId",
+                  "subProcessId",
+                  "attemptId",
+                  "state"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Process ID of agent run.",
+                    "example": "proc-12345"
+                  },
+                  "subProcessId": {
+                    "type": "string",
+                    "description": "Sub-process ID.",
+                    "example": "sub-001"
+                  },
+                  "attemptId": {
+                    "type": "integer",
+                    "description": "Attempt ID.",
+                    "example": 1
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "New state. Allowed: ACCEPTED, DISCARDED, RE_ATTEMPT (only if current is COMPLETED).",
+                    "example": "ACCEPTED"
+                  },
+                  "subProcessHeading": {
+                    "type": "string",
+                    "description": "Optional subprocess heading to update.",
+                    "example": "Validate API endpoints"
+                  },
+                  "data": {
+                    "type": "object",
+                    "description": "Optional user input data.",
+                    "example": {
+                      "feedback": "approved"
+                    }
+                  },
+                  "agent": {
+                    "type": "string",
+                    "description": "Agent type (for discovery agent handling).",
+                    "example": "DISCOVERY_AGENT"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Subprocess updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subprocess": {
+                      "type": "object",
+                      "description": "Updated AgentSubProcessSingleAttempt.",
+                      "properties": {
+                        "state": {
+                          "type": "string",
+                          "example": "ACCEPTED"
+                        },
+                        "subProcessHeading": {
+                          "type": "string",
+                          "example": "Validate API endpoints"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/updateStateOfDiscoveryAgentRun": {
+      "description": "Updates state and optionally results for a discovery agent run.",
+      "post": {
+        "summary": "POST request for endpoint /api/updateStateOfDiscoveryAgentRun",
+        "operationId": "/api/updateStateOfDiscoveryAgentRun-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId",
+                  "state"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Discovery agent run process ID.",
+                    "example": "proc-12345"
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "New state for the discovery agent run.",
+                    "example": "COMPLETED"
+                  },
+                  "results": {
+                    "type": "object",
+                    "description": "Optional discovery results to store.",
+                    "example": {
+                      "findings": 5,
+                      "status": "success"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Discovery agent run state updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "success"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/createSubProcessNew": {
+      "description": "Creates a new discovery subprocess with user input data for hostname and auth token.",
+      "post": {
+        "summary": "POST request for endpoint /api/createSubProcessNew",
+        "operationId": "/api/createSubProcessNew-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId",
+                  "hostname",
+                  "authToken"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Discovery agent run process ID.",
+                    "example": "proc-12345"
+                  },
+                  "hostname": {
+                    "type": "string",
+                    "description": "Target hostname to discover.",
+                    "example": "api.example.com"
+                  },
+                  "authToken": {
+                    "type": "string",
+                    "description": "Authentication token for the hostname.",
+                    "example": "Bearer token123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Discovery subprocess created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "success"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchAllResponsesForApiCollectionOrdered": {
+      "description": "Fetches sample response data for APIs in a collection with pagination, ordered by ID descending.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchAllResponsesForApiCollectionOrdered",
+        "operationId": "/api/fetchAllResponsesForApiCollectionOrdered-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "apiCollectionId"
+                ],
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "description": "API collection ID.",
+                    "example": 1001
+                  },
+                  "skip": {
+                    "type": "integer",
+                    "description": "Skip count for pagination (clamped to >= 0).",
+                    "example": 0
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "description": "Result limit (clamped to 1-10).",
+                    "example": 5
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns sample response data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sample": {
+                      "type": "object",
+                      "description": "First sample from paginated results ordered by ID descending.",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "sample-001"
+                        },
+                        "responseCode": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "responseBody": {
+                          "type": "string",
+                          "example": "{\"data\":[]}"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getFileForDiscovery": {
+      "description": "Retrieves compressed file content for discovery agent, validating it's referenced in agent init document.",
+      "post": {
+        "summary": "POST request for endpoint /api/getFileForDiscovery",
+        "operationId": "/api/getFileForDiscovery-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "agentProcessId",
+                  "fileId"
+                ],
+                "properties": {
+                  "agentProcessId": {
+                    "type": "string",
+                    "description": "Discovery agent run process ID.",
+                    "example": "proc-12345"
+                  },
+                  "fileId": {
+                    "type": "string",
+                    "description": "File ID to retrieve.",
+                    "example": "file-xyz"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns compressed file content.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "compressedContent": {
+                      "type": "string",
+                      "description": "Compressed file content (gzip format).",
+                      "example": "H4sIAERAJGYC/zWPwQqCQBCGXzVcvRskLYmibmFBEUgX6QhFCSlopGYpLYmibvPn7ot06isI33wz00CJxplQaxzidYtQZaLsTppGtf0AAAD//wMAUZN82FAAAAA="
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/saveVulnerabilities": {
+      "description": "Saves source code vulnerabilities found by agent to the database.",
+      "post": {
+        "summary": "POST request for endpoint /api/saveVulnerabilities",
+        "operationId": "/api/saveVulnerabilities-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "vulnerabilities",
+                  "agentProcessId",
+                  "totalApisScanned"
+                ],
+                "properties": {
+                  "vulnerabilities": {
+                    "type": "array",
+                    "description": "List of vulnerabilities with id and output fields.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "vuln-001"
+                        },
+                        "output": {
+                          "type": "string",
+                          "example": "SQL injection vulnerability found"
+                        }
+                      }
+                    }
+                  },
+                  "agentProcessId": {
+                    "type": "string",
+                    "description": "Agent process ID.",
+                    "example": "proc-12345"
+                  },
+                  "totalApisScanned": {
+                    "type": "integer",
+                    "description": "Total APIs scanned.",
+                    "example": 250
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Vulnerabilities saved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/createSensitiveResponseDataTypes": {
+      "description": "Asynchronously creates custom sensitive data types from detected data keys.",
+      "post": {
+        "summary": "POST request for endpoint /api/createSensitiveResponseDataTypes",
+        "operationId": "/api/createSensitiveResponseDataTypes-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "dataTypeKeys"
+                ],
+                "properties": {
+                  "dataTypeKeys": {
+                    "type": "array",
+                    "description": "List of data type keys to create as custom data types.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "ssn",
+                      "credit_card",
+                      "email"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data types creation scheduled asynchronously.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Empty response body on success; processing happens asynchronously."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/feedDataToAgent": {
+      "description": "Polling endpoint for agent to get initialization data or next subprocess task.",
+      "post": {
+        "summary": "POST request for endpoint /api/feedDataToAgent",
+        "operationId": "/api/feedDataToAgent-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "No request body required."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns initialization data or next subprocess task for the agent.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "description": "Response containing type and data for agent.",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "description": "Either 'init' or 'subTask'.",
+                          "example": "init"
+                        },
+                        "data": {
+                          "type": "object",
+                          "description": "Initialization or subprocess task data.",
+                          "example": {
+                            "apiCollectionId": 1001
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/feedDiscoveryDataToAgent": {
+      "description": "Polling endpoint for discovery agent to get initialization or next discovery subprocess task.",
+      "post": {
+        "summary": "POST request for endpoint /api/feedDiscoveryDataToAgent",
+        "operationId": "/api/feedDiscoveryDataToAgent-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Optional discovery agent process ID.",
+                    "example": "proc-12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns initialization or discovery subprocess task data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "description": "Response containing type, data, and optional apiToken.",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "init"
+                        },
+                        "data": {
+                          "type": "object",
+                          "example": {
+                            "hostname": "api.example.com"
+                          }
+                        },
+                        "apiToken": {
+                          "type": "string",
+                          "description": "Optional API token for discovery.",
+                          "example": "token123"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getAllAgentRunningDetails": {
+      "description": "Fetches complete agent run and all its subprocesses for reboot/recovery scenarios.",
+      "post": {
+        "summary": "POST request for endpoint /api/getAllAgentRunningDetails",
+        "operationId": "/api/getAllAgentRunningDetails-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Agent run process ID.",
+                    "example": "proc-12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns complete agent run details for reboot.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "initForReboot"
+                        },
+                        "data": {
+                          "type": "object",
+                          "description": "Complete agentRun object."
+                        },
+                        "allSubProcesses": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          },
+                          "description": "All subprocesses for the run."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/receiveDataFromAgent": {
+      "description": "Receives various types of data updates from running agents, handling logs, state changes, HAR data, and API dependencies.",
+      "post": {
+        "summary": "POST request for endpoint /api/receiveDataFromAgent",
+        "operationId": "/api/receiveDataFromAgent-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId",
+                  "subProcessId",
+                  "attemptId",
+                  "type",
+                  "agent"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Process ID.",
+                    "example": "proc-12345"
+                  },
+                  "subProcessId": {
+                    "type": "string",
+                    "description": "Sub-process ID.",
+                    "example": "sub-001"
+                  },
+                  "attemptId": {
+                    "type": "integer",
+                    "description": "Attempt ID.",
+                    "example": 1
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "Data type. One of: logs, stateChange, subProcessHeading, batchedData, logs_discovery, error_request, increment_processed_apis, metadata_discovery, harData, api_dependencies.",
+                    "example": "logs"
+                  },
+                  "agent": {
+                    "type": "string",
+                    "description": "Agent type.",
+                    "example": "DISCOVERY_AGENT"
+                  },
+                  "logs": {
+                    "type": "array",
+                    "description": "Agent logs (for type 'logs').",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "New state (for type 'stateChange').",
+                    "example": "COMPLETED"
+                  },
+                  "data": {
+                    "type": "object",
+                    "description": "Type-specific data.",
+                    "example": {
+                      "key": "value"
+                    }
+                  },
+                  "subProcessHeading": {
+                    "type": "string",
+                    "description": "Heading (for type 'subProcessHeading').",
+                    "example": "Scanning APIs"
+                  },
+                  "currentProcessingUrlInDiscoveryFromAgent": {
+                    "type": "string",
+                    "description": "Current URL being processed.",
+                    "example": "https://api.example.com/users"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data received and processed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "string",
+                          "example": "200 ok"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/updateAgentHealthCheck": {
+      "description": "Updates agent health check status with instance ID, version, and process information.",
+      "post": {
+        "summary": "POST request for endpoint /api/updateAgentHealthCheck",
+        "operationId": "/api/updateAgentHealthCheck-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "instanceId",
+                  "version",
+                  "processId"
+                ],
+                "properties": {
+                  "instanceId": {
+                    "type": "string",
+                    "description": "Agent instance ID.",
+                    "example": "instance-001"
+                  },
+                  "version": {
+                    "type": "string",
+                    "description": "Agent version.",
+                    "example": "1.0.0"
+                  },
+                  "processId": {
+                    "type": "string",
+                    "description": "Process ID being executed.",
+                    "example": "proc-12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Health check status updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/checkAgentRunModule": {
+      "description": "Checks if an agent process is currently running on any module.",
+      "post": {
+        "summary": "POST request for endpoint /api/checkAgentRunModule",
+        "operationId": "/api/checkAgentRunModule-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "processId"
+                ],
+                "properties": {
+                  "processId": {
+                    "type": "string",
+                    "description": "Process ID to check.",
+                    "example": "proc-12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns whether the agent is running.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agentRunningOnModule": {
+                      "type": "boolean",
+                      "description": "Whether the agent is running on any module.",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/saveAgentModel": {
+      "description": "Saves a new AI model configuration with type-specific validation.",
+      "post": {
+        "summary": "POST request for endpoint /api/saveAgentModel",
+        "operationId": "/api/saveAgentModel-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "model",
+                  "type"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Model name (required, must be unique).",
+                    "example": "gpt-4o"
+                  },
+                  "model": {
+                    "type": "string",
+                    "description": "Model identifier (e.g., 'gpt-4o', 'claude-3').",
+                    "example": "gpt-4o"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "Model type. One of: OPENAI, AZURE_OPENAI, ANTHROPIC, OLLAMA, DATABRICKS.",
+                    "example": "OPENAI"
+                  },
+                  "apiKey": {
+                    "type": "string",
+                    "description": "API key (not required for OLLAMA).",
+                    "example": "sk-xxxxxxx"
+                  },
+                  "azureOpenAIEndpoint": {
+                    "type": "string",
+                    "description": "Required for AZURE_OPENAI type.",
+                    "example": "https://myresource.openai.azure.com"
+                  },
+                  "ollamaAIEndpoint": {
+                    "type": "string",
+                    "description": "Required for OLLAMA type.",
+                    "example": "http://localhost:11434"
+                  },
+                  "databricksEndpoint": {
+                    "type": "string",
+                    "description": "Required for DATABRICKS type.",
+                    "example": "https://mybricks.databricks.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Model saved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/deleteAgentModel": {
+      "description": "Deletes an agent model by name with audit logging.",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteAgentModel",
+        "operationId": "/api/deleteAgentModel-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Model name to delete (must exist).",
+                    "example": "gpt-4o"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Model deleted successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/initiateAIAgentConnectorImport": {
+      "description": "Initiates a recurring import job for AI agent connector data with connector-specific validation and configuration.",
+      "post": {
+        "summary": "POST request for endpoint /api/initiateAIAgentConnectorImport",
+        "operationId": "/api/initiateAIAgentConnectorImport-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "connectorType",
+                  "dataIngestionUrl"
+                ],
+                "properties": {
+                  "connectorType": {
+                    "type": "string",
+                    "description": "Connector type. One of: N8N, LANGCHAIN, COPILOT_STUDIO, SNOWFLAKE, DATABRICKS, VERTEX_AI_CUSTOM_DEPLOYED_MODEL, SALESFORCE.",
+                    "example": "N8N"
+                  },
+                  "dataIngestionUrl": {
+                    "type": "string",
+                    "description": "Required data ingestion service URL.",
+                    "example": "https://ingest.example.com"
+                  },
+                  "recurringIntervalSeconds": {
+                    "type": "integer",
+                    "description": "Optional recurring interval in seconds (defaults to 3600).",
+                    "example": 3600
+                  },
+                  "n8nUrl": {
+                    "type": "string",
+                    "description": "Required for N8N connector.",
+                    "example": "https://n8n.example.com"
+                  },
+                  "n8nApiKey": {
+                    "type": "string",
+                    "description": "Required for N8N connector.",
+                    "example": "n8n_key_xxxxxxx"
+                  },
+                  "langsmithUrl": {
+                    "type": "string",
+                    "description": "Required for LANGCHAIN connector.",
+                    "example": "https://api.smith.langchain.com"
+                  },
+                  "langsmithApiKey": {
+                    "type": "string",
+                    "description": "Required for LANGCHAIN connector.",
+                    "example": "ls_key_xxxxxxx"
+                  },
+                  "dataverseEnvironmentUrl": {
+                    "type": "string",
+                    "description": "Required for COPILOT_STUDIO connector.",
+                    "example": "https://org.crm.dynamics.com"
+                  },
+                  "dataverseTenantId": {
+                    "type": "string",
+                    "description": "Required for COPILOT_STUDIO connector."
+                  },
+                  "dataverseClientId": {
+                    "type": "string",
+                    "description": "Required for COPILOT_STUDIO connector."
+                  },
+                  "dataverseClientSecret": {
+                    "type": "string",
+                    "description": "Required for COPILOT_STUDIO connector."
+                  },
+                  "snowflakeAccountUrl": {
+                    "type": "string",
+                    "description": "Required for SNOWFLAKE connector.",
+                    "example": "https://xy12345.us-east-1.snowflakecomputing.com"
+                  },
+                  "snowflakeAuthType": {
+                    "type": "string",
+                    "description": "SNOWFLAKE auth type: PASSWORD, TOKEN, KEYPAIR.",
+                    "example": "PASSWORD"
+                  },
+                  "snowflakeUsername": {
+                    "type": "string",
+                    "description": "SNOWFLAKE username."
+                  },
+                  "snowflakePassword": {
+                    "type": "string",
+                    "description": "SNOWFLAKE password (for PASSWORD auth)."
+                  },
+                  "snowflakeToken": {
+                    "type": "string",
+                    "description": "SNOWFLAKE token (for TOKEN auth)."
+                  },
+                  "snowflakePrivateKey": {
+                    "type": "string",
+                    "description": "SNOWFLAKE private key (for KEYPAIR auth)."
+                  },
+                  "snowflakePrivateKeyPassphrase": {
+                    "type": "string",
+                    "description": "SNOWFLAKE private key passphrase (for KEYPAIR auth)."
+                  },
+                  "snowflakeWarehouse": {
+                    "type": "string",
+                    "description": "SNOWFLAKE warehouse name."
+                  },
+                  "snowflakeDatabase": {
+                    "type": "string",
+                    "description": "SNOWFLAKE database name."
+                  },
+                  "snowflakeSchema": {
+                    "type": "string",
+                    "description": "SNOWFLAKE schema name."
+                  },
+                  "databricksHost": {
+                    "type": "string",
+                    "description": "Required for DATABRICKS connector.",
+                    "example": "https://xy12345.cloud.databricks.com"
+                  },
+                  "databricksClientId": {
+                    "type": "string",
+                    "description": "Required for DATABRICKS connector."
+                  },
+                  "databricksClientSecret": {
+                    "type": "string",
+                    "description": "Required for DATABRICKS connector."
+                  },
+                  "databricksCatalog": {
+                    "type": "string",
+                    "description": "DATABRICKS catalog name."
+                  },
+                  "databricksSchema": {
+                    "type": "string",
+                    "description": "DATABRICKS schema name."
+                  },
+                  "databricksPrefix": {
+                    "type": "string",
+                    "description": "DATABRICKS table prefix."
+                  },
+                  "vertexAIProjectId": {
+                    "type": "string",
+                    "description": "Required for VERTEX_AI_CUSTOM_DEPLOYED_MODEL.",
+                    "example": "my-gcp-project"
+                  },
+                  "vertexAIBigQueryDataset": {
+                    "type": "string",
+                    "description": "VERTEX_AI BigQuery dataset."
+                  },
+                  "vertexAIBigQueryTable": {
+                    "type": "string",
+                    "description": "VERTEX_AI BigQuery table."
+                  },
+                  "vertexAIJsonAuthFilePath": {
+                    "type": "string",
+                    "description": "Path to VERTEX_AI JSON auth file."
+                  },
+                  "salesforceUrl": {
+                    "type": "string",
+                    "description": "Required for SALESFORCE connector.",
+                    "example": "https://my-org.salesforce.com"
+                  },
+                  "salesforceConsumerKey": {
+                    "type": "string",
+                    "description": "Required for SALESFORCE connector."
+                  },
+                  "salesforceConsumerSecret": {
+                    "type": "string",
+                    "description": "Required for SALESFORCE connector."
+                  },
+                  "ingestionApiKey": {
+                    "type": "string",
+                    "description": "API key for data ingestion service."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Import job created and scheduled.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jobId": {
+                      "type": "string",
+                      "description": "Created job ID in hex format.",
+                      "example": "64b1f2c3a4e5d6f7b8c9d0e1"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
     }
   }
 }
