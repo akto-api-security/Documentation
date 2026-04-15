@@ -12742,6 +12742,1986 @@
           "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
         }
       } ]
+    },
+    "/api/fetchTestingRunResultSummary" : {
+      "description" : "Fetches a single testing run result summary by its hex ID.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchTestingRunResultSummary",
+        "operationId" : "/api/fetchTestingRunResultSummary-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "testingRunResultSummaryHexId" ],
+                "properties" : {
+                  "testingRunResultSummaryHexId" : {
+                    "type" : "string",
+                    "description" : "Hex-encoded ObjectId of the testing run result summary.",
+                    "example" : "64b1f2c3a4e5d6f7b8c9d0e1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns the matching testing run result summary.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "testingRunResultSummaries" : {
+                      "type" : "array",
+                      "description" : "List containing the fetched TestingRunResultSummary.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "id" : { "type" : "string", "example" : "64b1f2c3a4e5d6f7b8c9d0e1" },
+                          "testingRunId" : { "type" : "string", "example" : "64a0e1b2c3d4e5f6a7b8c9d0" },
+                          "state" : { "type" : "string", "example" : "COMPLETED" },
+                          "countIssuesByType" : { "type" : "object", "example" : { "HIGH" : 3, "MEDIUM" : 5 } },
+                          "startTimestamp" : { "type" : "integer", "example" : 1712300000 },
+                          "endTimestamp" : { "type" : "integer", "example" : 1712303600 }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/fetchAuthMechanismDataDoc" : {
+      "description" : "Fetches the raw authentication mechanism document for the current account.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchAuthMechanismDataDoc",
+        "operationId" : "/api/fetchAuthMechanismDataDoc-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "No request body required."
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns the current auth mechanism document.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "authMechanismDoc" : {
+                      "type" : "object",
+                      "description" : "Raw MongoDB document of the attacker token / auth mechanism for the account.",
+                      "properties" : {
+                        "_id" : { "type" : "string", "example" : "64b1f2c3a4e5d6f7b8c9d0e1" },
+                        "type" : { "type" : "string", "example" : "HARDCODED" },
+                        "authParamData" : { "type" : "array", "items" : { "type" : "object" } },
+                        "requestData" : { "type" : "array", "items" : { "type" : "object" } }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/fetchAllTestSuites" : {
+      "description" : "Fetches both custom and default (built-in) test suites available in the account.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchAllTestSuites",
+        "operationId" : "/api/fetchAllTestSuites-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "No request body required."
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns custom and default test suites.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "testSuiteList" : {
+                      "type" : "array",
+                      "description" : "Custom test suites created in the account.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "id" : { "type" : "string", "example" : "64b1f2c3a4e5d6f7b8c9d0e1" },
+                          "name" : { "type" : "string", "example" : "My OWASP Suite" },
+                          "subCategoryList" : { "type" : "array", "items" : { "type" : "string" }, "example" : [ "BOLA", "SQLi" ] }
+                        }
+                      }
+                    },
+                    "defaultTestSuites" : {
+                      "type" : "array",
+                      "description" : "Built-in default test suites.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : { "type" : "string", "example" : "OWASP Top 10" },
+                          "subCategoryList" : { "type" : "array", "items" : { "type" : "string" } }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/fetchTestSuites" : {
+      "description" : "Fetches all available test suite enum types for onboarding flows.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchTestSuites",
+        "operationId" : "/api/fetchTestSuites-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "No request body required."
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns the available test suite types.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "testSuites" : {
+                      "type" : "array",
+                      "description" : "Array of TestSuite enum values.",
+                      "items" : { "type" : "string" },
+                      "example" : [ "OWASP_TOP_10", "SANS_TOP_25", "CUSTOM" ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/fetchVulnerableRequests" : {
+      "description" : "Fetches a paginated list of vulnerable HTTP requests from demo data, used for test template previews.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchVulnerableRequests",
+        "operationId" : "/api/fetchVulnerableRequests-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "skip" : {
+                    "type" : "integer",
+                    "description" : "Number of records to skip for pagination.",
+                    "example" : 0
+                  },
+                  "limit" : {
+                    "type" : "integer",
+                    "description" : "Maximum number of records to return.",
+                    "example" : 20
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns paginated vulnerable requests.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "vulnerableRequests" : {
+                      "type" : "array",
+                      "description" : "List of VulnerableRequestForTemplate objects.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "id" : { "type" : "string", "example" : "64b1f2c3a4e5d6f7b8c9d0e1" },
+                          "url" : { "type" : "string", "example" : "/api/users/1" },
+                          "method" : { "type" : "string", "example" : "GET" },
+                          "category" : { "type" : "string", "example" : "BOLA" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/fetchTestingRunResultFromTestingRun" : {
+      "description" : "Fetches the first testing run result associated with a given testing run hex ID.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchTestingRunResultFromTestingRun",
+        "operationId" : "/api/fetchTestingRunResultFromTestingRun-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "testingRunHexId" ],
+                "properties" : {
+                  "testingRunHexId" : {
+                    "type" : "string",
+                    "description" : "Hex-encoded ObjectId of the testing run.",
+                    "example" : "64a0e1b2c3d4e5f6a7b8c9d0"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns the first test result for the specified run.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "testingRunResult" : {
+                      "type" : "object",
+                      "description" : "The first TestingRunResult matching the given testing run ID.",
+                      "properties" : {
+                        "id" : { "type" : "string", "example" : "64b1f2c3a4e5d6f7b8c9d0e1" },
+                        "testingRunId" : { "type" : "string", "example" : "64a0e1b2c3d4e5f6a7b8c9d0" },
+                        "vulnerable" : { "type" : "boolean", "example" : true },
+                        "testSubType" : { "type" : "string", "example" : "BOLA" },
+                        "apiInfoKey" : { "type" : "object" },
+                        "attempts" : { "type" : "array", "items" : { "type" : "object" } }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/fetchUsageTestRuns" : {
+      "description" : "Checks whether the current account has any user-created test runs (excluding onboarding demo runs), used for usage tracking.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchUsageTestRuns",
+        "operationId" : "/api/fetchUsageTestRuns-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "No request body required."
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns whether user-created test runs exist.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "testRunsByUser" : {
+                      "type" : "boolean",
+                      "description" : "True if the account has at least one user-created test run.",
+                      "example" : true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/fetchTestingLogs" : {
+      "description" : "Fetches testing engine logs within a specified time range.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchTestingLogs",
+        "operationId" : "/api/fetchTestingLogs-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "logFetchStartTime", "logFetchEndTime" ],
+                "properties" : {
+                  "logFetchStartTime" : {
+                    "type" : "integer",
+                    "format" : "int64",
+                    "description" : "Start of the log time range as Unix epoch milliseconds.",
+                    "example" : 1712300000000
+                  },
+                  "logFetchEndTime" : {
+                    "type" : "integer",
+                    "format" : "int64",
+                    "description" : "End of the log time range as Unix epoch milliseconds.",
+                    "example" : 1712303600000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns testing logs within the specified time range.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "testingLogs" : {
+                      "type" : "array",
+                      "description" : "List of LogRecord entries from the TESTING log database.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "timestamp" : { "type" : "integer", "example" : 1712300500000 },
+                          "level" : { "type" : "string", "example" : "INFO" },
+                          "message" : { "type" : "string", "example" : "Running test BOLA on /api/users/{id}" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/getBUACategoryCount" : {
+      "description" : "Counts the number of unique APIs affected by issues matching the given filter criteria.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/getBUACategoryCount",
+        "operationId" : "/api/getBUACategoryCount-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "showApiInfo" : { "type" : "boolean", "description" : "If true, returns full ApiInfo objects alongside the count.", "example" : false },
+                  "filterCollectionsId" : { "type" : "array", "items" : { "type" : "integer" }, "example" : [ 1001, 1002 ] },
+                  "severity" : { "type" : "array", "items" : { "type" : "string" }, "example" : [ "HIGH", "CRITICAL" ] },
+                  "issueStatus" : { "type" : "array", "items" : { "type" : "string" }, "example" : [ "OPEN" ] },
+                  "subcategory" : { "type" : "array", "items" : { "type" : "string" }, "example" : [ "BOLA" ] },
+                  "startTimestamp" : { "type" : "integer", "example" : 1712000000 },
+                  "endTimestamp" : { "type" : "integer", "example" : 1712999999 }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns count of affected APIs.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "buaCategoryCount" : { "type" : "integer", "description" : "Number of unique APIs with matching issues.", "example" : 14 },
+                    "buaCategoryApiInfo" : { "type" : "array", "description" : "ApiInfo details (only present when showApiInfo=true).", "items" : { "type" : "object" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/getNotTestedAPICount" : {
+      "description" : "Counts APIs that have never been tested, optionally filtered by collection.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/getNotTestedAPICount",
+        "operationId" : "/api/getNotTestedAPICount-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "showApiInfo" : { "type" : "boolean", "example" : false },
+                  "apiCollectionIds" : { "type" : "array", "items" : { "type" : "integer" }, "example" : [ 1001 ] }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns count of untested APIs.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "notTestedEndpointsCount" : { "type" : "integer", "description" : "Number of APIs with no testing history.", "example" : 42 },
+                    "notTestedEndpointsApiInfo" : { "type" : "array", "description" : "ApiInfo details (only present when showApiInfo=true).", "items" : { "type" : "object" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/getOnlyOnceTestedAPICount" : {
+      "description" : "Counts APIs that have been tested exactly one time, optionally filtered by collection.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/getOnlyOnceTestedAPICount",
+        "operationId" : "/api/getOnlyOnceTestedAPICount-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "showApiInfo" : { "type" : "boolean", "example" : false },
+                  "apiCollectionIds" : { "type" : "array", "items" : { "type" : "integer" }, "example" : [ 1001 ] }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns count of once-tested APIs.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "onlyOnceTestedEndpointsCount" : { "type" : "integer", "description" : "Number of APIs tested exactly once.", "example" : 18 },
+                    "onlyOnceTestedEndpointsApiInfo" : { "type" : "array", "description" : "ApiInfo details (only present when showApiInfo=true).", "items" : { "type" : "object" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/fetchTestedApisRanges" : {
+      "description" : "Returns the count of tested APIs grouped by week (year_weekOfYear) for trend analysis.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchTestedApisRanges",
+        "operationId" : "/api/fetchTestedApisRanges-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "apiCollectionIds" : { "type" : "array", "items" : { "type" : "integer" }, "example" : [ 1001, 1002 ] }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns per-week tested API counts.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "type" : "object",
+                      "description" : "Map of week key (year_weekOfYear) to count of APIs tested that week.",
+                      "additionalProperties" : { "type" : "integer" },
+                      "example" : { "2024_15" : 12, "2024_16" : 20 }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/getMisConfiguredTestsCount" : {
+      "description" : "Counts test results that require additional configuration (REQUIRES_CONFIG flag), optionally returning API details.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/getMisConfiguredTestsCount",
+        "operationId" : "/api/getMisConfiguredTestsCount-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "showApiInfo" : { "type" : "boolean", "example" : false }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns count of misconfigured tests.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "misConfiguredTestsCount" : { "type" : "integer", "description" : "Number of test results requiring configuration.", "example" : 5 },
+                    "misConfiguredTestsApiInfo" : { "type" : "array", "description" : "ApiInfo details (only present when showApiInfo=true).", "items" : { "type" : "object" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/fetchTestingRunsRanges" : {
+      "description" : "Returns completed test run counts grouped by week (year_weekOfYear) for trend analysis, optionally filtered by collection.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchTestingRunsRanges",
+        "operationId" : "/api/fetchTestingRunsRanges-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "apiCollectionIds" : { "type" : "array", "items" : { "type" : "integer" }, "example" : [ 1001, 1002 ] }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns per-week test run counts.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "allTestsCountsRanges" : {
+                      "type" : "object",
+                      "description" : "Map of week key (year_weekOfYear) to number of completed test runs that week.",
+                      "additionalProperties" : { "type" : "integer" },
+                      "example" : { "2024_15" : 3, "2024_16" : 7 }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/getLastCalculatedInfo" : {
+      "description" : "Fetches metadata about the last cron/background job execution for the current account.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/getLastCalculatedInfo",
+        "operationId" : "/api/getLastCalculatedInfo-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "No request body required."
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns last cron run information.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "timerInfo" : {
+                      "type" : "object",
+                      "description" : "LastCronRunInfo containing timing and status of the last background job.",
+                      "properties" : {
+                        "lastCalculatedTs" : { "type" : "integer", "example" : 1712300000 },
+                        "status" : { "type" : "string", "example" : "COMPLETED" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/fetchTestingData" : {
+      "description" : "Returns consolidated testing coverage statistics (tested vs non-tested API counts) within a time range.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchTestingData",
+        "operationId" : "/api/fetchTestingData-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "startTimestamp" ],
+                "properties" : {
+                  "startTimestamp" : { "type" : "integer", "format" : "int64", "description" : "Start of the time range as Unix epoch seconds.", "example" : 1712000000 },
+                  "endTimestamp" : { "type" : "integer", "format" : "int64", "description" : "End of the time range as Unix epoch seconds. Defaults to now if omitted.", "example" : 1712999999 }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns testing coverage statistics.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "type" : "object",
+                      "properties" : {
+                        "testedVsNonTested" : {
+                          "type" : "object",
+                          "description" : "Breakdown of tested vs non-tested API counts.",
+                          "properties" : {
+                            "tested" : { "type" : "integer", "example" : 85 },
+                            "nonTested" : { "type" : "integer", "example" : 42 }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/fetchMiniTestingServiceNames" : {
+      "description" : "Returns the names of active mini-testing service modules with recent heartbeats.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchMiniTestingServiceNames",
+        "operationId" : "/api/fetchMiniTestingServiceNames-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "No request body required."
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns the set of active mini-testing service names.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "miniTestingServiceNames" : {
+                      "type" : "array",
+                      "description" : "Names of currently active mini-testing service modules.",
+                      "items" : { "type" : "string" },
+                      "example" : [ "mini-service-1", "mini-service-2" ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/fetchDefaultPayload" : {
+      "description" : "Fetches the default payload configuration for a specific domain.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchDefaultPayload",
+        "operationId" : "/api/fetchDefaultPayload-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "domain" ],
+                "properties" : {
+                  "domain" : { "type" : "string", "description" : "Domain name to fetch the default payload for.", "example" : "example.com" }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns the default payload configuration for the domain.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "defaultPayload" : {
+                      "type" : "object",
+                      "description" : "DefaultPayload document for the specified domain.",
+                      "properties" : {
+                        "domain" : { "type" : "string", "example" : "example.com" },
+                        "pattern" : { "type" : "string", "example" : "{\"key\":\"value\"}" },
+                        "creator" : { "type" : "string", "example" : "alice@example.com" },
+                        "createdTs" : { "type" : "integer", "example" : 1712300000 },
+                        "updatedTs" : { "type" : "integer", "example" : 1712300000 }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/fetchAllDefaultPayloads" : {
+      "description" : "Fetches all default payload configurations saved for the current account.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchAllDefaultPayloads",
+        "operationId" : "/api/fetchAllDefaultPayloads-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "No request body required."
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns all default payloads for the account.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "domains" : {
+                      "type" : "array",
+                      "description" : "List of DefaultPayload objects, one per configured domain.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "domain" : { "type" : "string", "example" : "example.com" },
+                          "pattern" : { "type" : "string", "example" : "{\"key\":\"value\"}" },
+                          "creator" : { "type" : "string", "example" : "alice@example.com" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/fetchGlobalVars" : {
+      "description" : "Fetches saved global host variable mappings and known hosts for the specified collections.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchGlobalVars",
+        "operationId" : "/api/fetchGlobalVars-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "apiCollectionIds" ],
+                "properties" : {
+                  "apiCollectionIds" : {
+                    "type" : "array",
+                    "description" : "Collection IDs whose hosts should be included in the response.",
+                    "items" : { "type" : "integer" },
+                    "example" : [ 1001, 1002 ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns current host mappings and collection hosts.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "modifyHostDetails" : {
+                      "type" : "array",
+                      "description" : "Saved host modification mappings plus hosts extracted from the specified collections.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "currentHost" : { "type" : "string", "example" : "api.internal.example.com" },
+                          "newHost" : { "type" : "string", "example" : "api.staging.example.com" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/fetchTestCollectionConfiguration" : {
+      "description" : "Fetches test configuration properties (headers, cookies, auth requirements, etc.) for a specific API collection.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchTestCollectionConfiguration",
+        "operationId" : "/api/fetchTestCollectionConfiguration-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "apiCollectionId" ],
+                "properties" : {
+                  "apiCollectionId" : { "type" : "integer", "description" : "ID of the API collection to fetch configuration for.", "example" : 1001 }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns the test collection configuration properties.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "testCollectionProperties" : {
+                      "type" : "array",
+                      "description" : "List of TestCollectionProperty objects for the collection.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "propertyId" : { "type" : "string", "example" : "REQUIRES_AUTH" },
+                          "value" : { "type" : "string", "example" : "true" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/fetchPropertyIds" : {
+      "description" : "Fetches all available test collection property types with their metadata (id, title, type, impacted test categories).",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchPropertyIds",
+        "operationId" : "/api/fetchPropertyIds-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "No request body required."
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns all property type definitions.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "propertyIds" : {
+                      "type" : "object",
+                      "description" : "Map of property enum name to its metadata object.",
+                      "additionalProperties" : {
+                        "type" : "object",
+                        "properties" : {
+                          "id" : { "type" : "string", "example" : "REQUIRES_AUTH" },
+                          "title" : { "type" : "string", "example" : "Requires Authentication" },
+                          "type" : { "type" : "string", "example" : "BOOLEAN" },
+                          "impactingCategories" : { "type" : "array", "items" : { "type" : "string" }, "example" : [ "BOLA", "AUTH_BYPASS" ] }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/buildDependencyTable" : {
+      "description" : "Builds a paginated dependency flow table with API nodes, their parameters (from traffic and source code), and replacement details.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/buildDependencyTable",
+        "operationId" : "/api/buildDependencyTable-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "apiCollectionIds" ],
+                "properties" : {
+                  "apiCollectionIds" : { "type" : "array", "description" : "Collection IDs to build the dependency table for.", "items" : { "type" : "integer" }, "example" : [ 1001, 1002 ] },
+                  "skip" : { "type" : "integer", "description" : "Number of records to skip for pagination.", "example" : 0 }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns the dependency table with nodes, parameters, and replacement details.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "dependencyTableList" : { "type" : "array", "description" : "Paginated list of dependency nodes with parameter data.", "items" : { "type" : "object" } },
+                    "replaceDetails" : { "type" : "array", "description" : "Replacement detail configurations for the collections.", "items" : { "type" : "object" } },
+                    "total" : { "type" : "integer", "description" : "Total number of dependency nodes.", "example" : 150 }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/modifyTestingRunConfig" : {
+      "description" : "Modifies an existing testing run configuration including test suites, subcategories, schedule, concurrency, alerts, role, app URL override, and auto-ticketing settings.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/modifyTestingRunConfig",
+        "operationId" : "/api/modifyTestingRunConfig-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "testingRunConfigId" ],
+                "properties" : {
+                  "testingRunConfigId" : { "type" : "integer", "description" : "ID of the testing run config to modify.", "example" : 101 },
+                  "editableTestingRunConfig" : {
+                    "type" : "object",
+                    "description" : "Updated configuration fields for the testing run.",
+                    "properties" : {
+                      "testSuiteIds" : { "type" : "array", "items" : { "type" : "string" }, "example" : [ "suite-abc", "suite-xyz" ] },
+                      "subCategoryList" : { "type" : "array", "items" : { "type" : "string" }, "example" : [ "BOLA", "SQLi" ] },
+                      "roleId" : { "type" : "string", "example" : "role-001" },
+                      "appUrlOverride" : { "type" : "string", "example" : "https://staging.example.com" },
+                      "maxConcurrentRequests" : { "type" : "integer", "example" : 5 },
+                      "testRunTime" : { "type" : "integer", "description" : "Max test runtime in seconds.", "example" : 3600 },
+                      "sendAlerts" : { "type" : "boolean", "example" : true },
+                      "recurringDaily" : { "type" : "boolean", "example" : false },
+                      "continuousTesting" : { "type" : "boolean", "example" : false },
+                      "autoTicketingDetails" : { "type" : "object", "description" : "Optional auto-ticketing configuration (e.g., Jira project settings)." }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Testing run configuration updated successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : { "type" : "object", "description" : "Empty response body on success." }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/addAuthMechanism" : {
+      "description" : "Adds a new authentication mechanism (hardcoded token, login flow, sample data, or TLS) for API testing.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/addAuthMechanism",
+        "operationId" : "/api/addAuthMechanism-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "type" ],
+                "properties" : {
+                  "type" : { "type" : "string", "description" : "Authentication type. One of: HARDCODED, LOGIN_REQUEST, SAMPLE_DATA, TLS_AUTH.", "example" : "HARDCODED" },
+                  "authParamData" : {
+                    "type" : "array",
+                    "description" : "List of auth parameter entries specifying where and how to inject credentials.",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "where" : { "type" : "string", "description" : "Location: HEADER, COOKIE, PAYLOAD.", "example" : "HEADER" },
+                        "key" : { "type" : "string", "example" : "Authorization" },
+                        "value" : { "type" : "string", "example" : "Bearer eyJhbGci..." },
+                        "showHeader" : { "type" : "boolean", "example" : true }
+                      }
+                    }
+                  },
+                  "requestData" : {
+                    "type" : "array",
+                    "description" : "HTTP request steps used to obtain credentials (for LOGIN_REQUEST type).",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "url" : { "type" : "string", "example" : "https://example.com/api/login" },
+                        "method" : { "type" : "string", "example" : "POST" },
+                        "body" : { "type" : "string", "example" : "{\"username\":\"admin\",\"password\":\"secret\"}" },
+                        "headers" : { "type" : "object", "example" : { "Content-Type" : "application/json" } }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Authentication mechanism saved successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : { "type" : "object", "description" : "Empty response body on success." }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/triggerLoginSteps" : {
+      "description" : "Executes login flow steps and returns step-by-step responses. Used to validate login sequences before saving an auth mechanism.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/triggerLoginSteps",
+        "operationId" : "/api/triggerLoginSteps-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "type", "requestData" ],
+                "properties" : {
+                  "type" : { "type" : "string", "description" : "Must be LOGIN_REQUEST.", "example" : "LOGIN_REQUEST" },
+                  "authParamData" : {
+                    "type" : "array",
+                    "description" : "Auth parameters extracted from login flow responses.",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "where" : { "type" : "string", "example" : "HEADER" },
+                        "key" : { "type" : "string", "example" : "Authorization" },
+                        "value" : { "type" : "string", "example" : "Bearer {{token}}" }
+                      }
+                    }
+                  },
+                  "requestData" : {
+                    "type" : "array",
+                    "description" : "Ordered list of HTTP requests forming the login flow.",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "url" : { "type" : "string", "example" : "https://example.com/api/login" },
+                        "method" : { "type" : "string", "example" : "POST" },
+                        "body" : { "type" : "string", "example" : "{\"username\":\"admin\",\"password\":\"secret\"}" },
+                        "headers" : { "type" : "object", "example" : { "Content-Type" : "application/json" } }
+                      }
+                    }
+                  },
+                  "miniTestingServiceName" : { "type" : "string", "description" : "Optional name of mini-testing service to execute the login steps.", "example" : "mini-service-1" }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns responses for each login flow step.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "responses" : {
+                      "type" : "array",
+                      "description" : "Step-by-step HTTP responses from executing the login flow.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "statusCode" : { "type" : "integer", "example" : 200 },
+                          "body" : { "type" : "string", "example" : "{\"token\":\"eyJhbGci...\"}" },
+                          "headers" : { "type" : "object" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/createTestSuite" : {
+      "description" : "Creates a new custom test suite with a given name and list of test subcategories.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/createTestSuite",
+        "operationId" : "/api/createTestSuite-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "testSuiteName", "subCategoryList" ],
+                "properties" : {
+                  "testSuiteName" : { "type" : "string", "description" : "Display name for the new test suite. A numeric suffix is appended if the name already exists.", "example" : "My OWASP Suite" },
+                  "subCategoryList" : { "type" : "array", "description" : "List of test subcategory identifiers to include in this suite.", "items" : { "type" : "string" }, "example" : [ "BOLA", "SQLi", "XSS" ] }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Test suite created successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : { "type" : "object", "description" : "Empty response body on success." }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/modifyTestSuite" : {
+      "description" : "Updates an existing custom test suite's name and/or subcategories. Only the creator or an ADMIN can modify a suite.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/modifyTestSuite",
+        "operationId" : "/api/modifyTestSuite-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "testSuiteHexId" ],
+                "properties" : {
+                  "testSuiteHexId" : { "type" : "string", "description" : "Hex-encoded ObjectId of the test suite to modify.", "example" : "64b1f2c3a4e5d6f7b8c9d0e1" },
+                  "testSuiteName" : { "type" : "string", "description" : "New display name for the test suite.", "example" : "Updated OWASP Suite" },
+                  "subCategoryList" : { "type" : "array", "description" : "Replacement list of test subcategory identifiers.", "items" : { "type" : "string" }, "example" : [ "BOLA", "BFLA" ] }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Test suite updated successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : { "type" : "object", "description" : "Empty response body on success." }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/deleteTestSuite" : {
+      "description" : "Deletes a custom test suite by its hex ID.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/deleteTestSuite",
+        "operationId" : "/api/deleteTestSuite-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "testSuiteHexId" ],
+                "properties" : {
+                  "testSuiteHexId" : { "type" : "string", "description" : "Hex-encoded ObjectId of the test suite to delete.", "example" : "64b1f2c3a4e5d6f7b8c9d0e1" }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Test suite deleted successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : { "type" : "object", "description" : "Empty response body on success." }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/bulkUpdateTestResultsSeverity" : {
+      "description" : "Bulk-updates the severity level of selected test results across all related collections.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/bulkUpdateTestResultsSeverity",
+        "operationId" : "/api/bulkUpdateTestResultsSeverity-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "testingRunResultHexIds", "severityToBeUpdated" ],
+                "properties" : {
+                  "testingRunResultHexIds" : { "type" : "array", "description" : "Hex IDs of the test results to update.", "items" : { "type" : "string" }, "example" : [ "64b1f2c3a4e5d6f7b8c9d0e1", "64b1f2c3a4e5d6f7b8c9d0e2" ] },
+                  "severityToBeUpdated" : { "type" : "string", "description" : "New severity level. One of: CRITICAL, HIGH, MEDIUM, LOW.", "example" : "HIGH" }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Severity updated across all related collections.",
+            "content" : {
+              "application/json" : {
+                "schema" : { "type" : "object", "description" : "Empty response body on success." }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/deleteTestRuns" : {
+      "description" : "Deletes the specified test runs and schedules a background job to clean up associated results and summaries.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/deleteTestRuns",
+        "operationId" : "/api/deleteTestRuns-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "testRunIds" ],
+                "properties" : {
+                  "testRunIds" : { "type" : "array", "description" : "Hex-encoded ObjectIds of the test runs to delete.", "items" : { "type" : "string" }, "example" : [ "64a0e1b2c3d4e5f6a7b8c9d0", "64a0e1b2c3d4e5f6a7b8c9d1" ] }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Test runs deleted and cleanup job enqueued.",
+            "content" : {
+              "application/json" : {
+                "schema" : { "type" : "object", "description" : "Empty response body on success." }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/deleteTestRunsFromSummaries" : {
+      "description" : "Deletes test data (results and summaries) identified by testing run result summary IDs via a background job.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/deleteTestRunsFromSummaries",
+        "operationId" : "/api/deleteTestRunsFromSummaries-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "latestSummaryIds" ],
+                "properties" : {
+                  "latestSummaryIds" : { "type" : "array", "description" : "Hex-encoded ObjectIds of the testing run result summaries to delete.", "items" : { "type" : "string" }, "example" : [ "64b1f2c3a4e5d6f7b8c9d0e1", "64b1f2c3a4e5d6f7b8c9d0e2" ] }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Deletion job enqueued for the specified summaries.",
+            "content" : {
+              "application/json" : {
+                "schema" : { "type" : "object", "description" : "Empty response body on success." }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/changeStatus" : {
+      "description" : "Changes the active/inactive status of a custom webhook and updates its associated scheduled job.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/changeStatus",
+        "operationId" : "/api/changeStatus-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "id", "activeStatus" ],
+                "properties" : {
+                  "id" : { "type" : "integer", "description" : "ID of the custom webhook to update.", "example" : 7 },
+                  "activeStatus" : { "type" : "string", "description" : "New status. One of: ACTIVE, INACTIVE.", "example" : "ACTIVE" }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Webhook status updated successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : { "type" : "object", "description" : "Empty response body on success." }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/runOnce" : {
+      "description" : "Triggers an immediate one-time asynchronous execution of a custom webhook.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/runOnce",
+        "operationId" : "/api/runOnce-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "id" ],
+                "properties" : {
+                  "id" : { "type" : "integer", "description" : "ID of the custom webhook to execute.", "example" : 7 }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Webhook execution triggered asynchronously.",
+            "content" : {
+              "application/json" : {
+                "schema" : { "type" : "object", "description" : "Empty response body; execution happens asynchronously." }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/runTestOnboarding" : {
+      "description" : "Runs the onboarding test suite against a specified collection with provided auth credentials, creating the auth mechanism and test run, then marks onboarding as complete.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/runTestOnboarding",
+        "operationId" : "/api/runTestOnboarding-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "testSuite", "collectionId", "authParamData" ],
+                "properties" : {
+                  "testSuite" : { "type" : "string", "description" : "Test suite enum value to run during onboarding.", "example" : "OWASP_TOP_10" },
+                  "collectionId" : { "type" : "integer", "description" : "ID of the API collection to test.", "example" : 1001 },
+                  "authParamData" : {
+                    "type" : "array",
+                    "description" : "Authentication parameters for the onboarding test.",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "where" : { "type" : "string", "example" : "HEADER" },
+                        "key" : { "type" : "string", "example" : "Authorization" },
+                        "value" : { "type" : "string", "example" : "Bearer eyJhbGci..." }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Onboarding test run started.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "testingRunHexId" : { "type" : "string", "description" : "Hex ID of the created onboarding testing run.", "example" : "64a0e1b2c3d4e5f6a7b8c9d0" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/saveDefaultPayload" : {
+      "description" : "Saves or updates a default payload pattern for a domain, recording the creator and timestamps.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/saveDefaultPayload",
+        "operationId" : "/api/saveDefaultPayload-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "domain", "pattern" ],
+                "properties" : {
+                  "domain" : { "type" : "string", "description" : "Domain name to associate the payload with.", "example" : "example.com" },
+                  "pattern" : { "type" : "string", "description" : "JSON or text payload pattern to save as the default for this domain.", "example" : "{\"username\":\"test\",\"password\":\"test\"}" }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Payload saved. Returns the updated DefaultPayload object.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "defaultPayload" : {
+                      "type" : "object",
+                      "properties" : {
+                        "domain" : { "type" : "string", "example" : "example.com" },
+                        "pattern" : { "type" : "string", "example" : "{\"username\":\"test\",\"password\":\"test\"}" },
+                        "creator" : { "type" : "string", "example" : "alice@example.com" },
+                        "createdTs" : { "type" : "integer", "example" : 1712300000 },
+                        "updatedTs" : { "type" : "integer", "example" : 1712305000 }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/saveReplaceDetails" : {
+      "description" : "Saves key-value replacement pairs for a specific API endpoint, used in dependency flow testing.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/saveReplaceDetails",
+        "operationId" : "/api/saveReplaceDetails-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "apiCollectionId", "url", "method", "kvPairs" ],
+                "properties" : {
+                  "apiCollectionId" : { "type" : "integer", "description" : "ID of the API collection containing the endpoint.", "example" : 1001 },
+                  "url" : { "type" : "string", "description" : "URL path of the API endpoint.", "example" : "/api/users/{id}" },
+                  "method" : { "type" : "string", "description" : "HTTP method of the endpoint.", "example" : "GET" },
+                  "kvPairs" : {
+                    "type" : "array",
+                    "description" : "Key-value pairs specifying parameter replacements for this endpoint.",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "key" : { "type" : "string", "example" : "id" },
+                        "value" : { "type" : "string", "example" : "{{userId}}" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Replacement details saved successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : { "type" : "object", "description" : "Empty response body on success." }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/saveGlobalVars" : {
+      "description" : "Saves global host variable mappings for dependency flow testing (current hostname to replacement hostname).",
+      "post" : {
+        "summary" : "POST request for endpoint /api/saveGlobalVars",
+        "operationId" : "/api/saveGlobalVars-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "modifyHostDetails" ],
+                "properties" : {
+                  "modifyHostDetails" : {
+                    "type" : "array",
+                    "description" : "List of host modification mappings.",
+                    "items" : {
+                      "type" : "object",
+                      "properties" : {
+                        "currentHost" : { "type" : "string", "description" : "Original hostname.", "example" : "api.internal.example.com" },
+                        "newHost" : { "type" : "string", "description" : "Replacement hostname.", "example" : "api.staging.example.com" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Global host variable mappings saved successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : { "type" : "object", "description" : "Empty response body on success." }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
+    },
+    "/api/invokeDependencyTable" : {
+      "description" : "Asynchronously invokes the dependency graph build job for the specified collections, creating a temporary collection to store the dependency flow data.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/invokeDependencyTable",
+        "operationId" : "/api/invokeDependencyTable-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "apiCollectionIds" ],
+                "properties" : {
+                  "apiCollectionIds" : { "type" : "array", "description" : "Collection IDs to invoke the dependency graph for.", "items" : { "type" : "integer" }, "example" : [ 1001, 1002 ] },
+                  "sourceCodeApis" : { "type" : "boolean", "description" : "If true, APIs are from source code analysis and the original collection is used instead of creating a temp one.", "example" : false }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Dependency graph build job enqueued.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "newCollectionId" : { "type" : "integer", "description" : "ID of the temporary collection created to hold dependency flow data.", "example" : 2001 }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "application/json" }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : { "type" : "string", "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs" }
+      } ]
     }
   }
 }
