@@ -404,6 +404,9 @@
 * [Agentic Guardrails](api-reference/threat-protection/README.md)
   * [Fetch Data](api-reference/threat-protection/fetch-data.md)
   * [Modify Data](api-reference/threat-protection/modify-data.md)
+* [User Management](api-reference/user-management/README.md)
+  * [Fetch Data](api-reference/user-management/fetch-data.md)
+  * [Modify Data](api-reference/user-management/modify-data.md)
 
 ## Troubleshooting
 
