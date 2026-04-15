@@ -11183,6 +11183,1565 @@
           }
         }
       ]
+    },
+    "/api/me" : {
+      "description" : "Fetches the current logged-in user's profile information.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/me",
+        "operationId" : "/api/me-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "No request body required."
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns the current user's profile details.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "User profile object",
+                  "properties" : {
+                    "user" : {
+                      "type" : "object",
+                      "properties" : {
+                        "login" : { "type" : "string", "example" : "alice@example.com" },
+                        "name" : { "type" : "string", "example" : "Alice" },
+                        "role" : { "type" : "string", "example" : "ADMIN" },
+                        "accounts" : {
+                          "type" : "object",
+                          "additionalProperties" : { "type" : "string" },
+                          "example" : { "1000000" : "My Account" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/logout" : {
+      "description" : "Logs out the current user, clears session and auth cookies, and returns a redirect URL.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/logout",
+        "operationId" : "/api/logout-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "Optional redirect URL after logout.",
+                "properties" : {
+                  "redirectUrl" : {
+                    "type" : "string",
+                    "description" : "URL to redirect to after logout.",
+                    "example" : "https://app.akto.io/login"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Logout successful. Returns Auth0/SSO logout URL.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "logoutUrl" : {
+                      "type" : "string",
+                      "description" : "URL to redirect the user for completing logout (Auth0 or SSO).",
+                      "example" : "https://auth.akto.io/v2/logout?returnTo=https%3A%2F%2Fapp.akto.io"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/createNewAccount" : {
+      "description" : "Creates a new Akto account under the current user and initialises it with default collections and settings.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/createNewAccount",
+        "operationId" : "/api/createNewAccount-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "newAccountName" ],
+                "properties" : {
+                  "newAccountName" : {
+                    "type" : "string",
+                    "description" : "Display name for the new account.",
+                    "example" : "My New Workspace"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Account created successfully. Session is updated with the new account context.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Empty response body on success; session cookies are updated."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/goToAccount" : {
+      "description" : "Switches the active session context to a different account that the current user has access to.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/goToAccount",
+        "operationId" : "/api/goToAccount-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "newAccountId" ],
+                "properties" : {
+                  "newAccountId" : {
+                    "type" : "integer",
+                    "description" : "Numeric ID of the account to switch to.",
+                    "example" : 1000001
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Session switched to the specified account. Session cookies are updated.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Empty response body on success; session cookies are updated."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/getUserAnalysis" : {
+      "description" : "Fetches user analysis data for a given MCP agent and device, used by the Endpoint Shield agent.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/getUserAnalysis",
+        "operationId" : "/api/getUserAnalysis-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "agentId", "deviceId" ],
+                "properties" : {
+                  "agentId" : {
+                    "type" : "string",
+                    "description" : "Identifier of the MCP agent/service.",
+                    "example" : "agent-abc123"
+                  },
+                  "deviceId" : {
+                    "type" : "string",
+                    "description" : "Identifier of the device making the request.",
+                    "example" : "device-xyz789"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns the user analysis data for the specified agent and device.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "userAnalysis" : {
+                      "type" : "object",
+                      "description" : "UserAnalysisData object matching the provided agentId and deviceId.",
+                      "properties" : {
+                        "agentId" : { "type" : "string", "example" : "agent-abc123" },
+                        "deviceId" : { "type" : "string", "example" : "device-xyz789" },
+                        "analysisData" : { "type" : "object", "description" : "Raw analysis data payload." }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/updateUsernameAndOrganization" : {
+      "description" : "Updates the current user's display name and, if the user is an ADMIN, the organisation name.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/updateUsernameAndOrganization",
+        "operationId" : "/api/updateUsernameAndOrganization-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "username" ],
+                "properties" : {
+                  "username" : {
+                    "type" : "string",
+                    "description" : "New display name for the user. Max 24 characters. Allowed: alphanumeric, spaces, hyphens.",
+                    "example" : "Alice Smith"
+                  },
+                  "organization" : {
+                    "type" : "string",
+                    "description" : "New organisation name (required for ADMIN users). Max 24 characters. Allowed: alphanumeric, spaces, dots, ampersand, hyphens.",
+                    "example" : "Acme Corp"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Username (and organisation for admins) updated successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/removeInvitation" : {
+      "description" : "Removes a pending invitation for the given email address. Only the invitation issuer or an ADMIN can remove invitations.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/removeInvitation",
+        "operationId" : "/api/removeInvitation-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "email" ],
+                "properties" : {
+                  "email" : {
+                    "type" : "string",
+                    "format" : "email",
+                    "description" : "Email address of the pending invitation to remove.",
+                    "example" : "bob@example.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Invitation removed successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/resetUserPassword" : {
+      "description" : "Generates a password reset token for the specified user. Token is valid and can only be generated once every 2 hours.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/resetUserPassword",
+        "operationId" : "/api/resetUserPassword-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "userEmail" ],
+                "properties" : {
+                  "userEmail" : {
+                    "type" : "string",
+                    "format" : "email",
+                    "description" : "Email of the user whose password should be reset.",
+                    "example" : "bob@example.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Password reset token generated.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "passwordResetToken" : {
+                      "type" : "string",
+                      "description" : "One-time password reset token to be sent to the user.",
+                      "example" : "eyJhbGciOiJIUzI1NiJ9..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/fetchUserLastLoginTs" : {
+      "description" : "Fetches the Unix timestamp of the current user's last login.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchUserLastLoginTs",
+        "operationId" : "/api/fetchUserLastLoginTs-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "No request body required."
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns the last login timestamp.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "lastLoginTs" : {
+                      "type" : "integer",
+                      "description" : "Unix epoch timestamp (seconds) of the user's last login.",
+                      "example" : 1712345678
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/getCustomRoles" : {
+      "description" : "Retrieves all custom roles defined in the system for the current account.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/getCustomRoles",
+        "operationId" : "/api/getCustomRoles-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "No request body required."
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns the list of custom roles.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "roles" : {
+                      "type" : "array",
+                      "description" : "List of CustomRole objects.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : { "type" : "string", "example" : "security-analyst" },
+                          "baseRole" : { "type" : "string", "example" : "MEMBER" },
+                          "apiCollectionIds" : {
+                            "type" : "array",
+                            "items" : { "type" : "integer" },
+                            "example" : [ 1001, 1002 ]
+                          },
+                          "defaultInviteRole" : { "type" : "boolean", "example" : false },
+                          "allowedFeaturesForUser" : {
+                            "type" : "array",
+                            "items" : { "type" : "string" },
+                            "example" : [ "TESTING", "INVENTORY" ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/createCustomRole" : {
+      "description" : "Creates a new custom role with specified base role, collection access, and feature permissions.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/createCustomRole",
+        "operationId" : "/api/createCustomRole-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "roleName", "baseRole" ],
+                "properties" : {
+                  "roleName" : {
+                    "type" : "string",
+                    "description" : "Unique name for the role. Max 50 characters. Alphanumeric, hyphens, and underscores only.",
+                    "example" : "security-analyst"
+                  },
+                  "baseRole" : {
+                    "type" : "string",
+                    "description" : "Base role from which this custom role inherits. One of: ADMIN, MEMBER, GUEST.",
+                    "example" : "MEMBER"
+                  },
+                  "apiCollectionIds" : {
+                    "type" : "array",
+                    "description" : "List of API collection IDs this role has access to.",
+                    "items" : { "type" : "integer" },
+                    "example" : [ 1001, 1002 ]
+                  },
+                  "defaultInviteRole" : {
+                    "type" : "boolean",
+                    "description" : "Whether this role is the default role assigned to new invites.",
+                    "example" : false
+                  },
+                  "allowedFeaturesForUser" : {
+                    "type" : "array",
+                    "description" : "List of feature keys enabled for users in this role.",
+                    "items" : { "type" : "string" },
+                    "example" : [ "TESTING", "INVENTORY" ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Custom role created successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/updateCustomRole" : {
+      "description" : "Updates an existing custom role's base role, collection access, and feature permissions.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/updateCustomRole",
+        "operationId" : "/api/updateCustomRole-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "roleName", "baseRole" ],
+                "properties" : {
+                  "roleName" : {
+                    "type" : "string",
+                    "description" : "Name of the existing custom role to update.",
+                    "example" : "security-analyst"
+                  },
+                  "baseRole" : {
+                    "type" : "string",
+                    "description" : "Updated base role. One of: ADMIN, MEMBER, GUEST.",
+                    "example" : "MEMBER"
+                  },
+                  "apiCollectionIds" : {
+                    "type" : "array",
+                    "description" : "Updated list of API collection IDs this role has access to.",
+                    "items" : { "type" : "integer" },
+                    "example" : [ 1001, 1003 ]
+                  },
+                  "defaultInviteRole" : {
+                    "type" : "boolean",
+                    "description" : "Whether this role should become the default role for new invites.",
+                    "example" : true
+                  },
+                  "allowedFeaturesForUser" : {
+                    "type" : "array",
+                    "description" : "Updated list of feature keys enabled for users in this role.",
+                    "items" : { "type" : "string" },
+                    "example" : [ "TESTING" ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Custom role updated successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/deleteCustomRole" : {
+      "description" : "Deletes a custom role by name. The role must not be assigned to any users or pending invites.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/deleteCustomRole",
+        "operationId" : "/api/deleteCustomRole-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "roleName" ],
+                "properties" : {
+                  "roleName" : {
+                    "type" : "string",
+                    "description" : "Name of the custom role to delete.",
+                    "example" : "security-analyst"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Custom role deleted successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/makeAdmin" : {
+      "description" : "Updates the role of a user within the current account.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/makeAdmin",
+        "operationId" : "/api/makeAdmin-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "email", "userRole" ],
+                "properties" : {
+                  "email" : {
+                    "type" : "string",
+                    "format" : "email",
+                    "description" : "Email address of the user whose role is to be updated.",
+                    "example" : "bob@example.com"
+                  },
+                  "userRole" : {
+                    "type" : "string",
+                    "description" : "New role to assign to the user. Value is uppercased before processing.",
+                    "example" : "ADMIN"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "User role updated and cache cleared.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/updateUserScopeRoleMapping" : {
+      "description" : "Updates the per-product-scope role mapping for a user, enabling fine-grained access control across product areas.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/updateUserScopeRoleMapping",
+        "operationId" : "/api/updateUserScopeRoleMapping-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "email", "scopeRoleMapping" ],
+                "properties" : {
+                  "email" : {
+                    "type" : "string",
+                    "format" : "email",
+                    "description" : "Email address of the user to update.",
+                    "example" : "bob@example.com"
+                  },
+                  "scopeRoleMapping" : {
+                    "type" : "object",
+                    "description" : "Map of product scope to role. Valid scopes include API, ENDPOINT, etc. Use NO_ACCESS to revoke access for a scope.",
+                    "additionalProperties" : { "type" : "string" },
+                    "example" : { "API" : "ADMIN", "ENDPOINT" : "MEMBER" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Scope-role mapping updated and user cache cleared.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Empty response body on success."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/getRoleHierarchy" : {
+      "description" : "Returns the role hierarchy that the current user is permitted to assign to others.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/getRoleHierarchy",
+        "operationId" : "/api/getRoleHierarchy-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "No request body required."
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns the list of roles below the current user's role.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "userRoleHierarchy" : {
+                      "type" : "array",
+                      "description" : "Array of Role enum values that the current user can assign.",
+                      "items" : { "type" : "string" },
+                      "example" : [ "MEMBER", "GUEST" ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/getAccessTypes" : {
+      "description" : "Fetches access-type information (public, private, partner) for a given list of API URLs.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/getAccessTypes",
+        "operationId" : "/api/getAccessTypes-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "urls" ],
+                "properties" : {
+                  "urls" : {
+                    "type" : "array",
+                    "description" : "List of API endpoint URLs to look up access types for.",
+                    "items" : { "type" : "string" },
+                    "example" : [ "/api/login", "/api/admin/users" ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns ApiInfo objects with access type details for each URL.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "type" : "object",
+                      "properties" : {
+                        "apiInfos" : {
+                          "type" : "array",
+                          "description" : "List of ApiInfo objects containing access type details.",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "url" : { "type" : "string", "example" : "/api/login" },
+                              "accessType" : { "type" : "string", "example" : "PUBLIC" }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/applyAccessType" : {
+      "description" : "Triggers a background job to recalculate API access types for all endpoints based on the current private CIDR and partner IP rules stored in account settings.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/applyAccessType",
+        "operationId" : "/api/applyAccessType-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "No request body required. Configuration is read from AccountSettings (privateCidrList, partnerIpList)."
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Background access-type calculation job started.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Empty response body; processing happens asynchronously."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/resetCollectionAccessTypes" : {
+      "description" : "Starts a background job to reset access types for all APIs across all collections.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/resetCollectionAccessTypes",
+        "operationId" : "/api/resetCollectionAccessTypes-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "No request body required."
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Background reset job started.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "response" : {
+                      "type" : "object",
+                      "properties" : {
+                        "started" : {
+                          "type" : "boolean",
+                          "description" : "Always true when the job was successfully enqueued.",
+                          "example" : true
+                        },
+                        "message" : {
+                          "type" : "string",
+                          "description" : "Human-readable status message.",
+                          "example" : "Reset started for all collections."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/addApiToken" : {
+      "description" : "Creates a new API token of the specified utility type for the current user.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/addApiToken",
+        "operationId" : "/api/addApiToken-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "tokenUtility" ],
+                "properties" : {
+                  "tokenUtility" : {
+                    "type" : "string",
+                    "description" : "Type of API token to create. One of: BURP, CICD, EXTERNAL_API.",
+                    "example" : "EXTERNAL_API"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "API token created. Returns the newly created token in a list.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "apiTokenList" : {
+                      "type" : "array",
+                      "description" : "List containing the newly created ApiToken object.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "id" : { "type" : "integer", "example" : 42 },
+                          "key" : { "type" : "string", "description" : "40-character random API key.", "example" : "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2" },
+                          "utility" : { "type" : "string", "example" : "EXTERNAL_API" },
+                          "userId" : { "type" : "integer", "example" : 1001 }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/deleteApiToken" : {
+      "description" : "Deletes the specified API token. Only the owning user can delete their own tokens.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/deleteApiToken",
+        "operationId" : "/api/deleteApiToken-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "apiTokenId" ],
+                "properties" : {
+                  "apiTokenId" : {
+                    "type" : "integer",
+                    "description" : "ID of the API token to delete.",
+                    "example" : 42
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns whether the token was successfully deleted.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "apiTokenDeleted" : {
+                      "type" : "boolean",
+                      "description" : "True if the token was found and deleted, false otherwise.",
+                      "example" : true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/fetchApiTokens" : {
+      "description" : "Fetches all API tokens (including Slack webhook tokens) belonging to the current user in the current account.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchApiTokens",
+        "operationId" : "/api/fetchApiTokens-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "No request body required."
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns all API tokens for the current user.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "apiTokenList" : {
+                      "type" : "array",
+                      "description" : "List of ApiToken objects, including Slack webhook tokens.",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "id" : { "type" : "integer", "example" : 42 },
+                          "key" : { "type" : "string", "example" : "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2" },
+                          "utility" : { "type" : "string", "example" : "EXTERNAL_API" },
+                          "userId" : { "type" : "integer", "example" : 1001 }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/saveSubscription" : {
+      "description" : "Saves a web push notification subscription for the current user.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/saveSubscription",
+        "operationId" : "/api/saveSubscription-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "subscription" ],
+                "properties" : {
+                  "subscription" : {
+                    "type" : "object",
+                    "description" : "Web push subscription object (PushSubscription from the browser Push API).",
+                    "properties" : {
+                      "endpoint" : { "type" : "string", "example" : "https://fcm.googleapis.com/fcm/send/abc123" },
+                      "keys" : {
+                        "type" : "object",
+                        "properties" : {
+                          "p256dh" : { "type" : "string", "example" : "BNcRd..." },
+                          "auth" : { "type" : "string", "example" : "tBHItJI..." }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Subscription saved successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "subscription" : {
+                      "type" : "object",
+                      "description" : "Confirmation object.",
+                      "properties" : {
+                        "complete" : { "type" : "boolean", "example" : true }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/provisionSubscription" : {
+      "description" : "Creates a billing checkout session via Stigg for the specified plan, and returns the checkout result.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/provisionSubscription",
+        "operationId" : "/api/provisionSubscription-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "customerId", "planId", "billingPeriod", "successUrl", "cancelUrl" ],
+                "properties" : {
+                  "customerId" : {
+                    "type" : "string",
+                    "description" : "Stigg customer ID for the organisation.",
+                    "example" : "cust_01hx..."
+                  },
+                  "planId" : {
+                    "type" : "string",
+                    "description" : "Identifier of the billing plan to subscribe to.",
+                    "example" : "plan_enterprise_monthly"
+                  },
+                  "billingPeriod" : {
+                    "type" : "string",
+                    "description" : "Billing period for the subscription. One of: monthly, annual.",
+                    "example" : "monthly"
+                  },
+                  "successUrl" : {
+                    "type" : "string",
+                    "description" : "URL to redirect to after successful checkout.",
+                    "example" : "https://app.akto.io/dashboard?checkout=success"
+                  },
+                  "cancelUrl" : {
+                    "type" : "string",
+                    "description" : "URL to redirect to if the user cancels checkout.",
+                    "example" : "https://app.akto.io/dashboard?checkout=cancelled"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Checkout session created. Returns the result from the billing service.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "checkoutResult" : {
+                      "type" : "object",
+                      "description" : "Checkout session details returned by the Stigg billing service.",
+                      "properties" : {
+                        "checkoutUrl" : { "type" : "string", "example" : "https://checkout.stigg.io/session/abc123" },
+                        "status" : { "type" : "string", "example" : "PENDING" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/getCustomerStiggDetails" : {
+      "description" : "Fetches a signed Stigg customer token for authenticating the Stigg in-app widget on the client side.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/getCustomerStiggDetails",
+        "operationId" : "/api/getCustomerStiggDetails-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "customerId" ],
+                "properties" : {
+                  "customerId" : {
+                    "type" : "string",
+                    "format" : "uuid",
+                    "description" : "Organisation ID in UUID format, used as the Stigg customer identifier.",
+                    "example" : "550e8400-e29b-41d4-a716-446655440000"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Returns a signed Stigg customer token.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "customerToken" : {
+                      "type" : "string",
+                      "description" : "Signed JWT/signature token for authenticating with the Stigg client SDK.",
+                      "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
+    },
+    "/api/refreshUsageDataForOrg" : {
+      "description" : "Triggers a background job to recalculate and sync usage metrics for all accounts in the current organisation.",
+      "post" : {
+        "summary" : "POST request for endpoint /api/refreshUsageDataForOrg",
+        "operationId" : "/api/refreshUsageDataForOrg-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "No request body required."
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Background usage refresh job enqueued.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "description" : "Empty response body; processing happens asynchronously."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "content-type",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "application/json"
+        }
+      }, {
+        "name" : "X-API-KEY",
+        "in" : "header",
+        "schema" : {
+          "type" : "string",
+          "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+        }
+      } ]
     }
   }
 }
