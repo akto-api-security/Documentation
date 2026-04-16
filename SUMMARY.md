@@ -407,6 +407,9 @@
 * [User Management](api-reference/user-management/README.md)
   * [Fetch Data](api-reference/user-management/fetch-data.md)
   * [Modify Data](api-reference/user-management/modify-data.md)
+* [System Settings](api-reference/system-settings/README.md)
+  * [Fetch Data](api-reference/system-settings/fetch-data.md)
+  * [Modify Data](api-reference/system-settings/modify-data.md)
 
 ## Troubleshooting
 
