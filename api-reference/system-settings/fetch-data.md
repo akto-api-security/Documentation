@@ -1,7 +1,3 @@
----
-hidden: true
----
-
 # Fetch Data
 
 ## System & Health
