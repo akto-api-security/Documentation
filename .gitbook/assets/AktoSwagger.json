@@ -19981,6 +19981,1638 @@
           }
         }
       ]
+    },
+        "/api/deleteAllMaliciousEvents": {
+      "description": "Delete all malicious events from the system",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteAllMaliciousEvents",
+        "operationId": "/api/deleteAllMaliciousEvents-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "includeArchived": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "All malicious events deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deletedCount": {
+                      "type": "integer",
+                      "example": 994
+                    },
+                    "archivedDeletedCount": {
+                      "type": "integer",
+                      "example": 974
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchFiltersThreatTable": {
+      "description": "Fetch filters for threat detection table",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchFiltersThreatTable",
+        "operationId": "/api/fetchFiltersThreatTable-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Threat table filters retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "filters": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "High4XXAlertFilter"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "High 4XX Alert"
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "RL"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchFiltersForThreatActors": {
+      "description": "Fetch filters for threat actors",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchFiltersForThreatActors",
+        "operationId": "/api/fetchFiltersForThreatActors-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Threat actor filters retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actorFilters": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ip": {
+                            "type": "string",
+                            "example": "192.0.2.48"
+                          },
+                          "country": {
+                            "type": "string",
+                            "example": "IN"
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "active"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchThreatsForActor": {
+      "description": "Fetch all threats detected for a specific actor",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchThreatsForActor",
+        "operationId": "/api/fetchThreatsForActor-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "actor": {
+                    "type": "string",
+                    "example": "192.0.2.48"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Threats for actor retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "threats": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "4a3502a0-ab5f-4255-9628-aae3b0ef33bd"
+                          },
+                          "actor": {
+                            "type": "string",
+                            "example": "192.0.2.48"
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "RL"
+                          },
+                          "subCategory": {
+                            "type": "string",
+                            "example": "Rate Limiting"
+                          },
+                          "severity": {
+                            "type": "string",
+                            "example": "HIGH"
+                          },
+                          "detectedAt": {
+                            "type": "integer",
+                            "example": 1672531200
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "Anomaly"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchThreatConfiguration": {
+      "description": "Fetch current threat detection configuration",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchThreatConfiguration",
+        "operationId": "/api/fetchThreatConfiguration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Threat configuration retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ratelimitConfig": {
+                      "type": "object",
+                      "properties": {
+                        "rules": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "example": "Global Rate Limit Rule"
+                              },
+                              "period": {
+                                "type": "integer",
+                                "example": 5
+                              },
+                              "maxRequests": {
+                                "type": "integer",
+                                "example": 100
+                              },
+                              "mitigationPeriod": {
+                                "type": "integer",
+                                "example": 5
+                              },
+                              "action": {
+                                "type": "string",
+                                "example": "BLOCK"
+                              },
+                              "type": {
+                                "type": "string",
+                                "example": "DEFAULT"
+                              },
+                              "behaviour": {
+                                "type": "string",
+                                "example": "DYNAMIC"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/modifyThreatConfiguration": {
+      "description": "Modify threat detection configuration settings",
+      "post": {
+        "summary": "POST request for endpoint /api/modifyThreatConfiguration",
+        "operationId": "/api/modifyThreatConfiguration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ratelimitConfig": {
+                    "type": "object",
+                    "properties": {
+                      "rules": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "example": "Custom Rate Limit"
+                            },
+                            "period": {
+                              "type": "integer",
+                              "example": 10
+                            },
+                            "maxRequests": {
+                              "type": "integer",
+                              "example": 50
+                            },
+                            "action": {
+                              "type": "string",
+                              "example": "BLOCK"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Threat configuration updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Configuration updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/modifyThreatActorStatusCloudflare": {
+      "description": "Modify threat actor status in Cloudflare WAF",
+      "post": {
+        "summary": "POST request for endpoint /api/modifyThreatActorStatusCloudflare",
+        "operationId": "/api/modifyThreatActorStatusCloudflare-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "actor": {
+                    "type": "string",
+                    "example": "203.0.113.192/32"
+                  },
+                  "action": {
+                    "type": "string",
+                    "example": "BLOCK"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Actor status modified successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "actor": {
+                      "type": "string",
+                      "example": "203.0.113.192/32"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "BLOCKED"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/bulkModifyThreatActorStatusCloudflare": {
+      "description": "Bulk modify threat actor status in Cloudflare WAF",
+      "post": {
+        "summary": "POST request for endpoint /api/bulkModifyThreatActorStatusCloudflare",
+        "operationId": "/api/bulkModifyThreatActorStatusCloudflare-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "actors": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": ["192.0.2.48", "198.51.100.0", "203.0.113.192/32"]
+                  },
+                  "action": {
+                    "type": "string",
+                    "example": "BLOCK"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bulk actor status modification completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "successCount": {
+                      "type": "integer",
+                      "example": 3
+                    },
+                    "failureCount": {
+                      "type": "integer",
+                      "example": 0
+                    },
+                    "modifiedActors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": ["192.0.2.48", "198.51.100.0", "203.0.113.192/32"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getThreatActivityTimeline": {
+      "description": "Get threat activity timeline for visualization",
+      "post": {
+        "summary": "POST request for endpoint /api/getThreatActivityTimeline",
+        "operationId": "/api/getThreatActivityTimeline-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startTime": {
+                    "type": "integer",
+                    "example": 1672531200
+                  },
+                  "endTime": {
+                    "type": "integer",
+                    "example": 1672531200
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Threat activity timeline retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timeline": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "timestamp": {
+                            "type": "integer",
+                            "example": 1672531200
+                          },
+                          "severity": {
+                            "type": "string",
+                            "example": "HIGH"
+                          },
+                          "threatCount": {
+                            "type": "integer",
+                            "example": 5
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "RL"
+                          }
+                        }
+                      }
+                    },
+                    "totalThreatsDetected": {
+                      "type": "integer",
+                      "example": 994
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/addCloudflareWafIntegration": {
+      "description": "Add Cloudflare WAF integration",
+      "post": {
+        "summary": "POST request for endpoint /api/addCloudflareWafIntegration",
+        "operationId": "/api/addCloudflareWafIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apiToken": {
+                    "type": "string",
+                    "example": "[CLOUDFLARE_API_TOKEN_REDACTED]"
+                  },
+                  "zoneId": {
+                    "type": "string",
+                    "example": "[ZONE_ID_REDACTED]"
+                  },
+                  "ruleListId": {
+                    "type": "string",
+                    "example": "cloudflare_list_id"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cloudflare WAF integration added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "integrationId": {
+                      "type": "string",
+                      "example": "cf_integration_123"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/deleteCloudflareWafIntegration": {
+      "description": "Delete Cloudflare WAF integration",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteCloudflareWafIntegration",
+        "operationId": "/api/deleteCloudflareWafIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "integrationId": {
+                    "type": "string",
+                    "example": "cf_integration_123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cloudflare WAF integration deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchCloudflareWafIntegration": {
+      "description": "Fetch Cloudflare WAF integration details",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchCloudflareWafIntegration",
+        "operationId": "/api/fetchCloudflareWafIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cloudflare WAF integration details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "integrations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "integrationId": {
+                            "type": "string",
+                            "example": "cf_integration_123"
+                          },
+                          "zoneId": {
+                            "type": "string",
+                            "example": "[ZONE_ID_REDACTED]"
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "active"
+                          },
+                          "createdAt": {
+                            "type": "integer",
+                            "example": 1672531200
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/addAwsWafIntegration": {
+      "description": "Add AWS WAF integration",
+      "post": {
+        "summary": "POST request for endpoint /api/addAwsWafIntegration",
+        "operationId": "/api/addAwsWafIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accessKeyId": {
+                    "type": "string",
+                    "example": "[AWS_ACCESS_KEY_REDACTED]"
+                  },
+                  "secretAccessKey": {
+                    "type": "string",
+                    "example": "[AWS_SECRET_KEY_REDACTED]"
+                  },
+                  "region": {
+                    "type": "string",
+                    "example": "us-east-1"
+                  },
+                  "webAclId": {
+                    "type": "string",
+                    "example": "arn:aws:wafv2:us-east-1:[ACCOUNT_ID_REDACTED]:global/webacl/test/[ID_REDACTED]"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "AWS WAF integration added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "integrationId": {
+                      "type": "string",
+                      "example": "aws_integration_456"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchAwsWafIntegration": {
+      "description": "Fetch AWS WAF integration details",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchAwsWafIntegration",
+        "operationId": "/api/fetchAwsWafIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "AWS WAF integration details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "integrations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "integrationId": {
+                            "type": "string",
+                            "example": "aws_integration_456"
+                          },
+                          "region": {
+                            "type": "string",
+                            "example": "us-east-1"
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "active"
+                          },
+                          "lastSync": {
+                            "type": "integer",
+                            "example": 1672531200
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchThreatActivityWebhookIntegration": {
+      "description": "Fetch threat activity webhook integration configuration",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchThreatActivityWebhookIntegration",
+        "operationId": "/api/fetchThreatActivityWebhookIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Threat activity webhook integration retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "webhookUrl": {
+                      "type": "string",
+                      "example": "https://[YOUR_SYSTEM_DOMAIN]/webhooks/threat-activity"
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "eventTypes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": ["ANOMALY_DETECTED", "RATE_LIMIT_EXCEEDED", "BOLA_DETECTED"]
+                    },
+                    "createdAt": {
+                      "type": "integer",
+                      "example": 1672531200
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/addThreatActivityWebhookIntegration": {
+      "description": "Add threat activity webhook integration",
+      "post": {
+        "summary": "POST request for endpoint /api/addThreatActivityWebhookIntegration",
+        "operationId": "/api/addThreatActivityWebhookIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "webhookUrl": {
+                    "type": "string",
+                    "example": "https://[YOUR_SYSTEM_DOMAIN]/webhooks/threat-activity"
+                  },
+                  "eventTypes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": ["ANOMALY_DETECTED", "RATE_LIMIT_EXCEEDED", "BOLA_DETECTED"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Threat activity webhook integration added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "webhookId": {
+                      "type": "string",
+                      "example": "webhook_789"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchApiStats": {
+      "description": "Fetch API statistics and metrics",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchApiStats",
+        "operationId": "/api/fetchApiStats-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "timeRange": {
+                    "type": "string",
+                    "example": "24h"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API statistics retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "totalRequests": {
+                      "type": "integer",
+                      "example": 127239
+                    },
+                    "maliciousRequests": {
+                      "type": "integer",
+                      "example": 1968
+                    },
+                    "uniqueActors": {
+                      "type": "integer",
+                      "example": 234
+                    },
+                    "threatCategories": {
+                      "type": "object",
+                      "properties": {
+                        "RL": {
+                          "type": "integer",
+                          "example": 856
+                        },
+                        "BOLA": {
+                          "type": "integer",
+                          "example": 542
+                        },
+                        "INJECTION": {
+                          "type": "integer",
+                          "example": 324
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/addAdvancedFiltersForTraffic": {
+      "description": "Add advanced filters for traffic filtering",
+      "post": {
+        "summary": "POST request for endpoint /api/addAdvancedFiltersForTraffic",
+        "operationId": "/api/addAdvancedFiltersForTraffic-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filterId": {
+                    "type": "string",
+                    "example": "LocalFileInclusionLFIRFI"
+                  },
+                  "content": {
+                    "type": "string",
+                    "example": "id: CustomLFIFilter\nfilter:\n  request_payload:\n    regex:\n      - '(?i)(?:(?:\\.\\.|%2e%2e)(?:/|\\\\|%2f|%5c))+\\.?'"
+                  },
+                  "source": {
+                    "type": "string",
+                    "example": "CUSTOM"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Advanced filter added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "filterId": {
+                      "type": "string",
+                      "example": "LocalFileInclusionLFIRFI"
+                    },
+                    "createdAt": {
+                      "type": "integer",
+                      "example": 1672531200
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchAdvancedFiltersForTraffic": {
+      "description": "Fetch all advanced traffic filters",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchAdvancedFiltersForTraffic",
+        "operationId": "/api/fetchAdvancedFiltersForTraffic-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Advanced filters retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "filters": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "LocalFileInclusionLFIRFI"
+                          },
+                          "author": {
+                            "type": "string",
+                            "example": "AKTO"
+                          },
+                          "source": {
+                            "type": "string",
+                            "example": "AKTO_TEMPLATES"
+                          },
+                          "createdAt": {
+                            "type": "integer",
+                            "example": 1672531200
+                          },
+                          "inactive": {
+                            "type": "boolean",
+                            "example": false
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "integer",
+                      "example": 54
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/deleteAdvancedFilter": {
+      "description": "Delete an advanced traffic filter",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteAdvancedFilter",
+        "operationId": "/api/deleteAdvancedFilter-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filterId": {
+                    "type": "string",
+                    "example": "LocalFileInclusionLFIRFI"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Advanced filter deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "deletedFilterId": {
+                      "type": "string",
+                      "example": "LocalFileInclusionLFIRFI"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/changeStateOfFilter": {
+      "description": "Change the active/inactive state of a filter",
+      "post": {
+        "summary": "POST request for endpoint /api/changeStateOfFilter",
+        "operationId": "/api/changeStateOfFilter-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filterId": {
+                    "type": "string",
+                    "example": "LocalFileInclusionLFIRFI"
+                  },
+                  "active": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Filter state changed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "filterId": {
+                      "type": "string",
+                      "example": "LocalFileInclusionLFIRFI"
+                    },
+                    "newState": {
+                      "type": "string",
+                      "example": "active"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/dryRunAdvancedFilters": {
+      "description": "Perform dry run of advanced filters to test traffic filtering",
+      "post": {
+        "summary": "POST request for endpoint /api/dryRunAdvancedFilters",
+        "operationId": "/api/dryRunAdvancedFilters-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filterIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": ["LocalFileInclusionLFIRFI", "DEFAULT_ALLOW_FILTER"]
+                  },
+                  "timeRange": {
+                    "type": "string",
+                    "example": "24h"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dry run completed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "dryRunResults": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "filterId": {
+                            "type": "string",
+                            "example": "LocalFileInclusionLFIRFI"
+                          },
+                          "matchedRequests": {
+                            "type": "integer",
+                            "example": 42
+                          },
+                          "percentage": {
+                            "type": "number",
+                            "example": 3.2
+                          }
+                        }
+                      }
+                    },
+                    "totalRequestsAnalyzed": {
+                      "type": "integer",
+                      "example": 1307
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
     }
   }
 }
