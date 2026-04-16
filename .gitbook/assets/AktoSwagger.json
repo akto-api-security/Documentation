@@ -17496,6 +17496,2491 @@
           }
         }
       ]
+    },
+    "/api/inventory/{collectionId}/openapi": {
+      "description": "Retrieve OpenAPI specification for a specific API collection",
+      "get": {
+        "summary": "GET request for endpoint /api/inventory/{collectionId}/openapi",
+        "operationId": "/api/inventory/{collectionId}/openapi-GET",
+        "parameters": [
+          {
+            "name": "collectionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          },
+          {
+            "name": "content-type",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "example": "application/json"
+            }
+          },
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OpenAPI specification retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "openapi": {
+                      "type": "string",
+                      "example": "3.0.1"
+                    },
+                    "info": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "example": "Sample API"
+                        },
+                        "version": {
+                          "type": "string",
+                          "example": "1.0.0"
+                        }
+                      }
+                    },
+                    "paths": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/getAPICatalog": {
+      "description": "Retrieve the complete API catalog with all discovered APIs",
+      "post": {
+        "summary": "POST request for endpoint /api/getAPICatalog",
+        "operationId": "/api/getAPICatalog-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API catalog retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apiCatalogData": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "example": "https://vulnerable-server.akto.io/api/college/eco/students"
+                              },
+                              "method": {
+                                "type": "string",
+                                "example": "POST"
+                              },
+                              "apiCollectionId": {
+                                "type": "integer",
+                                "example": 1111111111
+                              }
+                            }
+                          },
+                          "apiType": {
+                            "type": "string",
+                            "example": "REST"
+                          },
+                          "discoveredTimestamp": {
+                            "type": "integer",
+                            "example": 1759319376
+                          },
+                          "lastSeen": {
+                            "type": "integer",
+                            "example": 1767352972
+                          },
+                          "responseCodes": {
+                            "type": "array",
+                            "items": {
+                              "type": "integer"
+                            },
+                            "example": [200, 401]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchCollections": {
+      "description": "Fetch all available API collections",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchCollections",
+        "operationId": "/api/fetchCollections-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Collections fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "collections": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "uid": {
+                            "type": "string",
+                            "example": "111111120"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Unauthenticated APIs"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "uid": "111111120",
+                          "name": "Unauthenticated APIs"
+                        },
+                        {
+                          "uid": "111111121",
+                          "name": "All Apis"
+                        },
+                        {
+                          "uid": "111111128",
+                          "name": "Login APIs"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getCollection": {
+      "description": "Get details of a specific API collection",
+      "post": {
+        "summary": "POST request for endpoint /api/getCollection",
+        "operationId": "/api/getCollection-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "example": 1111111111
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Collection details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apiCollections": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "integer",
+                            "example": 111111120
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Unauthenticated APIs"
+                          },
+                          "displayName": {
+                            "type": "string",
+                            "example": "Unauthenticated APIs"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "API_GROUP"
+                          },
+                          "deactivated": {
+                            "type": "boolean",
+                            "example": false
+                          },
+                          "automated": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "startTs": {
+                            "type": "integer",
+                            "example": 1767352753
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/activateCollections": {
+      "description": "Activate one or more API collections",
+      "post": {
+        "summary": "POST request for endpoint /api/activateCollections",
+        "operationId": "/api/activateCollections-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apiCollections": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Users API"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Collections activated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchIconsForHostnames": {
+      "description": "Fetch icons for given hostnames",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchIconsForHostnames",
+        "operationId": "/api/fetchIconsForHostnames-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "hostnames": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": ["api.example.com", "api2.example.com"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Icons retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "icons": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "example": {
+                        "api.example.com": "https://example.com/icon.png"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getApiSequences": {
+      "description": "Get API call sequences for a collection",
+      "post": {
+        "summary": "POST request for endpoint /api/getApiSequences",
+        "operationId": "/api/getApiSequences-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API sequences retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apiSequences": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "sequence": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "example": ["/api/login", "/api/user/profile"]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getSwaggerDependencies": {
+      "description": "Get Swagger/OpenAPI dependencies for APIs",
+      "post": {
+        "summary": "POST request for endpoint /api/getSwaggerDependencies",
+        "operationId": "/api/getSwaggerDependencies-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Swagger dependencies retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "dependencies": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "source": {
+                            "type": "string",
+                            "example": "api.example.com"
+                          },
+                          "dependencies": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "example": ["auth-service"]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getCountForHostnameDeactivatedCollections": {
+      "description": "Get count of deactivated collections per hostname",
+      "post": {
+        "summary": "POST request for endpoint /api/getCountForHostnameDeactivatedCollections",
+        "operationId": "/api/getCountForHostnameDeactivatedCollections-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Count retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deactivatedCollectionsCountByHostname": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "integer"
+                      },
+                      "example": {
+                        "vulnerable-server.akto.io": 8,
+                        "api.internal.example.com": 3,
+                        "legacy-api.example.com": 5
+                      }
+                    },
+                    "totalDeactivated": {
+                      "type": "integer",
+                      "example": 16
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getCountForUningestedApis": {
+      "description": "Get count of unintegrated APIs",
+      "post": {
+        "summary": "POST request for endpoint /api/getCountForUningestedApis",
+        "operationId": "/api/getCountForUningestedApis-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Count retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "uningestedCount": {
+                      "type": "integer",
+                      "example": 234
+                    },
+                    "totalApiCount": {
+                      "type": "integer",
+                      "example": 13226
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchUningestedApis": {
+      "description": "Fetch all unintegrated APIs",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchUningestedApis",
+        "operationId": "/api/fetchUningestedApis-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "skip": {
+                    "type": "integer",
+                    "example": 0
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "example": 10
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Unintegrated APIs retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apis": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "example": "https://vulnerable-server.akto.io/api/college/eco/students"
+                          },
+                          "method": {
+                            "type": "string",
+                            "example": "POST"
+                          },
+                          "apiCollectionId": {
+                            "type": "integer",
+                            "example": 1111111111
+                          },
+                          "discoveredTimestamp": {
+                            "type": "integer",
+                            "example": 1759319376
+                          }
+                        }
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "example": 234
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getSensitiveAndUnauthenticatedValue": {
+      "description": "Get sensitive fields and unauthenticated endpoints",
+      "post": {
+        "summary": "POST request for endpoint /api/getSensitiveAndUnauthenticatedValue",
+        "operationId": "/api/getSensitiveAndUnauthenticatedValue-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "example": 1111111111
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sensitive data retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sensitiveFields": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": ["content-length", "authorization", "api-key", "x-auth-token"]
+                    },
+                    "isSensitive": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "unauthenticatedEndpointsCount": {
+                      "type": "integer",
+                      "example": 12
+                    },
+                    "sensitiveEndpointsCount": {
+                      "type": "integer",
+                      "example": 3
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getHighRiskThirdPartyValue": {
+      "description": "Get high-risk third-party APIs",
+      "post": {
+        "summary": "POST request for endpoint /api/getHighRiskThirdPartyValue",
+        "operationId": "/api/getHighRiskThirdPartyValue-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "High-risk third-party APIs retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "highRiskApis": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "endpoint": {
+                            "type": "string",
+                            "example": "/api/external/payment"
+                          },
+                          "riskScore": {
+                            "type": "number",
+                            "example": 8.5
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getShadowApis": {
+      "description": "Get shadow/unmanaged APIs",
+      "post": {
+        "summary": "POST request for endpoint /api/getShadowApis",
+        "operationId": "/api/getShadowApis-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "example": 1111111111
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Shadow APIs retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "shadowApis": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "example": "https://vulnerable-server.akto.io/api/college/student-grades"
+                          },
+                          "method": {
+                            "type": "string",
+                            "example": "GET"
+                          },
+                          "discoveredTimestamp": {
+                            "type": "integer",
+                            "example": 1759319376
+                          },
+                          "lastSeen": {
+                            "type": "integer",
+                            "example": 1767352972
+                          },
+                          "riskScore": {
+                            "type": "number",
+                            "example": 7.2
+                          }
+                        }
+                      }
+                    },
+                    "totalShadowApisCount": {
+                      "type": "integer",
+                      "example": 23
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchActionItemsApiInfo": {
+      "description": "Fetch action items related to API information",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchActionItemsApiInfo",
+        "operationId": "/api/fetchActionItemsApiInfo-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Action items retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionItems": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "item_123"
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "Review shadow API"
+                          },
+                          "priority": {
+                            "type": "string",
+                            "example": "HIGH"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchAllUnauthenticatedApis": {
+      "description": "Fetch all unauthenticated APIs",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchAllUnauthenticatedApis",
+        "operationId": "/api/fetchAllUnauthenticatedApis-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Unauthenticated APIs retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apis": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "example": "https://vuln-server.akto.io/api/v2/feePayment"
+                          },
+                          "method": {
+                            "type": "string",
+                            "example": "GET"
+                          },
+                          "apiCollectionId": {
+                            "type": "integer",
+                            "example": 1111111111
+                          },
+                          "riskScore": {
+                            "type": "number",
+                            "example": 0
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "integer",
+                      "example": 145
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/deleteApis": {
+      "description": "Delete one or more APIs",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteApis",
+        "operationId": "/api/deleteApis-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apiInfoKeys": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "example": "/api/users"
+                        },
+                        "method": {
+                          "type": "string",
+                          "example": "DELETE"
+                        },
+                        "apiCollectionId": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "APIs deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deletedCount": {
+                      "type": "integer",
+                      "example": 3
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/removeApisFromCustomCollection": {
+      "description": "Remove APIs from a custom collection",
+      "post": {
+        "summary": "POST request for endpoint /api/removeApisFromCustomCollection",
+        "operationId": "/api/removeApisFromCustomCollection-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "customCollectionId": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "apiInfoKeys": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "example": "/api/users"
+                        },
+                        "method": {
+                          "type": "string",
+                          "example": "GET"
+                        },
+                        "apiCollectionId": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "APIs removed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/computeCustomCollections": {
+      "description": "Compute and create custom API collections based on criteria",
+      "post": {
+        "summary": "POST request for endpoint /api/computeCustomCollections",
+        "operationId": "/api/computeCustomCollections-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "conditions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string",
+                          "example": "url"
+                        },
+                        "operator": {
+                          "type": "string",
+                          "example": "CONTAINS"
+                        },
+                        "value": {
+                          "type": "string",
+                          "example": "/api"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Custom collections computed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "collectionId": {
+                      "type": "integer",
+                      "example": 5
+                    },
+                    "apiCount": {
+                      "type": "integer",
+                      "example": 45
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getCustomerEndpoints": {
+      "description": "Get customer endpoints statistics",
+      "post": {
+        "summary": "POST request for endpoint /api/getCustomerEndpoints",
+        "operationId": "/api/getCustomerEndpoints-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Customer endpoints retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "totalEndpoints": {
+                      "type": "integer",
+                      "example": 13226
+                    },
+                    "activeEndpoints": {
+                      "type": "integer",
+                      "example": 12452
+                    },
+                    "inactiveEndpoints": {
+                      "type": "integer",
+                      "example": 774
+                    },
+                    "sensitiveEndpoints": {
+                      "type": "integer",
+                      "example": 234
+                    },
+                    "unauthenticatedEndpoints": {
+                      "type": "integer",
+                      "example": 145
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/uploadTcp": {
+      "description": "Upload TCP traffic data (HAR format)",
+      "post": {
+        "summary": "POST request for endpoint /api/uploadTcp",
+        "operationId": "/api/uploadTcp-POST",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "TCP data uploaded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "uploadId": {
+                      "type": "string",
+                      "example": "upload_123"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "PROCESSING"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "multipart/form-data"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/updateCustomCollection": {
+      "description": "Update details of a custom collection",
+      "post": {
+        "summary": "POST request for endpoint /api/updateCustomCollection",
+        "operationId": "/api/updateCustomCollection-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "customCollectionId": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Updated Collection Name"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Updated description"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Collection updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/deleteCollection": {
+      "description": "Delete an entire API collection",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteCollection",
+        "operationId": "/api/deleteCollection-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Collection deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/deleteUntrackedCollections": {
+      "description": "Delete collections that are not being tracked",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteUntrackedCollections",
+        "operationId": "/api/deleteUntrackedCollections-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Untracked collections deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deletedCount": {
+                      "type": "integer",
+                      "example": 3
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/updateUserCollections": {
+      "description": "Update user permissions for collections",
+      "post": {
+        "summary": "POST request for endpoint /api/updateUserCollections",
+        "operationId": "/api/updateUserCollections-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string",
+                    "example": "user_123"
+                  },
+                  "collectionIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "example": [1, 2, 3]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User collections updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/addApiCollectionNameMapper": {
+      "description": "Add a mapping for API collection names",
+      "post": {
+        "summary": "POST request for endpoint /api/addApiCollectionNameMapper",
+        "operationId": "/api/addApiCollectionNameMapper-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fromName": {
+                    "type": "string",
+                    "example": "old-api-name"
+                  },
+                  "toName": {
+                    "type": "string",
+                    "example": "new-api-name"
+                  },
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Collection name mapper added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/deleteApiCollectionNameMapper": {
+      "description": "Delete a collection name mapper",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteApiCollectionNameMapper",
+        "operationId": "/api/deleteApiCollectionNameMapper-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mapperId": {
+                    "type": "string",
+                    "example": "mapper_123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Collection name mapper deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/deMergeApi": {
+      "description": "Separate a merged API into individual components",
+      "post": {
+        "summary": "POST request for endpoint /api/deMergeApi",
+        "operationId": "/api/deMergeApi-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apiInfoKey": {
+                    "type": "object",
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "example": "/api/users"
+                      },
+                      "method": {
+                        "type": "string",
+                        "example": "GET"
+                      },
+                      "apiCollectionId": {
+                        "type": "integer",
+                        "example": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API de-merged successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/bulkDeMergeApis": {
+      "description": "Bulk de-merge multiple APIs",
+      "post": {
+        "summary": "POST request for endpoint /api/bulkDeMergeApis",
+        "operationId": "/api/bulkDeMergeApis-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apiInfoKeys": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "example": "/api/users"
+                        },
+                        "method": {
+                          "type": "string",
+                          "example": "GET"
+                        },
+                        "apiCollectionId": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "APIs de-merged successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deMergedCount": {
+                      "type": "integer",
+                      "example": 5
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getDeMergedApis": {
+      "description": "Get list of de-merged APIs",
+      "post": {
+        "summary": "POST request for endpoint /api/getDeMergedApis",
+        "operationId": "/api/getDeMergedApis-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "De-merged APIs retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deMergedApis": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "original": {
+                            "type": "string",
+                            "example": "GET /api/users"
+                          },
+                          "separated": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "example": ["GET /api/users/list", "GET /api/users/{id}"]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/undoDemergedApis": {
+      "description": "Undo de-merging of APIs",
+      "post": {
+        "summary": "POST request for endpoint /api/undoDemergedApis",
+        "operationId": "/api/undoDemergedApis-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "deMergeGroupId": {
+                    "type": "string",
+                    "example": "demerge_group_123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "De-merge undone successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/editCollectionName": {
+      "description": "Edit the name of an API collection",
+      "post": {
+        "summary": "POST request for endpoint /api/editCollectionName",
+        "operationId": "/api/editCollectionName-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "newName": {
+                    "type": "string",
+                    "example": "New Collection Name"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Collection name updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/deleteApisBasedOnHeader": {
+      "description": "Delete APIs based on header matching criteria",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteApisBasedOnHeader",
+        "operationId": "/api/deleteApisBasedOnHeader-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "headerKey": {
+                    "type": "string",
+                    "example": "X-Custom-Header"
+                  },
+                  "headerValue": {
+                    "type": "string",
+                    "example": "deprecated"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "APIs deleted based on header successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deletedCount": {
+                      "type": "integer",
+                      "example": 10
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchNonStandardHeaderKeys": {
+      "description": "Fetch non-standard headers found in APIs",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchNonStandardHeaderKeys",
+        "operationId": "/api/fetchNonStandardHeaderKeys-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Non-standard headers retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nonStandardHeaders": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": ["X-Custom-Header", "X-API-Version", "X-Request-ID"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/syncExtractedAPIs": {
+      "description": "Sync APIs extracted from code analysis",
+      "post": {
+        "summary": "POST request for endpoint /api/syncExtractedAPIs",
+        "operationId": "/api/syncExtractedAPIs-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "analysisId": {
+                    "type": "string",
+                    "example": "analysis_123"
+                  },
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Extracted APIs synced successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "syncedCount": {
+                      "type": "integer",
+                      "example": 15
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getUniqueHostsTested": {
+      "description": "Get count of unique hosts that have been tested",
+      "post": {
+        "summary": "POST request for endpoint /api/getUniqueHostsTested",
+        "operationId": "/api/getUniqueHostsTested-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Unique hosts retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "uniqueHosts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": ["api.example.com", "api2.example.com", "internal-api.example.com"]
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 3
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchCountMapOfApis": {
+      "description": "Fetch count map of APIs by data type",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchCountMapOfApis",
+        "operationId": "/api/fetchCountMapOfApis-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API count map retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "countMap": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "integer"
+                      },
+                      "example": {
+                        "INTEGER_32": 89234,
+                        "STRING": 156234,
+                        "BOOLEAN": 42125,
+                        "OBJECT": 28934,
+                        "ARRAY": 12483
+                      }
+                    },
+                    "totalCount": {
+                      "type": "integer",
+                      "example": 444217
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
     }
   }
 }
