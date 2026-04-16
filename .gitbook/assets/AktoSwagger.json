@@ -21613,6 +21613,2338 @@
           }
         }
       ]
+    },
+    "/api/metrics": {
+      "description": "Fetch system metrics within a specified time range",
+      "post": {
+        "summary": "POST request for endpoint /api/metrics",
+        "operationId": "/api/metrics-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startTime": {
+                    "type": "integer",
+                    "example": 1766398000
+                  },
+                  "endTime": {
+                    "type": "integer",
+                    "example": 1766398064
+                  },
+                  "metricIdPrefix": {
+                    "type": "string",
+                    "example": "RT_KAFKA_"
+                  },
+                  "instanceId": {
+                    "type": "string",
+                    "example": "879c9527-b664-403e-9b7e-1abe0ac05ab6"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Metrics retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "metrics": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "metricId": {
+                            "type": "string",
+                            "example": "RT_KAFKA_RECORD_COUNT"
+                          },
+                          "value": {
+                            "type": "integer",
+                            "example": 0
+                          },
+                          "timestamp": {
+                            "type": "integer",
+                            "example": 1766398064
+                          },
+                          "instanceId": {
+                            "type": "string",
+                            "example": "879c9527-b664-403e-9b7e-1abe0ac05ab6"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/allMetricsDescription": {
+      "description": "Retrieve descriptions of all available metrics",
+      "get": {
+        "summary": "GET request for endpoint /api/allMetricsDescription",
+        "operationId": "/api/allMetricsDescription-GET",
+        "responses": {
+          "200": {
+            "description": "Metrics descriptions retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "names": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "RT_KAFKA_RECORD_COUNT"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health": {
+      "description": "System health check endpoint",
+      "get": {
+        "summary": "GET request for endpoint /api/health",
+        "operationId": "/api/health-GET",
+        "responses": {
+          "200": {
+            "description": "System is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "UP"
+                    },
+                    "timestamp": {
+                      "type": "integer",
+                      "example": 1767352972
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sendHealthCheck": {
+      "description": "Send health check signal to verify connectivity",
+      "post": {
+        "summary": "POST request for endpoint /api/sendHealthCheck",
+        "operationId": "/api/sendHealthCheck-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "instanceId": {
+                    "type": "string",
+                    "example": "879c9527-b664-403e-9b7e-1abe0ac05ab6"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Health check sent successfully"
+          }
+        }
+      }
+    },
+    "/api/fetchModuleInfo": {
+      "description": "Fetch information about system modules",
+      "get": {
+        "summary": "GET request for endpoint /api/fetchModuleInfo",
+        "operationId": "/api/fetchModuleInfo-GET",
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "TRAFFIC_COLLECTOR"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Module info retrieved successfully"
+          }
+        }
+      }
+    },
+    "/api/deleteModuleInfo": {
+      "description": "Delete module information from the system",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteModuleInfo",
+        "operationId": "/api/deleteModuleInfo-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "moduleId": {
+                    "type": "string",
+                    "example": "TRAFFIC_COLLECTOR"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Module info deleted successfully"
+          }
+        }
+      }
+    },
+    "/api/rebootModules": {
+      "description": "Reboot one or more system modules",
+      "post": {
+        "summary": "POST request for endpoint /api/rebootModules",
+        "operationId": "/api/rebootModules-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "moduleIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "TRAFFIC_COLLECTOR"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Modules reboot initiated successfully"
+          }
+        }
+      }
+    },
+    "/api/updateModuleEnvAndReboot": {
+      "description": "Update module environment variables and trigger reboot",
+      "post": {
+        "summary": "POST request for endpoint /api/updateModuleEnvAndReboot",
+        "operationId": "/api/updateModuleEnvAndReboot-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "moduleId": {
+                    "type": "string",
+                    "example": "TRAFFIC_COLLECTOR"
+                  },
+                  "envVariables": {
+                    "type": "object",
+                    "example": {
+                      "DEBUG_MODE": "true",
+                      "LOG_LEVEL": "INFO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Module environment updated and reboot initiated"
+          }
+        }
+      }
+    },
+    "/api/takeUpdate": {
+      "description": "Download and apply a system update",
+      "post": {
+        "summary": "POST request for endpoint /api/takeUpdate",
+        "operationId": "/api/takeUpdate-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": "string",
+                    "example": "1.97.0"
+                  },
+                  "force": {
+                    "type": "boolean",
+                    "example": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update applied successfully"
+          }
+        }
+      }
+    },
+    "/api/closeLoader": {
+      "description": "Close the loading indicator in the UI",
+      "post": {
+        "summary": "POST request for endpoint /api/closeLoader",
+        "operationId": "/api/closeLoader-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Loader closed successfully"
+          }
+        }
+      }
+    },
+    "/api/skipOnboarding": {
+      "description": "Mark onboarding as complete without running the full process",
+      "post": {
+        "summary": "POST request for endpoint /api/skipOnboarding",
+        "operationId": "/api/skipOnboarding-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Onboarding skipped successfully"
+          }
+        }
+      }
+    },
+    "/api/runTestOnboarding": {
+      "description": "Execute onboarding tests to verify setup",
+      "post": {
+        "summary": "POST request for endpoint /api/runTestOnboarding",
+        "operationId": "/api/runTestOnboarding-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "testType": {
+                    "type": "string",
+                    "example": "FULL"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Onboarding tests completed"
+          }
+        }
+      }
+    },
+    "/api/fetchAdminSettings": {
+      "description": "Retrieve all account-level administrative settings",
+      "get": {
+        "summary": "GET request for endpoint /api/fetchAdminSettings",
+        "operationId": "/api/fetchAdminSettings-GET",
+        "responses": {
+          "200": {
+            "description": "Admin settings retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "dashboardVersion": {
+                      "type": "string",
+                      "example": "[REDACTED-VERSION] - [REDACTED-TIMESTAMP] - [REDACTED-VERSION]"
+                    },
+                    "urlRegexMatchingEnabled": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "telemetrySettings": {
+                      "type": "object",
+                      "properties": {
+                        "customerEnabled": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "telemetryEnabled": {
+                          "type": "boolean",
+                          "example": false
+                        }
+                      }
+                    },
+                    "showOnboarding": {
+                      "type": "boolean",
+                      "example": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/modifyAccountSettings": {
+      "description": "Update various account-level settings",
+      "post": {
+        "summary": "POST request for endpoint /api/modifyAccountSettings",
+        "operationId": "/api/modifyAccountSettings-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "settingKey": {
+                    "type": "string",
+                    "example": "SETTING_NAME"
+                  },
+                  "settingValue": {
+                    "type": "string",
+                    "example": "new_value"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Settings updated successfully"
+          }
+        }
+      }
+    },
+    "/api/updateAktoUIMode": {
+      "description": "Change the UI mode (dark/light theme)",
+      "post": {
+        "summary": "POST request for endpoint /api/updateAktoUIMode",
+        "operationId": "/api/updateAktoUIMode-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uiMode": {
+                    "type": "string",
+                    "example": "DARK"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "UI mode updated successfully"
+          }
+        }
+      }
+    },
+    "/api/toggleRedactFeature": {
+      "description": "Enable or disable the redaction feature for sensitive data",
+      "post": {
+        "summary": "POST request for endpoint /api/toggleRedactFeature",
+        "operationId": "/api/toggleRedactFeature-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Redaction feature toggled successfully"
+          }
+        }
+      }
+    },
+    "/api/toggleCaseSensitiveApis": {
+      "description": "Enable or disable case-sensitive API matching",
+      "post": {
+        "summary": "POST request for endpoint /api/toggleCaseSensitiveApis",
+        "operationId": "/api/toggleCaseSensitiveApis-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "caseSensitive": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Case sensitivity setting updated"
+          }
+        }
+      }
+    },
+    "/api/switchTestingModule": {
+      "description": "Enable or disable the testing module",
+      "post": {
+        "summary": "POST request for endpoint /api/switchTestingModule",
+        "operationId": "/api/switchTestingModule-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Testing module switched successfully"
+          }
+        }
+      }
+    },
+    "/api/enableMergingOnVersionsInApis": {
+      "description": "Allow merging of API endpoints across different versions",
+      "post": {
+        "summary": "POST request for endpoint /api/enableMergingOnVersionsInApis",
+        "operationId": "/api/enableMergingOnVersionsInApis-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Version merging setting updated"
+          }
+        }
+      }
+    },
+    "/api/updateMergeAsyncOutside": {
+      "description": "Configure asynchronous merging outside of main request flow",
+      "post": {
+        "summary": "POST request for endpoint /api/updateMergeAsyncOutside",
+        "operationId": "/api/updateMergeAsyncOutside-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Async merge setting updated"
+          }
+        }
+      }
+    },
+    "/api/updateGlobalRateLimit": {
+      "description": "Set the global API rate limit for the entire account",
+      "post": {
+        "summary": "POST request for endpoint /api/updateGlobalRateLimit",
+        "operationId": "/api/updateGlobalRateLimit-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "globalRateLimit": {
+                    "type": "integer",
+                    "example": 1000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Rate limit updated successfully"
+          }
+        }
+      }
+    },
+    "/api/updateIgnoreTimeForSummaries": {
+      "description": "Configure whether to ignore timestamps in summaries",
+      "post": {
+        "summary": "POST request for endpoint /api/updateIgnoreTimeForSummaries",
+        "operationId": "/api/updateIgnoreTimeForSummaries-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ignoreTime": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Summary time setting updated"
+          }
+        }
+      }
+    },
+    "/api/updatePrivateCidrIps": {
+      "description": "Configure private CIDR ranges for internal traffic",
+      "post": {
+        "summary": "POST request for endpoint /api/updatePrivateCidrIps",
+        "operationId": "/api/updatePrivateCidrIps-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "privateCidrList": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "192.0.2.0/24"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Private CIDR IPs updated"
+          }
+        }
+      }
+    },
+    "/api/addMatchingPatternForProxy": {
+      "description": "Add a URL pattern for proxy matching",
+      "post": {
+        "summary": "POST request for endpoint /api/addMatchingPatternForProxy",
+        "operationId": "/api/addMatchingPatternForProxy-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "pattern": {
+                    "type": "string",
+                    "example": ".*\\.example\\.com.*"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Proxy pattern added successfully"
+          }
+        }
+      }
+    },
+    "/api/updatePartnerIps": {
+      "description": "Configure partner IP addresses",
+      "post": {
+        "summary": "POST request for endpoint /api/updatePartnerIps",
+        "operationId": "/api/updatePartnerIps-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "partnerIpList": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "192.0.2.100"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Partner IPs updated"
+          }
+        }
+      }
+    },
+    "/api/toggleNewMergingEnabled": {
+      "description": "Enable or disable the new merging algorithm (URL regex matching)",
+      "post": {
+        "summary": "POST request for endpoint /api/toggleNewMergingEnabled",
+        "operationId": "/api/toggleNewMergingEnabled-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "newMergingEnabled": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "New merging setting toggled"
+          }
+        }
+      }
+    },
+    "/api/toggleDoBodyMatch": {
+      "description": "Enable or disable matching based on request/response body content",
+      "post": {
+        "summary": "POST request for endpoint /api/toggleDoBodyMatch",
+        "operationId": "/api/toggleDoBodyMatch-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "doBodyMatch": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Body matching setting toggled"
+          }
+        }
+      }
+    },
+    "/api/toggleTelemetry": {
+      "description": "Enable or disable telemetry data collection",
+      "post": {
+        "summary": "POST request for endpoint /api/toggleTelemetry",
+        "operationId": "/api/toggleTelemetry-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enableTelemetry": {
+                    "type": "boolean",
+                    "example": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Telemetry setting toggled"
+          }
+        }
+      }
+    },
+    "/api/updateUrlSettings": {
+      "description": "Configure URL-related settings for API matching",
+      "post": {
+        "summary": "POST request for endpoint /api/updateUrlSettings",
+        "operationId": "/api/updateUrlSettings-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "urlRegexMatchingEnabled": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "URL settings updated"
+          }
+        }
+      }
+    },
+    "/api/toggleDebugLogsFeature": {
+      "description": "Enable or disable debug-level logging",
+      "post": {
+        "summary": "POST request for endpoint /api/toggleDebugLogsFeature",
+        "operationId": "/api/toggleDebugLogsFeature-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Debug logs feature toggled"
+          }
+        }
+      }
+    },
+    "/api/updateSetupType": {
+      "description": "Change the account setup type (SaaS, Hybrid, Self-Hosted)",
+      "post": {
+        "summary": "POST request for endpoint /api/updateSetupType",
+        "operationId": "/api/updateSetupType-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "setupType": {
+                    "type": "string",
+                    "example": "SAAS"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Setup type updated"
+          }
+        }
+      }
+    },
+    "/api/updateTrafficAlertThresholdSeconds": {
+      "description": "Set the time threshold for traffic alerts",
+      "post": {
+        "summary": "POST request for endpoint /api/updateTrafficAlertThresholdSeconds",
+        "operationId": "/api/updateTrafficAlertThresholdSeconds-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "thresholdSeconds": {
+                    "type": "integer",
+                    "example": 300
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Traffic alert threshold updated"
+          }
+        }
+      }
+    },
+    "/api/toggleArchivalEnabled": {
+      "description": "Enable or disable data archival",
+      "post": {
+        "summary": "POST request for endpoint /api/toggleArchivalEnabled",
+        "operationId": "/api/toggleArchivalEnabled-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Archival feature toggled"
+          }
+        }
+      }
+    },
+    "/api/updateRetrospectiveFilterSettings": {
+      "description": "Configure retrospective filtering behavior",
+      "post": {
+        "summary": "POST request for endpoint /api/updateRetrospectiveFilterSettings",
+        "operationId": "/api/updateRetrospectiveFilterSettings-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "allowRetrospectiveMerging": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Retrospective filter settings updated"
+          }
+        }
+      }
+    },
+    "/api/getAccountSettingsForAdvancedFilters": {
+      "description": "Retrieve account settings specific to advanced filtering",
+      "get": {
+        "summary": "GET request for endpoint /api/getAccountSettingsForAdvancedFilters",
+        "operationId": "/api/getAccountSettingsForAdvancedFilters-GET",
+        "responses": {
+          "200": {
+            "description": "Advanced filter settings retrieved"
+          }
+        }
+      }
+    },
+    "/api/updateCompulsoryDescription": {
+      "description": "Set which fields require descriptions",
+      "post": {
+        "summary": "POST request for endpoint /api/updateCompulsoryDescription",
+        "operationId": "/api/updateCompulsoryDescription-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "compulsoryDescription": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Compulsory description settings updated"
+          }
+        }
+      }
+    },
+    "/api/updateBlockLogs": {
+      "description": "Enable or disable blocking of logs",
+      "post": {
+        "summary": "POST request for endpoint /api/updateBlockLogs",
+        "operationId": "/api/updateBlockLogs-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "blockLogs": {
+                    "type": "boolean",
+                    "example": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Block logs setting updated"
+          }
+        }
+      }
+    },
+    "/api/updateFilterLogPolicy": {
+      "description": "Configure logging policy for filters",
+      "post": {
+        "summary": "POST request for endpoint /api/updateFilterLogPolicy",
+        "operationId": "/api/updateFilterLogPolicy-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filterLogPolicy": {
+                    "type": "array"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Filter log policy updated"
+          }
+        }
+      }
+    },
+    "/api/fetchRuntimeInstances": {
+      "description": "Retrieve information about all running runtime instances",
+      "get": {
+        "summary": "GET request for endpoint /api/fetchRuntimeInstances",
+        "operationId": "/api/fetchRuntimeInstances-GET",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "RUNNING"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Runtime instances retrieved successfully"
+          }
+        }
+      }
+    },
+    "/api/fetchRuntimeMetrics": {
+      "description": "Retrieve detailed metrics for runtime instances",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchRuntimeMetrics",
+        "operationId": "/api/fetchRuntimeMetrics-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "instanceId": {
+                    "type": "string",
+                    "example": "879c9527-b664-403e-9b7e-1abe0ac05ab6"
+                  },
+                  "metricType": {
+                    "type": "string",
+                    "example": "CPU"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Runtime metrics retrieved"
+          }
+        }
+      }
+    },
+    "/api/fetchRuntimeHelmCommand": {
+      "description": "Get the Helm command for deploying runtime",
+      "get": {
+        "summary": "GET request for endpoint /api/fetchRuntimeHelmCommand",
+        "operationId": "/api/fetchRuntimeHelmCommand-GET",
+        "responses": {
+          "200": {
+            "description": "Helm command retrieved"
+          }
+        }
+      }
+    },
+    "/api/checkStackCreationProgress": {
+      "description": "Monitor the progress of cloud stack creation",
+      "get": {
+        "summary": "GET request for endpoint /api/checkStackCreationProgress",
+        "operationId": "/api/checkStackCreationProgress-GET",
+        "parameters": [
+          {
+            "name": "stackId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "stack-abc123"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Stack creation progress retrieved"
+          }
+        }
+      }
+    },
+    "/api/createRuntimeStack": {
+      "description": "Create a new cloud infrastructure stack for runtime",
+      "post": {
+        "summary": "POST request for endpoint /api/createRuntimeStack",
+        "operationId": "/api/createRuntimeStack-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "stackName": {
+                    "type": "string",
+                    "example": "akto-prod-stack"
+                  },
+                  "cloudProvider": {
+                    "type": "string",
+                    "example": "AWS"
+                  },
+                  "region": {
+                    "type": "string",
+                    "example": "us-east-1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Stack creation initiated"
+          }
+        }
+      }
+    },
+    "/api/addAwsAccountIdsForApiGatewayLogging": {
+      "description": "Configure AWS accounts for API Gateway log ingestion",
+      "post": {
+        "summary": "POST request for endpoint /api/addAwsAccountIdsForApiGatewayLogging",
+        "operationId": "/api/addAwsAccountIdsForApiGatewayLogging-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accountIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "[REDACTED-AWS-ACCOUNT]"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "AWS account IDs added successfully"
+          }
+        }
+      }
+    },
+    "/api/fetchAwsAccountIdsForApiGatewayLogging": {
+      "description": "Retrieve configured AWS accounts for logging",
+      "get": {
+        "summary": "GET request for endpoint /api/fetchAwsAccountIdsForApiGatewayLogging",
+        "operationId": "/api/fetchAwsAccountIdsForApiGatewayLogging-GET",
+        "responses": {
+          "200": {
+            "description": "AWS account IDs retrieved"
+          }
+        }
+      }
+    },
+    "/api/fetchLoadBalancers": {
+      "description": "Retrieve information about configured load balancers",
+      "get": {
+        "summary": "GET request for endpoint /api/fetchLoadBalancers",
+        "operationId": "/api/fetchLoadBalancers-GET",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "AWS"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Load balancers retrieved"
+          }
+        }
+      }
+    },
+    "/api/saveLoadBalancers": {
+      "description": "Update load balancer settings",
+      "post": {
+        "summary": "POST request for endpoint /api/saveLoadBalancers",
+        "operationId": "/api/saveLoadBalancers-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Load balancer configuration saved"
+          }
+        }
+      }
+    },
+    "/api/fetchLogs": {
+      "description": "Retrieve application logs with filtering options",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchLogs",
+        "operationId": "/api/fetchLogs-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startTime": {
+                    "type": "integer",
+                    "example": 1767352900
+                  },
+                  "endTime": {
+                    "type": "integer",
+                    "example": 1767352972
+                  },
+                  "logLevel": {
+                    "type": "string",
+                    "example": "ERROR"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "example": 100
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Logs retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "logs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "key": {
+                            "type": "string",
+                            "example": "info"
+                          },
+                          "log": {
+                            "type": "string",
+                            "example": "class com.akto.testing.ApiExecutor: [Default_2064] acc: [REDACTED-ACCOUNT], Final url is: http://localhost:9000/api/bulkWriteTrafficMetrics"
+                          },
+                          "timestamp": {
+                            "type": "integer",
+                            "example": 1766730670
+                          }
+                        }
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "example": 1500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchLogsFromDb": {
+      "description": "Retrieve logs directly from the database with advanced filtering",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchLogsFromDb",
+        "operationId": "/api/fetchLogsFromDb-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "skip": {
+                    "type": "integer",
+                    "example": 0
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "example": 50
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Database logs retrieved"
+          }
+        }
+      }
+    },
+    "/api/fetchTestingLogs": {
+      "description": "Retrieve logs specifically related to API testing execution",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchTestingLogs",
+        "operationId": "/api/fetchTestingLogs-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "testId": {
+                    "type": "string",
+                    "example": "test-abc123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Testing logs retrieved"
+          }
+        }
+      }
+    },
+    "/api/fetchApiAuditLogsFromDb": {
+      "description": "Retrieve audit logs for API calls from the database",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchApiAuditLogsFromDb",
+        "operationId": "/api/fetchApiAuditLogsFromDb-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "skip": {
+                    "type": "integer",
+                    "example": 0
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "example": 20
+                  },
+                  "apiEndpoint": {
+                    "type": "string",
+                    "example": "api/switchTestingModule"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API audit logs retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "auditLogs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "6932edc79a05fc641a050ade"
+                          },
+                          "actionDescription": {
+                            "type": "string",
+                            "example": "Error: Description not available"
+                          },
+                          "apiEndpoint": {
+                            "type": "string",
+                            "example": "api/switchTestingModule"
+                          },
+                          "timestamp": {
+                            "type": "integer",
+                            "example": 1764945351
+                          },
+                          "userEmail": {
+                            "type": "string",
+                            "example": "[REDACTED-EMAIL]"
+                          },
+                          "userIpAddress": {
+                            "type": "string",
+                            "example": "192.0.2.100"
+                          }
+                        }
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "example": 85
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchAuditData": {
+      "description": "Retrieve audit trail data with various filters",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchAuditData",
+        "operationId": "/api/fetchAuditData-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Audit data retrieved"
+          }
+        }
+      }
+    },
+    "/api/updateAuditData": {
+      "description": "Update or archive audit data",
+      "post": {
+        "summary": "POST request for endpoint /api/updateAuditData",
+        "operationId": "/api/updateAuditData-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "auditId": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "ARCHIVED"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Audit data updated"
+          }
+        }
+      }
+    },
+    "/api/fetchTrafficMetrics": {
+      "description": "Retrieve API traffic metrics and statistics",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchTrafficMetrics",
+        "operationId": "/api/fetchTrafficMetrics-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startTime": {
+                    "type": "integer",
+                    "example": 20441
+                  },
+                  "endTime": {
+                    "type": "integer",
+                    "example": 20442
+                  },
+                  "host": {
+                    "type": "string",
+                    "example": "api.example.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Traffic metrics retrieved"
+          }
+        }
+      }
+    },
+    "/api/fetchTrafficMetricsDesciptions": {
+      "description": "Get descriptions of all available traffic metrics",
+      "get": {
+        "summary": "GET request for endpoint /api/fetchTrafficMetricsDesciriptions",
+        "operationId": "/api/fetchTrafficMetricsDesciriptions-GET",
+        "responses": {
+          "200": {
+            "description": "Traffic metrics descriptions retrieved"
+          }
+        }
+      }
+    },
+    "/api/fetchHistoricalData": {
+      "description": "Retrieve historical data for analysis and reporting",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchHistoricalData",
+        "operationId": "/api/fetchHistoricalData-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dataType": {
+                    "type": "string",
+                    "example": "TRAFFIC"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Historical data retrieved"
+          }
+        }
+      }
+    },
+    "/api/fetchApiStats": {
+      "description": "Get comprehensive statistics about API usage and performance",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchApiStats",
+        "operationId": "/api/fetchApiStats-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API statistics retrieved"
+          }
+        }
+      }
+    },
+    "/api/saveDashboardLayout": {
+      "description": "Save custom dashboard layout configuration",
+      "post": {
+        "summary": "POST request for endpoint /api/saveDashboardLayout",
+        "operationId": "/api/saveDashboardLayout-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dashboard layout saved successfully"
+          }
+        }
+      }
+    },
+    "/api/fetchDashboardLayout": {
+      "description": "Retrieve saved dashboard layout configuration",
+      "get": {
+        "summary": "GET request for endpoint /api/fetchDashboardLayout",
+        "operationId": "/api/fetchDashboardLayout-GET",
+        "parameters": [
+          {
+            "name": "layoutName",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "default"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dashboard layout retrieved"
+          }
+        }
+      }
+    },
+    "/api/getRecentActivities": {
+      "description": "Retrieve recent user and system activities",
+      "get": {
+        "summary": "GET request for endpoint /api/getRecentActivities",
+        "operationId": "/api/getRecentActivities-GET",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recent activities retrieved"
+          }
+        }
+      }
+    },
+    "/api/saveTagConfig": {
+      "description": "Save custom tag configuration for API organization",
+      "post": {
+        "summary": "POST request for endpoint /api/saveTagConfig",
+        "operationId": "/api/saveTagConfig-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tag configuration saved"
+          }
+        }
+      }
+    },
+    "/api/reviewTagConfig": {
+      "description": "Review saved tag configurations",
+      "get": {
+        "summary": "GET request for endpoint /api/reviewTagConfig",
+        "operationId": "/api/reviewTagConfig-GET",
+        "responses": {
+          "200": {
+            "description": "Tag configurations retrieved"
+          }
+        }
+      }
+    },
+    "/api/toggleActiveTagConfig": {
+      "description": "Enable or disable a tag configuration",
+      "post": {
+        "summary": "POST request for endpoint /api/toggleActiveTagConfig",
+        "operationId": "/api/toggleActiveTagConfig-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tag configuration toggled"
+          }
+        }
+      }
+    },
+    "/api/fetchFilterYamlTemplate": {
+      "description": "Retrieve YAML template for creating custom filters",
+      "get": {
+        "summary": "GET request for endpoint /api/fetchFilterYamlTemplate",
+        "operationId": "/api/fetchFilterYamlTemplate-GET",
+        "parameters": [
+          {
+            "name": "templateName",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "advanced-filter"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filter YAML template retrieved"
+          }
+        }
+      }
+    },
+    "/api/saveFilterYamlTemplate": {
+      "description": "Save a custom filter YAML template",
+      "post": {
+        "summary": "POST request for endpoint /api/saveFilterYamlTemplate",
+        "operationId": "/api/saveFilterYamlTemplate-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Filter template saved successfully"
+          }
+        }
+      }
+    },
+    "/api/deleteFilterYamlTemplate": {
+      "description": "Remove a filter YAML template",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteFilterYamlTemplate",
+        "operationId": "/api/deleteFilterYamlTemplate-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Filter template deleted"
+          }
+        }
+      }
+    },
+    "/api/addFilterHeaderValueMap": {
+      "description": "Configure header value mapping for advanced filters",
+      "post": {
+        "summary": "POST request for endpoint /api/addFilterHeaderValueMap",
+        "operationId": "/api/addFilterHeaderValueMap-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Header value map added"
+          }
+        }
+      }
+    },
+    "/api/fetchMetadataFilters": {
+      "description": "Retrieve available metadata filtering options",
+      "get": {
+        "summary": "GET request for endpoint /api/fetchMetadataFilters",
+        "operationId": "/api/fetchMetadataFilters-GET",
+        "responses": {
+          "200": {
+            "description": "Metadata filters retrieved"
+          }
+        }
+      }
+    },
+    "/api/fetchBrowserExtensionConfigs": {
+      "description": "Retrieve configurations for browser extension integration",
+      "get": {
+        "summary": "GET request for endpoint /api/fetchBrowserExtensionConfigs",
+        "operationId": "/api/fetchBrowserExtensionConfigs-GET",
+        "responses": {
+          "200": {
+            "description": "Browser extension configs retrieved"
+          }
+        }
+      }
+    },
+    "/api/saveBrowserExtensionConfig": {
+      "description": "Update browser extension configuration",
+      "post": {
+        "summary": "POST request for endpoint /api/saveBrowserExtensionConfig",
+        "operationId": "/api/saveBrowserExtensionConfig-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Browser extension config saved"
+          }
+        }
+      }
+    },
+    "/api/deleteBrowserExtensionConfigs": {
+      "description": "Remove a browser extension configuration",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteBrowserExtensionConfigs",
+        "operationId": "/api/deleteBrowserExtensionConfigs-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Browser extension config deleted"
+          }
+        }
+      }
+    },
+    "/api/getSummaryInfoForChanges": {
+      "description": "Retrieve summary information about API changes",
+      "post": {
+        "summary": "POST request for endpoint /api/getSummaryInfoForChanges",
+        "operationId": "/api/getSummaryInfoForChanges-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Change summary retrieved"
+          }
+        }
+      }
+    },
+    "/api/handleRefreshTableCount": {
+      "description": "Trigger refresh of table row counts",
+      "post": {
+        "summary": "POST request for endpoint /api/handleRefreshTableCount",
+        "operationId": "/api/handleRefreshTableCount-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Table count refreshed"
+          }
+        }
+      }
+    },
+    "/api/send_event": {
+      "description": "Send analytics or tracking event",
+      "post": {
+        "summary": "POST request for endpoint /api/send_event",
+        "operationId": "/api/send_event-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Event sent successfully"
+          }
+        }
+      }
+    },
+    "/api/markAlertAsDismissed": {
+      "description": "Dismiss an alert notification",
+      "post": {
+        "summary": "POST request for endpoint /api/markAlertAsDismissed",
+        "operationId": "/api/markAlertAsDismissed-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Alert dismissed successfully"
+          }
+        }
+      }
+    },
+    "/api/getAllTrafficAlerts": {
+      "description": "Retrieve all active traffic alerts",
+      "get": {
+        "summary": "GET request for endpoint /api/getAllTrafficAlerts",
+        "operationId": "/api/getAllTrafficAlerts-GET",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "ACTIVE"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Traffic alerts retrieved"
+          }
+        }
+      }
+    },
+    "/api/wrapped": {
+      "description": "Retrieve wrapped or year/period summary statistics",
+      "post": {
+        "summary": "POST request for endpoint /api/wrapped",
+        "operationId": "/api/wrapped-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Wrapped statistics retrieved"
+          }
+        }
+      }
+    },
+    "/api/fetchApiDependencies": {
+      "description": "Retrieve API service dependency graph",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchApiDependencies",
+        "operationId": "/api/fetchApiDependencies-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API dependencies retrieved"
+          }
+        }
+      }
+    },
+    "/api/checkIfDependencyGraphAvailable": {
+      "description": "Check availability status of dependency graph",
+      "get": {
+        "summary": "GET request for endpoint /api/checkIfDependencyGraphAvailable",
+        "operationId": "/api/checkIfDependencyGraphAvailable-GET",
+        "responses": {
+          "200": {
+            "description": "Dependency graph availability checked"
+          }
+        }
+      }
+    },
+    "/api/fetchLatestTraces": {
+      "description": "Retrieve latest distributed traces",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchLatestTraces",
+        "operationId": "/api/fetchLatestTraces-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Latest traces retrieved"
+          }
+        }
+      }
+    },
+    "/api/fetchSpansForTrace": {
+      "description": "Retrieve all spans for a specific trace",
+      "get": {
+        "summary": "GET request for endpoint /api/fetchSpansForTrace",
+        "operationId": "/api/fetchSpansForTrace-GET",
+        "parameters": [
+          {
+            "name": "traceId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "trace-abc123"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trace spans retrieved"
+          }
+        }
+      }
+    },
+    "/api/findSvcToSvcGraphEdges": {
+      "description": "Retrieve edges in the service dependency graph",
+      "post": {
+        "summary": "POST request for endpoint /api/findSvcToSvcGraphEdges",
+        "operationId": "/api/findSvcToSvcGraphEdges-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Graph edges retrieved"
+          }
+        }
+      }
+    },
+    "/api/findSvcToSvcGraphNodes": {
+      "description": "Retrieve nodes in the service dependency graph",
+      "post": {
+        "summary": "POST request for endpoint /api/findSvcToSvcGraphNodes",
+        "operationId": "/api/findSvcToSvcGraphNodes-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Graph nodes retrieved"
+          }
+        }
+      }
+    },
+    "/api/fetchMiniTestingServiceNames": {
+      "description": "Retrieve service names for mini testing mode",
+      "get": {
+        "summary": "GET request for endpoint /api/fetchMiniTestingServiceNames",
+        "operationId": "/api/fetchMiniTestingServiceNames-GET",
+        "responses": {
+          "200": {
+            "description": "Service names retrieved"
+          }
+        }
+      }
+    },
+    "/api/cleanNonHostApiInfos": {
+      "description": "Clean up API information for non-host endpoints",
+      "post": {
+        "summary": "POST request for endpoint /api/cleanNonHostApiInfos",
+        "operationId": "/api/cleanNonHostApiInfos-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Non-host API infos cleaned"
+          }
+        }
+      }
+    },
+    "/api/deleteOptionAndSlashApis": {
+      "description": "Remove HTTP OPTIONS and slash-based API entries",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteOptionAndSlashApis",
+        "operationId": "/api/deleteOptionAndSlashApis-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OPTIONS and slash APIs deleted"
+          }
+        }
+      }
+    },
+    "/api/deleteExtraApiInfo": {
+      "description": "Remove redundant or duplicate API information",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteExtraApiInfo",
+        "operationId": "/api/deleteExtraApiInfo-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Extra API info deleted"
+          }
+        }
+      }
+    },
+    "/api/deleteDuplicateEntries": {
+      "description": "Remove duplicate records from the system",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteDuplicateEntries",
+        "operationId": "/api/deleteDuplicateEntries-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Duplicate entries deleted"
+          }
+        }
+      }
+    },
+    "/api/deleteNonHostSTIs": {
+      "description": "Clean up type information for non-host APIs",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteNonHostSTIs",
+        "operationId": "/api/deleteNonHostSTIs-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Non-host STIs deleted"
+          }
+        }
+      }
+    },
+    "/api/unsetTemp": {
+      "description": "Clear temporary configuration values",
+      "post": {
+        "summary": "POST request for endpoint /api/unsetTemp",
+        "operationId": "/api/unsetTemp-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Temporary values cleared"
+          }
+        }
+      }
+    },
+    "/api/dryRunAdvancedFilters": {
+      "description": "Test advanced filters without applying them",
+      "post": {
+        "summary": "POST request for endpoint /api/dryRunAdvancedFilters",
+        "operationId": "/api/dryRunAdvancedFilters-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dry run completed"
+          }
+        }
+      }
+    },
+    "/api/fetchParamsStatus": {
+      "description": "Get the status of all system parameters",
+      "get": {
+        "summary": "GET request for endpoint /api/fetchParamsStatus",
+        "operationId": "/api/fetchParamsStatus-GET",
+        "responses": {
+          "200": {
+            "description": "Parameters status retrieved"
+          }
+        }
+      }
     }
   }
 }
