@@ -408,9 +408,22 @@ New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.github\hooks"
 {% step %}
 **Download Hook Scripts**
 
-Download the same files as the project-level install, minus `hooks.json` (not needed — user-level hooks are defined directly in `~/.copilot/config.json`).
+Download the eight hook files into the directory you just created. Do **not** download `hooks.json` — user-level hooks are defined directly in `~/.copilot/config.json` (step 4 below), not in a separate `hooks.json` file.
 
-**macOS / Linux:**
+Files you will download (all from `https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/github-cli-hooks/`):
+
+| # | macOS / Linux | Windows |
+|---|---|---|
+| 1 | `akto-validate-prompt-wrapper.sh` | `akto-validate-prompt-wrapper.ps1` |
+| 2 | `akto-validate-prompt.py` | `akto-validate-prompt.py` |
+| 3 | `akto-validate-pre-tool-wrapper.sh` | `akto-validate-pre-tool-wrapper.ps1` |
+| 4 | `akto-validate-pre-tool.py` | `akto-validate-pre-tool.py` |
+| 5 | `akto-validate-post-tool-wrapper.sh` | `akto-validate-post-tool-wrapper.ps1` |
+| 6 | `akto-validate-post-tool.py` | `akto-validate-post-tool.py` |
+| 7 | `akto_machine_id.py` | `akto_machine_id.py` |
+| 8 | `akto_heartbeat.py` | `akto_heartbeat.py` |
+
+**macOS / Linux — copy the entire block below, paste it into your terminal, press Enter:**
 ```bash
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/github-cli-hooks"
 HOOKS_DIR="$HOME/.github/hooks"
@@ -426,10 +439,15 @@ done
 chmod +x "$HOOKS_DIR"/*.py "$HOOKS_DIR"/*.sh
 ```
 
-**Windows (PowerShell):**
+Confirm all 8 files landed in the directory:
+```bash
+ls -l ~/.github/hooks
+```
+
+**Windows (PowerShell) — copy the entire block below, paste it into PowerShell, press Enter:**
 ```powershell
 $HOOKS_BASE = "https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/github-cli-hooks"
-$HOOKS_DIR = "$env:USERPROFILE\.github\hooks"
+$HOOKS_DIR  = "$env:USERPROFILE\.github\hooks"
 
 $files = @(
   "akto-validate-prompt-wrapper.ps1", "akto-validate-prompt.py",
@@ -444,46 +462,62 @@ foreach ($file in $files) {
 
 Get-ChildItem "$HOOKS_DIR\*" | Unblock-File
 ```
+
+Confirm all 8 files landed in the directory:
+```powershell
+Get-ChildItem "$env:USERPROFILE\.github\hooks"
+```
 {% endstep %}
 
 {% step %}
 **Configure Wrappers** ⚠️ **CRITICAL STEP**
 
-Each wrapper needs four updates — credential placeholders, absolute `.py` paths, and the connector env var:
+Each of the three wrapper scripts you downloaded has four things that need to be set before Copilot CLI can run them. The block below handles all four in one shot.
 
-1. Replace `{{AKTO_DATA_INGESTION_URL}}` with your Akto instance URL.
-2. Replace `{{AKTO_API_TOKEN}}` with your Akto API token.
-3. Change the relative `./.github/hooks/akto-validate-*.py` reference to an **absolute path**. User-level wrappers are invoked from whatever directory the user launched Copilot CLI from, so relative paths will not resolve.
-4. Add `export AKTO_CONNECTOR="github_copilot_cli"` (or `$env:AKTO_CONNECTOR` on Windows). Without this the connector defaults to `vscode` and CLI traffic is mis-attributed in the Akto dashboard.
+What the block does:
 
-**macOS / Linux — automated:**
+1. Replaces `{{AKTO_DATA_INGESTION_URL}}` inside the wrappers with your Akto instance URL.
+2. Replaces `{{AKTO_API_TOKEN}}` inside the wrappers with your Akto API token.
+3. Changes the relative `./.github/hooks/akto-validate-*.py` reference inside each wrapper to an **absolute path** (e.g. `/Users/you/.github/hooks/akto-validate-*.py`). User-level wrappers are invoked from whatever directory the user launched Copilot CLI from, so relative paths would not resolve.
+4. Adds `export AKTO_CONNECTOR="github_copilot_cli"` (or `$env:AKTO_CONNECTOR` on Windows). Without this the connector defaults to `vscode` and CLI traffic is mis-attributed in the Akto dashboard.
+
+**macOS / Linux — first, edit the two values at the top of the block** (`AKTO_URL` and `AKTO_TOKEN`) with your real Akto instance URL and API token. Then copy the entire block, paste it into your terminal, and press Enter:
+
 ```bash
-AKTO_URL="https://your-akto-instance.com"
-AKTO_TOKEN="your-akto-api-token"
+AKTO_URL="https://your-akto-instance.com"      # <-- replace with your Akto instance URL
+AKTO_TOKEN="your-akto-api-token"                # <-- replace with your Akto API token
 HOOKS_DIR="$HOME/.github/hooks"
 
-# Credentials
+# 1 + 2. Credentials
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" "$HOOKS_DIR"/*-wrapper.sh
 sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_TOKEN}|g" "$HOOKS_DIR"/*-wrapper.sh
 
-# Relative .py paths -> absolute
+# 3. Relative .py paths -> absolute
 sed -i.bak "s|\./\.github/hooks/akto-validate-|${HOOKS_DIR}/akto-validate-|g" "$HOOKS_DIR"/*-wrapper.sh
 
-# Add AKTO_CONNECTOR after the existing CONTEXT_SOURCE line
+# 4. Add AKTO_CONNECTOR after the existing CONTEXT_SOURCE line
 sed -i.bak '/^export CONTEXT_SOURCE=/a\
 export AKTO_CONNECTOR="github_copilot_cli"
 ' "$HOOKS_DIR"/*-wrapper.sh
 
+# Clean up the .bak files sed left behind
 rm -f "$HOOKS_DIR"/*.bak
-
-# Verify no placeholders remain
-grep -l '{{' "$HOOKS_DIR"/*-wrapper.sh || echo "✓ all placeholders substituted"
 ```
 
-**Windows (PowerShell) — automated:**
+Confirm no placeholders are left and the wrappers look correct:
+```bash
+# Should print "✓ all placeholders substituted" (no files listed)
+grep -l '{{' "$HOOKS_DIR"/*-wrapper.sh || echo "✓ all placeholders substituted"
+
+# Inspect one wrapper to eyeball the result
+cat ~/.github/hooks/akto-validate-prompt-wrapper.sh
+```
+
+**Windows (PowerShell) — first, edit the two values at the top of the block** (`$AKTO_URL` and `$AKTO_TOKEN`) with your real Akto instance URL and API token. Then copy the entire block, paste it into PowerShell, and press Enter:
+
 ```powershell
-$AKTO_URL   = "https://your-akto-instance.com"
-$AKTO_TOKEN = "your-akto-api-token"
+$AKTO_URL   = "https://your-akto-instance.com"      # <-- replace with your Akto instance URL
+$AKTO_TOKEN = "your-akto-api-token"                  # <-- replace with your Akto API token
 $HOOKS_DIR  = "$env:USERPROFILE\.github\hooks"
 $HOOKS_DIR_ESCAPED = $HOOKS_DIR -replace '\\', '\\'
 
@@ -498,18 +532,33 @@ Get-ChildItem "$HOOKS_DIR\*-wrapper.ps1" | ForEach-Object {
   Set-Content $_.FullName $content
 }
 ```
+
+Confirm no placeholders are left:
+```powershell
+Select-String -Pattern '\{\{' -Path "$env:USERPROFILE\.github\hooks\*-wrapper.ps1"
+# (no output = all placeholders substituted)
+```
 {% endstep %}
 
 {% step %}
 **Register Hooks in `~/.copilot/config.json`**
 
-User-level hooks are declared directly in the Copilot CLI user config — there is no separate `hooks.json` file, and the `hooks` object has **no outer `version` wrapper** (that format is only for repository-level `.github/hooks/*.json`).
+User-level hooks are declared directly in the Copilot CLI user config at `~/.copilot/config.json`. There is no separate `hooks.json` file at the user level, and the `hooks` object here has **no outer `version` wrapper** (that `version` wrapper is only for repository-level `.github/hooks/*.json`).
 
-**macOS / Linux:**
+The block below backs up your existing `config.json` to `config.json.bak`, then merges in the three Akto hooks (preserving any other keys you already have such as `trusted_folders`, `loggedInUsers`, `banner`, etc).
+
+{% hint style="info" %}
+Requires `jq` on macOS/Linux (usually preinstalled; if not: `brew install jq` on macOS, `sudo apt install jq` on Ubuntu/Debian). Windows uses PowerShell's built-in `ConvertFrom-Json` / `ConvertTo-Json` — no extra install.
+{% endhint %}
+
+**macOS / Linux — copy the entire block below, paste it into your terminal, press Enter:**
 ```bash
 HOOKS_DIR="$HOME/.github/hooks"
+
+# Back up your current config.json before modifying it
 cp ~/.copilot/config.json ~/.copilot/config.json.bak
 
+# Build the hooks block with absolute paths
 HOOKS_JSON=$(cat <<JSON
 {
   "userPromptSubmitted": [
@@ -540,14 +589,22 @@ HOOKS_JSON=$(cat <<JSON
 JSON
 )
 
+# Merge the hooks block into the existing config (other top-level keys are preserved)
 jq --argjson hooks "$HOOKS_JSON" '. + {hooks: $hooks}' ~/.copilot/config.json > ~/.copilot/config.json.tmp && \
   mv ~/.copilot/config.json.tmp ~/.copilot/config.json
 ```
 
-**Windows (PowerShell):**
+Verify the `hooks` section was written correctly:
+```bash
+jq .hooks ~/.copilot/config.json
+```
+
+**Windows (PowerShell) — copy the entire block below, paste it into PowerShell, press Enter:**
 ```powershell
 $HOOKS_DIR   = "$env:USERPROFILE\.github\hooks"
 $CONFIG_PATH = "$env:USERPROFILE\.copilot\config.json"
+
+# Back up your current config.json before modifying it
 Copy-Item $CONFIG_PATH "$CONFIG_PATH.bak"
 
 $config = Get-Content $CONFIG_PATH -Raw | ConvertFrom-Json
@@ -575,7 +632,12 @@ $config | Add-Member -NotePropertyName hooks -NotePropertyValue $hooksBlock -For
 $config | ConvertTo-Json -Depth 20 | Set-Content $CONFIG_PATH
 ```
 
-**Example — resulting `hooks` section in `~/.copilot/config.json` (macOS/Linux):**
+Verify the `hooks` section was written correctly:
+```powershell
+Get-Content $env:USERPROFILE\.copilot\config.json | ConvertFrom-Json | Select-Object -ExpandProperty hooks | ConvertTo-Json -Depth 10
+```
+
+**Reference — what the resulting `hooks` section in `~/.copilot/config.json` should look like (macOS/Linux example):**
 ```json
 {
   "hooks": {
@@ -611,43 +673,70 @@ $config | ConvertTo-Json -Depth 20 | Set-Content $CONFIG_PATH
 {% step %}
 **Verify Installation**
 
-**macOS / Linux:**
-```bash
-# Validate config
-jq .hooks ~/.copilot/config.json
+Three checks in order: validate the config file, run one hook manually end-to-end, then launch Copilot CLI from a directory that is **not** an Akto-hooked repo so you can confirm hooks fire globally.
 
-# Test a hook manually — should exit 0 and print the deny JSON to stdout
+**Check 1 — Validate the `hooks` block in `~/.copilot/config.json`.**
+
+macOS / Linux:
+```bash
+jq .hooks ~/.copilot/config.json
+```
+Windows (PowerShell):
+```powershell
+Get-Content "$env:USERPROFILE\.copilot\config.json" | ConvertFrom-Json | Select-Object -ExpandProperty hooks | ConvertTo-Json -Depth 10
+```
+Expected: the three events (`userPromptSubmitted`, `preToolUse`, `postToolUse`) each pointing at your absolute wrapper paths.
+
+**Check 2 — Run the pre-tool hook manually with a deliberately-flagged payload.** The hook should exit `0` and print a JSON `permissionDecision: "deny"` object to stdout.
+
+macOS / Linux:
+```bash
 echo '{"tool_name":"demo","tool_input":{"message":"test@example.com"},"cwd":"/tmp","timestamp":1704614400000}' | \
   bash ~/.github/hooks/akto-validate-pre-tool-wrapper.sh
 echo "exit=$?"
-
-# Run Copilot CLI from any directory — hooks fire globally
-cd /tmp && copilot
+```
+Expected output (roughly):
+```
+{"permissionDecision": "deny", "permissionDecisionReason": "Blocked by Akto Guardrails: ...", "hookSpecificOutput": { ... }}
+exit=0
 ```
 
-**Windows (PowerShell):**
+Windows (PowerShell):
 ```powershell
-# Validate config
-Get-Content "$env:USERPROFILE\.copilot\config.json" | ConvertFrom-Json | Select-Object -ExpandProperty hooks
-
-# Run Copilot CLI from any directory
-Set-Location $env:TEMP
-copilot
+'{"tool_name":"demo","tool_input":{"message":"test@example.com"},"cwd":"/tmp","timestamp":1704614400000}' | `
+  powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\.github\hooks\akto-validate-pre-tool-wrapper.ps1"
+"exit=$LASTEXITCODE"
 ```
 
-Watch logs while testing:
+**Check 3 — Launch Copilot CLI from any directory** (e.g. `/tmp` on macOS/Linux, `$env:TEMP` on Windows) to prove hooks fire regardless of project. Submit a test prompt that includes an email address, or ask Copilot to run a shell command that would print one, and watch the logs fill up in real time.
 
-**macOS / Linux:**
+Open a second terminal and tail the logs:
+
+macOS / Linux:
 ```bash
 tail -f ~/akto/.github/akto/copilot/logs/validate-prompt.log \
         ~/akto/.github/akto/copilot/logs/validate-pre-tool.log \
         ~/akto/.github/akto/copilot/logs/validate-post-tool.log
 ```
-
-**Windows (PowerShell):**
+Windows (PowerShell):
 ```powershell
 Get-Content "$env:USERPROFILE\akto\.github\akto\copilot\logs\validate-prompt.log" -Wait -Tail 20
 ```
+
+Then in your first terminal:
+
+macOS / Linux:
+```bash
+cd /tmp
+copilot
+```
+Windows (PowerShell):
+```powershell
+Set-Location $env:TEMP
+copilot
+```
+
+You should see `Connector: github_copilot_cli` and guardrail verdicts appearing in the log files for every prompt and tool call — confirming hooks are active globally and not scoped to a project.
 {% endstep %}
 {% endstepper %}
 
