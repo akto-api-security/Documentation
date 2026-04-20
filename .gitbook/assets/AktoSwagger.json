@@ -24884,6 +24884,1126 @@
           }
         }
       }
+    },
+    "/api/convertSampleDataToCurl": {
+      "description": "Convert a raw HTTP request/response sample (as captured by Akto traffic mirroring) into a curl command",
+      "post": {
+        "summary": "POST request for endpoint /api/convertSampleDataToCurl",
+        "operationId": "/api/convertSampleDataToCurl-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["sampleData"],
+                "properties": {
+                  "sampleData": {
+                    "type": "string",
+                    "description": "Raw HTTP request/response sample string in Akto's Kafka message format",
+                    "example": "{\"method\":\"POST\",\"requestPayload\":\"{\\\"email\\\":\\\"user@example.com\\\"}\",\"responsePayload\":\"{\\\"token\\\":\\\"[REDACTED_TOKEN]\\\"}\",\"ip\":\"192.0.2.10\",\"time\":1766398064,\"akto_account_id\":\"1000000\",\"statusCode\":200,\"type\":\"HTTP/1.1\",\"status\":\"OK\",\"path\":\"/api/auth/login\",\"requestHeaders\":\"{\\\"content-type\\\":\\\"application/json\\\"}\",\"responseHeaders\":\"{\\\"content-type\\\":\\\"application/json\\\"}\"}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "curl command generated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "curlString": {
+                      "type": "string",
+                      "description": "The equivalent curl command for the provided sample data",
+                      "example": "curl -X POST 'https://api.example.com/api/auth/login' -H 'content-type: application/json' -d '{\"email\":\"user@example.com\"}'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks SAMPLE_DATA / READ permission"
+          },
+          "422": {
+            "description": "Unprocessable — sample data string could not be parsed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "Couldn't parse the data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/resetSampleData": {
+      "description": "Trigger a full redaction pass over all stored sample data and sensitive sample data in the account. Iterates in batches and applies configured redaction rules. Long-running; executes synchronously.",
+      "post": {
+        "summary": "POST request for endpoint /api/resetSampleData",
+        "operationId": "/api/resetSampleData-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sample data redaction completed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks SENSITIVE_DATA / READ_WRITE permission"
+          }
+        }
+      }
+    },
+    "/api/fetchAllSampleData": {
+      "description": "Fetch paginated sample data records for a specific API collection. Returns up to 50 records by default.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchAllSampleData",
+        "operationId": "/api/fetchAllSampleData-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["apiCollectionId"],
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "description": "ID of the API collection to fetch sample data for",
+                    "example": 1748293710
+                  },
+                  "skip": {
+                    "type": "integer",
+                    "description": "Number of records to skip for pagination",
+                    "example": 0
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "description": "Maximum number of records to return (defaults to 50 if 0 or unset)",
+                    "example": 20
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sample data list retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sampleDataList": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "object",
+                            "properties": {
+                              "apiCollectionId": {
+                                "type": "integer",
+                                "example": 1748293710
+                              },
+                              "url": {
+                                "type": "string",
+                                "example": "https://api.example.com/api/users/profile"
+                              },
+                              "method": {
+                                "type": "string",
+                                "example": "GET"
+                              },
+                              "responseCode": {
+                                "type": "integer",
+                                "description": "-1 indicates all response codes",
+                                "example": -1
+                              },
+                              "bucketStartEpoch": {
+                                "type": "integer",
+                                "example": 0
+                              },
+                              "bucketEndEpoch": {
+                                "type": "integer",
+                                "example": 0
+                              }
+                            }
+                          },
+                          "collectionIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "integer"
+                            },
+                            "example": [1748293710, 1748293721, 1748293748]
+                          },
+                          "samples": {
+                            "type": "array",
+                            "description": "List of raw HTTP request/response sample strings",
+                            "items": {
+                              "type": "string"
+                            },
+                            "example": ["[RAW_HTTP_SAMPLE_STRING]"]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks SAMPLE_DATA / READ permission"
+          }
+        }
+      }
+    },
+    "/api/saveCustomDataType": {
+      "description": "Create or update a custom data type. Set createNew=true to create; false to update an existing one by name. Optionally triggers async redaction and test-template generation after saving.",
+      "post": {
+        "summary": "POST request for endpoint /api/saveCustomDataType",
+        "operationId": "/api/saveCustomDataType-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "operator", "createNew"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Data type name. Uppercase letters, digits, spaces, and underscores only. Max 25 characters. Must be unique when createNew=true.",
+                    "example": "API_KEY"
+                  },
+                  "createNew": {
+                    "type": "boolean",
+                    "description": "true to insert a new data type, false to update the existing one with this name",
+                    "example": true
+                  },
+                  "sensitiveAlways": {
+                    "type": "boolean",
+                    "description": "If true, any parameter matching this type is always considered sensitive regardless of position",
+                    "example": true
+                  },
+                  "sensitivePosition": {
+                    "type": "array",
+                    "description": "Positions where a match is considered sensitive. Valid values: REQUEST_PAYLOAD, RESPONSE_PAYLOAD, REQUEST_HEADER, RESPONSE_HEADER.",
+                    "items": {
+                      "type": "string",
+                      "enum": ["REQUEST_PAYLOAD", "RESPONSE_PAYLOAD", "REQUEST_HEADER", "RESPONSE_HEADER"]
+                    },
+                    "example": ["RESPONSE_PAYLOAD", "RESPONSE_HEADER"]
+                  },
+                  "operator": {
+                    "type": "string",
+                    "description": "Top-level operator combining key and value conditions. Valid values: AND, OR.",
+                    "enum": ["AND", "OR"],
+                    "example": "OR"
+                  },
+                  "keyOperator": {
+                    "type": "string",
+                    "description": "Operator for combining key predicates. Valid values: AND, OR. Required if keyConditionFromUsers is provided.",
+                    "enum": ["AND", "OR"],
+                    "example": "OR"
+                  },
+                  "keyConditionFromUsers": {
+                    "type": "array",
+                    "description": "List of predicates to match against the parameter key/name",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "description": "Predicate type. Valid values: REGEX, STARTS_WITH, ENDS_WITH, CONTAINS, IS_NUMBER.",
+                          "enum": ["REGEX", "STARTS_WITH", "ENDS_WITH", "CONTAINS", "IS_NUMBER"],
+                          "example": "REGEX"
+                        },
+                        "valueMap": {
+                          "type": "object",
+                          "description": "Map of predicate configuration values (e.g., {\"value\": \".*api[-_]?key.*\"} for REGEX)",
+                          "example": {"value": ".*api[-_]?key.*"}
+                        }
+                      }
+                    }
+                  },
+                  "valueOperator": {
+                    "type": "string",
+                    "description": "Operator for combining value predicates. Valid values: AND, OR. Required if valueConditionFromUsers is provided.",
+                    "enum": ["AND", "OR"],
+                    "example": "OR"
+                  },
+                  "valueConditionFromUsers": {
+                    "type": "array",
+                    "description": "List of predicates to match against the parameter value",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": ["REGEX", "STARTS_WITH", "ENDS_WITH", "CONTAINS", "IS_NUMBER"],
+                          "example": "REGEX"
+                        },
+                        "valueMap": {
+                          "type": "object",
+                          "example": {"value": "^[A-Za-z0-9_\\-]{20,60}$"}
+                        }
+                      }
+                    }
+                  },
+                  "redacted": {
+                    "type": "boolean",
+                    "description": "If true, existing sample data matching this type will be redacted asynchronously",
+                    "example": false
+                  },
+                  "active": {
+                    "type": "boolean",
+                    "description": "Whether the data type is active and should be applied during traffic analysis",
+                    "example": true
+                  },
+                  "skipDataTypeTestTemplateMapping": {
+                    "type": "boolean",
+                    "description": "If true, skips automatic creation of test templates for this data type",
+                    "example": false
+                  },
+                  "categoriesList": {
+                    "type": "array",
+                    "description": "Categories to assign to this data type (e.g., PII, AUTHENTICATION, TOKEN)",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": ["AUTHENTICATION", "TOKEN"]
+                  },
+                  "dataTypePriority": {
+                    "type": "string",
+                    "description": "Severity/priority level for this data type",
+                    "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
+                    "example": "HIGH"
+                  },
+                  "iconString": {
+                    "type": "string",
+                    "description": "Optional icon identifier string for UI display",
+                    "example": "key"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Custom data type saved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "customDataType": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "6a4c1b3dde8f92780c91637f"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "API_KEY"
+                        },
+                        "active": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "sensitiveAlways": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "sensitivePosition": {
+                          "type": "array",
+                          "items": {"type": "string"},
+                          "example": ["RESPONSE_PAYLOAD", "RESPONSE_HEADER"]
+                        },
+                        "operator": {
+                          "type": "string",
+                          "example": "OR"
+                        },
+                        "keyConditions": {
+                          "type": "object",
+                          "properties": {
+                            "operator": {"type": "string", "example": "OR"},
+                            "predicates": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "type": {"type": "string", "example": "REGEX"},
+                                  "value": {"type": "string", "example": ".*api[-_]?key.*"}
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "redacted": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "categoriesList": {
+                          "type": "array",
+                          "items": {"type": "string"},
+                          "example": ["AUTHENTICATION", "TOKEN"]
+                        },
+                        "dataTypePriority": {
+                          "type": "string",
+                          "example": "HIGH"
+                        },
+                        "timestamp": {
+                          "type": "integer",
+                          "example": 1766398064
+                        },
+                        "creatorId": {
+                          "type": "integer",
+                          "example": 1000000
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks SENSITIVE_DATA / READ_WRITE permission"
+          },
+          "422": {
+            "description": "Unprocessable — validation error (duplicate name, invalid conditions, reserved name, etc.)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "Data type with same name exists"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/resetDataType": {
+      "description": "Remove stale sensitive data parameter entries that no longer appear in most recent sample data. Processes in batches of 100 and invalidates outdated SensitiveSampleData records for the named data type.",
+      "post": {
+        "summary": "POST request for endpoint /api/resetDataType",
+        "operationId": "/api/resetDataType-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the custom or Akto built-in data type to clean up",
+                    "example": "API_KEY"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data type reset completed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks SENSITIVE_DATA / READ_WRITE permission"
+          }
+        }
+      }
+    },
+    "/api/reviewCustomDataType": {
+      "description": "Preview which existing sample data records would match a custom data type definition — before saving it. Scans a page of sample data and returns matched key/value pairs.",
+      "post": {
+        "summary": "POST request for endpoint /api/reviewCustomDataType",
+        "operationId": "/api/reviewCustomDataType-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "operator", "pageNum"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Proposed data type name (used only for validation; not saved)",
+                    "example": "API_KEY"
+                  },
+                  "sensitiveAlways": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "sensitivePosition": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "example": ["RESPONSE_PAYLOAD"]
+                  },
+                  "operator": {
+                    "type": "string",
+                    "enum": ["AND", "OR"],
+                    "example": "OR"
+                  },
+                  "keyOperator": {
+                    "type": "string",
+                    "enum": ["AND", "OR"],
+                    "example": "OR"
+                  },
+                  "keyConditionFromUsers": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {"type": "string", "example": "REGEX"},
+                        "valueMap": {"type": "object", "example": {"value": ".*api[-_]?key.*"}}
+                      }
+                    }
+                  },
+                  "valueOperator": {
+                    "type": "string",
+                    "enum": ["AND", "OR"],
+                    "example": "OR"
+                  },
+                  "valueConditionFromUsers": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {"type": "string", "example": "REGEX"},
+                        "valueMap": {"type": "object", "example": {"value": "^[A-Za-z0-9_\\-]{20,60}$"}}
+                      }
+                    }
+                  },
+                  "redacted": {
+                    "type": "boolean",
+                    "example": false
+                  },
+                  "pageNum": {
+                    "type": "integer",
+                    "description": "1-based page number. Each page scans 1000 sample data records.",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Review scan completed for the requested page",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "customSubTypeMatches": {
+                      "type": "array",
+                      "description": "Matched key/value pairs from sample data",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "apiCollectionId": {
+                            "type": "integer",
+                            "example": 1748293710
+                          },
+                          "url": {
+                            "type": "string",
+                            "example": "https://api.example.com/api/auth/token"
+                          },
+                          "method": {
+                            "type": "string",
+                            "example": "POST"
+                          },
+                          "key": {
+                            "type": "string",
+                            "example": "api_key"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "[REDACTED_MATCHED_VALUE]"
+                          }
+                        }
+                      }
+                    },
+                    "totalSampleDataCount": {
+                      "type": "integer",
+                      "description": "Estimated total number of sample data documents in the collection",
+                      "example": 5302
+                    },
+                    "currentProcessed": {
+                      "type": "integer",
+                      "description": "Number of sample data records processed in this page",
+                      "example": 1000
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks SENSITIVE_DATA / READ permission"
+          },
+          "422": {
+            "description": "Unprocessable — invalid data type definition (bad operator, empty conditions, etc.)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "Both key and value conditions can't be empty"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/resetDataTypeRetro": {
+      "description": "Re-scan all existing sample data retroactively to reapply a data type definition. Clears prior SingleTypeInfo and SensitiveSampleData entries for the named type, then re-runs the HTTP call parser asynchronously in batches of 200.",
+      "post": {
+        "summary": "POST request for endpoint /api/resetDataTypeRetro",
+        "operationId": "/api/resetDataTypeRetro-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the custom or Akto built-in data type to retroactively reprocess",
+                    "example": "API_KEY"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Retroactive reprocessing job submitted successfully (runs asynchronously)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks SENSITIVE_DATA / READ_WRITE permission"
+          },
+          "422": {
+            "description": "Unprocessable — data type with given name not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "Data type does not exist"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/toggleDataTypeActiveParam": {
+      "description": "Enable or disable a custom data type by name. Disabled data types are no longer applied during traffic analysis.",
+      "post": {
+        "summary": "POST request for endpoint /api/toggleDataTypeActiveParam",
+        "operationId": "/api/toggleDataTypeActiveParam-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "active"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the custom data type to activate or deactivate",
+                    "example": "API_KEY"
+                  },
+                  "active": {
+                    "type": "boolean",
+                    "description": "true to activate the data type, false to deactivate it",
+                    "example": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data type active status updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "customDataType": {
+                      "type": "object",
+                      "description": "Updated data type document",
+                      "properties": {
+                        "_id": {"type": "string", "example": "6a4c1b3dde8f92780c91637f"},
+                        "name": {"type": "string", "example": "API_KEY"},
+                        "active": {"type": "boolean", "example": false},
+                        "sensitiveAlways": {"type": "boolean", "example": true},
+                        "redacted": {"type": "boolean", "example": false},
+                        "timestamp": {"type": "integer", "example": 1766398064}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks SENSITIVE_DATA / READ_WRITE permission"
+          },
+          "422": {
+            "description": "Unprocessable — data type not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "Failed to activate data type"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/addCustomAuthType": {
+      "description": "Create a new custom authentication type by specifying which header keys or payload keys carry authentication tokens. The new type is immediately set to active and applied during traffic analysis.",
+      "post": {
+        "summary": "POST request for endpoint /api/addCustomAuthType",
+        "operationId": "/api/addCustomAuthType-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Unique name for the custom auth type",
+                    "example": "X-Service-Token"
+                  },
+                  "headerKeys": {
+                    "type": "array",
+                    "description": "HTTP header names that carry authentication tokens for this auth type",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": ["x-service-token", "x-internal-auth"]
+                  },
+                  "payloadKeys": {
+                    "type": "array",
+                    "description": "JSON payload keys that carry authentication tokens for this auth type",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": ["serviceToken", "internalAuth"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Custom auth type created successfully; returns updated list of all auth types",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "customAuthType": {
+                      "type": "object",
+                      "description": "The newly created custom auth type",
+                      "properties": {
+                        "_id": {"type": "string", "example": "7b5d2e4ffe9a38791da2748a"},
+                        "name": {"type": "string", "example": "X-Service-Token"},
+                        "headerKeys": {
+                          "type": "array",
+                          "items": {"type": "string"},
+                          "example": ["x-service-token", "x-internal-auth"]
+                        },
+                        "payloadKeys": {
+                          "type": "array",
+                          "items": {"type": "string"},
+                          "example": ["serviceToken", "internalAuth"]
+                        },
+                        "active": {"type": "boolean", "example": true},
+                        "creatorId": {"type": "integer", "example": 1000000},
+                        "timestamp": {"type": "integer", "example": 1766398064}
+                      }
+                    },
+                    "customAuthTypes": {
+                      "type": "array",
+                      "description": "All custom auth types in the account",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {"type": "string", "example": "7b5d2e4ffe9a38791da2748a"},
+                          "name": {"type": "string", "example": "X-Service-Token"},
+                          "active": {"type": "boolean", "example": true},
+                          "creatorId": {"type": "integer", "example": 1000000}
+                        }
+                      }
+                    },
+                    "usersMap": {
+                      "type": "object",
+                      "description": "Map of userId → username for all creators of custom auth types",
+                      "additionalProperties": {"type": "string"},
+                      "example": {"1000000": "admin@example.com"}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks AUTH_TYPE / READ_WRITE permission"
+          },
+          "422": {
+            "description": "Unprocessable — auth type name already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "Auth type name needs to be unique"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/updateCustomAuthType": {
+      "description": "Update the header keys, payload keys, and active status of an existing custom auth type. Immediately invalidates and recomputes auth detection caches.",
+      "post": {
+        "summary": "POST request for endpoint /api/updateCustomAuthType",
+        "operationId": "/api/updateCustomAuthType-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the existing custom auth type to update",
+                    "example": "X-Service-Token"
+                  },
+                  "headerKeys": {
+                    "type": "array",
+                    "description": "Replacement list of header key names",
+                    "items": {"type": "string"},
+                    "example": ["x-service-token", "x-internal-auth", "x-platform-key"]
+                  },
+                  "payloadKeys": {
+                    "type": "array",
+                    "description": "Replacement list of payload key names",
+                    "items": {"type": "string"},
+                    "example": ["serviceToken"]
+                  },
+                  "active": {
+                    "type": "boolean",
+                    "description": "Whether this auth type should remain active after the update",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Custom auth type updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "customAuthType": {
+                      "type": "object",
+                      "description": "The updated custom auth type document",
+                      "properties": {
+                        "_id": {"type": "string", "example": "7b5d2e4ffe9a38791da2748a"},
+                        "name": {"type": "string", "example": "X-Service-Token"},
+                        "headerKeys": {
+                          "type": "array",
+                          "items": {"type": "string"},
+                          "example": ["x-service-token", "x-internal-auth", "x-platform-key"]
+                        },
+                        "payloadKeys": {
+                          "type": "array",
+                          "items": {"type": "string"},
+                          "example": ["serviceToken"]
+                        },
+                        "active": {"type": "boolean", "example": true},
+                        "timestamp": {"type": "integer", "example": 1766398064}
+                      }
+                    },
+                    "customAuthTypes": {
+                      "type": "array",
+                      "items": {"type": "object"},
+                      "description": "All custom auth types after the update"
+                    },
+                    "usersMap": {
+                      "type": "object",
+                      "additionalProperties": {"type": "string"},
+                      "example": {"1000000": "admin@example.com"}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks AUTH_TYPE / READ_WRITE permission"
+          },
+          "422": {
+            "description": "Unprocessable — custom auth type with given name not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "Custom Auth Type does not exist"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/resetAllCustomAuthTypes": {
+      "description": "Invalidate all custom auth type detection caches and reprocess traffic data asynchronously. Use after bulk configuration changes to ensure all auth type detections are consistent.",
+      "post": {
+        "summary": "POST request for endpoint /api/resetAllCustomAuthTypes",
+        "operationId": "/api/resetAllCustomAuthTypes-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "All custom auth types reset and reprocessing scheduled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks AUTH_TYPE / READ_WRITE permission"
+          },
+          "422": {
+            "description": "Unprocessable — unexpected error during reset",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "ERROR: Reset custom auth types - unexpected failure"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/updateCustomAuthTypeStatus": {
+      "description": "Enable or disable a custom auth type by name, without modifying its key configuration",
+      "post": {
+        "summary": "POST request for endpoint /api/updateCustomAuthTypeStatus",
+        "operationId": "/api/updateCustomAuthTypeStatus-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "active"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the custom auth type to enable or disable",
+                    "example": "X-Service-Token"
+                  },
+                  "active": {
+                    "type": "boolean",
+                    "description": "true to enable the auth type, false to disable it",
+                    "example": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Custom auth type status updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "customAuthType": {
+                      "type": "object",
+                      "description": "The updated custom auth type document",
+                      "properties": {
+                        "_id": {"type": "string", "example": "7b5d2e4ffe9a38791da2748a"},
+                        "name": {"type": "string", "example": "X-Service-Token"},
+                        "active": {"type": "boolean", "example": false},
+                        "timestamp": {"type": "integer", "example": 1766398064}
+                      }
+                    },
+                    "customAuthTypes": {
+                      "type": "array",
+                      "description": "All custom auth types after the status update",
+                      "items": {"type": "object"}
+                    },
+                    "usersMap": {
+                      "type": "object",
+                      "additionalProperties": {"type": "string"},
+                      "example": {"1000000": "admin@example.com"}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks AUTH_TYPE / READ_WRITE permission"
+          },
+          "422": {
+            "description": "Unprocessable — custom auth type not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "Custom Auth Type does not exist"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
