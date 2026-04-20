@@ -410,6 +410,9 @@
 * [System Settings](api-reference/system-settings/README.md)
   * [Fetch Data](api-reference/system-settings/fetch-data.md)
   * [Modify Data](api-reference/system-settings/modify-data.md)
+* [Integration](api-reference/integration/README.md)
+  * [Fetch Data](api-reference/integration/fetch-data.md)
+  * [Modify Data](api-reference/integration/modify-data.md)
 
 ## Troubleshooting
 

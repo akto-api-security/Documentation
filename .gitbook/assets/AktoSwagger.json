@@ -27206,6 +27206,2352 @@
           }
         }
       }
+    },
+    "/api/jira/add": {
+      "description": "Add a Jira project to the integration or update bi-directional sync settings for an existing one. Supports both Jira Cloud (v3 API) and Data Center (v2 API).",
+      "post": {
+        "summary": "POST request for endpoint /api/jira/add",
+        "operationId": "/api/jira/add-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["baseUrl", "userEmail", "apiToken", "jiraType", "projectMappings"],
+                "properties": {
+                  "baseUrl": { "type": "string", "example": "https://example-org.atlassian.net" },
+                  "userEmail": { "type": "string", "example": "admin@example.com" },
+                  "apiToken": { "type": "string", "example": "[REDACTED_JIRA_API_TOKEN]" },
+                  "jiraType": { "type": "string", "enum": ["CLOUD", "DATA_CENTER"], "example": "CLOUD" },
+                  "projectMappings": {
+                    "type": "object",
+                    "description": "Map of project key to project mapping settings",
+                    "additionalProperties": {
+                      "type": "object",
+                      "properties": {
+                        "biDirectionalSyncSettings": {
+                          "type": "object",
+                          "properties": { "enabled": { "type": "boolean", "example": false } }
+                        },
+                        "statuses": { "type": "array", "items": { "type": "object" }, "example": [] }
+                      }
+                    },
+                    "example": { "SCRUM": { "biDirectionalSyncSettings": { "enabled": false }, "statuses": [] } }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Jira project added/updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jiraIntegration": {
+                      "type": "object",
+                      "properties": {
+                        "baseUrl": { "type": "string", "example": "https://example-org.atlassian.net" },
+                        "userEmail": { "type": "string", "example": "admin@example.com" },
+                        "projectIdsMap": {
+                          "type": "object",
+                          "description": "Map of project key to issue type list",
+                          "example": { "SCRUM": [{ "issueId": "10001", "issueType": "Bug" }, { "issueId": "10002", "issueType": "Story" }] }
+                        },
+                        "projectMappings": { "type": "object", "example": { "SCRUM": { "biDirectionalSyncSettings": { "enabled": false }, "statuses": [] } } },
+                        "createdTs": { "type": "integer", "example": 1766398064 },
+                        "updatedTs": { "type": "integer", "example": 1766398064 }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden — caller lacks INTEGRATIONS / READ_WRITE permission" },
+          "422": { "description": "Unprocessable — project mappings empty or project metadata fetch failed", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "Error while fetching project metadata" } } } } } } }
+        }
+      }
+    },
+    "/api/jira/delete": {
+      "description": "Remove a Jira project from the integration. At least one project must remain; the last project cannot be deleted.",
+      "post": {
+        "summary": "POST request for endpoint /api/jira/delete",
+        "operationId": "/api/jira/delete-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["projId"],
+                "properties": {
+                  "projId": { "type": "string", "description": "Jira project key to remove", "example": "SCRUM" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Project removed successfully", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — projId null or integration not found", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "Project Id cannot be null" } } } } } } }
+        }
+      }
+    },
+    "/api/jira/fetchProjectStatuses": {
+      "description": "Fetch all issue statuses for a Jira project. Used to configure bi-directional sync status mappings.",
+      "post": {
+        "summary": "POST request for endpoint /api/jira/fetchProjectStatuses",
+        "operationId": "/api/jira/fetchProjectStatuses-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["projId"],
+                "properties": {
+                  "projId": { "type": "string", "example": "SCRUM" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Project statuses retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "projectMappings": {
+                      "type": "object",
+                      "example": {
+                        "SCRUM": {
+                          "statuses": [
+                            { "id": "10000", "name": "To Do", "statusCategory": "new" },
+                            { "id": "10001", "name": "In Progress", "statusCategory": "indeterminate" },
+                            { "id": "10002", "name": "Done", "statusCategory": "done" }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — Jira not integrated", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "Jira is not integrated. Please integrate Jira first." } } } } } } }
+        }
+      }
+    },
+    "/api/jira/fetchPriorities": {
+      "description": "Fetch available priority levels from the configured Jira instance",
+      "post": {
+        "summary": "POST request for endpoint /api/jira/fetchPriorities",
+        "operationId": "/api/jira/fetchPriorities-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "Jira priorities retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jiraPriorities": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string", "example": "1" },
+                          "name": { "type": "string", "example": "Highest" }
+                        }
+                      },
+                      "example": [{ "id": "1", "name": "Highest" }, { "id": "2", "name": "High" }, { "id": "3", "name": "Medium" }, { "id": "4", "name": "Low" }, { "id": "5", "name": "Lowest" }]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — Jira not integrated" }
+        }
+      }
+    },
+    "/api/jira/fetchAvailableFieldsForMapping": {
+      "description": "Fetch Jira issue fields available for priority field mapping for a given project and issue type",
+      "post": {
+        "summary": "POST request for endpoint /api/jira/fetchAvailableFieldsForMapping",
+        "operationId": "/api/jira/fetchAvailableFieldsForMapping-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["projId", "issueType"],
+                "properties": {
+                  "projId": { "type": "string", "example": "SCRUM" },
+                  "issueType": { "type": "string", "example": "Bug" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Available fields retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fields": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string", "example": "priority" },
+                          "name": { "type": "string", "example": "Priority" },
+                          "type": { "type": "string", "example": "priority" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/jira/fetchFieldValues": {
+      "description": "Fetch allowed values for a specific Jira field in a given project",
+      "post": {
+        "summary": "POST request for endpoint /api/jira/fetchFieldValues",
+        "operationId": "/api/jira/fetchFieldValues-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["projId", "fieldId"],
+                "properties": {
+                  "projId": { "type": "string", "example": "SCRUM" },
+                  "fieldId": { "type": "string", "example": "priority" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Field values retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fieldValues": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string", "example": "1" },
+                          "value": { "type": "string", "example": "Highest" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/jira/savePriorityFieldMapping": {
+      "description": "Save the mapping from Akto severity levels to Jira field values for a project",
+      "post": {
+        "summary": "POST request for endpoint /api/jira/savePriorityFieldMapping",
+        "operationId": "/api/jira/savePriorityFieldMapping-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["projId", "fieldId", "fieldValuesMap"],
+                "properties": {
+                  "projId": { "type": "string", "example": "SCRUM" },
+                  "fieldId": { "type": "string", "example": "priority" },
+                  "fieldValuesMap": {
+                    "type": "object",
+                    "description": "Map of Akto severity → Jira field value ID",
+                    "example": { "HIGH": "1", "MEDIUM": "3", "LOW": "5" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Priority mapping saved", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/jira/fetchPriorityFieldMapping": {
+      "description": "Retrieve the saved Akto severity → Jira field value mapping for a project",
+      "post": {
+        "summary": "POST request for endpoint /api/jira/fetchPriorityFieldMapping",
+        "operationId": "/api/jira/fetchPriorityFieldMapping-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["projId"],
+                "properties": {
+                  "projId": { "type": "string", "example": "SCRUM" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Priority mapping retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "priorityMapping": {
+                      "type": "object",
+                      "properties": {
+                        "fieldId": { "type": "string", "example": "priority" },
+                        "fieldValuesMap": { "type": "object", "example": { "HIGH": "1", "MEDIUM": "3", "LOW": "5" } }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/fetchCreateJiraIssueFieldMetaData": {
+      "description": "Fetch field metadata required to create a Jira issue for a given project and issue type (field names, types, allowed values)",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchCreateJiraIssueFieldMetaData",
+        "operationId": "/api/fetchCreateJiraIssueFieldMetaData-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["projId", "issueType"],
+                "properties": {
+                  "projId": { "type": "string", "example": "SCRUM" },
+                  "issueType": { "type": "string", "example": "Bug" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Field metadata retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jiraMetaData": {
+                      "type": "object",
+                      "description": "Field metadata for issue creation — required fields, field types, allowed values",
+                      "example": { "projId": "SCRUM", "issueType": "Bug", "fields": [{ "id": "summary", "name": "Summary", "required": true }, { "id": "priority", "name": "Priority", "required": false }] }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — Jira not integrated" }
+        }
+      }
+    },
+    "/api/createJiraIssue": {
+      "description": "Create a Jira issue linked to an Akto testing run issue. Stores the resulting Jira ticket URL back in the testing run issues collection.",
+      "post": {
+        "summary": "POST request for endpoint /api/createJiraIssue",
+        "operationId": "/api/createJiraIssue-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["jiraMetaData"],
+                "properties": {
+                  "jiraMetaData": {
+                    "type": "object",
+                    "properties": {
+                      "testingIssueId": {
+                        "type": "object",
+                        "properties": {
+                          "apiInfoKey": {
+                            "type": "object",
+                            "properties": {
+                              "apiCollectionId": { "type": "integer", "example": 1748293710 },
+                              "url": { "type": "string", "example": "https://api.example.com/v1/users" },
+                              "method": { "type": "string", "example": "GET" }
+                            }
+                          },
+                          "testSubCategory": { "type": "string", "example": "BOLA" }
+                        }
+                      },
+                      "projId": { "type": "string", "example": "SCRUM" },
+                      "issueType": { "type": "string", "example": "Bug" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Jira issue created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jiraTicketKey": { "type": "string", "example": "SCRUM-42" },
+                    "jiraTicketUrl": { "type": "string", "example": "https://example-org.atlassian.net/browse/SCRUM-42" }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — Jira not integrated or Jira API error" }
+        }
+      }
+    },
+    "/api/bulkCreateJiraTickets": {
+      "description": "Bulk create Jira issues for multiple Akto testing run issues in a single request",
+      "post": {
+        "summary": "POST request for endpoint /api/bulkCreateJiraTickets",
+        "operationId": "/api/bulkCreateJiraTickets-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["testingRunIssueIds", "jiraMetaData"],
+                "properties": {
+                  "testingRunIssueIds": {
+                    "type": "array",
+                    "description": "List of testing run issue IDs to create Jira tickets for",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "apiInfoKey": {
+                          "type": "object",
+                          "properties": {
+                            "apiCollectionId": { "type": "integer", "example": 1748293710 },
+                            "url": { "type": "string", "example": "https://api.example.com/v1/users" },
+                            "method": { "type": "string", "example": "GET" }
+                          }
+                        },
+                        "testSubCategory": { "type": "string", "example": "BOLA" }
+                      }
+                    }
+                  },
+                  "jiraMetaData": {
+                    "type": "object",
+                    "properties": {
+                      "projId": { "type": "string", "example": "SCRUM" },
+                      "issueType": { "type": "string", "example": "Bug" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Bulk Jira tickets created", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/attachFileToIssue": {
+      "description": "Attach original and test HTTP request/response samples as a file to an existing Jira issue",
+      "post": {
+        "summary": "POST request for endpoint /api/attachFileToIssue",
+        "operationId": "/api/attachFileToIssue-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["issueId"],
+                "properties": {
+                  "origReq": { "type": "string", "description": "Raw HTTP request/response sample (original traffic)", "example": "[RAW_HTTP_SAMPLE]" },
+                  "testReq": { "type": "string", "description": "Raw HTTP request/response sample (test attempt)", "example": "[RAW_HTTP_TEST_SAMPLE]" },
+                  "issueId": { "type": "string", "description": "Jira issue key", "example": "SCRUM-42" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "File attached to issue", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — Jira not integrated or attachment failed" }
+        }
+      }
+    },
+    "/api/createGeneralJiraTicket": {
+      "description": "Create a free-form Jira ticket (not linked to a specific test issue). Used for general issue reporting from threat events or custom scenarios.",
+      "post": {
+        "summary": "POST request for endpoint /api/createGeneralJiraTicket",
+        "operationId": "/api/createGeneralJiraTicket-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["projId", "issueType", "title"],
+                "properties": {
+                  "projId": { "type": "string", "example": "SCRUM" },
+                  "issueType": { "type": "string", "example": "Bug" },
+                  "title": { "type": "string", "example": "Potential BOLA vulnerability on /api/v1/users endpoint" },
+                  "description": { "type": "string", "example": "Unauthorized access to other users' data was detected." },
+                  "labels": { "type": "string", "example": "security,akto" },
+                  "threatEventId": { "type": "string", "example": "4a3502a0-ab5f-4255-9628-aae3b0ef33bd" },
+                  "actionItemType": { "type": "string", "example": "THREAT" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Jira ticket created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jiraTicketUrl": { "type": "string", "example": "https://example-org.atlassian.net/browse/SCRUM-43" }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — Jira not integrated" }
+        }
+      }
+    },
+    "/api/fetchAzureBoardsIntegration": {
+      "description": "Retrieve the current Azure Boards integration configuration",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchAzureBoardsIntegration",
+        "operationId": "/api/fetchAzureBoardsIntegration-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "Azure Boards integration retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "azureBoardsIntegration": {
+                      "type": "object",
+                      "properties": {
+                        "azureBoardsBaseUrl": { "type": "string", "example": "https://dev.azure.com" },
+                        "organization": { "type": "string", "example": "example-corp" },
+                        "projectList": { "type": "array", "items": { "type": "string" }, "example": ["AktoSecurity", "InfraTeam"] }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/addAzureBoardsIntegration": {
+      "description": "Configure or update the Azure Boards integration",
+      "post": {
+        "summary": "POST request for endpoint /api/addAzureBoardsIntegration",
+        "operationId": "/api/addAzureBoardsIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["azureBoardsBaseUrl", "organization", "projectList", "personalAuthToken"],
+                "properties": {
+                  "azureBoardsBaseUrl": { "type": "string", "example": "https://dev.azure.com" },
+                  "organization": { "type": "string", "example": "example-corp" },
+                  "projectList": { "type": "array", "items": { "type": "string" }, "example": ["AktoSecurity", "InfraTeam"] },
+                  "personalAuthToken": { "type": "string", "example": "[REDACTED_AZURE_PAT]" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Integration saved", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — invalid credentials or project not found" }
+        }
+      }
+    },
+    "/api/removeAzureBoardsIntegration": {
+      "description": "Remove the Azure Boards integration",
+      "post": {
+        "summary": "POST request for endpoint /api/removeAzureBoardsIntegration",
+        "operationId": "/api/removeAzureBoardsIntegration-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": { "description": "Integration removed", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/createAzureBoardsWorkItem": {
+      "description": "Create an Azure Boards work item linked to an Akto testing issue or threat event",
+      "post": {
+        "summary": "POST request for endpoint /api/createAzureBoardsWorkItem",
+        "operationId": "/api/createAzureBoardsWorkItem-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["workItemType", "projectName"],
+                "properties": {
+                  "workItemType": { "type": "string", "example": "Bug" },
+                  "projectName": { "type": "string", "example": "AktoSecurity" },
+                  "testingIssuesId": {
+                    "type": "object",
+                    "properties": {
+                      "apiInfoKey": { "type": "object", "properties": { "apiCollectionId": { "type": "integer", "example": 1748293710 }, "url": { "type": "string", "example": "https://api.example.com/v1/users" }, "method": { "type": "string", "example": "GET" } } },
+                      "testSubCategory": { "type": "string", "example": "BOLA" }
+                    }
+                  },
+                  "aktoDashboardHostName": { "type": "string", "example": "https://app.akto.example.com" },
+                  "threatEventId": { "type": "string", "example": "4a3502a0-ab5f-4255-9628-aae3b0ef33bd" },
+                  "title": { "type": "string", "example": "BOLA vulnerability on /api/v1/users" },
+                  "description": { "type": "string", "example": "Unauthorized data access detected." }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Work item created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "azureBoardsWorkItemUrl": { "type": "string", "example": "https://dev.azure.com/example-corp/AktoSecurity/_workitems/edit/42" }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — integration not configured" }
+        }
+      }
+    },
+    "/api/bulkCreateAzureWorkItems": {
+      "description": "Bulk create Azure Boards work items for multiple Akto testing issues",
+      "post": {
+        "summary": "POST request for endpoint /api/bulkCreateAzureWorkItems",
+        "operationId": "/api/bulkCreateAzureWorkItems-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["testingIssuesIdList", "projectName", "workItemType"],
+                "properties": {
+                  "testingIssuesIdList": { "type": "array", "items": { "type": "object" }, "description": "Array of TestingIssuesId objects" },
+                  "projectName": { "type": "string", "example": "AktoSecurity" },
+                  "workItemType": { "type": "string", "example": "Bug" },
+                  "aktoDashboardHostName": { "type": "string", "example": "https://app.akto.example.com" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Work items created", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/fetchCreateABWorkItemFieldMetaData": {
+      "description": "Fetch available custom work item field metadata for an Azure Boards project",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchCreateABWorkItemFieldMetaData",
+        "operationId": "/api/fetchCreateABWorkItemFieldMetaData-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["projectName"],
+                "properties": {
+                  "projectName": { "type": "string", "example": "AktoSecurity" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Field metadata retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fields": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "referenceName": { "type": "string", "example": "System.Title" },
+                          "name": { "type": "string", "example": "Title" },
+                          "type": { "type": "string", "example": "string" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/createGeneralAzureBoardsWorkItem": {
+      "description": "Create a free-form Azure Boards work item (not tied to a specific test issue). Used for threat event reporting.",
+      "post": {
+        "summary": "POST request for endpoint /api/createGeneralAzureBoardsWorkItem",
+        "operationId": "/api/createGeneralAzureBoardsWorkItem-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["workItemType", "projectName", "title"],
+                "properties": {
+                  "workItemType": { "type": "string", "example": "Bug" },
+                  "projectName": { "type": "string", "example": "AktoSecurity" },
+                  "title": { "type": "string", "example": "Threat detected on /api/v1/chat endpoint" },
+                  "description": { "type": "string", "example": "Prompt injection attempt detected at 2024-01-15 14:32 UTC" },
+                  "threatEventId": { "type": "string", "example": "4a3502a0-ab5f-4255-9628-aae3b0ef33bd" },
+                  "templateId": { "type": "string", "example": "filter-template-uuid-001" },
+                  "endpoint": { "type": "string", "example": "/api/v1/chat" },
+                  "originalMessage": { "type": "string", "example": "[RAW_HTTP_SAMPLE]" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Work item created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "azureBoardsWorkItemUrl": { "type": "string", "example": "https://dev.azure.com/example-corp/AktoSecurity/_workitems/edit/43" }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — integration not configured" }
+        }
+      }
+    },
+    "/api/saveDataDogConfigs": {
+      "description": "Save Datadog credentials for API traffic collection. Creates a recurring hourly job to ingest traffic from the specified Datadog services.",
+      "post": {
+        "summary": "POST request for endpoint /api/saveDataDogConfigs",
+        "operationId": "/api/saveDataDogConfigs-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["datadogApiKey", "datadogAppKey", "datadogSite"],
+                "properties": {
+                  "datadogApiKey": { "type": "string", "example": "[REDACTED_DATADOG_API_KEY]" },
+                  "datadogAppKey": { "type": "string", "example": "[REDACTED_DATADOG_APP_KEY]" },
+                  "datadogSite": { "type": "string", "example": "datadoghq.com" },
+                  "serviceNames": { "type": "array", "items": { "type": "string" }, "example": ["payment-service", "auth-service", "api-gateway"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Datadog config saved; hourly traffic collection job scheduled", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — missing API key, app key, or site", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "Datadog API key, App key and Site are required" } } } } } } }
+        }
+      }
+    },
+    "/api/fetchDatadogIntegration": {
+      "description": "Retrieve the current Datadog SIEM forwarder integration configuration",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchDatadogIntegration",
+        "operationId": "/api/fetchDatadogIntegration-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "Datadog integration retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "datadogForwarderConfig": {
+                      "type": "object",
+                      "properties": {
+                        "datadogSite": { "type": "string", "example": "datadoghq.com" },
+                        "enabled": { "type": "boolean", "example": true }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/addDatadogIntegration": {
+      "description": "Add or update the Datadog SIEM forwarder integration",
+      "post": {
+        "summary": "POST request for endpoint /api/addDatadogIntegration",
+        "operationId": "/api/addDatadogIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["apiKey", "datadogSite"],
+                "properties": {
+                  "apiKey": { "type": "string", "example": "[REDACTED_DATADOG_API_KEY]" },
+                  "datadogSite": { "type": "string", "example": "datadoghq.com" },
+                  "enabled": { "type": "boolean", "example": true }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Datadog integration saved", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/deleteDatadogIntegration": {
+      "description": "Remove the Datadog SIEM forwarder integration",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteDatadogIntegration",
+        "operationId": "/api/deleteDatadogIntegration-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": { "description": "Datadog integration deleted", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/testDatadogIntegration": {
+      "description": "Test the Datadog integration by sending a test event to the configured Datadog site",
+      "post": {
+        "summary": "POST request for endpoint /api/testDatadogIntegration",
+        "operationId": "/api/testDatadogIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["apiKey", "datadogSite"],
+                "properties": {
+                  "apiKey": { "type": "string", "example": "[REDACTED_DATADOG_API_KEY]" },
+                  "datadogSite": { "type": "string", "example": "datadoghq.com" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Test event sent successfully", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — connection test failed" }
+        }
+      }
+    },
+    "/api/addSplunkIntegration": {
+      "description": "Add or update the Splunk HEC (HTTP Event Collector) SIEM integration",
+      "post": {
+        "summary": "POST request for endpoint /api/addSplunkIntegration",
+        "operationId": "/api/addSplunkIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["splunkUrl", "splunkToken"],
+                "properties": {
+                  "splunkUrl": { "type": "string", "example": "http://splunk.example.com:8088/services/collector" },
+                  "splunkToken": { "type": "string", "example": "[REDACTED_SPLUNK_TOKEN]" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Splunk integration saved", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/fetchSplunkIntegration": {
+      "description": "Retrieve the current Splunk SIEM integration configuration (token excluded)",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchSplunkIntegration",
+        "operationId": "/api/fetchSplunkIntegration-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "Splunk integration retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "splunkSiemConfig": {
+                      "type": "object",
+                      "properties": {
+                        "splunkUrl": { "type": "string", "example": "http://splunk.example.com:8088/services/collector" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/fetchAdxIntegration": {
+      "description": "Retrieve the stored Azure Data Explorer (ADX) integration configuration. The application key (client secret) is excluded from the response.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchAdxIntegration",
+        "operationId": "/api/fetchAdxIntegration-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "ADX integration retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "adxIntegration": {
+                      "type": "object",
+                      "properties": {
+                        "clusterEndpoint": { "type": "string", "example": "https://akto-cluster.eastus.kusto.windows.net" },
+                        "databaseName": { "type": "string", "example": "AktoThreatDB" },
+                        "tenantId": { "type": "string", "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890" },
+                        "applicationClientId": { "type": "string", "example": "b2c3d4e5-f6a7-8901-bcde-f12345678901" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/addAdxIntegration": {
+      "description": "Add or update the Azure Data Explorer integration configuration",
+      "post": {
+        "summary": "POST request for endpoint /api/addAdxIntegration",
+        "operationId": "/api/addAdxIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["clusterEndpoint", "databaseName", "tenantId", "applicationClientId"],
+                "properties": {
+                  "clusterEndpoint": { "type": "string", "example": "https://akto-cluster.eastus.kusto.windows.net" },
+                  "databaseName": { "type": "string", "example": "AktoThreatDB" },
+                  "tenantId": { "type": "string", "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890" },
+                  "applicationClientId": { "type": "string", "example": "b2c3d4e5-f6a7-8901-bcde-f12345678901" },
+                  "applicationKey": { "type": "string", "description": "Azure AD application client secret. Required on first save; can be omitted on subsequent updates to keep the stored value.", "example": "[REDACTED_ADX_APP_KEY]" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "ADX integration saved", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — missing required fields", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "Please enter a valid cluster endpoint." } } } } } } }
+        }
+      }
+    },
+    "/api/removeAdxIntegration": {
+      "description": "Remove the Azure Data Explorer integration",
+      "post": {
+        "summary": "POST request for endpoint /api/removeAdxIntegration",
+        "operationId": "/api/removeAdxIntegration-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": { "description": "ADX integration removed", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/getAdxExportStatus": {
+      "description": "Poll the status of an in-progress ADX export initiated by exportGuardrailActivityToAdx. The status entry is removed after SUCCESS or FAILED, so subsequent calls return 'No export in progress.'",
+      "post": {
+        "summary": "POST request for endpoint /api/getAdxExportStatus",
+        "operationId": "/api/getAdxExportStatus-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "Export status retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "exportSuccess": { "type": "boolean", "example": true },
+                    "exportMessage": { "type": "string", "example": "Export under processing" },
+                    "exportedCount": { "type": "integer", "example": 0 }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/fetchDevRevIntegration": {
+      "description": "Retrieve the current DevRev integration configuration (token excluded)",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchDevRevIntegration",
+        "operationId": "/api/fetchDevRevIntegration-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "DevRev integration retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "devrevIntegration": {
+                      "type": "object",
+                      "properties": {
+                        "orgUrl": { "type": "string", "example": "https://app.devrev.ai/example-org" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/addDevRevIntegration": {
+      "description": "Add or update the DevRev integration",
+      "post": {
+        "summary": "POST request for endpoint /api/addDevRevIntegration",
+        "operationId": "/api/addDevRevIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["orgUrl", "personalAccessToken"],
+                "properties": {
+                  "orgUrl": { "type": "string", "example": "https://app.devrev.ai/example-org" },
+                  "personalAccessToken": { "type": "string", "example": "[REDACTED_DEVREV_PAT]" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "DevRev integration saved", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/fetchDevRevParts": {
+      "description": "Fetch available DevRev parts (product areas / components) from the integrated organization for use when creating tickets",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchDevRevParts",
+        "operationId": "/api/fetchDevRevParts-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "DevRev parts retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "partsIdToNameMap": {
+                      "type": "object",
+                      "description": "Map of DevRev part ID to display name",
+                      "example": { "PROD-001": "Security Platform", "PROD-002": "API Gateway" }
+                    },
+                    "partTypes": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "example": ["issue", "ticket", "feature"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — DevRev not configured" }
+        }
+      }
+    },
+    "/api/removeDevRevIntegration": {
+      "description": "Remove the DevRev integration",
+      "post": {
+        "summary": "POST request for endpoint /api/removeDevRevIntegration",
+        "operationId": "/api/removeDevRevIntegration-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": { "description": "DevRev integration removed", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/createDevRevTickets": {
+      "description": "Create DevRev tickets for a list of Akto testing issues",
+      "post": {
+        "summary": "POST request for endpoint /api/createDevRevTickets",
+        "operationId": "/api/createDevRevTickets-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["testingIssuesIdList", "partId", "workItemType"],
+                "properties": {
+                  "testingIssuesIdList": { "type": "array", "items": { "type": "object" }, "description": "Array of TestingIssuesId objects" },
+                  "partId": { "type": "string", "example": "PROD-001" },
+                  "workItemType": { "type": "string", "example": "issue" },
+                  "aktoDashboardHost": { "type": "string", "example": "https://app.akto.example.com" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "DevRev tickets created", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — integration not configured" }
+        }
+      }
+    },
+    "/api/fetchServiceNowIntegration": {
+      "description": "Retrieve the current ServiceNow integration configuration (credentials excluded)",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchServiceNowIntegration",
+        "operationId": "/api/fetchServiceNowIntegration-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "ServiceNow integration retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "serviceNowIntegration": {
+                      "type": "object",
+                      "properties": {
+                        "instanceUrl": { "type": "string", "example": "https://example.service-now.com" },
+                        "tableNames": { "type": "array", "items": { "type": "string" }, "example": ["incident", "problem"] }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/fetchServiceNowTables": {
+      "description": "Fetch available ServiceNow tables using provided OAuth credentials (used before saving the integration)",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchServiceNowTables",
+        "operationId": "/api/fetchServiceNowTables-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["instanceUrl", "clientId", "clientSecret"],
+                "properties": {
+                  "instanceUrl": { "type": "string", "example": "https://example.service-now.com" },
+                  "clientId": { "type": "string", "example": "c3d4e5f6a7b8c9d0" },
+                  "clientSecret": { "type": "string", "example": "[REDACTED_SNOW_CLIENT_SECRET]" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ServiceNow tables retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tables": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "example": "incident" },
+                          "label": { "type": "string", "example": "Incident" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — OAuth token fetch failed or invalid credentials" }
+        }
+      }
+    },
+    "/api/addServiceNowIntegration": {
+      "description": "Add or update the ServiceNow integration",
+      "post": {
+        "summary": "POST request for endpoint /api/addServiceNowIntegration",
+        "operationId": "/api/addServiceNowIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["instanceUrl", "clientId", "clientSecret", "tableNames"],
+                "properties": {
+                  "instanceUrl": { "type": "string", "example": "https://example.service-now.com" },
+                  "clientId": { "type": "string", "example": "c3d4e5f6a7b8c9d0" },
+                  "clientSecret": { "type": "string", "example": "[REDACTED_SNOW_CLIENT_SECRET]" },
+                  "tableNames": { "type": "array", "items": { "type": "string" }, "example": ["incident", "problem"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "ServiceNow integration saved", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/removeServiceNowIntegration": {
+      "description": "Remove the ServiceNow integration",
+      "post": {
+        "summary": "POST request for endpoint /api/removeServiceNowIntegration",
+        "operationId": "/api/removeServiceNowIntegration-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": { "description": "ServiceNow integration removed", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/createServiceNowTicket": {
+      "description": "Create a ServiceNow ticket linked to an Akto testing issue",
+      "post": {
+        "summary": "POST request for endpoint /api/createServiceNowTicket",
+        "operationId": "/api/createServiceNowTicket-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["testingIssuesId", "tableName"],
+                "properties": {
+                  "testingIssuesId": {
+                    "type": "object",
+                    "properties": {
+                      "apiInfoKey": { "type": "object", "properties": { "apiCollectionId": { "type": "integer", "example": 1748293710 }, "url": { "type": "string", "example": "https://api.example.com/v1/users" }, "method": { "type": "string", "example": "GET" } } },
+                      "testSubCategory": { "type": "string", "example": "BOLA" }
+                    }
+                  },
+                  "tableName": { "type": "string", "example": "incident" },
+                  "aktoDashboardHostName": { "type": "string", "example": "https://app.akto.example.com" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ServiceNow ticket created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "serviceNowTicketUrl": { "type": "string", "example": "https://example.service-now.com/nav_to.do?uri=incident.do?sys_id=abc123" },
+                    "serviceNowTicketNumber": { "type": "string", "example": "INC0012345" }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — integration not configured or API error" }
+        }
+      }
+    },
+    "/api/bulkCreateServiceNowTickets": {
+      "description": "Bulk create ServiceNow tickets for multiple Akto testing issues",
+      "post": {
+        "summary": "POST request for endpoint /api/bulkCreateServiceNowTickets",
+        "operationId": "/api/bulkCreateServiceNowTickets-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["testingIssuesIdList", "tableName"],
+                "properties": {
+                  "testingIssuesIdList": { "type": "array", "items": { "type": "object" } },
+                  "tableName": { "type": "string", "example": "incident" },
+                  "aktoDashboardHostName": { "type": "string", "example": "https://app.akto.example.com" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "ServiceNow tickets created", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/fetchMicrosoftDefenderIntegration": {
+      "description": "Retrieve the Microsoft Defender for Endpoint integration configuration (client secret excluded)",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchMicrosoftDefenderIntegration",
+        "operationId": "/api/fetchMicrosoftDefenderIntegration-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "Integration retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "microsoftDefenderIntegration": {
+                      "type": "object",
+                      "properties": {
+                        "tenantId": { "type": "string", "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890" },
+                        "clientId": { "type": "string", "example": "d4e5f6a7-b8c9-0123-def0-123456789012" },
+                        "dataIngestionUrl": { "type": "string", "example": "https://akto-ingestion.example.com" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/addMicrosoftDefenderIntegration": {
+      "description": "Add or update the Microsoft Defender for Endpoint integration. Creates a recurring job to collect Advanced Hunting data.",
+      "post": {
+        "summary": "POST request for endpoint /api/addMicrosoftDefenderIntegration",
+        "operationId": "/api/addMicrosoftDefenderIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["tenantId", "clientId", "clientSecret", "dataIngestionUrl"],
+                "properties": {
+                  "tenantId": { "type": "string", "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890" },
+                  "clientId": { "type": "string", "example": "d4e5f6a7-b8c9-0123-def0-123456789012" },
+                  "clientSecret": { "type": "string", "example": "[REDACTED_DEFENDER_SECRET]" },
+                  "dataIngestionUrl": { "type": "string", "example": "https://akto-ingestion.example.com" },
+                  "recurringIntervalSeconds": { "type": "integer", "description": "Polling interval for Advanced Hunting jobs (default: 3600)", "example": 3600 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Integration saved; recurring job created or updated", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — missing required fields" }
+        }
+      }
+    },
+    "/api/removeMicrosoftDefenderIntegration": {
+      "description": "Remove the Microsoft Defender integration and stop the associated data collection job",
+      "post": {
+        "summary": "POST request for endpoint /api/removeMicrosoftDefenderIntegration",
+        "operationId": "/api/removeMicrosoftDefenderIntegration-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": { "description": "Integration removed", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/fetchDefenderDevices": {
+      "description": "Fetch devices registered in Microsoft Defender for Endpoint",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchDefenderDevices",
+        "operationId": "/api/fetchDefenderDevices-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "Devices retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "devices": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string", "example": "a1b2c3d4e5f6789012345678901234567890abcd" },
+                          "computerName": { "type": "string", "example": "prod-api-server-01" },
+                          "osName": { "type": "string", "example": "Linux" },
+                          "lastActiveDate": { "type": "string", "example": "2024-01-15T14:30:00Z" },
+                          "siteId": { "type": "string", "example": "site-001" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — integration not configured" }
+        }
+      }
+    },
+    "/api/uploadDefenderScript": {
+      "description": "Upload a script to the Microsoft Defender library for later use with Live Response",
+      "post": {
+        "summary": "POST request for endpoint /api/uploadDefenderScript",
+        "operationId": "/api/uploadDefenderScript-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["scriptContent", "scriptName"],
+                "properties": {
+                  "scriptContent": { "type": "string", "description": "Script content (PowerShell or Bash)", "example": "#!/bin/bash\necho 'Akto guardrail check'\n" },
+                  "scriptName": { "type": "string", "example": "akto-guardrail-check.sh" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Script uploaded to Defender library", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/runDefenderKqlQuery": {
+      "description": "Run a KQL (Kusto Query Language) query against Microsoft Defender Advanced Hunting",
+      "post": {
+        "summary": "POST request for endpoint /api/runDefenderKqlQuery",
+        "operationId": "/api/runDefenderKqlQuery-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["kqlQuery"],
+                "properties": {
+                  "kqlQuery": { "type": "string", "example": "DeviceNetworkEvents | where RemoteIP == '192.0.2.48' | limit 10" },
+                  "agentName": { "type": "string", "example": "prod-api-server-01" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "KQL query results returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "kqlResults": {
+                      "type": "array",
+                      "description": "Query result rows; column names vary by query",
+                      "items": { "type": "object" },
+                      "example": [{ "DeviceName": "prod-api-server-01", "RemoteIP": "192.0.2.48", "RemotePort": 443, "Timestamp": "2024-01-15T14:30:00Z" }]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — integration not configured or KQL error" }
+        }
+      }
+    },
+    "/api/listDefenderLibraryScripts": {
+      "description": "List all scripts in the Microsoft Defender Live Response library",
+      "post": {
+        "summary": "POST request for endpoint /api/listDefenderLibraryScripts",
+        "operationId": "/api/listDefenderLibraryScripts-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "Library scripts retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "libraryScripts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string", "example": "script-uuid-001" },
+                          "fileName": { "type": "string", "example": "akto-guardrail-check.sh" },
+                          "description": { "type": "string", "example": "Akto guardrail installation script" },
+                          "createdBy": { "type": "string", "example": "admin@example.com" },
+                          "creationTime": { "type": "string", "example": "2024-01-15T10:00:00Z" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — integration not configured" }
+        }
+      }
+    },
+    "/api/runDefenderLiveResponse": {
+      "description": "Run a Live Response script on selected Defender-enrolled devices. Polls until completion (up to 5 minutes).",
+      "post": {
+        "summary": "POST request for endpoint /api/runDefenderLiveResponse",
+        "operationId": "/api/runDefenderLiveResponse-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["deviceIds", "scriptName"],
+                "properties": {
+                  "deviceIds": { "type": "array", "items": { "type": "string" }, "example": ["a1b2c3d4e5f6789012345678901234567890abcd"] },
+                  "scriptName": { "type": "string", "description": "Script name in the Defender library", "example": "akto-guardrail-check.sh" },
+                  "scriptParameters": { "type": "string", "description": "Input parameters passed to the script", "example": "AKTO_DATA_INGESTION_URL=https://akto-ingestion.example.com" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Live response completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "liveResponseResults": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "deviceId": { "type": "string", "example": "a1b2c3d4e5f6789012345678901234567890abcd" },
+                          "status": { "type": "string", "example": "Succeeded" },
+                          "output": { "type": "string", "example": "Guardrail installed successfully." }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/ingestDefenderKqlResults": {
+      "description": "Ingest KQL query results from Microsoft Defender Advanced Hunting into the Akto data pipeline",
+      "post": {
+        "summary": "POST request for endpoint /api/ingestDefenderKqlResults",
+        "operationId": "/api/ingestDefenderKqlResults-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["kqlResults", "agentName"],
+                "properties": {
+                  "kqlResults": { "type": "array", "items": { "type": "object" }, "description": "Array of KQL result row objects to ingest" },
+                  "agentName": { "type": "string", "example": "prod-api-server-01" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "KQL results ingested", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/fetchSentinelOneIntegration": {
+      "description": "Retrieve the SentinelOne integration configuration (API token excluded)",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchSentinelOneIntegration",
+        "operationId": "/api/fetchSentinelOneIntegration-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "SentinelOne integration retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sentinelOneIntegration": {
+                      "type": "object",
+                      "properties": {
+                        "consoleUrl": { "type": "string", "example": "https://example.sentinelone.net" },
+                        "dataIngestionUrl": { "type": "string", "example": "https://akto-ingestion.example.com" },
+                        "guardrailType": { "type": "array", "items": { "type": "string" }, "example": ["cursor-hooks"] },
+                        "guardrailTargetMode": { "type": "string", "example": "all" },
+                        "guardrailStatus": { "type": "string", "example": "completed" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/addSentinelOneIntegration": {
+      "description": "Add or update the SentinelOne integration. Creates or updates a recurring agent data collection job.",
+      "post": {
+        "summary": "POST request for endpoint /api/addSentinelOneIntegration",
+        "operationId": "/api/addSentinelOneIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["consoleUrl", "dataIngestionUrl"],
+                "properties": {
+                  "consoleUrl": { "type": "string", "example": "https://example.sentinelone.net" },
+                  "dataIngestionUrl": { "type": "string", "example": "https://akto-ingestion.example.com" },
+                  "apiToken": { "type": "string", "description": "SentinelOne API token. Required on first save; omit to keep the existing token.", "example": "[REDACTED_S1_API_TOKEN]" },
+                  "recurringIntervalSeconds": { "type": "integer", "description": "Agent data collection interval (default: 3600)", "example": 3600 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Integration saved; recurring job created/updated", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — missing required fields", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "Please enter a valid SentinelOne console URL." } } } } } } }
+        }
+      }
+    },
+    "/api/removeSentinelOneIntegration": {
+      "description": "Remove the SentinelOne integration and stop the associated data collection job",
+      "post": {
+        "summary": "POST request for endpoint /api/removeSentinelOneIntegration",
+        "operationId": "/api/removeSentinelOneIntegration-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": { "description": "Integration removed", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/fetchSentinelOneAgents": {
+      "description": "Fetch all SentinelOne-enrolled agents in the organization",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchSentinelOneAgents",
+        "operationId": "/api/fetchSentinelOneAgents-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "Agents retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agents": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string", "example": "1234567890123456789" },
+                          "computerName": { "type": "string", "example": "prod-api-server-01" },
+                          "osName": { "type": "string", "example": "Linux Ubuntu 22.04" },
+                          "lastActiveDate": { "type": "string", "example": "2024-01-15T14:30:00.000Z" },
+                          "siteId": { "type": "string", "example": "9876543210987654321" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — SentinelOne integration not configured" }
+        }
+      }
+    },
+    "/api/getSentinelOneScriptTaskStatus": {
+      "description": "Poll the status of a SentinelOne remote script execution task by its parent task ID",
+      "post": {
+        "summary": "POST request for endpoint /api/getSentinelOneScriptTaskStatus",
+        "operationId": "/api/getSentinelOneScriptTaskStatus-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["parentTaskId"],
+                "properties": {
+                  "parentTaskId": { "type": "string", "description": "Parent task ID returned by executeSentinelOneRemoteScript", "example": "task-uuid-abc123def456" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task status retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "remoteScripts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "agentComputerName": { "type": "string", "example": "prod-api-server-01" },
+                          "status": { "type": "string", "example": "completed" },
+                          "detailedStatus": { "type": "string", "example": "Script executed successfully" },
+                          "updatedAt": { "type": "string", "example": "2024-01-15T14:35:00.000Z" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — parentTaskId missing or integration not configured" }
+        }
+      }
+    },
+    "/api/executeSentinelOneRemoteScript": {
+      "description": "Execute a remote script on one or more SentinelOne agents. Returns a parentTaskId to poll with getSentinelOneScriptTaskStatus.",
+      "post": {
+        "summary": "POST request for endpoint /api/executeSentinelOneRemoteScript",
+        "operationId": "/api/executeSentinelOneRemoteScript-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["scriptId", "executeAgentIds"],
+                "properties": {
+                  "scriptId": { "type": "string", "description": "Script ID from the SentinelOne script library", "example": "script-library-id-001" },
+                  "executeAgentIds": { "type": "array", "items": { "type": "string" }, "example": ["1234567890123456789", "9876543210987654321"] },
+                  "executeTaskDescription": { "type": "string", "example": "Akto guardrail installation" },
+                  "executeInputParams": { "type": "string", "description": "Space-separated key=value environment variable pairs", "example": "AKTO_DATA_INGESTION_URL=https://akto-ingestion.example.com" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Script execution initiated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "parentTaskId": { "type": "string", "description": "Use with getSentinelOneScriptTaskStatus to poll for completion", "example": "task-uuid-abc123def456" }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — scriptId or agentIds missing", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "scriptId is required." } } } } } } }
+        }
+      }
+    },
+    "/api/testIntegration": {
+      "description": "Legacy Jira v1 — Validate Jira credentials and resolve issue type IDs for one or more projects before saving. Use api/jira/add for new integrations.",
+      "post": {
+        "summary": "POST request for endpoint /api/testIntegration",
+        "operationId": "/api/testIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["baseUrl", "projId", "userEmail", "apiToken", "jiraType"],
+                "properties": {
+                  "baseUrl": { "type": "string", "example": "https://example-org.atlassian.net" },
+                  "projId": { "type": "string", "description": "Comma-separated project keys", "example": "SCRUM,API" },
+                  "userEmail": { "type": "string", "example": "admin@example.com" },
+                  "apiToken": { "type": "string", "example": "[REDACTED_JIRA_API_TOKEN]" },
+                  "jiraType": { "type": "string", "enum": ["CLOUD", "DATA_CENTER"], "example": "CLOUD" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Credentials valid; issue types resolved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "projectAndIssueMap": {
+                      "type": "object",
+                      "description": "Map of project key to resolved issue type list",
+                      "example": { "SCRUM": [{ "issueId": "10001", "issueType": "Bug" }, { "issueId": "10002", "issueType": "Story" }] }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — invalid credentials or project not found" }
+        }
+      }
+    },
+    "/api/addIntegration": {
+      "description": "Legacy Jira v1 — Save the Jira integration. Prefer api/jira/add for new integrations (v2 supports per-project mappings and bi-directional sync).",
+      "post": {
+        "summary": "POST request for endpoint /api/addIntegration",
+        "operationId": "/api/addIntegration-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["baseUrl", "projId", "userEmail", "apiToken", "jiraType"],
+                "properties": {
+                  "baseUrl": { "type": "string", "example": "https://example-org.atlassian.net" },
+                  "projId": { "type": "string", "example": "SCRUM" },
+                  "userEmail": { "type": "string", "example": "admin@example.com" },
+                  "apiToken": { "type": "string", "example": "[REDACTED_JIRA_API_TOKEN]" },
+                  "issueType": { "type": "string", "example": "Bug" },
+                  "jiraType": { "type": "string", "enum": ["CLOUD", "DATA_CENTER"], "example": "CLOUD" },
+                  "projectAndIssueMap": { "type": "object", "description": "Map of project key to issue type list (from testIntegration response)" },
+                  "projectMappings": { "type": "object", "description": "Map of project key to mapping settings" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Jira integration saved", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/fetchIntegration": {
+      "description": "Fetch the current Jira integration configuration (API token excluded)",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchIntegration",
+        "operationId": "/api/fetchIntegration-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "Jira integration retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jiraIntegration": {
+                      "type": "object",
+                      "properties": {
+                        "baseUrl": { "type": "string", "example": "https://example-org.atlassian.net" },
+                        "userEmail": { "type": "string", "example": "admin@example.com" },
+                        "projectIdsMap": { "type": "object", "example": { "SCRUM": [{ "issueId": "10001", "issueType": "Bug" }] } },
+                        "projectMappings": { "type": "object", "example": { "SCRUM": { "biDirectionalSyncSettings": { "enabled": false }, "statuses": [] } } },
+                        "createdTs": { "type": "integer", "example": 1766398064 },
+                        "updatedTs": { "type": "integer", "example": 1766398064 }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/getIntegratedConnectionsInfo": {
+      "description": "Fetch the integration completion status for key onboarding connection types shown on the dashboard",
+      "post": {
+        "summary": "POST request for endpoint /api/getIntegratedConnectionsInfo",
+        "operationId": "/api/getIntegratedConnectionsInfo-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "Connection info retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "integratedConnectionsInfo": {
+                      "type": "object",
+                      "description": "Map of connection type to status. Keys: AUTOMATED_TRAFFIC, GITHUB_SSO, SLACK_ALERTS, CI_CD_INTEGRATIONS, INVITE_MEMBERS",
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "timestamp": { "type": "integer", "example": 1766398064 },
+                          "skipped": { "type": "boolean", "example": false }
+                        }
+                      },
+                      "example": {
+                        "AUTOMATED_TRAFFIC": { "timestamp": 1766398064, "skipped": false },
+                        "GITHUB_SSO": { "timestamp": 0, "skipped": false },
+                        "SLACK_ALERTS": { "timestamp": 0, "skipped": true },
+                        "CI_CD_INTEGRATIONS": { "timestamp": 0, "skipped": false },
+                        "INVITE_MEMBERS": { "timestamp": 1766311200, "skipped": false }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/markConnectionAsSkipped": {
+      "description": "Mark a dashboard onboarding connection step as skipped by the user",
+      "post": {
+        "summary": "POST request for endpoint /api/markConnectionAsSkipped",
+        "operationId": "/api/markConnectionAsSkipped-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["connectionSkipped"],
+                "properties": {
+                  "connectionSkipped": {
+                    "type": "string",
+                    "description": "Connection type to mark as skipped",
+                    "enum": ["AUTOMATED_TRAFFIC", "GITHUB_SSO", "SLACK_ALERTS", "CI_CD_INTEGRATIONS", "INVITE_MEMBERS"],
+                    "example": "SLACK_ALERTS"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Connection marked as skipped", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — connectionSkipped is null" }
+        }
+      }
+    },
+    "/api/addSlackWebhook": {
+      "description": "Add a Slack webhook for alert notifications",
+      "post": {
+        "summary": "POST request for endpoint /api/addSlackWebhook",
+        "operationId": "/api/addSlackWebhook-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["webhookUrl", "webhookName"],
+                "properties": {
+                  "webhookUrl": { "type": "string", "example": "https://hooks.slack.com/services/[REDACTED_SLACK_WEBHOOK_PATH]" },
+                  "webhookName": { "type": "string", "example": "security-alerts" },
+                  "dashboardUrl": { "type": "string", "example": "https://app.akto.example.com" },
+                  "frequencyInSeconds": { "type": "integer", "example": 3600 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Slack webhook added", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/deleteSlackWebhook": {
+      "description": "Remove a Slack webhook by name",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteSlackWebhook",
+        "operationId": "/api/deleteSlackWebhook-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["webhookName"],
+                "properties": {
+                  "webhookName": { "type": "string", "example": "security-alerts" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Slack webhook deleted", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/fetchSlackWebhooks": {
+      "description": "Fetch all configured Slack webhooks for the account",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchSlackWebhooks",
+        "operationId": "/api/fetchSlackWebhooks-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "Slack webhooks retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "slackWebhooks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "webhookUrl": { "type": "string", "example": "https://hooks.slack.com/services/[REDACTED_SLACK_WEBHOOK_PATH]" },
+                          "webhookName": { "type": "string", "example": "security-alerts" },
+                          "frequencyInSeconds": { "type": "integer", "example": 3600 }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/addCustomWebhook": {
+      "description": "Create a custom outbound webhook that triggers on Akto events (new endpoints, sensitive data discovered, etc.)",
+      "post": {
+        "summary": "POST request for endpoint /api/addCustomWebhook",
+        "operationId": "/api/addCustomWebhook-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["webhookName", "url", "method"],
+                "properties": {
+                  "webhookName": { "type": "string", "example": "new-endpoint-notifier" },
+                  "url": { "type": "string", "example": "https://hooks.example.com/akto-events" },
+                  "method": { "type": "string", "enum": ["GET", "POST"], "example": "POST" },
+                  "headerString": { "type": "string", "description": "JSON string of headers to include", "example": "{\"Authorization\": \"Bearer [REDACTED_WEBHOOK_TOKEN]\", \"Content-Type\": \"application/json\"}" },
+                  "queryParams": { "type": "string", "example": "" },
+                  "body": { "type": "string", "description": "JSON template for the webhook payload", "example": "{\"event\": \"NEW_ENDPOINT\", \"url\": \"{{url}}\", \"collection\": \"{{collection}}\"}" },
+                  "frequencyInSeconds": { "type": "integer", "example": 3600 },
+                  "activeStatus": { "type": "string", "enum": ["ACTIVE", "INACTIVE"], "example": "ACTIVE" },
+                  "selectedWebhookOptions": { "type": "array", "items": { "type": "string" }, "example": ["NEW_ENDPOINT", "NEW_SENSITIVE_ENDPOINT"] },
+                  "newEndpointCollections": { "type": "array", "items": { "type": "string" }, "example": [] },
+                  "newSensitiveEndpointCollections": { "type": "array", "items": { "type": "string" }, "example": [] },
+                  "batchSize": { "type": "integer", "example": 100 },
+                  "sendInstantly": { "type": "boolean", "example": false },
+                  "webhookType": { "type": "string", "example": "GENERAL" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Custom webhook created", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — validation failed (invalid URL, method, etc.)" }
+        }
+      }
+    },
+    "/api/checkWebhook": {
+      "description": "Check whether a custom webhook with the given name already exists",
+      "post": {
+        "summary": "POST request for endpoint /api/checkWebhook",
+        "operationId": "/api/checkWebhook-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["webhookName"],
+                "properties": {
+                  "webhookName": { "type": "string", "example": "new-endpoint-notifier" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Existence check result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "webhookPresent": { "type": "boolean", "example": true }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/updateCustomWebhook": {
+      "description": "Update an existing custom webhook configuration",
+      "post": {
+        "summary": "POST request for endpoint /api/updateCustomWebhook",
+        "operationId": "/api/updateCustomWebhook-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["id", "webhookName", "url", "method"],
+                "properties": {
+                  "id": { "type": "integer", "description": "Existing custom webhook ID", "example": 7 },
+                  "webhookName": { "type": "string", "example": "new-endpoint-notifier" },
+                  "url": { "type": "string", "example": "https://hooks.example.com/akto-events" },
+                  "method": { "type": "string", "enum": ["GET", "POST"], "example": "POST" },
+                  "headerString": { "type": "string", "example": "{\"Authorization\": \"Bearer [REDACTED_WEBHOOK_TOKEN]\"}" },
+                  "queryParams": { "type": "string", "example": "" },
+                  "body": { "type": "string", "example": "{\"event\": \"NEW_ENDPOINT\", \"url\": \"{{url}}\"}" },
+                  "frequencyInSeconds": { "type": "integer", "example": 1800 },
+                  "activeStatus": { "type": "string", "enum": ["ACTIVE", "INACTIVE"], "example": "ACTIVE" },
+                  "selectedWebhookOptions": { "type": "array", "items": { "type": "string" }, "example": ["NEW_ENDPOINT"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Webhook updated", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — validation failed" }
+        }
+      }
+    },
+    "/api/fetchCustomWebhooks": {
+      "description": "Fetch all custom webhooks configured for the account",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchCustomWebhooks",
+        "operationId": "/api/fetchCustomWebhooks-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "Custom webhooks retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "customWebhooks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "integer", "example": 7 },
+                          "webhookName": { "type": "string", "example": "new-endpoint-notifier" },
+                          "url": { "type": "string", "example": "https://hooks.example.com/akto-events" },
+                          "method": { "type": "string", "example": "POST" },
+                          "frequencyInSeconds": { "type": "integer", "example": 3600 },
+                          "activeStatus": { "type": "string", "example": "ACTIVE" },
+                          "selectedWebhookOptions": { "type": "array", "items": { "type": "string" }, "example": ["NEW_ENDPOINT"] }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/fetchLatestWebhookResult": {
+      "description": "Fetch the most recent execution result for a custom webhook",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchLatestWebhookResult",
+        "operationId": "/api/fetchLatestWebhookResult-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["customWebhookId"],
+                "properties": {
+                  "customWebhookId": { "type": "integer", "example": 7 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Latest webhook result retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "customWebhookResult": {
+                      "type": "object",
+                      "properties": {
+                        "webhookId": { "type": "integer", "example": 7 },
+                        "statusCode": { "type": "integer", "example": 200 },
+                        "message": { "type": "string", "example": "OK" },
+                        "timestamp": { "type": "integer", "example": 1766398064 }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
     }
   }
 }
