@@ -1,5 +1,15 @@
 # Modify Data
 
+## Table of Contents
+
+- [System & Health](#system--health)
+- [Settings & Toggles](#settings--toggles)
+- [SSO & Authentication](#sso--authentication)
+- [Runtime & Infrastructure](#runtime--infrastructure)
+- [Logs, Audit & Traffic](#logs-audit--traffic)
+- [Dashboard, Filters & Misc](#dashboard-filters--misc)
+- [Maintenance](#maintenance)
+
 ## System & Health
 
 <table data-full-width="true"><thead><tr><th width="50">#</th><th width="420">API</th><th>Description</th></tr></thead><tbody><tr><td>1</td><td><strong>POST /api/sendHealthCheck</strong></td><td>Sends a health check request to verify system status and connectivity.</td></tr><tr><td>2</td><td><strong>POST /api/deleteModuleInfo</strong></td><td>Deletes information or data for a specified system module.</td></tr><tr><td>3</td><td><strong>POST /api/rebootModules</strong></td><td>Reboots specified system modules.</td></tr><tr><td>4</td><td><strong>POST /api/updateModuleEnvAndReboot</strong></td><td>Updates environment variables for modules and triggers a reboot.</td></tr><tr><td>5</td><td><strong>POST /api/takeUpdate</strong></td><td>Applies a system update and restarts affected components.</td></tr><tr><td>6</td><td><strong>POST /api/closeLoader</strong></td><td>Closes or dismisses the system loader/initialization interface.</td></tr><tr><td>7</td><td><strong>POST /api/skipOnboarding</strong></td><td>Skips the onboarding process for the current session or user.</td></tr><tr><td>8</td><td><strong>POST /api/runTestOnboarding</strong></td><td>Runs the onboarding test sequence to validate system configuration.</td></tr></tbody></table>
@@ -133,6 +143,50 @@
 {% endopenapi-operation %}
 
 {% openapi-operation spec="akto-agentic-security-api" path="/api/updateFilterLogPolicy" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+## SSO & Authentication
+
+<table data-full-width="true"><thead><tr><th width="50">#</th><th width="420">API</th><th>Description</th></tr></thead><tbody><tr><td>1</td><td><strong>POST /api/googleConfig</strong></td><td>Configures Google OAuth/SSO settings for the organization.</td></tr><tr><td>2</td><td><strong>POST /api/addGithubSso</strong></td><td>Adds or updates GitHub SSO configuration for the organization.</td></tr><tr><td>3</td><td><strong>POST /api/deleteGithubSso</strong></td><td>Deletes the existing GitHub SSO configuration.</td></tr><tr><td>4</td><td><strong>POST /api/addGithubAppSecretKey</strong></td><td>Adds a GitHub App secret key for SSO authentication.</td></tr><tr><td>5</td><td><strong>POST /api/deleteGithubAppSecretKey</strong></td><td>Deletes the GitHub App secret key used for SSO.</td></tr><tr><td>6</td><td><strong>POST /api/addOktaSso</strong></td><td>Adds or updates Okta SSO configuration for the organization.</td></tr><tr><td>7</td><td><strong>POST /api/deleteOktaSso</strong></td><td>Deletes the existing Okta SSO configuration.</td></tr><tr><td>8</td><td><strong>POST /api/saveOktaGroupRoleMapping</strong></td><td>Saves the mapping between Okta groups and Akto roles.</td></tr><tr><td>9</td><td><strong>POST /api/addSAMLSso</strong></td><td>Adds or updates SAML SSO configuration for the organization.</td></tr><tr><td>10</td><td><strong>POST /api/deleteSamlSso</strong></td><td>Deletes the existing SAML SSO configuration.</td></tr></tbody></table>
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/googleConfig" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/addGithubSso" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/deleteGithubSso" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/addGithubAppSecretKey" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/deleteGithubAppSecretKey" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/addOktaSso" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/deleteOktaSso" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/saveOktaGroupRoleMapping" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/addSAMLSso" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/deleteSamlSso" method="post" %}
 [OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 

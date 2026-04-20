@@ -1,5 +1,16 @@
 # Fetch Data
 
+## Table of Contents
+
+- [System & Health](#system--health)
+- [Settings & Toggles](#settings--toggles)
+- [SSO & Authentication](#sso--authentication)
+- [Runtime & Infrastructure](#runtime--infrastructure)
+- [Logs, Audit & Traffic](#logs-audit--traffic)
+- [Dashboard, Filters & Misc](#dashboard-filters--misc)
+- [Service Graph, Tracing & Misc](#service-graph-tracing--misc)
+- [Maintenance](#maintenance)
+
 ## System & Health
 
 <table data-full-width="true"><thead><tr><th width="50">#</th><th width="400">API</th><th>Description</th></tr></thead><tbody><tr><td>1</td><td><strong>POST /api/metrics</strong></td><td>Fetches system metrics and performance data.</td></tr><tr><td>2</td><td><strong>GET /api/allMetricsDescription</strong></td><td>Retrieves descriptions and metadata for all available system metrics.</td></tr><tr><td>3</td><td><strong>GET /api/health</strong></td><td>Checks the health status of the system and services.</td></tr><tr><td>4</td><td><strong>GET /api/fetchModuleInfo</strong></td><td>Fetches information about system modules and their status.</td></tr></tbody></table>
@@ -29,6 +40,30 @@
 {% endopenapi-operation %}
 
 {% openapi-operation spec="akto-agentic-security-api" path="/api/getAccountSettingsForAdvancedFilters" method="get" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+## SSO & Authentication
+
+<table data-full-width="true"><thead><tr><th width="50">#</th><th width="400">API</th><th>Description</th></tr></thead><tbody><tr><td>1</td><td><strong>POST /api/fetchGithubSso</strong></td><td>Fetches the current GitHub SSO configuration for the organization.</td></tr><tr><td>2</td><td><strong>POST /api/fetchGithubAppId</strong></td><td>Retrieves the GitHub App ID configured for SSO integration.</td></tr><tr><td>3</td><td><strong>POST /api/fetchOktaSso</strong></td><td>Fetches the current Okta SSO configuration and settings.</td></tr><tr><td>4</td><td><strong>POST /api/fetchOktaGroups</strong></td><td>Retrieves available Okta groups for role mapping configuration.</td></tr><tr><td>5</td><td><strong>POST /api/fetchSAMLSso</strong></td><td>Fetches the current SAML SSO configuration and metadata.</td></tr></tbody></table>
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchGithubSso" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchGithubAppId" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchOktaSso" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchOktaGroups" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchSAMLSso" method="post" %}
 [OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
