@@ -2,17 +2,17 @@
 
 ## Table of Contents
 
-- [System & Health](#system--health)
-- [Settings & Toggles](#settings--toggles)
-- [SSO & Authentication](#sso--authentication)
-- [Runtime & Infrastructure](#runtime--infrastructure)
-- [Logs, Audit & Traffic](#logs-audit--traffic)
-- [Dashboard, Filters & Misc](#dashboard-filters--misc)
-- [Maintenance](#maintenance)
+* [#system-and-health](modify-data.md#system-and-health "mention")
+* [#settings-and-toggles](modify-data.md#settings-and-toggles "mention")
+* [#sso-and-authentication](modify-data.md#sso-and-authentication "mention")
+* [#runtime-and-infrastructure](modify-data.md#runtime-and-infrastructure "mention")
+* [#logs-audit-and-traffic](modify-data.md#logs-audit-and-traffic "mention")
+* [#dashboard-filters-and-misc](modify-data.md#dashboard-filters-and-misc "mention")
+* [#maintenance](modify-data.md#maintenance "mention")
 
 ## System & Health
 
-<table data-full-width="true"><thead><tr><th width="50">#</th><th width="420">API</th><th>Description</th></tr></thead><tbody><tr><td>1</td><td><strong>POST /api/sendHealthCheck</strong></td><td>Sends a health check request to verify system status and connectivity.</td></tr><tr><td>2</td><td><strong>POST /api/deleteModuleInfo</strong></td><td>Deletes information or data for a specified system module.</td></tr><tr><td>3</td><td><strong>POST /api/rebootModules</strong></td><td>Reboots specified system modules.</td></tr><tr><td>4</td><td><strong>POST /api/updateModuleEnvAndReboot</strong></td><td>Updates environment variables for modules and triggers a reboot.</td></tr><tr><td>5</td><td><strong>POST /api/takeUpdate</strong></td><td>Applies a system update and restarts affected components.</td></tr><tr><td>6</td><td><strong>POST /api/closeLoader</strong></td><td>Closes or dismisses the system loader/initialization interface.</td></tr><tr><td>7</td><td><strong>POST /api/skipOnboarding</strong></td><td>Skips the onboarding process for the current session or user.</td></tr><tr><td>8</td><td><strong>POST /api/runTestOnboarding</strong></td><td>Runs the onboarding test sequence to validate system configuration.</td></tr></tbody></table>
+<table data-full-width="true"><thead><tr><th width="50">#</th><th width="420">API</th><th>Description</th></tr></thead><tbody><tr><td>1</td><td><a href="modify-data.md#post-api-sendhealthcheck"><strong>POST /api/sendHealthCheck</strong></a></td><td>Sends a health check request to verify system status and connectivity.</td></tr><tr><td>2</td><td><strong>POST /api/deleteModuleInfo</strong></td><td>Deletes information or data for a specified system module.</td></tr><tr><td>3</td><td><strong>POST /api/rebootModules</strong></td><td>Reboots specified system modules.</td></tr><tr><td>4</td><td><strong>POST /api/updateModuleEnvAndReboot</strong></td><td>Updates environment variables for modules and triggers a reboot.</td></tr><tr><td>5</td><td><strong>POST /api/takeUpdate</strong></td><td>Applies a system update and restarts affected components.</td></tr><tr><td>6</td><td><strong>POST /api/closeLoader</strong></td><td>Closes or dismisses the system loader/initialization interface.</td></tr><tr><td>7</td><td><strong>POST /api/skipOnboarding</strong></td><td>Skips the onboarding process for the current session or user.</td></tr><tr><td>8</td><td><strong>POST /api/runTestOnboarding</strong></td><td>Runs the onboarding test sequence to validate system configuration.</td></tr></tbody></table>
 
 {% openapi-operation spec="akto-agentic-security-api" path="/api/sendHealthCheck" method="post" %}
 [OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)

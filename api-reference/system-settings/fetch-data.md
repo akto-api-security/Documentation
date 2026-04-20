@@ -2,18 +2,18 @@
 
 ## Table of Contents
 
-- [System & Health](#system--health)
-- [Settings & Toggles](#settings--toggles)
-- [SSO & Authentication](#sso--authentication)
-- [Runtime & Infrastructure](#runtime--infrastructure)
-- [Logs, Audit & Traffic](#logs-audit--traffic)
-- [Dashboard, Filters & Misc](#dashboard-filters--misc)
-- [Service Graph, Tracing & Misc](#service-graph-tracing--misc)
-- [Maintenance](#maintenance)
+* [#system-and-health](fetch-data.md#system-and-health "mention")
+* [#settings-and-toggles](fetch-data.md#settings-and-toggles "mention")
+* [#sso-and-authentication](fetch-data.md#sso-and-authentication "mention")
+* [#runtime-and-infrastructure](fetch-data.md#runtime-and-infrastructure "mention")
+* [#logs-audit-and-traffic](fetch-data.md#logs-audit-and-traffic "mention")
+* [#dashboard-filters-and-misc](fetch-data.md#dashboard-filters-and-misc "mention")
+* [#service-graph-tracing-and-misc](fetch-data.md#service-graph-tracing-and-misc "mention")
+* [#maintenance](fetch-data.md#maintenance "mention")
 
 ## System & Health
 
-<table data-full-width="true"><thead><tr><th width="50">#</th><th width="400">API</th><th>Description</th></tr></thead><tbody><tr><td>1</td><td><strong>POST /api/metrics</strong></td><td>Fetches system metrics and performance data.</td></tr><tr><td>2</td><td><strong>GET /api/allMetricsDescription</strong></td><td>Retrieves descriptions and metadata for all available system metrics.</td></tr><tr><td>3</td><td><strong>GET /api/health</strong></td><td>Checks the health status of the system and services.</td></tr><tr><td>4</td><td><strong>GET /api/fetchModuleInfo</strong></td><td>Fetches information about system modules and their status.</td></tr></tbody></table>
+<table data-full-width="true"><thead><tr><th width="50">#</th><th width="400">API</th><th>Description</th></tr></thead><tbody><tr><td>1</td><td><a href="fetch-data.md#post-api-metrics"><strong>POST /api/metrics</strong></a></td><td>Fetches system metrics and performance data.</td></tr><tr><td>2</td><td><strong>GET /api/allMetricsDescription</strong></td><td>Retrieves descriptions and metadata for all available system metrics.</td></tr><tr><td>3</td><td><strong>GET /api/health</strong></td><td>Checks the health status of the system and services.</td></tr><tr><td>4</td><td><strong>GET /api/fetchModuleInfo</strong></td><td>Fetches information about system modules and their status.</td></tr></tbody></table>
 
 {% openapi-operation spec="akto-agentic-security-api" path="/api/metrics" method="post" %}
 [OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
