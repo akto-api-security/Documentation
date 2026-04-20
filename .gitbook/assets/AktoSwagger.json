@@ -29552,6 +29552,1295 @@
           "403": { "description": "Forbidden" }
         }
       }
+    },
+    "/api/createWorkflowTest": {
+      "description": "Create a new workflow test with a node/edge graph and associated node details",
+      "post": {
+        "summary": "POST request for endpoint /api/createWorkflowTest",
+        "operationId": "/api/createWorkflowTest-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["mapNodeIdToWorkflowNodeDetails"],
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "description": "ID of the API collection this workflow test belongs to",
+                    "example": 1748293710
+                  },
+                  "nodes": {
+                    "type": "array",
+                    "description": "List of React Flow node IDs in the workflow graph",
+                    "items": { "type": "string" },
+                    "example": ["node-1", "node-2", "node-3"]
+                  },
+                  "edges": {
+                    "type": "array",
+                    "description": "List of React Flow edge IDs connecting workflow nodes",
+                    "items": { "type": "string" },
+                    "example": ["edge-1-2", "edge-2-3"]
+                  },
+                  "mapNodeIdToWorkflowNodeDetails": {
+                    "type": "object",
+                    "description": "Map of node ID to WorkflowNodeDetails configuration. Each node describes an API call with optional overrides.",
+                    "additionalProperties": {
+                      "type": "object",
+                      "properties": {
+                        "apiInfoKey": {
+                          "type": "object",
+                          "properties": {
+                            "apiCollectionId": { "type": "integer", "example": 1748293710 },
+                            "url": { "type": "string", "example": "https://api.example.com/v1/login" },
+                            "method": { "type": "string", "example": "POST" }
+                          }
+                        },
+                        "type": { "type": "string", "description": "Node type", "example": "API" },
+                        "overrideRedirectUri": { "type": "string", "example": "" },
+                        "requestPayload": { "type": "string", "example": "{\"username\":\"admin@example.com\",\"password\":\"[REDACTED]\"}" },
+                        "testConfigStr": { "type": "string", "example": "" }
+                      }
+                    },
+                    "example": {
+                      "node-1": {
+                        "apiInfoKey": { "apiCollectionId": 1748293710, "url": "https://api.example.com/v1/login", "method": "POST" },
+                        "type": "API",
+                        "requestPayload": "{\"username\":\"admin@example.com\",\"password\":\"[REDACTED]\"}"
+                      }
+                    }
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "Initial workflow test state",
+                    "enum": ["DRAFT", "PUBLISHED", "INACTIVE"],
+                    "example": "DRAFT"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Workflow test created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflowTests": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "integer", "example": 1766398064 },
+                          "apiCollectionId": { "type": "integer", "example": 1748293710 },
+                          "author": { "type": "string", "example": "admin@example.com" },
+                          "editor": { "type": "string", "example": "admin@example.com" },
+                          "createdTimestamp": { "type": "integer", "example": 1766398064 },
+                          "lastEdited": { "type": "integer", "example": 1766398064 },
+                          "nodes": { "type": "array", "items": { "type": "string" } },
+                          "edges": { "type": "array", "items": { "type": "string" } },
+                          "state": { "type": "string", "example": "DRAFT" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": {
+            "description": "Unprocessable — nodes map is null or a node failed validation",
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "nodes can't be null" } } } } } }
+          }
+        }
+      }
+    },
+    "/api/editWorkflowTest": {
+      "description": "Update the nodes, edges, and node details of an existing workflow test",
+      "post": {
+        "summary": "POST request for endpoint /api/editWorkflowTest",
+        "operationId": "/api/editWorkflowTest-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["id"],
+                "properties": {
+                  "id": { "type": "integer", "description": "Workflow test ID", "example": 1766398064 },
+                  "nodes": { "type": "array", "items": { "type": "string" }, "example": ["node-1", "node-2", "node-3"] },
+                  "edges": { "type": "array", "items": { "type": "string" }, "example": ["edge-1-2", "edge-2-3"] },
+                  "mapNodeIdToWorkflowNodeDetails": {
+                    "type": "object",
+                    "additionalProperties": { "type": "object" },
+                    "example": { "node-1": { "apiInfoKey": { "apiCollectionId": 1748293710, "url": "https://api.example.com/v1/login", "method": "POST" } } }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Workflow test updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflowTests": { "type": "array", "items": { "type": "object" } }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — workflow test not found" }
+        }
+      }
+    },
+    "/api/setWorkflowTestState": {
+      "description": "Change the state of a workflow test (e.g. DRAFT → PUBLISHED)",
+      "post": {
+        "summary": "POST request for endpoint /api/setWorkflowTestState",
+        "operationId": "/api/setWorkflowTestState-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["id", "state"],
+                "properties": {
+                  "id": { "type": "integer", "example": 1766398064 },
+                  "state": { "type": "string", "enum": ["DRAFT", "PUBLISHED", "INACTIVE"], "example": "PUBLISHED" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "State updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflowTests": { "type": "array", "items": { "type": "object" } }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — workflow test not found" }
+        }
+      }
+    },
+    "/api/exportWorkflowTestAsString": {
+      "description": "Serialize a workflow test to a JSON string for export or clipboard copy",
+      "post": {
+        "summary": "POST request for endpoint /api/exportWorkflowTestAsString",
+        "operationId": "/api/exportWorkflowTestAsString-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["id"],
+                "properties": {
+                  "id": { "type": "integer", "example": 1766398064 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Workflow test serialized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "str": {
+                      "type": "string",
+                      "description": "Full JSON serialization of the WorkflowTest object",
+                      "example": "{\"id\":1766398064,\"apiCollectionId\":1748293710,\"author\":\"admin@example.com\",\"nodes\":[\"node-1\"],\"edges\":[],\"state\":\"PUBLISHED\"}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — workflow test not found or serialization error" }
+        }
+      }
+    },
+    "/api/editWorkflowNodeDetails": {
+      "description": "Update the details of a single node within a workflow test",
+      "post": {
+        "summary": "POST request for endpoint /api/editWorkflowNodeDetails",
+        "operationId": "/api/editWorkflowNodeDetails-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["id", "mapNodeIdToWorkflowNodeDetails"],
+                "properties": {
+                  "id": { "type": "integer", "description": "Workflow test ID", "example": 1766398064 },
+                  "mapNodeIdToWorkflowNodeDetails": {
+                    "type": "object",
+                    "description": "Must contain exactly one entry: the node ID to update → updated WorkflowNodeDetails",
+                    "example": {
+                      "node-2": {
+                        "apiInfoKey": { "apiCollectionId": 1748293710, "url": "https://api.example.com/v1/profile", "method": "GET" },
+                        "type": "API"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Node details updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflowTests": { "type": "array", "items": { "type": "object" } }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — workflow test not found or node ID mismatch" }
+        }
+      }
+    },
+    "/api/fetchWorkflowResult": {
+      "description": "Fetch the latest testing run and result for a workflow test",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchWorkflowResult",
+        "operationId": "/api/fetchWorkflowResult-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["workflowTestId"],
+                "properties": {
+                  "workflowTestId": { "type": "integer", "example": 1766398064 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Workflow result retrieved (workflowTestingRun and workflowTestResult may be null if no run exists yet)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflowTestingRun": {
+                      "type": "object",
+                      "description": "The latest TestingRun for this workflow test",
+                      "properties": {
+                        "id": { "type": "string", "example": "6a4c1b3dde8f92780c91637f" },
+                        "state": { "type": "string", "example": "COMPLETED" },
+                        "scheduleTimestamp": { "type": "integer", "example": 1766398064 }
+                      }
+                    },
+                    "workflowTestResult": {
+                      "type": "object",
+                      "description": "The WorkflowTestResult for the latest run, null if no result yet",
+                      "properties": {
+                        "testRunId": { "type": "string", "example": "6a4c1b3dde8f92780c91637f" },
+                        "nodeResultMap": { "type": "object", "description": "Map of node ID to test result" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/deleteScheduledWorkflowTests": {
+      "description": "Stop all SCHEDULED or RUNNING testing runs for a given workflow test",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteScheduledWorkflowTests",
+        "operationId": "/api/deleteScheduledWorkflowTests-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["workflowTestId"],
+                "properties": {
+                  "workflowTestId": { "type": "integer", "example": 1766398064 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Scheduled/running tests stopped (state set to STOPPED)", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/fetchWorkflowTestingRun": {
+      "description": "Fetch all SCHEDULED testing runs for a workflow test",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchWorkflowTestingRun",
+        "operationId": "/api/fetchWorkflowTestingRun-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["workflowTestId"],
+                "properties": {
+                  "workflowTestId": { "type": "integer", "example": 1766398064 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Scheduled testing runs retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "testingRuns": {
+                      "type": "array",
+                      "description": "TestingRun records in SCHEDULED state for this workflow test",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string", "example": "6a4c1b3dde8f92780c91637f" },
+                          "state": { "type": "string", "example": "SCHEDULED" },
+                          "scheduleTimestamp": { "type": "integer", "example": 1766484064 }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable" }
+        }
+      }
+    },
+    "/api/downloadWorkflowAsJson": {
+      "description": "Download a workflow test as a JSON file string (Gson serialization)",
+      "post": {
+        "summary": "POST request for endpoint /api/downloadWorkflowAsJson",
+        "operationId": "/api/downloadWorkflowAsJson-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["id"],
+                "properties": {
+                  "id": { "type": "integer", "example": 1766398064 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Workflow JSON ready for download",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflowTestJson": {
+                      "type": "string",
+                      "description": "Gson-serialized JSON string of the full WorkflowTest object",
+                      "example": "{\"id\":1766398064,\"apiCollectionId\":1748293710,\"nodes\":[\"node-1\",\"node-2\"],\"edges\":[\"edge-1-2\"],\"state\":\"PUBLISHED\"}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — workflow test not found", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "Invalid workflow test" } } } } } } }
+        }
+      }
+    },
+    "/api/uploadWorkflowJson": {
+      "description": "Import a workflow test from a JSON string. Creates a new workflow test with the current user and timestamp; the original ID in the JSON is replaced.",
+      "post": {
+        "summary": "POST request for endpoint /api/uploadWorkflowJson",
+        "operationId": "/api/uploadWorkflowJson-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["workflowTestJson"],
+                "properties": {
+                  "workflowTestJson": {
+                    "type": "string",
+                    "description": "JSON string of a WorkflowTest (as produced by downloadWorkflowAsJson)",
+                    "example": "{\"apiCollectionId\":1748293710,\"nodes\":[\"node-1\",\"node-2\"],\"edges\":[\"edge-1-2\"],\"state\":\"PUBLISHED\",\"mapNodeIdToWorkflowNodeDetails\":{\"node-1\":{\"type\":\"API\"}}}"
+                  },
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "description": "Target API collection for the imported workflow",
+                    "example": 1748293710
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Workflow test imported successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflowTests": { "type": "array", "items": { "type": "object" } }
+                  }
+                }
+              }
+            }
+          },
+          "422": { "description": "Unprocessable — invalid JSON", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "Invalid workflow test json" } } } } } } }
+        }
+      }
+    },
+    "/api/addTestLibrary": {
+      "description": "Add a custom GitHub test library to the account. Clones YAML test templates from the repository immediately.",
+      "post": {
+        "summary": "POST request for endpoint /api/addTestLibrary",
+        "operationId": "/api/addTestLibrary-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["repositoryUrl"],
+                "properties": {
+                  "repositoryUrl": {
+                    "type": "string",
+                    "description": "GitHub repository URL containing Akto YAML test templates",
+                    "example": "https://github.com/example-org/custom-akto-tests"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Test library added and templates synced", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — repository URL empty or library already exists", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "Test library already exists" } } } } } } }
+        }
+      }
+    },
+    "/api/removeTestLibrary": {
+      "description": "Remove a custom test library and delete all CUSTOM-sourced templates that were loaded from it",
+      "post": {
+        "summary": "POST request for endpoint /api/removeTestLibrary",
+        "operationId": "/api/removeTestLibrary-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["repositoryUrl"],
+                "properties": {
+                  "repositoryUrl": { "type": "string", "example": "https://github.com/example-org/custom-akto-tests" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Test library and its templates removed", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — repository URL empty" }
+        }
+      }
+    },
+    "/api/syncCustomLibrary": {
+      "description": "Re-sync YAML templates from a previously added custom test library repository",
+      "post": {
+        "summary": "POST request for endpoint /api/syncCustomLibrary",
+        "operationId": "/api/syncCustomLibrary-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["repositoryUrl"],
+                "properties": {
+                  "repositoryUrl": { "type": "string", "example": "https://github.com/example-org/custom-akto-tests" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Custom library re-synced", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — repository URL empty or library not found" }
+        }
+      }
+    },
+    "/api/syncAllDefaultTestLibraries": {
+      "description": "Trigger an async sync of all default Akto test libraries from GitHub for the current account",
+      "post": {
+        "summary": "POST request for endpoint /api/syncAllDefaultTestLibraries",
+        "operationId": "/api/syncAllDefaultTestLibraries-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": { "description": "Sync job scheduled asynchronously", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/fetchCustomTestsCount": {
+      "description": "Fetch the count of custom YAML test templates grouped by repository URL",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchCustomTestsCount",
+        "operationId": "/api/fetchCustomTestsCount-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "Template counts retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "testCountMap": {
+                      "type": "object",
+                      "description": "Map of repositoryUrl → number of templates loaded from it",
+                      "additionalProperties": { "type": "integer" },
+                      "example": {
+                        "https://github.com/example-org/custom-akto-tests": 12,
+                        "https://github.com/example-org/pentest-templates": 5
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/saveTestEditorFile": {
+      "description": "Save a YAML test template from the test editor. Validates the YAML structure, resolves a unique test ID and name, then upserts the template. For built-in (non-CUSTOM) templates, creates a new fork with a suffixed ID.",
+      "post": {
+        "summary": "POST request for endpoint /api/saveTestEditorFile",
+        "operationId": "/api/saveTestEditorFile-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["content"],
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "description": "Full YAML content of the test template",
+                    "example": "id: BOLA_TEST_CUSTOM\ninfo:\n  name: Custom BOLA Test\n  description: Tests for BOLA vulnerability\n  details: Checks if user A can access user B resources\n  impact: HIGH\n  category:\n    name: BOLA\n    shortName: BOLA\n    displayName: Broken Object Level Authorization\n  subCategory: BOLA_TEST_CUSTOM\n  severity: HIGH\n  tags:\n    - OWASP_TOP_10\napi_selection_filters:\n  method:\n    eq: GET\nexecute:\n  type: single\n  requests:\n    - req:\n        - modify_url:\n            replace_auth_header: true\nvalidate:\n  response_code:\n    eq: 200"
+                  },
+                  "originalTestId": {
+                    "type": "string",
+                    "description": "Existing test ID to update. If null or different from the content's id, a new template is inserted.",
+                    "example": "BOLA_TEST_CUSTOM"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Test template saved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "finalTestId": {
+                      "type": "string",
+                      "description": "The resolved unique test ID (may differ from content id if a conflict was found)",
+                      "example": "BOLA_TEST_CUSTOM"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "The normalized YAML content that was saved (with resolved id and name)",
+                      "example": "id: BOLA_TEST_CUSTOM\ninfo:\n  name: Custom BOLA Test\n  ..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": {
+            "description": "Unprocessable — invalid YAML, missing info keys, or built-in template conflict",
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "Error in template: info key absent" } } } } } }
+          }
+        }
+      }
+    },
+    "/api/fetchCommonTestTemplate": {
+      "description": "Fetch the account-level common test template (shared word lists and reusable YAML definitions)",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchCommonTestTemplate",
+        "operationId": "/api/fetchCommonTestTemplate-POST",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "Common test template retrieved (content is empty string if not set)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "content": {
+                      "type": "string",
+                      "description": "YAML content of the common template",
+                      "example": "wordLists:\n  userIds:\n    - \"1\"\n    - \"2\"\n    - \"3\"\n  adminEndpoints:\n    - /admin\n    - /internal"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/saveCommonTestTemplate": {
+      "description": "Save the account-level common test template containing shared word lists",
+      "post": {
+        "summary": "POST request for endpoint /api/saveCommonTestTemplate",
+        "operationId": "/api/saveCommonTestTemplate-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["content"],
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "description": "YAML content with wordLists definitions",
+                    "example": "wordLists:\n  userIds:\n    - \"1\"\n    - \"2\"\n    - \"100\"\n  sensitiveEndpoints:\n    - /api/admin\n    - /api/internal"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Common template saved", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — invalid YAML or empty/null wordLists" }
+        }
+      }
+    },
+    "/api/fetchTestContent": {
+      "description": "Fetch the raw YAML content of a test template by its ID",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchTestContent",
+        "operationId": "/api/fetchTestContent-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["originalTestId"],
+                "properties": {
+                  "originalTestId": {
+                    "type": "string",
+                    "description": "Test template ID to fetch",
+                    "example": "BOLA_TEST_CUSTOM"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Test content retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "content": {
+                      "type": "string",
+                      "description": "YAML content of the test template",
+                      "example": "id: BOLA_TEST_CUSTOM\ninfo:\n  name: Custom BOLA Test\n  severity: HIGH\n..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — test ID empty or template not found", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "test not found" } } } } } } }
+        }
+      }
+    },
+    "/api/runTestForGivenTemplate": {
+      "description": "Execute a test template against a specific API endpoint in the test editor playground. Clears role cache before execution. Returns results synchronously if possible, or a playgroundHexId for async polling.",
+      "post": {
+        "summary": "POST request for endpoint /api/runTestForGivenTemplate",
+        "operationId": "/api/runTestForGivenTemplate-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["content", "apiInfoKey"],
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "description": "YAML content of the test template to run",
+                    "example": "id: BOLA_TEST_CUSTOM\ninfo:\n  name: Custom BOLA Test\n  severity: HIGH\n..."
+                  },
+                  "apiInfoKey": {
+                    "type": "object",
+                    "description": "Target API endpoint to test",
+                    "properties": {
+                      "apiCollectionId": { "type": "integer", "example": 1748293710 },
+                      "url": { "type": "string", "example": "https://api.example.com/v1/users/22" },
+                      "method": { "type": "string", "example": "GET" }
+                    }
+                  },
+                  "testingRunHexId": {
+                    "type": "string",
+                    "description": "Optional hex ID of an existing testing run to use for context",
+                    "example": "6a4c1b3dde8f92780c91637f"
+                  },
+                  "testingRunConfig": {
+                    "type": "object",
+                    "description": "Optional test run config overrides",
+                    "properties": {
+                      "overriddenTestAppUrl": { "type": "string", "example": "https://staging-api.example.com" },
+                      "testRoleId": { "type": "string", "example": "ATTACKER_TOKEN_ALL" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Test executed; results returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "testingRunHexId": { "type": "string", "example": "6a4c1b3dde8f92780c91637f" },
+                    "testingRunPlaygroundHexId": { "type": "string", "description": "Use with fetchTestingRunPlaygroundStatus to poll for async results", "example": "7b5d2e4ffe9a38791da2748a" },
+                    "testingRunResult": {
+                      "type": "object",
+                      "description": "Test execution result",
+                      "properties": {
+                        "vulnerable": { "type": "boolean", "example": true },
+                        "testResults": { "type": "array", "items": { "type": "object" } }
+                      }
+                    },
+                    "testingRunIssues": {
+                      "type": "object",
+                      "description": "Issue record created if test found a vulnerability"
+                    },
+                    "subCategoryMap": {
+                      "type": "object",
+                      "description": "Map of test ID to subcategory info object"
+                    },
+                    "callbackUuids": {
+                      "type": "array",
+                      "description": "Callback UUIDs for out-of-band detection tests",
+                      "items": { "type": "string" },
+                      "example": ["cb-uuid-abc123"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — invalid YAML template", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "Error parsing test template" } } } } } } }
+        }
+      }
+    },
+    "/api/fetchTestingRunPlaygroundStatus": {
+      "description": "Poll the status of an async test editor playground run. Returns the current state and test result once available.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchTestingRunPlaygroundStatus",
+        "operationId": "/api/fetchTestingRunPlaygroundStatus-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["testingRunPlaygroundHexId"],
+                "properties": {
+                  "testingRunPlaygroundHexId": {
+                    "type": "string",
+                    "description": "Hex ID returned by runTestForGivenTemplate",
+                    "example": "7b5d2e4ffe9a38791da2748a"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Playground status retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "testingRunPlaygroundStatus": {
+                      "type": "string",
+                      "description": "Current state of the playground run",
+                      "enum": ["SCHEDULED", "RUNNING", "COMPLETED", "STOPPED"],
+                      "example": "COMPLETED"
+                    },
+                    "testingRunResult": {
+                      "type": "object",
+                      "properties": {
+                        "vulnerable": { "type": "boolean", "example": false },
+                        "testResults": { "type": "array", "items": { "type": "object" } }
+                      }
+                    },
+                    "callbackUuids": { "type": "array", "items": { "type": "string" } },
+                    "testingRunIssues": { "type": "object" },
+                    "subCategoryMap": { "type": "object" }
+                  }
+                }
+              }
+            }
+          },
+          "422": { "description": "Unprocessable — hex ID empty, invalid, or playground not found", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "testingRunPlayGround not found" } } } } } } }
+        }
+      }
+    },
+    "/api/fetchCallbackStatusForTestEditor": {
+      "description": "Check whether any out-of-band callback URL was hit for a set of callback UUIDs (used by SSRF/OAST test templates)",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchCallbackStatusForTestEditor",
+        "operationId": "/api/fetchCallbackStatusForTestEditor-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["callbackUuids"],
+                "properties": {
+                  "callbackUuids": {
+                    "type": "array",
+                    "description": "List of callback UUIDs from the test result to check",
+                    "items": { "type": "string" },
+                    "example": ["cb-uuid-abc123", "cb-uuid-def456"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Callback status checked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "callbackHit": {
+                      "type": "boolean",
+                      "description": "true if at least one callback URL was hit by the target server",
+                      "example": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — callbackUuids empty", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "callbackUuids cannot be empty" } } } } } } }
+        }
+      }
+    },
+    "/api/saveTestRoleMeta": {
+      "description": "Update the scope roles (allowed Akto roles) for an existing test role",
+      "post": {
+        "summary": "POST request for endpoint /api/saveTestRoleMeta",
+        "operationId": "/api/saveTestRoleMeta-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["roleName", "scopeRoles"],
+                "properties": {
+                  "roleName": {
+                    "type": "string",
+                    "description": "Name of the test role to update",
+                    "example": "ATTACKER_TOKEN_ALL"
+                  },
+                  "scopeRoles": {
+                    "type": "array",
+                    "description": "Akto user roles allowed to use this test role",
+                    "items": { "type": "string" },
+                    "example": ["ADMIN", "MEMBER"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Test role meta saved", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — test role not found or scope roles empty", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "Test role does not exist" } } } } } } }
+        }
+      }
+    },
+    "/api/deleteTestRole": {
+      "description": "Delete a test role and its associated endpoint logical group",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteTestRole",
+        "operationId": "/api/deleteTestRole-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["roleName"],
+                "properties": {
+                  "roleName": { "type": "string", "example": "ATTACKER_TOKEN_ALL" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Test role deleted", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — role not found" }
+        }
+      }
+    },
+    "/api/deleteAuthFromRole": {
+      "description": "Remove an auth mechanism entry at a specific index from a test role's authWithCondList",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteAuthFromRole",
+        "operationId": "/api/deleteAuthFromRole-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["roleName", "index"],
+                "properties": {
+                  "roleName": { "type": "string", "example": "ATTACKER_TOKEN_ALL" },
+                  "index": {
+                    "type": "integer",
+                    "description": "0-based index of the auth entry to remove from authWithCondList",
+                    "example": 0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Auth entry deleted; returns updated test role",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "selectedRole": {
+                      "type": "object",
+                      "description": "Updated TestRoles object after deletion"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — role not found" }
+        }
+      }
+    },
+    "/api/updateAuthInRole": {
+      "description": "Update an auth mechanism entry at a specific index in a test role's authWithCondList",
+      "post": {
+        "summary": "POST request for endpoint /api/updateAuthInRole",
+        "operationId": "/api/updateAuthInRole-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["roleName", "index", "authParamData"],
+                "properties": {
+                  "roleName": { "type": "string", "example": "ATTACKER_TOKEN_ALL" },
+                  "index": { "type": "integer", "description": "0-based index of the auth entry to update", "example": 0 },
+                  "authParamData": {
+                    "type": "array",
+                    "description": "Updated auth parameter definitions",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": { "type": "string", "example": "Authorization" },
+                        "value": { "type": "string", "example": "Bearer [REDACTED_TOKEN]" },
+                        "where": { "type": "string", "enum": ["HEADER", "PAYLOAD"], "example": "HEADER" },
+                        "showHeader": { "type": "boolean", "example": true }
+                      }
+                    }
+                  },
+                  "urlRegex": {
+                    "type": "string",
+                    "description": "Optional regex to restrict which URLs this auth applies to",
+                    "example": ".*"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Auth entry updated; returns updated test role",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "selectedRole": { "type": "object" }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — role not found or invalid URL regex" }
+        }
+      }
+    },
+    "/api/addAuthToRole": {
+      "description": "Add a new auth mechanism entry to a test role's authWithCondList",
+      "post": {
+        "summary": "POST request for endpoint /api/addAuthToRole",
+        "operationId": "/api/addAuthToRole-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["roleName", "authParamData"],
+                "properties": {
+                  "roleName": { "type": "string", "example": "ATTACKER_TOKEN_ALL" },
+                  "authParamData": {
+                    "type": "array",
+                    "description": "New auth parameter definitions",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": { "type": "string", "example": "Authorization" },
+                        "value": { "type": "string", "example": "Bearer [REDACTED_TOKEN]" },
+                        "where": { "type": "string", "enum": ["HEADER", "PAYLOAD"], "example": "HEADER" },
+                        "showHeader": { "type": "boolean", "example": true }
+                      }
+                    }
+                  },
+                  "urlRegex": {
+                    "type": "string",
+                    "description": "Optional regex to restrict which URLs this auth applies to",
+                    "example": ".*"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Auth entry added; returns updated test role",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "selectedRole": {
+                      "type": "object",
+                      "description": "Updated TestRoles object",
+                      "properties": {
+                        "name": { "type": "string", "example": "ATTACKER_TOKEN_ALL" },
+                        "authWithCondList": { "type": "array", "items": { "type": "object" } }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — role not found or invalid URL regex" }
+        }
+      }
+    },
+    "/api/fetchOtpData/{uuid}": {
+      "description": "Fetch the OTP text received for a test run identified by UUID. Returns the most recent OTP stored within the last 5 minutes. Used by login-flow tests that require OTP-based authentication.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchOtpData/{uuid}",
+        "operationId": "/api/fetchOtpData-POST",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890" },
+            "description": "UUID identifying the OTP test data slot"
+          }
+        ],
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": {
+          "200": {
+            "description": "OTP text retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "otpText": {
+                      "type": "string",
+                      "description": "The OTP text received within the last 5 minutes for this UUID",
+                      "example": "482917"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — UUID null or OTP not received within 5 minutes", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "otp data not received for uuid a1b2c3d4-e5f6-7890-abcd-ef1234567890" } } } } } } }
+        }
+      }
+    },
+    "/api/triggerSingleLoginFlow": {
+      "description": "Trigger a single login flow step for a login-flow-based auth mechanism. Used to test and validate login steps during auth mechanism configuration.",
+      "post": {
+        "summary": "POST request for endpoint /api/triggerSingleLoginFlow",
+        "operationId": "/api/triggerSingleLoginFlow-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["type", "requestData"],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "Auth mechanism type. Must not be HARDCODED, SAMPLE_DATA, or TLS_AUTH.",
+                    "enum": ["LOGIN_FLOW", "OTP_LOGIN_FLOW", "API_TOKEN"],
+                    "example": "LOGIN_FLOW"
+                  },
+                  "requestData": {
+                    "type": "array",
+                    "description": "List of request steps to execute in the login flow",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "url": { "type": "string", "example": "https://api.example.com/v1/login" },
+                        "method": { "type": "string", "example": "POST" },
+                        "body": { "type": "string", "example": "{\"username\":\"admin@example.com\",\"password\":\"[REDACTED]\"}" },
+                        "headers": { "type": "object", "example": { "Content-Type": "application/json" } }
+                      }
+                    }
+                  },
+                  "nodeId": {
+                    "type": "string",
+                    "description": "Optional node ID for multi-step login flow",
+                    "example": "step-1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login flow step executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "responses": {
+                      "type": "array",
+                      "description": "HTTP responses from each step of the login flow",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "statusCode": { "type": "integer", "example": 200 },
+                          "body": { "type": "string", "example": "{\"token\":\"[REDACTED_TOKEN]\"}" },
+                          "headers": { "type": "object" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": { "description": "Forbidden" },
+          "422": { "description": "Unprocessable — invalid type (HARDCODED/SAMPLE_DATA/TLS_AUTH) or login flow execution failed", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "Invalid Type Value" } } } } } } }
+        }
+      }
     }
   }
 }
