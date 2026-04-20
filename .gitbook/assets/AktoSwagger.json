@@ -23945,6 +23945,945 @@
           }
         }
       }
+    },
+    "/api/googleConfig": {
+      "description": "Retrieve the configured Google OAuth client ID for the account",
+      "post": {
+        "summary": "POST request for endpoint /api/googleConfig",
+        "operationId": "/api/googleConfig-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Google OAuth configuration retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "client_id": {
+                      "type": "string",
+                      "description": "Google OAuth client ID registered for this Akto instance",
+                      "example": "812345678901-abcdef1234567890abcdef1234567890.apps.googleusercontent.com"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — no Google OAuth configuration found for this account"
+          },
+          "403": {
+            "description": "Forbidden — caller lacks INTEGRATIONS / READ_WRITE permission"
+          }
+        }
+      }
+    },
+    "/api/addGithubSso": {
+      "description": "Add a GitHub OAuth SSO integration. Only available in on-premises deployments. Fails if another SSO integration is already active.",
+      "post": {
+        "summary": "POST request for endpoint /api/addGithubSso",
+        "operationId": "/api/addGithubSso-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["githubClientId", "githubClientSecret"],
+                "properties": {
+                  "githubClientId": {
+                    "type": "string",
+                    "description": "GitHub OAuth App client ID",
+                    "example": "Iv1.a1b2c3d4e5f6g7h8"
+                  },
+                  "githubClientSecret": {
+                    "type": "string",
+                    "description": "GitHub OAuth App client secret",
+                    "example": "[REDACTED_GITHUB_CLIENT_SECRET]"
+                  },
+                  "githubUrl": {
+                    "type": "string",
+                    "description": "Base URL for GitHub Enterprise instances (leave empty for github.com)",
+                    "example": "https://github.example-corp.com"
+                  },
+                  "githubApiUrl": {
+                    "type": "string",
+                    "description": "GitHub API base URL for Enterprise instances (leave empty for github.com)",
+                    "example": "https://github.example-corp.com/api/v3"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "GitHub SSO integration added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks ADMIN_ACTIONS / READ_WRITE permission"
+          },
+          "422": {
+            "description": "Unprocessable — another SSO integration already exists, or deployment is not on-prem",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "A SSO Integration already exists."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/deleteGithubSso": {
+      "description": "Delete the GitHub OAuth SSO integration and revoke all user refresh tokens. Only available in on-premises deployments.",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteGithubSso",
+        "operationId": "/api/deleteGithubSso-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "GitHub SSO integration deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks ADMIN_ACTIONS permission"
+          },
+          "422": {
+            "description": "Unprocessable — deployment is not on-prem",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "This feature is only available in on-prem deployment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchGithubSso": {
+      "description": "Fetch the current GitHub OAuth SSO configuration for the account",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchGithubSso",
+        "operationId": "/api/fetchGithubSso-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "GitHub SSO configuration retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "githubClientId": {
+                      "type": "string",
+                      "description": "GitHub OAuth App client ID currently configured",
+                      "example": "Iv1.a1b2c3d4e5f6g7h8"
+                    },
+                    "githubUrl": {
+                      "type": "string",
+                      "description": "GitHub Enterprise base URL, null for github.com",
+                      "example": "https://github.example-corp.com"
+                    },
+                    "githubApiUrl": {
+                      "type": "string",
+                      "description": "GitHub Enterprise API URL, null for github.com",
+                      "example": "https://github.example-corp.com/api/v3"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks ADMIN_ACTIONS / READ permission"
+          },
+          "422": {
+            "description": "Unprocessable — a different SSO type is already active",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "A different SSO Integration already exists."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchGithubAppId": {
+      "description": "Fetch the GitHub App ID stored in account settings (used for GitHub App-based authentication flows)",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchGithubAppId",
+        "operationId": "/api/fetchGithubAppId-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "GitHub App ID retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "githubAppId": {
+                      "type": "string",
+                      "description": "GitHub App numeric or string identifier",
+                      "example": "987654"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks ADMIN_ACTIONS / READ permission"
+          }
+        }
+      }
+    },
+    "/api/addGithubAppSecretKey": {
+      "description": "Register a GitHub App ID and its RSA private key for GitHub App-based authentication. Only available in on-premises deployments. Validates the credentials against GitHub before saving.",
+      "post": {
+        "summary": "POST request for endpoint /api/addGithubAppSecretKey",
+        "operationId": "/api/addGithubAppSecretKey-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["githubAppId", "githubAppSecretKey"],
+                "properties": {
+                  "githubAppId": {
+                    "type": "string",
+                    "description": "GitHub App ID (numeric identifier shown on the App settings page)",
+                    "example": "987654"
+                  },
+                  "githubAppSecretKey": {
+                    "type": "string",
+                    "description": "RSA private key PEM content (with or without header/footer lines; newlines are stripped automatically)",
+                    "example": "[REDACTED_RSA_PRIVATE_KEY_PEM]"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "GitHub App credentials validated and saved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks ADMIN_ACTIONS / READ_WRITE permission"
+          },
+          "422": {
+            "description": "Unprocessable — invalid credentials or not on-prem",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "invalid github app Id and secret key"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/deleteGithubAppSecretKey": {
+      "description": "Remove the stored GitHub App ID and RSA private key from account settings. Only available in on-premises deployments.",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteGithubAppSecretKey",
+        "operationId": "/api/deleteGithubAppSecretKey-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "GitHub App credentials deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionMessages": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "Deleted github app ID and secret key"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks ADMIN_ACTIONS / READ_WRITE permission"
+          },
+          "422": {
+            "description": "Unprocessable — deployment is not on-prem",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "This feature is only available in on-prem deployment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/addOktaSso": {
+      "description": "Add an Okta OIDC SSO integration. Fails if another SSO integration is already active. Optionally accepts an Okta Management API token to enable group fetching and role mapping.",
+      "post": {
+        "summary": "POST request for endpoint /api/addOktaSso",
+        "operationId": "/api/addOktaSso-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["clientId", "clientSecret", "authorisationServerId", "oktaDomain", "redirectUri"],
+                "properties": {
+                  "clientId": {
+                    "type": "string",
+                    "description": "Okta OIDC application client ID",
+                    "example": "0oa1b2c3d4e5F6G7H890"
+                  },
+                  "clientSecret": {
+                    "type": "string",
+                    "description": "Okta OIDC application client secret",
+                    "example": "[REDACTED_OKTA_CLIENT_SECRET]"
+                  },
+                  "authorisationServerId": {
+                    "type": "string",
+                    "description": "Okta Authorization Server ID (use 'default' for the org-level server)",
+                    "example": "aus1b2c3d4e5F6G7H890"
+                  },
+                  "oktaDomain": {
+                    "type": "string",
+                    "description": "Okta organization domain URL",
+                    "example": "https://example-corp.okta.com"
+                  },
+                  "redirectUri": {
+                    "type": "string",
+                    "description": "Redirect URI registered in the Okta application",
+                    "example": "https://app.akto.example-corp.com/login/oauth2/code/okta"
+                  },
+                  "managementApiToken": {
+                    "type": "string",
+                    "description": "Okta Management API token — required for fetchOktaGroups and role mapping. Stored server-side; returned masked as '*' on subsequent reads.",
+                    "example": "[REDACTED_OKTA_MANAGEMENT_API_TOKEN]"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Okta SSO integration added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "managementApiToken": {
+                      "type": "string",
+                      "description": "Returns '*' if a management API token was saved, null otherwise",
+                      "example": "*"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks ADMIN_ACTIONS / READ_WRITE permission"
+          },
+          "422": {
+            "description": "Unprocessable — another SSO integration already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "A SSO Integration already exists."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/deleteOktaSso": {
+      "description": "Delete the Okta OIDC SSO integration and revoke all user refresh tokens for the account",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteOktaSso",
+        "operationId": "/api/deleteOktaSso-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Okta SSO integration deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks ADMIN_ACTIONS permission"
+          }
+        }
+      }
+    },
+    "/api/fetchOktaSso": {
+      "description": "Fetch the current Okta OIDC SSO configuration including group-to-role mappings. The management API token is returned as '*' if set, or null if not configured.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchOktaSso",
+        "operationId": "/api/fetchOktaSso-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Okta SSO configuration retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "clientId": {
+                      "type": "string",
+                      "description": "Okta OIDC application client ID",
+                      "example": "0oa1b2c3d4e5F6G7H890"
+                    },
+                    "oktaDomain": {
+                      "type": "string",
+                      "description": "Okta organization domain URL",
+                      "example": "https://example-corp.okta.com"
+                    },
+                    "authorisationServerId": {
+                      "type": "string",
+                      "description": "Okta Authorization Server ID",
+                      "example": "aus1b2c3d4e5F6G7H890"
+                    },
+                    "redirectUri": {
+                      "type": "string",
+                      "description": "Configured redirect URI",
+                      "example": "https://app.akto.example-corp.com/login/oauth2/code/okta"
+                    },
+                    "oktaGroupToAktoUserRoleMap": {
+                      "type": "object",
+                      "description": "Map of Okta group name to Akto role. Valid Akto roles: ADMIN, MEMBER, DEVELOPER, GUEST, or any custom role name.",
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "example": {
+                        "Security-Admins": "ADMIN",
+                        "Dev-Engineers": "DEVELOPER",
+                        "Auditors": "GUEST"
+                      }
+                    },
+                    "managementApiToken": {
+                      "type": "string",
+                      "description": "Returns '*' if a management API token is stored, null otherwise",
+                      "example": "*"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks ADMIN_ACTIONS permission"
+          },
+          "422": {
+            "description": "Unprocessable — a different SSO type is already active",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "A different SSO Integration already exists."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchOktaGroups": {
+      "description": "Fetch all Okta group names from the Okta Management API for use in role mapping auto-suggest. Requires a management API token to be configured in the Okta SSO settings.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchOktaGroups",
+        "operationId": "/api/fetchOktaGroups-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Okta group names retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "oktaGroupNames": {
+                      "type": "array",
+                      "description": "List of all group names in the Okta organization",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "Security-Admins",
+                        "Dev-Engineers",
+                        "QA-Team",
+                        "Auditors",
+                        "Everyone"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks ADMIN_ACTIONS permission"
+          },
+          "422": {
+            "description": "Unprocessable — Okta SSO not configured, or management API token missing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "Management API token is not configured. Configure it in Edit to fetch Okta groups."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/saveOktaGroupRoleMapping": {
+      "description": "Save or update the Okta group-to-Akto-role mapping. Each Akto role may be assigned to at most one Okta group (one-to-one). Optionally updates the Okta Management API token at the same time.",
+      "post": {
+        "summary": "POST request for endpoint /api/saveOktaGroupRoleMapping",
+        "operationId": "/api/saveOktaGroupRoleMapping-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["oktaGroupToAktoUserRoleMap"],
+                "properties": {
+                  "oktaGroupToAktoUserRoleMap": {
+                    "type": "object",
+                    "description": "Map of Okta group name → Akto role. Valid roles: ADMIN, MEMBER, DEVELOPER, GUEST, or any existing custom role name. Pass an empty object to clear all mappings.",
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "example": {
+                      "Security-Admins": "ADMIN",
+                      "Dev-Engineers": "DEVELOPER",
+                      "Auditors": "GUEST"
+                    }
+                  },
+                  "managementApiToken": {
+                    "type": "string",
+                    "description": "Optional — update the stored Okta Management API token. Pass empty string to remove it. Pass '*' or a value containing '***' to leave the existing token unchanged.",
+                    "example": "[REDACTED_OKTA_MANAGEMENT_API_TOKEN]"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Group role mapping saved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "managementApiToken": {
+                      "type": "string",
+                      "description": "Returns '*' if a management API token is now stored, null otherwise",
+                      "example": "*"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks ADMIN_ACTIONS permission"
+          },
+          "422": {
+            "description": "Unprocessable — invalid role value or duplicate role assignment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "One-to-one mapping required: each Akto role can be assigned to only one Okta group. Role ADMIN is mapped more than once."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/addSAMLSso": {
+      "description": "Add a SAML 2.0 SSO integration. Supports Azure AD (configType: AZURE) and Google SAML (configType: GOOGLE_SAML). Fails if another SSO integration is already active.",
+      "post": {
+        "summary": "POST request for endpoint /api/addSAMLSso",
+        "operationId": "/api/addSAMLSso-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["x509Certificate", "ssoEntityId", "loginUrl", "acsUrl", "applicationIdentifier", "configType"],
+                "properties": {
+                  "configType": {
+                    "type": "string",
+                    "description": "SAML provider type. Use AZURE for Azure AD / Microsoft Entra ID, or GOOGLE_SAML for Google Workspace SAML.",
+                    "enum": ["AZURE", "GOOGLE_SAML"],
+                    "example": "AZURE"
+                  },
+                  "x509Certificate": {
+                    "type": "string",
+                    "description": "Base64-encoded X.509 public certificate from the identity provider's SAML metadata",
+                    "example": "[REDACTED_X509_CERTIFICATE_BASE64]"
+                  },
+                  "ssoEntityId": {
+                    "type": "string",
+                    "description": "SAML Entity ID / Issuer URI of the identity provider",
+                    "example": "https://sts.windows.net/a1b2c3d4-e5f6-7890-abcd-ef1234567890/"
+                  },
+                  "loginUrl": {
+                    "type": "string",
+                    "description": "SAML SSO login URL provided by the identity provider",
+                    "example": "https://login.microsoftonline.com/a1b2c3d4-e5f6-7890-abcd-ef1234567890/saml2"
+                  },
+                  "acsUrl": {
+                    "type": "string",
+                    "description": "Assertion Consumer Service URL — the Akto callback endpoint that receives the SAML response",
+                    "example": "https://app.akto.example-corp.com/api/saml/callback"
+                  },
+                  "applicationIdentifier": {
+                    "type": "string",
+                    "description": "Application / Audience URI registered in the identity provider for this Akto instance",
+                    "example": "https://app.akto.example-corp.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SAML SSO integration added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks ADMIN_ACTIONS permission"
+          },
+          "422": {
+            "description": "Unprocessable — another SSO integration already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "A SSO Integration already exists."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/deleteSamlSso": {
+      "description": "Delete the SAML SSO integration for the specified provider type and revoke all user refresh tokens",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteSamlSso",
+        "operationId": "/api/deleteSamlSso-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["configType"],
+                "properties": {
+                  "configType": {
+                    "type": "string",
+                    "description": "SAML provider type to delete",
+                    "enum": ["AZURE", "GOOGLE_SAML"],
+                    "example": "AZURE"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SAML SSO integration deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks ADMIN_ACTIONS permission"
+          }
+        }
+      }
+    },
+    "/api/fetchSAMLSso": {
+      "description": "Fetch the current SAML SSO configuration (login URL and entity ID) for the specified provider type",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchSAMLSso",
+        "operationId": "/api/fetchSAMLSso-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["configType"],
+                "properties": {
+                  "configType": {
+                    "type": "string",
+                    "description": "SAML provider type to fetch",
+                    "enum": ["AZURE", "GOOGLE_SAML"],
+                    "example": "AZURE"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SAML SSO configuration retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "loginUrl": {
+                      "type": "string",
+                      "description": "Identity provider SAML SSO login URL",
+                      "example": "https://login.microsoftonline.com/a1b2c3d4-e5f6-7890-abcd-ef1234567890/saml2"
+                    },
+                    "ssoEntityId": {
+                      "type": "string",
+                      "description": "Identity provider SAML Entity ID / Issuer URI",
+                      "example": "https://sts.windows.net/a1b2c3d4-e5f6-7890-abcd-ef1234567890/"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — caller lacks ADMIN_ACTIONS / READ permission"
+          },
+          "422": {
+            "description": "Unprocessable — a different SSO type is already active",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "A different SSO Integration already exists."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
