@@ -104,6 +104,7 @@ HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps
 for f in \
   cortex_common.py \
   akto_machine_id.py \
+  akto_heartbeat.py \
   akto-validate-prompt.py \
   akto-validate-prompt-wrapper.sh \
   akto-validate-pre-tool.py \
@@ -123,10 +124,42 @@ chmod +x ./*.sh
 {% endstep %}
 
 {% step %}
+**Configure URLs and API token (CRITICAL)**
+
+The wrapper scripts ship with placeholders that must be replaced before hooks can authenticate to Akto (ingestion + cyborg heartbeat), unless you override everything via `.env` in the next step.
+
+| Placeholder | Purpose |
+| --- | --- |
+| `{{AKTO_DATA_INGESTION_URL}}` | Akto data ingestion base URL (no trailing slash) |
+| `{{AKTO_API_TOKEN}}` | API token sent as `Authorization` on ingestion `POST` and on cyborg heartbeat |
+| `{{DATABASE_ABSTRACTOR_SERVICE_URL}}` | Cyborg / database-abstractor base URL for heartbeat; for Akto SaaS replace with `https://cyborg.akto.io` |
+
+**macOS / Linux (`sed`):**
+
+```bash
+cd ~/.snowflake/cortex/akto-hooks
+
+AKTO_URL="https://your-akto-ingestion.example.com"
+AKTO_TOKEN="your-akto-api-token"
+CYBORG_URL="https://cyborg.akto.io"
+
+sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ./*-wrapper.sh
+sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_TOKEN}|g" ./*-wrapper.sh
+sed -i.bak "s|{{DATABASE_ABSTRACTOR_SERVICE_URL}}|${CYBORG_URL}|g" ./*-wrapper.sh
+
+grep -E "AKTO_DATA_INGESTION_URL|AKTO_API_TOKEN|DATABASE_ABSTRACTOR" ./*-wrapper.sh
+```
+
+{% hint style="info" %}
+If you use a `.env` file in the same directory, variables set there **override** these exports when the wrapper runs (the wrapper sources `.env` after the `export` lines).
+{% endhint %}
+{% endstep %}
+
+{% step %}
 **Configure Akto environment file**
 
 {% hint style="warning" %}
-Create `~/.snowflake/cortex/akto-hooks/.env` (do not commit it). Set `AKTO_DATA_INGESTION_URL` to your Akto ingestion host with **no** trailing slash. You can start from the downloaded `.env.example`.
+Create `~/.snowflake/cortex/akto-hooks/.env` (do not commit it) if you prefer env-based config instead of `sed` on wrappers. Set `AKTO_DATA_INGESTION_URL` with **no** trailing slash, and `AKTO_API_TOKEN` as provided by your Akto deployment. You can start from the downloaded `.env.example`.
 {% endhint %}
 
 Minimal example:
@@ -134,6 +167,8 @@ Minimal example:
 ```bash
 cat > ~/.snowflake/cortex/akto-hooks/.env << 'EOF'
 AKTO_DATA_INGESTION_URL=https://your-akto-ingestion.example.com
+AKTO_API_TOKEN=your-akto-api-token
+DATABASE_ABSTRACTOR_SERVICE_URL=https://cyborg.akto.io
 MODE=atlas
 AKTO_SYNC_MODE=true
 AKTO_TIMEOUT=5
@@ -224,6 +259,8 @@ Run a short Cortex Code CLI session and confirm new lines in the Akto logs and d
 | Variable | Description |
 |----------|-------------|
 | `AKTO_DATA_INGESTION_URL` | **Required.** Akto ingestion base URL (no trailing `/`). |
+| `AKTO_API_TOKEN` | **Required for authenticated SaaS.** Sent as `Authorization` on ingestion and cyborg heartbeat (same as Copilot hooks). `AKTO_TOKEN` is accepted as an alias. |
+| `DATABASE_ABSTRACTOR_SERVICE_URL` | Cyborg base URL for heartbeat; defaults to `https://cyborg.akto.io` when unset or still a `{{...}}` placeholder. |
 | `MODE` | `atlas` (employee endpoints) or `argus`. |
 | `DEVICE_ID` | Optional Atlas device id; defaults to generated machine id. |
 | `AKTO_SYNC_MODE` | `true` to enforce guardrails on `PreToolUse`; `false` observes only where applicable. |
@@ -233,7 +270,7 @@ Run a short Cortex Code CLI session and confirm new lines in the Akto logs and d
 | `LOG_DIR` | Log directory; defaults under `~/.snowflake/cortex/akto/logs`. |
 | `LOG_LEVEL` | `INFO`, `DEBUG`, etc. |
 
-Wrappers `source` `~/.snowflake/cortex/akto-hooks/.env` automatically when present.
+Wrappers export `{{AKTO_DATA_INGESTION_URL}}`, `{{AKTO_API_TOKEN}}`, and `{{DATABASE_ABSTRACTOR_SERVICE_URL}}` (replace with `sed` or override via `.env`). They `source` `~/.snowflake/cortex/akto-hooks/.env` when present **after** those exports so `.env` wins.
 
 ### Synthetic traffic (Atlas)
 
@@ -245,7 +282,8 @@ In Atlas mode, hooks tag traffic with host pattern `https://{DEVICE_ID}.ai-agent
 |-------|----------------|
 | Hooks never run | JSON path in `command` must be absolute; merge did not overwrite unrelated keys incorrectly. |
 | Python errors | `python3` on `PATH`; all `.py` files live in the same directory as wrappers (`cortex_common` import). |
-| No data in Akto | `AKTO_DATA_INGESTION_URL`, network egress, and Akto account mapping for your org. |
+| No data in Akto | `AKTO_DATA_INGESTION_URL`, `AKTO_API_TOKEN`, network egress, and Akto account mapping for your org. |
+| `401` / auth errors on ingestion | Set `AKTO_API_TOKEN` (or replace `{{AKTO_API_TOKEN}}` in wrappers). Include `Bearer ` prefix in the token value if your deployment expects it. |
 | Permission errors on `~/.snowflake` | Ensure home directory permissions; logs may fall back to the system temp directory. |
 
 ## Related
