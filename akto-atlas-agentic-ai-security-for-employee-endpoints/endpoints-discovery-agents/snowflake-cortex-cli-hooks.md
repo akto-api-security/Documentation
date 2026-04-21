@@ -18,30 +18,30 @@ Cortex Code CLI loads hook definitions from `~/.snowflake/cortex/hooks.json` or 
 sequenceDiagram
     autonumber
     participant User
-    participant Cortex as Cortex Code CLI
-    participant PromptHook as UserPromptSubmit
-    participant PreHook as PreToolUse
-    participant PostHook as PostToolUse
+    participant Cortex as Cortex CLI
+    participant PromptHook as User prompt hook
+    participant PreHook as PreTool hook
+    participant PostHook as PostTool hook
     participant Akto as Akto ingestion
 
     User->>Cortex: Submit prompt
-    Cortex->>PromptHook: JSON on stdin
-    PromptHook->>Akto: POST /api/http-proxy?guardrails=true
-    PromptHook-->>Cortex: stdout JSON (exit 0)
-    Note over PromptHook: Monitoring / systemMessage; cannot block prompt in Cortex
+    Cortex->>PromptHook: Hook JSON on stdin
+    PromptHook->>Akto: Guardrails request
+    PromptHook-->>Cortex: Stdout JSON exit 0
+    Note over PromptHook: Monitoring only, cannot block prompt
 
     Cortex->>PreHook: Tool request JSON
-    PreHook->>Akto: POST /api/http-proxy?guardrails=true
+    PreHook->>Akto: Guardrails request
     alt Allowed
-        PreHook-->>Cortex: allow (exit 0)
+        PreHook-->>Cortex: Allow exit 0
     else Denied
-        PreHook-->>Cortex: decision block (exit 2)
-        PreHook->>Akto: ingest blocked attempt
+        PreHook-->>Cortex: Block exit 2
+        PreHook->>Akto: Ingest blocked attempt
     end
 
     Cortex->>PostHook: Tool result JSON
-    PostHook->>Akto: POST /api/http-proxy?ingest_data=true
-    PostHook-->>Cortex: exit 0
+    PostHook->>Akto: Ingest telemetry
+    PostHook-->>Cortex: Exit 0
 ```
 
 **Hook points (Akto package):**
