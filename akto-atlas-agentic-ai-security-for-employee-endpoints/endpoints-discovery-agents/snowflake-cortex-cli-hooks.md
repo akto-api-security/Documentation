@@ -99,7 +99,7 @@ cd ~/.snowflake/cortex/akto-hooks
 **Download hook scripts**
 
 ```bash
-HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/snowflake-cortex-cli-hooks"
+HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/feature/snowflake-cortex-atlas-integration/apps/mcp-endpoint-shield/snowflake-cortex-cli-hooks"
 
 for f in \
   cortex_common.py \
