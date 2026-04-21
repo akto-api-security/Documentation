@@ -9,6 +9,7 @@
 ## migration
 
 * [Agentic AI Documentation](migration/agentic-ai-documentation.md)
+* [Snowflake Cortex Code CLI hooks (Atlas)](migration/snowflake-cortex-cli-hooks-atlas.md)
 
 ## Getting Started
 

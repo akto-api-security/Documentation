@@ -26,6 +26,7 @@ The following documentation sections have moved:
 * [MCP Endpoint Shield](https://ai-security-docs.akto.io/akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield)
 * [MCP Endpoint Shield - Jamf MDM Deployment](https://ai-security-docs.akto.io/akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/jamf-mdm-deployment)
 * [MCP Endpoint Shield via Cursor Hooks](https://ai-security-docs.akto.io/akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/cursor-hooks)
+* [Snowflake Cortex Code CLI hooks (Atlas)](https://ai-security-docs.akto.io/akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/snowflake-cortex-cli-hooks) — [source in Documentation repo](./snowflake-cortex-cli-hooks-atlas.md)
 
 ### AI Agent Security
 
