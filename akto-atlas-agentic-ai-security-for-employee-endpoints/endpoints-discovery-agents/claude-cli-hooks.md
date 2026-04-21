@@ -61,7 +61,7 @@ sequenceDiagram
 
 ## Hook Points
 
-Akto covers **26 hook points** across the full Claude CLI session lifecycle, grouped into two categories:
+Akto covers **25 hook points** across the full Claude CLI session lifecycle, grouped into two categories:
 
 ### Blocking Hooks
 
@@ -69,16 +69,15 @@ These hooks can actively block or deny operations based on guardrails policy:
 
 | Hook Event | Script | Blocks Via | Description |
 |---|---|---|---|
-| `UserPromptSubmit` | `akto-validate-prompt.py` | Non-zero exit / `decision: block` | Validates user prompts before sending to Claude API |
-| `PreToolUse` | `akto-validate-mcp-request.py` | Non-zero exit / `decision: block` | Validates MCP tool inputs before execution |
-| `PermissionRequest` | `akto-permission-request.py` | `decision.behavior: deny` | Validates permission requests and can deny with a custom message |
-| `ConfigChange` | `akto-config-change.py` | `decision: block` | Validates configuration changes against guardrails policy |
-| `Elicitation` | `akto-elicitation.py` | `action: decline` | Validates MCP elicitation requests (form prompts from MCP servers) |
-| `ElicitationResult` | `akto-elicitation-result.py` | `action: decline` | Validates MCP elicitation results submitted by the user |
-| `SubagentStop` | `akto-sub-agent-stop.py` | `decision: block` / `continue: false` | Validates subagent completion; can block result or stop the main session |
-| `TaskCreated` | `akto-task-created.py` | `continue: false` | Validates task creation against guardrails policy |
-| `TaskCompleted` | `akto-task-completed.py` | `continue: false` | Validates task completion against guardrails policy |
-| `WorktreeCreate` | `akto-worktree-create.py` | Non-zero exit | Validates git worktree creation requests |
+| `UserPromptSubmit` | `akto-validate-prompt-wrapper.sh` → `akto-validate-prompt.py` | Non-zero exit / `decision: block` | Validates user prompts before sending to Claude API |
+| `PreToolUse` | `akto-validate-mcp-request-wrapper.sh` → `akto-validate-mcp-request.py` | Non-zero exit / `decision: block` | Validates MCP tool inputs before execution |
+| `PermissionRequest` | `akto-hook-wrapper.sh` → `akto-hooks.py PermissionRequest` | `decision.behavior: deny` | Validates permission requests and can deny with a custom message |
+| `ConfigChange` | `akto-hook-wrapper.sh` → `akto-hooks.py ConfigChange` | `decision: block` | Validates configuration changes against guardrails policy |
+| `Elicitation` | `akto-hook-wrapper.sh` → `akto-hooks.py Elicitation` | `action: decline` | Validates MCP elicitation requests (form prompts from MCP servers) |
+| `ElicitationResult` | `akto-hook-wrapper.sh` → `akto-hooks.py ElicitationResult` | `action: decline` | Validates MCP elicitation results submitted by the user |
+| `SubagentStop` | `akto-hook-wrapper.sh` → `akto-sub-agent-stop.py` | `decision: block` / `continue: false` | Validates subagent completion; can block result or stop the main session |
+| `TaskCreated` | `akto-hook-wrapper.sh` → `akto-hooks.py TaskCreated` | `continue: false` | Validates task creation against guardrails policy |
+| `TaskCompleted` | `akto-hook-wrapper.sh` → `akto-hooks.py TaskCompleted` | `continue: false` | Validates task completion against guardrails policy |
 
 ### Observability Hooks
 
@@ -86,86 +85,64 @@ These hooks report events to Akto for monitoring but cannot block:
 
 | Hook Event | Script | Description |
 |---|---|---|
-| `SessionStart` | `akto-session-start.py` | Logs session initialization metadata |
-| `SessionEnd` | `akto-session-end.py` | Logs session termination metadata |
-| `InstructionsLoaded` | `akto-instructions-loaded.py` | Logs instruction file loads including file content, for compliance tracking |
-| `PostToolUse` | `akto-validate-mcp-response.py` | Ingests MCP tool input/output data |
-| `PostToolUseFailure` | `akto-post-tool-use-failure.py` | Logs tool execution failures (tool name, input, error) |
-| `Stop` | `akto-validate-response.py` | Ingests full prompt/response conversation data |
-| `StopFailure` | `akto-stop-failure.py` | Logs events when Claude fails to stop gracefully |
-| `SubagentStart` | `akto-sub-agent-start.py` | Logs subagent creation and extracts the triggering user prompt from transcript |
-| `TeammateIdle` | `akto-teammate-idle.py` | Logs team collaboration events when a teammate becomes idle |
-| `Notification` | `akto-notification.py` | Logs notifications emitted by Claude CLI |
-| `CwdChanged` | `akto-cwd-changed.py` | Logs working directory change events |
-| `FileChanged` | `akto-file-changed.py` | Logs file change events within the session |
-| `PermissionDenied` | `akto-permission-denied.py` | Logs events when Claude CLI denies a permission request |
-| `PreCompact` | `akto-pre-compact.py` | Logs pre-compaction events before transcript compression |
-| `PostCompact` | `akto-post-compact.py` | Logs post-compaction events after transcript is summarized |
-| `WorktreeRemove` | `akto-worktree-remove.py` | Logs git worktree deletion events |
+| `SessionStart` | `akto-hook-wrapper.sh` → `akto-hooks.py SessionStart` | Logs session initialization metadata |
+| `SessionEnd` | `akto-hook-wrapper.sh` → `akto-hooks.py SessionEnd` | Logs session termination metadata |
+| `InstructionsLoaded` | `akto-hook-wrapper.sh` → `akto-instructions-loaded.py` | Logs instruction file loads including file content, for compliance tracking |
+| `PostToolUse` | `akto-validate-mcp-response-wrapper.sh` → `akto-validate-mcp-response.py` | Ingests MCP tool input/output data |
+| `PostToolUseFailure` | `akto-hook-wrapper.sh` → `akto-hooks.py PostToolUseFailure` | Logs tool execution failures (tool name, input, error) |
+| `Stop` | `akto-validate-response-wrapper.sh` → `akto-validate-response.py` | Ingests full prompt/response conversation data |
+| `StopFailure` | `akto-hook-wrapper.sh` → `akto-hooks.py StopFailure` | Logs events when Claude fails to stop gracefully |
+| `SubagentStart` | `akto-hook-wrapper.sh` → `akto-sub-agent-start.py` | Logs subagent creation and extracts the triggering user prompt from transcript |
+| `TeammateIdle` | `akto-hook-wrapper.sh` → `akto-hooks.py TeammateIdle` | Logs team collaboration events when a teammate becomes idle |
+| `Notification` | `akto-hook-wrapper.sh` → `akto-hooks.py Notification` | Logs notifications emitted by Claude CLI |
+| `CwdChanged` | `akto-hook-wrapper.sh` → `akto-hooks.py CwdChanged` | Logs working directory change events |
+| `FileChanged` | `akto-hook-wrapper.sh` → `akto-hooks.py FileChanged` | Logs file change events within the session |
+| `PermissionDenied` | `akto-hook-wrapper.sh` → `akto-hooks.py PermissionDenied` | Logs events when Claude CLI denies a permission request |
+| `PreCompact` | `akto-hook-wrapper.sh` → `akto-hooks.py PreCompact` | Logs pre-compaction events before transcript compression |
+| `PostCompact` | `akto-hook-wrapper.sh` → `akto-hooks.py PostCompact` | Logs post-compaction events after transcript is summarized |
+| `WorktreeRemove` | `akto-hook-wrapper.sh` → `akto-hooks.py WorktreeRemove` | Logs git worktree deletion events |
 
 ## File Structure
 
 ```
 ~/.claude/
 ├── hooks/
-│   ├── akto-hook-wrapper.sh                   # Generic wrapper for all hooks
+│   ├── akto-hook-wrapper.sh                   # Generic wrapper — sets env vars, invokes target Python script
+│   ├── akto-hooks.py                          # Single dispatcher for all misc hooks (SessionStart, PermissionRequest, ConfigChange, etc.)
 │   │
-│   ├── # Prompt & Response (Blocking)
+│   ├── # Prompt & Response (dedicated wrappers)
 │   ├── akto-validate-prompt-wrapper.sh        # Prompt validation wrapper
 │   ├── akto-validate-prompt.py                # Prompt validation logic
 │   ├── akto-validate-response-wrapper.sh      # Response validation wrapper
 │   ├── akto-validate-response.py              # Response ingestion logic
 │   │
-│   ├── # MCP Tool Validation (Blocking)
+│   ├── # MCP Tool Validation (dedicated wrappers)
 │   ├── akto-validate-mcp-request-wrapper.sh   # MCP request validation wrapper
 │   ├── akto-validate-mcp-request.py           # MCP request validation logic
 │   ├── akto-validate-mcp-response-wrapper.sh  # MCP response wrapper
 │   ├── akto-validate-mcp-response.py          # MCP response ingestion logic
 │   │
-│   ├── # Blocking Hooks (via generic wrapper)
-│   ├── akto-config-change.py
-│   ├── akto-elicitation.py
-│   ├── akto-elicitation-result.py
-│   ├── akto-permission-request.py
-│   ├── akto-sub-agent-stop.py
-│   ├── akto-task-created.py
-│   ├── akto-task-completed.py
-│   ├── akto-worktree-create.py
-│   │
-│   ├── # Observability Hooks (via generic wrapper)
-│   ├── akto-session-start.py
-│   ├── akto-session-end.py
-│   ├── akto-instructions-loaded.py
-│   ├── akto-post-tool-use-failure.py
-│   ├── akto-stop-failure.py
-│   ├── akto-sub-agent-start.py
-│   ├── akto-teammate-idle.py
-│   ├── akto-notification.py
-│   ├── akto-cwd-changed.py
-│   ├── akto-file-changed.py
-│   ├── akto-permission-denied.py
-│   ├── akto-pre-compact.py
-│   ├── akto-post-compact.py
-│   ├── akto-worktree-remove.py
+│   ├── # Standalone hooks (invoked directly via akto-hook-wrapper.sh)
+│   ├── akto-instructions-loaded.py            # InstructionsLoaded
+│   ├── akto-sub-agent-start.py                # SubagentStart
+│   ├── akto-sub-agent-stop.py                 # SubagentStop
 │   │
 │   ├── akto_ingestion_utility.py              # Shared ingestion utility (from shared/)
 │   └── akto_machine_id.py                     # Device ID utility (from shared/)
 ├── akto/
-│   └── logs/
-│       ├── validate-prompt.log
-│       ├── validate-response.log
-│       └── config.log                         # (and per-hook log files)
+│   └── logs/                                  # Per-hook log files
 └── settings.json                              # Hook configuration
 ```
 
 **Key Files:**
 
-* **`akto-hook-wrapper.sh`**: Generic wrapper used by most hooks — sets environment variables and invokes the target Python script
-* **Specific wrapper scripts (`*-wrapper.sh`)**: Used for prompt, response, and MCP hooks that have their own URL/config requirements
-* **Python scripts (`.py`)**: Core validation and ingestion logic for each hook event
-* **`akto_ingestion_utility.py`**: Shared utility for sending data to Akto — sourced from `shared/`, not the hooks folder
-* **`akto_machine_id.py`**: Generates unique device identifiers for Atlas mode — sourced from `shared/`, not the hooks folder
-* **`settings.json`**: Maps all 26 hook events to their respective scripts
+* **`akto-hook-wrapper.sh`**: Generic wrapper — sets environment variables, then invokes the target Python script passed as argument
+* **`akto-hooks.py`**: Single dispatcher for misc hooks — takes hook name as argument (`akto-hooks.py SessionStart`), routes to `akto_ingestion_utility`
+* **Dedicated wrapper scripts (`*-wrapper.sh`)**: Used for prompt, response, and MCP hooks that have their own URL/config
+* **Standalone scripts**: `akto-instructions-loaded.py`, `akto-sub-agent-start.py`, `akto-sub-agent-stop.py` — invoked directly via `akto-hook-wrapper.sh`
+* **`akto_ingestion_utility.py`**: Shared utility for sending data to Akto — sourced from `shared/`
+* **`akto_machine_id.py`**: Generates unique device identifiers for Atlas mode — sourced from `shared/`
+* **`settings.json`**: Maps all 25 hook events to their respective scripts
 
 ## Setup Guide
 
@@ -228,21 +205,15 @@ curl -o ~/.claude/hooks/akto-validate-mcp-response-wrapper.sh \
 curl -o ~/.claude/hooks/akto-validate-mcp-response.py \
   "${HOOKS_BASE}/akto-validate-mcp-response.py"
 
-# Download all other hooks (blocking + observability)
-for hook in \
-  akto-config-change.py akto-cwd-changed.py \
-  akto-elicitation.py akto-elicitation-result.py \
-  akto-file-changed.py akto-instructions-loaded.py \
-  akto-notification.py akto-permission-denied.py \
-  akto-permission-request.py akto-post-compact.py \
-  akto-post-tool-use-failure.py akto-pre-compact.py \
-  akto-session-end.py akto-session-start.py \
-  akto-stop-failure.py akto-sub-agent-start.py \
-  akto-sub-agent-stop.py akto-task-completed.py \
-  akto-task-created.py akto-teammate-idle.py \
-  akto-worktree-create.py akto-worktree-remove.py; do
-  curl -o ~/.claude/hooks/${hook} "${HOOKS_BASE}/${hook}"
-done
+# Download misc hooks dispatcher + standalone hooks
+curl -o ~/.claude/hooks/akto-hooks.py \
+  "${HOOKS_BASE}/akto-hooks.py"
+curl -o ~/.claude/hooks/akto-instructions-loaded.py \
+  "${HOOKS_BASE}/akto-instructions-loaded.py"
+curl -o ~/.claude/hooks/akto-sub-agent-start.py \
+  "${HOOKS_BASE}/akto-sub-agent-start.py"
+curl -o ~/.claude/hooks/akto-sub-agent-stop.py \
+  "${HOOKS_BASE}/akto-sub-agent-stop.py"
 
 # Make executable
 chmod +x ~/.claude/hooks/*.sh
@@ -288,301 +259,17 @@ AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
 {% step %}
 **Configure Hooks**
 
-Create Claude CLI settings configuration with all 26 hook events:
+Merge Akto hooks into your existing `~/.claude/settings.json` (replaces the `hooks` key, preserving all other settings):
 
 ```bash
-cat > ~/.claude/settings.json << 'EOF'
-{
-  "hooks": {
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-session-start.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-session-end.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "InstructionsLoaded": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-instructions-loaded.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-validate-prompt-wrapper.sh",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-validate-mcp-request-wrapper.sh",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "PermissionRequest": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-permission-request.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "PermissionDenied": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-permission-denied.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-validate-mcp-response-wrapper.sh",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "PostToolUseFailure": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-post-tool-use-failure.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-validate-response-wrapper.sh",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "StopFailure": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-stop-failure.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "SubagentStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-sub-agent-start.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "SubagentStop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-sub-agent-stop.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "TaskCreated": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-task-created.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "TaskCompleted": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-task-completed.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "TeammateIdle": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-teammate-idle.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-notification.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "ConfigChange": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-config-change.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "CwdChanged": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-cwd-changed.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "FileChanged": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-file-changed.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "PreCompact": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-pre-compact.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "PostCompact": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-post-compact.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "Elicitation": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-elicitation.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "ElicitationResult": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-elicitation-result.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "WorktreeCreate": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-worktree-create.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "WorktreeRemove": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-hook-wrapper.sh akto-worktree-remove.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ]
-  }
-}
-EOF
+SETTINGS="$HOME/.claude/settings.json"
+
+# Create empty settings.json if it doesn't exist
+[ -f "$SETTINGS" ] || echo '{}' > "$SETTINGS"
+
+# Merge Akto hooks into existing settings.json
+jq -s '.[0] * .[1]' "$SETTINGS" <(curl -s "${HOOKS_BASE}/settings.json") \
+  > /tmp/akto_settings_merged.json && mv /tmp/akto_settings_merged.json "$SETTINGS"
 ```
 {% endstep %}
 
@@ -845,17 +532,9 @@ done
 for hook in \
   akto-validate-prompt.py akto-validate-response.py \
   akto-validate-mcp-request.py akto-validate-mcp-response.py \
-  akto-config-change.py akto-cwd-changed.py \
-  akto-elicitation.py akto-elicitation-result.py \
-  akto-file-changed.py akto-instructions-loaded.py \
-  akto-notification.py akto-permission-denied.py \
-  akto-permission-request.py akto-post-compact.py \
-  akto-post-tool-use-failure.py akto-pre-compact.py \
-  akto-session-end.py akto-session-start.py \
-  akto-stop-failure.py akto-sub-agent-start.py \
-  akto-sub-agent-stop.py akto-task-completed.py \
-  akto-task-created.py akto-teammate-idle.py \
-  akto-worktree-create.py akto-worktree-remove.py; do
+  akto-hooks.py \
+  akto-instructions-loaded.py \
+  akto-sub-agent-start.py akto-sub-agent-stop.py; do
   curl -s "${HOOKS_BASE}/${hook}" -o ~/.claude/hooks/${hook}
 done
 
@@ -875,8 +554,11 @@ MODE=atlas
 EOFCONFIG
 chmod 600 ~/.claude/akto/config
 
-# Download and install settings.json
-curl -s "${HOOKS_BASE}/settings.json" -o ~/.claude/settings.json
+# Merge Akto hooks into existing settings.json (preserves other settings)
+SETTINGS="$HOME/.claude/settings.json"
+[ -f "$SETTINGS" ] || echo '{}' > "$SETTINGS"
+jq -s '.[0] * .[1]' "$SETTINGS" <(curl -s "${HOOKS_BASE}/settings.json") \
+  > /tmp/akto_settings_merged.json && mv /tmp/akto_settings_merged.json "$SETTINGS"
 
 # Install dependencies
 pip3 install requests
@@ -907,7 +589,7 @@ sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.claude/hooks/*.sh
 # 4. Make executable
 chmod +x ~/.claude/hooks/*.sh
 
-# 5. Install settings.json (see step 4 above)
+# 5. Merge Akto hooks into settings.json (see step 4 above)
 
 # 6. Install dependencies
 pip3 install requests
