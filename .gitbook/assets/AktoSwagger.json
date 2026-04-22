@@ -8788,6 +8788,816 @@
           "buttonText": { "type": "string", "description": "Text of the element that linked to this URL.", "example": "View Products" }
         }
       }
+    },
+    "/api/fetchCodeAnalysisApiInfos": {
+      "description": "Fetch code-analysis API info for a given traffic collection. Returns the matched CodeAnalysisCollection record and a map of all endpoints discovered from source code, keyed by 'METHOD /path'.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchCodeAnalysisApiInfos",
+        "operationId": "/api/fetchCodeAnalysisApiInfos-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "example": 1111111
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Code analysis API info retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "codeAnalysisCollectionInfo": {
+                      "type": "object",
+                      "properties": {
+                        "codeAnalysisCollection": {
+                          "type": "object",
+                          "nullable": true,
+                          "description": "Null when no source-code scan has been linked to this collection",
+                          "properties": {
+                            "_id": {
+                              "type": "string",
+                              "example": "64a1f2e3b5c7d8e9f0a1b2c3"
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "payments-service"
+                            },
+                            "projectDir": {
+                              "type": "string",
+                              "example": "src/main/java/com/example/payments"
+                            },
+                            "apiCollectionId": {
+                              "type": "integer",
+                              "example": 1111111
+                            }
+                          }
+                        },
+                        "codeAnalysisApisMap": {
+                          "type": "object",
+                          "description": "Map keyed by 'METHOD /endpoint'. Each value is a CodeAnalysisApiInfo document.",
+                          "additionalProperties": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "object",
+                                "properties": {
+                                  "codeAnalysisCollectionId": {
+                                    "type": "string",
+                                    "example": "64a1f2e3b5c7d8e9f0a1b2c3"
+                                  },
+                                  "method": {
+                                    "type": "string",
+                                    "example": "GET"
+                                  },
+                                  "endpoint": {
+                                    "type": "string",
+                                    "example": "/api/payments/transactions"
+                                  }
+                                }
+                              },
+                              "location": {
+                                "type": "object",
+                                "properties": {
+                                  "filePath": {
+                                    "type": "string",
+                                    "example": "src/main/java/com/example/payments/TransactionController.java"
+                                  },
+                                  "fileName": {
+                                    "type": "string",
+                                    "example": "TransactionController.java"
+                                  },
+                                  "fileLink": {
+                                    "type": "string",
+                                    "example": "https://github.com/example-org/payments-service/blob/main/src/main/java/com/example/payments/TransactionController.java#L58"
+                                  },
+                                  "lineNo": {
+                                    "type": "integer",
+                                    "example": 58
+                                  }
+                                }
+                              },
+                              "discoveredTs": {
+                                "type": "integer",
+                                "description": "Unix epoch seconds when the endpoint was first discovered in source code",
+                                "example": 1672531200
+                              },
+                              "lastSeenTs": {
+                                "type": "integer",
+                                "description": "Unix epoch seconds of the most recent scan that found this endpoint",
+                                "example": 1675209600
+                              }
+                            }
+                          },
+                          "example": {
+                            "GET /api/payments/transactions": {
+                              "_id": {
+                                "codeAnalysisCollectionId": "64a1f2e3b5c7d8e9f0a1b2c3",
+                                "method": "GET",
+                                "endpoint": "/api/payments/transactions"
+                              },
+                              "location": {
+                                "filePath": "src/main/java/com/example/payments/TransactionController.java",
+                                "fileName": "TransactionController.java",
+                                "fileLink": "https://github.com/example-org/payments-service/blob/main/src/main/java/com/example/payments/TransactionController.java#L58",
+                                "lineNo": 58
+                              },
+                              "discoveredTs": 1672531200,
+                              "lastSeenTs": 1675209600
+                            },
+                            "POST /api/payments/refund": {
+                              "_id": {
+                                "codeAnalysisCollectionId": "64a1f2e3b5c7d8e9f0a1b2c3",
+                                "method": "POST",
+                                "endpoint": "/api/payments/refund"
+                              },
+                              "location": {
+                                "filePath": "src/main/java/com/example/payments/RefundController.java",
+                                "fileName": "RefundController.java",
+                                "fileLink": "https://github.com/example-org/payments-service/blob/main/src/main/java/com/example/payments/RefundController.java#L34",
+                                "lineNo": 34
+                              },
+                              "discoveredTs": 1672531200,
+                              "lastSeenTs": 1675209600
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/addCodeAnalysisRepo": {
+      "description": "Add one or more source-code repositories for code-analysis scanning. Uses upsert — re-adding an existing repo is a no-op and will not reset its lastRun or scheduleTime.",
+      "post": {
+        "summary": "POST request for endpoint /api/addCodeAnalysisRepo",
+        "operationId": "/api/addCodeAnalysisRepo-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["codeAnalysisRepos"],
+                "properties": {
+                  "codeAnalysisRepos": {
+                    "type": "array",
+                    "description": "List of repositories to register. Must not be empty.",
+                    "items": {
+                      "type": "object",
+                      "required": ["projectName", "repoName", "sourceCodeType"],
+                      "properties": {
+                        "projectName": {
+                          "type": "string",
+                          "example": "example-org"
+                        },
+                        "repoName": {
+                          "type": "string",
+                          "example": "payments-service"
+                        },
+                        "sourceCodeType": {
+                          "type": "string",
+                          "enum": ["GITHUB", "BITBUCKET"],
+                          "example": "GITHUB"
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "projectName": "example-org",
+                        "repoName": "payments-service",
+                        "sourceCodeType": "GITHUB"
+                      },
+                      {
+                        "projectName": "example-org",
+                        "repoName": "user-service",
+                        "sourceCodeType": "GITHUB"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Repositories added (or already existed) successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error — codeAnalysisRepos list was null or empty",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "example": ["Can't add empty repo"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/deleteCodeAnalysisRepo": {
+      "description": "Delete a source-code repository registration. Removes all documents matching the given projectName and repoName combination. Does not delete the associated CodeAnalysisCollection or its API info.",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteCodeAnalysisRepo",
+        "operationId": "/api/deleteCodeAnalysisRepo-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["codeAnalysisRepo"],
+                "properties": {
+                  "codeAnalysisRepo": {
+                    "type": "object",
+                    "required": ["repoName", "projectName"],
+                    "properties": {
+                      "repoName": {
+                        "type": "string",
+                        "example": "payments-service"
+                      },
+                      "projectName": {
+                        "type": "string",
+                        "example": "example-org"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Repository deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error — codeAnalysisRepo was null",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "example": ["Can't delete null repo"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchCodeAnalysisRepos": {
+      "description": "Fetch all registered source-code repositories, optionally filtered by source-code type. Defaults to BITBUCKET (includes repos where sourceCodeType is absent for backward compatibility).",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchCodeAnalysisRepos",
+        "operationId": "/api/fetchCodeAnalysisRepos-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sourceCodeType": {
+                    "type": "string",
+                    "enum": ["GITHUB", "BITBUCKET"],
+                    "description": "Filter by SCM provider. Omit or set to BITBUCKET to also match legacy repos without a type field.",
+                    "example": "GITHUB"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Repositories fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "codeAnalysisRepos": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "object",
+                            "description": "MongoDB ObjectId of the repo document"
+                          },
+                          "hexId": {
+                            "type": "string",
+                            "description": "Hex-string representation of the ObjectId",
+                            "example": "64a1f2e3b5c7d8e9f0a1b2c4"
+                          },
+                          "projectName": {
+                            "type": "string",
+                            "example": "example-org"
+                          },
+                          "repoName": {
+                            "type": "string",
+                            "example": "payments-service"
+                          },
+                          "sourceCodeType": {
+                            "type": "string",
+                            "enum": ["GITHUB", "BITBUCKET"],
+                            "example": "GITHUB"
+                          },
+                          "lastRun": {
+                            "type": "integer",
+                            "description": "Unix epoch seconds of the last completed scan. 0 if never run.",
+                            "example": 1675123200
+                          },
+                          "scheduleTime": {
+                            "type": "integer",
+                            "description": "Unix epoch seconds when the next scan is scheduled",
+                            "example": 1675209600
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "hexId": "64a1f2e3b5c7d8e9f0a1b2c4",
+                          "projectName": "example-org",
+                          "repoName": "payments-service",
+                          "sourceCodeType": "GITHUB",
+                          "lastRun": 1675123200,
+                          "scheduleTime": 1675209600
+                        },
+                        {
+                          "hexId": "64a1f2e3b5c7d8e9f0a1b2c5",
+                          "projectName": "example-org",
+                          "repoName": "user-service",
+                          "sourceCodeType": "GITHUB",
+                          "lastRun": 1675036800,
+                          "scheduleTime": 1675209600
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/runCodeAnalysisRepo": {
+      "description": "Trigger an immediate scan for one or more registered repositories by setting their scheduleTime to now. Only updates repos that already exist (upsert:false).",
+      "post": {
+        "summary": "POST request for endpoint /api/runCodeAnalysisRepo",
+        "operationId": "/api/runCodeAnalysisRepo-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["codeAnalysisRepos"],
+                "properties": {
+                  "codeAnalysisRepos": {
+                    "type": "array",
+                    "description": "List of repos to trigger. Only repoName and projectName are required; other fields are ignored.",
+                    "items": {
+                      "type": "object",
+                      "required": ["repoName", "projectName"],
+                      "properties": {
+                        "repoName": {
+                          "type": "string",
+                          "example": "payments-service"
+                        },
+                        "projectName": {
+                          "type": "string",
+                          "example": "example-org"
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "repoName": "payments-service",
+                        "projectName": "example-org"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Scan triggered successfully — scheduleTime updated to current timestamp",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error — codeAnalysisRepos list was null or empty",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "example": ["Can't run empty repo"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getSourceCodeCollectionsForDirectories": {
+      "description": "Given a backend directory path prefix, return all CodeAnalysisCollections that have at least one API endpoint whose source file lives under that directory. Returns endpoint counts per collection to help the caller decide which collections to load fully.",
+      "post": {
+        "summary": "POST request for endpoint /api/getSourceCodeCollectionsForDirectories",
+        "operationId": "/api/getSourceCodeCollectionsForDirectories-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["chosenBackendDirectory"],
+                "properties": {
+                  "chosenBackendDirectory": {
+                    "type": "string",
+                    "description": "Directory path prefix used as a regex anchor (^prefix.*) to filter CodeAnalysisApiInfo by location.filePath",
+                    "example": "src/main/java/com/example/payments"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Matching collections retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "codeAnalysisCollectionIdList": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "Hex ObjectId of the CodeAnalysisCollection",
+                            "example": "64a1f2e3b5c7d8e9f0a1b2c3"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "Collection name (matches the corresponding API collection name)",
+                            "example": "payments-service"
+                          },
+                          "count": {
+                            "type": "integer",
+                            "description": "Number of endpoints whose file path matches the given directory prefix",
+                            "example": 24
+                          },
+                          "apiCollectionId": {
+                            "type": "integer",
+                            "description": "ID of the linked traffic API collection",
+                            "example": 1111111
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "id": "64a1f2e3b5c7d8e9f0a1b2c3",
+                          "name": "payments-service",
+                          "count": 24,
+                          "apiCollectionId": 1111111
+                        },
+                        {
+                          "id": "64a1f2e3b5c7d8e9f0a1b2d7",
+                          "name": "billing-service",
+                          "count": 11,
+                          "apiCollectionId": 2222222
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getApisForChosenCollectionForSourceCode": {
+      "description": "Fetch request/response schema information for all API endpoints in the specified CodeAnalysisCollections. Returns a flat list of endpoints enriched with their inferred JSON schemas, suitable for displaying source-code-discovered APIs alongside their traffic data.",
+      "post": {
+        "summary": "POST request for endpoint /api/getApisForChosenCollectionForSourceCode",
+        "operationId": "/api/getApisForChosenCollectionForSourceCode-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["chosenCodeAnalysisCollectionIds"],
+                "properties": {
+                  "chosenCodeAnalysisCollectionIds": {
+                    "type": "array",
+                    "description": "Hex ObjectId strings of CodeAnalysisCollections to load. Pass an empty array to return an empty result.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "64a1f2e3b5c7d8e9f0a1b2c3",
+                      "64a1f2e3b5c7d8e9f0a1b2d7"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API endpoints with schemas retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apiInfoKeysWithSchema": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "apiCollectionId": {
+                            "type": "integer",
+                            "description": "ID of the linked traffic API collection",
+                            "example": 1111111
+                          },
+                          "url": {
+                            "type": "string",
+                            "description": "Endpoint URL path, possibly containing Akto template tokens for parameterised segments",
+                            "example": "/api/payments/transactions/INTEGER"
+                          },
+                          "method": {
+                            "type": "string",
+                            "example": "GET"
+                          },
+                          "requestSchema": {
+                            "type": "object",
+                            "description": "Inferred JSON schema for the request body. May be empty if no request body detected.",
+                            "example": {
+                              "type": "object",
+                              "properties": {
+                                "filters": {
+                                  "type": "object"
+                                },
+                                "page": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "responseSchema": {
+                            "type": "object",
+                            "description": "Inferred JSON schema for the response body. May be empty if not yet analysed.",
+                            "example": {
+                              "type": "object",
+                              "properties": {
+                                "transactionId": {
+                                  "type": "string"
+                                },
+                                "amount": {
+                                  "type": "number"
+                                },
+                                "status": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "apiCollectionId": 1111111,
+                          "url": "/api/payments/transactions/INTEGER",
+                          "method": "GET",
+                          "requestSchema": {},
+                          "responseSchema": {
+                            "type": "object",
+                            "properties": {
+                              "transactionId": { "type": "string" },
+                              "amount": { "type": "number" },
+                              "status": { "type": "string" },
+                              "createdAt": { "type": "integer" }
+                            }
+                          }
+                        },
+                        {
+                          "apiCollectionId": 1111111,
+                          "url": "/api/payments/refund",
+                          "method": "POST",
+                          "requestSchema": {
+                            "type": "object",
+                            "properties": {
+                              "transactionId": { "type": "string" },
+                              "reason": { "type": "string" }
+                            }
+                          },
+                          "responseSchema": {
+                            "type": "object",
+                            "properties": {
+                              "refundId": { "type": "string" },
+                              "status": { "type": "string" }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
     }
   }
 }

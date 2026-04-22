@@ -389,6 +389,7 @@
   * [Fetch Data](api-reference/threat-protection/fetch-data.md)
   * [Modify Data](api-reference/threat-protection/modify-data.md)
 * [DAST](api-reference/dast.md)
+* [Code Analysis](api-reference/code-analysis.md)
 
 ***
 
