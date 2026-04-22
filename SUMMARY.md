@@ -388,6 +388,7 @@
 * [Threat Protection](api-reference/threat-protection/README.md)
   * [Fetch Data](api-reference/threat-protection/fetch-data.md)
   * [Modify Data](api-reference/threat-protection/modify-data.md)
+* [DAST](api-reference/dast.md)
 
 ***
 
