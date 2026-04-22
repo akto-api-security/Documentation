@@ -4,6 +4,7 @@
 
 * [#agent-and-mcp](fetch-data.md#agent-and-mcp "mention")
 * [#data-types-and-sample-data](fetch-data.md#data-types-and-sample-data "mention")
+* [#endpoints-and-data-management](fetch-data.md#endpoints-and-data-management "mention")
 
 ## Agent & MCP
 
@@ -276,5 +277,53 @@
 <table data-full-width="true"><thead><tr><th width="50">#</th><th width="430">API</th><th>Description</th></tr></thead><tbody><tr><td>1</td><td><strong>POST /api/fetchAllSampleData</strong></td><td>Fetches all sample Agentic Request/Agentic Response data entries across agentic collections.</td></tr></tbody></table>
 
 {% openapi-operation spec="akto-agentic-security-api" path="/api/fetchAllSampleData" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+## Endpoints & Data Management
+
+<table data-full-width="true"><thead><tr><th width="50">#</th><th width="430">API</th><th>Description</th></tr></thead><tbody><tr><td>1</td><td><strong>POST /api/fetchApiInfosFromSTIs</strong></td><td>Fetch API metadata for all endpoints in a collection from single_type_info, returning both the raw STI list and enriched response object.</td></tr><tr><td>2</td><td><strong>POST /api/fetchApiInfoList</strong></td><td>Fetch all ApiInfo records for a collection with auth types calculated.</td></tr><tr><td>3</td><td><strong>POST /api/getSingleEndpoint</strong></td><td>Fetch the ApiInfo record for a single endpoint identified by URL, method, and collection ID.</td></tr><tr><td>4</td><td><strong>POST /api/findMissingUrls</strong></td><td>Check whether a list of URLs exist in the api_info and single_type_info collections, returning per-URL presence status.</td></tr><tr><td>5</td><td><strong>POST /api/fetchRecentParams</strong></td><td>Fetch recently discovered parameters (new fields added to endpoints) within a time window.</td></tr><tr><td>6</td><td><strong>POST /api/getEndpointsListFromConditions</strong></td><td>Return a paginated list of up to 200 endpoints matching a set of collection conditions, with accurate total count.</td></tr><tr><td>7</td><td><strong>POST /api/getEndpointsFromConditions</strong></td><td>Return only the total count of endpoints matching given conditions — lighter than getEndpointsListFromConditions.</td></tr><tr><td>8</td><td><strong>POST /api/fetchEndpointsBasedOnHostName</strong></td><td>Fetch all endpoint URL/method pairs for a collection identified by its hostname, with pagination support.</td></tr><tr><td>9</td><td><strong>POST /api/fetchEndpointDiscoveryData</strong></td><td>Consolidated endpoint discovery statistics (shadow, sensitive, no-auth, normal counts) for a given time window.</td></tr><tr><td>10</td><td><strong>POST /api/listAllSensitiveFields</strong></td><td>Retrieve all parameters currently flagged as sensitive in the sensitive_param_infos collection.</td></tr><tr><td>11</td><td><strong>POST /api/getAPIInfosForMissingData</strong></td><td>Audit the api_info collection for gaps and return aggregate counts per gap category.</td></tr></tbody></table>
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchApiInfosFromSTIs" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchApiInfoList" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/getSingleEndpoint" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/findMissingUrls" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchRecentParams" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/getEndpointsListFromConditions" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/getEndpointsFromConditions" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchEndpointsBasedOnHostName" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/fetchEndpointDiscoveryData" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/listAllSensitiveFields" method="post" %}
+[OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="akto-agentic-security-api" path="/api/getAPIInfosForMissingData" method="post" %}
 [OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}

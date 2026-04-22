@@ -33338,6 +33338,1999 @@
           }
         }
       }
+    },
+    "/api/fetchApiInfosFromSTIs": {
+      "description": "Fetch API metadata for all endpoints in a given collection by reading from the single_type_info collection. Returns both the raw STI list and the enriched response object (auth types, risk scores, etc.).",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchApiInfosFromSTIs",
+        "operationId": "/api/fetchApiInfosFromSTIs-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "apiCollectionId"
+                ],
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "example": 1111111
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API info fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "list": {
+                      "type": "array",
+                      "description": "Paginated list of endpoint records from single_type_info",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "example": "https://api.example.com/api/users/profile"
+                              },
+                              "method": {
+                                "type": "string",
+                                "example": "GET"
+                              },
+                              "apiCollectionId": {
+                                "type": "integer",
+                                "example": 1111111
+                              }
+                            }
+                          },
+                          "apiType": {
+                            "type": "string",
+                            "example": "REST"
+                          },
+                          "discoveredTimestamp": {
+                            "type": "integer",
+                            "example": 1672531200
+                          },
+                          "lastSeen": {
+                            "type": "integer",
+                            "example": 1675209600
+                          },
+                          "responseCodes": {
+                            "type": "array",
+                            "items": {
+                              "type": "integer"
+                            },
+                            "example": [
+                              200,
+                              401
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "response": {
+                      "type": "object",
+                      "description": "Enriched response with auth types, risk, and sensitivity info",
+                      "properties": {
+                        "apiInfoList": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "object",
+                                "properties": {
+                                  "url": {
+                                    "type": "string",
+                                    "example": "https://api.example.com/api/users/profile"
+                                  },
+                                  "method": {
+                                    "type": "string",
+                                    "example": "GET"
+                                  },
+                                  "apiCollectionId": {
+                                    "type": "integer",
+                                    "example": 1111111
+                                  }
+                                }
+                              },
+                              "allAuthTypesFound": {
+                                "type": "array",
+                                "items": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "example": [
+                                  [
+                                    "AUTHORIZATION_HEADER_BEARER"
+                                  ]
+                                ]
+                              },
+                              "actualAuthType": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "example": [
+                                  "AUTHORIZATION_HEADER_BEARER"
+                                ]
+                              },
+                              "isPublic": {
+                                "type": "boolean",
+                                "example": false
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchApiInfoList": {
+      "description": "Fetch all ApiInfo records for a collection, with auth types calculated. Reads from the api_info collection filtered by apiCollectionId.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchApiInfoList",
+        "operationId": "/api/fetchApiInfoList-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "apiCollectionId"
+                ],
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "example": 1111111
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ApiInfo list retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apiInfoList": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "example": "https://api.example.com/api/orders/INTEGER"
+                              },
+                              "method": {
+                                "type": "string",
+                                "example": "GET"
+                              },
+                              "apiCollectionId": {
+                                "type": "integer",
+                                "example": 1111111
+                              }
+                            }
+                          },
+                          "allAuthTypesFound": {
+                            "type": "array",
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "example": [
+                              [
+                                "AUTHORIZATION_HEADER_BEARER"
+                              ]
+                            ]
+                          },
+                          "actualAuthType": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "example": [
+                              "AUTHORIZATION_HEADER_BEARER"
+                            ]
+                          },
+                          "apiAccessType": {
+                            "type": "string",
+                            "example": "ONLY_AUTHENTICATED"
+                          },
+                          "lastSeen": {
+                            "type": "integer",
+                            "example": 1675209600
+                          },
+                          "discoveredTimestamp": {
+                            "type": "integer",
+                            "example": 1672531200
+                          },
+                          "responseCodes": {
+                            "type": "array",
+                            "items": {
+                              "type": "integer"
+                            },
+                            "example": [
+                              200,
+                              404
+                            ]
+                          },
+                          "isPublic": {
+                            "type": "boolean",
+                            "example": false
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getSingleEndpoint": {
+      "description": "Fetch the ApiInfo record for a single endpoint identified by url, method, and apiCollectionId. Tolerates missing leading slash in the URL.",
+      "post": {
+        "summary": "POST request for endpoint /api/getSingleEndpoint",
+        "operationId": "/api/getSingleEndpoint-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "url",
+                  "method",
+                  "apiCollectionId"
+                ],
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "example": "https://api.example.com/api/orders/INTEGER"
+                  },
+                  "method": {
+                    "type": "string",
+                    "example": "GET"
+                  },
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "example": 1111111
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Endpoint info retrieved successfully. apiInfo is null if the endpoint does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apiInfo": {
+                      "nullable": true,
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "object",
+                          "properties": {
+                            "url": {
+                              "type": "string",
+                              "example": "https://api.example.com/api/orders/INTEGER"
+                            },
+                            "method": {
+                              "type": "string",
+                              "example": "GET"
+                            },
+                            "apiCollectionId": {
+                              "type": "integer",
+                              "example": 1111111
+                            }
+                          }
+                        },
+                        "allAuthTypesFound": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "example": [
+                            [
+                              "AUTHORIZATION_HEADER_BEARER"
+                            ]
+                          ]
+                        },
+                        "actualAuthType": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "example": [
+                            "AUTHORIZATION_HEADER_BEARER"
+                          ]
+                        },
+                        "apiAccessType": {
+                          "type": "string",
+                          "example": "ONLY_AUTHENTICATED"
+                        },
+                        "lastSeen": {
+                          "type": "integer",
+                          "example": 1675209600
+                        },
+                        "discoveredTimestamp": {
+                          "type": "integer",
+                          "example": 1672531200
+                        },
+                        "responseCodes": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          },
+                          "example": [
+                            200,
+                            401,
+                            404
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/findMissingUrls": {
+      "description": "Check whether a list of URLs exist in the api_info and single_type_info collections. Returns per-URL presence status along with matching collection IDs and names. Useful for gap analysis between discovered and expected endpoints.",
+      "post": {
+        "summary": "POST request for endpoint /api/findMissingUrls",
+        "operationId": "/api/findMissingUrls-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "missingUrls"
+                ],
+                "properties": {
+                  "missingUrls": {
+                    "type": "array",
+                    "description": "List of URL paths to check. Pass an empty array to get an empty result.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "/api/payments/refund",
+                      "/api/users/admin/delete",
+                      "/api/reports/export"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "URL presence results returned (sorted alphabetically by URL)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "missingUrlsResults": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "example": "/api/payments/refund"
+                          },
+                          "collectionId": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Null when the URL has no entry in api_info",
+                            "example": 1111111
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "hostName or displayName of the matched collection",
+                            "example": "payments-service"
+                          },
+                          "hasApiInfo": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "hasSingleTypeInfo": {
+                            "type": "boolean",
+                            "example": false
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "url": "/api/payments/refund",
+                          "collectionId": 1111111,
+                          "name": "payments-service",
+                          "hasApiInfo": true,
+                          "hasSingleTypeInfo": false
+                        },
+                        {
+                          "url": "/api/reports/export",
+                          "collectionId": null,
+                          "name": "",
+                          "hasApiInfo": false,
+                          "hasSingleTypeInfo": false
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchRecentParams": {
+      "description": "Fetch recently discovered parameters (new fields added to existing or new endpoints) within a time window. Applies smart logic to use either newly-discovered or old-discovered API filter depending on data distribution.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchRecentParams",
+        "operationId": "/api/fetchRecentParams-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "startTimestamp",
+                  "endTimestamp"
+                ],
+                "properties": {
+                  "startTimestamp": {
+                    "type": "integer",
+                    "description": "Start of time window (Unix epoch seconds)",
+                    "example": 1672531200
+                  },
+                  "endTimestamp": {
+                    "type": "integer",
+                    "description": "End of time window (Unix epoch seconds)",
+                    "example": 1675209600
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Recent params fetched (up to 20,000 STI records)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "endpoints": {
+                          "type": "array",
+                          "description": "SingleTypeInfo records for recently-seen parameters (values field excluded)",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "apiCollectionId": {
+                                "type": "integer",
+                                "example": 1111111
+                              },
+                              "url": {
+                                "type": "string",
+                                "example": "https://api.example.com/api/users/profile"
+                              },
+                              "method": {
+                                "type": "string",
+                                "example": "POST"
+                              },
+                              "param": {
+                                "type": "string",
+                                "example": "newField"
+                              },
+                              "isHeader": {
+                                "type": "boolean",
+                                "example": false
+                              },
+                              "responseCode": {
+                                "type": "integer",
+                                "example": -1
+                              },
+                              "timestamp": {
+                                "type": "integer",
+                                "example": 1673000000
+                              },
+                              "subType": {
+                                "type": "string",
+                                "example": "STRING"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getEndpointsListFromConditions": {
+      "description": "Return a paginated list of endpoints (up to 200) that match a set of collection conditions (e.g., API group filters, custom endpoint lists). Also returns the accurate total count of matching APIs.",
+      "post": {
+        "summary": "POST request for endpoint /api/getEndpointsListFromConditions",
+        "operationId": "/api/getEndpointsListFromConditions-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "conditions": {
+                    "type": "array",
+                    "description": "List of ConditionUtils defining filters. Each condition has a type, operator, and data payload.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "description": "Condition type such as CUSTOM, COLLECTION, ENDPOINT",
+                          "example": "CUSTOM"
+                        },
+                        "operator": {
+                          "type": "string",
+                          "enum": [
+                            "AND",
+                            "OR"
+                          ],
+                          "example": "OR"
+                        },
+                        "data": {
+                          "type": "object",
+                          "description": "Condition-type-specific filter payload",
+                          "example": {
+                            "apiList": [
+                              {
+                                "apiCollectionId": 1111111,
+                                "url": "https://api.example.com/api/users/profile",
+                                "method": "GET"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "type": "CUSTOM",
+                        "operator": "OR",
+                        "data": {
+                          "apiList": [
+                            {
+                              "apiCollectionId": 1111111,
+                              "url": "https://api.example.com/api/users/profile",
+                              "method": "GET"
+                            },
+                            {
+                              "apiCollectionId": 1111111,
+                              "url": "https://api.example.com/api/orders/INTEGER",
+                              "method": "POST"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Endpoint list and total count returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apiCount": {
+                      "type": "integer",
+                      "description": "Total number of matching endpoints (not limited to page size)",
+                      "example": 48
+                    },
+                    "response": {
+                      "type": "object",
+                      "description": "Enriched endpoint data (auth types, risk, sensitivity)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getEndpointsFromConditions": {
+      "description": "Return only the total count of endpoints matching the given conditions (no endpoint list). Lighter than getEndpointsListFromConditions \u2014 use when only the count is needed.",
+      "post": {
+        "summary": "POST request for endpoint /api/getEndpointsFromConditions",
+        "operationId": "/api/getEndpointsFromConditions-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "conditions": {
+                    "type": "array",
+                    "description": "Same ConditionUtils format as getEndpointsListFromConditions",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "COLLECTION"
+                        },
+                        "operator": {
+                          "type": "string",
+                          "example": "OR"
+                        },
+                        "data": {
+                          "type": "object"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Count of matching endpoints returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apiCount": {
+                      "type": "integer",
+                      "example": 312
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchEndpointsBasedOnHostName": {
+      "description": "Fetch all endpoint URL/method pairs for a collection identified by its hostName. Supports pagination via skip. Returns an error if the host is unknown or deactivated.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchEndpointsBasedOnHostName",
+        "operationId": "/api/fetchEndpointsBasedOnHostName-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "hostName"
+                ],
+                "properties": {
+                  "hostName": {
+                    "type": "string",
+                    "example": "api.example.com"
+                  },
+                  "skip": {
+                    "type": "integer",
+                    "description": "Number of records to skip for pagination",
+                    "example": 0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Endpoints for the given host returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "endpoints": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "example": "https://api.example.com/api/users/profile"
+                          },
+                          "method": {
+                            "type": "string",
+                            "example": "GET"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "url": "https://api.example.com/api/users/profile",
+                          "method": "GET"
+                        },
+                        {
+                          "url": "https://api.example.com/api/orders/INTEGER",
+                          "method": "POST"
+                        },
+                        {
+                          "url": "https://api.example.com/api/payments/refund",
+                          "method": "POST"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid or null hostName, or deactivated collection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "Invalid host"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchEndpointDiscoveryData": {
+      "description": "Consolidated endpoint discovery statistics for a time window. Returns different stat sets depending on context: API Security (shadow, sensitive, no-auth, normal counts) vs Agentic (AI agents, MCP servers, LLM discovery counts).",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchEndpointDiscoveryData",
+        "operationId": "/api/fetchEndpointDiscoveryData-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startTimestamp": {
+                    "type": "integer",
+                    "description": "Start of time window (Unix epoch seconds)",
+                    "example": 1672531200
+                  },
+                  "endTimestamp": {
+                    "type": "integer",
+                    "description": "End of time window (Unix epoch seconds). Defaults to now if 0.",
+                    "example": 1675209600
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Discovery stats returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "discoveryStats": {
+                      "type": "object",
+                      "description": "Shape depends on context source (API Security vs Agentic)",
+                      "example": {
+                        "shadowApis": 14,
+                        "sensitiveApis": 8,
+                        "noAuthApis": 3,
+                        "newEndpoints": 27,
+                        "totalEndpoints": 834
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/bulkMarkSensitive": {
+      "description": "Bulk upsert sensitivity flags for a list of parameters. Set sensitive=true to mark fields as sensitive (PII), or sensitive=false to clear the override and let Akto decide automatically.",
+      "post": {
+        "summary": "POST request for endpoint /api/bulkMarkSensitive",
+        "operationId": "/api/bulkMarkSensitive-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "items",
+                  "sensitive"
+                ],
+                "properties": {
+                  "sensitive": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "url",
+                        "method",
+                        "responseCode",
+                        "isHeader",
+                        "param",
+                        "apiCollectionId"
+                      ],
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "example": "https://api.example.com/api/users/profile"
+                        },
+                        "method": {
+                          "type": "string",
+                          "example": "GET"
+                        },
+                        "responseCode": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "isHeader": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "param": {
+                          "type": "string",
+                          "example": "ssn"
+                        },
+                        "apiCollectionId": {
+                          "type": "integer",
+                          "example": 1111111
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "url": "https://api.example.com/api/users/profile",
+                        "method": "GET",
+                        "responseCode": 200,
+                        "isHeader": false,
+                        "param": "ssn",
+                        "apiCollectionId": 1111111
+                      },
+                      {
+                        "url": "https://api.example.com/api/users/profile",
+                        "method": "GET",
+                        "responseCode": 200,
+                        "isHeader": false,
+                        "param": "dateOfBirth",
+                        "apiCollectionId": 1111111
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bulk update completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ret": {
+                      "type": "object",
+                      "properties": {
+                        "updates": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "inserts": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/listAllSensitiveFields": {
+      "description": "Retrieve all parameters currently flagged as sensitive (sensitive=true) in the sensitive_param_infos collection.",
+      "post": {
+        "summary": "POST request for endpoint /api/listAllSensitiveFields",
+        "operationId": "/api/listAllSensitiveFields-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sensitive fields list returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ret": {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "example": "https://api.example.com/api/users/profile"
+                              },
+                              "method": {
+                                "type": "string",
+                                "example": "GET"
+                              },
+                              "responseCode": {
+                                "type": "integer",
+                                "example": 200
+                              },
+                              "isHeader": {
+                                "type": "boolean",
+                                "example": false
+                              },
+                              "param": {
+                                "type": "string",
+                                "example": "ssn"
+                              },
+                              "apiCollectionId": {
+                                "type": "integer",
+                                "example": 1111111
+                              },
+                              "sensitive": {
+                                "type": "boolean",
+                                "example": true
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fillSensitiveDataTypes": {
+      "description": "Trigger a server-side refresh of PII / sensitive data type definitions. Calls insertPiiSources() and executePIISourceFetch() to pull the latest sensitive data type rules from configured sources. Returns immediately; processing happens asynchronously.",
+      "post": {
+        "summary": "POST request for endpoint /api/fillSensitiveDataTypes",
+        "operationId": "/api/fillSensitiveDataTypes-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "PII source refresh triggered successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/getAPIInfosForMissingData": {
+      "description": "Audit the api_info collection for gaps \u2014 endpoints recorded in single_type_info but missing from api_info, endpoints missing API type or auth calculation, and redundant entries. Returns aggregate counts per gap category.",
+      "post": {
+        "summary": "POST request for endpoint /api/getAPIInfosForMissingData",
+        "operationId": "/api/getAPIInfosForMissingData-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startTimeStamp": {
+                    "type": "integer",
+                    "description": "Start of audit window (Unix epoch seconds)",
+                    "example": 1672531200
+                  },
+                  "endTimeStamp": {
+                    "type": "integer",
+                    "description": "End of audit window (Unix epoch seconds)",
+                    "example": 1675209600
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API info gap counts returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "totalMissing": {
+                      "type": "integer",
+                      "description": "Endpoints in STI but absent from api_info",
+                      "example": 14
+                    },
+                    "apiTypeMissing": {
+                      "type": "integer",
+                      "description": "Endpoints with no sample data to determine API type",
+                      "example": 6
+                    },
+                    "authNotCalculated": {
+                      "type": "integer",
+                      "description": "Endpoints where auth type has not been computed",
+                      "example": 3
+                    },
+                    "accessTypeNotCalculated": {
+                      "type": "integer",
+                      "description": "Endpoints where access type has not been computed",
+                      "example": 2
+                    },
+                    "redundantApiInfoKeys": {
+                      "type": "integer",
+                      "description": "api_info entries with no matching STI record",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchAccessMatrixTaskInfos": {
+      "description": "Fetch all Access Matrix task configurations. Each task represents a scheduled job that tests whether endpoints correctly enforce role-based access.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchAccessMatrixTaskInfos",
+        "operationId": "/api/fetchAccessMatrixTaskInfos-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Access matrix task list returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessMatrixTaskInfos": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "object"
+                          },
+                          "hexId": {
+                            "type": "string",
+                            "example": "64a1f2e3b5c7d8e9f0a1b2c3"
+                          },
+                          "endpointLogicalGroupName": {
+                            "type": "string",
+                            "description": "roleName + '_GROUP' suffix",
+                            "example": "ADMIN_GROUP"
+                          },
+                          "frequencyInSeconds": {
+                            "type": "integer",
+                            "example": 86400
+                          },
+                          "lastCompletedTimestamp": {
+                            "type": "integer",
+                            "example": 1675123200
+                          },
+                          "nextScheduledTimestamp": {
+                            "type": "integer",
+                            "example": 1675209600
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "hexId": "64a1f2e3b5c7d8e9f0a1b2c3",
+                          "endpointLogicalGroupName": "ADMIN_GROUP",
+                          "frequencyInSeconds": 86400,
+                          "lastCompletedTimestamp": 1675123200,
+                          "nextScheduledTimestamp": 1675209600
+                        },
+                        {
+                          "hexId": "64a1f2e3b5c7d8e9f0a1b2d7",
+                          "endpointLogicalGroupName": "READ_ONLY_GROUP",
+                          "frequencyInSeconds": 86400,
+                          "lastCompletedTimestamp": 1675036800,
+                          "nextScheduledTimestamp": 1675209600
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/fetchAccessMatrixUrlToRoles": {
+      "description": "Fetch all URL-to-role mappings for the access matrix. Returns both the raw list and an inverted role-to-URLs map for efficient lookup.",
+      "post": {
+        "summary": "POST request for endpoint /api/fetchAccessMatrixUrlToRoles",
+        "operationId": "/api/fetchAccessMatrixUrlToRoles-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "URL-to-role and role-to-URLs mappings returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessMatrixUrlToRoles": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "object",
+                            "description": "ApiInfoKey identifying the endpoint",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "example": "https://api.example.com/api/admin/users"
+                              },
+                              "method": {
+                                "type": "string",
+                                "example": "DELETE"
+                              },
+                              "apiCollectionId": {
+                                "type": "integer",
+                                "example": 1111111
+                              }
+                            }
+                          },
+                          "roles": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "example": [
+                              "ADMIN",
+                              "SUPER_ADMIN"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "accessMatrixRoleToUrls": {
+                      "type": "object",
+                      "description": "Inverted map: role name \u2192 list of ApiInfoKeys that have access",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "url": {
+                              "type": "string"
+                            },
+                            "method": {
+                              "type": "string"
+                            },
+                            "apiCollectionId": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "ADMIN": [
+                          {
+                            "url": "https://api.example.com/api/admin/users",
+                            "method": "DELETE",
+                            "apiCollectionId": 1111111
+                          }
+                        ],
+                        "READ_ONLY": [
+                          {
+                            "url": "https://api.example.com/api/users/profile",
+                            "method": "GET",
+                            "apiCollectionId": 1111111
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/updateAccessMatrixTask": {
+      "description": "Update the roleName and frequencyInSeconds for an existing AccessMatrixTask identified by its hexId. If frequencyInSeconds is \u2264 0, it defaults to 86400 (24 hours).",
+      "post": {
+        "summary": "POST request for endpoint /api/updateAccessMatrixTask",
+        "operationId": "/api/updateAccessMatrixTask-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "hexId",
+                  "roleName"
+                ],
+                "properties": {
+                  "hexId": {
+                    "type": "string",
+                    "description": "Hex ObjectId of the AccessMatrixTaskInfo document to update",
+                    "example": "64a1f2e3b5c7d8e9f0a1b2c3"
+                  },
+                  "roleName": {
+                    "type": "string",
+                    "description": "Role name; stored as roleName + '_GROUP' in endpointLogicalGroupName",
+                    "example": "ADMIN"
+                  },
+                  "frequencyInSeconds": {
+                    "type": "integer",
+                    "description": "Scan frequency. Values \u2264 0 default to 86400.",
+                    "example": 43200
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid hexId or other error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "invalid request"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/createMultipleAccessMatrixTasks": {
+      "description": "Create (or upsert) an AccessMatrixTask for a given role with default settings: frequencyInSeconds=86400, nextScheduledTimestamp=now. The endpointLogicalGroupName is set to roleName + '_GROUP'.",
+      "post": {
+        "summary": "POST request for endpoint /api/createMultipleAccessMatrixTasks",
+        "operationId": "/api/createMultipleAccessMatrixTasks-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "roleName"
+                ],
+                "properties": {
+                  "roleName": {
+                    "type": "string",
+                    "example": "READ_ONLY"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Access matrix task created or updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/deleteAccessMatrix": {
+      "description": "Delete all access matrix data for a given role: removes the AccessMatrixTaskInfo record and pulls the role from all AccessMatrixUrlToRole entries.",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteAccessMatrix",
+        "operationId": "/api/deleteAccessMatrix-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "roleName"
+                ],
+                "properties": {
+                  "roleName": {
+                    "type": "string",
+                    "description": "Role whose access matrix data should be deleted",
+                    "example": "READ_ONLY"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Access matrix data for the role deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/deleteAccessMatrixTask": {
+      "description": "Delete a single AccessMatrixTask by its hexId. Does not affect URL-to-role mappings.",
+      "post": {
+        "summary": "POST request for endpoint /api/deleteAccessMatrixTask",
+        "operationId": "/api/deleteAccessMatrixTask-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "hexId"
+                ],
+                "properties": {
+                  "hexId": {
+                    "type": "string",
+                    "description": "Hex ObjectId of the AccessMatrixTaskInfo document to delete",
+                    "example": "64a1f2e3b5c7d8e9f0a1b2c3"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unable to delete \u2014 invalid hexId",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "unable to delete"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
+    },
+    "/api/analyzeApiSamples": {
+      "description": "Analyze live traffic samples across specified collections to extract distinct values for given request headers. Useful for discovering role/tenant identifiers used in headers (e.g., x-role, x-tenant-id) to configure access matrix roles. Processes up to 50,000 sample messages.",
+      "post": {
+        "summary": "POST request for endpoint /api/analyzeApiSamples",
+        "operationId": "/api/analyzeApiSamples-POST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "apiCollectionIds",
+                  "headerNames"
+                ],
+                "properties": {
+                  "apiCollectionIds": {
+                    "type": "array",
+                    "description": "Collection IDs whose traffic samples to analyze. Must not be empty.",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "example": [
+                      1111111,
+                      2222222
+                    ]
+                  },
+                  "headerNames": {
+                    "type": "array",
+                    "description": "Request header names to extract and count. Must not be empty.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "x-role",
+                      "x-tenant-id"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Header value frequency map returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "headerValues": {
+                      "type": "object",
+                      "description": "Map of headerName \u2192 { value \u2192 occurrence count }",
+                      "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "integer"
+                        }
+                      },
+                      "example": {
+                        "x-role": {
+                          "ADMIN": 412,
+                          "READ_ONLY": 1893,
+                          "BILLING": 204
+                        },
+                        "x-tenant-id": {
+                          "tenant-a": 954,
+                          "tenant-b": 1555
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error \u2014 empty apiCollectionIds or headerNames",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actionErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "No header name was provided"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "content-type",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "application/json"
+          }
+        },
+        {
+          "name": "X-API-KEY",
+          "in": "header",
+          "schema": {
+            "type": "string",
+            "example": "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        }
+      ]
     }
   }
 }
