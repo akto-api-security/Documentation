@@ -178,17 +178,30 @@ The Snowflake connector captures two categories of information:
 *   Grant necessary permissions to your Snowflake user:
 
     ```sql
-    -- Grant usage on warehouse
-    GRANT USAGE ON WAREHOUSE COMPUTE_WH TO USER your_username;
+    -- Create role and user
+    -- Role for Akto to consume AI observability data
+    CREATE ROLE IF NOT EXISTS AKTO_CONSUMER;
+    -- Service user for Akto integration (key-pair auth)
+    CREATE USER IF NOT EXISTS <AKTO_USER> DEFAULT_ROLE = 'AKTO_CONSUMER';
+    -- Assign the role so the user can activate it
+    GRANT ROLE AKTO_CONSUMER TO USER <AKTO_USER>;
 
-    -- Grant usage on database
-    GRANT USAGE ON DATABASE SNOWFLAKE TO USER your_username;
+    -- Read-only access to AI observability events (via application role)
+    -- Read access to AI observability events (agent traces, spans, metrics)
+    GRANT APPLICATION ROLE SNOWFLAKE.AI_OBSERVABILITY_READER TO ROLE AKTO_CONSUMER;
+    -- Required to query Cortex agent metadata and observability functions
+    GRANT DATABASE ROLE SNOWFLAKE.CORTEX_USER TO ROLE AKTO_CONSUMER;
+    -- Account-level monitoring to discover all agents and view usage stats
+    GRANT MONITOR USAGE ON ACCOUNT TO ROLE AKTO_CONSUMER;
 
-    -- Grant usage on schema
-    GRANT USAGE ON SCHEMA SNOWFLAKE.PUBLIC TO USER your_username;
+    -- Monitor ALL existing agents (add each agent database/schema)
+    -- Replace <DB> and <SCHEMA> with each agent's location
+    -- GRANT USAGE ON DATABASE <DB> TO ROLE AKTO_CONSUMER;
+    -- GRANT USAGE ON SCHEMA <DB>.<SCHEMA> TO ROLE AKTO_CONSUMER;
+    -- GRANT MONITOR ON AGENT <DB>.<SCHEMA>.<AGENT_NAME> TO ROLE AKTO_CONSUMER;
 
-    -- Grant select on tables (for Cortex agent discovery)
-    GRANT SELECT ON ALL TABLES IN SCHEMA SNOWFLAKE.PUBLIC TO USER your_username;
+    -- Auto-grant MONITOR on future agents per schema
+    -- GRANT MONITOR ON FUTURE AGENTS IN SCHEMA <DB>.<SCHEMA> TO ROLE AKTO_CONSUMER;
     ```
 
 ### No Agents Appearing
@@ -200,11 +213,6 @@ The Snowflake connector captures two categories of information:
 * Verify Snowflake Cortex is enabled in your account
 * Ensure you have AI agents deployed in Snowflake
 * Check `SNOWFLAKE_DATABASE` and `SNOWFLAKE_SCHEMA` point to the correct location
-*   Review connector logs for errors:
-
-    ```bash
-    docker compose -f docker-compose-snowflake-cron.yaml logs -f
-    ```
 * Verify Traffic Processor is running and accessible
 
 ## Get Support
