@@ -8537,12 +8537,17 @@
         "summary": "List all DAST scan runs",
         "description": "Returns all `CrawlerRun` documents that are in `RUNNING`, `COMPLETED`, `STOP_REQUESTED`, or `STOPPED` state, plus legacy records that have no `status` field. `PENDING` and `FAILED` runs are excluded.\n\nSource: `DastAction.fetchAllDastScans()`",
         "operationId": "fetchAllDastScans",
-        "tags": ["DAST Scans"],
+        "tags": [
+          "DAST Scans"
+        ],
         "requestBody": {
           "required": false,
           "content": {
             "application/json": {
-              "schema": { "type": "object", "properties": {} },
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
               "examples": {
                 "fetch_all": {
                   "summary": "Fetch all DAST scans",
@@ -8563,7 +8568,9 @@
                     "crawlerRuns": {
                       "type": "array",
                       "description": "All matching `CrawlerRun` documents.",
-                      "items": { "$ref": "#/components/schemas/CrawlerRun" },
+                      "items": {
+                        "$ref": "#/components/schemas/CrawlerRun"
+                      },
                       "example": [
                         {
                           "crawlId": "550e8400-e29b-41d4-a716-446655440000",
@@ -8581,7 +8588,9 @@
                     },
                     "actionErrors": {
                       "type": "array",
-                      "items": { "type": "string" }
+                      "items": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
@@ -8596,14 +8605,18 @@
         "summary": "Fetch URLs discovered in a DAST scan",
         "description": "Returns all `CrawlerUrl` documents recorded by the crawler for the specified `crawlId`, representing every URL that was discovered (both in-scope and out-of-scope).\n\nSource: `DastAction.fetchDastScan()`",
         "operationId": "fetchDastScan",
-        "tags": ["DAST Scans"],
+        "tags": [
+          "DAST Scans"
+        ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["crawlId"],
+                "required": [
+                  "crawlId"
+                ],
                 "properties": {
                   "crawlId": {
                     "type": "string",
@@ -8615,7 +8628,9 @@
               "examples": {
                 "fetch_scan": {
                   "summary": "Fetch discovered URLs for a crawl",
-                  "value": { "crawlId": "550e8400-e29b-41d4-a716-446655440000" }
+                  "value": {
+                    "crawlId": "550e8400-e29b-41d4-a716-446655440000"
+                  }
                 }
               }
             }
@@ -8632,7 +8647,9 @@
                     "crawlerUrls": {
                       "type": "array",
                       "description": "All `CrawlerUrl` documents for the given crawl.",
-                      "items": { "$ref": "#/components/schemas/CrawlerUrl" },
+                      "items": {
+                        "$ref": "#/components/schemas/CrawlerUrl"
+                      },
                       "example": [
                         {
                           "url": "https://app.example.com/api/products",
@@ -8647,7 +8664,9 @@
                     },
                     "actionErrors": {
                       "type": "array",
-                      "items": { "type": "string" }
+                      "items": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
@@ -8665,12 +8684,17 @@
         "summary": "List active DAST modules",
         "description": "Returns all external DAST modules that have sent a heartbeat within the last 5 minutes. An empty `availableModules` list means only the built-in internal Akto DAST crawler is available and `selectedModuleName` should be left null when calling `initiateCrawler`.\n\nSource: `AktoJaxAction.fetchAvailableDastModules()`",
         "operationId": "fetchAvailableDastModules",
-        "tags": ["DAST Scans"],
+        "tags": [
+          "DAST Scans"
+        ],
         "requestBody": {
           "required": false,
           "content": {
             "application/json": {
-              "schema": { "type": "object", "properties": {} },
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
               "examples": {
                 "fetch_modules": {
                   "summary": "Fetch available DAST modules",
@@ -8719,73 +8743,15 @@
                     },
                     "actionErrors": {
                       "type": "array",
-                      "items": { "type": "string" }
+                      "items": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
               }
             }
           }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "ImportLogEntry": {
-        "type": "object",
-        "description": "A single per-endpoint parse result entry in an import log.",
-        "properties": {
-          "term": {
-            "type": "string",
-            "description": "Method and path of the endpoint (e.g. `GET /users`).",
-            "example": "GET /users"
-          },
-          "description": {
-            "type": "string",
-            "description": "Human-readable parse result or error message.",
-            "example": "Parsed successfully"
-          }
-        }
-      },
-      "CrawlerRun": {
-        "type": "object",
-        "description": "A `CrawlerRun` document from MongoDB representing one DAST crawl execution.",
-        "properties": {
-          "crawlId": { "type": "string", "description": "UUID of the crawl run.", "example": "550e8400-e29b-41d4-a716-446655440000" },
-          "hostname": { "type": "string", "description": "Target URL of the crawl.", "example": "https://app.example.com" },
-          "startedBy": { "type": "string", "description": "Email of the user who initiated the crawl.", "example": "admin@example.com" },
-          "startTimestamp": { "type": "integer", "description": "Unix epoch when the crawl started.", "example": 1745280000 },
-          "endTimestamp": { "type": "integer", "description": "Unix epoch when the crawl ended (0 if not yet finished).", "example": 1745283600 },
-          "status": {
-            "type": "string",
-            "enum": ["PENDING", "RUNNING", "COMPLETED", "FAILED", "STOP_REQUESTED", "STOPPED"],
-            "example": "COMPLETED"
-          },
-          "moduleName": { "type": "string", "description": "Name of the DAST module used.", "example": "Internal DAST (Akto)" },
-          "collectionId": { "type": "integer", "description": "ID of the API collection populated by this crawl.", "example": 1234567890 },
-          "crawlingTime": { "type": "integer", "description": "Maximum crawl duration in seconds.", "example": 3600 },
-          "runTestAfterCrawling": { "type": "boolean", "example": true },
-          "outScopeUrls": { "type": "string", "description": "Comma-separated excluded URL paths.", "example": "/logout,/static" },
-          "urlTemplatePatterns": { "type": "string", "example": "/users/{id}" },
-          "applicationPages": { "type": "string", "example": "/dashboard,/profile" },
-          "errorMessage": { "type": "string", "example": null },
-          "testRoleHexId": { "type": "string", "example": "60a7b2c3d4e5f6a7b8c9d0e1" },
-          "selectedMiniTestingService": { "type": "string", "example": null },
-          "accountId": { "type": "integer", "example": 1000000 }
-        }
-      },
-      "CrawlerUrl": {
-        "type": "object",
-        "description": "A `CrawlerUrl` document representing a single URL discovered during a DAST crawl.",
-        "properties": {
-          "url": { "type": "string", "description": "The discovered URL.", "example": "https://app.example.com/api/products" },
-          "crawlId": { "type": "string", "description": "UUID of the crawl run that discovered this URL.", "example": "550e8400-e29b-41d4-a716-446655440000" },
-          "accepted": { "type": "boolean", "description": "Whether this URL was within the crawl scope.", "example": true },
-          "timestamp": { "type": "integer", "description": "Unix epoch when the URL was discovered.", "example": 1745280120 },
-          "sourceUrl": { "type": "string", "description": "Page where the link to this URL was found.", "example": "https://app.example.com/shop" },
-          "sourceXpath": { "type": "string", "description": "XPath of the element that triggered navigation.", "example": "//a[@id='products-link']" },
-          "buttonText": { "type": "string", "description": "Text of the element that linked to this URL.", "example": "View Products" }
         }
       }
     },
@@ -8961,7 +8927,7 @@
       ]
     },
     "/api/addCodeAnalysisRepo": {
-      "description": "Add one or more source-code repositories for code-analysis scanning. Uses upsert — re-adding an existing repo is a no-op and will not reset its lastRun or scheduleTime.",
+      "description": "Add one or more source-code repositories for code-analysis scanning. Uses upsert \u2014 re-adding an existing repo is a no-op and will not reset its lastRun or scheduleTime.",
       "post": {
         "summary": "POST request for endpoint /api/addCodeAnalysisRepo",
         "operationId": "/api/addCodeAnalysisRepo-POST",
@@ -8970,14 +8936,20 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["codeAnalysisRepos"],
+                "required": [
+                  "codeAnalysisRepos"
+                ],
                 "properties": {
                   "codeAnalysisRepos": {
                     "type": "array",
                     "description": "List of repositories to register. Must not be empty.",
                     "items": {
                       "type": "object",
-                      "required": ["projectName", "repoName", "sourceCodeType"],
+                      "required": [
+                        "projectName",
+                        "repoName",
+                        "sourceCodeType"
+                      ],
                       "properties": {
                         "projectName": {
                           "type": "string",
@@ -8989,7 +8961,10 @@
                         },
                         "sourceCodeType": {
                           "type": "string",
-                          "enum": ["GITHUB", "BITBUCKET"],
+                          "enum": [
+                            "GITHUB",
+                            "BITBUCKET"
+                          ],
                           "example": "GITHUB"
                         }
                       }
@@ -9025,7 +9000,7 @@
             }
           },
           "400": {
-            "description": "Validation error — codeAnalysisRepos list was null or empty",
+            "description": "Validation error \u2014 codeAnalysisRepos list was null or empty",
             "content": {
               "application/json": {
                 "schema": {
@@ -9033,8 +9008,12 @@
                   "properties": {
                     "actionErrors": {
                       "type": "array",
-                      "items": { "type": "string" },
-                      "example": ["Can't add empty repo"]
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "Can't add empty repo"
+                      ]
                     }
                   }
                 }
@@ -9072,11 +9051,16 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["codeAnalysisRepo"],
+                "required": [
+                  "codeAnalysisRepo"
+                ],
                 "properties": {
                   "codeAnalysisRepo": {
                     "type": "object",
-                    "required": ["repoName", "projectName"],
+                    "required": [
+                      "repoName",
+                      "projectName"
+                    ],
                     "properties": {
                       "repoName": {
                         "type": "string",
@@ -9106,7 +9090,7 @@
             }
           },
           "400": {
-            "description": "Validation error — codeAnalysisRepo was null",
+            "description": "Validation error \u2014 codeAnalysisRepo was null",
             "content": {
               "application/json": {
                 "schema": {
@@ -9114,8 +9098,12 @@
                   "properties": {
                     "actionErrors": {
                       "type": "array",
-                      "items": { "type": "string" },
-                      "example": ["Can't delete null repo"]
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "Can't delete null repo"
+                      ]
                     }
                   }
                 }
@@ -9156,7 +9144,10 @@
                 "properties": {
                   "sourceCodeType": {
                     "type": "string",
-                    "enum": ["GITHUB", "BITBUCKET"],
+                    "enum": [
+                      "GITHUB",
+                      "BITBUCKET"
+                    ],
                     "description": "Filter by SCM provider. Omit or set to BITBUCKET to also match legacy repos without a type field.",
                     "example": "GITHUB"
                   }
@@ -9197,7 +9188,10 @@
                           },
                           "sourceCodeType": {
                             "type": "string",
-                            "enum": ["GITHUB", "BITBUCKET"],
+                            "enum": [
+                              "GITHUB",
+                              "BITBUCKET"
+                            ],
                             "example": "GITHUB"
                           },
                           "lastRun": {
@@ -9267,14 +9261,19 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["codeAnalysisRepos"],
+                "required": [
+                  "codeAnalysisRepos"
+                ],
                 "properties": {
                   "codeAnalysisRepos": {
                     "type": "array",
                     "description": "List of repos to trigger. Only repoName and projectName are required; other fields are ignored.",
                     "items": {
                       "type": "object",
-                      "required": ["repoName", "projectName"],
+                      "required": [
+                        "repoName",
+                        "projectName"
+                      ],
                       "properties": {
                         "repoName": {
                           "type": "string",
@@ -9300,7 +9299,7 @@
         },
         "responses": {
           "200": {
-            "description": "Scan triggered successfully — scheduleTime updated to current timestamp",
+            "description": "Scan triggered successfully \u2014 scheduleTime updated to current timestamp",
             "content": {
               "application/json": {
                 "schema": {
@@ -9311,7 +9310,7 @@
             }
           },
           "400": {
-            "description": "Validation error — codeAnalysisRepos list was null or empty",
+            "description": "Validation error \u2014 codeAnalysisRepos list was null or empty",
             "content": {
               "application/json": {
                 "schema": {
@@ -9319,8 +9318,12 @@
                   "properties": {
                     "actionErrors": {
                       "type": "array",
-                      "items": { "type": "string" },
-                      "example": ["Can't run empty repo"]
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "Can't run empty repo"
+                      ]
                     }
                   }
                 }
@@ -9358,7 +9361,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["chosenBackendDirectory"],
+                "required": [
+                  "chosenBackendDirectory"
+                ],
                 "properties": {
                   "chosenBackendDirectory": {
                     "type": "string",
@@ -9456,7 +9461,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["chosenCodeAnalysisCollectionIds"],
+                "required": [
+                  "chosenCodeAnalysisCollectionIds"
+                ],
                 "properties": {
                   "chosenCodeAnalysisCollectionIds": {
                     "type": "array",
@@ -9545,10 +9552,18 @@
                           "responseSchema": {
                             "type": "object",
                             "properties": {
-                              "transactionId": { "type": "string" },
-                              "amount": { "type": "number" },
-                              "status": { "type": "string" },
-                              "createdAt": { "type": "integer" }
+                              "transactionId": {
+                                "type": "string"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "status": {
+                                "type": "string"
+                              },
+                              "createdAt": {
+                                "type": "integer"
+                              }
                             }
                           }
                         },
@@ -9559,15 +9574,23 @@
                           "requestSchema": {
                             "type": "object",
                             "properties": {
-                              "transactionId": { "type": "string" },
-                              "reason": { "type": "string" }
+                              "transactionId": {
+                                "type": "string"
+                              },
+                              "reason": {
+                                "type": "string"
+                              }
                             }
                           },
                           "responseSchema": {
                             "type": "object",
                             "properties": {
-                              "refundId": { "type": "string" },
-                              "status": { "type": "string" }
+                              "refundId": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string"
+                              }
                             }
                           }
                         }
