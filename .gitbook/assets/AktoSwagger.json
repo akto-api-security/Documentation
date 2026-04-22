@@ -32149,1195 +32149,6 @@
         },
         "tags": ["Issues"]
       }
-    }
-  },
-  "components": {
-    "schemas": {
-      "TestingIssuesId": {
-        "type": "object",
-        "description": "Composite identifier for a testing issue. Corresponds to `com.akto.dto.test_run_findings.TestingIssuesId`.",
-        "required": ["apiInfoKey", "testErrorSource", "testSubCategory"],
-        "properties": {
-          "apiInfoKey": {
-            "$ref": "#/components/schemas/ApiInfoKey"
-          },
-          "testErrorSource": {
-            "type": "string",
-            "description": "Source of the test that generated this issue.",
-            "enum": ["AUTOMATED_TESTING", "TEST_EDITOR", "CICD"],
-            "example": "AUTOMATED_TESTING"
-          },
-          "testSubCategory": {
-            "type": "string",
-            "description": "YAML template ID of the test (e.g. `OPEN_REDIRECT`, `SQL_INJECTION`) or an HTTP URL for custom fuzzing tests.",
-            "example": "OPEN_REDIRECT"
-          },
-          "testCategoryFromSourceConfig": {
-            "type": "string",
-            "description": "For custom (HTTP-source) tests only: the source config category identifier.",
-            "example": null
-          }
-        },
-        "example": {
-          "apiInfoKey": {
-            "apiCollectionId": 1000000,
-            "method": "GET",
-            "url": "https://api.example.com/redirect"
-          },
-          "testErrorSource": "AUTOMATED_TESTING",
-          "testSubCategory": "OPEN_REDIRECT"
-        }
-      },
-      "ApiInfoKey": {
-        "type": "object",
-        "description": "Uniquely identifies an API endpoint within Akto. Corresponds to `com.akto.dto.ApiInfo.ApiInfoKey`.",
-        "required": ["apiCollectionId", "method", "url"],
-        "properties": {
-          "apiCollectionId": {
-            "type": "integer",
-            "description": "ID of the API collection this endpoint belongs to.",
-            "example": 1000000
-          },
-          "method": {
-            "type": "string",
-            "description": "HTTP method of the endpoint.",
-            "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"],
-            "example": "GET"
-          },
-          "url": {
-            "type": "string",
-            "description": "Full URL (or URL template) of the endpoint.",
-            "example": "https://api.example.com/redirect"
-          }
-        }
-      },
-      "IgnoreData": {
-        "type": "object",
-        "description": "Specifies which parameter keys should be treated as false positives for a given sensitive data type. Corresponds to `com.akto.dto.IgnoreData`.",
-        "properties": {
-          "ignoredKeysInAllAPIs": {
-            "type": "array",
-            "description": "Parameter key names that should be ignored as false positives across all API endpoints.",
-            "items": { "type": "string" },
-            "example": ["ssn", "social_security"]
-          },
-          "ignoredKeysInSelectedAPIs": {
-            "type": "object",
-            "description": "Map from parameter key name to a list of `ParamId` objects specifying the exact endpoints where the key should be ignored.",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ParamId"
-              }
-            },
-            "example": {}
-          }
-        }
-      },
-      "ParamId": {
-        "type": "object",
-        "description": "Identifies a specific parameter occurrence in an API endpoint. Corresponds to `com.akto.dto.type.SingleTypeInfo.ParamId`.",
-        "properties": {
-          "url": {
-            "type": "string",
-            "description": "URL of the endpoint.",
-            "example": "https://api.example.com/users"
-          },
-          "method": {
-            "type": "string",
-            "description": "HTTP method of the endpoint.",
-            "example": "POST"
-          },
-          "apiCollectionId": {
-            "type": "integer",
-            "description": "API collection ID of the endpoint.",
-            "example": 1000000
-          },
-          "param": {
-            "type": "string",
-            "description": "Parameter key name.",
-            "example": "token"
-          },
-          "isHeader": {
-            "type": "boolean",
-            "description": "Whether this parameter is an HTTP header.",
-            "example": false
-          },
-          "responseCode": {
-            "type": "integer",
-            "description": "HTTP response code context. Use `-1` for request-scope parameters.",
-            "example": -1
-          }
-        }
-      },
-      "IssueTrendType": {
-        "type": "object",
-        "description": "A single data point in an issues trend series — count of issues for a specific test sub-category on a given day.",
-        "properties": {
-          "count": {
-            "type": "integer",
-            "description": "Number of issues for the sub-category on the associated day.",
-            "example": 3
-          },
-          "subCategory": {
-            "type": "string",
-            "description": "Test sub-category name.",
-            "example": "OPEN_REDIRECT"
-          }
-        }
-      },
-      "TimePeriodCount": {
-        "type": "object",
-        "description": "A single time-period data point as returned by the Java-based time-grouping utilities.",
-        "properties": {
-          "_id": {
-            "type": "string",
-            "description": "Time period label. Format depends on the window size: `YYYY-MM-DD` for daily, `YYYY-Www` for weekly, `YYYY-MM` for monthly.",
-            "example": "2026-04-15"
-          },
-          "count": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Number of events in this time period.",
-            "example": 5
-          }
-        }
-      },
-      "AgentConversationResult": {
-        "type": "object",
-        "description": "A single turn in an agentic test conversation. Corresponds to `com.akto.dto.testing.AgentConversationResult` (stored in the `agent_conversation_results` collection).",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "MongoDB ObjectId hex string for this conversation turn document.",
-            "example": "507f1f77bcf86cd799439011"
-          },
-          "conversationId": {
-            "type": "string",
-            "description": "Conversation identifier shared by all turns in the same session.",
-            "example": "conv_0ae3f12b9c7d41e5"
-          },
-          "role": {
-            "type": "string",
-            "description": "Role of the speaker in this turn.",
-            "enum": ["user", "assistant", "system"],
-            "example": "assistant"
-          },
-          "content": {
-            "type": "string",
-            "description": "Text content of this conversation turn.",
-            "example": "The endpoint /redirect does not validate the `url` parameter, making it susceptible to open-redirect attacks."
-          },
-          "lastUpdatedAt": {
-            "type": "integer",
-            "description": "Epoch seconds when this document was last updated. Used for chronological sorting.",
-            "example": 1745001234
-          }
-        }
-      }
-    },
-    "/api/ask_ai": {
-      "post": {
-        "summary": "Ask AI (GPT query dispatcher)",
-        "description": "Routes a query to the appropriate LLM handler based on `type`. The server appends the caller's email to `meta` before forwarding. Responses are handler-specific JSON objects.\n\nSupported `type` values (from `GptQuery` enum):\n- `list_apis_by_type` — list API endpoints grouped by inferred type\n- `group_apis_by_functionality` — cluster endpoints by functional domain\n- `list_sensitive_params` — identify sensitive parameters in sample data\n- `generate_curl_for_test` — generate a cURL command for a test scenario\n- `generate_regex` — generate a regex for a given description\n- `suggest_tests` — suggest test cases for an endpoint\n- `find_auth_related_tokens` — identify authentication-related tokens in request/response data\n- `analyze_request_response_headers` — analyse HTTP headers for security issues\n- `analyze_vulnerability` — analyse a test result for vulnerabilities (also exposed separately via `api/analyze_vulnerability`)\n\nSource: `GptAction.askAi()`",
-        "operationId": "askAi",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": ["type", "meta"],
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "description": "Query type. Must match one of the `GptQuery` enum name strings (case-insensitive).",
-                    "enum": [
-                      "list_apis_by_type",
-                      "group_apis_by_functionality",
-                      "list_sensitive_params",
-                      "generate_curl_for_test",
-                      "generate_regex",
-                      "suggest_tests",
-                      "find_auth_related_tokens",
-                      "analyze_request_response_headers",
-                      "analyze_vulnerability"
-                    ],
-                    "example": "suggest_tests"
-                  },
-                  "meta": {
-                    "type": "object",
-                    "description": "Handler-specific input parameters. The server automatically injects `user_email` into this object before processing. Common keys vary by `type` — see examples.",
-                    "additionalProperties": true,
-                    "example": {
-                      "apiCollectionId": 1000000,
-                      "url": "https://api.example.com/users",
-                      "method": "GET"
-                    }
-                  }
-                }
-              },
-              "examples": {
-                "suggest_tests": {
-                  "summary": "Suggest tests for an endpoint",
-                  "value": {
-                    "type": "suggest_tests",
-                    "meta": {
-                      "apiCollectionId": 1000000,
-                      "url": "https://api.example.com/users/{id}",
-                      "method": "GET"
-                    }
-                  }
-                },
-                "generate_regex": {
-                  "summary": "Generate a regex pattern",
-                  "value": {
-                    "type": "generate_regex",
-                    "meta": {
-                      "description": "Match a US Social Security Number in the format XXX-XX-XXXX"
-                    }
-                  }
-                },
-                "list_sensitive_params": {
-                  "summary": "List sensitive parameters in a collection",
-                  "value": {
-                    "type": "list_sensitive_params",
-                    "meta": {
-                      "apiCollectionId": 1000000
-                    }
-                  }
-                },
-                "find_auth_tokens": {
-                  "summary": "Find auth-related tokens in a request/response",
-                  "value": {
-                    "type": "find_auth_related_tokens",
-                    "meta": {
-                      "message": "HTTP/1.1 200 OK\nAuthorization: Bearer [REDACTED_TOKEN]\nContent-Type: application/json\n\n{\"user_id\": 42}"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "AI query result. Shape depends on the handler for the given `type`.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "response": {
-                      "type": "object",
-                      "description": "Handler-specific response object. Structure varies by `type`.",
-                      "additionalProperties": true,
-                      "example": {
-                        "tests": [
-                          "Test for IDOR by substituting another user's ID",
-                          "Test for missing authentication on GET /users/{id}"
-                        ]
-                      }
-                    },
-                    "actionErrors": {
-                      "type": "array",
-                      "items": { "type": "string" }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "`type` is not a recognised `GptQuery` name, `meta` is null, or the AI returned an empty response."
-          }
-        },
-        "tags": ["AI Query"]
-      }
-    },
-    "/api/chatAndStore": {
-      "post": {
-        "summary": "Chat with MCP agent and store conversation",
-        "description": "Sends a user message to the Akto MCP (Model Context Protocol) agent, stores the full conversation turn in MongoDB, and returns the assistant's reply together with conversation metadata.\n\nOn the **first turn** omit `conversationId` (or leave it empty) — the server will generate a new UUID and return it in the response. Pass that value as `conversationId` on all subsequent turns to maintain context.\n\nThe optional `metaData` field lets the caller inject structured context that is prepended to the user message before it reaches the LLM. Three `type` values are supported:\n- `sample_request` — fetches the latest sample request/response for a given endpoint from `sample_data` and prepends it\n- `dashboard_collections` — accepts a `data` list of collection metrics objects and prepends a formatted summary\n- `test_execution_result` — accepts a `data` map with test execution details (name, category, vulnerable, severity, url, original and attempt messages, agentic conversation context) and prepends a formatted summary\n\nSource: `McpAgentAction.chatAndStoreConversation()`",
-        "operationId": "chatAndStore",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": ["message", "conversationType"],
-                "properties": {
-                  "message": {
-                    "type": "string",
-                    "description": "The user's message to send to the agent.",
-                    "example": "Which endpoints in my collection have no authentication?"
-                  },
-                  "conversationId": {
-                    "type": "string",
-                    "description": "Optional. Omit or pass empty string for the first turn. Pass the value returned from the previous turn to continue an existing conversation.",
-                    "example": "a3f1c2d4-5e6f-7a8b-9c0d-e1f2a3b4c5d6"
-                  },
-                  "conversationType": {
-                    "type": "string",
-                    "description": "Conversation category that determines agent routing and storage metadata.",
-                    "enum": [
-                      "ASK_AKTO",
-                      "TEST_EXECUTION_RESULT",
-                      "PROMPT_PLAYGROUND",
-                      "ANALYZE_REQUESTS",
-                      "DOCS_AGENT",
-                      "ANALYZE_DASHBOARD_DATA"
-                    ],
-                    "example": "ASK_AKTO"
-                  },
-                  "metaData": {
-                    "type": "object",
-                    "description": "Optional structured context to prepend to the message. Must include a `type` key and a `data` key.",
-                    "properties": {
-                      "type": {
-                        "type": "string",
-                        "description": "Context type. Controls how `data` is interpreted.",
-                        "enum": ["sample_request", "dashboard_collections", "test_execution_result"],
-                        "example": "sample_request"
-                      },
-                      "data": {
-                        "description": "Context payload. Shape depends on `type` — see examples.",
-                        "oneOf": [
-                          { "$ref": "#/components/schemas/SampleRequestContext" },
-                          { "$ref": "#/components/schemas/TestExecutionResultContext" },
-                          {
-                            "type": "array",
-                            "description": "For `dashboard_collections`: list of collection metric objects.",
-                            "items": { "type": "object", "additionalProperties": true }
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              },
-              "examples": {
-                "first_turn_plain": {
-                  "summary": "First turn — no prior context",
-                  "value": {
-                    "message": "Summarise the top security risks in my API collection.",
-                    "conversationType": "ASK_AKTO"
-                  }
-                },
-                "follow_up_turn": {
-                  "summary": "Follow-up turn in existing conversation",
-                  "value": {
-                    "message": "Can you explain the OPEN_REDIRECT risk in more detail?",
-                    "conversationId": "a3f1c2d4-5e6f-7a8b-9c0d-e1f2a3b4c5d6",
-                    "conversationType": "ASK_AKTO"
-                  }
-                },
-                "with_sample_request_context": {
-                  "summary": "First turn with sample API request as context",
-                  "value": {
-                    "message": "Is this endpoint vulnerable to injection attacks?",
-                    "conversationType": "ANALYZE_REQUESTS",
-                    "metaData": {
-                      "type": "sample_request",
-                      "data": {
-                        "apiCollectionId": 1000000,
-                        "url": "https://api.example.com/users",
-                        "method": "GET"
-                      }
-                    }
-                  }
-                },
-                "with_test_execution_context": {
-                  "summary": "Asking about a specific test execution result",
-                  "value": {
-                    "message": "Why did this test flag the endpoint as vulnerable?",
-                    "conversationType": "TEST_EXECUTION_RESULT",
-                    "metaData": {
-                      "type": "test_execution_result",
-                      "data": {
-                        "testName": "OPEN_REDIRECT",
-                        "testCategory": "Injection",
-                        "vulnerable": true,
-                        "severity": "HIGH",
-                        "url": "https://api.example.com/redirect",
-                        "originalMessage": "GET /redirect?url=https://example.com HTTP/1.1\n\nHTTP/1.1 302 Found\nLocation: https://example.com",
-                        "attemptMessage": "GET /redirect?url=https://evil.example.com HTTP/1.1\n\nHTTP/1.1 302 Found\nLocation: https://evil.example.com"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Agent reply and conversation metadata.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "response": {
-                      "type": "object",
-                      "description": "Conversation response object.",
-                      "properties": {
-                        "response": {
-                          "type": "string",
-                          "description": "The assistant's reply text.",
-                          "example": "Based on your API collection, the top security risks are: 1. Open Redirect on /redirect…"
-                        },
-                        "conversationId": {
-                          "type": "string",
-                          "description": "UUID of the conversation. Use this in subsequent turns.",
-                          "example": "a3f1c2d4-5e6f-7a8b-9c0d-e1f2a3b4c5d6"
-                        },
-                        "finalSentPrompt": {
-                          "type": "string",
-                          "description": "The full prompt that was actually sent to the LLM (including any injected context). Useful for debugging.",
-                          "example": "Current context: GET /users HTTP/1.1 … \n\nUser: Is this endpoint vulnerable?"
-                        },
-                        "tokensUsed": {
-                          "type": "integer",
-                          "description": "Number of LLM tokens consumed by this turn.",
-                          "example": 420
-                        },
-                        "title": {
-                          "type": "string",
-                          "description": "Auto-generated title for the conversation, set on the first turn.",
-                          "example": "API Security Risks Summary"
-                        }
-                      }
-                    },
-                    "actionErrors": {
-                      "type": "array",
-                      "items": { "type": "string" }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "`conversationType` is null/invalid, or the caller's email matches the internal block-list pattern."
-          }
-        },
-        "tags": ["Conversational Chat"]
-      }
-    },
-    "/api/fetchHistory": {
-      "post": {
-        "summary": "Fetch conversation history",
-        "description": "Returns the most recent conversations from `agent_conversations`, grouped by `conversationId`. Each group includes the accumulated `tokensUsed`, the conversation `title`, the `lastUpdatedAt` timestamp, and the list of prompt/response message pairs.\n\nResults are sorted by `lastUpdatedAt` descending (most recent first) and limited to `limit` conversations (default 5).\n\nSource: `McpAgentAction.fetchHistory()`",
-        "operationId": "fetchHistory",
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "limit": {
-                    "type": "integer",
-                    "description": "Maximum number of distinct conversations to return. Defaults to 5 when 0 or omitted.",
-                    "example": 10
-                  }
-                }
-              },
-              "examples": {
-                "default": {
-                  "summary": "Fetch last 5 conversations (default)",
-                  "value": {}
-                },
-                "custom_limit": {
-                  "summary": "Fetch last 10 conversations",
-                  "value": { "limit": 10 }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "List of grouped conversation history objects.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "response": {
-                      "type": "object",
-                      "properties": {
-                        "history": {
-                          "type": "array",
-                          "description": "Grouped conversation history, one entry per unique `conversationId`.",
-                          "items": {
-                            "$ref": "#/components/schemas/ConversationHistoryEntry"
-                          },
-                          "example": [
-                            {
-                              "_id": "a3f1c2d4-5e6f-7a8b-9c0d-e1f2a3b4c5d6",
-                              "lastUpdatedAt": 1745001234,
-                              "title": "API Security Risks Summary",
-                              "tokensUsed": 840,
-                              "messages": [
-                                {
-                                  "prompt": "Summarise the top security risks in my API collection.",
-                                  "response": "Based on your collection, the top risks are…"
-                                },
-                                {
-                                  "prompt": "Can you explain the OPEN_REDIRECT risk in more detail?",
-                                  "response": "An Open Redirect vulnerability allows an attacker to…"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      }
-                    },
-                    "actionErrors": {
-                      "type": "array",
-                      "items": { "type": "string" }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["Conversational Chat"]
-      }
-    },
-    "/api/deleteConversationHistory": {
-      "post": {
-        "summary": "Delete a conversation history",
-        "description": "Permanently deletes all `agent_conversations` documents that share the given `conversationId`. This is irreversible.\n\nSource: `McpAgentAction.deleteConversationHistory()`",
-        "operationId": "deleteConversationHistory",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": ["conversationId"],
-                "properties": {
-                  "conversationId": {
-                    "type": "string",
-                    "description": "UUID of the conversation to delete.",
-                    "example": "a3f1c2d4-5e6f-7a8b-9c0d-e1f2a3b4c5d6"
-                  }
-                }
-              },
-              "examples": {
-                "delete": {
-                  "summary": "Delete a specific conversation",
-                  "value": {
-                    "conversationId": "a3f1c2d4-5e6f-7a8b-9c0d-e1f2a3b4c5d6"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Conversation deleted successfully."
-          },
-          "400": {
-            "description": "`conversationId` is null or empty."
-          }
-        },
-        "tags": ["Conversational Chat"]
-      }
-    },
-    "/api/analyze_vulnerability": {
-      "post": {
-        "summary": "Analyse a vulnerability / content with AI",
-        "description": "Passes structured content to an LLM handler determined by `analysisType`. Results are cached in-process using a key derived from (`analysisType`, `resultId`, content hash) — subsequent calls with the same key skip the LLM and return the cached result.\n\nCurrently the only supported `analysisType` is `redteaming`, which maps to the `ANALYZE_VULNERABILITY` GPT handler (`AnalyzeVulnerability` using `SelfHostedLlmResultFetcherStrategy`).\n\nThe `requestData` string must be a JSON object with the structure documented in the `VulnerabilityAnalysisRequest` schema.\n\nSource: `VulnerabilityAnalysisAction.analyzeVulnerability()`",
-        "operationId": "analyzeVulnerability",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": ["requestData", "analysisType"],
-                "properties": {
-                  "requestData": {
-                    "type": "string",
-                    "description": "JSON-encoded string containing the analysis payload. Must be parseable as a MongoDB `BasicDBObject`. See the `VulnerabilityAnalysisRequest` schema for the expected structure.",
-                    "example": "{\"resultId\":\"507f1f77bcf86cd799439011\",\"testContext\":{\"category\":\"Injection\",\"description\":\"Tests for SQL injection via the `id` parameter.\"},\"request\":{\"url\":\"https://api.example.com/users?id=1\",\"method\":\"GET\"},\"response\":{\"status\":200,\"body\":\"{\\\"user\\\":{\\\"id\\\":1,\\\"name\\\":\\\"Alice\\\"}}\"}}"
-                  },
-                  "analysisType": {
-                    "type": "string",
-                    "description": "Type of analysis to perform. Currently only `redteaming` is supported.",
-                    "enum": ["redteaming"],
-                    "example": "redteaming"
-                  },
-                  "resultId": {
-                    "type": "string",
-                    "description": "Optional. Cache identifier (e.g. a test result ObjectId hex). If omitted, the server tries to extract it from `requestData.resultId`. Used to skip redundant LLM calls.",
-                    "example": "507f1f77bcf86cd799439011"
-                  }
-                }
-              },
-              "examples": {
-                "redteaming_analysis": {
-                  "summary": "Analyse a test execution result for vulnerabilities",
-                  "value": {
-                    "requestData": "{\"resultId\":\"507f1f77bcf86cd799439011\",\"testContext\":{\"category\":\"Injection\",\"description\":\"Tests for SQL injection via the id parameter.\"},\"request\":{\"url\":\"https://api.example.com/users?id=1 OR 1=1\",\"method\":\"GET\"},\"response\":{\"status\":200,\"body\":\"{\\\"users\\\":[{\\\"id\\\":1},{\\\"id\\\":2}]}\"}}",
-                    "analysisType": "redteaming",
-                    "resultId": "507f1f77bcf86cd799439011"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Analysis result from the LLM handler. Shape is handler-specific.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "analysisResult": {
-                      "type": "object",
-                      "description": "LLM-generated analysis output. Structure depends on the handler, but typically includes an assessment, severity, and remediation advice.",
-                      "additionalProperties": true,
-                      "example": {
-                        "vulnerable": true,
-                        "severity": "HIGH",
-                        "assessment": "The endpoint returns all rows when the `id` parameter is manipulated with SQL injection syntax, indicating the parameter is not sanitised.",
-                        "remediation": "Use parameterised queries or an ORM layer. Validate and type-cast the `id` input to an integer before use."
-                      }
-                    },
-                    "actionErrors": {
-                      "type": "array",
-                      "items": { "type": "string" }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "`requestData` or `analysisType` is null/empty, or `requestData` cannot be parsed as JSON."
-          }
-        },
-        "tags": ["AI Query"]
-      }
-    },
-    "/api/saveAktoGptConfig": {
-      "post": {
-        "summary": "Save Akto GPT config per collection",
-        "description": "Persists the enabled/disabled state of the AI feature for one or more API collections. After writing, re-fetches and returns the complete, up-to-date config list for all collections in the account (including any collections whose config did not previously exist — they are auto-initialised with the platform default state).\n\nThe default state is `ENABLED` on SaaS deployments and `DISABLED` on self-hosted deployments.\n\nSource: `GptConfigAction.saveAktoGptConfig()`",
-        "operationId": "saveAktoGptConfig",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": ["currentState"],
-                "properties": {
-                  "currentState": {
-                    "type": "array",
-                    "description": "List of config objects to upsert. Each entry must contain the collection `id` and the desired `state`.",
-                    "items": {
-                      "$ref": "#/components/schemas/AktoGptConfigEntry"
-                    }
-                  }
-                }
-              },
-              "examples": {
-                "enable_one_disable_another": {
-                  "summary": "Enable AI for one collection, disable for another",
-                  "value": {
-                    "currentState": [
-                      { "id": 1000000, "state": "ENABLED" },
-                      { "id": 1664578207, "state": "DISABLED" }
-                    ]
-                  }
-                },
-                "enable_all": {
-                  "summary": "Enable AI for a single collection",
-                  "value": {
-                    "currentState": [
-                      { "id": 1000000, "state": "ENABLED" }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Updated config list for all collections in the account.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "currentState": {
-                      "type": "array",
-                      "description": "Full, up-to-date GPT config list for every API collection in the account. Each entry includes the collection ID, state, and human-readable name.",
-                      "items": {
-                        "$ref": "#/components/schemas/AktoGptConfigFull"
-                      },
-                      "example": [
-                        { "id": 1000000,    "state": "ENABLED",  "collectionName": "Production APIs" },
-                        { "id": 1664578207, "state": "DISABLED", "collectionName": "Internal Services" }
-                      ]
-                    },
-                    "actionErrors": {
-                      "type": "array",
-                      "items": { "type": "string" }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["GPT Config"]
-      }
-    },
-    "/api/addScript": {
-      "post": {
-        "summary": "Add a test script",
-        "description": "Inserts a new JavaScript test script into `test_scripts`. Generates a random UUID as the script's `_id`. Assigns `type` from `testScript.type` if present; otherwise falls back to `scriptType`; otherwise defaults to `PRE_REQUEST`.\n\n**SaaS restriction:** On SaaS deployments, only Akto-internal accounts (`@akto.io` email) may call this endpoint — all other callers receive `ERROR`.\n\nScript types (`TestScript.Type`):\n- `PRE_TEST` — runs once before the entire test suite\n- `PRE_REQUEST` — runs before each individual API request *(default)*\n- `POST_REQUEST` — runs after each individual API request\n- `POST_TEST` — runs once after the entire test suite\n\nSource: `ScriptAction.addScript()`",
-        "operationId": "addScript",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": ["testScript"],
-                "properties": {
-                  "testScript": {
-                    "$ref": "#/components/schemas/TestScriptInput",
-                    "description": "Script to create. `javascript` is required; `type` is optional."
-                  },
-                  "scriptType": {
-                    "type": "string",
-                    "description": "Fallback script type string if `testScript.type` is not set. Must match a `TestScript.Type` enum value.",
-                    "enum": ["PRE_TEST", "PRE_REQUEST", "POST_REQUEST", "POST_TEST"],
-                    "example": "PRE_REQUEST"
-                  }
-                }
-              },
-              "examples": {
-                "add_pre_request": {
-                  "summary": "Add a PRE_REQUEST script that injects a custom header",
-                  "value": {
-                    "testScript": {
-                      "javascript": "// Inject a tracing header before every request\nrequest.headers['X-Trace-Id'] = generateUUID();",
-                      "type": "PRE_REQUEST"
-                    }
-                  }
-                },
-                "add_post_test": {
-                  "summary": "Add a POST_TEST cleanup script (type via scriptType fallback)",
-                  "value": {
-                    "testScript": {
-                      "javascript": "// Clean up test artefacts\nconsole.log('Test suite finished. Total requests:', stats.totalRequests);"
-                    },
-                    "scriptType": "POST_TEST"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Script inserted successfully. No additional fields are returned."
-          },
-          "400": {
-            "description": "`testScript` is null, `testScript.javascript` is null, or the caller is not authorised on a SaaS deployment."
-          }
-        },
-        "tags": ["Test Scripts"]
-      }
-    },
-    "/api/fetchScript": {
-      "post": {
-        "summary": "Fetch the active test script for a type",
-        "description": "Returns the most recently stored `TestScript` document for the given type. Type resolution follows the same priority as `addScript`: `testScript.type` → `scriptType` → `PRE_REQUEST` default.\n\nSource: `ScriptAction.fetchScript()`",
-        "operationId": "fetchScript",
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "testScript": {
-                    "type": "object",
-                    "description": "Only the `type` field is read from this object when present.",
-                    "properties": {
-                      "type": {
-                        "type": "string",
-                        "enum": ["PRE_TEST", "PRE_REQUEST", "POST_REQUEST", "POST_TEST"],
-                        "description": "Script type to retrieve.",
-                        "example": "PRE_REQUEST"
-                      }
-                    }
-                  },
-                  "scriptType": {
-                    "type": "string",
-                    "description": "Alternative way to specify the script type. Used if `testScript.type` is absent.",
-                    "enum": ["PRE_TEST", "PRE_REQUEST", "POST_REQUEST", "POST_TEST"],
-                    "example": "PRE_REQUEST"
-                  }
-                }
-              },
-              "examples": {
-                "via_testScript_type": {
-                  "summary": "Fetch PRE_REQUEST script via testScript.type",
-                  "value": {
-                    "testScript": { "type": "PRE_REQUEST" }
-                  }
-                },
-                "via_scriptType": {
-                  "summary": "Fetch PRE_REQUEST script via scriptType string",
-                  "value": {
-                    "scriptType": "PRE_REQUEST"
-                  }
-                },
-                "default": {
-                  "summary": "Fetch the default (PRE_REQUEST) script",
-                  "value": {}
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The active test script for the requested type. `testScript` is `null` if no script exists for that type.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "testScript": {
-                      "description": "The matching `TestScript` document, or `null` if none exists.",
-                      "oneOf": [
-                        { "$ref": "#/components/schemas/TestScriptFull" },
-                        { "type": "null" }
-                      ]
-                    },
-                    "actionErrors": {
-                      "type": "array",
-                      "items": { "type": "string" }
-                    }
-                  }
-                },
-                "examples": {
-                  "found": {
-                    "summary": "Script found",
-                    "value": {
-                      "testScript": {
-                        "id": "b1c2d3e4-f5a6-7890-abcd-ef1234567890",
-                        "javascript": "request.headers['X-Trace-Id'] = generateUUID();",
-                        "type": "PRE_REQUEST",
-                        "author": "admin@example.com",
-                        "lastCreatedAt": 1745001000,
-                        "lastUpdatedAt": 1745001000
-                      }
-                    }
-                  },
-                  "not_found": {
-                    "summary": "No script exists for the type",
-                    "value": {
-                      "testScript": null
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["Test Scripts"]
-      }
-    },
-    "/api/updateScript": {
-      "post": {
-        "summary": "Update an existing test script",
-        "description": "Replaces the `javascript` content of an existing script identified by `testScript.id`. Also updates `author` (to the current user's email) and `lastUpdatedAt` (to the current epoch).\n\n**SaaS restriction:** On SaaS deployments, only Akto-internal accounts (`@akto.io` email) may call this endpoint.\n\nSource: `ScriptAction.updateScript()`",
-        "operationId": "updateScript",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": ["testScript"],
-                "properties": {
-                  "testScript": {
-                    "$ref": "#/components/schemas/TestScriptUpdate",
-                    "description": "Must contain `id` (the script's UUID) and `javascript` (the new content)."
-                  }
-                }
-              },
-              "examples": {
-                "update_javascript": {
-                  "summary": "Update the JavaScript content of an existing script",
-                  "value": {
-                    "testScript": {
-                      "id": "b1c2d3e4-f5a6-7890-abcd-ef1234567890",
-                      "javascript": "// Updated: also inject correlation ID\nrequest.headers['X-Trace-Id'] = generateUUID();\nrequest.headers['X-Correlation-Id'] = context.testRunId;"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Script updated successfully. No additional fields are returned."
-          },
-          "400": {
-            "description": "`testScript` is null, `testScript.javascript` is null, or the caller is not authorised on a SaaS deployment."
-          }
-        },
-        "tags": ["Test Scripts"]
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "AktoGptConfigEntry": {
-        "type": "object",
-        "description": "A single collection-level GPT config entry used as input when saving.",
-        "required": ["id", "state"],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "description": "API collection ID.",
-            "example": 1000000
-          },
-          "state": {
-            "type": "string",
-            "description": "Desired state of the AI feature for this collection.",
-            "enum": ["ENABLED", "DISABLED"],
-            "example": "ENABLED"
-          }
-        }
-      },
-      "AktoGptConfigFull": {
-        "type": "object",
-        "description": "Full GPT config entry returned in the response (includes collection name).",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "description": "API collection ID.",
-            "example": 1000000
-          },
-          "state": {
-            "type": "string",
-            "enum": ["ENABLED", "DISABLED"],
-            "example": "ENABLED"
-          },
-          "collectionName": {
-            "type": "string",
-            "description": "Human-readable name of the API collection.",
-            "example": "Production APIs"
-          }
-        }
-      },
-      "TestScriptInput": {
-        "type": "object",
-        "description": "Input payload for creating a new test script.",
-        "required": ["javascript"],
-        "properties": {
-          "javascript": {
-            "type": "string",
-            "description": "JavaScript source code of the script.",
-            "example": "request.headers['X-Trace-Id'] = generateUUID();"
-          },
-          "type": {
-            "type": "string",
-            "description": "Optional script lifecycle hook type. Defaults to `PRE_REQUEST` if omitted.",
-            "enum": ["PRE_TEST", "PRE_REQUEST", "POST_REQUEST", "POST_TEST"],
-            "example": "PRE_REQUEST"
-          }
-        }
-      },
-      "TestScriptUpdate": {
-        "type": "object",
-        "description": "Input payload for updating an existing test script.",
-        "required": ["id", "javascript"],
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "UUID of the script document to update.",
-            "example": "b1c2d3e4-f5a6-7890-abcd-ef1234567890"
-          },
-          "javascript": {
-            "type": "string",
-            "description": "Replacement JavaScript source code.",
-            "example": "request.headers['X-Trace-Id'] = generateUUID();\nrequest.headers['X-Correlation-Id'] = context.testRunId;"
-          }
-        }
-      },
-      "TestScriptFull": {
-        "type": "object",
-        "description": "A complete `TestScript` document as returned from the database. Corresponds to `com.akto.dto.testing.config.TestScript`.",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "UUID of the script document.",
-            "example": "b1c2d3e4-f5a6-7890-abcd-ef1234567890"
-          },
-          "javascript": {
-            "type": "string",
-            "description": "JavaScript source code of the script.",
-            "example": "request.headers['X-Trace-Id'] = generateUUID();"
-          },
-          "type": {
-            "type": "string",
-            "description": "Lifecycle hook type.",
-            "enum": ["PRE_TEST", "PRE_REQUEST", "POST_REQUEST", "POST_TEST"],
-            "example": "PRE_REQUEST"
-          },
-          "author": {
-            "type": "string",
-            "description": "Email of the user who last created or updated the script.",
-            "example": "admin@example.com"
-          },
-          "lastCreatedAt": {
-            "type": "integer",
-            "description": "Epoch seconds when the script was first inserted.",
-            "example": 1745001000
-          },
-          "lastUpdatedAt": {
-            "type": "integer",
-            "description": "Epoch seconds when the script was last updated.",
-            "example": 1745001000
-          }
-        }
-      },
-      "ConversationHistoryEntry": {
-        "type": "object",
-        "description": "A single grouped conversation entry returned by `fetchHistory`. Aggregated from all `GenericAgentConversation` documents sharing the same `conversationId`.",
-        "properties": {
-          "_id": {
-            "type": "string",
-            "description": "The conversation UUID (aggregation group key).",
-            "example": "a3f1c2d4-5e6f-7a8b-9c0d-e1f2a3b4c5d6"
-          },
-          "lastUpdatedAt": {
-            "type": "integer",
-            "description": "Epoch seconds of the most recent turn in this conversation.",
-            "example": 1745001234
-          },
-          "title": {
-            "type": "string",
-            "description": "Auto-generated conversation title (set on the first turn by the MCP server).",
-            "example": "API Security Risks Summary"
-          },
-          "tokensUsed": {
-            "type": "integer",
-            "description": "Total tokens consumed across all turns of this conversation.",
-            "example": 840
-          },
-          "messages": {
-            "type": "array",
-            "description": "Ordered list of prompt/response pairs for this conversation.",
-            "items": {
-              "type": "object",
-              "properties": {
-                "prompt": {
-                  "type": "string",
-                  "description": "User message text.",
-                  "example": "Summarise the top security risks in my API collection."
-                },
-                "response": {
-                  "type": "string",
-                  "description": "Assistant reply text.",
-                  "example": "Based on your collection, the top risks are: 1. Open Redirect…"
-                }
-              }
-            }
-          }
-        }
-      },
-      "SampleRequestContext": {
-        "type": "object",
-        "description": "Context payload for `metaData.type = sample_request`. Specifies an endpoint whose latest sample request/response will be fetched from `sample_data` and prepended to the message.",
-        "required": ["apiCollectionId", "url", "method"],
-        "properties": {
-          "apiCollectionId": {
-            "type": "integer",
-            "description": "ID of the API collection containing the endpoint.",
-            "example": 1000000
-          },
-          "url": {
-            "type": "string",
-            "description": "URL of the endpoint.",
-            "example": "https://api.example.com/users"
-          },
-          "method": {
-            "type": "string",
-            "description": "HTTP method of the endpoint.",
-            "example": "GET"
-          }
-        }
-      },
-      "TestExecutionResultContext": {
-        "type": "object",
-        "description": "Context payload for `metaData.type = test_execution_result`. Provides test execution details that are formatted and prepended to the message.",
-        "properties": {
-          "testName": {
-            "type": "string",
-            "description": "Name / sub-category of the test.",
-            "example": "OPEN_REDIRECT"
-          },
-          "testCategory": {
-            "type": "string",
-            "description": "Broad category of the test.",
-            "example": "Injection"
-          },
-          "vulnerable": {
-            "type": "boolean",
-            "description": "Whether the test marked the endpoint as vulnerable.",
-            "example": true
-          },
-          "severity": {
-            "type": "string",
-            "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
-            "example": "HIGH"
-          },
-          "url": {
-            "type": "string",
-            "description": "URL of the tested endpoint.",
-            "example": "https://api.example.com/redirect"
-          },
-          "originalMessage": {
-            "type": "string",
-            "description": "The original (baseline) HTTP request and response captured during testing.",
-            "example": "GET /redirect?url=https://example.com HTTP/1.1\n\nHTTP/1.1 302 Found\nLocation: https://example.com"
-          },
-          "attemptMessage": {
-            "type": "string",
-            "description": "The modified (attack) HTTP request and response.",
-            "example": "GET /redirect?url=https://evil.example.com HTTP/1.1\n\nHTTP/1.1 302 Found\nLocation: https://evil.example.com"
-          },
-          "agenticConversationContext": {
-            "type": "string",
-            "description": "Optional. Serialised agentic/LLM conversation log from the test execution. Truncated server-side to 120 000 characters if too large.",
-            "example": null
-          }
-        }
-      }
     },
     "/api/fetchApiInfosFromSTIs": {
       "description": "Fetch API metadata for all endpoints in a given collection by reading from the single_type_info collection. Returns both the raw STI list and the enriched response object (auth types, risk scores, etc.).",
@@ -35331,6 +34142,967 @@
           }
         }
       ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "TestingIssuesId": {
+        "type": "object",
+        "description": "Composite identifier for a testing issue. Corresponds to `com.akto.dto.test_run_findings.TestingIssuesId`.",
+        "required": ["apiInfoKey", "testErrorSource", "testSubCategory"],
+        "properties": {
+          "apiInfoKey": {
+            "$ref": "#/components/schemas/ApiInfoKey"
+          },
+          "testErrorSource": {
+            "type": "string",
+            "description": "Source of the test that generated this issue.",
+            "enum": ["AUTOMATED_TESTING", "TEST_EDITOR", "CICD"],
+            "example": "AUTOMATED_TESTING"
+          },
+          "testSubCategory": {
+            "type": "string",
+            "description": "YAML template ID of the test (e.g. `OPEN_REDIRECT`, `SQL_INJECTION`) or an HTTP URL for custom fuzzing tests.",
+            "example": "OPEN_REDIRECT"
+          },
+          "testCategoryFromSourceConfig": {
+            "type": "string",
+            "description": "For custom (HTTP-source) tests only: the source config category identifier.",
+            "example": null
+          }
+        },
+        "example": {
+          "apiInfoKey": {
+            "apiCollectionId": 1000000,
+            "method": "GET",
+            "url": "https://api.example.com/redirect"
+          },
+          "testErrorSource": "AUTOMATED_TESTING",
+          "testSubCategory": "OPEN_REDIRECT"
+        }
+      },
+      "ApiInfoKey": {
+        "type": "object",
+        "description": "Uniquely identifies an API endpoint within Akto. Corresponds to `com.akto.dto.ApiInfo.ApiInfoKey`.",
+        "required": ["apiCollectionId", "method", "url"],
+        "properties": {
+          "apiCollectionId": {
+            "type": "integer",
+            "description": "ID of the API collection this endpoint belongs to.",
+            "example": 1000000
+          },
+          "method": {
+            "type": "string",
+            "description": "HTTP method of the endpoint.",
+            "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"],
+            "example": "GET"
+          },
+          "url": {
+            "type": "string",
+            "description": "Full URL (or URL template) of the endpoint.",
+            "example": "https://api.example.com/redirect"
+          }
+        }
+      },
+      "IgnoreData": {
+        "type": "object",
+        "description": "Specifies which parameter keys should be treated as false positives for a given sensitive data type. Corresponds to `com.akto.dto.IgnoreData`.",
+        "properties": {
+          "ignoredKeysInAllAPIs": {
+            "type": "array",
+            "description": "Parameter key names that should be ignored as false positives across all API endpoints.",
+            "items": { "type": "string" },
+            "example": ["ssn", "social_security"]
+          },
+          "ignoredKeysInSelectedAPIs": {
+            "type": "object",
+            "description": "Map from parameter key name to a list of `ParamId` objects specifying the exact endpoints where the key should be ignored.",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ParamId"
+              }
+            },
+            "example": {}
+          }
+        }
+      },
+      "ParamId": {
+        "type": "object",
+        "description": "Identifies a specific parameter occurrence in an API endpoint. Corresponds to `com.akto.dto.type.SingleTypeInfo.ParamId`.",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "URL of the endpoint.",
+            "example": "https://api.example.com/users"
+          },
+          "method": {
+            "type": "string",
+            "description": "HTTP method of the endpoint.",
+            "example": "POST"
+          },
+          "apiCollectionId": {
+            "type": "integer",
+            "description": "API collection ID of the endpoint.",
+            "example": 1000000
+          },
+          "param": {
+            "type": "string",
+            "description": "Parameter key name.",
+            "example": "token"
+          },
+          "isHeader": {
+            "type": "boolean",
+            "description": "Whether this parameter is an HTTP header.",
+            "example": false
+          },
+          "responseCode": {
+            "type": "integer",
+            "description": "HTTP response code context. Use `-1` for request-scope parameters.",
+            "example": -1
+          }
+        }
+      },
+      "IssueTrendType": {
+        "type": "object",
+        "description": "A single data point in an issues trend series — count of issues for a specific test sub-category on a given day.",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "Number of issues for the sub-category on the associated day.",
+            "example": 3
+          },
+          "subCategory": {
+            "type": "string",
+            "description": "Test sub-category name.",
+            "example": "OPEN_REDIRECT"
+          }
+        }
+      },
+      "TimePeriodCount": {
+        "type": "object",
+        "description": "A single time-period data point as returned by the Java-based time-grouping utilities.",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Time period label. Format depends on the window size: `YYYY-MM-DD` for daily, `YYYY-Www` for weekly, `YYYY-MM` for monthly.",
+            "example": "2026-04-15"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of events in this time period.",
+            "example": 5
+          }
+        }
+      },
+      "AgentConversationResult": {
+        "type": "object",
+        "description": "A single turn in an agentic test conversation. Corresponds to `com.akto.dto.testing.AgentConversationResult` (stored in the `agent_conversation_results` collection).",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "MongoDB ObjectId hex string for this conversation turn document.",
+            "example": "507f1f77bcf86cd799439011"
+          },
+          "conversationId": {
+            "type": "string",
+            "description": "Conversation identifier shared by all turns in the same session.",
+            "example": "conv_0ae3f12b9c7d41e5"
+          },
+          "role": {
+            "type": "string",
+            "description": "Role of the speaker in this turn.",
+            "enum": ["user", "assistant", "system"],
+            "example": "assistant"
+          },
+          "content": {
+            "type": "string",
+            "description": "Text content of this conversation turn.",
+            "example": "The endpoint /redirect does not validate the `url` parameter, making it susceptible to open-redirect attacks."
+          },
+          "lastUpdatedAt": {
+            "type": "integer",
+            "description": "Epoch seconds when this document was last updated. Used for chronological sorting.",
+            "example": 1745001234
+          }
+        }
+      }
+    },
+    "/api/ask_ai": {
+      "post": {
+        "summary": "Ask AI (GPT query dispatcher)",
+        "description": "Routes a query to the appropriate LLM handler based on `type`. The server appends the caller's email to `meta` before forwarding. Responses are handler-specific JSON objects.\n\nSupported `type` values (from `GptQuery` enum):\n- `list_apis_by_type` — list API endpoints grouped by inferred type\n- `group_apis_by_functionality` — cluster endpoints by functional domain\n- `list_sensitive_params` — identify sensitive parameters in sample data\n- `generate_curl_for_test` — generate a cURL command for a test scenario\n- `generate_regex` — generate a regex for a given description\n- `suggest_tests` — suggest test cases for an endpoint\n- `find_auth_related_tokens` — identify authentication-related tokens in request/response data\n- `analyze_request_response_headers` — analyse HTTP headers for security issues\n- `analyze_vulnerability` — analyse a test result for vulnerabilities (also exposed separately via `api/analyze_vulnerability`)\n\nSource: `GptAction.askAi()`",
+        "operationId": "askAi",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["type", "meta"],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "Query type. Must match one of the `GptQuery` enum name strings (case-insensitive).",
+                    "enum": [
+                      "list_apis_by_type",
+                      "group_apis_by_functionality",
+                      "list_sensitive_params",
+                      "generate_curl_for_test",
+                      "generate_regex",
+                      "suggest_tests",
+                      "find_auth_related_tokens",
+                      "analyze_request_response_headers",
+                      "analyze_vulnerability"
+                    ],
+                    "example": "suggest_tests"
+                  },
+                  "meta": {
+                    "type": "object",
+                    "description": "Handler-specific input parameters. The server automatically injects `user_email` into this object before processing. Common keys vary by `type` — see examples.",
+                    "additionalProperties": true,
+                    "example": {
+                      "apiCollectionId": 1000000,
+                      "url": "https://api.example.com/users",
+                      "method": "GET"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "suggest_tests": {
+                  "summary": "Suggest tests for an endpoint",
+                  "value": {
+                    "type": "suggest_tests",
+                    "meta": {
+                      "apiCollectionId": 1000000,
+                      "url": "https://api.example.com/users/{id}",
+                      "method": "GET"
+                    }
+                  }
+                },
+                "generate_regex": {
+                  "summary": "Generate a regex pattern",
+                  "value": {
+                    "type": "generate_regex",
+                    "meta": {
+                      "description": "Match a US Social Security Number in the format XXX-XX-XXXX"
+                    }
+                  }
+                },
+                "list_sensitive_params": {
+                  "summary": "List sensitive parameters in a collection",
+                  "value": {
+                    "type": "list_sensitive_params",
+                    "meta": {
+                      "apiCollectionId": 1000000
+                    }
+                  }
+                },
+                "find_auth_tokens": {
+                  "summary": "Find auth-related tokens in a request/response",
+                  "value": {
+                    "type": "find_auth_related_tokens",
+                    "meta": {
+                      "message": "HTTP/1.1 200 OK\nAuthorization: Bearer [REDACTED_TOKEN]\nContent-Type: application/json\n\n{\"user_id\": 42}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "AI query result. Shape depends on the handler for the given `type`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "description": "Handler-specific response object. Structure varies by `type`.",
+                      "additionalProperties": true,
+                      "example": {
+                        "tests": [
+                          "Test for IDOR by substituting another user's ID",
+                          "Test for missing authentication on GET /users/{id}"
+                        ]
+                      }
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`type` is not a recognised `GptQuery` name, `meta` is null, or the AI returned an empty response."
+          }
+        },
+        "tags": ["AI Query"]
+      }
+    },
+    "/api/chatAndStore": {
+      "post": {
+        "summary": "Chat with MCP agent and store conversation",
+        "description": "Sends a user message to the Akto MCP (Model Context Protocol) agent, stores the full conversation turn in MongoDB, and returns the assistant's reply together with conversation metadata.\n\nOn the **first turn** omit `conversationId` (or leave it empty) — the server will generate a new UUID and return it in the response. Pass that value as `conversationId` on all subsequent turns to maintain context.\n\nThe optional `metaData` field lets the caller inject structured context that is prepended to the user message before it reaches the LLM. Three `type` values are supported:\n- `sample_request` — fetches the latest sample request/response for a given endpoint from `sample_data` and prepends it\n- `dashboard_collections` — accepts a `data` list of collection metrics objects and prepends a formatted summary\n- `test_execution_result` — accepts a `data` map with test execution details (name, category, vulnerable, severity, url, original and attempt messages, agentic conversation context) and prepends a formatted summary\n\nSource: `McpAgentAction.chatAndStoreConversation()`",
+        "operationId": "chatAndStore",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["message", "conversationType"],
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "description": "The user's message to send to the agent.",
+                    "example": "Which endpoints in my collection have no authentication?"
+                  },
+                  "conversationId": {
+                    "type": "string",
+                    "description": "Optional. Omit or pass empty string for the first turn. Pass the value returned from the previous turn to continue an existing conversation.",
+                    "example": "a3f1c2d4-5e6f-7a8b-9c0d-e1f2a3b4c5d6"
+                  },
+                  "conversationType": {
+                    "type": "string",
+                    "description": "Conversation category that determines agent routing and storage metadata.",
+                    "enum": [
+                      "ASK_AKTO",
+                      "TEST_EXECUTION_RESULT",
+                      "PROMPT_PLAYGROUND",
+                      "ANALYZE_REQUESTS",
+                      "DOCS_AGENT",
+                      "ANALYZE_DASHBOARD_DATA"
+                    ],
+                    "example": "ASK_AKTO"
+                  },
+                  "metaData": {
+                    "type": "object",
+                    "description": "Optional structured context to prepend to the message. Must include a `type` key and a `data` key.",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "Context type. Controls how `data` is interpreted.",
+                        "enum": ["sample_request", "dashboard_collections", "test_execution_result"],
+                        "example": "sample_request"
+                      },
+                      "data": {
+                        "description": "Context payload. Shape depends on `type` — see examples.",
+                        "oneOf": [
+                          { "$ref": "#/components/schemas/SampleRequestContext" },
+                          { "$ref": "#/components/schemas/TestExecutionResultContext" },
+                          {
+                            "type": "array",
+                            "description": "For `dashboard_collections`: list of collection metric objects.",
+                            "items": { "type": "object", "additionalProperties": true }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "first_turn_plain": {
+                  "summary": "First turn — no prior context",
+                  "value": {
+                    "message": "Summarise the top security risks in my API collection.",
+                    "conversationType": "ASK_AKTO"
+                  }
+                },
+                "follow_up_turn": {
+                  "summary": "Follow-up turn in existing conversation",
+                  "value": {
+                    "message": "Can you explain the OPEN_REDIRECT risk in more detail?",
+                    "conversationId": "a3f1c2d4-5e6f-7a8b-9c0d-e1f2a3b4c5d6",
+                    "conversationType": "ASK_AKTO"
+                  }
+                },
+                "with_sample_request_context": {
+                  "summary": "First turn with sample API request as context",
+                  "value": {
+                    "message": "Is this endpoint vulnerable to injection attacks?",
+                    "conversationType": "ANALYZE_REQUESTS",
+                    "metaData": {
+                      "type": "sample_request",
+                      "data": {
+                        "apiCollectionId": 1000000,
+                        "url": "https://api.example.com/users",
+                        "method": "GET"
+                      }
+                    }
+                  }
+                },
+                "with_test_execution_context": {
+                  "summary": "Asking about a specific test execution result",
+                  "value": {
+                    "message": "Why did this test flag the endpoint as vulnerable?",
+                    "conversationType": "TEST_EXECUTION_RESULT",
+                    "metaData": {
+                      "type": "test_execution_result",
+                      "data": {
+                        "testName": "OPEN_REDIRECT",
+                        "testCategory": "Injection",
+                        "vulnerable": true,
+                        "severity": "HIGH",
+                        "url": "https://api.example.com/redirect",
+                        "originalMessage": "GET /redirect?url=https://example.com HTTP/1.1\n\nHTTP/1.1 302 Found\nLocation: https://example.com",
+                        "attemptMessage": "GET /redirect?url=https://evil.example.com HTTP/1.1\n\nHTTP/1.1 302 Found\nLocation: https://evil.example.com"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent reply and conversation metadata.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "description": "Conversation response object.",
+                      "properties": {
+                        "response": {
+                          "type": "string",
+                          "description": "The assistant's reply text.",
+                          "example": "Based on your API collection, the top security risks are: 1. Open Redirect on /redirect…"
+                        },
+                        "conversationId": {
+                          "type": "string",
+                          "description": "UUID of the conversation. Use this in subsequent turns.",
+                          "example": "a3f1c2d4-5e6f-7a8b-9c0d-e1f2a3b4c5d6"
+                        },
+                        "finalSentPrompt": {
+                          "type": "string",
+                          "description": "The full prompt that was actually sent to the LLM (including any injected context). Useful for debugging.",
+                          "example": "Current context: GET /users HTTP/1.1 … \n\nUser: Is this endpoint vulnerable?"
+                        },
+                        "tokensUsed": {
+                          "type": "integer",
+                          "description": "Number of LLM tokens consumed by this turn.",
+                          "example": 420
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Auto-generated title for the conversation, set on the first turn.",
+                          "example": "API Security Risks Summary"
+                        }
+                      }
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`conversationType` is null/invalid, or the caller's email matches the internal block-list pattern."
+          }
+        },
+        "tags": ["Conversational Chat"]
+      }
+    },
+    "/api/fetchHistory": {
+      "post": {
+        "summary": "Fetch conversation history",
+        "description": "Returns the most recent conversations from `agent_conversations`, grouped by `conversationId`. Each group includes the accumulated `tokensUsed`, the conversation `title`, the `lastUpdatedAt` timestamp, and the list of prompt/response message pairs.\n\nResults are sorted by `lastUpdatedAt` descending (most recent first) and limited to `limit` conversations (default 5).\n\nSource: `McpAgentAction.fetchHistory()`",
+        "operationId": "fetchHistory",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "description": "Maximum number of distinct conversations to return. Defaults to 5 when 0 or omitted.",
+                    "example": 10
+                  }
+                }
+              },
+              "examples": {
+                "default": {
+                  "summary": "Fetch last 5 conversations (default)",
+                  "value": {}
+                },
+                "custom_limit": {
+                  "summary": "Fetch last 10 conversations",
+                  "value": { "limit": 10 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of grouped conversation history objects.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "history": {
+                          "type": "array",
+                          "description": "Grouped conversation history, one entry per unique `conversationId`.",
+                          "items": {
+                            "$ref": "#/components/schemas/ConversationHistoryEntry"
+                          },
+                          "example": [
+                            {
+                              "_id": "a3f1c2d4-5e6f-7a8b-9c0d-e1f2a3b4c5d6",
+                              "lastUpdatedAt": 1745001234,
+                              "title": "API Security Risks Summary",
+                              "tokensUsed": 840,
+                              "messages": [
+                                {
+                                  "prompt": "Summarise the top security risks in my API collection.",
+                                  "response": "Based on your collection, the top risks are…"
+                                },
+                                {
+                                  "prompt": "Can you explain the OPEN_REDIRECT risk in more detail?",
+                                  "response": "An Open Redirect vulnerability allows an attacker to…"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Conversational Chat"]
+      }
+    },
+    "/api/deleteConversationHistory": {
+      "post": {
+        "summary": "Delete a conversation history",
+        "description": "Permanently deletes all `agent_conversations` documents that share the given `conversationId`. This is irreversible.\n\nSource: `McpAgentAction.deleteConversationHistory()`",
+        "operationId": "deleteConversationHistory",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["conversationId"],
+                "properties": {
+                  "conversationId": {
+                    "type": "string",
+                    "description": "UUID of the conversation to delete.",
+                    "example": "a3f1c2d4-5e6f-7a8b-9c0d-e1f2a3b4c5d6"
+                  }
+                }
+              },
+              "examples": {
+                "delete": {
+                  "summary": "Delete a specific conversation",
+                  "value": {
+                    "conversationId": "a3f1c2d4-5e6f-7a8b-9c0d-e1f2a3b4c5d6"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Conversation deleted successfully."
+          },
+          "400": {
+            "description": "`conversationId` is null or empty."
+          }
+        },
+        "tags": ["Conversational Chat"]
+      }
+    },
+    "/api/analyze_vulnerability": {
+      "post": {
+        "summary": "Analyse a vulnerability / content with AI",
+        "description": "Passes structured content to an LLM handler determined by `analysisType`. Results are cached in-process using a key derived from (`analysisType`, `resultId`, content hash) — subsequent calls with the same key skip the LLM and return the cached result.\n\nCurrently the only supported `analysisType` is `redteaming`, which maps to the `ANALYZE_VULNERABILITY` GPT handler (`AnalyzeVulnerability` using `SelfHostedLlmResultFetcherStrategy`).\n\nThe `requestData` string must be a JSON object with the structure documented in the `VulnerabilityAnalysisRequest` schema.\n\nSource: `VulnerabilityAnalysisAction.analyzeVulnerability()`",
+        "operationId": "analyzeVulnerability",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["requestData", "analysisType"],
+                "properties": {
+                  "requestData": {
+                    "type": "string",
+                    "description": "JSON-encoded string containing the analysis payload. Must be parseable as a MongoDB `BasicDBObject`. See the `VulnerabilityAnalysisRequest` schema for the expected structure.",
+                    "example": "{\"resultId\":\"507f1f77bcf86cd799439011\",\"testContext\":{\"category\":\"Injection\",\"description\":\"Tests for SQL injection via the `id` parameter.\"},\"request\":{\"url\":\"https://api.example.com/users?id=1\",\"method\":\"GET\"},\"response\":{\"status\":200,\"body\":\"{\\\"user\\\":{\\\"id\\\":1,\\\"name\\\":\\\"Alice\\\"}}\"}}"
+                  },
+                  "analysisType": {
+                    "type": "string",
+                    "description": "Type of analysis to perform. Currently only `redteaming` is supported.",
+                    "enum": ["redteaming"],
+                    "example": "redteaming"
+                  },
+                  "resultId": {
+                    "type": "string",
+                    "description": "Optional. Cache identifier (e.g. a test result ObjectId hex). If omitted, the server tries to extract it from `requestData.resultId`. Used to skip redundant LLM calls.",
+                    "example": "507f1f77bcf86cd799439011"
+                  }
+                }
+              },
+              "examples": {
+                "redteaming_analysis": {
+                  "summary": "Analyse a test execution result for vulnerabilities",
+                  "value": {
+                    "requestData": "{\"resultId\":\"507f1f77bcf86cd799439011\",\"testContext\":{\"category\":\"Injection\",\"description\":\"Tests for SQL injection via the id parameter.\"},\"request\":{\"url\":\"https://api.example.com/users?id=1 OR 1=1\",\"method\":\"GET\"},\"response\":{\"status\":200,\"body\":\"{\\\"users\\\":[{\\\"id\\\":1},{\\\"id\\\":2}]}\"}}",
+                    "analysisType": "redteaming",
+                    "resultId": "507f1f77bcf86cd799439011"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Analysis result from the LLM handler. Shape is handler-specific.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "analysisResult": {
+                      "type": "object",
+                      "description": "LLM-generated analysis output. Structure depends on the handler, but typically includes an assessment, severity, and remediation advice.",
+                      "additionalProperties": true,
+                      "example": {
+                        "vulnerable": true,
+                        "severity": "HIGH",
+                        "assessment": "The endpoint returns all rows when the `id` parameter is manipulated with SQL injection syntax, indicating the parameter is not sanitised.",
+                        "remediation": "Use parameterised queries or an ORM layer. Validate and type-cast the `id` input to an integer before use."
+                      }
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`requestData` or `analysisType` is null/empty, or `requestData` cannot be parsed as JSON."
+          }
+        },
+        "tags": ["AI Query"]
+      }
+    },
+    "/api/saveAktoGptConfig": {
+      "post": {
+        "summary": "Save Akto GPT config per collection",
+        "description": "Persists the enabled/disabled state of the AI feature for one or more API collections. After writing, re-fetches and returns the complete, up-to-date config list for all collections in the account (including any collections whose config did not previously exist — they are auto-initialised with the platform default state).\n\nThe default state is `ENABLED` on SaaS deployments and `DISABLED` on self-hosted deployments.\n\nSource: `GptConfigAction.saveAktoGptConfig()`",
+        "operationId": "saveAktoGptConfig",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["currentState"],
+                "properties": {
+                  "currentState": {
+                    "type": "array",
+                    "description": "List of config objects to upsert. Each entry must contain the collection `id` and the desired `state`.",
+                    "items": {
+                      "$ref": "#/components/schemas/AktoGptConfigEntry"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "enable_one_disable_another": {
+                  "summary": "Enable AI for one collection, disable for another",
+                  "value": {
+                    "currentState": [
+                      { "id": 1000000, "state": "ENABLED" },
+                      { "id": 1664578207, "state": "DISABLED" }
+                    ]
+                  }
+                },
+                "enable_all": {
+                  "summary": "Enable AI for a single collection",
+                  "value": {
+                    "currentState": [
+                      { "id": 1000000, "state": "ENABLED" }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated config list for all collections in the account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "currentState": {
+                      "type": "array",
+                      "description": "Full, up-to-date GPT config list for every API collection in the account. Each entry includes the collection ID, state, and human-readable name.",
+                      "items": {
+                        "$ref": "#/components/schemas/AktoGptConfigFull"
+                      },
+                      "example": [
+                        { "id": 1000000,    "state": "ENABLED",  "collectionName": "Production APIs" },
+                        { "id": 1664578207, "state": "DISABLED", "collectionName": "Internal Services" }
+                      ]
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["GPT Config"]
+      }
+    },
+    "/api/addScript": {
+      "post": {
+        "summary": "Add a test script",
+        "description": "Inserts a new JavaScript test script into `test_scripts`. Generates a random UUID as the script's `_id`. Assigns `type` from `testScript.type` if present; otherwise falls back to `scriptType`; otherwise defaults to `PRE_REQUEST`.\n\n**SaaS restriction:** On SaaS deployments, only Akto-internal accounts (`@akto.io` email) may call this endpoint — all other callers receive `ERROR`.\n\nScript types (`TestScript.Type`):\n- `PRE_TEST` — runs once before the entire test suite\n- `PRE_REQUEST` — runs before each individual API request *(default)*\n- `POST_REQUEST` — runs after each individual API request\n- `POST_TEST` — runs once after the entire test suite\n\nSource: `ScriptAction.addScript()`",
+        "operationId": "addScript",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["testScript"],
+                "properties": {
+                  "testScript": {
+                    "$ref": "#/components/schemas/TestScriptInput",
+                    "description": "Script to create. `javascript` is required; `type` is optional."
+                  },
+                  "scriptType": {
+                    "type": "string",
+                    "description": "Fallback script type string if `testScript.type` is not set. Must match a `TestScript.Type` enum value.",
+                    "enum": ["PRE_TEST", "PRE_REQUEST", "POST_REQUEST", "POST_TEST"],
+                    "example": "PRE_REQUEST"
+                  }
+                }
+              },
+              "examples": {
+                "add_pre_request": {
+                  "summary": "Add a PRE_REQUEST script that injects a custom header",
+                  "value": {
+                    "testScript": {
+                      "javascript": "// Inject a tracing header before every request\nrequest.headers['X-Trace-Id'] = generateUUID();",
+                      "type": "PRE_REQUEST"
+                    }
+                  }
+                },
+                "add_post_test": {
+                  "summary": "Add a POST_TEST cleanup script (type via scriptType fallback)",
+                  "value": {
+                    "testScript": {
+                      "javascript": "// Clean up test artefacts\nconsole.log('Test suite finished. Total requests:', stats.totalRequests);"
+                    },
+                    "scriptType": "POST_TEST"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Script inserted successfully. No additional fields are returned."
+          },
+          "400": {
+            "description": "`testScript` is null, `testScript.javascript` is null, or the caller is not authorised on a SaaS deployment."
+          }
+        },
+        "tags": ["Test Scripts"]
+      }
+    },
+    "/api/fetchScript": {
+      "post": {
+        "summary": "Fetch the active test script for a type",
+        "description": "Returns the most recently stored `TestScript` document for the given type. Type resolution follows the same priority as `addScript`: `testScript.type` → `scriptType` → `PRE_REQUEST` default.\n\nSource: `ScriptAction.fetchScript()`",
+        "operationId": "fetchScript",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "testScript": {
+                    "type": "object",
+                    "description": "Only the `type` field is read from this object when present.",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": ["PRE_TEST", "PRE_REQUEST", "POST_REQUEST", "POST_TEST"],
+                        "description": "Script type to retrieve.",
+                        "example": "PRE_REQUEST"
+                      }
+                    }
+                  },
+                  "scriptType": {
+                    "type": "string",
+                    "description": "Alternative way to specify the script type. Used if `testScript.type` is absent.",
+                    "enum": ["PRE_TEST", "PRE_REQUEST", "POST_REQUEST", "POST_TEST"],
+                    "example": "PRE_REQUEST"
+                  }
+                }
+              },
+              "examples": {
+                "via_testScript_type": {
+                  "summary": "Fetch PRE_REQUEST script via testScript.type",
+                  "value": {
+                    "testScript": { "type": "PRE_REQUEST" }
+                  }
+                },
+                "via_scriptType": {
+                  "summary": "Fetch PRE_REQUEST script via scriptType string",
+                  "value": {
+                    "scriptType": "PRE_REQUEST"
+                  }
+                },
+                "default": {
+                  "summary": "Fetch the default (PRE_REQUEST) script",
+                  "value": {}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The active test script for the requested type. `testScript` is `null` if no script exists for that type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "testScript": {
+                      "description": "The matching `TestScript` document, or `null` if none exists.",
+                      "oneOf": [
+                        { "$ref": "#/components/schemas/TestScriptFull" },
+                        { "type": "null" }
+                      ]
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                },
+                "examples": {
+                  "found": {
+                    "summary": "Script found",
+                    "value": {
+                      "testScript": {
+                        "id": "b1c2d3e4-f5a6-7890-abcd-ef1234567890",
+                        "javascript": "request.headers['X-Trace-Id'] = generateUUID();",
+                        "type": "PRE_REQUEST",
+                        "author": "admin@example.com",
+                        "lastCreatedAt": 1745001000,
+                        "lastUpdatedAt": 1745001000
+                      }
+                    }
+                  },
+                  "not_found": {
+                    "summary": "No script exists for the type",
+                    "value": {
+                      "testScript": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Test Scripts"]
+      }
+    },
+    "/api/updateScript": {
+      "post": {
+        "summary": "Update an existing test script",
+        "description": "Replaces the `javascript` content of an existing script identified by `testScript.id`. Also updates `author` (to the current user's email) and `lastUpdatedAt` (to the current epoch).\n\n**SaaS restriction:** On SaaS deployments, only Akto-internal accounts (`@akto.io` email) may call this endpoint.\n\nSource: `ScriptAction.updateScript()`",
+        "operationId": "updateScript",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["testScript"],
+                "properties": {
+                  "testScript": {
+                    "$ref": "#/components/schemas/TestScriptUpdate",
+                    "description": "Must contain `id` (the script's UUID) and `javascript` (the new content)."
+                  }
+                }
+              },
+              "examples": {
+                "update_javascript": {
+                  "summary": "Update the JavaScript content of an existing script",
+                  "value": {
+                    "testScript": {
+                      "id": "b1c2d3e4-f5a6-7890-abcd-ef1234567890",
+                      "javascript": "// Updated: also inject correlation ID\nrequest.headers['X-Trace-Id'] = generateUUID();\nrequest.headers['X-Correlation-Id'] = context.testRunId;"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Script updated successfully. No additional fields are returned."
+          },
+          "400": {
+            "description": "`testScript` is null, `testScript.javascript` is null, or the caller is not authorised on a SaaS deployment."
+          }
+        },
+        "tags": ["Test Scripts"]
+      }
     }
   }
 }
