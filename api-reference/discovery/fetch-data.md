@@ -273,7 +273,7 @@
 
 ## Data Types & Sample Data
 
-<table data-full-width="true"><thead><tr><th width="50">#</th><th width="430">API</th><th>Description</th></tr></thead><tbody><tr><td>1</td><td><strong>POST /api/fetchAllSampleData</strong></td><td>Fetches all sample request/response data entries across collections.</td></tr></tbody></table>
+<table data-full-width="true"><thead><tr><th width="50">#</th><th width="430">API</th><th>Description</th></tr></thead><tbody><tr><td>1</td><td><strong>POST /api/fetchAllSampleData</strong></td><td>Fetches all sample Agentic Request/Agentic Response data entries across agentic collections.</td></tr></tbody></table>
 
 {% openapi-operation spec="akto-agentic-security-api" path="/api/fetchAllSampleData" method="post" %}
 [OpenAPI akto-agentic-security-api](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/agentic_security/.gitbook/assets/AktoSwagger.json)
