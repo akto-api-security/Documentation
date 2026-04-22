@@ -30841,6 +30841,1500 @@
           "422": { "description": "Unprocessable — invalid type (HARDCODED/SAMPLE_DATA/TLS_AUTH) or login flow execution failed", "content": { "application/json": { "schema": { "type": "object", "properties": { "actionErrors": { "type": "array", "items": { "type": "string", "example": "Invalid Type Value" } } } } } } }
         }
       }
+    },
+    "/api/getIssueSummaryInfo": {
+      "post": {
+        "summary": "Get issue summary info",
+        "description": "Returns a map of test sub-category names to their total issue counts within an optional time range and optional collection filter. Used by the dashboard summary widget.\n\nSource: `StartTestAction.getIssueSummaryInfo()`",
+        "operationId": "getIssueSummaryInfo",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startTimestamp": {
+                    "type": "integer",
+                    "description": "Start of the time window (epoch seconds). Defaults to 0 (all time).",
+                    "example": 1745000000
+                  },
+                  "endTimestamp": {
+                    "type": "integer",
+                    "description": "End of the time window (epoch seconds). Defaults to `Context.now()` when 0.",
+                    "example": 1745600000
+                  },
+                  "issueSummaryFilterCollectionIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "description": "Optional list of API collection IDs to restrict the summary to.",
+                    "example": [1000000, 1664578207]
+                  }
+                }
+              },
+              "examples": {
+                "all_time": {
+                  "summary": "All-time summary, no collection filter",
+                  "value": {
+                    "startTimestamp": 0,
+                    "endTimestamp": 0
+                  }
+                },
+                "filtered": {
+                  "summary": "Summary for a specific time range and two collections",
+                  "value": {
+                    "startTimestamp": 1745000000,
+                    "endTimestamp": 1745600000,
+                    "issueSummaryFilterCollectionIds": [1000000]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Map of sub-category IDs to issue counts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "issuesSummaryInfoMap": {
+                      "type": "object",
+                      "description": "Map from test sub-category name to total issue count.",
+                      "additionalProperties": {
+                        "type": "integer"
+                      },
+                      "example": {
+                        "OPEN_REDIRECT": 4,
+                        "BROKEN_AUTHENTICATION": 2,
+                        "SQL_INJECTION": 1
+                      }
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Issues"]
+      }
+    },
+    "/api/bulkUpdateIssueStatus": {
+      "post": {
+        "summary": "Bulk update issue status",
+        "description": "Updates the status (OPEN, FIXED, IGNORED) of one or more issues identified by their `TestingIssuesId` objects. Optionally sets an `ignoreReason` (required when `statusToBeUpdated` is `IGNORED`), a custom `description`, and a map of result hex IDs used for asynchronous summary-count recalculation.\n\nSource: `IssuesAction.bulkUpdateIssueStatus()`",
+        "operationId": "bulkUpdateIssueStatus",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["issueIdArray", "statusToBeUpdated", "ignoreReason"],
+                "properties": {
+                  "issueIdArray": {
+                    "type": "array",
+                    "description": "List of TestingIssuesId objects identifying the issues to update.",
+                    "items": {
+                      "$ref": "#/components/schemas/TestingIssuesId"
+                    }
+                  },
+                  "statusToBeUpdated": {
+                    "type": "string",
+                    "enum": ["OPEN", "FIXED", "IGNORED"],
+                    "description": "New status to set on all specified issues."
+                  },
+                  "ignoreReason": {
+                    "type": "string",
+                    "description": "Reason for ignoring the issues. Required even when `statusToBeUpdated` is not IGNORED (pass an empty string). Stored only when status is IGNORED.",
+                    "example": "False positive — rate-limit header present in production"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Optional free-text description to attach to the issues.",
+                    "example": "Reviewed by security team on 2026-04-22"
+                  },
+                  "testingRunResultHexIdsMap": {
+                    "type": "object",
+                    "description": "Map of testing-run-result hex IDs to severity strings. Used asynchronously to decrement the corresponding summary counts.",
+                    "additionalProperties": {
+                      "type": "string",
+                      "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"]
+                    },
+                    "example": {
+                      "507f1f77bcf86cd799439011": "HIGH"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "mark_ignored": {
+                  "summary": "Mark two issues as IGNORED",
+                  "value": {
+                    "issueIdArray": [
+                      {
+                        "apiInfoKey": {
+                          "apiCollectionId": 1000000,
+                          "method": "GET",
+                          "url": "https://api.example.com/redirect"
+                        },
+                        "testErrorSource": "AUTOMATED_TESTING",
+                        "testSubCategory": "OPEN_REDIRECT"
+                      }
+                    ],
+                    "statusToBeUpdated": "IGNORED",
+                    "ignoreReason": "Not exploitable in our configuration",
+                    "description": "",
+                    "testingRunResultHexIdsMap": {
+                      "507f1f77bcf86cd799439011": "HIGH"
+                    }
+                  }
+                },
+                "mark_fixed": {
+                  "summary": "Mark an issue as FIXED",
+                  "value": {
+                    "issueIdArray": [
+                      {
+                        "apiInfoKey": {
+                          "apiCollectionId": 1000000,
+                          "method": "POST",
+                          "url": "https://api.example.com/login"
+                        },
+                        "testErrorSource": "AUTOMATED_TESTING",
+                        "testSubCategory": "BROKEN_AUTHENTICATION"
+                      }
+                    ],
+                    "statusToBeUpdated": "FIXED",
+                    "ignoreReason": "",
+                    "testingRunResultHexIdsMap": {}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Status updated successfully. Response body contains no additional fields beyond the standard Struts2 action result."
+          },
+          "400": {
+            "description": "Missing required fields (`issueIdArray`, `statusToBeUpdated`, or `ignoreReason` is null)."
+          }
+        },
+        "tags": ["Issues"]
+      }
+    },
+    "/api/bulkUpdateIssueSeverity": {
+      "post": {
+        "summary": "Bulk update issue severity",
+        "description": "Updates the severity of one or more issues across all related collections (`testing_run_issues`, `testing_run_result`, `vulnerable_testing_run_results`, and `testing_run_result_summaries`). Processed in chunks of 1 000 records to handle large datasets safely.\n\nSource: `IssuesAction.bulkUpdateIssueSeverity()`",
+        "operationId": "bulkUpdateIssueSeverity",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["issueIdArray", "severityToBeUpdated"],
+                "properties": {
+                  "issueIdArray": {
+                    "type": "array",
+                    "description": "List of TestingIssuesId objects identifying the issues to update.",
+                    "items": {
+                      "$ref": "#/components/schemas/TestingIssuesId"
+                    }
+                  },
+                  "severityToBeUpdated": {
+                    "type": "string",
+                    "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
+                    "description": "New severity to assign to all specified issues."
+                  }
+                }
+              },
+              "examples": {
+                "downgrade_to_medium": {
+                  "summary": "Downgrade one issue to MEDIUM",
+                  "value": {
+                    "issueIdArray": [
+                      {
+                        "apiInfoKey": {
+                          "apiCollectionId": 1000000,
+                          "method": "GET",
+                          "url": "https://api.example.com/redirect"
+                        },
+                        "testErrorSource": "AUTOMATED_TESTING",
+                        "testSubCategory": "OPEN_REDIRECT"
+                      }
+                    ],
+                    "severityToBeUpdated": "MEDIUM"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Severity updated successfully across all related collections."
+          },
+          "400": {
+            "description": "`severityToBeUpdated` or `issueIdArray` is null / empty."
+          }
+        },
+        "tags": ["Issues"]
+      }
+    },
+    "/api/setFalsePositives": {
+      "post": {
+        "summary": "Set false positives for sensitive data",
+        "description": "Marks specific parameter keys or API-specific keys as false positives for a given sensitive data type (custom or built-in). The system removes existing `SingleTypeInfo` records for those keys and re-classifies them to a generic/non-sensitive sub-type asynchronously.\n\nSource: `IgnoreFalsePositivesAction.setFalsePositivesInSensitiveData()`",
+        "operationId": "setFalsePositives",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["falsePositives"],
+                "properties": {
+                  "falsePositives": {
+                    "type": "object",
+                    "description": "Map from sensitive data type name to an `IgnoreData` object that specifies which parameter keys to mark as false positives.",
+                    "additionalProperties": {
+                      "$ref": "#/components/schemas/IgnoreData"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "ignore_global_key": {
+                  "summary": "Mark 'ssn' as a false positive for the SOCIAL_SECURITY_NUMBER type across all APIs",
+                  "value": {
+                    "falsePositives": {
+                      "SOCIAL_SECURITY_NUMBER": {
+                        "ignoredKeysInAllAPIs": ["ssn", "social_security"],
+                        "ignoredKeysInSelectedAPIs": {}
+                      }
+                    }
+                  }
+                },
+                "ignore_api_specific": {
+                  "summary": "Mark 'token' as a false positive only for a specific endpoint",
+                  "value": {
+                    "falsePositives": {
+                      "JWT": {
+                        "ignoredKeysInAllAPIs": [],
+                        "ignoredKeysInSelectedAPIs": {
+                          "token": [
+                            {
+                              "url": "https://api.example.com/token",
+                              "method": "POST",
+                              "apiCollectionId": 1000000,
+                              "param": "token",
+                              "isHeader": false,
+                              "responseCode": -1
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "False positives applied. The `SingleTypeInfo` records are updated asynchronously."
+          },
+          "400": {
+            "description": "`falsePositives` is null."
+          }
+        },
+        "tags": ["Issues"]
+      }
+    },
+    "/api/getIssuesTrend": {
+      "post": {
+        "summary": "Get issues trend over time",
+        "description": "Returns a day-keyed map of issue counts grouped by test sub-category for a given time range. Used to render the trend chart on the Issues dashboard.\n\nSource: `DashboardAction.fetchIssuesTrend()`",
+        "operationId": "getIssuesTrend",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startTimeStamp": {
+                    "type": "integer",
+                    "description": "Start of the trend window (epoch seconds).",
+                    "example": 1745000000
+                  },
+                  "endTimeStamp": {
+                    "type": "integer",
+                    "description": "End of the trend window (epoch seconds). Defaults to `Context.now()` when 0.",
+                    "example": 1745600000
+                  }
+                }
+              },
+              "examples": {
+                "last_7_days": {
+                  "summary": "Trend for the last 7 days",
+                  "value": {
+                    "startTimeStamp": 1744995000,
+                    "endTimeStamp": 1745600000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Map of day-epoch integers to lists of sub-category trend objects.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "issuesTrendMap": {
+                      "type": "object",
+                      "description": "Map from day epoch (int) to list of `IssueTrendType` objects, one per sub-category active that day.",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/IssueTrendType"
+                        }
+                      },
+                      "example": {
+                        "1745001600": [
+                          { "count": 3, "subCategory": "OPEN_REDIRECT" },
+                          { "count": 1, "subCategory": "SQL_INJECTION" }
+                        ],
+                        "1745088000": [
+                          { "count": 2, "subCategory": "OPEN_REDIRECT" }
+                        ]
+                      }
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Issues"]
+      }
+    },
+    "/api/findTotalIssues": {
+      "post": {
+        "summary": "Find total issues count",
+        "description": "Returns two counts for the dashboard summary tile:\n- `totalIssuesCount`: number of OPEN issues created on or before `endTimeStamp` (excluding deactivated collections).\n- `oldOpenCount`: number of OPEN+FIXED issues created on or before `startTimeStamp` (used as the baseline for the period delta).\n\nSource: `DashboardAction.findTotalIssues()`",
+        "operationId": "findTotalIssues",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startTimeStamp": {
+                    "type": "integer",
+                    "description": "Baseline epoch for `oldOpenCount`. Defaults to `now - 24 h` when 0.",
+                    "example": 1745000000
+                  },
+                  "endTimeStamp": {
+                    "type": "integer",
+                    "description": "Upper bound epoch for `totalIssuesCount`.",
+                    "example": 1745600000
+                  }
+                }
+              },
+              "examples": {
+                "default": {
+                  "summary": "Default call with explicit timestamps",
+                  "value": {
+                    "startTimeStamp": 1745000000,
+                    "endTimeStamp": 1745600000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Total and baseline issue counts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "totalIssuesCount": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "Number of OPEN issues created on or before `endTimeStamp`, excluding deactivated collections.",
+                      "example": 186
+                    },
+                    "oldOpenCount": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "Number of OPEN+FIXED issues created on or before `startTimeStamp`, used to compute the delta for the period.",
+                      "example": 172
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Issues"]
+      }
+    },
+    "/api/fetchIssuesData": {
+      "post": {
+        "summary": "Fetch consolidated issues analytics data",
+        "description": "Consolidated API that returns multiple issues analytics datasets in a single response: issues over time, issues by severity, average issue age per severity, open vs. resolved issues over time, top issues by category, top hostnames by critical/high issues, and compliance-at-risk percentages. Intended for the agentic/consolidated dashboard view.\n\nSource: `AgenticDashboardAction.fetchIssuesData()`",
+        "operationId": "fetchIssuesData",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startTimestamp": {
+                    "type": "integer",
+                    "description": "Start of the analytics window (epoch seconds). Pass 0 for all-time.",
+                    "example": 1745000000
+                  },
+                  "endTimestamp": {
+                    "type": "integer",
+                    "description": "End of the analytics window (epoch seconds). Defaults to `Context.now()` when 0.",
+                    "example": 1745600000
+                  }
+                }
+              },
+              "examples": {
+                "last_30_days": {
+                  "summary": "Analytics for a 30-day window",
+                  "value": {
+                    "startTimestamp": 1742400000,
+                    "endTimestamp": 1745000000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Consolidated issues analytics.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "issuesOverTime": {
+                          "type": "array",
+                          "description": "OPEN issues grouped by time period.",
+                          "items": { "$ref": "#/components/schemas/TimePeriodCount" },
+                          "example": [
+                            { "_id": "2026-04-15", "count": 5 },
+                            { "_id": "2026-04-16", "count": 3 }
+                          ]
+                        },
+                        "issuesBySeverity": {
+                          "type": "object",
+                          "description": "Count of OPEN issues per severity level.",
+                          "properties": {
+                            "critical": { "type": "integer", "example": 2 },
+                            "high":     { "type": "integer", "example": 8 },
+                            "medium":   { "type": "integer", "example": 15 },
+                            "low":      { "type": "integer", "example": 6 },
+                            "total":    { "type": "integer", "example": 31 }
+                          }
+                        },
+                        "averageIssueAge": {
+                          "type": "object",
+                          "description": "Average age (in days) of OPEN issues per severity.",
+                          "properties": {
+                            "critical": { "type": "number", "format": "double", "example": 14.5 },
+                            "high":     { "type": "number", "format": "double", "example": 20.3 },
+                            "medium":   { "type": "number", "format": "double", "example": 35.1 },
+                            "low":      { "type": "number", "format": "double", "example": 60.0 }
+                          }
+                        },
+                        "openResolvedIssues": {
+                          "type": "object",
+                          "description": "OPEN and FIXED issue counts grouped by time period.",
+                          "properties": {
+                            "open": {
+                              "type": "array",
+                              "items": { "$ref": "#/components/schemas/TimePeriodCount" }
+                            },
+                            "resolved": {
+                              "type": "array",
+                              "items": { "$ref": "#/components/schemas/TimePeriodCount" }
+                            }
+                          }
+                        },
+                        "topIssuesByCategory": {
+                          "type": "array",
+                          "description": "Top 5 test sub-categories by OPEN issue count.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "_id":   { "type": "string", "example": "Broken Object Level Authorization" },
+                              "count": { "type": "integer", "example": 12 }
+                            }
+                          }
+                        },
+                        "topHostnamesByIssues": {
+                          "type": "array",
+                          "description": "Top 5 hostnames (collections with a hostname set) ranked by CRITICAL+HIGH open issue count.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "hostname": { "type": "string", "example": "api.example.com" },
+                              "count":    { "type": "integer", "example": 7 }
+                            }
+                          }
+                        },
+                        "complianceAtRisks": {
+                          "type": "array",
+                          "description": "Top 4 compliance standards with the highest percentage of tested APIs having related issues.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name":       { "type": "string", "example": "OWASP API Security Top 10" },
+                              "percentage": { "type": "number", "format": "double", "example": 45.5 },
+                              "count":      { "type": "integer", "example": 10 }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Issues"]
+      }
+    },
+    "/api/fetchUrlsByIssues": {
+      "post": {
+        "summary": "Fetch URLs grouped by test sub-category",
+        "description": "Aggregates OPEN issues from `testing_run_issues` and groups unique URL+method pairs by test sub-category. Only groups with more than one distinct URL+method pair are included (threshold = 1).\n\n- When `showTestSubCategories` is `false`: returns only `totalCount` (number of qualifying sub-categories).\n- When `showTestSubCategories` is `true`: returns `testSubCategories` (full list) and `totalCount`.\n\nSource: `IssuesAction.fetchUrlsByIssues()`",
+        "operationId": "fetchUrlsByIssues",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "showTestSubCategories": {
+                    "type": "boolean",
+                    "description": "When true, include the full sub-category list in the response. When false, return only the count.",
+                    "example": true
+                  }
+                }
+              },
+              "examples": {
+                "count_only": {
+                  "summary": "Return only the total count",
+                  "value": { "showTestSubCategories": false }
+                },
+                "full_list": {
+                  "summary": "Return the full list of sub-categories with their URL sets",
+                  "value": { "showTestSubCategories": true }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sub-category URL aggregation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "testSubCategories": {
+                          "type": "array",
+                          "description": "Present only when `showTestSubCategories` is true. List of sub-category objects, each with the set of unique URLs that have an open issue for that category.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "object",
+                                "description": "Grouped ID containing the test sub-category name.",
+                                "properties": {
+                                  "testSubCategory": {
+                                    "type": "string",
+                                    "example": "OPEN_REDIRECT"
+                                  }
+                                }
+                              },
+                              "apiInfoKeySet": {
+                                "type": "array",
+                                "description": "Unique URL+method+collectionId combinations with an open issue for this sub-category.",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "url":             { "type": "string", "example": "https://api.example.com/redirect" },
+                                    "method":          { "type": "string", "example": "GET" },
+                                    "apiCollectionId": { "type": "integer", "example": 1000000 }
+                                  }
+                                }
+                              },
+                              "apiInfoKeySetCount": {
+                                "type": "integer",
+                                "description": "Number of unique URL+method pairs for this sub-category.",
+                                "example": 3
+                              }
+                            }
+                          }
+                        },
+                        "totalCount": {
+                          "type": "integer",
+                          "description": "Number of sub-categories (or total count when `showTestSubCategories` is false).",
+                          "example": 5
+                        }
+                      }
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Issues"]
+      }
+    },
+    "/api/updateIssueDescription": {
+      "post": {
+        "summary": "Update issue description",
+        "description": "Sets a free-text description on a single issue identified by its `TestingIssuesId`. Both `issueId` and `description` are required.\n\nSource: `IssuesAction.updateIssueDescription()`",
+        "operationId": "updateIssueDescription",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["issueId", "description"],
+                "properties": {
+                  "issueId": {
+                    "$ref": "#/components/schemas/TestingIssuesId",
+                    "description": "Identifies the issue to update."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "New description text to set on the issue.",
+                    "example": "Confirmed exploitable via the /redirect endpoint with an unvalidated `url` parameter."
+                  }
+                }
+              },
+              "examples": {
+                "update": {
+                  "summary": "Update description for an open-redirect issue",
+                  "value": {
+                    "issueId": {
+                      "apiInfoKey": {
+                        "apiCollectionId": 1000000,
+                        "method": "GET",
+                        "url": "https://api.example.com/redirect"
+                      },
+                      "testErrorSource": "AUTOMATED_TESTING",
+                      "testSubCategory": "OPEN_REDIRECT"
+                    },
+                    "description": "Confirmed exploitable via the /redirect endpoint."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Description updated successfully."
+          },
+          "400": {
+            "description": "`issueId` or `description` is null."
+          }
+        },
+        "tags": ["Issues"]
+      }
+    },
+    "/api/getReportFilters": {
+      "post": {
+        "summary": "Get test report filters",
+        "description": "Retrieves the filter configuration and issue IDs that were stored when the report was generated via `generateTestReport`. The `generatedReportId` is the ObjectId hex string returned by that endpoint.\n\nSource: `IssuesAction.getReportFilters()`",
+        "operationId": "getReportFilters",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["generatedReportId"],
+                "properties": {
+                  "generatedReportId": {
+                    "type": "string",
+                    "description": "ObjectId hex string of the test report document (returned by generateTestReport).",
+                    "example": "696f83245ae7e4166f7347ad"
+                  }
+                }
+              },
+              "examples": {
+                "fetch": {
+                  "summary": "Fetch filters for a generated report",
+                  "value": {
+                    "generatedReportId": "696f83245ae7e4166f7347ad"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Report filter configuration.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "filtersForReport": {
+                          "type": "object",
+                          "description": "Map of filter keys to filter value lists used when the report was created.",
+                          "additionalProperties": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                          },
+                          "example": {
+                            "severity": ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
+                            "startTimestamp": ["1745000000"],
+                            "endTimestamp": ["1745600000"]
+                          }
+                        },
+                        "issueIdsForReport": {
+                          "type": "array",
+                          "description": "List of TestingIssuesId objects included in the report.",
+                          "items": {
+                            "$ref": "#/components/schemas/TestingIssuesId"
+                          }
+                        }
+                      }
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`generatedReportId` is null."
+          }
+        },
+        "tags": ["Reports"]
+      }
+    },
+    "/api/downloadReportPDF": {
+      "post": {
+        "summary": "Download test report as PDF",
+        "description": "Generates or polls for a PDF rendering of a previously created test report (via `generateTestReport`). On the first call set `firstPollRequest: true`; subsequent polling calls set it to `false` and pass back the `reportId` returned in the previous response. Returns the PDF as a base64-encoded string when `status` is `COMPLETED`.\n\nSource: `ReportAction.downloadReportPDF()`",
+        "operationId": "downloadReportPDF",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reportId": {
+                    "type": "string",
+                    "description": "ObjectId hex string of the report document. On the first call this is the ID returned by `generateTestReport`. On subsequent polling calls it is the `reportId` returned in the previous response.",
+                    "example": "696f83245ae7e4166f7347ad"
+                  },
+                  "organizationName": {
+                    "type": "string",
+                    "description": "Organisation name to embed in the PDF header.",
+                    "example": "Acme Corp"
+                  },
+                  "reportDate": {
+                    "type": "string",
+                    "description": "Human-readable date string to embed in the PDF.",
+                    "example": "2026-04-22"
+                  },
+                  "reportUrl": {
+                    "type": "string",
+                    "description": "URL at which the report is hosted (rendered by the headless browser).",
+                    "example": "https://app.example.com/dashboard/reports/696f83245ae7e4166f7347ad"
+                  },
+                  "username": {
+                    "type": "string",
+                    "description": "Username of the requester to embed in the PDF.",
+                    "example": "admin@example.com"
+                  },
+                  "firstPollRequest": {
+                    "type": "boolean",
+                    "description": "Set to `true` on the initial trigger call; `false` on all subsequent polling calls.",
+                    "example": true
+                  }
+                }
+              },
+              "examples": {
+                "first_call": {
+                  "summary": "Initial PDF generation request",
+                  "value": {
+                    "reportId": "696f83245ae7e4166f7347ad",
+                    "organizationName": "Acme Corp",
+                    "reportDate": "2026-04-22",
+                    "reportUrl": "https://app.example.com/dashboard/reports/696f83245ae7e4166f7347ad",
+                    "username": "admin@example.com",
+                    "firstPollRequest": true
+                  }
+                },
+                "poll_call": {
+                  "summary": "Subsequent polling call",
+                  "value": {
+                    "reportId": "696f83245ae7e4166f7347ad",
+                    "firstPollRequest": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "PDF generation status and, when complete, the base64-encoded PDF.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pdf": {
+                      "type": "string",
+                      "description": "Base64-encoded PDF content. Non-null only when `status` is `COMPLETED`.",
+                      "example": "[REDACTED_BASE64_PDF]"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Current generation status.",
+                      "enum": ["PENDING", "PROCESSING", "COMPLETED", "ERROR"],
+                      "example": "COMPLETED"
+                    },
+                    "reportId": {
+                      "type": "string",
+                      "description": "Report document ObjectId hex string. Use this as `reportId` in subsequent polling calls.",
+                      "example": "696f83245ae7e4166f7347ad"
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Reports"]
+      }
+    },
+    "/api/generateThreatReport": {
+      "post": {
+        "summary": "Generate a threat report",
+        "description": "Creates a new threat report document in `test_reports` with the provided filter criteria and threat IDs. Automatically adds `{label: [THREAT]}` to `filtersForReport`. Returns the `generatedReportId` (ObjectId hex) needed by `getThreatReportFilters` and `downloadThreatReportPDF`.\n\nSource: `ThreatReportAction.generateThreatReport()`",
+        "operationId": "generateThreatReport",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filtersForReport": {
+                    "type": "object",
+                    "description": "Map of filter keys to value lists. The `label` key will be overwritten with `[THREAT]` by the server.",
+                    "additionalProperties": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "example": {
+                      "severity": ["CRITICAL", "HIGH"],
+                      "startTimestamp": ["1745000000"],
+                      "endTimestamp": ["1745600000"]
+                    }
+                  },
+                  "threatIdsForReport": {
+                    "type": "array",
+                    "description": "Optional list of specific threat event IDs (hex strings) to include in the report. Pass null or omit to include all threats matching the filters.",
+                    "items": { "type": "string" },
+                    "example": ["507f1f77bcf86cd799439011", "507f1f77bcf86cd799439012"]
+                  }
+                }
+              },
+              "examples": {
+                "all_high_critical": {
+                  "summary": "Generate a threat report for high and critical threats",
+                  "value": {
+                    "filtersForReport": {
+                      "severity": ["CRITICAL", "HIGH"],
+                      "startTimestamp": ["1745000000"],
+                      "endTimestamp": ["1745600000"]
+                    },
+                    "threatIdsForReport": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Report created. Returns the ObjectId of the new report document.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "generatedReportId": {
+                      "type": "string",
+                      "description": "ObjectId hex string of the newly created threat report document.",
+                      "example": "696f83245ae7e4166f7347ae"
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Reports"]
+      }
+    },
+    "/api/getThreatReportFilters": {
+      "post": {
+        "summary": "Get threat report filters",
+        "description": "Retrieves the filter configuration and threat IDs that were stored when the report was generated via `generateThreatReport`.\n\nSource: `ThreatReportAction.getThreatReportFilters()`",
+        "operationId": "getThreatReportFilters",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["generatedReportId"],
+                "properties": {
+                  "generatedReportId": {
+                    "type": "string",
+                    "description": "ObjectId hex string of the threat report (returned by `generateThreatReport`).",
+                    "example": "696f83245ae7e4166f7347ae"
+                  }
+                }
+              },
+              "examples": {
+                "fetch": {
+                  "summary": "Fetch filters for a generated threat report",
+                  "value": {
+                    "generatedReportId": "696f83245ae7e4166f7347ae"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Threat report filter configuration.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "object",
+                      "properties": {
+                        "filtersForReport": {
+                          "type": "object",
+                          "description": "Map of filter keys to filter value lists (as stored at report creation time). Always includes `{label: [THREAT]}`.",
+                          "additionalProperties": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                          },
+                          "example": {
+                            "severity": ["CRITICAL", "HIGH"],
+                            "label": ["THREAT"],
+                            "startTimestamp": ["1745000000"],
+                            "endTimestamp": ["1745600000"]
+                          }
+                        },
+                        "threatIdsForReport": {
+                          "type": "array",
+                          "description": "List of threat event IDs included in the report. Null if all matching threats were included.",
+                          "items": { "type": "string" },
+                          "example": ["507f1f77bcf86cd799439011"]
+                        }
+                      }
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`generatedReportId` is null, or the threat report document was not found."
+          }
+        },
+        "tags": ["Reports"]
+      }
+    },
+    "/api/downloadThreatReportPDF": {
+      "post": {
+        "summary": "Download threat report as PDF",
+        "description": "Generates or polls for a PDF rendering of a previously created threat report (via `generateThreatReport`). Polling semantics are identical to `downloadReportPDF`: set `firstPollRequest: true` on the first call, then `false` on subsequent polling calls.\n\nSource: `ThreatReportAction.downloadThreatReportPDF()`",
+        "operationId": "downloadThreatReportPDF",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reportId": {
+                    "type": "string",
+                    "description": "ObjectId hex string of the threat report document.",
+                    "example": "696f83245ae7e4166f7347ae"
+                  },
+                  "organizationName": {
+                    "type": "string",
+                    "description": "Organisation name to embed in the PDF header.",
+                    "example": "Acme Corp"
+                  },
+                  "reportDate": {
+                    "type": "string",
+                    "description": "Human-readable date string to embed in the PDF.",
+                    "example": "2026-04-22"
+                  },
+                  "reportUrl": {
+                    "type": "string",
+                    "description": "URL at which the report page is hosted (rendered by the headless browser).",
+                    "example": "https://app.example.com/dashboard/reports/threat/696f83245ae7e4166f7347ae"
+                  },
+                  "username": {
+                    "type": "string",
+                    "description": "Username of the requester to embed in the PDF.",
+                    "example": "admin@example.com"
+                  },
+                  "firstPollRequest": {
+                    "type": "boolean",
+                    "description": "Set to `true` on the initial trigger call; `false` on subsequent polling calls.",
+                    "example": true
+                  }
+                }
+              },
+              "examples": {
+                "first_call": {
+                  "summary": "Initial PDF generation request for a threat report",
+                  "value": {
+                    "reportId": "696f83245ae7e4166f7347ae",
+                    "organizationName": "Acme Corp",
+                    "reportDate": "2026-04-22",
+                    "reportUrl": "https://app.example.com/dashboard/reports/threat/696f83245ae7e4166f7347ae",
+                    "username": "admin@example.com",
+                    "firstPollRequest": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "PDF generation status and base64 PDF when complete.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pdf": {
+                      "type": "string",
+                      "description": "Base64-encoded PDF content. Non-null only when `status` is `COMPLETED`.",
+                      "example": "[REDACTED_BASE64_PDF]"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["PENDING", "PROCESSING", "COMPLETED", "ERROR"],
+                      "example": "COMPLETED"
+                    },
+                    "reportId": {
+                      "type": "string",
+                      "description": "Report document ObjectId hex string.",
+                      "example": "696f83245ae7e4166f7347ae"
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Reports"]
+      }
+    },
+    "/api/downloadSamplePdf": {
+      "post": {
+        "summary": "Download a sample PDF report",
+        "description": "Requests a pre-built sample PDF from the Puppeteer replay service (configured via the `PUPPETEER_REPLAY_SERVICE_URL` environment variable). Requires no request body. Returns a base64-encoded PDF on success.\n\nSource: `ReportAction.downloadSamplePdf()`",
+        "operationId": "downloadSamplePdf",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Empty body — no request parameters are required.",
+                "example": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sample PDF content.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pdf": {
+                      "type": "string",
+                      "description": "Base64-encoded sample PDF content.",
+                      "example": "[REDACTED_BASE64_PDF]"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["COMPLETED", "ERROR"],
+                      "example": "COMPLETED"
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The Puppeteer service did not return a `base64PDF` field, or the service URL is not configured."
+          }
+        },
+        "tags": ["Reports"]
+      }
+    },
+    "/api/fetchConversationsFromConversationId": {
+      "post": {
+        "summary": "Fetch agent conversations by conversation ID",
+        "description": "Returns up to 100 `AgentConversationResult` documents for a given `conversationId`, sorted by `lastUpdatedAt` ascending. Used by the agentic testing flow to replay or inspect a conversation.\n\nSource: `StartTestAction.fetchConversationsFromConversationId()`",
+        "operationId": "fetchConversationsFromConversationId",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["conversationId"],
+                "properties": {
+                  "conversationId": {
+                    "type": "string",
+                    "description": "The conversation ID to retrieve agent conversation results for.",
+                    "example": "conv_0ae3f12b9c7d41e5"
+                  }
+                }
+              },
+              "examples": {
+                "fetch": {
+                  "summary": "Fetch all turns for a conversation",
+                  "value": {
+                    "conversationId": "conv_0ae3f12b9c7d41e5"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of conversation turn results ordered by creation time.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "conversationsList": {
+                      "type": "array",
+                      "description": "Up to 100 `AgentConversationResult` documents for the given conversation ID, sorted by `lastUpdatedAt` ascending.",
+                      "items": {
+                        "$ref": "#/components/schemas/AgentConversationResult"
+                      }
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`conversationId` is null or empty."
+          }
+        },
+        "tags": ["Issues"]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TestingIssuesId": {
+        "type": "object",
+        "description": "Composite identifier for a testing issue. Corresponds to `com.akto.dto.test_run_findings.TestingIssuesId`.",
+        "required": ["apiInfoKey", "testErrorSource", "testSubCategory"],
+        "properties": {
+          "apiInfoKey": {
+            "$ref": "#/components/schemas/ApiInfoKey"
+          },
+          "testErrorSource": {
+            "type": "string",
+            "description": "Source of the test that generated this issue.",
+            "enum": ["AUTOMATED_TESTING", "TEST_EDITOR", "CICD"],
+            "example": "AUTOMATED_TESTING"
+          },
+          "testSubCategory": {
+            "type": "string",
+            "description": "YAML template ID of the test (e.g. `OPEN_REDIRECT`, `SQL_INJECTION`) or an HTTP URL for custom fuzzing tests.",
+            "example": "OPEN_REDIRECT"
+          },
+          "testCategoryFromSourceConfig": {
+            "type": "string",
+            "description": "For custom (HTTP-source) tests only: the source config category identifier.",
+            "example": null
+          }
+        },
+        "example": {
+          "apiInfoKey": {
+            "apiCollectionId": 1000000,
+            "method": "GET",
+            "url": "https://api.example.com/redirect"
+          },
+          "testErrorSource": "AUTOMATED_TESTING",
+          "testSubCategory": "OPEN_REDIRECT"
+        }
+      },
+      "ApiInfoKey": {
+        "type": "object",
+        "description": "Uniquely identifies an API endpoint within Akto. Corresponds to `com.akto.dto.ApiInfo.ApiInfoKey`.",
+        "required": ["apiCollectionId", "method", "url"],
+        "properties": {
+          "apiCollectionId": {
+            "type": "integer",
+            "description": "ID of the API collection this endpoint belongs to.",
+            "example": 1000000
+          },
+          "method": {
+            "type": "string",
+            "description": "HTTP method of the endpoint.",
+            "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"],
+            "example": "GET"
+          },
+          "url": {
+            "type": "string",
+            "description": "Full URL (or URL template) of the endpoint.",
+            "example": "https://api.example.com/redirect"
+          }
+        }
+      },
+      "IgnoreData": {
+        "type": "object",
+        "description": "Specifies which parameter keys should be treated as false positives for a given sensitive data type. Corresponds to `com.akto.dto.IgnoreData`.",
+        "properties": {
+          "ignoredKeysInAllAPIs": {
+            "type": "array",
+            "description": "Parameter key names that should be ignored as false positives across all API endpoints.",
+            "items": { "type": "string" },
+            "example": ["ssn", "social_security"]
+          },
+          "ignoredKeysInSelectedAPIs": {
+            "type": "object",
+            "description": "Map from parameter key name to a list of `ParamId` objects specifying the exact endpoints where the key should be ignored.",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ParamId"
+              }
+            },
+            "example": {}
+          }
+        }
+      },
+      "ParamId": {
+        "type": "object",
+        "description": "Identifies a specific parameter occurrence in an API endpoint. Corresponds to `com.akto.dto.type.SingleTypeInfo.ParamId`.",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "URL of the endpoint.",
+            "example": "https://api.example.com/users"
+          },
+          "method": {
+            "type": "string",
+            "description": "HTTP method of the endpoint.",
+            "example": "POST"
+          },
+          "apiCollectionId": {
+            "type": "integer",
+            "description": "API collection ID of the endpoint.",
+            "example": 1000000
+          },
+          "param": {
+            "type": "string",
+            "description": "Parameter key name.",
+            "example": "token"
+          },
+          "isHeader": {
+            "type": "boolean",
+            "description": "Whether this parameter is an HTTP header.",
+            "example": false
+          },
+          "responseCode": {
+            "type": "integer",
+            "description": "HTTP response code context. Use `-1` for request-scope parameters.",
+            "example": -1
+          }
+        }
+      },
+      "IssueTrendType": {
+        "type": "object",
+        "description": "A single data point in an issues trend series — count of issues for a specific test sub-category on a given day.",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "Number of issues for the sub-category on the associated day.",
+            "example": 3
+          },
+          "subCategory": {
+            "type": "string",
+            "description": "Test sub-category name.",
+            "example": "OPEN_REDIRECT"
+          }
+        }
+      },
+      "TimePeriodCount": {
+        "type": "object",
+        "description": "A single time-period data point as returned by the Java-based time-grouping utilities.",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Time period label. Format depends on the window size: `YYYY-MM-DD` for daily, `YYYY-Www` for weekly, `YYYY-MM` for monthly.",
+            "example": "2026-04-15"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of events in this time period.",
+            "example": 5
+          }
+        }
+      },
+      "AgentConversationResult": {
+        "type": "object",
+        "description": "A single turn in an agentic test conversation. Corresponds to `com.akto.dto.testing.AgentConversationResult` (stored in the `agent_conversation_results` collection).",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "MongoDB ObjectId hex string for this conversation turn document.",
+            "example": "507f1f77bcf86cd799439011"
+          },
+          "conversationId": {
+            "type": "string",
+            "description": "Conversation identifier shared by all turns in the same session.",
+            "example": "conv_0ae3f12b9c7d41e5"
+          },
+          "role": {
+            "type": "string",
+            "description": "Role of the speaker in this turn.",
+            "enum": ["user", "assistant", "system"],
+            "example": "assistant"
+          },
+          "content": {
+            "type": "string",
+            "description": "Text content of this conversation turn.",
+            "example": "The endpoint /redirect does not validate the `url` parameter, making it susceptible to open-redirect attacks."
+          },
+          "lastUpdatedAt": {
+            "type": "integer",
+            "description": "Epoch seconds when this document was last updated. Used for chronological sorting.",
+            "example": 1745001234
+          }
+        }
+      }
     }
   }
 }
