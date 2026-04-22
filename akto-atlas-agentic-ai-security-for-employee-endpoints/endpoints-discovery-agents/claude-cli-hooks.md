@@ -75,7 +75,6 @@ These hooks can actively block or deny operations based on guardrails policy:
 | `ConfigChange` | `akto-hook-wrapper.sh` → `akto-hooks.py ConfigChange` | `decision: block` | Validates configuration changes against guardrails policy |
 | `Elicitation` | `akto-hook-wrapper.sh` → `akto-hooks.py Elicitation` | `action: decline` | Validates MCP elicitation requests (form prompts from MCP servers) |
 | `ElicitationResult` | `akto-hook-wrapper.sh` → `akto-hooks.py ElicitationResult` | `action: decline` | Validates MCP elicitation results submitted by the user |
-| `SubagentStop` | `akto-hook-wrapper.sh` → `akto-sub-agent-stop.py` | `decision: block` / `continue: false` | Validates subagent completion; can block result or stop the main session |
 | `TaskCreated` | `akto-hook-wrapper.sh` → `akto-hooks.py TaskCreated` | `continue: false` | Validates task creation against guardrails policy |
 | `TaskCompleted` | `akto-hook-wrapper.sh` → `akto-hooks.py TaskCompleted` | `continue: false` | Validates task completion against guardrails policy |
 
@@ -93,6 +92,7 @@ These hooks report events to Akto for monitoring but cannot block:
 | `Stop` | `akto-validate-response-wrapper.sh` → `akto-validate-response.py` | Ingests full prompt/response conversation data |
 | `StopFailure` | `akto-hook-wrapper.sh` → `akto-hooks.py StopFailure` | Logs events when Claude fails to stop gracefully |
 | `SubagentStart` | `akto-hook-wrapper.sh` → `akto-sub-agent-start.py` | Logs subagent creation and extracts the triggering user prompt from transcript |
+| `SubagentStop` | `akto-hook-wrapper.sh` → `akto-sub-agent-stop.py` | Logs subagent completion and ingests conversation data |
 | `TeammateIdle` | `akto-hook-wrapper.sh` → `akto-hooks.py TeammateIdle` | Logs team collaboration events when a teammate becomes idle |
 | `Notification` | `akto-hook-wrapper.sh` → `akto-hooks.py Notification` | Logs notifications emitted by Claude CLI |
 | `CwdChanged` | `akto-hook-wrapper.sh` → `akto-hooks.py CwdChanged` | Logs working directory change events |

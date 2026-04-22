@@ -65,9 +65,10 @@ sequenceDiagram
 7. `subagentStart / subagentStop` - Subagent (Task tool) lifecycle
 8. `beforeShellExecution / afterShellExecution` - Control shell commands
 9. `beforeReadFile / afterFileEdit` - Control file access and edits
-10. `preCompact` - Observe context window compaction
-11. `stop` - Handle agent completion
-12. `afterAgentThought` - Track agent thoughts
+10. `beforeTabFileRead / afterTabFileEdit` - Control tab-based file access and edits
+11. `preCompact` - Observe context window compaction
+12. `stop` - Handle agent completion
+13. `afterAgentThought` - Track agent thoughts
 
 ## File Structure
 
@@ -292,13 +293,13 @@ cat > ~/.cursor/hooks.json << 'EOF'
     ],
     "subagentStart": [
       {
-        "command": "python3 ~/.cursor/hooks/akto/akto-subagent-start.py",
+        "command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-subagent-start.py",
         "timeout": 10
       }
     ],
     "subagentStop": [
       {
-        "command": "python3 ~/.cursor/hooks/akto/akto-subagent-stop.py",
+        "command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-subagent-stop.py",
         "timeout": 10
       }
     ],
@@ -597,8 +598,10 @@ cat > ~/.cursor/hooks.json << 'EOFHOOKS'
     "preToolUse": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py preToolUse", "timeout": 10}],
     "postToolUse": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py postToolUse", "timeout": 10}],
     "postToolUseFailure": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py postToolUseFailure", "timeout": 10}],
-    "subagentStart": [{"command": "python3 ~/.cursor/hooks/akto/akto-subagent-start.py", "timeout": 10}],
-    "subagentStop": [{"command": "python3 ~/.cursor/hooks/akto/akto-subagent-stop.py", "timeout": 10}],
+    "subagentStart": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-subagent-start.py", "timeout": 10}],
+    "subagentStop": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-subagent-stop.py", "timeout": 10}],
+    "beforeTabFileRead": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py beforeTabFileRead", "timeout": 10}],
+    "afterTabFileEdit": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py afterTabFileEdit", "timeout": 10}],
     "beforeShellExecution": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py beforeShellExecution", "timeout": 10}],
     "afterShellExecution": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py afterShellExecution", "timeout": 10}],
     "beforeReadFile": [{"command": "bash ~/.cursor/hooks/akto/akto-hook-wrapper.sh akto-hooks.py beforeReadFile", "timeout": 10}],
