@@ -6960,6 +6960,1834 @@
             "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
           }
         } ]
+    },
+    "/api/fetchOpenApiSchema": {
+      "post": {
+        "summary": "Fetch OpenAPI schema for a collection",
+        "description": "Returns the stored OpenAPI/Swagger schema (gunzipped from the database) for the given API collection as a JSON string.\n\nSource: `OpenApiAction.fetchOpenApiSchema()`",
+        "operationId": "fetchOpenApiSchema",
+        "tags": ["OpenAPI / Swagger"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["apiCollectionId"],
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "description": "Numeric ID of the API collection whose OpenAPI schema to retrieve.",
+                    "example": 1234567890
+                  }
+                }
+              },
+              "examples": {
+                "fetch_schema": {
+                  "summary": "Fetch schema for a collection",
+                  "value": { "apiCollectionId": 1234567890 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OpenAPI schema returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "openApiSchema": {
+                      "type": "string",
+                      "description": "The OpenAPI 3.x / Swagger 2.x schema as a JSON string.",
+                      "example": "{\"openapi\":\"3.0.1\",\"info\":{\"title\":\"My API\",\"version\":\"1.0.0\"},\"paths\":{}}"
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchSwaggerImportLogs": {
+      "post": {
+        "summary": "Fetch Swagger file upload logs",
+        "description": "Returns the import status and per-endpoint parsing details for a previous Swagger/OpenAPI file upload identified by `uploadId`. Use this to inspect which endpoints parsed successfully, which had non-fatal errors, and which could not be imported at all.\n\nSource: `OpenApiAction.fetchImportLogs()`",
+        "operationId": "fetchSwaggerImportLogs",
+        "tags": ["OpenAPI / Swagger"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["uploadId"],
+                "properties": {
+                  "uploadId": {
+                    "type": "string",
+                    "description": "ID of the Swagger file upload record to inspect.",
+                    "example": "upload_abc123def456"
+                  }
+                }
+              },
+              "examples": {
+                "fetch_logs": {
+                  "summary": "Fetch import logs for an upload",
+                  "value": { "uploadId": "upload_abc123def456" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Upload details returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "uploadDetails": {
+                      "type": "object",
+                      "description": "Aggregated import details for the upload.",
+                      "properties": {
+                        "uploadStatus": {
+                          "type": "string",
+                          "description": "Overall upload status (e.g. SUCCEEDED, FAILED, PROCESSING).",
+                          "example": "SUCCEEDED"
+                        },
+                        "logs": {
+                          "type": "array",
+                          "description": "Per-endpoint parse results.",
+                          "items": { "$ref": "#/components/schemas/ImportLogEntry" }
+                        },
+                        "collectionErrors": {
+                          "type": "array",
+                          "items": { "type": "string" },
+                          "description": "Collection-level errors that apply to the whole upload."
+                        },
+                        "apisWithErrorsAndParsed": {
+                          "type": "integer",
+                          "description": "Endpoints with non-fatal errors that were still partially parsed.",
+                          "example": 1
+                        },
+                        "apisWithErrorsAndCannotBeImported": {
+                          "type": "integer",
+                          "description": "Endpoints with fatal parse errors that cannot be imported.",
+                          "example": 0
+                        },
+                        "correctlyParsedApis": {
+                          "type": "integer",
+                          "description": "Endpoints that parsed without any errors.",
+                          "example": 42
+                        },
+                        "totalCount": {
+                          "type": "integer",
+                          "description": "Total number of endpoints in the upload.",
+                          "example": 43
+                        }
+                      }
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/importSwaggerLogs": {
+      "post": {
+        "summary": "Approve and ingest a Swagger file upload",
+        "description": "Pushes approved records from the specified Swagger/OpenAPI upload to Kafka (topic `akto.api.logs`) for async ingestion into the Akto API inventory. Only endpoints matching the chosen `importType` are included.\n\nSource: `OpenApiAction.importFile()`",
+        "operationId": "importSwaggerLogs",
+        "tags": ["OpenAPI / Swagger"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["uploadId", "importType"],
+                "properties": {
+                  "uploadId": {
+                    "type": "string",
+                    "description": "ID of the Swagger file upload to ingest.",
+                    "example": "upload_abc123def456"
+                  },
+                  "importType": {
+                    "type": "string",
+                    "enum": ["ONLY_SUCCESSFUL_APIS", "ALL_APIS"],
+                    "description": "Whether to ingest only successfully parsed endpoints (`ONLY_SUCCESSFUL_APIS`) or all endpoints including those with non-fatal parse errors (`ALL_APIS`).",
+                    "example": "ONLY_SUCCESSFUL_APIS"
+                  }
+                }
+              },
+              "examples": {
+                "successful_only": {
+                  "summary": "Ingest only successfully parsed endpoints",
+                  "value": {
+                    "uploadId": "upload_abc123def456",
+                    "importType": "ONLY_SUCCESSFUL_APIS"
+                  }
+                },
+                "all_apis": {
+                  "summary": "Ingest all endpoints including those with non-fatal parse errors",
+                  "value": {
+                    "uploadId": "upload_abc123def456",
+                    "importType": "ALL_APIS"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Import queued successfully. Ingestion happens asynchronously via Kafka."
+          },
+          "400": {
+            "description": "`uploadId` is not found or records cannot be read."
+          }
+        }
+      }
+    },
+    "/api/importImpervaSchema": {
+      "post": {
+        "summary": "Import Imperva schema",
+        "description": "Parses a raw Imperva JSON string (max 10 MB), creates or finds an API collection named after the extracted hostname, and pushes the parsed traffic asynchronously to Kafka for ingestion into the API inventory. `generateMultipleSamples` controls whether multiple sample request/response pairs are generated per endpoint.\n\nSource: `ImpervaImportAction.execute()`",
+        "operationId": "importImpervaSchema",
+        "tags": ["Imperva Import"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["impervaString"],
+                "properties": {
+                  "impervaString": {
+                    "type": "string",
+                    "description": "Raw Imperva JSON string. Maximum size is 10 MB.",
+                    "example": "{\"services\":[{\"hostname\":\"api.example.com\",\"traffic\":[]}]}"
+                  },
+                  "generateMultipleSamples": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If `true`, generates multiple sample messages per endpoint instead of just one.",
+                    "example": false
+                  }
+                }
+              },
+              "examples": {
+                "basic_import": {
+                  "summary": "Import an Imperva schema with single samples",
+                  "value": {
+                    "impervaString": "{\"services\":[{\"hostname\":\"api.example.com\",\"traffic\":[]}]}",
+                    "generateMultipleSamples": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Import initiated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Human-readable success message.",
+                      "example": "Imperva schema imported successfully. Collection: api.example.com"
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`impervaString` is null/empty or exceeds the 10 MB size limit."
+          }
+        }
+      }
+    },
+    "/api/importFromUrl": {
+      "post": {
+        "summary": "Import APIs from a URL",
+        "description": "Creates an API collection named after the URL's hostname (tagged as GenAI), then fires an HTTP request to the given URL asynchronously and ingests the response via Kafka. Omit `requestBody` to use GET; provide it to send a POST with that body. An optional `testRoleId` enables authenticated fetching using a pre-configured test role.\n\nSource: `AgentImportAction.importFromUrl()`",
+        "operationId": "importFromUrl",
+        "tags": ["URL Import"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["url"],
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "Full URL to fetch. The hostname is used as the collection name.",
+                    "example": "https://api.example.com/openapi.json"
+                  },
+                  "testRoleId": {
+                    "type": "string",
+                    "description": "Optional ObjectId hex of the test role to use for authentication when fetching the URL.",
+                    "example": "60a7b2c3d4e5f6a7b8c9d0e1"
+                  },
+                  "requestBody": {
+                    "type": "string",
+                    "description": "Optional POST body. If set, the URL is fetched with HTTP POST using this as the body. Omit to use GET.",
+                    "example": null
+                  }
+                }
+              },
+              "examples": {
+                "get_request": {
+                  "summary": "Import via GET (no auth)",
+                  "value": {
+                    "url": "https://api.example.com/openapi.json"
+                  }
+                },
+                "authenticated_get": {
+                  "summary": "Import via GET with test role auth",
+                  "value": {
+                    "url": "https://api.example.com/openapi.json",
+                    "testRoleId": "60a7b2c3d4e5f6a7b8c9d0e1"
+                  }
+                },
+                "post_request": {
+                  "summary": "Import via POST with a body",
+                  "value": {
+                    "url": "https://api.example.com/spec",
+                    "requestBody": "{\"format\":\"openapi\"}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Import initiated. Ingestion happens asynchronously."
+          },
+          "400": {
+            "description": "`url` is null or empty."
+          }
+        }
+      }
+    },
+    "/api/addOrUpdatePostmanCred": {
+      "post": {
+        "summary": "Add or update Postman API key",
+        "description": "Upserts the Postman credential (API key and workspace ID) for the current account in `third_party_access`. Used by subsequent Postman integration calls (`createPostmanApi`, `savePostmanCollection`).\n\nSource: `PostmanAction.addOrUpdateApiKey()`",
+        "operationId": "addOrUpdatePostmanCred",
+        "tags": ["Postman"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["api_key", "workspace_id"],
+                "properties": {
+                  "api_key": {
+                    "type": "string",
+                    "description": "Postman API key.",
+                    "example": "[REDACTED_POSTMAN_API_KEY]"
+                  },
+                  "workspace_id": {
+                    "type": "string",
+                    "description": "Postman workspace UUID.",
+                    "example": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  }
+                }
+              },
+              "examples": {
+                "save_cred": {
+                  "summary": "Save Postman credentials",
+                  "value": {
+                    "api_key": "[REDACTED_POSTMAN_API_KEY]",
+                    "workspace_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Credentials saved successfully."
+          }
+        }
+      }
+    },
+    "/api/createPostmanApi": {
+      "post": {
+        "summary": "Export a collection to Postman",
+        "description": "Builds an OpenAPI spec from the stored sample data for the given collection and pushes it to the Postman API asynchronously using the API key stored via `addOrUpdatePostmanCred`. An optional `apiInfoKeyList` restricts the export to a specific subset of endpoints; if omitted, the entire collection is exported.\n\nSource: `PostmanAction.createPostmanApi()`",
+        "operationId": "createPostmanApi",
+        "tags": ["Postman"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["apiCollectionId"],
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "description": "ID of the API collection to export.",
+                    "example": 1234567890
+                  },
+                  "apiInfoKeyList": {
+                    "type": "array",
+                    "description": "Optional list of specific endpoints to export. If omitted the entire collection is exported.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "url": { "type": "string", "example": "/api/users" },
+                        "method": { "type": "string", "example": "GET" },
+                        "apiCollectionId": { "type": "integer", "example": 1234567890 }
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "export_full_collection": {
+                  "summary": "Export the entire collection",
+                  "value": { "apiCollectionId": 1234567890 }
+                },
+                "export_subset": {
+                  "summary": "Export specific endpoints only",
+                  "value": {
+                    "apiCollectionId": 1234567890,
+                    "apiInfoKeyList": [
+                      { "url": "/api/users", "method": "GET", "apiCollectionId": 1234567890 },
+                      { "url": "/api/orders", "method": "POST", "apiCollectionId": 1234567890 }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Export queued successfully. Upload to Postman happens asynchronously."
+          }
+        }
+      }
+    },
+    "/api/savePostmanCollection": {
+      "post": {
+        "summary": "Import a Postman collection into Akto",
+        "description": "Fetches the specified Postman collection via the stored Postman API key, converts it through Akto's Node.js conversion service, and stores the resulting APISpec document in MongoDB.\n\nSource: `PostmanAction.savePostmanCollection()`",
+        "operationId": "savePostmanCollection",
+        "tags": ["Postman"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["postmanCollectionId", "apiCollectionId"],
+                "properties": {
+                  "postmanCollectionId": {
+                    "type": "string",
+                    "description": "Postman collection UUID (found in the Postman share URL).",
+                    "example": "12345678-abcd-ef01-2345-67890abcdef0"
+                  },
+                  "apiCollectionId": {
+                    "type": "integer",
+                    "description": "Akto collection ID to associate with the imported Postman collection.",
+                    "example": 1234567890
+                  }
+                }
+              },
+              "examples": {
+                "import_collection": {
+                  "summary": "Import a Postman collection",
+                  "value": {
+                    "postmanCollectionId": "12345678-abcd-ef01-2345-67890abcdef0",
+                    "apiCollectionId": 1234567890
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Collection imported and APISpec stored."
+          }
+        }
+      }
+    },
+    "/api/ingestPostman": {
+      "post": {
+        "summary": "Approve and ingest a Postman file upload",
+        "description": "Pushes approved records from the specified Postman file upload to Kafka (topic `akto.api.logs`) for async ingestion. Only endpoints matching the chosen `importType` are included.\n\nSource: `PostmanAction.importFile()`",
+        "operationId": "ingestPostman",
+        "tags": ["Postman"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["uploadId", "importType"],
+                "properties": {
+                  "uploadId": {
+                    "type": "string",
+                    "description": "ID of the Postman file upload to ingest.",
+                    "example": "postman_upload_xyz789"
+                  },
+                  "importType": {
+                    "type": "string",
+                    "enum": ["ONLY_SUCCESSFUL_APIS", "ALL_APIS"],
+                    "description": "Whether to ingest only successfully parsed endpoints or all endpoints including those with non-fatal parse errors.",
+                    "example": "ALL_APIS"
+                  }
+                }
+              },
+              "examples": {
+                "ingest_all": {
+                  "summary": "Ingest all parsed endpoints",
+                  "value": {
+                    "uploadId": "postman_upload_xyz789",
+                    "importType": "ALL_APIS"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Import queued successfully."
+          }
+        }
+      }
+    },
+    "/api/fetchPostmanImportLogs": {
+      "post": {
+        "summary": "Fetch Postman file upload logs",
+        "description": "Returns import status and per-endpoint parsing details for a previous Postman file upload.\n\nSource: `PostmanAction.fetchImportLogs()`",
+        "operationId": "fetchPostmanImportLogs",
+        "tags": ["Postman"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["uploadId"],
+                "properties": {
+                  "uploadId": {
+                    "type": "string",
+                    "description": "ID of the Postman file upload record to inspect.",
+                    "example": "postman_upload_xyz789"
+                  }
+                }
+              },
+              "examples": {
+                "fetch_logs": {
+                  "summary": "Fetch import logs for a Postman upload",
+                  "value": { "uploadId": "postman_upload_xyz789" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Upload details returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "uploadDetails": {
+                      "type": "object",
+                      "properties": {
+                        "uploadStatus": { "type": "string", "example": "SUCCEEDED" },
+                        "uploadId": { "type": "string", "example": "postman_upload_xyz789" },
+                        "collectionErrors": { "type": "array", "items": { "type": "string" } },
+                        "logs": {
+                          "type": "array",
+                          "items": { "$ref": "#/components/schemas/ImportLogEntry" }
+                        },
+                        "errorCount": { "type": "integer", "example": 0 },
+                        "totalCount": { "type": "integer", "example": 10 },
+                        "correctlyParsedApis": { "type": "integer", "example": 10 },
+                        "apisWithErrorsAndParsed": { "type": "integer", "example": 0 },
+                        "apisWithErrorsAndCannotBeImported": { "type": "integer", "example": 0 }
+                      }
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/deletePostmanImportLogs": {
+      "post": {
+        "summary": "Mark a Postman upload for deletion",
+        "description": "Sets `markedForDeletion: true` on the specified upload record so it is excluded from future import log listings.\n\nSource: `PostmanAction.markImportForDeletion()`",
+        "operationId": "deletePostmanImportLogs",
+        "tags": ["Postman"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["uploadId"],
+                "properties": {
+                  "uploadId": {
+                    "type": "string",
+                    "description": "ID of the Postman upload to mark for deletion.",
+                    "example": "postman_upload_xyz789"
+                  }
+                }
+              },
+              "examples": {
+                "delete": {
+                  "summary": "Mark an upload for deletion",
+                  "value": { "uploadId": "postman_upload_xyz789" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Upload marked for deletion."
+          }
+        }
+      }
+    },
+    "/api/convertSamleDataToBurpRequest": {
+      "post": {
+        "summary": "Convert sample data to a Burp Suite request",
+        "description": "Converts a single Akto HTTP sample message (a JSON string encoding the full request + response) into a raw HTTP request string compatible with Burp Suite. The returned string uses the URL path (not the full absolute URL) and omits the `Content-Length` header.\n\nNote: the endpoint name contains a typo (`Samle`) which is preserved for backwards compatibility.\n\nSource: `ExportSampleDataAction.generateBurpRequest()`",
+        "operationId": "convertSamleDataToBurpRequest",
+        "tags": ["Burp Suite"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["sampleData"],
+                "properties": {
+                  "sampleData": {
+                    "type": "string",
+                    "description": "Akto HTTP sample message JSON string encoding both the request and response.",
+                    "example": "{\"method\":\"GET\",\"path\":\"/api/users\",\"requestHeaders\":{\"Host\":\"api.example.com\",\"Authorization\":\"Bearer [REDACTED_JWT]\"},\"responseCode\":200,\"responseBody\":\"{\\\"users\\\":[]}\"}"
+                  }
+                }
+              },
+              "examples": {
+                "convert_sample": {
+                  "summary": "Convert a GET request sample",
+                  "value": {
+                    "sampleData": "{\"method\":\"GET\",\"path\":\"/api/users\",\"requestHeaders\":{\"Host\":\"api.example.com\",\"Authorization\":\"Bearer [REDACTED_JWT]\"},\"responseCode\":200,\"responseBody\":\"{\\\"users\\\":[]}\"}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Burp Suite request string returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "burpRequest": {
+                      "type": "string",
+                      "description": "Raw HTTP request in Burp Suite format using the URL path.",
+                      "example": "GET /api/users HTTP/1.1\nHost: api.example.com\nAuthorization: Bearer [REDACTED_JWT]\n\n"
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`sampleData` is null."
+          }
+        }
+      }
+    },
+    "/api/importInBurp": {
+      "post": {
+        "summary": "Bulk-export collection sample data for Burp Suite",
+        "description": "Paginates through the sample data of the named collection and returns Burp Suite-compatible raw HTTP request + response strings for each endpoint. Pagination is cursor-based: pass `lastUrlFetched` and `lastMethodFetched` from the previous response to fetch the next page. Maximum 500 endpoints per page.\n\nSource: `ExportSampleDataAction.importInBurp()`",
+        "operationId": "importInBurp",
+        "tags": ["Burp Suite"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["collectionName"],
+                "properties": {
+                  "collectionName": {
+                    "type": "string",
+                    "description": "Name of the API collection to paginate.",
+                    "example": "My API Collection"
+                  },
+                  "lastUrlFetched": {
+                    "type": "string",
+                    "description": "Pagination cursor: URL returned at the end of the previous page. Omit on the first request.",
+                    "example": null
+                  },
+                  "lastMethodFetched": {
+                    "type": "string",
+                    "description": "Pagination cursor: HTTP method returned at the end of the previous page. Omit on the first request.",
+                    "example": null
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "description": "Number of endpoints per page. Values ≤ 0 or > 500 are clamped to 500.",
+                    "example": 100
+                  }
+                }
+              },
+              "examples": {
+                "first_page": {
+                  "summary": "First page (no cursor)",
+                  "value": {
+                    "collectionName": "My API Collection",
+                    "limit": 100
+                  }
+                },
+                "next_page": {
+                  "summary": "Next page using cursor from previous response",
+                  "value": {
+                    "collectionName": "My API Collection",
+                    "lastUrlFetched": "/api/users",
+                    "lastMethodFetched": "GET",
+                    "limit": 100
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Paginated Burp request/response entries.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "importInBurpResult": {
+                      "type": "array",
+                      "description": "List of Burp-formatted entries for this page.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "description": "Absolute URL for the endpoint.",
+                            "example": "https://api.example.com/api/users"
+                          },
+                          "req": {
+                            "type": "string",
+                            "description": "Raw HTTP request in Burp format (with absolute URL).",
+                            "example": "GET https://api.example.com/api/users HTTP/1.1\nHost: api.example.com\nAuthorization: Bearer [REDACTED_JWT]\n\n"
+                          },
+                          "res": {
+                            "type": "string",
+                            "description": "Raw HTTP response in Burp format.",
+                            "example": "HTTP/1.1 200 \nContent-Type: application/json\n\n{\"users\":[]}"
+                          }
+                        }
+                      }
+                    },
+                    "lastUrlFetched": {
+                      "type": "string",
+                      "description": "Pass this value as `lastUrlFetched` in the next request to get the next page. `null` when there is no more data.",
+                      "example": "/api/users"
+                    },
+                    "lastMethodFetched": {
+                      "type": "string",
+                      "description": "Pass this value as `lastMethodFetched` in the next request.",
+                      "example": "GET"
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`collectionName` does not match any existing collection."
+          }
+        }
+      }
+    },
+    "/api/downloadBurpPluginJar": {
+      "post": {
+        "summary": "Record a Burp plugin JAR download",
+        "description": "Updates the `lastDownloadedAt` timestamp for the current user and returns success. Call this endpoint when the user downloads the Akto Burp extension JAR to track adoption metrics. Returns no body fields beyond success.\n\nSource: `BurpJarAction.execute()`",
+        "operationId": "downloadBurpPluginJar",
+        "tags": ["Burp Suite"],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "properties": {} },
+              "examples": {
+                "record_download": {
+                  "summary": "Record a download event",
+                  "value": {}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Download recorded successfully."
+          }
+        }
+      }
+    },
+    "/api/fetchBurpPluginDownloadLink": {
+      "post": {
+        "summary": "Get the Burp plugin JAR download URL",
+        "description": "Returns the static GitHub raw URL for the latest Akto Burp extension JAR (`akto-burp-extension` repository, master branch).\n\nSource: `BurpJarAction.fetchBurpPluginDownloadLink()`",
+        "operationId": "fetchBurpPluginDownloadLink",
+        "tags": ["Burp Suite"],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "properties": {} },
+              "examples": {
+                "fetch_link": {
+                  "summary": "Fetch the download link",
+                  "value": {}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Download link returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "burpGithubLink": {
+                      "type": "string",
+                      "description": "GitHub raw URL for the Akto Burp extension JAR.",
+                      "example": "https://raw.githubusercontent.com/akto-api-security/akto-burp-extension/master/Akto.jar"
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchBurpCredentials": {
+      "post": {
+        "summary": "Fetch or create Burp Suite credentials",
+        "description": "Finds or creates a BURP-type utility API token for the current account. The `host` in the response is derived from the HTTP `Origin` request header sent by the Burp plugin.\n\nSource: `BurpJarAction.fetchBurpCredentials()`",
+        "operationId": "fetchBurpCredentials",
+        "tags": ["Burp Suite"],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "properties": {} },
+              "examples": {
+                "fetch_creds": {
+                  "summary": "Fetch Burp credentials (no body required)",
+                  "value": {}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Burp credentials returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "apiToken": {
+                      "type": "string",
+                      "description": "BURP-type utility API token for the account.",
+                      "example": "[REDACTED_API_TOKEN]"
+                    },
+                    "host": {
+                      "type": "string",
+                      "description": "Host extracted from the `Origin` HTTP header of the request (used by the Burp plugin to identify the Akto server).",
+                      "example": "app.example.com"
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchBurpPluginInfo": {
+      "post": {
+        "summary": "Fetch Burp plugin runtime info",
+        "description": "Returns the last boot-up timestamp and version string of the Akto Burp extension as recorded by the plugin during its last startup.\n\nSource: `BurpJarAction.fetchBurpPluginInfo()`",
+        "operationId": "fetchBurpPluginInfo",
+        "tags": ["Burp Suite"],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "properties": {} },
+              "examples": {
+                "fetch_info": {
+                  "summary": "Fetch Burp plugin info",
+                  "value": {}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Plugin info returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "burpPluginInfo": {
+                      "type": "object",
+                      "description": "Runtime details of the Burp plugin.",
+                      "properties": {
+                        "lastBootUpTimestamp": {
+                          "type": "integer",
+                          "description": "Unix epoch when the Burp plugin last booted.",
+                          "example": 1745280000
+                        },
+                        "version": {
+                          "type": "string",
+                          "description": "Burp plugin version string.",
+                          "example": "1.5.2"
+                        }
+                      }
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/uploadRecordedFlow": {
+      "post": {
+        "summary": "Upload a recorded login flow",
+        "description": "Stores a recorded login flow and optionally executes it to extract an auth token. Two modes are supported:\n\n- **Standard mode** (default): `miniTestingServiceName` is null or `hybridTestingEnabled` is false for the account. The flow is triggered asynchronously. `testingRunPlaygroundId` is null in the response.\n- **Hybrid mode**: `miniTestingServiceName` is set AND the account has `hybridTestingEnabled`. A `TestingRunPlayground` document is created and its ID is returned. Poll `fetchRecordedFlowOutput` with this ID to retrieve the token.\n\nSource: `LoginRecorderAction.uploadRecordedFlow()`",
+        "operationId": "uploadRecordedFlow",
+        "tags": ["Login Flow Recorder"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["content", "tokenFetchCommand", "roleName"],
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "description": "JSON string representing the recorded login flow steps.",
+                    "example": "[{\"action\":\"navigate\",\"url\":\"https://app.example.com/login\"},{\"action\":\"type\",\"selector\":\"#username\",\"value\":\"admin\"},{\"action\":\"click\",\"selector\":\"#login-btn\"}]"
+                  },
+                  "tokenFetchCommand": {
+                    "type": "string",
+                    "description": "JavaScript expression or command executed after the login flow to extract the auth token (e.g. `document.cookie`).",
+                    "example": "document.cookie"
+                  },
+                  "roleName": {
+                    "type": "string",
+                    "description": "Name of the test role to associate with this login flow.",
+                    "example": "admin"
+                  },
+                  "miniTestingServiceName": {
+                    "type": "string",
+                    "description": "If set and the account has `hybridTestingEnabled`, activates hybrid mode and a `TestingRunPlayground` ID is returned for polling.",
+                    "example": null
+                  }
+                }
+              },
+              "examples": {
+                "standard_mode": {
+                  "summary": "Standard mode — async execution",
+                  "value": {
+                    "content": "[{\"action\":\"navigate\",\"url\":\"https://app.example.com/login\"},{\"action\":\"type\",\"selector\":\"#username\",\"value\":\"admin\"},{\"action\":\"click\",\"selector\":\"#login-btn\"}]",
+                    "tokenFetchCommand": "document.cookie",
+                    "roleName": "admin"
+                  }
+                },
+                "hybrid_mode": {
+                  "summary": "Hybrid mode — returns playground ID for polling",
+                  "value": {
+                    "content": "[{\"action\":\"navigate\",\"url\":\"https://app.example.com/login\"},{\"action\":\"click\",\"selector\":\"#sso-btn\"}]",
+                    "tokenFetchCommand": "window.localStorage.getItem('token')",
+                    "roleName": "sso_user",
+                    "miniTestingServiceName": "testing-service-1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Flow uploaded. `testingRunPlaygroundId` is non-null only in hybrid mode.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "testingRunPlaygroundId": {
+                      "type": "string",
+                      "description": "ObjectId hex of the `TestingRunPlayground` document. `null` in standard mode.",
+                      "example": null
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchRecordedFlowOutput": {
+      "post": {
+        "summary": "Poll for recorded login flow output",
+        "description": "Polls for the result of a recorded login flow execution. In hybrid mode, pass the `testingRunPlaygroundId` returned by `uploadRecordedFlow`. When the flow completes, `token` contains the extracted auth token JSON (with an `all_cookies` array). While still running, `tokenFetchInProgress` is `true` and `token` is null.\n\nSource: `LoginRecorderAction.fetchRecordedFlowOutput()`",
+        "operationId": "fetchRecordedFlowOutput",
+        "tags": ["Login Flow Recorder"],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "testingRunPlaygroundId": {
+                    "type": "string",
+                    "description": "ObjectId hex for hybrid mode polling. Omit for standard (non-hybrid) mode.",
+                    "example": "60a7b2c3d4e5f6a7b8c9d0e1"
+                  }
+                }
+              },
+              "examples": {
+                "hybrid_poll": {
+                  "summary": "Poll using a playground ID (hybrid mode)",
+                  "value": { "testingRunPlaygroundId": "60a7b2c3d4e5f6a7b8c9d0e1" }
+                },
+                "standard_poll": {
+                  "summary": "Poll standard mode (no ID needed)",
+                  "value": {}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Flow output or in-progress indicator.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "Extracted auth token JSON string (contains `all_cookies` array). `null` while the flow is still executing.",
+                      "example": "{\"all_cookies\":[{\"name\":\"session\",\"value\":\"[REDACTED_SESSION_TOKEN]\"}]}"
+                    },
+                    "tokenFetchInProgress": {
+                      "type": "boolean",
+                      "description": "`true` while the flow is still executing; `false` when complete.",
+                      "example": false
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchRecordedLoginScreenshots": {
+      "post": {
+        "summary": "Fetch login flow screenshots",
+        "description": "Returns base64-encoded PNG screenshots captured during the last login flow execution for the given test role.\n\nSource: `LoginRecorderAction.fetchRecordedLoginScreenshots()`",
+        "operationId": "fetchRecordedLoginScreenshots",
+        "tags": ["Login Flow Recorder"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["roleName"],
+                "properties": {
+                  "roleName": {
+                    "type": "string",
+                    "description": "Name of the test role whose login screenshots to fetch.",
+                    "example": "admin"
+                  }
+                }
+              },
+              "examples": {
+                "fetch_screenshots": {
+                  "summary": "Fetch screenshots for the admin role",
+                  "value": { "roleName": "admin" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Screenshots returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "screenshotsBase64": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "description": "List of base64-encoded PNG screenshots from the login flow.",
+                      "example": ["iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQI12NgAAIABQ=="]
+                    },
+                    "screenshotsUpdatedAt": {
+                      "type": "integer",
+                      "description": "Unix epoch when the screenshots were last updated.",
+                      "example": 1745280000
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/initiateCrawler": {
+      "post": {
+        "summary": "Start a DAST crawler run",
+        "description": "Creates or reuses an API collection named after the target hostname (tagging it DAST), then starts a crawl run. Supports multiple authentication strategies: username/password form auth, API key, and test role-based token extraction (via recorded login flow or login step builder). Custom HTTP headers, URL template patterns for path normalisation, and seed application pages are all supported.\n\nIf `selectedModuleName` is set, the named DAST module must have sent a heartbeat within the last 5 minutes; otherwise the request returns an error. If null, falls back to the internal Akto DAST crawler service.\n\n`crawlingTime` must be between 600 (10 minutes) and 345600 (4 days) seconds.\n\nSource: `AktoJaxAction.initiateCrawler()`",
+        "operationId": "initiateCrawler",
+        "tags": ["Crawler"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["hostname", "crawlingTime"],
+                "properties": {
+                  "hostname": {
+                    "type": "string",
+                    "description": "Full URL of the target application (e.g. `https://app.example.com`). The hostname is used as the collection name unless `collectionName` is provided.",
+                    "example": "https://app.example.com"
+                  },
+                  "crawlingTime": {
+                    "type": "integer",
+                    "description": "Maximum crawl duration in seconds. Must be between 600 (10 min) and 345600 (4 days).",
+                    "example": 3600
+                  },
+                  "outscopeUrls": {
+                    "type": "string",
+                    "description": "Comma-separated URL paths to exclude from the crawl.",
+                    "example": "/logout,/static"
+                  },
+                  "testRoleHexId": {
+                    "type": "string",
+                    "description": "Optional ObjectId hex of the test role to use for cookie/token extraction. Used when neither username/password nor API key is provided.",
+                    "example": "60a7b2c3d4e5f6a7b8c9d0e1"
+                  },
+                  "username": {
+                    "type": "string",
+                    "description": "Optional username for basic/form authentication.",
+                    "example": "crawl_user"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Optional password for basic/form authentication.",
+                    "example": "[REDACTED_PASSWORD]"
+                  },
+                  "apiKey": {
+                    "type": "string",
+                    "description": "Optional API key to pass to the crawler service.",
+                    "example": "[REDACTED_API_KEY]"
+                  },
+                  "dashboardUrl": {
+                    "type": "string",
+                    "description": "Optional Akto dashboard URL to pass to the internal crawler service.",
+                    "example": "https://app.akto.io"
+                  },
+                  "runTestAfterCrawling": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If `true`, automatically triggers security tests on all discovered endpoints after the crawl completes.",
+                    "example": true
+                  },
+                  "selectedMiniTestingService": {
+                    "type": "string",
+                    "description": "Name of the mini testing service to use for post-crawl tests. Only relevant when `runTestAfterCrawling` is `true`.",
+                    "example": null
+                  },
+                  "selectedModuleName": {
+                    "type": "string",
+                    "description": "Name of the external DAST module to use. The module must have sent a heartbeat within the last 5 minutes. Falls back to the internal Akto DAST service when null.",
+                    "example": null
+                  },
+                  "collectionName": {
+                    "type": "string",
+                    "description": "Custom collection name. Defaults to the extracted hostname when not provided.",
+                    "example": "My App DAST"
+                  },
+                  "customHeaders": {
+                    "type": "object",
+                    "additionalProperties": { "type": "string" },
+                    "description": "Additional HTTP headers to include in every crawl request.",
+                    "example": { "X-Internal-Token": "[REDACTED_INTERNAL_TOKEN]" }
+                  },
+                  "urlTemplatePatterns": {
+                    "type": "string",
+                    "description": "Comma-separated URL template patterns used to normalise path parameters (e.g. `/users/{id},/orders/{orderId}`).",
+                    "example": "/users/{id},/orders/{orderId}"
+                  },
+                  "applicationPages": {
+                    "type": "string",
+                    "description": "Comma-separated seed pages from which the crawl starts.",
+                    "example": "/dashboard,/profile,/checkout"
+                  }
+                }
+              },
+              "examples": {
+                "basic_crawl": {
+                  "summary": "Minimal crawl — hostname and duration only",
+                  "value": {
+                    "hostname": "https://app.example.com",
+                    "crawlingTime": 3600
+                  }
+                },
+                "authenticated_crawl": {
+                  "summary": "Crawl with test role auth and post-crawl testing",
+                  "value": {
+                    "hostname": "https://app.example.com",
+                    "crawlingTime": 7200,
+                    "testRoleHexId": "60a7b2c3d4e5f6a7b8c9d0e1",
+                    "runTestAfterCrawling": true,
+                    "outscopeUrls": "/logout,/static",
+                    "collectionName": "My App DAST",
+                    "customHeaders": { "X-Internal-Token": "[REDACTED_INTERNAL_TOKEN]" },
+                    "urlTemplatePatterns": "/users/{id},/orders/{orderId}",
+                    "applicationPages": "/dashboard,/profile,/checkout"
+                  }
+                },
+                "external_module": {
+                  "summary": "Crawl using an external DAST module",
+                  "value": {
+                    "hostname": "https://app.example.com",
+                    "crawlingTime": 3600,
+                    "selectedModuleName": "dast-module-prod-1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Crawler initiated. A `CrawlerRun` document is created in MongoDB."
+          },
+          "400": {
+            "description": "`crawlingTime` is outside the 600–345600 range, the selected DAST module is not available, or authentication token extraction via the test role failed."
+          }
+        }
+      }
+    },
+    "/api/uploadCrawlerData": {
+      "post": {
+        "summary": "Upload crawler-captured traffic",
+        "description": "Pushes raw crawler traffic data (in Akto HTTP sample format) for the given collection to Kafka (topic `akto.api.logs`) for async ingestion.\n\nSource: `AktoJaxAction.uploadCrawlerData()`",
+        "operationId": "uploadCrawlerData",
+        "tags": ["Crawler"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["apiCollectionId", "crawlerData"],
+                "properties": {
+                  "apiCollectionId": {
+                    "type": "string",
+                    "description": "Numeric ID of the target API collection, passed as a string.",
+                    "example": "1234567890"
+                  },
+                  "crawlerData": {
+                    "type": "string",
+                    "description": "Akto HTTP sample message JSON captured by the crawler.",
+                    "example": "{\"method\":\"GET\",\"path\":\"/api/users\",\"requestHeaders\":{\"Host\":\"api.example.com\"},\"responseCode\":200,\"responseBody\":\"{\\\"users\\\":[]}\"}"
+                  }
+                }
+              },
+              "examples": {
+                "upload_data": {
+                  "summary": "Upload a single captured request",
+                  "value": {
+                    "apiCollectionId": "1234567890",
+                    "crawlerData": "{\"method\":\"GET\",\"path\":\"/api/users\",\"requestHeaders\":{\"Host\":\"api.example.com\"},\"responseCode\":200,\"responseBody\":\"{\\\"users\\\":[]}\"}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data queued for ingestion."
+          },
+          "400": {
+            "description": "`apiCollectionId` does not match any known collection."
+          }
+        }
+      }
+    },
+    "/api/updateCrawlerStatus": {
+      "post": {
+        "summary": "Update crawl run status",
+        "description": "Updates the status of an existing crawl run identified by `crawlId`. Depending on the new status:\n- `RUNNING` — sets `startTimestamp` to now\n- `COMPLETED` — sets `endTimestamp` to now and optionally triggers post-crawl security tests if `runTestAfterCrawling` was set when the crawl was initiated\n- `FAILED` — sets `endTimestamp` to now and stores the `errorMessage`\n- `STOPPED` — sets `endTimestamp` to now\n\nSource: `AktoJaxAction.updateCrawlerStatus()`",
+        "operationId": "updateCrawlerStatus",
+        "tags": ["Crawler"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["crawlId", "status"],
+                "properties": {
+                  "crawlId": {
+                    "type": "string",
+                    "description": "UUID of the crawl run to update.",
+                    "example": "550e8400-e29b-41d4-a716-446655440000"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["RUNNING", "COMPLETED", "FAILED", "STOPPED"],
+                    "description": "New status to set on the crawl run.",
+                    "example": "COMPLETED"
+                  },
+                  "errorMessage": {
+                    "type": "string",
+                    "description": "Error details. Only stored when `status` is `FAILED`.",
+                    "example": null
+                  }
+                }
+              },
+              "examples": {
+                "mark_running": {
+                  "summary": "Mark a crawl as running",
+                  "value": {
+                    "crawlId": "550e8400-e29b-41d4-a716-446655440000",
+                    "status": "RUNNING"
+                  }
+                },
+                "mark_completed": {
+                  "summary": "Mark a crawl as completed",
+                  "value": {
+                    "crawlId": "550e8400-e29b-41d4-a716-446655440000",
+                    "status": "COMPLETED"
+                  }
+                },
+                "mark_failed": {
+                  "summary": "Mark a crawl as failed with an error",
+                  "value": {
+                    "crawlId": "550e8400-e29b-41d4-a716-446655440000",
+                    "status": "FAILED",
+                    "errorMessage": "Connection refused: target host unreachable"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Status updated successfully."
+          }
+        }
+      }
+    },
+    "/api/stopCrawler": {
+      "post": {
+        "summary": "Stop a running crawl",
+        "description": "Sends a stop request to the internal AKTOJAX crawler service and sets the crawl run's status to `STOP_REQUESTED`. The crawler service acknowledges the stop and will complete its current work before shutting down.\n\nSource: `AktoJaxAction.stopCrawler()`",
+        "operationId": "stopCrawler",
+        "tags": ["Crawler"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["crawlId"],
+                "properties": {
+                  "crawlId": {
+                    "type": "string",
+                    "description": "UUID of the crawl run to stop.",
+                    "example": "550e8400-e29b-41d4-a716-446655440000"
+                  }
+                }
+              },
+              "examples": {
+                "stop_crawl": {
+                  "summary": "Stop a crawl by ID",
+                  "value": { "crawlId": "550e8400-e29b-41d4-a716-446655440000" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Stop request sent and crawl status set to `STOP_REQUESTED`."
+          },
+          "400": {
+            "description": "`crawlId` is null/empty or the crawler service returned a non-success status."
+          }
+        }
+      }
+    },
+    "/api/saveCrawlerUrl": {
+      "post": {
+        "summary": "Record a URL discovered by the crawler",
+        "description": "Stores a single URL that was discovered during a crawl, along with provenance information (the source page, the XPath of the triggering element, and the button text) and whether it was accepted (within the crawl scope).\n\nSource: `AktoJaxAction.saveCrawlerUrl()`",
+        "operationId": "saveCrawlerUrl",
+        "tags": ["Crawler"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["url", "crawlId"],
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "The discovered URL.",
+                    "example": "https://app.example.com/api/products"
+                  },
+                  "crawlId": {
+                    "type": "string",
+                    "description": "UUID of the crawl run that discovered this URL.",
+                    "example": "550e8400-e29b-41d4-a716-446655440000"
+                  },
+                  "accepted": {
+                    "type": "boolean",
+                    "description": "Whether this URL was within the crawl scope.",
+                    "example": true
+                  },
+                  "timestamp": {
+                    "type": "integer",
+                    "description": "Unix epoch when the URL was discovered.",
+                    "example": 1745280000
+                  },
+                  "sourceUrl": {
+                    "type": "string",
+                    "description": "Page URL on which the link to this URL was found.",
+                    "example": "https://app.example.com/shop"
+                  },
+                  "sourceXpath": {
+                    "type": "string",
+                    "description": "XPath of the element that triggered navigation to this URL.",
+                    "example": "//a[@id='products-link']"
+                  },
+                  "buttonText": {
+                    "type": "string",
+                    "description": "Text content of the element that linked to this URL.",
+                    "example": "View Products"
+                  }
+                }
+              },
+              "examples": {
+                "accepted_url": {
+                  "summary": "Save an accepted (in-scope) URL with provenance",
+                  "value": {
+                    "url": "https://app.example.com/api/products",
+                    "crawlId": "550e8400-e29b-41d4-a716-446655440000",
+                    "accepted": true,
+                    "timestamp": 1745280000,
+                    "sourceUrl": "https://app.example.com/shop",
+                    "sourceXpath": "//a[@id='products-link']",
+                    "buttonText": "View Products"
+                  }
+                },
+                "rejected_url": {
+                  "summary": "Save an out-of-scope URL",
+                  "value": {
+                    "url": "https://external.example.com/ads",
+                    "crawlId": "550e8400-e29b-41d4-a716-446655440000",
+                    "accepted": false,
+                    "timestamp": 1745280120
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "URL saved successfully."
+          },
+          "400": {
+            "description": "`url` or `crawlId` is null/empty."
+          }
+        }
+      }
+    },
+    "/api/fetchAllDastScans": {
+      "post": {
+        "summary": "List all DAST scan runs",
+        "description": "Returns all `CrawlerRun` documents that are in `RUNNING`, `COMPLETED`, `STOP_REQUESTED`, or `STOPPED` state, plus legacy records that have no `status` field. `PENDING` and `FAILED` runs are excluded.\n\nSource: `DastAction.fetchAllDastScans()`",
+        "operationId": "fetchAllDastScans",
+        "tags": ["DAST Scans"],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "properties": {} },
+              "examples": {
+                "fetch_all": {
+                  "summary": "Fetch all DAST scans",
+                  "value": {}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of crawler run documents.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "crawlerRuns": {
+                      "type": "array",
+                      "description": "All matching `CrawlerRun` documents.",
+                      "items": { "$ref": "#/components/schemas/CrawlerRun" },
+                      "example": [
+                        {
+                          "crawlId": "550e8400-e29b-41d4-a716-446655440000",
+                          "hostname": "https://app.example.com",
+                          "startedBy": "admin@example.com",
+                          "startTimestamp": 1745280000,
+                          "endTimestamp": 1745283600,
+                          "status": "COMPLETED",
+                          "moduleName": "Internal DAST (Akto)",
+                          "collectionId": 1234567890,
+                          "crawlingTime": 3600,
+                          "runTestAfterCrawling": true
+                        }
+                      ]
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fetchDastScan": {
+      "post": {
+        "summary": "Fetch URLs discovered in a DAST scan",
+        "description": "Returns all `CrawlerUrl` documents recorded by the crawler for the specified `crawlId`, representing every URL that was discovered (both in-scope and out-of-scope).\n\nSource: `DastAction.fetchDastScan()`",
+        "operationId": "fetchDastScan",
+        "tags": ["DAST Scans"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["crawlId"],
+                "properties": {
+                  "crawlId": {
+                    "type": "string",
+                    "description": "UUID of the crawl run whose discovered URLs to retrieve.",
+                    "example": "550e8400-e29b-41d4-a716-446655440000"
+                  }
+                }
+              },
+              "examples": {
+                "fetch_scan": {
+                  "summary": "Fetch discovered URLs for a crawl",
+                  "value": { "crawlId": "550e8400-e29b-41d4-a716-446655440000" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of discovered crawler URL documents.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "crawlerUrls": {
+                      "type": "array",
+                      "description": "All `CrawlerUrl` documents for the given crawl.",
+                      "items": { "$ref": "#/components/schemas/CrawlerUrl" },
+                      "example": [
+                        {
+                          "url": "https://app.example.com/api/products",
+                          "crawlId": "550e8400-e29b-41d4-a716-446655440000",
+                          "accepted": true,
+                          "timestamp": 1745280120,
+                          "sourceUrl": "https://app.example.com/shop",
+                          "sourceXpath": "//a[@id='products-link']",
+                          "buttonText": "View Products"
+                        }
+                      ]
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`crawlId` is null or empty."
+          }
+        }
+      }
+    },
+    "/api/fetchAvailableDastModules": {
+      "post": {
+        "summary": "List active DAST modules",
+        "description": "Returns all external DAST modules that have sent a heartbeat within the last 5 minutes. An empty `availableModules` list means only the built-in internal Akto DAST crawler is available and `selectedModuleName` should be left null when calling `initiateCrawler`.\n\nSource: `AktoJaxAction.fetchAvailableDastModules()`",
+        "operationId": "fetchAvailableDastModules",
+        "tags": ["DAST Scans"],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "properties": {} },
+              "examples": {
+                "fetch_modules": {
+                  "summary": "Fetch available DAST modules",
+                  "value": {}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Available DAST modules returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "availableModules": {
+                      "type": "array",
+                      "description": "DAST modules that sent a heartbeat within the last 5 minutes. Empty if only the built-in service is available.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "Internal module name. Pass this as `selectedModuleName` to `initiateCrawler`.",
+                            "example": "dast-module-prod-1"
+                          },
+                          "displayName": {
+                            "type": "string",
+                            "description": "Display name (same as `name`).",
+                            "example": "dast-module-prod-1"
+                          },
+                          "lastHeartbeat": {
+                            "type": "integer",
+                            "description": "Unix epoch of the last heartbeat received from this module.",
+                            "example": 1745283500
+                          },
+                          "isDefault": {
+                            "type": "boolean",
+                            "description": "Always `false` for external modules.",
+                            "example": false
+                          }
+                        }
+                      }
+                    },
+                    "actionErrors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ImportLogEntry": {
+        "type": "object",
+        "description": "A single per-endpoint parse result entry in an import log.",
+        "properties": {
+          "term": {
+            "type": "string",
+            "description": "Method and path of the endpoint (e.g. `GET /users`).",
+            "example": "GET /users"
+          },
+          "description": {
+            "type": "string",
+            "description": "Human-readable parse result or error message.",
+            "example": "Parsed successfully"
+          }
+        }
+      },
+      "CrawlerRun": {
+        "type": "object",
+        "description": "A `CrawlerRun` document from MongoDB representing one DAST crawl execution.",
+        "properties": {
+          "crawlId": { "type": "string", "description": "UUID of the crawl run.", "example": "550e8400-e29b-41d4-a716-446655440000" },
+          "hostname": { "type": "string", "description": "Target URL of the crawl.", "example": "https://app.example.com" },
+          "startedBy": { "type": "string", "description": "Email of the user who initiated the crawl.", "example": "admin@example.com" },
+          "startTimestamp": { "type": "integer", "description": "Unix epoch when the crawl started.", "example": 1745280000 },
+          "endTimestamp": { "type": "integer", "description": "Unix epoch when the crawl ended (0 if not yet finished).", "example": 1745283600 },
+          "status": {
+            "type": "string",
+            "enum": ["PENDING", "RUNNING", "COMPLETED", "FAILED", "STOP_REQUESTED", "STOPPED"],
+            "example": "COMPLETED"
+          },
+          "moduleName": { "type": "string", "description": "Name of the DAST module used.", "example": "Internal DAST (Akto)" },
+          "collectionId": { "type": "integer", "description": "ID of the API collection populated by this crawl.", "example": 1234567890 },
+          "crawlingTime": { "type": "integer", "description": "Maximum crawl duration in seconds.", "example": 3600 },
+          "runTestAfterCrawling": { "type": "boolean", "example": true },
+          "outScopeUrls": { "type": "string", "description": "Comma-separated excluded URL paths.", "example": "/logout,/static" },
+          "urlTemplatePatterns": { "type": "string", "example": "/users/{id}" },
+          "applicationPages": { "type": "string", "example": "/dashboard,/profile" },
+          "errorMessage": { "type": "string", "example": null },
+          "testRoleHexId": { "type": "string", "example": "60a7b2c3d4e5f6a7b8c9d0e1" },
+          "selectedMiniTestingService": { "type": "string", "example": null },
+          "accountId": { "type": "integer", "example": 1000000 }
+        }
+      },
+      "CrawlerUrl": {
+        "type": "object",
+        "description": "A `CrawlerUrl` document representing a single URL discovered during a DAST crawl.",
+        "properties": {
+          "url": { "type": "string", "description": "The discovered URL.", "example": "https://app.example.com/api/products" },
+          "crawlId": { "type": "string", "description": "UUID of the crawl run that discovered this URL.", "example": "550e8400-e29b-41d4-a716-446655440000" },
+          "accepted": { "type": "boolean", "description": "Whether this URL was within the crawl scope.", "example": true },
+          "timestamp": { "type": "integer", "description": "Unix epoch when the URL was discovered.", "example": 1745280120 },
+          "sourceUrl": { "type": "string", "description": "Page where the link to this URL was found.", "example": "https://app.example.com/shop" },
+          "sourceXpath": { "type": "string", "description": "XPath of the element that triggered navigation.", "example": "//a[@id='products-link']" },
+          "buttonText": { "type": "string", "description": "Text of the element that linked to this URL.", "example": "View Products" }
+        }
+      }
     }
   }
 }
