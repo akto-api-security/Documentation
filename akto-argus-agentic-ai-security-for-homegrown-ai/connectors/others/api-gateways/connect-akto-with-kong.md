@@ -1,285 +1,423 @@
 # Connect Akto with Kong
 
-Monitor and analyze all incoming requests and outgoing responses from your AI agents and MCP (Model Context Protocol) servers running on Kong API Gateway. This custom Kong plugin automatically captures API traffic, enabling comprehensive visibility, security analysis, and compliance monitoring for your AI infrastructure.
+Monitor and secure all incoming requests and outgoing responses from your **AI agents and MCP (Model Context Protocol) servers** running on Kong API Gateway. The `akto-mcp-endpoint-shield` plugin works for any agentic workload behind Kong — whether that's an MCP server handling tool calls, an AI agent API, an LLM-backed service, or any HTTP-based AI workload. It captures traffic flowing through Kong and sends it to Akto's guardrail service for real-time security analysis, visibility, and compliance monitoring.
 
 <figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2Fgit-blob-644c0f5adf38a5b8d700ef0ed54927fe97510207%2Fkong-agentic-guardrail.png?alt=media" alt="Kong AI Agent Monitoring" width="563"><figcaption></figcaption></figure>
 
-## Quick Setup Steps
+## Prerequisites
 
-This integration requires you to download our custom plugin, install it inside your Kong instance, enable it for your target services/routes, and deploy the associated helm charts for full functionality.
+Before you begin, make sure you have:
 
-### 1. Download the Custom Kong Plugin
+* Kong Gateway **2.0 or later** already running with your AI agent or MCP server registered as a Kong service/route
+* Access to Kong's Admin API (default: `http://localhost:8001`)
+* A server or Kubernetes cluster to host the Akto guardrail backend
+* Your **Akto API Token** (available from your Akto dashboard → Quick Start → Hybrid SaaS → Connect → Copy your `databaseAbstractorToken`)
 
-Clone the GitHub repository containing the plugin files.
+---
 
-```bash
-git clone https://github.com/akto-api-security/kong-integration.git
-```
-
-Inside the repository, navigate to the `/plugin` directory. You will find the following two required files:
-
-* **handler.lua**
-* **schema.lua**
-
-These constitute the core logic and validation schema for the custom Kong plugin.
-
-### 2. Install the Plugin in Kong
-
-Follow the steps below to install the plugin into your Kong environment.
+## Step 1: Install the Plugin in Kong
 
 {% stepper %}
 {% step %}
-**Copy Plugin Files to Kong**
+**Download the Plugin Files**
 
-1.  Create a directory for custom plugins (if not already present):
+Clone the Akto Kong integration repository:
 
-    ```bash
-    mkdir -p /usr/local/share/lua/5.1/kong/plugins/akto-mcp-endpoint-shield
-    ```
-2.  Copy the files:
+```bash
+git clone https://github.com/akto-api-security/kong-integration.git
+cd kong-integration
+```
 
-    ```bash
-    cp plugin/handler.lua /usr/local/share/lua/5.1/kong/plugins/akto-mcp-endpoint-shield/
-    cp plugin/schema.lua /usr/local/share/lua/5.1/kong/plugins/akto-mcp-endpoint-shield/
-    ```
+Inside the `plugin/` directory you will find two files:
+
+* `handler.lua` — plugin logic
+* `schema.lua` — configuration schema
+
+{% hint style="info" %}
+You only need these two files. Nothing else from the repository is required for the plugin itself.
+{% endhint %}
 {% endstep %}
 
 {% step %}
-**Update Kong Configuration**
+**Copy the Plugin Files into Kong**
 
-Edit your `kong.conf` or environment variable configuration:
+Create the plugin directory inside Kong and copy both files into it:
+
+```bash
+mkdir -p /usr/local/share/lua/5.1/kong/plugins/akto-mcp-endpoint-shield
+
+cp plugin/handler.lua /usr/local/share/lua/5.1/kong/plugins/akto-mcp-endpoint-shield/
+cp plugin/schema.lua  /usr/local/share/lua/5.1/kong/plugins/akto-mcp-endpoint-shield/
+```
+
+**Using Docker?** Mount the plugin directory as a volume instead:
+
+```yaml
+volumes:
+  - /path/to/kong-integration/plugin:/usr/local/share/lua/5.1/kong/plugins/akto-mcp-endpoint-shield:ro
+```
+{% endstep %}
+
+{% step %}
+**Register the Plugin with Kong**
+
+Add `akto-mcp-endpoint-shield` to Kong's plugins list. How you do this depends on how Kong is configured:
+
+**Via `kong.conf`:**
 
 ```
 plugins = bundled,akto-mcp-endpoint-shield
 ```
 
+**Via environment variable:**
+
+```bash
+KONG_PLUGINS=bundled,akto-mcp-endpoint-shield
+```
+
 {% hint style="info" %}
-This ensures Kong loads your custom plugin along with the built-in ones.
+If you are using Docker Compose, set this as an environment variable on the Kong service.
 {% endhint %}
 {% endstep %}
 
 {% step %}
 **Restart Kong**
 
-Apply the config changes:
-
 ```bash
 kong restart
+```
+
+Or if using Docker:
+
+```bash
+docker compose restart kong
 ```
 {% endstep %}
 {% endstepper %}
 
-### 3. Enable the Plugin for a Service or Route
+---
 
-You can enable the plugin globally or at the service/route level. Most teams prefer enabling it only for selected upstreams (MCP servers or AI agents).
+## Step 2: Enable the Plugin on Your Service or Route
 
-#### **Enable for a specific service:**
+You can attach the plugin to a specific service, a specific route, or globally across all traffic.
 
-```bash
-curl -X POST http://localhost:8001/services/<SERVICE_NAME>/plugins \
-  --data "name=mcp-endpoint-shield" \
-  --data "config.service_url=http://<AKTO_SERVICE_URL>:9091" \
-  --data "config.mode=async"
-```
-
-#### **Enable for a specific route:**
+**Enable on a specific service** (recommended — scopes monitoring to your AI agent or MCP service only):
 
 ```bash
-curl -X POST http://localhost:8001/routes/<ROUTE_NAME>/plugins \
-  --data "name=mcp-endpoint-shield" \
-  --data "config.service_url=http://<AKTO_SERVICE_URL>:9091" \
-  --data "config.mode=async"
+curl -X POST http://localhost:8001/services/<YOUR_SERVICE_NAME>/plugins \
+  --data "name=akto-mcp-endpoint-shield" \
+  --data "config.service_url=http://<AKTO_GUARDRAIL_URL>" \
+  --data "config.mode=async" \
+  --data "config.timeout=15000"
 ```
 
-#### **Enable globally:**
+**Enable on a specific route:**
+
+```bash
+curl -X POST http://localhost:8001/routes/<YOUR_ROUTE_NAME>/plugins \
+  --data "name=akto-mcp-endpoint-shield" \
+  --data "config.service_url=http://<AKTO_GUARDRAIL_URL>" \
+  --data "config.mode=async" \
+  --data "config.timeout=15000"
+```
+
+**Enable globally** (monitors all traffic through Kong):
 
 ```bash
 curl -X POST http://localhost:8001/plugins \
-  --data "name=mcp-endpoint-shield" \
-  --data "config.service_url=http://<AKTO_SERVICE_URL>:9091" \
-  --data "config.mode=async"
+  --data "name=akto-mcp-endpoint-shield" \
+  --data "config.service_url=http://<AKTO_GUARDRAIL_URL>" \
+  --data "config.mode=async" \
+  --data "config.timeout=15000"
 ```
 
+Replace `<AKTO_GUARDRAIL_URL>` with the URL you get after completing Step 3.
+
 {% hint style="info" %}
-#### **Configuration Parameters**
+**Configuration Parameters**
 
-* **`service_url`** - The URL where captured traffic data will be sent (Akto guardrail service endpoint)
-* **`mode`** - Processing mode: `async` or `blocked`
-
-Once applied, the plugin will automatically capture and validate all incoming requests and outgoing responses for the selected service/route.
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `service_url` | Yes | Base URL of your deployed Akto guardrail backend (e.g., `http://10.0.1.4:8080`) |
+| `mode` | Yes | `async` — non-blocking, logs traffic in background. `blocked` — validates request and response before serving, can return 403. |
+| `timeout` | No | Request timeout in milliseconds. Default: `30000`. Recommended minimum: `15000`. |
 {% endhint %}
 
-### 4. Deploy the Supporting Helm Charts
+You can also configure the plugin via **Kong Manager UI**: go to **Plugins → New Plugin → search for `akto-mcp-endpoint-shield`**.
 
-After enabling the Kong plugin, you need to deploy the Akto backend components using Helm charts. These components process and store the captured traffic data.
+---
+
+## Step 3: Deploy the Akto Guardrail Backend
+
+The guardrail backend is a set of services that receive traffic from the Kong plugin, run security checks, and ingest data for analysis. You can deploy it using **Docker Compose** (any Linux VM) or **Helm** (Kubernetes).
+
+### Option A: Docker Compose — Any Linux VM
+
+This is the fastest way to get started. You need a Linux server with at least **4 vCPUs and 8 GB RAM**.
+
+The deployment files are available at:\
+`https://github.com/akto-api-security/infra/tree/feature/quick-setup/guardrail-service-e2e-setup`
 
 {% stepper %}
 {% step %}
-**Add Akto Helm Repository**
+**Clone the Setup Repository**
 
 ```bash
-# Add the Akto Helm repository
-helm repo add akto https://akto-api-security.github.io/helm-charts
+git clone -b feature/quick-setup https://github.com/akto-api-security/infra.git
+cd infra/guardrail-service-e2e-setup
+```
+{% endstep %}
+
+{% step %}
+**Set Up Environment Files**
+
+Navigate into the `docker-compose` folder, then copy each template and fill in your Akto API token:
+
+```bash
+cd docker-compose
+
+# Kafka IP (only variable substituted by docker-compose itself)
+cp .env.example .env
+# Edit .env — set AKTO_KAFKA_IP to your server's private IP
+
+# Service env files — copy each template and replace <YOUR_AKTO_API_TOKEN>
+cp docker-guardrails-service.env.template          docker-guardrails-service.env
+cp docker-guardrails-service-kafka.env.template    docker-guardrails-service-kafka.env
+cp docker-mini-runtime.env.template                docker-mini-runtime.env
+cp data-ingestion-docker.env.template              data-ingestion-docker.env
+cp docker-account-job-executor.env.template        docker-account-job-executor.env
 ```
 
-If you've already added the repository before, update it to get the latest charts:
+Open each `.env` file you just created and replace every `<YOUR_AKTO_API_TOKEN>` with your token from the Akto dashboard (Settings → API Tokens).
+
+{% hint style="warning" %}
+Never publish `.env` files in the public — they contain your API token.
+{% endhint %}
+{% endstep %}
+
+{% step %}
+**Start the Services**
 
 ```bash
-# Update Helm repositories
+docker compose up -d
+```
+
+This starts the following services:
+
+| Service | Port | Purpose |
+|---------|------|---------|
+| `zoo1` | 2181 | ZooKeeper (Kafka coordination) |
+| `kafka1` | 9092 | Kafka message broker |
+| `akto-api-security-runtime` | — | Processes API traffic from Kafka |
+| `guardrails-service` | 9090 | Async guardrails (Kafka-based) |
+| `guardrails-service-http` | 9091 | Internal sync guardrails (called by data-ingestion-service) |
+| `data-ingestion-service` | 8080 | Receives traffic, runs guardrails, and ingests data — **this is the Kong plugin endpoint** |
+
+{% endstep %}
+
+{% step %}
+**Verify All Services Are Running**
+
+```bash
+docker compose ps
+```
+
+All services should show status `Up`. If any are restarting, check their logs:
+
+```bash
+docker compose logs guardrails-service-http
+docker compose logs data-ingestion-service
+```
+
+Test the guardrail service endpoint directly:
+
+```bash
+curl -sf http://localhost:9091/health && echo "guardrails OK"
+curl -sf http://localhost:8080/health && echo "data-ingestion OK"
+```
+{% endstep %}
+
+{% step %}
+**Update the Kong Plugin with the Service URL**
+
+Your guardrail service is now available at `http://<YOUR_SERVER_IP>:8080`. Update the Kong plugin configuration:
+
+```bash
+# Update an existing plugin (replace <PLUGIN_ID> with your plugin's ID)
+curl -X PATCH http://localhost:8001/plugins/<PLUGIN_ID> \
+  --data "config.service_url=http://<YOUR_SERVER_IP>:8080"
+```
+
+Or if you haven't enabled the plugin yet, use this URL in the Step 2 commands above.
+
+{% hint style="info" %}
+If your Kong instance and guardrail server are on different networks, make sure port `8080` is accessible from the Kong host. If you want HTTPS, place a reverse proxy (nginx, Caddy) or load balancer in front of the guardrail service.
+{% endhint %}
+{% endstep %}
+{% endstepper %}
+
+---
+
+### Option B: Kubernetes (Helm Charts)
+
+Use this option if your infrastructure runs on Kubernetes.
+
+{% stepper %}
+{% step %}
+**Add the Akto Helm Repository**
+
+```bash
+helm repo add akto https://akto-api-security.github.io/helm-charts
 helm repo update
 ```
 {% endstep %}
 
 {% step %}
-**Prepare MongoDB Connection String**
+**Install the Charts in Order**
 
-Akto requires a MongoDB instance for data storage. You'll need a MongoDB connection string.
+Deploy the following four charts **in the exact order shown**. Each chart depends on the previous one.
 
-For detailed MongoDB setup instructions, refer to the [Helm Deploy guide](https://docs.akto.io/getting-started/quick-start-with-akto-self-hosted/helm-deploy#prepare-mongo-connection-string).
-{% endstep %}
+**Chart 1 — Database Abstractor**
 
-{% step %}
-**Install Helm Charts in Sequence**
-
-Deploy the following three Helm charts **in the order shown below**:
-
-**Chart 1: Database Abstractor (Cyborg)**
-
-This chart sets up the database abstraction layer that manages data access patterns.
+Sets up the data access layer. After installing, retrieve the service token from your Akto dashboard.
 
 ```bash
 helm install akto-database-abstractor akto/akto-setup-database-abstractor \
   -n <NAMESPACE> \
-  --set mongo.aktoMongoConn="<AKTO_MONGO_CONNECTION_STRING>"
+  --set mongo.aktoMongoConn="<MONGODB_CONNECTION_STRING>"
 ```
 
-After installation, retrieve the **Database Abstractor Service Token** from Akto dashboard (you'll need this for Chart 2).
+**Chart 2 — Data Ingestion + Runtime**
 
-**Chart 2: Data Ingestion + Mini-Runtime (Combined)**
-
-This chart deploys the data ingestion service and mini-runtime together. It processes the traffic captured by the Kong plugin.
+Processes and stores the traffic captured by the Kong plugin.
 
 ```bash
 helm install akto-mrs-runtime-combined akto/akto-mrs-runtime-combined \
   -n <NAMESPACE> \
-  --set mini_runtime.aktoApiSecurityRuntime.env.databaseAbstractorToken="<DATABASE_ABSTRACTOR_SERVICE_TOKEN>" \
+  --set mini_runtime.aktoApiSecurityRuntime.env.databaseAbstractorUrl="https://ultron.akto.io" \
+  --set mini_runtime.aktoApiSecurityRuntime.env.databaseAbstractorToken="<YOUR_AKTO_API_TOKEN>" \
   --set mini_runtime.aktoApiSecurityRuntime.env.aktoLogLevel="INFO"
 ```
 
-Replace `<DATABASE_ABSTRACTOR_SERVICE_TOKEN>` with the token retrieved from Chart 1.
-
-**Chart 3: Threat Backend**
-
-This chart deploys the security analysis and security scanning backend.
+**Chart 3 — Threat Backend**
 
 ```bash
 helm install akto-threat-backend akto/akto-threat-backend \
   -n <NAMESPACE> \
-  --set mongo.aktoMongoConn="<AKTO_MONGO_CONNECTION_STRING>"
+  --set mongo.aktoMongoConn="<MONGODB_CONNECTION_STRING>"
 ```
 
-**Chart 4: AI Guardrails**
-
-This chart deploys the AI guardrails service that validates and monitors AI agent interactions.
+**Chart 4 — AI Guardrails**
 
 ```bash
 helm install akto-ai-guardrails akto/akto-ai-guardrails \
   -n <NAMESPACE> \
-  --set guardrailsService.env.aktoApiToken="<AKTO_API_TOKEN>" \
-  --set guardrailsService.env.aktoDbAbstractorHost="<DATABASE_ABSTRACTOR_HOST>" \
+  --set guardrailsService.env.aktoApiToken="<YOUR_AKTO_API_TOKEN>" \
+  --set guardrailsService.env.aktoDbAbstractorHost="https://ultron.akto.io" \
   --set guardrailsService.env.aktoAgentGuardUrl="http://akto-ai-guardrails-executor:8092" \
-  --set guardrailsService.env.aktoThreatDetectionHost="<THREAT_BACKEND_HOST>" \
-  --set guardrailsService.env.aktoLlmValidatorHost="<LLM_VALIDATOR_HOST>" \
-  --set guardrailsService.env.aktoIngestHost="<DATA_INGESTION_HOST>" \
-  --set guardrailsService.env.logLevel="info"
+  --set guardrailsService.env.aktoThreatDetectionHost="http://akto-threat-backend:8080" \
+  --set guardrailsService.env.aktoLlmValidatorHost="https://ultron.akto.io" \
+  --set guardrailsService.env.aktoIngestHost="http://akto-mrs-runtime-combined-data-ingestion-service:8080" \
+  --set guardrailsService.env.logLevel="info" \
+  --set agentGuardExecutor.enabled=true
 ```
-
-<details>
-
-<summary><strong>Environment Variables Explained</strong></summary>
-
-| Environment Variable          | Description                                                                                                                                      |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| AKTO\_API\_TOKEN              | Database Abstractor token retrieved from Chart 1                                                                                                 |
-| AKTO\_DB\_ABSTRACTOR\_HOST    | Database Abstractor service URL (e.g., [http://akto-database-abstractor:8080](http://akto-database-abstractor:8080/))                            |
-| AKTO\_AGENT\_GUARD\_URL       | Agent Guard Executor service URL (deployed in same chart, accessible at [http://localhost:8092](http://localhost:8092/))                         |
-| AKTO\_THREAT\_DETECTION\_HOST | Threat Backend service URL (e.g., [http://akto-threat-backend:8080](http://akto-threat-backend:8080/))                                           |
-| AKTO\_LLM\_VALIDATOR\_HOST    | LLM Validator service URL (same as Database Abstractor service URL)                                                                              |
-| AKTO\_INGEST\_HOST            | Data Ingestion service URL (e.g., [http://akto-mrs-runtime-combined-data-ingestion:8080](http://akto-mrs-runtime-combined-data-ingestion:8080/)) |
-| LOG\_LEVEL                    | Logging level (set to info for standard logging)                                                                                                 |
-
-</details>
-
-**Getting Service URLs**
-
-To get the internal service URLs for the deployed components:
-
-```bash
-# Get Database Abstractor service URL
-kubectl get service -n <NAMESPACE> | grep database-abstractor
-
-# Get Threat Backend service URL
-kubectl get service -n <NAMESPACE> | grep threat-backend
-
-# Get Data Ingestion service URL
-kubectl get service -n <NAMESPACE> | grep data-ingestion
-```
-
-The service URLs typically follow the format: `http://<service-name>:<port>`
 {% endstep %}
 
 {% step %}
-**Verify Helm Deployments**
-
-Check that all pods are running successfully:
+**Verify All Pods Are Running**
 
 ```bash
-# Check all pods in your namespace
 kubectl get pods -n <NAMESPACE>
-
-# You should see pods for:
-# - akto-database-abstractor
-# - akto-mrs-runtime-combined (mini-runtime and data ingestion)
-# - akto-threat-backend
-# - akto-ai-guardrails (with agentGuardExecutor service)
-
-# Check services
-kubectl get services -n <NAMESPACE>
-
-# Check Helm releases
-helm list -n <NAMESPACE>
 ```
 
-All pods should show a `Running` status. If any pod is in `CrashLoopBackOff` or `Error` state, check the logs:
+You should see pods for all four charts in `Running` status. If any pod is stuck in `CrashLoopBackOff` or `Pending`, check its logs:
 
 ```bash
 kubectl logs -n <NAMESPACE> <POD_NAME>
 ```
 {% endstep %}
+
+{% step %}
+**Get the Guardrail Service URL**
+
+```bash
+kubectl get services -n <NAMESPACE> | grep guardrails
+```
+
+Use the service's `CLUSTER-IP` (for in-cluster access) or set up an `Ingress` / `LoadBalancer` service for external access. Update the Kong plugin `config.service_url` with this URL.
+{% endstep %}
 {% endstepper %}
 
-## **Complete Deployment Summary**
+---
 
-After all four Helm charts are successfully deployed, you will have:
+## How the Two Modes Work
 
-1. **Database Abstractor (Cyborg)** - Database access layer
-2. **Data Ingestion + Mini-Runtime** - Traffic processing pipeline
-3. **Security Backend** - Security scanning and security analysis
-4. **AI Guardrails** - AI agent validation and monitoring with Agent Guard Executor
+| | `async` | `blocked` |
+|--|---------|-----------|
+| **When guardrails run** | After the response is sent to the client | Before the request reaches your AI agent or MCP server |
+| **Impact on latency** | None — runs in background | Adds guardrail check latency to every request |
+| **Can block requests** | No (logs only) | Yes — returns `403` if a request or response is flagged |
+| **Best for** | Monitoring and visibility | Enforcing security policies |
 
-{% hint style="info" %}
-#### Important Notes
+**Start with `async`** to monitor traffic without impacting your users. Switch to `blocked` once you've validated your guardrail rules.
 
-* Ensure your Kong version supports custom plugins (Kong ≥ 2.0 recommended).
-* The plugin must be listed under `plugins` in `kong.conf` to be loaded.
-* Restart Kong after any plugin installation or configuration change.
-* Helm charts should be deployed in a Kubernetes cluster with sufficient permissions.
-{% endhint %}
+---
+
+## Verify the Integration
+
+After setup, send a test request through Kong (use the port Kong is listening on in your environment):
+
+```bash
+curl -X POST http://<KONG_HOST>:<KONG_PROXY_PORT>/<YOUR_ROUTE> \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}'
+```
+
+Check Kong logs to confirm the plugin is active:
+
+```bash
+# Docker
+docker compose logs kong | grep "\[akto\]"
+
+# Kubernetes
+kubectl logs -n <NAMESPACE> <KONG_POD_NAME> | grep "\[akto\]"
+```
+
+In **async mode**, you should see lines like:
+
+```
+[akto] ASYNC MODE — queuing ingest
+[akto]   method : POST
+[akto]   path   : /your-route
+[akto] [async] sending to → http://<AKTO_GUARDRAIL_URL>/api/http-proxy?...
+[akto] [async] ingest ok — guardrails passed
+```
+
+In **blocked mode**, the log will show each step: request check → upstream call → response check.
+
+---
+
+## Troubleshooting
+
+**Plugin not loading after restart**\
+Verify that `akto-mcp-endpoint-shield` appears in `KONG_PLUGINS` and that both `handler.lua` and `schema.lua` are present in the correct directory. Run `kong check` to validate the configuration.
+
+**`[akto] async ingest error: request failed: timeout`**\
+The guardrail service is not reachable from Kong within the configured timeout. Check:
+1. The `config.service_url` is correct and reachable from the Kong host
+2. Firewall/NSG rules allow traffic on port `9091` (or your configured port)
+3. Increase `config.timeout` (e.g., `15000` ms) if the service is reachable but slow on first connection due to SSL handshake
+
+**No `[akto]` lines in Kong logs**\
+The default Kong log level is `warn`. Plugin info messages only appear at `info` level. Set `KONG_LOG_LEVEL=info` in your Kong environment and restart.
+
+**`blocked` mode returns `500` / unexpected errors**\
+Confirm that `kong.router.get_route()` returns a valid route object. This happens when the plugin runs on a route that is properly registered via the Kong Admin API.
+
+---
 
 ## Get Support
 
-If you need help integrating or debugging your setup:
-
-1. Contact the team via Slack or internal support channels.
-2. Raise an issue in the GitHub repository.
-3. Email the engineering team if you need custom integrations or help debugging Kong-level errors.
+* Raise an issue in the [Kong Integration GitHub repository](https://github.com/akto-api-security/kong-integration)
+* Contact the team via Slack or your assigned support channel
+* For enterprise support, email the engineering team with your Kong version, plugin version, and relevant log snippets
