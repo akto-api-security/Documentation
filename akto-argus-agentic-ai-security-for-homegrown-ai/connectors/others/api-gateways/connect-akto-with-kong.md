@@ -131,7 +131,9 @@ curl -X POST http://localhost:8001/plugins \
   --data "config.timeout=15000"
 ```
 
-Replace `<AKTO_GUARDRAIL_URL>` with the URL you get after completing Step 3.
+Replace `<AKTO_GUARDRAIL_URL>` with your guardrail service URL:
+- **If Akto provided you a URL** (e.g., `https://17*******0-guardrails.akto.io`), use that directly.
+- **Otherwise**, complete Step 3 to self-host the backend and use the URL you get from there.
 
 {% hint style="info" %}
 **Configuration Parameters**
@@ -148,6 +150,10 @@ You can also configure the plugin via **Kong Manager UI**: go to **Plugins → N
 ---
 
 ## Step 3: Deploy the Akto Guardrail Backend
+
+{% hint style="info" %}
+If you already have the Akto guardrail backend deployed (or have been given a `service_url` by your team), skip this step and use that URL directly in Step 2.
+{% endhint %}
 
 The guardrail backend is a set of services that receive traffic from the Kong plugin, run security checks, and ingest data for analysis. You can deploy it using **Docker Compose** (any Linux VM) or **Helm** (Kubernetes).
 
