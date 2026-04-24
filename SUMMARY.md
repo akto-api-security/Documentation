@@ -23,6 +23,7 @@
   * [MCP Endpoint Shield](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/README.md)
     * [MDM Deployment](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/mdm-deployment.md)
     * [Jamf MDM Deployment](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/jamf-mdm-deployment.md)
+    * [Mosyle MDM Deployment](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/mosyle-mdm-deployment.md)
     * [MacOS Installation](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/macos-installation.md)
   * [OpenClaw (Clawdbot) Visibility](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/openclaw-clawdbot-visibility.md)
   * [Cursor Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/cursor-hooks.md)

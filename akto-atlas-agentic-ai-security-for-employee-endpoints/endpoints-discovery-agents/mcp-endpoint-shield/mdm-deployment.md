@@ -341,6 +341,13 @@ Criteria:
 2. Check **Device install status**
 3. Review **Installation errors** if any
 {% endtab %}
+
+{% tab title="For Mosyle Business" %}
+1. Open the **Mosyle Business** admin console and locate **device inventory** or **command history** for the target Mac (exact labels vary by version).
+2. Confirm the **custom package** assignment for `mcp-endpoint-shield-Jamf-Installer.pkg` (or your chosen display name) shows **installed / success**.
+3. Confirm **custom commands** for `deploy_token.sh` and `install_from_staging.sh` completed successfully (check execution logs and timestamps after user login).
+4. For path-accurate deployment steps and verification commands, see **[Mosyle MDM Deployment](mosyle-mdm-deployment.md)** and the operator runbook in **akto-gateway** (`mcp-endpoint-shield/mosyle-scripts/README.md`).
+{% endtab %}
 {% endtabs %}
 
 **Automated Health Check Script**
@@ -378,6 +385,40 @@ if [ -z "$AKTO_API_TOKEN" ]; then
 fi
 
 echo "SUCCESS: MCP Shield is properly configured"
+exit 0
+```
+{% endtab %}
+
+{% tab title="macOS (Mosyle / akto-gateway)" %}
+```bash
+#!/bin/bash
+# health-check-mcp-shield-akto-gateway.sh
+# Use when deploying via akto-gateway jamf-scripts / Mosyle (per-user install under ~/.akto-mcp-endpoint-shield).
+
+CONSOLE_USER=$(stat -f "%Su" /dev/console 2>/dev/null)
+if [ -z "$CONSOLE_USER" ] || [ "$CONSOLE_USER" = "root" ] || [ "$CONSOLE_USER" = "_mbsetupuser" ]; then
+    echo "ERROR: No GUI console user (run when a user is logged in)"
+    exit 1
+fi
+USER_HOME=$(dscl . -read "/Users/$CONSOLE_USER" NFSHomeDirectory 2>/dev/null | awk '{print $2}')
+BIN="$USER_HOME/.akto-mcp-endpoint-shield/bin/mcp-endpoint-shield"
+CFG="$USER_HOME/.akto-mcp-endpoint-shield/config/config.env"
+
+if [ ! -f "$BIN" ]; then
+    echo "ERROR: Binary not found at $BIN"
+    exit 1
+fi
+
+if [ ! -f "$CFG" ]; then
+    echo "ERROR: Token config not found at $CFG"
+    exit 1
+fi
+
+if ! sudo -u "$CONSOLE_USER" launchctl print "gui/$(id -u "$CONSOLE_USER")" 2>/dev/null | grep -q "io.akto.mcp-endpoint-shield"; then
+    echo "WARNING: LaunchAgents may not be loaded; check launchctl list as the user"
+fi
+
+echo "SUCCESS: akto-gateway style MCP Endpoint Shield files present for $CONSOLE_USER"
 exit 0
 ```
 {% endtab %}
