@@ -26,7 +26,7 @@ description: Add Akto app in your GitHub organization
 
 * After app creation, install github app to your repositories
 
-<figure><img src="../../../.gitbook/assets/image (5) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (5) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 * Once setup is done you will need **Github App Id** and **Private key** as `.pem` file.
 

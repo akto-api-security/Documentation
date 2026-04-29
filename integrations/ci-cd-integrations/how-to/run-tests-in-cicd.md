@@ -8,8 +8,8 @@ You can trigger Akto's AI Red Teaming in your CI/CD pipelines too. Generate your
 
 *   Go to `My account > Settings > Integrations`
 
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (6).png" alt="" width="563"><figcaption></figcaption></figure></div>
-* Select `CI/CD Integeration`&#x20;
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (5) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+* Select `CI/CD Integeration`
 *   Click on `Generate token` button to generate a fresh token or copy an existing token.
 
     <figure><img src="../../../.gitbook/assets/image (7).png" alt="" width="563"><figcaption></figcaption></figure>
@@ -23,10 +23,11 @@ You can trigger Akto's AI Red Teaming in your CI/CD pipelines too. Generate your
 
     <figure><img src="../../../.gitbook/assets/image (8).png" alt="" width="375"><figcaption></figcaption></figure>
 * Click on `Run once now` (if the button name says anything else, read the previous point 🙄)
-* Observe the `Scan ID` on the red teaming page for the probe you just created.
-  *
+*   Observe the `Scan ID` on the red teaming page for the probe you just created. \*
 
-      <figure><img src="../../../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+    ```
+    <figure><img src="../../../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+    ```
 
 ### GitHub Actions
 

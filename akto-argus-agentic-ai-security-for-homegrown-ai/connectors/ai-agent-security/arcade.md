@@ -60,7 +60,7 @@ In the **Add Extension** screen enter the Basic Information such as:
 Under **Webhook Endpoints**, configure the execution stages that should be intercepted.
 
 {% hint style="warning" %}
-#### Note
+**Note**
 
 You must enter your Akto Traffic Processor ingestion URL in each enabled stage.\
 All other fields can be left as default unless you require a custom configuration.
@@ -99,10 +99,10 @@ Enable **Pre tool execution** to validate and inspect tool inputs before the too
 * Leave **Priority**, **Timeout**, and other fields as default unless you require custom behaviour.
 *   **On Failure:** Controls what arcade.dev does if Akto's webhook is unreachable or returns an error. Set to `Allow request` to let the tool call proceed when Akto is unavailable, or `Block request` to deny the call if Akto cannot be reached.
 
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (133).png" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (132).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 {% hint style="info" %}
-#### Blocking vs Async Mode
+**Blocking vs Async Mode**
 
 * **Blocking mode (default):** Keep **Pre Tool Execution** enabled. Akto evaluates tool inputs before execution and can block unsafe or policy-violating calls.
 * **Async / monitoring-only mode:** Disable **Pre Tool Execution** and rely solely on Post Tool Execution. Tool calls will not be intercepted — Akto will only observe and record outputs after execution. Use this when you want visibility without enforcement.
@@ -134,7 +134,7 @@ After configuring all required webhook stages:
 2. Ensure the extension is marked as **Enabled**.
 3.  Review the **Execution Order Preview** to confirm hooks are active.
 
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (143).png" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (142).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 {% endstepper %}
 

@@ -1,6 +1,6 @@
 # Run Live Response & Queries via Akto
 
-## Overview&#x20;
+## Overview
 
 You can use **Microsoft Defender Run Queries** in Akto Atlas to discover agentic activity and endpoints directly from employee devices.
 
@@ -8,7 +8,7 @@ To access this feature, navigate to:
 
 **Akto Atlas → Connectors → Microsoft Defender → Run Queries**
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 This integration allows you to:
 
@@ -47,7 +47,7 @@ Your Microsoft Defender API credentials must be configured with the following pe
 
 <details>
 
-<summary> <strong>Permission Required</strong></summary>
+<summary><strong>Permission Required</strong></summary>
 
 Your Microsoft Defender API token must include the following permissions:
 
@@ -65,19 +65,19 @@ Use this when you want to:
 * Extract API traffic or logs
 * Gather system/network metadata from endpoints
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
 
 ### Steps to Run
 
 {% stepper %}
 {% step %}
-#### Select Live Response
+**Select Live Response**
 
 Choose **Live Response** from the Run Queries screen.
 {% endstep %}
 
 {% step %}
-#### Select Devices
+**Select Devices**
 
 Search and select the devices where you want to run your script.
 
@@ -86,7 +86,7 @@ Search and select the devices where you want to run your script.
 {% endstep %}
 
 {% step %}
-#### Add Your Script
+**Add Your Script**
 
 You have two options:
 
@@ -101,7 +101,7 @@ Supported formats:
 {% endstep %}
 
 {% step %}
-#### (Optional) Add Script Parameters
+**(Optional) Add Script Parameters**
 
 You can pass parameters to your script at runtime.
 
@@ -113,7 +113,7 @@ AKTO_PROXY_URL=https://example.ngrok-free.dev/v1
 {% endstep %}
 
 {% step %}
-#### Run the Script
+**Run the Script**
 
 Click **Run on Selected Devices** to execute the script.
 {% endstep %}
@@ -146,21 +146,19 @@ You use KQL queries to:
 * Identify which devices are running these applications
 * Monitor adoption and potential risk exposure
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (2) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
-
-
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (2) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
 
 ### Steps to Run
 
 {% stepper %}
 {% step %}
-#### Select KQL Query
+**Select KQL Query**
 
 Switch to the **KQL Query** tab.
 {% endstep %}
 
 {% step %}
-#### Enter Your Query
+**Enter Your Query**
 
 Example:
 
@@ -173,7 +171,7 @@ DeviceNetworkEvents
 {% endstep %}
 
 {% step %}
-#### Run Query
+**Run Query**
 
 Click **Run Query** to execute.
 {% endstep %}

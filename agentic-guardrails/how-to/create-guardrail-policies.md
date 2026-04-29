@@ -22,7 +22,7 @@ The guardrail policies list displays existing policies and provides access to po
 1. Locate the **Create Guardrail** button in the top-right corner of the Guardrail Policies page.
 2.  Select **Create Guardrail** to open the guardrail configuration form.
 
-    <figure><img src="../../.gitbook/assets/image (6) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/image (27).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ### Fill the Configuration Form
 
@@ -43,7 +43,7 @@ This section defines identifying metadata and user-facing enforcement messages.
 This section is required to create a guardrail policy.
 {% endhint %}
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (3) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 </details>
 
@@ -53,18 +53,18 @@ This section is required to create a guardrail policy.
 
 Configure content moderation and policy-based control:
 
-#### **Enable Prompt Injection Attack Filter**
+**Enable Prompt Injection Attack Filter**
 
 * Enable the prompt attack filter to detect jailbreaks and manipulation attempts.
 * Adjust detection strength using the horizontal slider..
 
-#### **Enable Harmful Categories Filter**
+**Enable Harmful Categories Filter**
 
 * Enable the harmful content filter using the category checkbox.
 * Configure enforcement strength for **hate, insults, sexual content, violence, and misconduct** by adjusting the category sliders.
 * Enable the option to apply category filtering to **responses**, if required.
 
-#### **Add Denied Topics**
+**Add Denied Topics**
 
 Denied topics block specific concepts in user inputs or model responses.
 
@@ -77,7 +77,7 @@ Denied topics block specific concepts in user inputs or model responses.
 You can add up to **30 denied topics** per guardrail policy.
 {% endhint %}
 
-#### **Agent Intent Verification**
+**Agent Intent Verification**
 
 Enable Intent verification to validate whether agent-generated requests align with expected intent.
 
@@ -91,17 +91,17 @@ Enable Intent verification to validate whether agent-generated requests align wi
 
 <summary>3. Language Safety and Abuse Guardrails</summary>
 
-#### Gibberish Detection
+**Gibberish Detection**
 
 Identify nonsensical or meaningless inputs that may disrupt agent processing or indicate misuse.
 
-* Enable gibberish detection and define a confidence threshold.&#x20;
+* Enable gibberish detection and define a confidence threshold.
 
-#### Sentiment Analysis
+**Sentiment Analysis**
 
 You can just enable sentiment detection to evaluates inputs for negative, toxic, or inappropriate sentimentand configure a confidence threshold.
 
-#### Profanity
+**Profanity**
 
 Word filters enforce keyword- and phrase-based restrictions.
 
@@ -123,26 +123,26 @@ Akto support for up to **10,000 custom entries**.
 
 Configure controls to detect, block, or anonymise sensitive data.
 
-#### **Personally Identifiable Information**
+**Personally Identifiable Information**
 
 * Select predefined **PII types** to detect and block.
 * For each selected PII type, configure the **guardrail behavior**:
   * **Block** to deny the request or response containing the detected PII.
   * **Mask** to redact the detected PII before processing or returning the content.
 
-#### **Regex-Based Detection**
+**Regex-Based Detection**
 
 Akto detects sensitive data based on defined patterns.
 
 * Add up to **10 custom regex patterns** for structured data detection.
 
-#### Secrets Detection
+**Secrets Detection**
 
 Akto detects API keys, passwords, and similar sensitive values.
 
 * Just enable secrets detection and set the confidence threshold.
 
-#### Sensitive Data Anonymisation
+**Sensitive Data Anonymisation**
 
 Akto replaces detected sensitive data with placeholders while preserving original values securely for controlled restoration.
 
@@ -156,13 +156,13 @@ Akto replaces detected sensitive data with placeholders while preserving origina
 
 You configure detection and blocking of programming code and code injection attempts.
 
-#### Code Detection Filter
+**Code Detection Filter**
 
 Akto detects code patterns across supported programming languages and blocks content based on the configured level.
 
 * Enable the code detection filter and set the **Code Detection Level**.
 
-#### Ban Code Detection
+**Ban Code Detection**
 
 Enable ban code detection to block all code regardless of programming language.
 
@@ -183,7 +183,7 @@ Enable ban code detection to block all code regardless of programming language.
 
 <summary>6. Custom Guardrails</summary>
 
-#### LLM prompt based rule
+**LLM prompt based rule**
 
 This rule uses an LLM to classify content against a custom prompt.
 
@@ -191,7 +191,7 @@ This rule uses an LLM to classify content against a custom prompt.
 * Configure a **confidence score threshold**.
 * Content is blocked when the model confidence exceeds the configured threshold.
 
-#### External model based evaluation
+**External model based evaluation**
 
 External evaluation allows integration with third-party or internal scoring systems.
 
@@ -206,7 +206,7 @@ External evaluation allows integration with third-party or internal scoring syst
 
 <summary>7. Usage Based Guardrails</summary>
 
-#### Token Limit Detection
+**Token Limit Detection**
 
 Akto can evaluate input size and detects requests that exceed acceptable token limits.
 
@@ -225,11 +225,11 @@ Akto can evaluate input size and detects requests that exceed acceptable token l
 
 <summary>8. Anomaly Detection (Coming Soon)</summary>
 
-#### Availability Status
+**Availability Status**
 
 Anomaly detection guardrails are currently under development and not yet configurable.
 
-#### Anomaly Categories
+**Anomaly Categories**
 
 You will be able to define rules across three categories:
 
@@ -237,7 +237,7 @@ You will be able to define rules across three categories:
 * **Behavioral Anomalies**: Identify unexpected agent actions or tool usage patterns.
 * **Structural Anomalies**: Detect irregularities in request structure or interaction flows.
 
-#### Expected Capability
+**Expected Capability**
 
 Anomaly detection will enable proactive identification of abnormal patterns and potential security risks across agent workflows.
 
@@ -249,11 +249,11 @@ Anomaly detection will enable proactive identification of abnormal patterns and 
 
 You define where the guardrail policy is enforced and how violations are handled.
 
-#### Select Deployment Targets
+**Select Deployment Targets**
 
 Akto enforces the policy only on selected servers. Select MCP servers and agent servers where the guardrail policy should be applied.
 
-#### Configure Rule Behaviour
+**Configure Rule Behaviour**
 
 Choose how Akto responds when a guardrail condition is triggered:
 
@@ -261,7 +261,7 @@ Choose how Akto responds when a guardrail condition is triggered:
 * **Warn**: Notifies the user and allows continuation after acknowledgment.
 * **Alert**: Generates an alert for review without blocking content.
 
-#### Apply to Requests and Responses
+**Apply to Requests and Responses**
 
 Enable enforcement based on traffic direction:
 
@@ -282,7 +282,7 @@ A guardrail policy becomes active only after you explicitly select the target **
 {% endhint %}
 
 {% hint style="info" %}
-## **OWASP Agentic Risk Tags**
+### **OWASP Agentic Risk Tags**
 
 Guardrail policies include OWASP-aligned risk tags. You can click each tag in the UI to understand the associated risk category and its security impact on agent behaviour.
 {% endhint %}
@@ -303,7 +303,7 @@ The playground allows your team to validate guardrail behaviour before updating 
 * The playground evaluates the prompt using the selected guardrail configuration and displays the enforcement result.
 * You can also use the **Quick Test Prompts** provided in the playground to test common scenarios such as sensitive data exposure, prompt injection attempts, or abusive language.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 Playground probing helps your security team verify that guardrail conditions correctly detect violations and return the expected blocked response message before the policy is finalized.
 

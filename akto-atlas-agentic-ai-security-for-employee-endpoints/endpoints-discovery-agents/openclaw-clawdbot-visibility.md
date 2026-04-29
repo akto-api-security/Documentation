@@ -13,7 +13,7 @@ Akto Atlas does not require direct integration with Clawdbot services, APIs, or 
 
 Akto Atlas observes OpenClaw interactions through request and response guardrail validation.
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 Requests originating from OpenClaw channels such as AI models, chat applications, productivity tools, and automation platforms first pass through **Akto Endpoint Shield** for input guardrail validation before reaching **OpenClaw (Clawdbot)**.
 
@@ -280,7 +280,7 @@ For each Clawdbot asset, Akto Atlas displays:
 * First seen timestamp
 * Last seen timestamp
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (5) (1).png" alt="" width="540"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (5) (1) (1).png" alt="" width="540"><figcaption></figcaption></figure></div>
 
 ## Supported Operating Systems
 

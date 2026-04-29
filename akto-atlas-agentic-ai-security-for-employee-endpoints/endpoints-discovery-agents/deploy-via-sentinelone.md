@@ -32,14 +32,14 @@ The integration flow has two stages:
 
 {% stepper %}
 {% step %}
-#### Connect SentinelOne to Akto
+**Connect SentinelOne to Akto**
 
 1. Open **Akto ATLAS Dashboard**.
 2. Go to Connectors.
 3. Go to **Endpoint Management**.
 4.  Select **SentinelOne** and click **Connect**.
 
-    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (5).png" alt="" width="563"><figcaption></figcaption></figure></div>
 5. Fill in the following fields:
 
 * **SentinelOne Console URL**: `https://<your-tenant>.sentinelone.net`
@@ -47,7 +47,7 @@ The integration flow has two stages:
 * **Data Ingestion Service URL**: your Akto ingestion endpoint (`AKTO_DATA_INGESTION_URL`)
 *   **Polling Interval (seconds)**: keep default or set based on your monitoring preference
 
-    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
 
 6. Click **Save**.
 
@@ -55,7 +55,7 @@ After saving, Akto starts discovering AI coding tools and related agent activity
 {% endstep %}
 
 {% step %}
-#### Discover AI Agents on Managed Endpoints
+**Discover AI Agents on Managed Endpoints**
 
 Once integration is active, Akto uses SentinelOne endpoint telemetry to identify AI tooling usage (for example Cursor, Claude , and other supported agent clients) on managed devices.
 
@@ -67,14 +67,14 @@ You can then:
 {% endstep %}
 
 {% step %}
-#### Configure and Run Guardrails
+**Configure and Run Guardrails**
 
 1. Open the SentinelOne integration setup in Akto.
 2. In **Guardrails Installation**, choose the guardrails you want to deploy.
 3. Select specific devices, or use **Run on all devices**.
 4.  Click **Save & Run Guardrails**.
 
-    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (2).png" alt="" width="375"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (2) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
 
 **Cursor Guardrails**
 

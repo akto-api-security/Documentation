@@ -4,7 +4,7 @@ The **Endpoint Security Posture** dashboard gives you a high-level, executive vi
 
 With a single view, you can assess how AI agents, MCP servers, and LLMs are being used across your environment and where your organization is most vulnerable.
 
-<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (165).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (164).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ## What You Get at a Glance
 

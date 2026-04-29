@@ -7,6 +7,6 @@
    * The URL format will be: `https://app.akto.io/dashboard/testing/<test-id>`
    * Example: In `https://app.akto.io/dashboard/testing/69844a94fcad425c86b110e4?filters=#vulnerable`, the Scan ID is `69844a94fcad425c86b110e4`
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/Screenshot 2026-03-25 at 12.40.49 PM.png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (9).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 Note: Each scan has a unique ID that you'll need to use in your CI/CD configuration

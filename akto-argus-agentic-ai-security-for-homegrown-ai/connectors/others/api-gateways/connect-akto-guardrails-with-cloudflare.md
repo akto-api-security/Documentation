@@ -14,7 +14,7 @@ Use the steps below to deploy the Worker and attach it to your zones.
 
 {% stepper %}
 {% step %}
-### Deploy the Guardrails Worker
+#### Deploy the Guardrails Worker
 
 Use the Worker script from Akto’s published source:
 
@@ -22,7 +22,7 @@ Use the Worker script from Akto’s published source:
 
 Deploy using the Cloudflare dashboard and the steps below.
 
-#### Dashboard path (high level)
+**Dashboard path (high level)**
 
 1. Open the [Cloudflare Dashboard](https://dash.cloudflare.com/) and select your account.
 2.  Go to **Workers & Pages**.
@@ -36,7 +36,7 @@ Deploy using the Cloudflare dashboard and the steps below.
 
 <div data-with-frame="true"><figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2Fgit-blob-88941adf7ef76ca875ad24039e647c1958c18d70%2Fcloudflare-hello-world-worker-deploy.png?alt=media" alt="" width="563"><figcaption></figcaption></figure></div>
 
-#### What this Worker does (so you can verify your deployment)
+**What this Worker does (so you can verify your deployment)**
 
 * **WebSocket upgrades** are proxied as-is. The Worker logs metadata suitable for mirroring; it does not run Guardrails body validation on the upgrade handshake in the same way as full HTTP bodies.
 * **HTTP(S)**
@@ -60,13 +60,11 @@ Configure these in the Worker’s **Settings → Variables** (plain vars) and **
 
 <table><thead><tr><th width="228.09375">Name</th><th>Purpose</th></tr></thead><tbody><tr><td><code>APPLY_AKTO_GUARDRAILS</code></td><td>Set to <code>true</code> or <code>1</code> (string or boolean) to enable request/response Guardrails for applicable methods and paths. Any other value disables Guardrails while keeping mirroring.</td></tr><tr><td><code>AKTO_GUARDRAILS_URL</code></td><td>Base URL of the Guardrails service (Akto-provided), <strong>no trailing slash</strong>. Required for validation calls; if missing, the Worker skips Guardrails and only mirrors.</td></tr><tr><td><code>AKTO_ENDPOINTS_TO_GUARD</code></td><td>Optional. Comma-separated path fragments; if non-empty, Guardrails run only when the request path contains one of these fragments (after lowercasing). If empty, all eligible methods/paths (except GET/DELETE) are guarded when Guardrails are on.</td></tr><tr><td><code>AKTO_DATA_INGESTION_URL</code></td><td>Base URL of the Akto data-ingestion host (Akto-provided), <strong>no trailing slash</strong>. The Worker appends <code>/api/ingestData</code>. If this or the token is missing, ingest calls are skipped (logged in Worker logs).</td></tr><tr><td><code>AKTO_DATA_INGESTION_TOKEN</code></td><td>Secret sent as the <strong><code>Authorization</code></strong> header on ingest POSTs. Add it under <strong>Settings → Variables and Secrets</strong> as a <strong>Secret</strong>. You can copy the value from <strong>Akto Dashboard → Quick Setup → Hybrid SaaS</strong> as <code>databaseAbstractorToken</code>.</td></tr></tbody></table>
 
-
-
 </details>
 {% endstep %}
 
 {% step %}
-### Configure Worker Routing
+#### Configure Worker Routing
 
 Attach the Worker to the hostnames and paths that should pass through Akto mirroring (and Guardrails when enabled):
 
@@ -81,7 +79,7 @@ Traffic matching the route is handled by this Worker; everything else is unchang
 {% endstep %}
 
 {% step %}
-### Verify the setup
+#### Verify the setup
 
 1. **Ingestion:** Generate API traffic on a routed hostname. In **Akto Dashboard → API Collections** (e.g. by hostname), confirm new endpoints and traffic appear as with the standard Cloudflare proxy connector.
 2. **Guardrails:** With `APPLY_AKTO_GUARDRAILS` enabled, exercise a **POST** or **PUT** (or other non-GET/DELETE) path that should be guarded. Confirm allowed traffic still reaches your origin; intentionally trigger a policy that **blocks** and confirm the client receives **400** with the JSON error shape; if your policies **modify** payloads, confirm the client sees the rewritten body.
