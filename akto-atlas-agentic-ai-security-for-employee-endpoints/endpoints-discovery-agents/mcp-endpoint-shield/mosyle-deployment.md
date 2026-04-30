@@ -152,28 +152,16 @@ Leave all other options unchecked. Click **Save** to create the profile.
 
 #### **1. Assign to device group**
 
-1. In **Mosyle Business**, go to **Devices** → **Device Groups** (or select **All Devices**).
-2. Select the target group(s) where you want to deploy MCP Endpoint Shield.
-3. Click **Edit** (or the group name).
-4. Scroll to **Custom Commands** section.
-5. Find your `Akto MCP Shield - Install` profile.
-6. Toggle the switch to **ON** (green).
-7. Click **Save.**
-
-#### **2. Monitor deployment**
+Toggle the script **on** (green toggle) and assign it to the device group(s) or individual Macs you want to deploy to.
 
 The script will run the next time each assigned user signs in.
 
-**Monitor in Mosyle:**
+#### **2. Monitor deployment**
 
-1. Go to **Management** → **Custom Commands**
-2. Select your `Akto MCP Shield - Install` profile
-3. Click **View Results** to see execution status per device:
-   * **Success**: Installation completed
-   * **Pending**: Awaiting user sign-in
-   * **Failed**: See troubleshooting section below
-
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (4).png" alt="" width="563"><figcaption></figcaption></figure></div>
+Go to **Management** → **Custom Commands**, select your profile, and click **View Results** to see execution status:
+- **Success**: Installation completed
+- **Pending**: Awaiting user sign-in
+- **Failed**: See troubleshooting section
 {% endstep %}
 
 {% step %}
