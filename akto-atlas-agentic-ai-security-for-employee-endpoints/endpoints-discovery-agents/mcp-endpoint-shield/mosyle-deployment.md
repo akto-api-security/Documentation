@@ -63,23 +63,16 @@ Permissions to create/edit and manage:
 
 **1. Obtain credentials from Akto**
 
-Contact Akto support to request the installer download URL:
+Contact Akto support team to request following information:
 
-* **Contact**: support@akto.io
-* **Information to provide**:
-  * Your organization name
-  * List of target devices or user groups
-  * Deployment timeline
-
-Akto will provide:
-
+* Installation Script: `install.sh` file.
 * Direct download URL for the installer (`PKG_URL`)
 * Confirmation of your `AKTO_API_TOKEN`
 * Your `AKTO_API_BASE_URL`
 
 **2. Configure the installation script**
 
-Open `install.sh` from this directory and fill in the CONFIG section at the top:
+Open `install.sh` and fill in the CONFIG section at the top:
 
 ```bash
 PKG_URL=""              # installer URL provided by Akto
@@ -115,13 +108,13 @@ Do not commit `install.sh` with a real token to version control. Keep the filled
 4. Review the pasted content for accuracy (verify CONFIG section is filled)
 5. Click **Save**
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 **3. Configure execution settings**
 
 Click the **Execution Settings** tab and configure:
 
-<table><thead><tr><th width="234.02734375">Option</th><th>Configuration</th></tr></thead><tbody><tr><td><strong>Execute command</strong></td><td>Selectt: <strong>Immediately when saving the profile, upon assignment, or based on schedule or events</strong></td></tr><tr><td><strong>Execution trigger</strong></td><td>Tick Every user sign-in✅</td></tr><tr><td><strong>Schedule</strong></td><td>Only once (Event Required)✅</td></tr></tbody></table>
+<table><thead><tr><th width="234.02734375">Option</th><th>Configuration</th></tr></thead><tbody><tr><td><strong>Execute command</strong></td><td>Select: <strong>Immediately when saving the profile, upon assignment, or based on schedule or events</strong></td></tr><tr><td><strong>Execution trigger</strong></td><td>Tick Every user sign-in✅</td></tr><tr><td><strong>Schedule</strong></td><td>Only once (Event Required)✅</td></tr></tbody></table>
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
@@ -139,9 +132,12 @@ Leave all other options unchecked. Click **Save** to create the profile.
 {% step %}
 #### **Deploy to Devices**
 
-**1. Assign to device group**
+**1. Add Profile Assignment Based on Your Preferences**
 
-Toggle the script **on** (green toggle) and assign it to the device group(s) or individual Macs you want to deploy to.
+*   Click **+ Add Assignment**, choose users or devices, then select and confirm your assignment.
+
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure></div>
+* Save the Custom Commands.
 
 The script will run the next time each assigned user signs in.
 
@@ -153,7 +149,7 @@ Go to **Management** → **Custom Commands**, select your profile, and click **V
 * **Pending**: Awaiting user sign-in
 * **Failed**: See troubleshooting section
 
-<figure><img src="../../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}

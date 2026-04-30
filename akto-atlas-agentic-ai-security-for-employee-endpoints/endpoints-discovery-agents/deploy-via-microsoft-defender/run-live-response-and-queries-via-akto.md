@@ -65,7 +65,7 @@ Use this when you want to:
 * Extract API traffic or logs
 * Gather system/network metadata from endpoints
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
 
 ### Steps to Run
 

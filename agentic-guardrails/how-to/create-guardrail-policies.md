@@ -303,7 +303,7 @@ The playground allows your team to validate guardrail behaviour before updating 
 * The playground evaluates the prompt using the selected guardrail configuration and displays the enforcement result.
 * You can also use the **Quick Test Prompts** provided in the playground to test common scenarios such as sensitive data exposure, prompt injection attempts, or abusive language.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 Playground probing helps your security team verify that guardrail conditions correctly detect violations and return the expected blocked response message before the policy is finalized.
 
