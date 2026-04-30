@@ -1,0 +1,288 @@
+---
+hidden:true
+---
+
+# MCP Endpoint Shield - Mosyle Deployment
+
+Deploy MCP Endpoint Shield across your organization using a single script via Mosyle MDM.
+
+### Overview
+
+MCP Endpoint Shield can be deployed enterprise-wide via **Mosyle MDM** (Mobile Device Management) for seamless, automated installation across your organization's macOS devices.
+
+#### Why Use MDM Deployment?
+
+MDM deployment provides significant advantages over manual installation:
+
+* **Zero-touch deployment** - Automatic installation at user login
+* **Centralized management** - Configure and monitor from a single Mosyle console
+* **Consistent configuration** - Ensure all devices have the same security posture
+* **Automated updates** - Push new versions across the organization
+* **Compliance tracking** - Monitor deployment status and coverage
+
+#### Key Features of Mosyle Deployment
+
+- **One script** handles everything: downloads the installer, deploys the token, installs to each user's home directory, and starts services automatically
+- **Runs at user sign-in** — installs once per user, retries automatically if it fails
+- **No PKG upload to Mosyle required** — the script downloads the installer directly from a URL provided by Akto
+- **Minimal configuration** — only 3 values to configure in the script
+
+***
+
+### Prerequisites
+
+Before deploying MCP Endpoint Shield via Mosyle, ensure you have the following:
+
+#### 1. Akto Credentials
+
+* **AKTO_API_TOKEN** — obtain from your Akto platform dashboard
+* **AKTO_API_BASE_URL** — your Akto instance URL (e.g. `https://<account-id>-guardrails.akto.io`)
+
+#### 2. Installer URL
+
+* **PKG download URL** — request this from Akto (support@akto.io); Akto will provide a direct download URL for the installer
+* ⚠️ **Important**: Keep this URL confidential as it's tied to your organization
+
+#### 3. Mosyle Admin Access
+
+Permissions to create/edit and manage:
+
+* Custom Commands
+* Device Group assignments
+* Execution results and logs
+
+#### 4. Device Enrollment
+
+* Target Macs must be enrolled and appear in your Mosyle dashboard
+* Devices must have internet connectivity to download the installer
+* Users must be able to log in to devices for installation to trigger
+
+***
+
+## Deployment Process
+
+{% stepper %}
+{% step %}
+**Prepare the Installation Script**
+
+**Step 1: Obtain credentials from Akto**
+
+Contact Akto support to request the installer download URL:
+
+* **Contact**: support@akto.io
+* **Information to provide**:
+  * Your organization name
+  * List of target devices or user groups
+  * Deployment timeline
+
+Akto will provide:
+- Direct download URL for the installer (`PKG_URL`)
+- Confirmation of your `AKTO_API_TOKEN`
+- Your `AKTO_API_BASE_URL`
+
+**Step 2: Configure the installation script**
+
+Open `install.sh` from this directory and fill in the CONFIG section at the top:
+
+```bash
+PKG_URL=""              # installer URL provided by Akto
+AKTO_API_TOKEN=""       # your Akto API token
+AKTO_API_BASE_URL=""    # your Akto base URL (e.g. https://<account-id>-guardrails.akto.io)
+```
+
+All other values (hook flags, wrap flags) can be left at their defaults or adjusted as needed.
+
+> **Security note**: Do not commit `install.sh` with a real token to version control. Keep the filled-in copy local or in a secrets manager.
+
+{% endstep %}
+
+{% step %}
+**Upload to Mosyle**
+
+**Step 1: Create Custom Command profile**
+
+1. Log into your **Mosyle Business** console
+2. Navigate to **Management** → **Custom Commands**
+3. Click **Add new profile**
+4. Name it: `Akto MCP Shield - Install`
+5. Choose **Category**: Security (or create custom category)
+
+**Step 2: Upload the script**
+
+1. Click the **Code** tab
+2. Select code format: **Shell Script (bash)**
+3. Paste the **entire contents** of your configured `install.sh` file
+4. Review the pasted content for accuracy (verify CONFIG section is filled)
+5. Click **Save**
+
+**Step 3: Configure execution settings**
+
+Click the **Execution Settings** tab and configure:
+
+**Execute command:**
+- Select: `Immediately when saving the profile, upon assignment, or based on schedule or events`
+
+**Execution trigger — select:**
+- ✅ **Every user sign-in**
+
+**Schedule — check:**
+- ✅ **Only once (Event Required)**
+
+**Execution context:**
+- ✅ **Run as logged-in user**
+
+> **Why this configuration**: This combination runs the script on each user sign-in until it succeeds, then stops. If the download fails or no user is logged in, it retries automatically at the next sign-in. The "only once" setting prevents repeated executions for the same user on the same device.
+
+Leave all other options unchecked. Click **Save** to create the profile.
+
+{% endstep %}
+
+{% step %}
+**Deploy to Devices**
+
+**Step 1: Assign to device group**
+
+1. In **Mosyle Business**, go to **Devices** → **Device Groups** (or select **All Devices**)
+2. Select the target group(s) where you want to deploy MCP Endpoint Shield
+3. Click **Edit** (or the group name)
+4. Scroll to **Custom Commands** section
+5. Find your `Akto MCP Shield - Install` profile
+6. Toggle the switch to **ON** (green)
+7. Click **Save**
+
+**Step 2: Monitor deployment**
+
+The script will run the next time each assigned user signs in.
+
+**Monitor in Mosyle:**
+1. Go to **Management** → **Custom Commands**
+2. Select your `Akto MCP Shield - Install` profile
+3. Click **View Results** to see execution status per device:
+   - **Success**: Installation completed
+   - **Pending**: Awaiting user sign-in
+   - **Failed**: See troubleshooting section below
+
+{% endstep %}
+
+{% step %}
+**Verify Installation**
+
+**Step 1: Verify on target device**
+
+On a target Mac after the user has signed in, open Terminal and run:
+
+```bash
+# Check 1: Binary installed
+ls -la ~/.akto-mcp-endpoint-shield/bin/mcp-endpoint-shield
+
+# Check 2: Token configured
+cat ~/.akto-mcp-endpoint-shield/config/config.env
+
+# Check 3: Services running
+launchctl list | grep mcp-endpoint-shield
+
+# Check 4: View installation log
+tail -30 /var/log/akto-mcp-endpoint-shield-install.log
+```
+
+**Step 2: Verification checklist**
+
+* [ ] Binary exists at `~/.akto-mcp-endpoint-shield/bin/mcp-endpoint-shield`
+* [ ] Config file exists at `~/.akto-mcp-endpoint-shield/config/config.env`
+* [ ] Config file has correct permissions (`chmod 600`)
+* [ ] Token is present in config file
+* [ ] Both LaunchAgents are loaded (`launchctl list`)
+* [ ] Installation log shows no errors
+* [ ] Mosyle shows "Success" status for this device
+
+{% endstep %}
+{% endstepper %}
+
+***
+
+### Updating MCP Endpoint Shield
+
+1. Request the updated installer URL from Akto (support@akto.io)
+2. Update `PKG_URL` in the script with the new URL
+3. Edit the script in Mosyle and save — Mosyle will re-run it on next sign-in
+
+> ⚠️ **Force Upgrade**: The script skips reinstallation if the binary is already present. To force an upgrade, run the uninstall script first (see below), then the install script will run again on next sign-in.
+
+***
+
+### Uninstall
+
+To remove MCP Endpoint Shield from devices:
+
+1. In Mosyle → **Custom Commands** → **Add new profile**
+2. Paste the contents of `uninstall.sh`
+3. Name it: `Akto MCP Shield - Uninstall`
+4. Execution Settings:
+   - Event: ✅ **Every user sign-in** (or trigger manually)
+   - Schedule: ✅ **Only once (Event Required)**
+5. Assign to the target devices
+
+***
+
+## Troubleshooting
+
+#### Issue: Script shows "Failed" in Mosyle View Results
+
+**Symptoms**: Custom Command status shows "Failed" or "Error"
+
+**Diagnostic command:**
+```bash
+tail -50 /var/log/akto-mcp-endpoint-shield-install.log
+```
+
+**Common causes and solutions:**
+
+| Issue | Check | Solution |
+|-------|-------|----------|
+| `PKG_URL` is empty or unreachable | Look for URL errors in install log | Verify the URL provided by Akto is correctly pasted in CONFIG; test: `curl -I $PKG_URL` |
+| `AKTO_API_TOKEN` is empty | Search install log for "TOKEN" | Check the CONFIG section of the script has the token value |
+| `AKTO_API_BASE_URL` is empty | Search install log for "BASE_URL" | Check the CONFIG section of the script has the base URL value |
+| No user logged in | Check timestamp when script ran | Will retry automatically on next sign-in; no action needed |
+
+#### Issue: Services Not Running After Installation
+
+**Symptoms**: `launchctl list` shows no MCP Endpoint Shield services
+
+**Solution - Manually load services:**
+
+```bash
+# Load both services
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/io.akto.mcp-endpoint-shield.plist
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/io.akto.mcp-endpoint-shield-agent.plist
+
+# Verify they're running
+launchctl list | grep mcp-endpoint-shield
+```
+
+#### Issue: Token Needs Updating After Installation
+
+**Symptoms**: Services running but not authenticated; logs show "AKTO_API_TOKEN not configured"
+
+**Solution:**
+
+Edit the script in Mosyle with the new token. Then on the device:
+```bash
+# Manually redeploy config
+cat > ~/.akto-mcp-endpoint-shield/config/config.env <<EOF
+AKTO_API_TOKEN=new-token-here
+EOF
+chmod 600 ~/.akto-mcp-endpoint-shield/config/config.env
+
+# Restart services
+launchctl bootout gui/$(id -u)/io.akto.mcp-endpoint-shield
+launchctl bootout gui/$(id -u)/io.akto.mcp-endpoint-shield-agent
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/io.akto.mcp-endpoint-shield.plist
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/io.akto.mcp-endpoint-shield-agent.plist
+```
+
+***
+
+## Support
+
+* **Akto platform issues**: support@akto.io
+* **Mosyle issues**: your IT administrator
