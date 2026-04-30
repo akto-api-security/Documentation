@@ -4,7 +4,7 @@ description: >-
   Mosyle MDM.
 ---
 
-# Mosyle Deployment
+# Mosyle MDM Deployment
 
 ## Overview
 
@@ -49,7 +49,7 @@ Permissions to create/edit and manage:
 * Device Group assignments
 * Execution results and logs
 
-### 4. Device Enrollment
+### 4. Device Enrolment
 
 * Target Macs must be enrolled and appear in your Mosyle dashboard
 * Devices must have internet connectivity to download the installer
@@ -59,9 +59,9 @@ Permissions to create/edit and manage:
 
 {% stepper %}
 {% step %}
-### **Prepare the Installation Script**
+#### **Prepare the Installation Script**
 
-#### **1. Obtain credentials from Akto**
+**1. Obtain credentials from Akto**
 
 Contact Akto support to request the installer download URL:
 
@@ -77,7 +77,7 @@ Akto will provide:
 * Confirmation of your `AKTO_API_TOKEN`
 * Your `AKTO_API_BASE_URL`
 
-#### **2. Configure the installation script**
+**2. Configure the installation script**
 
 Open `install.sh` from this directory and fill in the CONFIG section at the top:
 
@@ -90,24 +90,24 @@ AKTO_API_BASE_URL=""    # your Akto base URL (e.g. https://<account-id>-guardrai
 All other values (hook flags, wrap flags) can be left at their defaults or adjusted as needed.
 
 {% hint style="warning" %}
-## **Security Note**
+### **Security Note**
 
 Do not commit `install.sh` with a real token to version control. Keep the filled-in copy local or in a secrets manager.
 {% endhint %}
 {% endstep %}
 
 {% step %}
-### **Upload to Mosyle**
+#### **Upload to Mosyle**
 
-#### **1. Create Custom Command profile**
+**1. Create Custom Command profile**
 
 1. Log into your **Mosyle Business** console
 2. Navigate to **Management** → **Custom Commands**
 3. Click **Add new profile**
-4. Name it: `Akto MCP Shield - Install`
+4. Name it: `Akto Endpoint Shield - Install`
 5. Choose **Category**: Security (or create custom category)
 
-#### **2. Upload the script**
+**2. Upload the script**
 
 1. Click the **Code** tab
 2. Select code format: **Shell Script (bash)**
@@ -115,20 +115,20 @@ Do not commit `install.sh` with a real token to version control. Keep the filled
 4. Review the pasted content for accuracy (verify CONFIG section is filled)
 5. Click **Save**
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (2).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
-#### **3. Configure execution settings**
+**3. Configure execution settings**
 
 Click the **Execution Settings** tab and configure:
 
-<table><thead><tr><th width="234.02734375">Option</th><th>Configuration</th></tr></thead><tbody><tr><td><strong>Execute command</strong></td><td>Selectt: <strong>Immediately when saving the profile, upon assignment, or based on schedule or events</strong></td></tr><tr><td><strong>Execution trigger</strong></td><td>Tick Every user sign-in✅ </td></tr><tr><td><strong>Schedule</strong></td><td>Only once (Event Required)✅ </td></tr></tbody></table>
+<table><thead><tr><th width="234.02734375">Option</th><th>Configuration</th></tr></thead><tbody><tr><td><strong>Execute command</strong></td><td>Selectt: <strong>Immediately when saving the profile, upon assignment, or based on schedule or events</strong></td></tr><tr><td><strong>Execution trigger</strong></td><td>Tick Every user sign-in✅</td></tr><tr><td><strong>Schedule</strong></td><td>Only once (Event Required)✅</td></tr></tbody></table>
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 {% hint style="info" %}
-## **Why this configuration?**
+### **Why this configuration?**
 
-This combination runs the script on each user sign-in until it succeeds, then stops. If the download fails or no user is logged in, it retries automatically at the next sign-in.&#x20;
+This combination runs the script on each user sign-in until it succeeds, then stops. If the download fails or no user is logged in, it retries automatically at the next sign-in.
 
 The "**only once**" setting prevents repeated executions for the same user on the same device.
 {% endhint %}
@@ -137,26 +137,29 @@ Leave all other options unchecked. Click **Save** to create the profile.
 {% endstep %}
 
 {% step %}
-### **Deploy to Devices**
+#### **Deploy to Devices**
 
-#### **1. Assign to device group**
+**1. Assign to device group**
 
 Toggle the script **on** (green toggle) and assign it to the device group(s) or individual Macs you want to deploy to.
 
 The script will run the next time each assigned user signs in.
 
-#### **2. Monitor deployment**
+**2. Monitor deployment**
 
 Go to **Management** → **Custom Commands**, select your profile, and click **View Results** to see execution status:
-- **Success**: Installation completed
-- **Pending**: Awaiting user sign-in
-- **Failed**: See troubleshooting section
+
+* **Success**: Installation completed
+* **Pending**: Awaiting user sign-in
+* **Failed**: See troubleshooting section
+
+<figure><img src="../../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
-### **Verify Installation**
+#### **Verify Installation**
 
-#### **Verify on target device**
+**Verify on target device**
 
 On a target Mac after the user has signed in, open Terminal and run:
 
@@ -190,25 +193,25 @@ tail -30 /var/log/akto-mcp-endpoint-shield-install.log
 {% endstep %}
 {% endstepper %}
 
-## Updating MCP Endpoint Shield
+## Updating Akto Endpoint Shield
 
 1. Request the updated installer URL from Akto (support@akto.io)
 2. Update `PKG_URL` in the script with the new URL
 3. Edit the script in Mosyle and save — Mosyle will re-run it on next sign-in
 
 {% hint style="danger" %}
-## **Force Upgrade**:
+### **Force Upgrade**:
 
 The script skips reinstallation if the binary is already present. To force an upgrade, run the uninstall script first (see below), then the install script will run again on next sign-in.
 {% endhint %}
 
-## Uninstall
+### Uninstall Script
 
-To remove MCP Endpoint Shield from devices:
+To remove Akto Endpoint Shield from devices:
 
 1. In Mosyle → **Custom Commands** → **Add new profile**
 2. Paste the contents of `uninstall.sh`
-3. Name it: `Akto MCP Shield - Uninstall`
+3. Name it: `Akto Endpoint Shield - Uninstall`
 4. Execution Settings:
    * Event: ✅ **Every user sign-in** (or trigger manually)
    * Schedule: ✅ **Only once (Event Required)**
@@ -228,16 +231,11 @@ tail -50 /var/log/akto-mcp-endpoint-shield-install.log
 
 **Common causes and solutions:**
 
-| Issue                             | Check                              | Solution                                                                                |
-| --------------------------------- | ---------------------------------- | --------------------------------------------------------------------------------------- |
-| `PKG_URL` is empty or unreachable | Look for URL errors in install log | Verify the URL provided by Akto is correctly pasted in CONFIG; test: `curl -I $PKG_URL` |
-| `AKTO_API_TOKEN` is empty         | Search install log for "TOKEN"     | Check the CONFIG section of the script has the token value                              |
-| `AKTO_API_BASE_URL` is empty      | Search install log for "BASE\_URL" | Check the CONFIG section of the script has the base URL value                           |
-| No user logged in                 | Check timestamp when script ran    | Will retry automatically on next sign-in; no action needed                              |
+<table><thead><tr><th width="229.3984375">Issue</th><th>Check</th><th>Solution</th></tr></thead><tbody><tr><td><code>PKG_URL</code> is empty or unreachable</td><td>Look for URL errors in install log</td><td>Verify the URL provided by Akto is correctly pasted in CONFIG; test: <code>curl -I $PKG_URL</code></td></tr><tr><td><code>AKTO_API_TOKEN</code> is empty</td><td>Search install log for "TOKEN"</td><td>Check the CONFIG section of the script has the token value</td></tr><tr><td><code>AKTO_API_BASE_URL</code> is empty</td><td>Search install log for "BASE_URL"</td><td>Check the CONFIG section of the script has the base URL value</td></tr><tr><td>No user logged in</td><td>Check timestamp when script ran</td><td>Will retry automatically on next sign-in; no action needed</td></tr></tbody></table>
 
 ### Issue: Services Not Running After Installation
 
-**Symptoms**: `launchctl list` shows no MCP Endpoint Shield services
+**Symptoms**: `launchctl list` shows no Akto Endpoint Shield services
 
 **Solution - Manually load services:**
 
