@@ -1,15 +1,4 @@
 ---
-'0': h
-'1': i
-'2': d
-'3': d
-'4': e
-'5': 'n'
-'6': ':'
-'7': t
-'8': r
-'9': u
-'10': e
 description: >-
   Deploy MCP Endpoint Shield across your organization using a single script via
   Mosyle MDM.
