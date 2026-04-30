@@ -45,7 +45,7 @@ The table lists all discovered agentic assets.
 Selecting an agentic asset opens the **Agentic Asset Details** view.\
 The Agentic Asset Details view provides endpoint-level visibility for the selected agentic asset.
 
-<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ### Endpoint List
 

@@ -8,7 +8,7 @@ You can trigger Akto's AI Red Teaming in your CI/CD pipelines too. Generate your
 
 *   Go to `My account > Settings > Integrations`
 
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (5) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (6).png" alt="" width="563"><figcaption></figcaption></figure></div>
 * Select `CI/CD Integeration`
 *   Click on `Generate token` button to generate a fresh token or copy an existing token.
 
