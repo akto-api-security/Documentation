@@ -90,7 +90,7 @@ Akto Guardrails defends against:
 
 ## Next Steps
 
-* [Discover your agents](../../agentic-ai-discovery/get-started.md) to get full visibility
+* [Discover your agents](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/README.md) to get full visibility
 * [Run Red Teaming Probes](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/) to identify vulnerabilities
 * [Configure custom blocking policies for your use case](../how-to/create-guardrail-policies.md)
 

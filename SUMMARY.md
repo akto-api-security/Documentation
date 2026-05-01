@@ -310,10 +310,6 @@
 * [Compliance](akto-argus-agentic-ai-security-for-homegrown-ai/compliance/README.md)
   * [Bot Policy](akto-argus-agentic-ai-security-for-homegrown-ai/compliance/bot-policy.md)
 
-## Agentic AI Discovery
-
-* [Get Started](agentic-ai-discovery/get-started.md)
-
 ## Agentic Guardrails
 
 * [Get Started](agentic-guardrails/overview/README.md)
