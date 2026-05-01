@@ -62,12 +62,6 @@ Configure content moderation and policy-based control:
 
 * Enable the context poisoning filter to detect attempts to manipulate agent memory or context.
 
-**Harmful Categories Filter**
-
-* Enable the harmful content filter using the category checkbox.
-* Configure enforcement strength for **hate, insults, sexual content, violence, and misconduct** by adjusting the category sliders.
-* Enable the option to apply category filtering to **responses**, if required.
-
 **Add Denied Topics**
 
 Denied topics block specific concepts in user inputs or model responses.
@@ -80,6 +74,12 @@ Denied topics block specific concepts in user inputs or model responses.
 {% hint style="info" %}
 You can add up to **30 denied topics** per guardrail policy.
 {% endhint %}
+
+**Harmful Categories Filter**
+
+* Enable the harmful content filter using the category checkbox.
+* Configure enforcement strength for **hate, insults, sexual content, violence, and misconduct** by adjusting the category sliders.
+* Enable the option to apply category filtering to **responses**, if required.
 
 **Agent Intent Verification**
 
@@ -101,7 +101,7 @@ Identify nonsensical or meaningless inputs that may disrupt agent processing or 
 
 * Enable gibberish detection and define a confidence threshold.
 
-**Sentiment Analysis**
+**Sentiment Detection**
 
 You can just enable sentiment detection to evaluates inputs for negative, toxic, or inappropriate sentimentand configure a confidence threshold.
 
@@ -127,14 +127,14 @@ Akto support for up to **10,000 custom entries**.
 
 Configure controls to detect, block, or anonymise sensitive data.
 
-**Personally Identifiable Information**
+**Personally Identifiable Information Types**
 
 * Select predefined **PII types** to detect and block.
 * For each selected PII type, configure the **guardrail behavior**:
   * **Block** to deny the request or response containing the detected PII.
   * **Mask** to redact the detected PII before processing or returning the content.
 
-**Regex-Based Detection**
+**Regex Pattern**
 
 Akto detects sensitive data based on defined patterns.
 
@@ -251,19 +251,19 @@ Anomaly detection will enable proactive identification of abnormal patterns and 
 
 <summary>9.Tool Guardrails</summary>
 
-**Tool Misuse Detection**
+**Tool Misuse**
 
 &#x20;Evaluate tool invocation patterns and blocks suspicious activity.
 
 * Enable tool misuse detection to identify unauthorized or unsafe tool usage by agents.
 
-**Malicious Tool Detection**
+**Detect Malicious Tool**
 
 Block tools that exhibit unsafe or exploitative characteristics.
 
 * Enable malicious tool detection to identify tools with harmful behavior or intent.
 
-**Tool Metadata Mismatch Detection**
+**Detect Tool Name and Description Mismatch**
 
 Detect cases where tool behavior does not align with declared metada
 
