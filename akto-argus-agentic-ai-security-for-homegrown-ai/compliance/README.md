@@ -17,10 +17,14 @@ This dashboard offers actionable insights, visual summaries, and exportable repo
 
 Akto supports the following compliance standards for agentic systems:
 
-* **SOC 2** - Service Organization Control requirements for AI agent security
+* **OWASP Agentic Top 10** - Security risks and protections for autonomous AI agents
+* **OWASP LLM** - Top vulnerabilities specific to large language model applications
+* **EU AI Act** - Regulatory compliance for AI systems based on risk classification
+* **NIST AI Risk Management Framework** - Structured risk management for AI systems and agents
 * **CIS Controls** - Critical security controls adapted for autonomous systems
-* **CMMC** and **Cybersecurity Maturity Model Certification** - Defense contractor compliance for agent deployments
+* **CMMC** - Defense contractor compliance for agent deployments
 * **CSA CCM** - Cloud Security Alliance controls for AI agents
+* **Cybersecurity Maturity Model Certification (CMMC)** - Defense contractor compliance for agent deployments
 * **FISMA** - Federal information security for government AI systems
 * **FedRAMP** - Federal risk authorization for cloud-based agents
 * **GDPR** - Data protection compliance for LLM and agent data processing
@@ -29,6 +33,9 @@ Akto supports the following compliance standards for agentic systems:
 * **NIST 800-171** - Controlled unclassified information protection
 * **NIST 800-53** - Security controls for AI agent implementations
 * **PCI DSS** - Payment card security for e-commerce agents
+* **SOC 2** - Service Organization Control requirements for AI agent security
+* **OWASP** - General web application security best practices
+* **MITRE ATLAS** - Adversarial tactics and techniques for AI systems
 
 Each standard includes mapped issues from agent components aligned with specific control requirements.
 
