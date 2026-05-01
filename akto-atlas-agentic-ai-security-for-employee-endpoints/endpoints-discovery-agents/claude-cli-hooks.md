@@ -13,16 +13,23 @@ Akto Guardrails for Claude CLI provides security validation for AI interactions.
 
 ## How It Works
 
-Claude CLI's hook system executes custom scripts at two critical points:
+Claude CLI's hook system executes custom scripts at multiple lifecycle points:
 
 ```mermaid
 sequenceDiagram
     autonumber
     participant User
+    participant SessionHook as SessionStart Hook
     participant PromptHook as UserPromptSubmit Hook
+    participant PermHook as PermissionRequest Hook
+    participant ToolHook as PreToolUse Hook
     participant Claude as Claude AI
+    participant PostToolHook as PostToolUse Hook
     participant ResponseHook as Stop Hook
     participant Akto as Akto Dashboard
+
+    User->>SessionHook: Session begins
+    SessionHook-->>Akto: Log session start
 
     User->>PromptHook: User submits prompt
     Note over PromptHook: Validate guardrail policies
@@ -34,41 +41,108 @@ sequenceDiagram
         PromptHook-->>Akto: Report security event
     end
 
+    Claude->>PermHook: Permission request
+    PermHook-->>Akto: Validate & log
+    PermHook->>Claude: Allow or deny
+
+    Claude->>ToolHook: Tool call (MCP)
+    Note over ToolHook: Validate tool input
+    ToolHook->>Claude: Allow or block
+    ToolHook-->>Akto: Report event
+
+    Claude->>PostToolHook: Tool result
+    PostToolHook-->>Akto: Ingest tool output
+
     Claude->>ResponseHook: Claude response
     Note over ResponseHook: Validate response
     ResponseHook-->>Akto: Report event
     ResponseHook->>User: Response
 ```
 
-**2 Hook Points:**
+## Hook Points
 
-1. `UserPromptSubmit` - Validates prompts before sending to Claude API
-2. `Stop` - Validates responses when Claude finishes generating
+Akto covers **25 hook points** across the full Claude CLI session lifecycle, grouped into two categories:
+
+### Blocking Hooks
+
+These hooks can actively block or deny operations based on guardrails policy:
+
+| Hook Event | Script | Blocks Via | Description |
+|---|---|---|---|
+| `UserPromptSubmit` | `akto-validate-prompt-wrapper.sh` → `akto-validate-prompt.py` | Non-zero exit / `decision: block` | Validates user prompts before sending to Claude API |
+| `PreToolUse` | `akto-validate-mcp-request-wrapper.sh` → `akto-validate-mcp-request.py` | Non-zero exit / `decision: block` | Validates MCP tool inputs before execution |
+| `PermissionRequest` | `akto-hook-wrapper.sh` → `akto-hooks.py PermissionRequest` | `decision.behavior: deny` | Validates permission requests and can deny with a custom message |
+| `ConfigChange` | `akto-hook-wrapper.sh` → `akto-hooks.py ConfigChange` | `decision: block` | Validates configuration changes against guardrails policy |
+| `Elicitation` | `akto-hook-wrapper.sh` → `akto-hooks.py Elicitation` | `action: decline` | Validates MCP elicitation requests (form prompts from MCP servers) |
+| `ElicitationResult` | `akto-hook-wrapper.sh` → `akto-hooks.py ElicitationResult` | `action: decline` | Validates MCP elicitation results submitted by the user |
+| `TaskCreated` | `akto-hook-wrapper.sh` → `akto-hooks.py TaskCreated` | `continue: false` | Validates task creation against guardrails policy |
+| `TaskCompleted` | `akto-hook-wrapper.sh` → `akto-hooks.py TaskCompleted` | `continue: false` | Validates task completion against guardrails policy |
+
+### Observability Hooks
+
+These hooks report events to Akto for monitoring but cannot block:
+
+| Hook Event | Script | Description |
+|---|---|---|
+| `SessionStart` | `akto-hook-wrapper.sh` → `akto-hooks.py SessionStart` | Logs session initialization metadata |
+| `SessionEnd` | `akto-hook-wrapper.sh` → `akto-hooks.py SessionEnd` | Logs session termination metadata |
+| `InstructionsLoaded` | `akto-hook-wrapper.sh` → `akto-instructions-loaded.py` | Logs instruction file loads including file content, for compliance tracking |
+| `PostToolUse` | `akto-validate-mcp-response-wrapper.sh` → `akto-validate-mcp-response.py` | Ingests MCP tool input/output data |
+| `PostToolUseFailure` | `akto-hook-wrapper.sh` → `akto-hooks.py PostToolUseFailure` | Logs tool execution failures (tool name, input, error) |
+| `Stop` | `akto-validate-response-wrapper.sh` → `akto-validate-response.py` | Ingests full prompt/response conversation data |
+| `StopFailure` | `akto-hook-wrapper.sh` → `akto-hooks.py StopFailure` | Logs events when Claude fails to stop gracefully |
+| `SubagentStart` | `akto-hook-wrapper.sh` → `akto-sub-agent-start.py` | Logs subagent creation and extracts the triggering user prompt from transcript |
+| `SubagentStop` | `akto-hook-wrapper.sh` → `akto-sub-agent-stop.py` | Logs subagent completion and ingests conversation data |
+| `TeammateIdle` | `akto-hook-wrapper.sh` → `akto-hooks.py TeammateIdle` | Logs team collaboration events when a teammate becomes idle |
+| `Notification` | `akto-hook-wrapper.sh` → `akto-hooks.py Notification` | Logs notifications emitted by Claude CLI |
+| `CwdChanged` | `akto-hook-wrapper.sh` → `akto-hooks.py CwdChanged` | Logs working directory change events |
+| `FileChanged` | `akto-hook-wrapper.sh` → `akto-hooks.py FileChanged` | Logs file change events within the session |
+| `PermissionDenied` | `akto-hook-wrapper.sh` → `akto-hooks.py PermissionDenied` | Logs events when Claude CLI denies a permission request |
+| `PreCompact` | `akto-hook-wrapper.sh` → `akto-hooks.py PreCompact` | Logs pre-compaction events before transcript compression |
+| `PostCompact` | `akto-hook-wrapper.sh` → `akto-hooks.py PostCompact` | Logs post-compaction events after transcript is summarized |
+| `WorktreeRemove` | `akto-hook-wrapper.sh` → `akto-hooks.py WorktreeRemove` | Logs git worktree deletion events |
 
 ## File Structure
 
 ```
 ~/.claude/
 ├── hooks/
-│   ├── akto-validate-prompt-wrapper.sh       # Prompt validation wrapper
+│   ├── akto-hook-wrapper.sh                   # Generic wrapper — sets env vars, invokes target Python script
+│   ├── akto-hooks.py                          # Single dispatcher for all misc hooks (SessionStart, PermissionRequest, ConfigChange, etc.)
+│   │
+│   ├── # Prompt & Response (dedicated wrappers)
+│   ├── akto-validate-prompt-wrapper.sh        # Prompt validation wrapper
 │   ├── akto-validate-prompt.py                # Prompt validation logic
 │   ├── akto-validate-response-wrapper.sh      # Response validation wrapper
-│   ├── akto-validate-response.py              # Response validation logic
-│   └── akto_machine_id.py                     # Device ID utility
+│   ├── akto-validate-response.py              # Response ingestion logic
+│   │
+│   ├── # MCP Tool Validation (dedicated wrappers)
+│   ├── akto-validate-mcp-request-wrapper.sh   # MCP request validation wrapper
+│   ├── akto-validate-mcp-request.py           # MCP request validation logic
+│   ├── akto-validate-mcp-response-wrapper.sh  # MCP response wrapper
+│   ├── akto-validate-mcp-response.py          # MCP response ingestion logic
+│   │
+│   ├── # Standalone hooks (invoked directly via akto-hook-wrapper.sh)
+│   ├── akto-instructions-loaded.py            # InstructionsLoaded
+│   ├── akto-sub-agent-start.py                # SubagentStart
+│   ├── akto-sub-agent-stop.py                 # SubagentStop
+│   │
+│   ├── akto_ingestion_utility.py              # Shared ingestion utility (from shared/)
+│   └── akto_machine_id.py                     # Device ID utility (from shared/)
 ├── akto/
-│   └── logs/
-│       ├── validate-prompt.log
-│       └── validate-response.log
+│   └── logs/                                  # Per-hook log files
 └── settings.json                              # Hook configuration
 ```
 
 **Key Files:**
 
-* **Wrapper scripts (`.sh`)**: Set environment variables, invoke Python scripts
-  * ⚠️ **Contains `AKTO_DATA_INGESTION_URL` placeholder** - Must be replaced with your Akto instance URL
-* **Python scripts (`.py`)**: Core validation logic and Akto API communication
-* **`akto_machine_id.py`**: Generates unique device identifiers for Atlas mode
-* **`settings.json`**: Links hooks to wrapper scripts
+* **`akto-hook-wrapper.sh`**: Generic wrapper — sets environment variables, then invokes the target Python script passed as argument
+* **`akto-hooks.py`**: Single dispatcher for misc hooks — takes hook name as argument (`akto-hooks.py SessionStart`), routes to `akto_ingestion_utility`
+* **Dedicated wrapper scripts (`*-wrapper.sh`)**: Used for prompt, response, and MCP hooks that have their own URL/config
+* **Standalone scripts**: `akto-instructions-loaded.py`, `akto-sub-agent-start.py`, `akto-sub-agent-stop.py` — invoked directly via `akto-hook-wrapper.sh`
+* **`akto_ingestion_utility.py`**: Shared utility for sending data to Akto — sourced from `shared/`
+* **`akto_machine_id.py`**: Generates unique device identifiers for Atlas mode — sourced from `shared/`
+* **`settings.json`**: Maps all 25 hook events to their respective scripts
 
 ## Setup Guide
 
@@ -95,8 +169,19 @@ mkdir -p ~/.claude/akto/logs
 **Download Hook Scripts**
 
 ```bash
-# Base URL for downloading hooks
+# Base URLs
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/claude-cli-hooks"
+SHARED_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
+
+# Download shared utilities (sourced from shared/, not hooks/)
+curl -o ~/.claude/hooks/akto_ingestion_utility.py \
+  "${SHARED_BASE}/akto_ingestion_utility.py"
+curl -o ~/.claude/hooks/akto_machine_id.py \
+  "${SHARED_BASE}/akto_machine_id.py"
+
+# Download generic wrapper
+curl -o ~/.claude/hooks/akto-hook-wrapper.sh \
+  "${HOOKS_BASE}/akto-hook-wrapper.sh"
 
 # Download prompt validation hooks
 curl -o ~/.claude/hooks/akto-validate-prompt-wrapper.sh \
@@ -110,9 +195,25 @@ curl -o ~/.claude/hooks/akto-validate-response-wrapper.sh \
 curl -o ~/.claude/hooks/akto-validate-response.py \
   "${HOOKS_BASE}/akto-validate-response.py"
 
-# Download utility
-curl -o ~/.claude/hooks/akto_machine_id.py \
-  "${HOOKS_BASE}/akto_machine_id.py"
+# Download MCP validation hooks
+curl -o ~/.claude/hooks/akto-validate-mcp-request-wrapper.sh \
+  "${HOOKS_BASE}/akto-validate-mcp-request-wrapper.sh"
+curl -o ~/.claude/hooks/akto-validate-mcp-request.py \
+  "${HOOKS_BASE}/akto-validate-mcp-request.py"
+curl -o ~/.claude/hooks/akto-validate-mcp-response-wrapper.sh \
+  "${HOOKS_BASE}/akto-validate-mcp-response-wrapper.sh"
+curl -o ~/.claude/hooks/akto-validate-mcp-response.py \
+  "${HOOKS_BASE}/akto-validate-mcp-response.py"
+
+# Download misc hooks dispatcher + standalone hooks
+curl -o ~/.claude/hooks/akto-hooks.py \
+  "${HOOKS_BASE}/akto-hooks.py"
+curl -o ~/.claude/hooks/akto-instructions-loaded.py \
+  "${HOOKS_BASE}/akto-instructions-loaded.py"
+curl -o ~/.claude/hooks/akto-sub-agent-start.py \
+  "${HOOKS_BASE}/akto-sub-agent-start.py"
+curl -o ~/.claude/hooks/akto-sub-agent-stop.py \
+  "${HOOKS_BASE}/akto-sub-agent-stop.py"
 
 # Make executable
 chmod +x ~/.claude/hooks/*.sh
@@ -134,9 +235,10 @@ AKTO_URL="https://your-akto-instance.com"
 
 # Update all wrapper scripts
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.claude/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.claude/hooks/akto-hook-wrapper.sh
 
 # Verify replacement
-grep "AKTO_DATA_INGESTION_URL" ~/.claude/hooks/*-wrapper.sh
+grep "AKTO_DATA_INGESTION_URL" ~/.claude/hooks/*.sh
 ```
 
 **Manual replacement (alternative):**
@@ -152,57 +254,32 @@ With:
 ```bash
 AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
 ```
-
-Files to update:
-
-* `akto-validate-prompt-wrapper.sh`
-* `akto-validate-response-wrapper.sh`
 {% endstep %}
 
 {% step %}
 **Configure Hooks**
 
-Create Claude CLI settings configuration:
+Merge Akto hooks into your existing `~/.claude/settings.json` (replaces the `hooks` key, preserving all other settings):
 
 ```bash
-cat > ~/.claude/settings.json << 'EOF'
-{
-  "hooks": {
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-validate-prompt-wrapper.sh",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-validate-response-wrapper.sh",
-            "timeout": 10
-          }
-        ]
-      }
-    ]
-  }
-}
-EOF
+SETTINGS="$HOME/.claude/settings.json"
+
+# Create empty settings.json if it doesn't exist
+[ -f "$SETTINGS" ] || echo '{}' > "$SETTINGS"
+
+# Merge Akto hooks into existing settings.json
+jq -s '.[0] * .[1]' "$SETTINGS" <(curl -s "${HOOKS_BASE}/settings.json") \
+  > /tmp/akto_settings_merged.json && mv /tmp/akto_settings_merged.json "$SETTINGS"
 ```
 {% endstep %}
 
 {% step %}
 **Configure Hook Behavior (Optional)**
 
-Edit wrapper scripts to customize:
+Edit `akto-hook-wrapper.sh` to customize global defaults:
 
 ```bash
-# In each *-wrapper.sh file:
+# In akto-hook-wrapper.sh:
 
 MODE="atlas"                    # "argus" or "atlas"
 AKTO_SYNC_MODE="true"          # "true" (blocking) or "false" (observe only)
@@ -255,7 +332,7 @@ You should see log entries indicating validation occurred.
 
 ## Configuration Reference
 
-### Wrapper Script Variables
+### Generic Wrapper Variables (`akto-hook-wrapper.sh`)
 
 ```bash
 MODE="atlas"                                            # "argus" or "atlas"
@@ -263,7 +340,7 @@ AKTO_DATA_INGESTION_URL="{{AKTO_DATA_INGESTION_URL}}"  # ⚠️ MUST REPLACE
 AKTO_SYNC_MODE="true"                                  # "true" or "false"
 AKTO_TIMEOUT="5"                                       # Timeout in seconds
 AKTO_CONNECTOR="claude_code_cli"                       # Connector identifier
-CLAUDE_API_URL="https://api.anthropic.com"             # Claude API endpoint
+CONTEXT_SOURCE="ENDPOINT"                              # Context source tag
 ```
 
 ### Environment Variables (Optional)
@@ -314,21 +391,23 @@ claude --version
 
 ```bash
 # Check if placeholder still exists
-grep "{{AKTO_DATA_INGESTION_URL}}" ~/.claude/hooks/*-wrapper.sh
+grep "{{AKTO_DATA_INGESTION_URL}}" ~/.claude/hooks/*.sh
 
 # Replace with actual URL
 AKTO_URL="https://your-akto-instance.com"
-sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.claude/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.claude/hooks/*.sh
 ```
 
 ### Check Logs for Errors
 
 ```bash
-# View logs
-cat ~/.claude/akto/logs/validate-prompt.log
-cat ~/.claude/akto/logs/validate-response.log
+# View all logs
+ls ~/.claude/akto/logs/
 
-# Check for errors
+# Check specific log
+cat ~/.claude/akto/logs/validate-prompt.log
+
+# Check for errors across all logs
 grep -i error ~/.claude/akto/logs/*.log
 ```
 
@@ -341,7 +420,7 @@ curl -X POST "${AKTO_DATA_INGESTION_URL}/api/v1/events" \
   -d '{"test": "event"}'
 
 # Verify URL in wrapper scripts
-grep "AKTO_DATA_INGESTION_URL" ~/.claude/hooks/*-wrapper.sh
+grep "AKTO_DATA_INGESTION_URL" ~/.claude/hooks/*.sh
 ```
 
 ### Python Dependencies Missing
@@ -400,11 +479,11 @@ cp -r ~/.claude/akto/ ~/akto-backup/claude-akto-logs/ 2>/dev/null
 
 ```bash
 # Check that hooks are removed
-test -f ~/.claude/settings.json && echo "⚠️  settings.json still exists" || echo "✅ settings.json removed"
-test -d ~/.claude/hooks && echo "⚠️  Hook scripts still exist" || echo "✅ Hook scripts removed"
+test -f ~/.claude/settings.json && echo "settings.json still exists" || echo "settings.json removed"
+test -d ~/.claude/hooks && echo "Hook scripts still exist" || echo "Hook scripts removed"
 
 # Check if logs are removed (if you chose to remove them)
-test -d ~/.claude/akto && echo "ℹ️  Logs still present" || echo "✅ Logs removed"
+test -d ~/.claude/akto && echo "Logs still present" || echo "Logs removed"
 ```
 
 ### Restore Claude CLI to Default
@@ -426,24 +505,44 @@ claude "Test message"
 set -e
 AKTO_URL="${1:-https://your-akto-instance.com}"
 
-echo "🔧 Installing Akto Guardrails for Claude CLI..."
+echo "Installing Akto Guardrails for Claude CLI..."
 
 # Create directories
 mkdir -p ~/.claude/hooks ~/.claude/akto/logs
 
-# Download hooks
+# Base URLs
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/claude-cli-hooks"
-curl -s "${HOOKS_BASE}/akto-validate-prompt-wrapper.sh" -o ~/.claude/hooks/akto-validate-prompt-wrapper.sh
-curl -s "${HOOKS_BASE}/akto-validate-prompt.py" -o ~/.claude/hooks/akto-validate-prompt.py
-curl -s "${HOOKS_BASE}/akto-validate-response-wrapper.sh" -o ~/.claude/hooks/akto-validate-response-wrapper.sh
-curl -s "${HOOKS_BASE}/akto-validate-response.py" -o ~/.claude/hooks/akto-validate-response.py
-curl -s "${HOOKS_BASE}/akto_machine_id.py" -o ~/.claude/hooks/akto_machine_id.py
+SHARED_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
+
+# Shared utilities (sourced from shared/, not hooks/)
+curl -s "${SHARED_BASE}/akto_ingestion_utility.py" -o ~/.claude/hooks/akto_ingestion_utility.py
+curl -s "${SHARED_BASE}/akto_machine_id.py" -o ~/.claude/hooks/akto_machine_id.py
+
+# Wrappers
+for wrapper in \
+  akto-hook-wrapper.sh \
+  akto-validate-prompt-wrapper.sh \
+  akto-validate-response-wrapper.sh \
+  akto-validate-mcp-request-wrapper.sh \
+  akto-validate-mcp-response-wrapper.sh; do
+  curl -s "${HOOKS_BASE}/${wrapper}" -o ~/.claude/hooks/${wrapper}
+done
+
+# Python hook scripts
+for hook in \
+  akto-validate-prompt.py akto-validate-response.py \
+  akto-validate-mcp-request.py akto-validate-mcp-response.py \
+  akto-hooks.py \
+  akto-instructions-loaded.py \
+  akto-sub-agent-start.py akto-sub-agent-stop.py; do
+  curl -s "${HOOKS_BASE}/${hook}" -o ~/.claude/hooks/${hook}
+done
 
 # Make executable
 chmod +x ~/.claude/hooks/*.sh
 
-# Configure URL
-sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.claude/hooks/*-wrapper.sh
+# Configure URL in all wrapper scripts
+sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.claude/hooks/*.sh
 
 # Create config file
 cat > ~/.claude/akto/config << EOFCONFIG
@@ -455,41 +554,17 @@ MODE=atlas
 EOFCONFIG
 chmod 600 ~/.claude/akto/config
 
-# Create settings.json
-cat > ~/.claude/settings.json << 'EOFSETTINGS'
-{
-  "hooks": {
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-validate-prompt-wrapper.sh",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/akto-validate-response-wrapper.sh",
-            "timeout": 10
-          }
-        ]
-      }
-    ]
-  }
-}
-EOFSETTINGS
+# Merge Akto hooks into existing settings.json (preserves other settings)
+SETTINGS="$HOME/.claude/settings.json"
+[ -f "$SETTINGS" ] || echo '{}' > "$SETTINGS"
+jq -s '.[0] * .[1]' "$SETTINGS" <(curl -s "${HOOKS_BASE}/settings.json") \
+  > /tmp/akto_settings_merged.json && mv /tmp/akto_settings_merged.json "$SETTINGS"
 
 # Install dependencies
 pip3 install requests
 
-echo "✅ Installation complete!"
-echo "📍 Akto instance: ${AKTO_URL}"
+echo "Installation complete!"
+echo "Akto instance: ${AKTO_URL}"
 echo "Test with: claude 'What is 2+2?'"
 ```
 
@@ -507,14 +582,14 @@ mkdir -p ~/.claude/hooks ~/.claude/akto/logs
 
 # 2. Download all hook scripts from GitHub (see step 2 above)
 
-# 3. ⚠️ Configure Akto URL (REQUIRED)
+# 3. Configure Akto URL (REQUIRED)
 AKTO_URL="https://your-akto-instance.com"
-sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.claude/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.claude/hooks/*.sh
 
 # 4. Make executable
 chmod +x ~/.claude/hooks/*.sh
 
-# 5. Create settings.json (see step 4 above)
+# 5. Merge Akto hooks into settings.json (see step 4 above)
 
 # 6. Install dependencies
 pip3 install requests

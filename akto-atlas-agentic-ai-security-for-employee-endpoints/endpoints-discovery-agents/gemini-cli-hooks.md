@@ -6,6 +6,7 @@ Akto Guardrails for Gemini CLI provides security validation for AI interactions.
 
 * ✅ **Zero Installation** - No standalone apps to install
 * ✅ **Transparent Integration** - Uses Gemini CLI's native hook mechanism
+* ✅ **Comprehensive Coverage** - Monitors prompts, responses, tool use, agent lifecycle, session events, and more
 * ✅ **Real-time Protection** - Validates every prompt and response
 * ✅ **Centralized Monitoring** - All events reported to Akto dashboard
 * ✅ **Flexible Deployment** - Supports Argus and Atlas modes (project or user-level)
@@ -13,7 +14,7 @@ Akto Guardrails for Gemini CLI provides security validation for AI interactions.
 
 ## How It Works
 
-Gemini CLI's hook system executes custom scripts at two critical points:
+Gemini CLI's hook system executes custom scripts at key points across the agent lifecycle:
 
 ```mermaid
 sequenceDiagram
@@ -40,10 +41,19 @@ sequenceDiagram
     ResponseHook->>User: Response
 ```
 
-**2 Hook Points:**
+**Hook Points:**
 
 1. `BeforeModel` - Validates prompts before sending to Gemini API
 2. `AfterModel` - Ingests prompt/response when Gemini finishes (final chunk)
+3. `SessionStart` - Session lifecycle start
+4. `SessionEnd` - Session lifecycle end
+5. `BeforeAgent` - Fires before agent execution begins
+6. `AfterAgent` - Fires after agent execution completes
+7. `BeforeToolSelection` - Fires before tool is selected
+8. `BeforeTool` - Validates tool request before execution
+9. `AfterTool` - Validates tool response after execution
+10. `PreCompress` - Observe context compression
+11. `Notification` - Track agent notifications
 
 ## File Structure
 
@@ -51,13 +61,16 @@ sequenceDiagram
 ~/.gemini/
 ├── hooks/
 │   ├── akto-validate-prompt-wrapper.sh       # Prompt validation wrapper
-│   ├── akto-validate-prompt.py                # Prompt validation logic
-│   ├── akto-validate-response-wrapper.sh      # Response ingestion wrapper
-│   ├── akto-validate-response.py              # Response ingestion logic
-│   └── akto_machine_id.py                     # Device ID utility
+│   ├── akto-validate-prompt.py               # Prompt validation logic
+│   ├── akto-validate-response-wrapper.sh     # Response ingestion wrapper
+│   ├── akto-validate-response.py             # Response ingestion logic
+│   ├── akto-hook-wrapper.sh                  # Wrapper for all misc hooks
+│   ├── akto-hooks.py                         # Misc hooks logic (SessionStart/End, BeforeAgent, BeforeTool, etc.)
+│   ├── akto_machine_id.py                    # Device ID utility
+│   └── akto_ingestion_utility.py             # Ingestion utility
 ├── akto/
-│   └── chat-logs/                             # Optional local logs
-└── settings.json                              # Hook configuration
+│   └── chat-logs/                            # Optional local logs
+└── settings.json                             # Hook configuration
 ```
 
 **Key Files:**
@@ -98,6 +111,9 @@ mkdir -p ~/.gemini/akto/chat-logs
 # Base URL for downloading hooks
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/gemini-cli-hooks"
 
+# Base URL for utility files
+HOOKS_UTILITY_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
+
 # Download prompt validation hooks
 curl -o ~/.gemini/hooks/akto-validate-prompt-wrapper.sh \
   "${HOOKS_BASE}/akto-validate-prompt-wrapper.sh"
@@ -110,9 +126,17 @@ curl -o ~/.gemini/hooks/akto-validate-response-wrapper.sh \
 curl -o ~/.gemini/hooks/akto-validate-response.py \
   "${HOOKS_BASE}/akto-validate-response.py"
 
-# Download utility
+# Download misc hooks
+curl -o ~/.gemini/hooks/akto-hook-wrapper.sh \
+  "${HOOKS_BASE}/akto-hook-wrapper.sh"
+curl -o ~/.gemini/hooks/akto-hooks.py \
+  "${HOOKS_BASE}/akto-hooks.py"
+
+# Download utilities
 curl -o ~/.gemini/hooks/akto_machine_id.py \
-  "${HOOKS_BASE}/akto_machine_id.py"
+  "${HOOKS_UTILITY_BASE}/akto_machine_id.py"
+curl -o ~/.gemini/hooks/akto_ingestion_utility.py \
+  "${HOOKS_UTILITY_BASE}/akto_ingestion_utility.py"
 
 # Make executable
 chmod +x ~/.gemini/hooks/*.py ~/.gemini/hooks/*.sh
@@ -192,6 +216,123 @@ cat > ~/.gemini/settings.json << 'EOF'
             "command": "bash ~/.gemini/hooks/akto-validate-response-wrapper.sh",
             "timeout": 10000,
             "description": "Sends prompt/response pairs to Akto for ingestion"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-session-start",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py SessionStart",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-session-end",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py SessionEnd",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "BeforeAgent": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-before-agent",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py BeforeAgent",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "AfterAgent": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-after-agent",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py AfterAgent",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "BeforeToolSelection": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-before-tool-selection",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py BeforeToolSelection",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "BeforeTool": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-before-tool",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py BeforeTool",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "AfterTool": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-after-tool",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py AfterTool",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "PreCompress": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-pre-compress",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py PreCompress",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-notification",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py Notification",
+            "timeout": 10000
           }
         ]
       }
@@ -417,11 +558,15 @@ mkdir -p ~/.gemini/hooks ~/.gemini/akto/chat-logs
 
 # Download hooks
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/gemini-cli-hooks"
+SHARED_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
 curl -s "${HOOKS_BASE}/akto-validate-prompt-wrapper.sh" -o ~/.gemini/hooks/akto-validate-prompt-wrapper.sh
 curl -s "${HOOKS_BASE}/akto-validate-prompt.py" -o ~/.gemini/hooks/akto-validate-prompt.py
 curl -s "${HOOKS_BASE}/akto-validate-response-wrapper.sh" -o ~/.gemini/hooks/akto-validate-response-wrapper.sh
 curl -s "${HOOKS_BASE}/akto-validate-response.py" -o ~/.gemini/hooks/akto-validate-response.py
-curl -s "${HOOKS_BASE}/akto_machine_id.py" -o ~/.gemini/hooks/akto_machine_id.py
+curl -s "${HOOKS_BASE}/akto-hook-wrapper.sh" -o ~/.gemini/hooks/akto-hook-wrapper.sh
+curl -s "${HOOKS_BASE}/akto-hooks.py" -o ~/.gemini/hooks/akto-hooks.py
+curl -s "${SHARED_BASE}/akto_machine_id.py" -o ~/.gemini/hooks/akto_machine_id.py
+curl -s "${SHARED_BASE}/akto_ingestion_utility.py" -o ~/.gemini/hooks/akto_ingestion_utility.py
 
 # Make executable
 chmod +x ~/.gemini/hooks/*.py ~/.gemini/hooks/*.sh
@@ -457,6 +602,123 @@ cat > ~/.gemini/settings.json << 'EOFSETTINGS'
             "command": "bash ~/.gemini/hooks/akto-validate-response-wrapper.sh",
             "timeout": 10000,
             "description": "Sends prompt/response pairs to Akto for ingestion"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-session-start",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py SessionStart",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-session-end",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py SessionEnd",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "BeforeAgent": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-before-agent",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py BeforeAgent",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "AfterAgent": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-after-agent",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py AfterAgent",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "BeforeToolSelection": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-before-tool-selection",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py BeforeToolSelection",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "BeforeTool": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-before-tool",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py BeforeTool",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "AfterTool": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-after-tool",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py AfterTool",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "PreCompress": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-pre-compress",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py PreCompress",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "akto-validate-notification",
+            "type": "command",
+            "command": "bash ~/.gemini/hooks/akto-hook-wrapper.sh akto-hooks.py Notification",
+            "timeout": 10000
           }
         ]
       }

@@ -14,7 +14,7 @@ Akto Guardrails for Codex CLI provides comprehensive security monitoring and val
 
 ## How It Works
 
-Codex CLI's hook system executes custom scripts at four critical points:
+Codex CLI's hook system executes custom scripts at key points across the agent lifecycle:
 
 ```mermaid
 sequenceDiagram
@@ -59,12 +59,13 @@ sequenceDiagram
     PostToolHook->>Codex: Result
 ```
 
-**4 Hook Points:**
+**Hook Points:**
 
 1. `UserPromptSubmit` - Validates prompts before sending to Codex API
 2. `Stop` - Ingests prompt/response pair when Codex finishes generating
 3. `PreToolUse` - Validates tool requests before execution (blocks if malicious)
 4. `PostToolUse` - Ingests tool input/output after execution (observational only)
+5. `SessionStart` - Session lifecycle start
 
 > **Note:** Codex CLI currently only supports the `Bash` tool for `PreToolUse` and `PostToolUse` hooks.
 
@@ -83,7 +84,10 @@ sequenceDiagram
 │   ├── akto-validate-pre-tool.py               # Pre-tool validation logic
 │   ├── akto-validate-post-tool-wrapper.sh      # Post-tool ingestion wrapper
 │   ├── akto-validate-post-tool.py              # Post-tool ingestion logic
-│   └── akto_machine_id.py                      # Device ID utility
+│   ├── akto-hook-wrapper.sh                    # Wrapper for misc hooks
+│   ├── akto-hooks.py                           # Misc hooks logic (SessionStart)
+│   ├── akto_machine_id.py                      # Device ID utility
+│   └── akto_ingestion_utility.py               # Ingestion utility
 └── akto/
     └── logs/
         ├── validate-prompt.log
@@ -140,6 +144,9 @@ mkdir -p ~/.codex/akto/logs
 # Base URL for downloading hooks
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/codex-cli-hooks"
 
+# Base URL for utility files
+HOOKS_UTILITY_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
+
 # Download prompt validation hooks
 curl -o ~/.codex/hooks/akto-validate-prompt-wrapper.sh \
   "${HOOKS_BASE}/akto-validate-prompt-wrapper.sh"
@@ -164,9 +171,17 @@ curl -o ~/.codex/hooks/akto-validate-post-tool-wrapper.sh \
 curl -o ~/.codex/hooks/akto-validate-post-tool.py \
   "${HOOKS_BASE}/akto-validate-post-tool.py"
 
-# Download utility
+# Download misc hooks
+curl -o ~/.codex/hooks/akto-hook-wrapper.sh \
+  "${HOOKS_BASE}/akto-hook-wrapper.sh"
+curl -o ~/.codex/hooks/akto-hooks.py \
+  "${HOOKS_BASE}/akto-hooks.py"
+
+# Download utilities
 curl -o ~/.codex/hooks/akto_machine_id.py \
-  "${HOOKS_BASE}/akto_machine_id.py"
+  "${HOOKS_UTILITY_BASE}/akto_machine_id.py"
+curl -o ~/.codex/hooks/akto_ingestion_utility.py \
+  "${HOOKS_UTILITY_BASE}/akto_ingestion_utility.py"
 
 # Make executable
 chmod +x ~/.codex/hooks/*.sh
@@ -263,6 +278,17 @@ cat > ~/.codex/hooks.json << 'EOF'
           {
             "type": "command",
             "command": "bash ~/.codex/hooks/akto-validate-post-tool-wrapper.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.codex/hooks/akto-hook-wrapper.sh akto-hooks.py SessionStart",
             "timeout": 10
           }
         ]
@@ -536,6 +562,7 @@ mkdir -p ~/.codex/hooks ~/.codex/akto/logs
 
 # Download hooks
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/codex-cli-hooks"
+HOOKS_UTILITY_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
 curl -s "${HOOKS_BASE}/akto-validate-prompt-wrapper.sh" -o ~/.codex/hooks/akto-validate-prompt-wrapper.sh
 curl -s "${HOOKS_BASE}/akto-validate-prompt.py" -o ~/.codex/hooks/akto-validate-prompt.py
 curl -s "${HOOKS_BASE}/akto-validate-response-wrapper.sh" -o ~/.codex/hooks/akto-validate-response-wrapper.sh
@@ -544,7 +571,10 @@ curl -s "${HOOKS_BASE}/akto-validate-pre-tool-wrapper.sh" -o ~/.codex/hooks/akto
 curl -s "${HOOKS_BASE}/akto-validate-pre-tool.py" -o ~/.codex/hooks/akto-validate-pre-tool.py
 curl -s "${HOOKS_BASE}/akto-validate-post-tool-wrapper.sh" -o ~/.codex/hooks/akto-validate-post-tool-wrapper.sh
 curl -s "${HOOKS_BASE}/akto-validate-post-tool.py" -o ~/.codex/hooks/akto-validate-post-tool.py
-curl -s "${HOOKS_BASE}/akto_machine_id.py" -o ~/.codex/hooks/akto_machine_id.py
+curl -s "${HOOKS_BASE}/akto-hook-wrapper.sh" -o ~/.codex/hooks/akto-hook-wrapper.sh
+curl -s "${HOOKS_BASE}/akto-hooks.py" -o ~/.codex/hooks/akto-hooks.py
+curl -s "${HOOKS_UTILITY_BASE}/akto_machine_id.py" -o ~/.codex/hooks/akto_machine_id.py
+curl -s "${HOOKS_UTILITY_BASE}/akto_ingestion_utility.py" -o ~/.codex/hooks/akto_ingestion_utility.py
 
 # Make executable
 chmod +x ~/.codex/hooks/*.sh
@@ -567,6 +597,9 @@ cat > ~/.codex/hooks.json << 'EOFHOOKS'
     ],
     "PostToolUse": [
       {"hooks": [{"type": "command", "command": "bash ~/.codex/hooks/akto-validate-post-tool-wrapper.sh", "timeout": 10}]}
+    ],
+    "SessionStart": [
+      {"hooks": [{"type": "command", "command": "bash ~/.codex/hooks/akto-hook-wrapper.sh akto-hooks.py SessionStart", "timeout": 10}]}
     ]
   }
 }

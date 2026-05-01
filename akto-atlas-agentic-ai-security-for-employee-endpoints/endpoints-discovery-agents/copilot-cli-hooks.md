@@ -16,17 +16,22 @@ Akto Guardrails for GitHub Copilot provides security validation for AI-assisted 
 
 ## How Hooks Works
 
-GitHub Copilot's hook system executes custom scripts at three critical points in both VS Code and the CLI:
+GitHub Copilot's hook system executes custom scripts at multiple lifecycle points in both VS Code and the CLI:
 
 ```mermaid
 sequenceDiagram
     autonumber
     participant User
+    participant SessionHook as SessionStart Hook
     participant PromptHook as userPromptSubmitted Hook
     participant Copilot as GitHub Copilot AI
     participant PreToolHook as preToolUse Hook
     participant PostToolHook as postToolUse Hook
+    participant StopHook as Stop Hook
     participant Akto as Akto Dashboard
+
+    User->>SessionHook: Session begins
+    SessionHook-->>Akto: Log session start
 
     User->>PromptHook: User submits prompt
     Note over PromptHook: Validate guardrail policies (monitor only)
@@ -47,13 +52,23 @@ sequenceDiagram
     Note over PostToolHook: Ingest tool result for analytics
     PostToolHook-->>Akto: Report event
     PostToolHook->>User: Result returned
+
+    Copilot->>StopHook: Session ends
+    StopHook-->>Akto: Log session stop
 ```
 
-**3 Hook Points:**
+**8 Hook Points:**
 
-1. `userPromptSubmitted` - Monitors prompts when submitted to Copilot (reporting only, cannot block)
-2. `preToolUse` - Validates tool use before execution and **can block** dangerous operations
-3. `postToolUse` - Ingests tool execution results for monitoring and audit
+| Hook | Type | Can Block? | Description |
+|---|---|---|---|
+| `SessionStart` | Observability | No | Logs session initialization |
+| `userPromptSubmitted` | Observability | No | Monitors prompts (GitHub limitation prevents blocking) |
+| `preToolUse` | Blocking | **Yes** | Validates and can block tool executions |
+| `postToolUse` | Observability | No | Ingests tool execution results |
+| `Stop` | Blocking | **Yes** | Validates session stop; can block via guardrails |
+| `PreCompact` | Observability | No | Logs pre-compaction events |
+| `SubagentStart` | Observability | No | Logs subagent creation |
+| `SubagentStop` | Blocking | **Yes** | Validates subagent completion; can block |
 
 {% hint style="warning" %}
 **GitHub Copilot Limitation**: The `userPromptSubmitted` hook **cannot block** prompt execution. Prompts flagged by guardrails will still reach the LLM. Only `preToolUse` can prevent operations from executing. For complete prompt blocking, consider using a network proxy.
@@ -65,6 +80,9 @@ sequenceDiagram
 <project-root>/
 └── .github/
     └── hooks/
+        ├── akto-hook-wrapper.sh                  # Generic wrapper for lifecycle hooks (macOS/Linux)
+        ├── akto-hook-wrapper.ps1                 # Generic wrapper for lifecycle hooks (Windows)
+        ├── akto-hooks.py                         # Dispatch script for lifecycle hook events
         ├── akto-validate-prompt-wrapper.sh       # Prompt monitoring wrapper (macOS/Linux)
         ├── akto-validate-prompt-wrapper.ps1      # Prompt monitoring wrapper (Windows)
         ├── akto-validate-prompt.py               # Prompt monitoring logic
@@ -74,21 +92,24 @@ sequenceDiagram
         ├── akto-validate-post-tool-wrapper.sh    # Post-tool ingestion wrapper (macOS/Linux)
         ├── akto-validate-post-tool-wrapper.ps1   # Post-tool ingestion wrapper (Windows)
         ├── akto-validate-post-tool.py            # Post-tool ingestion logic
-        ├── akto_machine_id.py                    # Device ID utility (macOS/Linux/Windows)
+        ├── akto_ingestion_utility.py             # Shared ingestion utility (from shared/)
+        ├── akto_machine_id.py                    # Device ID utility (from shared/)
         ├── akto_heartbeat.py                     # Agent registration heartbeat
         └── hooks.json                            # Hook configuration
 ```
 
 **Key Files:**
 
-* **Wrapper scripts (`.sh` / `.ps1`)**: Set environment variables, invoke Python scripts
+* **`akto-hook-wrapper.sh` / `akto-hook-wrapper.ps1`**: Generic wrapper for lifecycle hooks — sets env vars and invokes `akto-hooks.py <hookName>`
+* **`akto-hooks.py`**: Single dispatch script for all lifecycle hook events (`SessionStart`, `Stop`, `PreCompact`, `SubagentStart`, `SubagentStop`) — routes to observability or blocking handler based on hook type
+* **Specific wrapper scripts (`*-wrapper.sh` / `*-wrapper.ps1`)**: Used for prompt, pre-tool, and post-tool hooks
   * ⚠️ **Contains `AKTO_DATA_INGESTION_URL` placeholder** - Must be set to your Akto instance URL
   * ⚠️ **Contains `AKTO_API_TOKEN` placeholder** - Must be set for agent registration
   * `.sh` used on macOS/Linux; `.ps1` used on Windows
-* **Python scripts (`.py`)**: Core validation logic and Akto API communication
-* **`akto_machine_id.py`**: Generates unique device identifiers — uses Windows registry (`MachineGuid`) on Windows, IOPlatformUUID on macOS, `/etc/machine-id` on Linux
+* **`akto_ingestion_utility.py`**: Shared utility for sending data to Akto — sourced from `shared/`
+* **`akto_machine_id.py`**: Generates unique device identifiers — uses Windows registry (`MachineGuid`) on Windows, IOPlatformUUID on macOS, `/etc/machine-id` on Linux; sourced from `shared/`
 * **`akto_heartbeat.py`**: Sends agent registration (device ID, username, OS) to Akto on each hook invocation, rate-limited to once per 30 seconds via a local timestamp cache
-* **`hooks.json`**: Links hooks to wrapper scripts — uses `bash` key on macOS/Linux and `powershell` key on Windows
+* **`hooks.json`**: Links all 8 hook events to their respective scripts — uses `bash` key on macOS/Linux and `powershell` key on Windows
 
 > **Note:** `hooks.json` is loaded from the project root's `.github/hooks/` directory.
 
@@ -134,8 +155,17 @@ New-Item -ItemType Directory -Force -Path .github\hooks
 
 **macOS / Linux:**
 ```bash
-# Base URL for downloading hooks
+# Base URLs
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/github-cli-hooks"
+SHARED_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
+
+# Download shared utilities (sourced from shared/)
+curl -o .github/hooks/akto_ingestion_utility.py "${SHARED_BASE}/akto_ingestion_utility.py"
+curl -o .github/hooks/akto_machine_id.py "${SHARED_BASE}/akto_machine_id.py"
+
+# Download generic lifecycle hook wrapper
+curl -o .github/hooks/akto-hook-wrapper.sh "${HOOKS_BASE}/akto-hook-wrapper.sh"
+curl -o .github/hooks/akto-hooks.py "${HOOKS_BASE}/akto-hooks.py"
 
 # Download prompt monitoring hooks
 curl -o .github/hooks/akto-validate-prompt-wrapper.sh \
@@ -156,14 +186,10 @@ curl -o .github/hooks/akto-validate-post-tool.py \
   "${HOOKS_BASE}/akto-validate-post-tool.py"
 
 # Download utilities
-curl -o .github/hooks/akto_machine_id.py \
-  "${HOOKS_BASE}/akto_machine_id.py"
-curl -o .github/hooks/akto_heartbeat.py \
-  "${HOOKS_BASE}/akto_heartbeat.py"
+curl -o .github/hooks/akto_heartbeat.py "${HOOKS_BASE}/akto_heartbeat.py"
 
 # Download hooks configuration
-curl -o .github/hooks/hooks.json \
-  "${HOOKS_BASE}/hooks.json"
+curl -o .github/hooks/hooks.json "${HOOKS_BASE}/hooks.json"
 
 # Make executable
 chmod +x .github/hooks/*.py .github/hooks/*.sh
@@ -172,12 +198,19 @@ chmod +x .github/hooks/*.py .github/hooks/*.sh
 **Windows (PowerShell):**
 ```powershell
 $HOOKS_BASE = "https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/github-cli-hooks"
+$SHARED_BASE = "https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
+
+# Download shared utilities
+foreach ($file in @("akto_ingestion_utility.py", "akto_machine_id.py")) {
+  Invoke-WebRequest -Uri "$SHARED_BASE/$file" -OutFile ".github\hooks\$file"
+}
 
 $files = @(
+  "akto-hook-wrapper.ps1", "akto-hooks.py",
   "akto-validate-prompt-wrapper.ps1", "akto-validate-prompt.py",
   "akto-validate-pre-tool-wrapper.ps1", "akto-validate-pre-tool.py",
   "akto-validate-post-tool-wrapper.ps1", "akto-validate-post-tool.py",
-  "akto_machine_id.py", "akto_heartbeat.py", "hooks.json"
+  "akto_heartbeat.py", "hooks.json"
 )
 
 foreach ($file in $files) {
@@ -234,11 +267,13 @@ Select-String "AKTO_DATA_INGESTION_URL|AKTO_API_TOKEN" .github\hooks\*-wrapper.p
 Edit each wrapper script and replace the two placeholders with your actual values.
 
 Files to update on macOS/Linux:
+* `akto-hook-wrapper.sh`
 * `akto-validate-prompt-wrapper.sh`
 * `akto-validate-pre-tool-wrapper.sh`
 * `akto-validate-post-tool-wrapper.sh`
 
 Files to update on Windows:
+* `akto-hook-wrapper.ps1`
 * `akto-validate-prompt-wrapper.ps1`
 * `akto-validate-pre-tool-wrapper.ps1`
 * `akto-validate-post-tool-wrapper.ps1`
@@ -247,7 +282,7 @@ Files to update on Windows:
 {% step %}
 **Verify hooks.json Configuration**
 
-The `hooks.json` file should already be configured after downloading. Verify it contains all three hooks:
+The `hooks.json` file should already be configured after downloading. Verify it contains all 8 hooks:
 
 ```json
 {
@@ -278,6 +313,51 @@ The `hooks.json` file should already be configured after downloading. Verify it 
         "powershell": "powershell -ExecutionPolicy Bypass -File .github/hooks/akto-validate-post-tool-wrapper.ps1",
         "comment": "Ingest tool execution results to Akto for monitoring and analytics",
         "timeoutSec": 30
+      }
+    ],
+    "SessionStart": [
+      {
+        "type": "command",
+        "bash": "bash ./.github/hooks/akto-hook-wrapper.sh akto-hooks.py SessionStart",
+        "powershell": "powershell -ExecutionPolicy Bypass -File .github/hooks/akto-hook-wrapper.ps1 akto-hooks.py SessionStart",
+        "comment": "Ingest session start event to Akto for observability",
+        "timeoutSec": 10
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "bash": "bash ./.github/hooks/akto-hook-wrapper.sh akto-hooks.py Stop",
+        "powershell": "powershell -ExecutionPolicy Bypass -File .github/hooks/akto-hook-wrapper.ps1 akto-hooks.py Stop",
+        "comment": "Ingest session stop event to Akto for observability",
+        "timeoutSec": 10
+      }
+    ],
+    "PreCompact": [
+      {
+        "type": "command",
+        "bash": "bash ./.github/hooks/akto-hook-wrapper.sh akto-hooks.py PreCompact",
+        "powershell": "powershell -ExecutionPolicy Bypass -File .github/hooks/akto-hook-wrapper.ps1 akto-hooks.py PreCompact",
+        "comment": "Ingest pre-compact event to Akto for observability",
+        "timeoutSec": 10
+      }
+    ],
+    "SubagentStart": [
+      {
+        "type": "command",
+        "bash": "bash ./.github/hooks/akto-hook-wrapper.sh akto-hooks.py SubagentStart",
+        "powershell": "powershell -ExecutionPolicy Bypass -File .github/hooks/akto-hook-wrapper.ps1 akto-hooks.py SubagentStart",
+        "comment": "Ingest subagent start event to Akto for observability",
+        "timeoutSec": 10
+      }
+    ],
+    "SubagentStop": [
+      {
+        "type": "command",
+        "bash": "bash ./.github/hooks/akto-hook-wrapper.sh akto-hooks.py SubagentStop",
+        "powershell": "powershell -ExecutionPolicy Bypass -File .github/hooks/akto-hook-wrapper.ps1 akto-hooks.py SubagentStop",
+        "comment": "Ingest subagent stop event to Akto for observability",
+        "timeoutSec": 10
       }
     ]
   }
@@ -975,12 +1055,20 @@ mkdir -p "${PROJECT_DIR}/.github/hooks"
 
 # Download hooks
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/github-cli-hooks"
+SHARED_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
+
 for FILE in \
   akto-validate-prompt-wrapper.sh akto-validate-prompt.py \
   akto-validate-pre-tool-wrapper.sh akto-validate-pre-tool.py \
   akto-validate-post-tool-wrapper.sh akto-validate-post-tool.py \
-  akto_machine_id.py akto_heartbeat.py hooks.json; do
+  akto-hook-wrapper.sh akto-hooks.py \
+  akto_heartbeat.py hooks.json; do
   curl -s "${HOOKS_BASE}/${FILE}" -o "${PROJECT_DIR}/.github/hooks/${FILE}"
+done
+
+# Download shared utilities
+for FILE in akto_ingestion_utility.py akto_machine_id.py; do
+  curl -s "${SHARED_BASE}/${FILE}" -o "${PROJECT_DIR}/.github/hooks/${FILE}"
 done
 
 # Make executable
@@ -1007,15 +1095,22 @@ param(
 )
 
 $HOOKS_BASE = "https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/github-cli-hooks"
+$SHARED_BASE = "https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
 $hooksDir = Join-Path $ProjectDir ".github\hooks"
 
 New-Item -ItemType Directory -Force -Path $hooksDir | Out-Null
 
+# Download shared utilities
+foreach ($file in @("akto_ingestion_utility.py", "akto_machine_id.py")) {
+  Invoke-WebRequest -Uri "$SHARED_BASE/$file" -OutFile (Join-Path $hooksDir $file)
+}
+
 $files = @(
+  "akto-hook-wrapper.ps1", "akto-hooks.py",
   "akto-validate-prompt-wrapper.ps1", "akto-validate-prompt.py",
   "akto-validate-pre-tool-wrapper.ps1", "akto-validate-pre-tool.py",
   "akto-validate-post-tool-wrapper.ps1", "akto-validate-post-tool.py",
-  "akto_machine_id.py", "akto_heartbeat.py", "hooks.json"
+  "akto_heartbeat.py", "hooks.json"
 )
 
 foreach ($file in $files) {
