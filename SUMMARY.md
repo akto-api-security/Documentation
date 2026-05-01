@@ -1,6 +1,5 @@
 # Table of contents
 
-* [API Security Documentation](https://docs.akto.io)
 * [Akto Agentic AI Security](README.md)
   * [AI Security](readme/ai-security.md)
   * [MCP Security](readme/mcp-security.md)
