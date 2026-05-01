@@ -78,4 +78,4 @@ The Agentic Asset Details view includes asset-level controls.
 
 ## What Next
 
-After reviewing an agentic asset and its endpoints, you can drill down into individual [**agentic components**](../../../agentic-ai-discovery/concepts/endpoints/agent-component.md) exposed by those endpoints.
+After reviewing an agentic asset and its endpoints, you can drill down into individual [**agentic components**](../../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/endpoints/agent-component.md) exposed by those endpoints.

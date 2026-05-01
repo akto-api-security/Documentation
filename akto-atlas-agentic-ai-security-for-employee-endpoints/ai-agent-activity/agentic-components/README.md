@@ -132,4 +132,4 @@ The **Agentic Components** view is the deepest level of agentic inspection in Ak
 After reviewing component behaviour, you can return to:
 
 * [**Agentic Assets**](../agentic-assets/) to review other agentic systems
-* [**Sensitive Data**](../../../agentic-ai-discovery/concepts/sensitive-data.md) and [**Audit Data**](../../../agentic-ai-discovery/concepts/audit-data.md) views to correlate findings
+* [**Sensitive Data**](../../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/sensitive-data.md) and [**Audit Data**](../../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/audit-data.md) views to correlate findings
