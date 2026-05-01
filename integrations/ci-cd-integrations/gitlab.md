@@ -14,8 +14,8 @@ Akto integrates with GitLab to add automated AI Red Teaming to your CI/CD pipeli
 * GitLab repository with CI/CD enabled
 * Docker runner configured in GitLab
 * [Akto dashboard access](https://app.akto.io/)
-* [Akto API credentials](/broken/pages/fxxYPwGU1kTuZwMAksYR) (API key and dashboard URL)
-* [Valid test ID from your Akto Probe](/broken/pages/q2Oz4FsKPEq381Pwpaws)
+* [Akto API credentials](how-to/get-api-credentials.md) (API key and dashboard URL)
+* [Valid test ID from your Akto Probe](how-to/test-id-from-akto-test.md)
 
 ### Steps to Configure GitLab
 

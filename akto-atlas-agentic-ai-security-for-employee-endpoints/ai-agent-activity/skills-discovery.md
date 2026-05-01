@@ -117,5 +117,5 @@ You can:
 
 Refer to:
 
-* [Agentic Guardrails](/broken/pages/GqT7atAXg9l9FDBVe7BX)
+* [Agentic Guardrails](../../agentic-guardrails/overview/README.md)
 * [Guardrail Policies](../../agentic-guardrails/concepts/threat-policy.md)

@@ -12,8 +12,8 @@ Akto's integration with Azure DevOps allows you to maintain agentic AI security 
 
 * Azure DevOps project with administrator access
 * Akto dashboard access
-* [Akto API credentials](/broken/pages/fxxYPwGU1kTuZwMAksYR) (API key and dashboard URL)
-* [Valid test ID from Akto Probe](/broken/pages/q2Oz4FsKPEq381Pwpaws)
+* [Akto API credentials](how-to/get-api-credentials.md) (API key and dashboard URL)
+* [Valid test ID from Akto Probe](how-to/test-id-from-akto-test.md)
 
 ### Steps to Configure Azure DevOps Pipeline
 
