@@ -13,7 +13,7 @@
 ## Akto Atlas: Agentic AI Security for Employee Endpoints
 
 * [Overview](akto-atlas-agentic-ai-security-for-employee-endpoints/overview.md)
-* [Endpoints Discovery Methods](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/README.md)
+* [AI Discovery Connectors](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/README.md)
   * [Browser Extensions](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/README.md)
     * [Chrome](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/chrome/README.md)
       * [Extension Usage Behaviour](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/chrome/extension-usage-behaviour.md)
@@ -36,7 +36,7 @@
     * [Run Live Response & Queries via Akto](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/deploy-via-microsoft-defender/run-live-response-and-queries-via-akto.md)
   * [Deploy via SentinelOne](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/deploy-via-sentinelone.md)
   * [Agentic Shield](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/agentic-shield.md)
-* [Endpoint Security Posture](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoint-security-posture.md)
+* [AI Security Posture](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoint-security-posture.md)
 * [AI Agent Activity](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/README.md)
   * [Agentic Assets](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-assets/README.md)
     * [Take Actions on Collections](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-assets/take-actions-on-collections.md)
