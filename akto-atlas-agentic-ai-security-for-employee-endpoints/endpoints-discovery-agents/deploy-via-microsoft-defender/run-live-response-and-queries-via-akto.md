@@ -8,7 +8,7 @@ To access this feature, navigate to:
 
 **Akto Atlas → Connectors → Microsoft Defender → Run Queries**
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 This integration allows you to:
 
@@ -65,7 +65,7 @@ Use this when you want to:
 * Extract API traffic or logs
 * Gather system/network metadata from endpoints
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
 
 ### Steps to Run
 
@@ -146,7 +146,7 @@ You use KQL queries to:
 * Identify which devices are running these applications
 * Monitor adoption and potential risk exposure
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure></div>
 
 ### Steps to Run
 

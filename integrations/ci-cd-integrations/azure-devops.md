@@ -6,7 +6,7 @@ Akto's integration with Azure DevOps allows you to maintain agentic AI security 
 * Generate scans from live functional traffic for targeted security scanning
 * Insert security seamlessly into existing functional scans with complete automation
 
-<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Prerequisites
 

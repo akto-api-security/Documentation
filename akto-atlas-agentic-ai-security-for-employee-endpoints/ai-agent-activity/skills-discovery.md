@@ -43,7 +43,7 @@ Select the skill that you want to restrict and open its skill details view.
 {% step %}
 Select the endpoint IDs (devices) where you want to block the skill.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -81,13 +81,13 @@ Select the device where you want to enforce the restriction.
 {% step %}
 Open the list of agents associated with the selected device and select the agent.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (2) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (2) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 Choose the skills that you want to block.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (3) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (3) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
