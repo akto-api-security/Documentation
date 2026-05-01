@@ -10,6 +10,7 @@ Get started immediately with endpoint-based discovery agents that require no inf
 * [Gemini CLI Hooks](gemini-cli-hooks.md) - Zero-installation security hooks for Gemini CLI (monitors prompts + responses)
 * [Snowflake Cortex Code CLI Hooks](snowflake-cortex-cli-hooks.md) - Security hooks for Snowflake Cortex Code CLI (prompts + tool use via native Cortex hooks)
 * [Neovim Hooks](neovim-hooks.md) - Lua plugin for Neovim AI plugins security (avante, copilot, codecompanion, windsurf + more)
+* [OpenCode Hooks](opencode-hooks.md) - Zero-installation security hooks for OpenCode (monitors chat + MCP tools)
 * [Deploy via SentinelOne](deploy-via-sentinelone.md) - Connect SentinelOne to discover AI agents and deploy guardrails on managed endpoints
 * [Agentic Shield](agentic-shield.md) - Application-level shield for real-time discovery and protection of AI agent interactions
 
