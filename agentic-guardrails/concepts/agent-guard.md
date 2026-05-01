@@ -465,7 +465,7 @@ Here are the **two separate scanner entries**, aligned with your format and nami
 
 ***
 
-### 16. MCP Tool Scanner
+### 16. Tool Guardrails
 
 **Purpose:** Detects and blocks malicious or untrusted tools before execution.
 
@@ -950,7 +950,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
-### 17. MCP Tool Scanner (Output)
+### 17. Tool Guardrails (Output)
 
 **Purpose:** Detects and blocks malicious or unsafe tool responses before they are used by the agent.
 
