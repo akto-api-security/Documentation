@@ -4,6 +4,8 @@ Akto's **Compliance Dashboard** provides a centralized view to monitor how your 
 
 This dashboard offers actionable insights, visual summaries, and exportable reports to help maintain compliance across your autonomous systems.
 
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (39).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 ### 📍 Accessing the Compliance Dashboard
 
 1. Go to the **Reports** section in the left sidebar
@@ -38,5 +40,3 @@ Akto supports the following compliance standards for agentic systems:
 * **MITRE ATLAS** - Adversarial tactics and techniques for AI systems
 
 Each standard includes mapped issues from agent components aligned with specific control requirements.
-
-***
