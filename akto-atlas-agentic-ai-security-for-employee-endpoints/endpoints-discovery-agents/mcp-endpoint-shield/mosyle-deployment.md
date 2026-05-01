@@ -108,7 +108,7 @@ Do not commit `install.sh` with a real token to version control. Keep the filled
 4. Review the pasted content for accuracy (verify CONFIG section is filled)
 5. Click **Save**
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 **3. Configure execution settings**
 
@@ -149,7 +149,7 @@ Go to **Management** → **Custom Commands**, select your profile, and click **V
 * **Pending**: Awaiting user sign-in
 * **Failed**: See troubleshooting section
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
