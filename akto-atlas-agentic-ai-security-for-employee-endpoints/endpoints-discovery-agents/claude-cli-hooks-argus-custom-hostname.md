@@ -78,7 +78,7 @@ sequenceDiagram
 │   ├── akto-validate-mcp-request.py               # MCP tool input validation
 │   ├── akto-validate-mcp-response-wrapper.sh      # MCP tool result wrapper
 │   ├── akto-validate-mcp-response.py              # MCP tool result capture
-│   └── akto_machine_id.py                         # Device ID utility
+│   └── akto_helpers.py                            # get_device_ip() helper
 ├── akto/
 │   └── logs/
 │       ├── validate-prompt.log
@@ -91,9 +91,9 @@ sequenceDiagram
 **Key Files:**
 
 * **Wrapper scripts (`.sh`)**: Set environment variables, invoke Python scripts
-  * ⚠️ **Contains `{{AKTO_DATA_INGESTION_URL}}` placeholder** — Must be replaced with your Akto instance URL
+  * ⚠️ **Contains `{{AKTO_DATA_INGESTION_URL}}`, `{{AKTO_TOKEN}}`, `{{AKTO_HOST}}` placeholders** — must be replaced with your real values
 * **Python scripts (`.py`)**: Core validation logic and Akto API communication
-* **`akto_machine_id.py`**: Generates unique device identifiers used in ingestion payloads
+* **`akto_helpers.py`**: Provides `get_device_ip()` (LAN IP used in the `ip` payload field)
 * **`settings.json`**: Links Claude CLI hook events to wrapper scripts
 
 ## Setup Guide
@@ -121,36 +121,18 @@ mkdir -p ~/.claude/akto/logs
 **Download Hook Scripts**
 
 ```bash
-# Base URL for downloading hooks
-HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/claude-cli-hooks"
+# Base URL for downloading argus hooks
+HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/claude-cli-hooks-argus"
 
-# Download prompt validation hooks
-curl -o ~/.claude/hooks/akto-validate-prompt-wrapper.sh \
-  "${HOOKS_BASE}/akto-validate-prompt-wrapper.sh"
-curl -o ~/.claude/hooks/akto-validate-prompt.py \
-  "${HOOKS_BASE}/akto-validate-prompt.py"
+for f in akto-validate-prompt.py akto-validate-prompt-wrapper.sh \
+         akto-validate-response.py akto-validate-response-wrapper.sh \
+         akto-validate-mcp-request.py akto-validate-mcp-request-wrapper.sh \
+         akto-validate-mcp-response.py akto-validate-mcp-response-wrapper.sh \
+         akto_helpers.py; do
+  curl -o ~/.claude/hooks/"$f" "${HOOKS_BASE}/${f}"
+done
 
-# Download response validation hooks
-curl -o ~/.claude/hooks/akto-validate-response-wrapper.sh \
-  "${HOOKS_BASE}/akto-validate-response-wrapper.sh"
-curl -o ~/.claude/hooks/akto-validate-response.py \
-  "${HOOKS_BASE}/akto-validate-response.py"
-
-# Download MCP tool hooks
-curl -o ~/.claude/hooks/akto-validate-mcp-request-wrapper.sh \
-  "${HOOKS_BASE}/akto-validate-mcp-request-wrapper.sh"
-curl -o ~/.claude/hooks/akto-validate-mcp-request.py \
-  "${HOOKS_BASE}/akto-validate-mcp-request.py"
-curl -o ~/.claude/hooks/akto-validate-mcp-response-wrapper.sh \
-  "${HOOKS_BASE}/akto-validate-mcp-response-wrapper.sh"
-curl -o ~/.claude/hooks/akto-validate-mcp-response.py \
-  "${HOOKS_BASE}/akto-validate-mcp-response.py"
-
-# Download utility
-curl -o ~/.claude/hooks/akto_machine_id.py \
-  "${HOOKS_BASE}/akto_machine_id.py"
-
-# Make executable
+# Make wrappers executable
 chmod +x ~/.claude/hooks/*.sh
 ```
 {% endstep %}
@@ -257,22 +239,20 @@ EOF
 {% endstep %}
 
 {% step %}
-**Configure Token**
+**Configure Token and Host**
 
 ```bash
-AKTO_TOKEN="your-akto-token"
+AKTO_TOKEN_VALUE="your-akto-token"
+AKTO_HOST_VALUE="api.anthropic.com"   # or your custom host, e.g. my-proxy.corp.example.com
 
-sed -i.bak "s|{{AKTO_TOKEN}}|${AKTO_TOKEN}|g" ~/.claude/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_TOKEN}}|${AKTO_TOKEN_VALUE}|g" ~/.claude/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_HOST}}|${AKTO_HOST_VALUE}|g"   ~/.claude/hooks/*-wrapper.sh
 
 # Verify
-grep "AKTO_TOKEN" ~/.claude/hooks/*-wrapper.sh
+grep -E "AKTO_TOKEN|AKTO_HOST" ~/.claude/hooks/*-wrapper.sh
 ```
 
-Optionally set `AKTO_HOST` in each wrapper script to override the default `api.anthropic.com` host header:
-
-```bash
-export AKTO_HOST="my-proxy.corp.example.com"
-```
+`AKTO_HOST` becomes the `host` request header value in every mirrored payload.
 {% endstep %}
 
 {% step %}
@@ -283,10 +263,10 @@ Edit wrapper scripts to customize:
 ```bash
 # In each *-wrapper.sh file:
 
-export MODE="argus"
 export AKTO_SYNC_MODE="true"          # "true" (blocking) or "false" (observe only)
 export AKTO_TIMEOUT="5"               # Timeout in seconds
 export AKTO_CONNECTOR="claude_code_cli"
+export CONTEXT_SOURCE="AGENTIC"       # contextSource + tags["source"] in payloads
 ```
 
 **Sync Mode:**
@@ -311,8 +291,8 @@ tail -20 ~/.claude/akto/logs/validate-prompt.log
 A successful Argus mode entry looks like:
 
 ```
-INFO - MODE: argus, AKTO_HOST: https://api.anthropic.com
-INFO - === Hook execution started - Mode: argus, Sync: True ===
+INFO - AKTO_HOST: https://api.anthropic.com, DEVICE_IP: 192.168.0.3
+INFO - === Hook execution started - Sync: True ===
 INFO - Processing prompt (length: 14 chars)
 INFO - Validating prompt against guardrails
 INFO - API CALL: POST https://your-akto-instance.com/api/http-proxy?guardrails=true&...
@@ -329,21 +309,16 @@ A fully configured Argus mode wrapper script:
 
 ```bash
 #!/bin/bash
-export MODE="argus"
 export AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
 export AKTO_TOKEN="your-akto-token"
+export AKTO_HOST="my-proxy.corp.example.com"
+export CONTEXT_SOURCE="AGENTIC"
 export AKTO_SYNC_MODE="true"
 export AKTO_TIMEOUT="5"
 export AKTO_CONNECTOR="claude_code_cli"
-export AKTO_HOST="my-proxy.corp.example.com"   # Optional: custom host header value
 
-# Logging Configuration
 export LOG_LEVEL="INFO"
 export LOG_PAYLOADS="false"
-
-# SSL Configuration
-# export SSL_CERT_PATH="/path/to/ca-bundle.crt"
-# export SSL_VERIFY="false"  # INSECURE - testing only
 
 exec python3 "$HOME/.claude/hooks/akto-validate-prompt.py" "$@"
 ```
@@ -352,10 +327,10 @@ exec python3 "$HOME/.claude/hooks/akto-validate-prompt.py" "$@"
 
 | Variable | Required | Default | Description |
 |---|---|---|---|
-| `MODE` | No | `argus` | Set to `argus` (or omit) for Argus mode |
 | `AKTO_DATA_INGESTION_URL` | Yes | — | Your Akto instance URL |
 | `AKTO_TOKEN` | Yes | — | Authorization token for Akto API |
-| `AKTO_HOST` | No | `api.anthropic.com` | Custom `host` header value in requests |
+| `AKTO_HOST` | No | `https://api.anthropic.com` | `host` header value in mirrored requests |
+| `CONTEXT_SOURCE` | No | `AGENTIC` | Payload `contextSource` field and `tags["source"]` value |
 | `AKTO_SYNC_MODE` | No | `true` | `true` = blocking, `false` = observe only |
 | `AKTO_TIMEOUT` | No | `5` | Request timeout in seconds |
 | `AKTO_CONNECTOR` | No | `claude_code_cli` | Connector identifier in the dashboard |
@@ -368,10 +343,10 @@ exec python3 "$HOME/.claude/hooks/akto-validate-prompt.py" "$@"
 Override wrapper script values via shell environment:
 
 ```bash
-export MODE="argus"
 export AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
 export AKTO_TOKEN="your-akto-token"
 export AKTO_HOST="my-proxy.corp.example.com"
+export CONTEXT_SOURCE="AGENTIC"
 export AKTO_SYNC_MODE="true"
 export AKTO_TIMEOUT="5"
 ```
@@ -401,17 +376,6 @@ grep "{{AKTO_DATA_INGESTION_URL}}" ~/.claude/hooks/*-wrapper.sh
 # Replace with actual URL
 AKTO_URL="https://your-akto-instance.com"
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.claude/hooks/*-wrapper.sh
-```
-
-### Running in Atlas Mode Instead of Argus
-
-```bash
-# Verify MODE is set to argus in all wrapper scripts
-grep "^export MODE" ~/.claude/hooks/*-wrapper.sh
-# Should show: export MODE="argus"
-
-# Fix if needed
-sed -i.bak 's|export MODE=.*|export MODE="argus"|' ~/.claude/hooks/*-wrapper.sh
 ```
 
 ### Custom Hostname Not Appearing in Logs
@@ -513,30 +477,24 @@ echo "🔧 Installing Akto Guardrails for Claude CLI (Argus mode)..."
 # Create directories
 mkdir -p ~/.claude/hooks ~/.claude/akto/logs
 
-# Download hooks
-HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/claude-cli-hooks"
+# Download argus hooks
+HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/claude-cli-hooks-argus"
 for file in \
   akto-validate-prompt-wrapper.sh akto-validate-prompt.py \
   akto-validate-response-wrapper.sh akto-validate-response.py \
   akto-validate-mcp-request-wrapper.sh akto-validate-mcp-request.py \
   akto-validate-mcp-response-wrapper.sh akto-validate-mcp-response.py \
-  akto_machine_id.py; do
+  akto_helpers.py; do
   curl -s "${HOOKS_BASE}/${file}" -o ~/.claude/hooks/"${file}"
 done
 
 # Make executable
 chmod +x ~/.claude/hooks/*.sh
 
-# Configure URL and token
+# Replace placeholders in all wrapper scripts
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.claude/hooks/*-wrapper.sh
 [ -n "${AKTO_TOKEN_VALUE}" ] && sed -i.bak "s|{{AKTO_TOKEN}}|${AKTO_TOKEN_VALUE}|g" ~/.claude/hooks/*-wrapper.sh
-
-# Optionally append custom hostname to each wrapper script
-if [ -n "${AKTO_HOST_VALUE}" ]; then
-  for f in ~/.claude/hooks/*-wrapper.sh; do
-    echo "export AKTO_HOST=\"${AKTO_HOST_VALUE}\"" >> "$f"
-  done
-fi
+sed -i.bak "s|{{AKTO_HOST}}|${AKTO_HOST_VALUE:-api.anthropic.com}|g" ~/.claude/hooks/*-wrapper.sh
 
 # Create settings.json
 cat > ~/.claude/settings.json << 'EOFSETTINGS'
@@ -611,9 +569,13 @@ mkdir -p ~/.claude/hooks ~/.claude/akto/logs
 
 # 2. Download all hook scripts (see Download Hook Scripts above)
 
-# 3. ⚠️ Configure Akto URL (REQUIRED)
+# 3. ⚠️ Replace placeholders (REQUIRED)
 AKTO_URL="https://your-akto-instance.com"
-sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.claude/hooks/*-wrapper.sh
+AKTO_TOKEN_VALUE="your-akto-token"
+AKTO_HOST_VALUE="api.anthropic.com"   # or your custom host
+sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g"     ~/.claude/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_TOKEN}}|${AKTO_TOKEN_VALUE}|g"          ~/.claude/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_HOST}}|${AKTO_HOST_VALUE}|g"            ~/.claude/hooks/*-wrapper.sh
 
 # 4. Make scripts executable
 chmod +x ~/.claude/hooks/*.sh
