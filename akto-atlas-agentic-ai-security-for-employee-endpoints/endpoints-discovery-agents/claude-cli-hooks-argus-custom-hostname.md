@@ -257,23 +257,22 @@ EOF
 {% endstep %}
 
 {% step %}
-**Set Token and Optional Custom Hostname**
-
-Add `AKTO_TOKEN` to each wrapper script. Optionally set `AKTO_HOST` to override the default `api.anthropic.com` host header:
+**Configure Token**
 
 ```bash
-AKTO_TOKEN_VALUE="your-akto-token"
-AKTO_HOST_VALUE="my-proxy.corp.example.com"   # optional
+AKTO_TOKEN="your-akto-token"
 
-for f in ~/.claude/hooks/*-wrapper.sh; do
-  # Add token after the AKTO_DATA_INGESTION_URL line
-  sed -i.bak "/^export AKTO_DATA_INGESTION_URL/a export AKTO_TOKEN=\"${AKTO_TOKEN_VALUE}\"" "$f"
-  # Add custom hostname (remove this line if you want the default api.anthropic.com)
-  sed -i.bak "/^export AKTO_CONNECTOR/a export AKTO_HOST=\"${AKTO_HOST_VALUE}\"" "$f"
-done
+sed -i.bak "s|{{AKTO_TOKEN}}|${AKTO_TOKEN}|g" ~/.claude/hooks/*-wrapper.sh
+
+# Verify
+grep "AKTO_TOKEN" ~/.claude/hooks/*-wrapper.sh
 ```
 
-Leave `AKTO_HOST` unset to use the default `api.anthropic.com`.
+Optionally set `AKTO_HOST` in each wrapper script to override the default `api.anthropic.com` host header:
+
+```bash
+export AKTO_HOST="my-proxy.corp.example.com"
+```
 {% endstep %}
 
 {% step %}
@@ -528,18 +527,16 @@ done
 # Make executable
 chmod +x ~/.claude/hooks/*.sh
 
-# Configure URL
+# Configure URL and token
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.claude/hooks/*-wrapper.sh
+[ -n "${AKTO_TOKEN_VALUE}" ] && sed -i.bak "s|{{AKTO_TOKEN}}|${AKTO_TOKEN_VALUE}|g" ~/.claude/hooks/*-wrapper.sh
 
-# Inject token and optional custom hostname
-for f in ~/.claude/hooks/*-wrapper.sh; do
-  if [ -n "${AKTO_TOKEN_VALUE}" ]; then
-    sed -i.bak "/^export AKTO_DATA_INGESTION_URL/a export AKTO_TOKEN=\"${AKTO_TOKEN_VALUE}\"" "$f"
-  fi
-  if [ -n "${AKTO_HOST_VALUE}" ]; then
-    sed -i.bak "/^export AKTO_CONNECTOR/a export AKTO_HOST=\"${AKTO_HOST_VALUE}\"" "$f"
-  fi
-done
+# Optionally append custom hostname to each wrapper script
+if [ -n "${AKTO_HOST_VALUE}" ]; then
+  for f in ~/.claude/hooks/*-wrapper.sh; do
+    echo "export AKTO_HOST=\"${AKTO_HOST_VALUE}\"" >> "$f"
+  done
+fi
 
 # Create settings.json
 cat > ~/.claude/settings.json << 'EOFSETTINGS'
