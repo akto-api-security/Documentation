@@ -36,6 +36,7 @@ Each MCP server exposes capabilities used by agents. For each capability, you ca
 | ------------------------ | -------------------------------------------------------------------------------- |
 | **Name**                 | The identifier of the capability                                                 |
 | **Type**                 | Whether it's a Tool, Resource, or Prompt                                         |
+| **Access Type**          | Whether the capability is public, private, partner, or third-party               |
 | **Risk Classification**  | Any risk signals like **Privileged Access** or **Malicious**                    |
 | **Current Status**       | Whether it's **Approved**, **Rejected**, or **Conditionally Allowed**            |
 | **Reviewed By**          | Who made the decision                                                             |
