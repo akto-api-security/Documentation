@@ -44,7 +44,7 @@ Enforcement behaviour depends on the **Bypass Guardrails** setting.
 Monitoring mode gives you visibility without blocking user traffic.
 
 {% hint style="warning" %}
-### **Important**
+#### **Important**
 
 End users cannot modify the **Bypass Guardrails** setting. This behaviour is controlled by administrators through the extension configuration.
 {% endhint %}
@@ -69,7 +69,7 @@ Every flagged request, whether blocked or allowed, is recorded in Akto Atlas.
 For guardrail behaviour and event lifecycle details, see: [guardrail-activity.md](../../../../agentic-guardrails/concepts/guardrail-activity.md "mention")
 
 {% hint style="info" %}
-### **Export Capability**
+#### **Export Capability**
 
 You can export guardrail events using the **Export to JSON** option in the browser extension.
 

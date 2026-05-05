@@ -48,7 +48,7 @@ Before configuring GitHub:
 * Validate that the proxy endpoint is functioning correctly
 
 {% hint style="warning" %}
-### **Important**
+#### **Important**
 
 The Agent Proxy must already be connected to the target model backend before you configure it in GitHub. Misconfiguration will cause Copilot requests to fail.
 {% endhint %}

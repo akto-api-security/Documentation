@@ -14,7 +14,7 @@ Follow the steps below to configure guardrail schema validation for a component.
 
 {% stepper %}
 {% step %}
-### Navigate to Guardrail Schema Configuration
+#### Navigate to Guardrail Schema Configuration
 
 1. Navigate to **Agentic AI Discovery**.
 2. Open the required **Agentic Collection**.
@@ -30,7 +30,7 @@ The guardrail schema configuration dialog opens for the selected component.
 {% endstep %}
 
 {% step %}
-### Configure Request Message Fields
+#### Configure Request Message Fields
 
 1. Locate the **Request message fields** section.
 2. Click **Add field**.
@@ -41,7 +41,7 @@ Akto validates incoming request payloads against the configured JSON paths.
 {% endstep %}
 
 {% step %}
-### Configure Response Message Fields
+#### Configure Response Message Fields
 
 1. Locate the **Response message fields** section.
 2. Click **Add field**.
@@ -52,7 +52,7 @@ Akto validates tool response payloads against the configured response field defi
 {% endstep %}
 
 {% step %}
-### Configure Guardrail Blocking Behaviour
+#### Configure Guardrail Blocking Behaviour
 
 Define the response returned when schema validation fails.
 

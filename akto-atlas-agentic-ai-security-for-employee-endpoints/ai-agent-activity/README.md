@@ -1,4 +1,4 @@
-# AI Agent Activity
+# Agentic AI Discovery
 
 The **AI Agent Activity** section provides visibility into AI agent–related data collected from Atlas connectors.
 
@@ -14,11 +14,10 @@ Organise and review AI agent activity using logical groupings.
 
 Access audit records related to AI agent activity for review, compliance, and investigation.
 
-### [**Sensitive Data**](../../agentic-ai-discovery/concepts/sensitive-data.md)
+### [**Sensitive Data**](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/sensitive-data.md)
 
 Review visibility into sensitive data associated with AI agent activity, based on collected data.
 
 ### [**Endpoint Shield Details**](view-endpoint-shield-details.md)
 
 View Endpoint Shield details to understand endpoint-level protections related to observed activity.
-

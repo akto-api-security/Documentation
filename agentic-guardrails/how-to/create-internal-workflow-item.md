@@ -44,7 +44,7 @@ If your team uses internal workflows within Akto, you can log and assign tasks u
 
 ### **Prerequisite**
 
-Before creating Jira tickets from Akto, ensure that your Azure DevOps Board is integrated with Akto. Follow for [**Integrations Setup**](/broken/pages/KRajfTWw91KllsU24SAE)
+Before creating Jira tickets from Akto, ensure that your Azure DevOps Board is integrated with Akto. Follow for [**Integrations Setup**](../../integrations/azure-devops-boards-integration.md)
 
 ### **Steps**
 

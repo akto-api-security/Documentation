@@ -152,6 +152,5 @@ Deleted components are removed permanently and cannot be recovered.
 
 After performing component-level actions, you can continue analysis by:
 
-* Opening an [individual component to review **Values** and **Schema**](../../../agentic-ai-discovery/concepts/endpoints/agent-component.md#how-to-view-agent-components)
+* Opening an [individual component to review **Values** and **Schema**](../../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/endpoints/agent-component.md#how-to-view-agent-components)
 * Returning to [**Agentic Assets**](../agentic-assets/) to manage other agentic systems
-

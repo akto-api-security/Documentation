@@ -1,10 +1,10 @@
-# Endpoint Security Posture
+# AI Security Posture
 
-The **Endpoint Security Posture** dashboard gives you a high-level, executive view of AI security across your organization’s endpoints. It is designed to help you quickly understand risk exposure, AI usage, threat activity, and compliance gaps, without needing to dive into operational details.
+The **AI Security Posture** dashboard gives you a high-level, executive view of AI security across your organization’s endpoints. It is designed to help you quickly understand risk exposure, AI usage, threat activity, and compliance gaps, without needing to dive into operational details.
 
 With a single view, you can assess how AI agents, MCP servers, and LLMs are being used across your environment and where your organization is most vulnerable.
 
-<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (165).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (164).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ## What You Get at a Glance
 

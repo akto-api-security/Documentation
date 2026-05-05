@@ -68,6 +68,6 @@ Each result includes:
 * A safety status indicating whether the response complied with expected controls.
 * A vulnerability indication when unsafe behavior or policy violations are detected.
 
-<figure><img src="../../.gitbook/assets/image (39).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (36).png" alt="" width="563"><figcaption></figcaption></figure>
 
 Response visibility helps you quickly identify prompt injection risks and unsafe AI agent behaviour during scanning.

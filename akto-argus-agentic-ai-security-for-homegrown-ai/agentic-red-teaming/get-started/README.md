@@ -70,7 +70,7 @@ Akto probes for:
 
 ## Next Steps
 
-* Set up continuous probing with [discovery agents](../../../agentic-ai-discovery/get-started.md)
+* Set up continuous probing with [discovery agents](../../agentic-ai-discovery/README.md)
 * Enable [Guardrails](../../../agentic-guardrails/overview/) to block threats in production
 * Review compliance posture against security frameworks
 

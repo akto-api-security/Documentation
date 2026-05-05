@@ -22,7 +22,7 @@ Select and configure the appropriate protection proxy:
 #### For MCP Servers
 Deploy real-time protection for Model Context Protocol servers, tools, and resources.
 
-→ [Set Up MCP Proxy](akto-mcp-proxy.md)
+→ [Set Up MCP Proxy](../../agentic-guardrails/overview/akto-mcp-proxy.md)
 
 **What it protects:**
 - MCP tool invocations
@@ -33,7 +33,7 @@ Deploy real-time protection for Model Context Protocol servers, tools, and resou
 #### For AI Agents
 Deploy real-time protection for AI agents and LLM applications.
 
-→ [Set Up Agent Proxy](akto-agent-proxy.md)
+→ [Set Up Agent Proxy](../../agentic-guardrails/overview/akto-agent-proxy.md)
 
 **What it protects:**
 - Agent requests and responses
