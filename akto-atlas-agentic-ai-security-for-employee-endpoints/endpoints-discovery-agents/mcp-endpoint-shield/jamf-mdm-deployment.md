@@ -86,7 +86,7 @@ This deployment uses three scripts that are included in the MCP Endpoint Shield 
 * **Purpose**: Deploys AKTO\_API\_TOKEN to user's config directory
 * **Run as**: Logged-in user (NOT root)
 * **Jamf Parameter 4**: AKTO\_API\_TOKEN (encrypted)
-* **Jamf Parameter 5**: AKTO\_API\_BASE\_URL (e.g. https://\<account-id\>-guardrails.akto.io)
+* **Jamf Parameter 5**: AKTO\_API\_BASE\_URL (e.g. https://\<account-id>-guardrails.akto.io)
 * **Execution**: Before or with package installation
 
 #### 2. install\_from\_staging.sh
@@ -216,7 +216,7 @@ Configure scripts in this order:
   * Parameter 4 (AKTO\_API\_TOKEN): `<YOUR_AKTO_TOKEN_HERE>`
     * ⚠️ **IMPORTANT**: Use Jamf's encrypted parameters feature
     * Store token securely, don't commit to version control
-  * Parameter 5 (AKTO\_API\_BASE\_URL): `<YOUR_AKTO_BASE_URL_HERE>` (e.g. https://\<account-id\>-guardrails.akto.io)
+  * Parameter 5 (AKTO\_API\_BASE\_URL): `<YOUR_AKTO_BASE_URL_HERE>` (e.g. https://\<account-id>-guardrails.akto.io)
 
 **Script 2: Install User Package (Priority: After)**
 
@@ -388,7 +388,7 @@ Navigate to **Computers** → **Policies** → **+ New**
 
 #### Issue: Token Not Found
 
-**Symptoms**: Services fail to start, logs show "AKTO\_API\_TOKEN not configured"
+**Symptoms**: Services fail to start, logs show "AKTO\_API\_TOKEN not configured" or "AKTO\_API\_BASE\_URL not configured"
 
 **Causes**:
 
@@ -596,13 +596,13 @@ tail -f /var/log/jamf.log
 
 ### Jamf Policy Parameters Reference
 
-| Parameter | Value            | Description                      |
-| --------- | ---------------- | -------------------------------- |
-| $1        | Mount point      | Typically `/`                    |
-| $2        | Computer name    | Hostname                         |
-| $3        | Username         | Current user                     |
-| $4        | AKTO\_API\_TOKEN | Token for MCP Shield (encrypted) |
-| $5        | AKTO\_API\_BASE\_URL | Akto data ingestion URL (e.g. https://\<account-id\>-guardrails.akto.io) |
+| Parameter | Value                | Description                                                             |
+| --------- | -------------------- | ----------------------------------------------------------------------- |
+| $1        | Mount point          | Typically `/`                                                           |
+| $2        | Computer name        | Hostname                                                                |
+| $3        | Username             | Current user                                                            |
+| $4        | AKTO\_API\_TOKEN     | Token for MCP Shield (encrypted)                                        |
+| $5        | AKTO\_API\_BASE\_URL | Akto data ingestion URL (e.g. https://\<account-id>-guardrails.akto.io) |
 
 ### Support
 
