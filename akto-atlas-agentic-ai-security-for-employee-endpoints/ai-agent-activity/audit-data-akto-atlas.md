@@ -40,15 +40,6 @@ Each MCP server exposes capabilities used by agents. For each capability, you ca
 | **Current Status**       | Whether it's **Approved**, **Rejected**, or **Conditionally Allowed**            |
 | **Reviewed By**          | Who made the decision                                                             |
 
-### Action Dropdown
-
-From the **Action** dropdown at the top of the server details view, you can make server-level decisions:
-
-* **Allow this server** – Grant full access to all capabilities
-* **Block this server** – Deny all access immediately
-* **Block for all agents** – Block this server across all agents in your organization
-* **Conditionally allow this server** – Grant access with defined restrictions
-
 ### Access Control Options
 
 You can set access decisions at both the server level (via the Action dropdown) and the individual tool level. Use the following options:
@@ -96,3 +87,17 @@ You add a mandatory justification so your team understands why you approved the 
 {% endtabs %}
 
 After configuring everything, click **Approve with Conditions** to enforce the restricted access.
+
+### Action Dropdown
+
+From the **Action** dropdown at the top of the server details view, you can make server-level decisions:
+
+* **Allow this server** – Grant full access to all capabilities
+* **Block this server** – Deny all access immediately
+* **Block for all agents** – Block this server across all agents in your organization
+* **Conditionally allow this server** – Grant access with defined restrictions
+* **Add to MCP registry** – Register the server in your organization's MCP registry
+
+{% hint style="info" %}
+To use **Add to MCP registry**, you must first set up an MCP registry integration. Go to **Settings → Integrations → MCP Registry** to configure one.
+{% endhint %}
