@@ -1,6 +1,6 @@
-# SentinelOne Whitelist — MCP Endpoint Shield
+# Whitelist Paths — MCP Endpoint Shield
 
-When deploying MCP Endpoint Shield via Jamf on macOS, SentinelOne may flag or block the shield's binaries, hook scripts, and background services. This page lists every file system path that must be whitelisted in SentinelOne for the shield to operate correctly.
+This page lists all file system paths that should be whitelisted in your security software (EDR, antivirus, or endpoint protection) to allow the Akto MCP Endpoint Shield to function correctly on macOS.
 
 > **Note:** `*` in paths is a wildcard covering all usernames (e.g., `/Users/*/` matches `/Users/john/`).
 
@@ -8,7 +8,7 @@ When deploying MCP Endpoint Shield via Jamf on macOS, SentinelOne may flag or bl
 
 ## Priority Order
 
-Add paths in the following order of importance. Start with Section 1 — it alone resolves most SentinelOne conflicts.
+Add paths in the following order of importance. Start with Section 1 — it alone resolves most conflicts.
 
 | Priority | Section | What it covers |
 |----------|---------|----------------|
@@ -22,7 +22,7 @@ Add paths in the following order of importance. Start with Section 1 — it alon
 
 ## 1. Binaries & Executables
 
-These are the primary process paths SentinelOne evaluates on launch. **Whitelist these first.**
+These are the primary process paths evaluated on launch. **Whitelist these first.**
 
 | Path | Description |
 |------|-------------|
@@ -62,7 +62,7 @@ These are the primary process paths SentinelOne evaluates on launch. **Whitelist
 
 ## 4. LaunchAgent Plists
 
-These define the background services launched at user login. Whitelist these if SentinelOne monitors `launchctl` activity.
+These define the background services launched at user login. Whitelist these if your security software monitors `launchctl` activity.
 
 | Path | Description |
 |------|-------------|
@@ -74,7 +74,7 @@ These define the background services launched at user login. Whitelist these if 
 
 ## 5. Staging & Install Paths
 
-Active only during Jamf installation. Whitelist as transient execution paths if SentinelOne raises alerts during the install phase.
+Active only during Jamf installation. Whitelist as transient execution paths if your security software raises alerts during the install phase.
 
 | Path | Description |
 |------|-------------|
@@ -86,7 +86,7 @@ Active only during Jamf installation. Whitelist as transient execution paths if 
 
 ## 6. Log Directories
 
-Whitelist these only if SentinelOne raises alerts on file write activity.
+Whitelist these only if your security software raises alerts on file write activity.
 
 | Path | Description |
 |------|-------------|
