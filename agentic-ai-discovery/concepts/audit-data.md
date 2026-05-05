@@ -12,21 +12,11 @@ The table on the Audit Data page gives you full visibility into each component.
 
 <summary>You will see the following details:</summary>
 
-| Column                 | What it tells you                                                                                            |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------ |
-| **Primitive Type**     | Whether the component is a MCP Tool, Server, or Prompt.                                                      |
-| **MCP Component Name** | The name of the detected component.                                                                          |
-| **Collection Name**    | The collection or group where you discovered the component.                                                  |
-| **Last Detected**      | When you last observed the component.                                                                        |
-| **Updated**            | When the component details were last refreshed.                                                              |
-| **Access Type**        | Whether the component is Private, Public, Partner, or Third-party.                                           |
-| **Remarks**            | The current status of the component: **Approved**, **Pending**, **Rejected**, or **Conditionally Approved**. |
-| **Marked By**          | The teammate who tagged or updated the entry.                                                                |
-| **Actions**            | Controls that let you approve, disapprove, or apply conditional approval.                                    |
+<table><thead><tr><th width="257.87890625">Column</th><th>What it tells you</th></tr></thead><tbody><tr><td><strong>Primitive Type</strong></td><td>Whether the component is a MCP Tool, Server, or Prompt.</td></tr><tr><td><strong>Risk Analysis</strong></td><td>The risk level associated with the component based on its behaviour and access patterns.</td></tr><tr><td><strong>Agent Component Name</strong></td><td>The name of the detected component.</td></tr><tr><td><strong>Collection Name</strong></td><td>The collection or group where you discovered the component.</td></tr><tr><td><strong>Last Detected</strong></td><td>When you last observed the component.</td></tr><tr><td><strong>Updated</strong></td><td>When the component details were last refreshed.</td></tr><tr><td><strong>Access Type</strong></td><td>Whether the component is Private, Public, Partner, or Third-party.</td></tr><tr><td><strong>Remarks</strong></td><td>The current status of the component: <strong>Approved</strong>, <strong>Pending</strong>, <strong>Rejected</strong>, or <strong>Conditionally Approved</strong>.</td></tr><tr><td><strong>Marked By</strong></td><td>The teammate who tagged or updated the entry.</td></tr><tr><td><strong>Actions</strong></td><td>Controls that let you approve, disapprove, or apply conditional approval.</td></tr></tbody></table>
 
 </details>
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (102).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ## Actions You Can Take
 
