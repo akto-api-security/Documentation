@@ -33,7 +33,7 @@ You can gather the following information before starting deployment:
 * Update XML URL provided by the Akto Support team
 
 {% hint style="info" %}
-### **Support Contact**
+#### **Support Contact**
 
 You can request the extension ID, custom extension URL, and update XML URL from the Akto Support team at [**support@akto.io**](mailto:support@akto.io).
 {% endhint %}
@@ -42,7 +42,7 @@ You can request the extension ID, custom extension URL, and update XML URL from 
 
 {% stepper %}
 {% step %}
-#### Navigating to Chrome Extension Management
+**Navigating to Chrome Extension Management**
 
 1. Sign in to `https://admin.google.com`.
 2. Navigate to **Devices**.
@@ -55,7 +55,7 @@ You can request the extension ID, custom extension URL, and update XML URL from 
 {% endstep %}
 
 {% step %}
-#### Adding the Akto Chrome Extension by ID
+**Adding the Akto Chrome Extension by ID**
 
 1. Select the yellow **+** button.
 2.  Choose **Add Chrome app or extension by ID**.
@@ -70,7 +70,7 @@ You can request the extension ID, custom extension URL, and update XML URL from 
 {% endstep %}
 
 {% step %}
-#### Configuring Force Installation
+**Configuring Force Installation**
 
 1. Open the extension configuration panel.
 2.  Set **Installation policy** to **Force install**.
@@ -90,7 +90,7 @@ Now, force installation enables automatic deployment to all managed Chrome users
 ### Prerequisites
 
 * Google Chrome browser (Version 88 or higher)
-* The Akto Security extension ZIP file (required).&#x20;
+* The Akto Security extension ZIP file (required).
 * The extension folder (extracted from the ZIP file)
 
 {% hint style="warning" %}
@@ -101,7 +101,7 @@ Contact the Akto support team for the required extension ZIP file.
 
 {% stepper %}
 {% step %}
-#### **Get the Extension Files**
+**Get the Extension Files**
 
 * Download the extension package you received
 * If it's a ZIP file, extract it to a folder on your computer
@@ -109,7 +109,7 @@ Contact the Akto support team for the required extension ZIP file.
 {% endstep %}
 
 {% step %}
-#### **Open Chrome Extensions**
+**Open Chrome Extensions**
 
 Open Chrome and type this in the address bar:
 
@@ -127,7 +127,7 @@ Click the three dots (⋮) in Chrome → **More tools** → **Extensions**
 {% endstep %}
 
 {% step %}
-#### **Turn On Developer Mode**
+**Turn On Developer Mode**
 
 * Look at the top-right corner of the Extensions page
 * Find the **Developer mode** toggle switch
@@ -135,7 +135,7 @@ Click the three dots (⋮) in Chrome → **More tools** → **Extensions**
 {% endstep %}
 
 {% step %}
-#### **Load the Extension**
+**Load the Extension**
 
 * Click the **Load unpacked** button (appears at the top after Step 3)
 * A file browser will open
@@ -144,7 +144,7 @@ Click the three dots (⋮) in Chrome → **More tools** → **Extensions**
 {% endstep %}
 
 {% step %}
-#### **Verify It's Installed**
+**Verify It's Installed**
 
 You should now see **Akto Security** in your extensions list with:
 
@@ -154,7 +154,7 @@ You should now see **Akto Security** in your extensions list with:
 {% endstep %}
 
 {% step %}
-#### **Pin to Toolbar (Optional but Recommended)**
+**Pin to Toolbar (Optional but Recommended)**
 
 * Click the puzzle icon (🧩) in Chrome toolbar
 * Find **Akto Security** in the list

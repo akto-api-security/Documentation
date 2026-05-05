@@ -22,7 +22,7 @@ Probe your AI agents and MCP servers with 1000+ specialized security probes. Ide
 
 ***
 
-## [Agentic Guardrails](/broken/pages/GqT7atAXg9l9FDBVe7BX)
+## [Agentic Guardrails](agentic-guardrails/overview/README.md)
 
 Deploy real-time protection for your production agents. Block threats as they occur, enforce schema conformance, and prevent exploits before they impact your systems.
 

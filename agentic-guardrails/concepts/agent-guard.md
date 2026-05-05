@@ -459,6 +459,41 @@ Input scanners analyse user messages before they reach your AI models. These sca
 * Detected Intent: Sensitive Data Exfiltration
 * Enforced Output: "Request blocked: disallowed intent detected"
 
+
+
+Here are the **two separate scanner entries**, aligned with your format and naming:
+
+***
+
+### 16. Tool Guardrails
+
+**Purpose:** Detects and blocks malicious or untrusted tools before execution.
+
+**What it Does:**
+
+* Scans tool definitions and metadata for security risks
+* Validates tool sources and endpoints
+* Identifies unauthorized or suspicious tools
+* Enforces allowlist or policy-based tool access
+
+**Risk Prevention:** Prevents execution of malicious tools that could lead to unauthorized actions, data exfiltration, or system compromise.
+
+**Use Cases:**
+
+* Blocking untrusted third-party tools
+* Preventing tools with unsafe or unknown endpoints
+* Enforcing allowlist-based tool usage
+* Detecting spoofed or tampered tools
+
+**Example Transformation:**
+
+* Tool Request:\
+  Invoke tool: "external-data-fetcher" → URL: `http://malicious-api.com/steal-data`
+* Detected Issue:\
+  Tool endpoint is untrusted
+* Enforced Output:\
+  "Tool execution blocked: untrusted tool detected"
+
 ***
 
 ## OUTPUT SCANNERS
@@ -915,6 +950,41 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
+### 17. Tool Guardrails (Output)
+
+**Purpose:** Detects and blocks malicious or unsafe tool responses before they are used by the agent.
+
+**What it Does:**
+
+* Scans tool responses for sensitive data exposure
+* Detects malicious content or injected instructions
+* Identifies unsafe or unexpected response patterns
+* Validates response against security policies
+
+**Risk Prevention:** Prevents data leakage, prompt injection, and unsafe actions originating from tool responses.
+
+**Use Cases:**
+
+* Preventing sensitive data exposure (API keys, credentials)
+* Detecting tool response poisoning
+* Blocking injected instructions in tool outputs
+* Validating outputs from external or third-party tools
+
+**Example Transformation:**
+
+* Tool Request:\
+  Invoke tool: "file-reader"
+* Tool Response:\
+  "System files:\
+  /config.yaml\
+  API\_KEY=abcd-1234-secret"
+* Detected Issue:\
+  Response contains sensitive data
+* Enforced Output:\
+  "Tool response blocked: sensitive data exposure detected"
+
+***
+
 ## Custom Policies
 
 You can create Custom Policies to define application-specific guardrails beyond the default scanners. These policies allow you to control agent behavior across inputs, outputs, and tool execution based on your requirements.
@@ -952,7 +1022,7 @@ When a policy condition is met, you can:
 * Restrict
 * Block
 
-Multiple policies can be combined to enforce layered controls. See: [create-guardrail-policies.md](../how-to/create-guardrail-policies.md "mention") to learn more.&#x20;
+Multiple policies can be combined to enforce layered controls. See: [create-guardrail-policies.md](../how-to/create-guardrail-policies.md "mention") to learn more.
 
 ***
 

@@ -25,4 +25,4 @@ Check out the t[test-categories.md](test-categories.md "mention") present in our
 **Our methodology of building the probe  library:** We are building the probe  library keeping in mind the needs of our users. Our users care about covering OWASP Top 10 APIs and all the new critical vulnerabilities. Additionally, if we see our users creating custom probes  that are also valuable for other members, we add those probes  to our probe  library and make them available to everyone.
 {% endhint %}
 
-For more information on how to contribute to the probe  library, please refer to this documentation- [Contribute to Probe Library](/broken/pages/ynkA1VzfvEo6zrElY94W).
+For more information on how to contribute to the probe  library, please refer to this documentation- [Contribute to Probe Library](../how-to/contribute-to-test-library.md).
