@@ -60,7 +60,12 @@ Before deploying MCP Endpoint Shield via Jamf, ensure you have the following:
 * Obtain from Akto platform
 * Will be deployed securely via Jamf encrypted parameters
 
-#### 3. Jamf Pro Access
+#### 3. AKTO\_API\_BASE\_URL
+
+* Your Akto data ingestion URL (e.g. `https://<account-id>-guardrails.akto.io`)
+* Will be deployed via Jamf parameter 5
+
+#### 4. Jamf Pro Access
 
 Permissions to create/edit:
 
@@ -81,6 +86,7 @@ This deployment uses three scripts that are included in the MCP Endpoint Shield 
 * **Purpose**: Deploys AKTO\_API\_TOKEN to user's config directory
 * **Run as**: Logged-in user (NOT root)
 * **Jamf Parameter 4**: AKTO\_API\_TOKEN (encrypted)
+* **Jamf Parameter 5**: AKTO\_API\_BASE\_URL (e.g. https://\<account-id\>-guardrails.akto.io)
 * **Execution**: Before or with package installation
 
 #### 2. install\_from\_staging.sh
@@ -123,6 +129,7 @@ Navigate to **Settings** → **Computer Management** → **Scripts** and upload 
 * **Category**: MCP Endpoint Shield
 * **Parameter Labels**:
   * Parameter 4: `AKTO_API_TOKEN` (description: "API token for MCP Endpoint Shield")
+  * Parameter 5: `AKTO_API_BASE_URL` (description: "Akto data ingestion URL")
 
 **Script 2: install\_from\_staging.sh**
 
@@ -209,6 +216,7 @@ Configure scripts in this order:
   * Parameter 4 (AKTO\_API\_TOKEN): `<YOUR_AKTO_TOKEN_HERE>`
     * ⚠️ **IMPORTANT**: Use Jamf's encrypted parameters feature
     * Store token securely, don't commit to version control
+  * Parameter 5 (AKTO\_API\_BASE\_URL): `<YOUR_AKTO_BASE_URL_HERE>` (e.g. https://\<account-id\>-guardrails.akto.io)
 
 **Script 2: Install User Package (Priority: After)**
 
@@ -394,7 +402,7 @@ Navigate to **Computers** → **Policies** → **+ New**
 2.  Manually deploy token:
 
     ```bash
-    sudo /path/to/deploy_token.sh "" "" "" "YOUR_TOKEN"
+    sudo /path/to/deploy_token.sh "" "" "" "YOUR_TOKEN" "YOUR_BASE_URL"
     ```
 3.  Restart services:
 
@@ -594,6 +602,7 @@ tail -f /var/log/jamf.log
 | $2        | Computer name    | Hostname                         |
 | $3        | Username         | Current user                     |
 | $4        | AKTO\_API\_TOKEN | Token for MCP Shield (encrypted) |
+| $5        | AKTO\_API\_BASE\_URL | Akto data ingestion URL (e.g. https://\<account-id\>-guardrails.akto.io) |
 
 ### Support
 
