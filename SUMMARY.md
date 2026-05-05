@@ -46,6 +46,7 @@
     * [Take Bulk Actions](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-components/take-bulk-actions.md)
   * [Endpoint Shield Details](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/view-endpoint-shield-details.md)
   * [Skills Discovery](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/skills-discovery.md)
+  * [Audit Data - Akto Atlas](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/audit-data-akto-atlas.md)
 
 ## Akto Argus: Agentic AI Security for Homegrown AI
 
@@ -145,7 +146,7 @@
       * [Agent Collection](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/collections/agent-collection.md)
       * [MCP Collection](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/collections/mcp-collection.md)
     * [Meta Properties](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/meta-properties-of-api-endpoint.md)
-    * [Audit Data](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/audit-data.md)
+    * [Audit Data - Akto Argus](agentic-ai-discovery/concepts/audit-data.md)
     * [Explore mode](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/explore-mode.md)
     * [Data Types](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/data-types.md)
     * [Component Group](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/component-group/README.md)
