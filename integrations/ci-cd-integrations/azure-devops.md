@@ -6,14 +6,14 @@ Akto's integration with Azure DevOps allows you to maintain agentic AI security 
 * Generate scans from live functional traffic for targeted security scanning
 * Insert security seamlessly into existing functional scans with complete automation
 
-<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Prerequisites
 
 * Azure DevOps project with administrator access
 * Akto dashboard access
-* [Akto API credentials](/broken/pages/fxxYPwGU1kTuZwMAksYR) (API key and dashboard URL)
-* [Valid test ID from Akto Probe](/broken/pages/q2Oz4FsKPEq381Pwpaws)
+* [Akto API credentials](how-to/get-api-credentials.md) (API key and dashboard URL)
+* [Valid test ID from Akto Probe](how-to/test-id-from-akto-test.md)
 
 ### Steps to Configure Azure DevOps Pipeline
 

@@ -108,7 +108,7 @@ Do not commit `install.sh` with a real token to version control. Keep the filled
 4. Review the pasted content for accuracy (verify CONFIG section is filled)
 5. Click **Save**
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 **3. Configure execution settings**
 
@@ -116,7 +116,7 @@ Click the **Execution Settings** tab and configure:
 
 <table><thead><tr><th width="234.02734375">Option</th><th>Configuration</th></tr></thead><tbody><tr><td><strong>Execute command</strong></td><td>Select: <strong>Immediately when saving the profile, upon assignment, or based on schedule or events</strong></td></tr><tr><td><strong>Execution trigger</strong></td><td>Tick Every user sign-in✅</td></tr><tr><td><strong>Schedule</strong></td><td>Only once (Event Required)✅</td></tr></tbody></table>
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 {% hint style="info" %}
 ### **Why this configuration?**
@@ -136,7 +136,7 @@ Leave all other options unchecked. Click **Save** to create the profile.
 
 *   Click **+ Add Assignment**, choose users or devices, then select and confirm your assignment.
 
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure></div>
 * Save the Custom Commands.
 
 The script will run the next time each assigned user signs in.
@@ -149,7 +149,7 @@ Go to **Management** → **Custom Commands**, select your profile, and click **V
 * **Pending**: Awaiting user sign-in
 * **Failed**: See troubleshooting section
 
-<figure><img src="../../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}

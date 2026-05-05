@@ -8,7 +8,7 @@ You can setup alerts for Akto scan run results by following the steps given belo
     <div data-with-frame="true"><figure><img src="../.gitbook/assets/image (11).png" alt="" width="563"><figcaption></figcaption></figure></div>
 3.  Voila you have configured scan alerts. Once the scan are completed, you will receive scan run summary directly in your preferred medium.
 
-    <figure><img src="../.gitbook/assets/image (3) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+    <figure><img src="../.gitbook/assets/image (3) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ### Reminders for Scheduled Scans
 
