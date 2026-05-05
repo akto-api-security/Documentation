@@ -122,7 +122,7 @@ mkdir -p ~/.claude/akto/logs
 
 ```bash
 # Base URL for downloading argus hooks
-HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/feat/claude-cli-hooks-argus-mode/apps/mcp-endpoint-shield/claude-cli-hooks-argus"
+HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/claude-cli-hooks-argus"
 
 for f in akto-validate-prompt.py akto-validate-prompt-wrapper.sh \
          akto-validate-response.py akto-validate-response-wrapper.sh \
@@ -478,7 +478,7 @@ echo "🔧 Installing Akto Guardrails for Claude CLI (Argus mode)..."
 mkdir -p ~/.claude/hooks ~/.claude/akto/logs
 
 # Download argus hooks
-HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/feat/claude-cli-hooks-argus-mode/apps/mcp-endpoint-shield/claude-cli-hooks-argus"
+HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/claude-cli-hooks-argus"
 for file in \
   akto-validate-prompt-wrapper.sh akto-validate-prompt.py \
   akto-validate-response-wrapper.sh akto-validate-response.py \
