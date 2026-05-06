@@ -61,9 +61,9 @@ Select **Save** to block the IP address.
 {% endstepper %}
 
 {% hint style="info" %}
-## Important Note
+### Important Note
 
 Blocking an IP address is completely reversible. Once you block an IP, the **Block IP** button changes to **Unblock IP**, allowing you to restore access whenever needed.
 
-<p align="center"><img src="../../.gitbook/assets/image (153).png" alt="" data-size="original"></p>
+<img src="../../.gitbook/assets/image (152).png" alt="" data-size="original">
 {% endhint %}

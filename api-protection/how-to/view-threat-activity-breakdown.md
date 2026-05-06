@@ -33,11 +33,11 @@ Select an activity to open its drilldown view.
 {% endstepper %}
 
 {% hint style="success" %}
-## Refine Threats Using Filters
+### Refine Threats Using Filters
 
 Use the search and filter option in the upper-right corner of the activity list to refine the displayed results.
 
-<p align="center"><img src="../../.gitbook/assets/image (116).png" alt=""></p>
+<img src="../../.gitbook/assets/image (116).png" alt="" data-size="original">
 
 You can filter by:
 
@@ -76,10 +76,10 @@ Shows the **attempted request** and its **response**.
 {% hint style="success" %}
 You can now copy the request in two formats:
 
-* Curl&#x20;
+* Curl
 *   Burp
 
-    <figure><img src="../../.gitbook/assets/image (157).png" alt="" width="563"><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/image (151).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endhint %}
 {% endtab %}
 

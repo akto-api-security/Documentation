@@ -51,7 +51,7 @@ The following documentation sections have moved:
 If you're looking for specific content that was previously here, please visit the [new documentation site](https://ai-security-docs.akto.io) or contact Akto Support.
 
 {% hint style="warning" %}
-## **Note**
+### **Note**
 
 This page serves as a redirect. Please update your bookmarks to the new locations.
 {% endhint %}

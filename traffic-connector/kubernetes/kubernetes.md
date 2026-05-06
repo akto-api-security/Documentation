@@ -74,7 +74,7 @@ If you have installed on _GCP_, _Kubernetes_ or _OpenShift_ -
 
 3.  Create a file `akto-daemonset-config.yaml` with the above YAML config
 
-    <figure><img src="../../.gitbook/assets/big image01.webp" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/eksimage.webp" alt=""><figcaption></figcaption></figure>
 4. Call `kubectl apply -f akto-daemonset-config.yaml -n <NAMESPACE>` on your _kubectl_ terminal
 
 <figure><img src="https://user-images.githubusercontent.com/91221068/236832475-1a20f62c-05e8-4ca7-85c6-c5bc1d4a9946.png" alt="call yaml"><figcaption><p>call yaml</p></figcaption></figure>

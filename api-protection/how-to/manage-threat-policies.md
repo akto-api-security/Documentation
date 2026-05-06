@@ -34,7 +34,7 @@ In the code editor area, start by entering or modifying the configuration accord
 Set a unique value for the **id** key.
 
 {% hint style="info" %}
-## Important
+### Important
 
 The **id** key defines the policy template name.
 

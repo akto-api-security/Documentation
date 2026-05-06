@@ -48,7 +48,7 @@ Get started with Akto Cloud in 5 simple steps:
 * Go to User Configuration
 * Set ATTACKER\_TOKEN\_ALL
 
-<figure><img src=".gitbook/assets/image (49) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (49).png" alt=""><figcaption></figcaption></figure>
 
 ### 5. Run Tests
 

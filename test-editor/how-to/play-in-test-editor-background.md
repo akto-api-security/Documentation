@@ -8,7 +8,7 @@ You can run a test from the Test Editor against a selected API endpoint. Verify 
 
 {% stepper %}
 {% step %}
-### Select a Test YAML
+#### Select a Test YAML
 
 Select any default test of your choice and replace the 3 sections (api\_selection\_filters, execute, validate) with the above YAML text. Please refer the [Edit test](edit-test.md) section for a better understanding of how to edit a test YAML.
 
@@ -16,7 +16,7 @@ You can change the Test YAML. Learn [here](create-a-custom-test.md).
 {% endstep %}
 
 {% step %}
-### **Select your Sample API For Testing**
+#### **Select your Sample API For Testing**
 
 Click on the API endpoint to select the API you want to check for testing the above YAML.
 
@@ -26,11 +26,11 @@ Click on save. You will now see your sample API req and res in the right column.
 {% endstep %}
 
 {% step %}
-### Run Test
+#### Run Test
 
 Click on Run Test at the Top right. Selecting **Run Test** opens the **Test configuration** dialog. The dialog defines the execution context for the test.
 
-#### Configure the Test Execution
+**Configure the Test Execution**
 
 1. Select the **API collection** that contains the endpoint used for testing.
 2. Select the **API endpoint** that Akto will use to execute the test request.
@@ -43,7 +43,7 @@ Click on Run Test at the Top right. Selecting **Run Test** opens the **Test conf
 {% endstep %}
 
 {% step %}
-### Validate test results
+#### Validate test results
 
 We ran the above test and discovered the vulnerability. In the bottom-right section, you will see the text "HIGH" indicating the severity level of the vulnerability.
 
@@ -55,7 +55,7 @@ In this example, we requested a `limit of 100 entities` from the server, and rec
 {% endstep %}
 
 {% step %}
-### Save your test
+#### Save your test
 
 Click on **Save** to save your test. You can now run this test on all your APIs in the API inventory.
 {% endstep %}

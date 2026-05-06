@@ -12,7 +12,7 @@ You can set up Okta SSO along with role mapping in a unified flow that links Okt
 
 {% stepper %}
 {% step %}
-### Create Okta Application for Akto
+#### Create Okta Application for Akto
 
 1. Open your Okta Admin Console and go to **Applications**.\
    Click on **Create App Integration**.
@@ -22,7 +22,7 @@ You can set up Okta SSO along with role mapping in a unified flow that links Okt
 4. Add the following under **Sign-in redirect URIs**:\
    `https://app.akto.io/authorization-code/callback`
 5. If using Okta-initiated login, include this under **Initiate login URI**:\
-   `https://app.akto.io/okta-initiate-login?accountId=<your-akto-accountId>`&#x20;
+   `https://app.akto.io/okta-initiate-login?accountId=<your-akto-accountId>`
 6. Assign the application to the necessary users or groups.\
    Save the configuration.
 7. Copy the **CLIENT\_ID** and **CLIENT\_SECRET** from the created application.
@@ -33,7 +33,7 @@ Replace `your-akto-accountId` in step 5 with your actual account ID, which you c
 {% endstep %}
 
 {% step %}
-### **Configure Authorisation Server for Group Claims**
+#### **Configure Authorisation Server for Group Claims**
 
 Update your Okta authorisation server to include a **groups claim** in the access token.
 
@@ -46,19 +46,19 @@ Group claims enable Akto to determine user roles based on their group membership
 {% endstep %}
 
 {% step %}
-### Generate Okta API Token
+#### Generate Okta API Token
 
 Navigate to:
 
 * **Security → API → Tokens**
 * Generate a new token
 * Assign a name to the token
-*   Set IP restrictions to: `Any IP`&#x20;
+*   Set IP restrictions to: `Any IP`
 
     <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (196).png" alt="" width="375"><figcaption></figcaption></figure></div>
 
 {% hint style="info" %}
-### **Note**
+#### **Note**
 
 Providing a valid Okta API token allows Akto to automatically fetch available group names. This simplifies the mapping process and minimizes manual configuration errors.
 {% endhint %}
@@ -68,9 +68,9 @@ Copy and store the generated API token.
 {% endstepper %}
 
 {% hint style="success" %}
-## API Access Management in Okta
+### API Access Management in Okta
 
-It is recommended to have the **API Access Management** feature enabled in Okta. Without this feature, users cannot customise the access policies of authorisation server IDs.&#x20;
+It is recommended to have the **API Access Management** feature enabled in Okta. Without this feature, users cannot customise the access policies of authorisation server IDs.
 
 By default, Okta provides only a single **default authorisation server**, which cannot be modified. Enabling API Access Management allows organisations to create and configure custom authorisation servers, giving them more control over access policies and security.
 {% endhint %}
@@ -154,7 +154,7 @@ Save your changes.
 {% endstepper %}
 
 {% hint style="warning" %}
-## Role Override on Okta SSO Login
+### Role Override on Okta SSO Login
 
 When you sign in using Okta SSO, your role in Akto is based on your current Okta group. If your group (and role) has changed in Okta, your role in Akto will automatically update and override your previous role the next time you log in.
 {% endhint %}

@@ -19,7 +19,7 @@ Setup Akto data processor using the guide [here](../../getting-started/quick-sta
 Apply the Daemonset configuration given below using `kubectl apply -f akto-daemonset-config.yaml -n <NAMESPACE>`. You will find `AKTO_NLB_IP` after setting up Akto data processor, as mentioned above.
 
 {% hint style="success" %}
-## eBPF CO-RE Image Option
+### eBPF CO-RE Image Option
 
 Alternatively, you can use the eBPF CO-RE image for environments where kernel headers are unavailable or kernel versions vary across nodes.
 

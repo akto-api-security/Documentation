@@ -44,9 +44,7 @@ Common examples include `Authorization` headers or `X-API-Key` headers.
 {% step %}
 Select **Save** to activate webhook export.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (190).png" alt="" width="563"><figcaption></figcaption></figure></div>
-
-
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (189).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 {% endstepper %}
 
@@ -61,8 +59,3 @@ Configured webhook integration allows security teams to stream API threat activi
 * Incident response tooling
 
 Webhook export ensures external monitoring platforms receive threat activity data without manual exports.
-
-
-
-
-

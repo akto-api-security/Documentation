@@ -33,7 +33,7 @@ On this page, you see all your previously executed scans, each with essential in
     <figure><img src="../.gitbook/assets/image (170).png" alt="" width="563"><figcaption></figcaption></figure>
 
 {% hint style="info" %}
-## **Using Filters and Search**
+### **Using Filters and Search**
 
 You can refine the scans list using:
 
@@ -72,7 +72,7 @@ Inside the scan details, you see the full list of URLs the crawler identified to
 * **Page Type** — Terminal or non-terminal.
 * **Discovered At** — Relative timestamp such as _2 months ago_ or _1 day ago_.
 
-<figure><img src="../.gitbook/assets/image (172).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (171).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ## **What Comes Next**
 

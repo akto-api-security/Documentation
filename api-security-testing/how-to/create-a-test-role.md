@@ -52,7 +52,7 @@ Click on a particular **Test Roles.**
 {% step %}
 Click on `Add Auth` button.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/Screenshot 2024-03-18 at 11.58.07 AM (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/Screenshot 2024-03-18 at 11.58.07 AM.png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -67,7 +67,7 @@ Click on `Save` button and verify that the auth is created.
 {% endstepper %}
 
 {% hint style="info" %}
-### Note
+#### Note
 
 If you want to use the auth token only for a specific account, you can add `API Header condition`.
 
@@ -106,7 +106,7 @@ Under **Use tokens from traffic**, configure the following:
   Example: `Bearer .*`\
   This ensures only tokens matching the defined pattern are used.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -203,7 +203,7 @@ Click on `Save`
 {% endstepper %}
 
 {% hint style="warning" %}
-### **Notes**
+#### **Notes**
 
 1. Please enter the keys only in the format shown in the images. Do not enter any additional details.
 2. If you have a `P12` type key you can convert it to a `PEM` key using the commands given below. Here `client.p12` is your original key, `client.crt` is the client certificate and `client.key` is the client private key. While running these commands, you may be asked for an `Import Password`. You can leave that blank.
@@ -263,7 +263,7 @@ Advanced Settings allow you to control **which authentication configuration is a
 Since a Test Role can have multiple auth setups (Hard-coded token, Automated token, TLS Authentication, Tokens from Traffic, etc.), Advanced Settings help Akto determine **which token should be used for a specific request**.
 
 {% hint style="info" %}
-### Use case
+#### Use case
 
 * The same role is used across multiple accounts.
 * You want to apply an auth token only for specific tenants.
@@ -304,7 +304,7 @@ Click on **Save** to apply the configuration.
 {% endstepper %}
 
 {% hint style="warning" %}
-### Important Behaviour
+#### Important Behaviour
 
 * Advanced Settings act as conditional routing for auth configurations.
 * An auth configuration without Advanced Settings behaves as a fallback/default.
@@ -329,7 +329,7 @@ When the Test Role runs on a collection:
    * The auth configuration without any Advanced Settings acts as the default.
 
 {% hint style="warning" %}
-### **Important**
+#### **Important**
 
 If multiple auth configurations match the same request (for example, they have the same regex), Akto uses the **first configured or first discovered token** during evaluation.
 
@@ -337,7 +337,7 @@ The order of configuration in UI determines which token gets applied.
 {% endhint %}
 
 {% hint style="success" %}
-### Example Scenario
+#### Example Scenario
 
 A Test Role has two auth configurations:
 

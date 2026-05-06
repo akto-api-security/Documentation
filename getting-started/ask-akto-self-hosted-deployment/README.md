@@ -4,7 +4,7 @@
 
 **Ask Akto** is an AI-powered conversational assistant integrated into Akto's security platform that enables users to have real-time conversations about API vulnerabilities, test results, and security insights.
 
-<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (195).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (195).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ## Key Capabilities
 
@@ -25,7 +25,7 @@
 
 {% stepper %}
 {% step %}
-#### **Create the Deployment Directory**
+**Create the Deployment Directory**
 
 Create a directory that stores the Docker Compose configuration and environment files.
 
@@ -38,7 +38,7 @@ The directory acts as the working location for the deployment.
 {% endstep %}
 
 {% step %}
-#### **Create Docker Compose File**
+**Create Docker Compose File**
 
 Create a `docker-compose.yml` file with the following configuration:
 
@@ -72,7 +72,7 @@ The Docker Compose configuration defines two services:
 {% endstep %}
 
 {% step %}
-#### **Create Environment Files**
+**Create Environment Files**
 
 Two environment files configure runtime behavior for the containers.
 
@@ -123,7 +123,7 @@ DEBUG=true
 {% endstep %}
 
 {% step %}
-#### **Start the Services**
+**Start the Services**
 
 ```bash
 # From the deployment directory
@@ -143,7 +143,7 @@ mcp-server        Up ...        0.0.0.0:4000->4000/tcp
 {% endstep %}
 
 {% step %}
-#### **Verify Connectivity**
+**Verify Connectivity**
 
 You can verify that both services started successfully by checking the health endpoints.
 

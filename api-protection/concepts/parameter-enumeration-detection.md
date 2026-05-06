@@ -24,7 +24,7 @@ Parameter enumeration detection configuration is available from the Akto dashboa
 
 {% stepper %}
 {% step %}
-### Navigate to Threat Configuration
+#### Navigate to Threat Configuration
 
 Access the configuration using the following navigation path:
 
@@ -34,16 +34,16 @@ Access the configuration using the following navigation path:
 {% endstep %}
 
 {% step %}
-### Configure Parameters
+#### Configure Parameters
 
-#### 1. Unique Parameter Threshold
+**1. Unique Parameter Threshold**
 
 Unique Parameter Threshold defines the minimum number of distinct parameter values required to flag enumeration activity for an API endpoint.
 
 **Example:**\
 A threshold value of `50` triggers detection when more than 50 unique values for the same parameter appear within the configured window.
 
-#### 2. Window size (Minutes)
+**2. Window size (Minutes)**
 
 Window Size defines the time interval used to count unique parameter values.
 

@@ -87,7 +87,7 @@ It consists of **two tightly integrated components**:
 {% endhint %}
 
 {% hint style="warning" %}
-### Scope of This Documentation
+#### Scope of This Documentation
 
 This documentation site **only covers:** API Security & DAST
 

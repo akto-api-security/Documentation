@@ -21,7 +21,7 @@ Click **Run test** to open the Configure Test window.
 {% step %}
 In **Select Testing Module**, use the dropdown to pick the modules you want (e.g., `Default_b5f3`).
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (194).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (193).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -34,13 +34,11 @@ Click **Run once now** to start the test.
 {% endstepper %}
 
 {% hint style="info" %}
-## Note
+### Note
 
 * If unsure, leave the default module selected, Akto will use the active testing module automatically.
 * You can also choose multiple modules. Akto will run the tests on the first available module it finds from your selected options.
 {% endhint %}
-
-
 
 ## Viewing Available Modules
 

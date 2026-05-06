@@ -25,9 +25,9 @@ Akto derives User threat actors directly from inbound API traffic observed durin
 <table><thead><tr><th width="140.78515625">Attribute</th><th>Description</th><th>Investigation Value</th></tr></thead><tbody><tr><td>Actor ID</td><td>Unique identifier derived from the source IP address.</td><td>Enables correlation of attack activity across APIs and time.</td></tr><tr><td>Actor IP</td><td>Network address associated with the actor.</td><td>Supports blocking, rate limiting, and forensic analysis.</td></tr><tr><td>Country</td><td>Geolocation inferred from the actor IP.</td><td>Helps identify regional attack patterns.</td></tr><tr><td>IP Reputation</td><td>Reputation metadata associated with the actor IP.</td><td>Provides contextual risk signals for prioritization.</td></tr><tr><td>Latest Host</td><td>Hostname targeted by the actor.</td><td>Identifies the API surface under attack.</td></tr><tr><td>Latest API</td><td>Most recent API endpoint accessed by the actor.</td><td>Shows the affected API operation.</td></tr><tr><td>Latest Attack</td><td>Attack category detected for the request.</td><td>Indicates the security issue type observed.</td></tr><tr><td>Access Type</td><td>Exposure level of the API endpoint.</td><td>Differentiates public and restricted APIs.</td></tr><tr><td>Sensitive Data</td><td>Indicator of sensitive data involvement.</td><td>Highlights potential data exposure risk.</td></tr><tr><td>Status</td><td>Current state of the threat actor.</td><td>Shows whether the actor remains active.</td></tr><tr><td>Detected At</td><td>Timestamp of first detection.</td><td>Supports incident timeline reconstruction.</td></tr></tbody></table>
 
 {% hint style="success" %}
-## Note
+### Note
 
-IP reputation information is sourced from a third-party threat intelligence provider and includes contextual signals such as ISP, usage type, abuse reports, and whitelist status.&#x20;
+IP reputation information is sourced from a third-party threat intelligence provider and includes contextual signals such as ISP, usage type, abuse reports, and whitelist status.
 
 Akto consumes this data to enrich threat actor context and does not generate or modify reputation scores.
 {% endhint %}

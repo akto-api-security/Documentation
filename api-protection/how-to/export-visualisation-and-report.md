@@ -51,7 +51,7 @@ In the top-right corner, click More Actions.
 {% step %}
 Select Export.
 
-<figure><img src="../../.gitbook/assets/image (160).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (159).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}

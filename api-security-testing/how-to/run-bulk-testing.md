@@ -30,7 +30,7 @@ Select multiple endpoints from the collection list.
 {% step %}
 Click **Run Tests** from the bulk actions menu.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 {% endstepper %}
 
@@ -60,7 +60,7 @@ You can configure the following parameters:
 * **Automatic Issue Resolution**\
   Enable **Mark issues as fixed if they don't show up again** to automatically close findings when subsequent scans no longer reproduce the issue.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 After configuration, select **Run once now** to start the API security test execution.
 

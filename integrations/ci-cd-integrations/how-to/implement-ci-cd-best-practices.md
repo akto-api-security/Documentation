@@ -9,7 +9,7 @@ Enterprise CI/CD pipelines require predictable execution time, controlled enforc
 ### 1. Set an Upper Time Limit to Prevent Pipeline Delays ⌛
 
 {% hint style="info" %}
-## **Usecase**&#x20;
+### **Usecase**
 
 Your CI/CD pipeline has strict execution time constraints, and security testing should not delay releases beyond an acceptable window.
 {% endhint %}
@@ -29,7 +29,7 @@ A defined time boundary ensures predictable CI/CD duration and prevents extended
 ### 2. Enable Non-Blocking Mode to Avoid Release Friction 🚦
 
 {% hint style="info" %}
-## **Usecase**&#x20;
+### **Usecase**
 
 Your team is introducing Akto into CI/CD and wants visibility into security findings without impacting deployment timelines.
 {% endhint %}
@@ -53,7 +53,7 @@ Non-blocking mode helps platform teams build confidence in security testing befo
 ### 3. Configure Block Level Based on Risk Tolerance 🚫
 
 {% hint style="info" %}
-## **Usecase**&#x20;
+### **Usecase**
 
 Your organisation wants to block Pull Requests only when high-risk vulnerabilities are introduced.
 {% endhint %}
@@ -74,7 +74,7 @@ Severity-based blocking ensures enforcement aligns with enterprise risk threshol
 ### 4. Run Custom Test Suites in CI/CD 🛠️
 
 {% hint style="info" %}
-## **Usecase**&#x20;
+### **Usecase**
 
 Your CI/CD pipeline requires fast execution and should focus only on high-impact or low-latency tests.
 {% endhint %}
@@ -92,7 +92,7 @@ You can create a Custom Test Suite by following: [create-custom-test-suites.md](
 ### 5. Schedule Weekly Full Scans for Complete Coverage 🗓️
 
 {% hint style="info" %}
-## **Use case**&#x20;
+### **Use case**
 
 Your CI/CD pipeline runs only high-impact tests, and your team requires periodic full coverage across all security checks.
 {% endhint %}
@@ -104,7 +104,7 @@ You can configure and manage full API security testing from: [schedule-tests.md]
 ### 6. Configure Automated Authentication Token Generation 👨‍💻
 
 {% hint style="info" %}
-## **Use case**&#x20;
+### **Use case**
 
 Your APIs require authentication, and manually rotating tokens in CI/CD causes test failures or operational overhead.
 {% endhint %}
