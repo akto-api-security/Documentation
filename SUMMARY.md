@@ -37,6 +37,7 @@
   * [OpenCode Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/opencode-hooks.md)
   * [Hermes Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/hermes-hooks.md)
   * [Codex CLI Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/codex-cli-hooks.md)
+  * [Neovim Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/neovim-hooks.md)
   * [Deploy via Microsoft Defender Endpoint](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/deploy-via-microsoft-defender/README.md)
     * [Run Live Response & Queries via Akto](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/deploy-via-microsoft-defender/run-live-response-and-queries-via-akto.md)
   * [Deploy via SentinelOne](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/deploy-via-sentinelone.md)
