@@ -42,7 +42,15 @@ You'll use this token as your API key in the next step.
 {% step %}
 #### Configure GitHub Copilot as Your Model
 
-Head to the [Agent Configuration](../integrations/agent-configuration.md) guide and select **GitHub Copilot** as your agent when adding a model.
+Add your token to Akto so it can call GitHub Copilot:
+
+1. In your Akto dashboard, go to **Settings → Integrations → Agents**
+2. Click **Add Model**
+3. Select **GitHub Copilot** as the provider
+4. Enter a **Name**, paste your token into the **API Key** field, and pick a supported **Model**
+5. Click **Save**
+
+For more details on each field and the full list of supported models, see the [Agent Configuration](../integrations/agent-configuration.md) guide.
 {% endstep %}
 
 {% step %}
