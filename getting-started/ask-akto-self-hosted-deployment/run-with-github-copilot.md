@@ -12,7 +12,7 @@ You can use this integration only with **on-premises deployments**.
 
 Make sure you have:
 
-* A running self-hosted Akto deployment — if you don't have one yet, follow the Self-Hosted Deployment guide first
+* A running self-hosted Akto deployment — if you don't have one yet, follow the [Self-Hosted Deployment](./) guide first
 * Your GitHub Copilot access with a valid API key
 * Admin access to your Akto dashboard
 
@@ -63,7 +63,7 @@ Only models that your GitHub Copilot subscription has access to will work. While
 {% step %}
 ### **Update Your Environment File**
 
-Open your `docker-agentic-testing-dashboard.env` file and update it with the values below. These override the defaults you set during the base deployment:
+Open your `docker-agentic-testing-dashboard.env` file and update it with the values below. These override the defaults you set during the [base deployment](./#deployment-setup):
 
 ```bash
 # Leave this empty — you're using GitHub Copilot as your model provider
