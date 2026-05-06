@@ -40,14 +40,14 @@ Enter the following information:
 The API key must have sufficient permissions to invoke the selected model.
 
 {% hint style="success" %}
-#### Supported Models
+**Supported Models**
 
 Akto supports the following providers when you configure a model in **Add Model**:
 
 * **OpenAI**\
   Supported models: `gpt-4o`, `gpt-4o-mini`
 * **Anthropic**\
-  Supported models: Claude 3.5 Haiku, Claude 3 Haiku, Claude 3.7 Sonnet, Claude 3.5 Sonnet
+  Supported models: `Claude 3.5 Haiku`, `Claude 3 Haiku`, `Claude 3.7 Sonnet`, `Claude 3.5 Sonnet`
 * **Azure OpenAI**\
   **Additional** **Requirement**: Azure OpenAI server endpoint
 * **Ollama**\
@@ -55,8 +55,10 @@ Akto supports the following providers when you configure a model in **Add Model*
   **Additional** **Requirement**: Ollama server endpoint
 *   **Databricks**
 
-    Supported models: GPT 5.4, GPT 5, GPT 5 Nano, Opus 4.6, Sonnet 4.6, Gemini 2.5 Pro, Gemini 2.5 Flash, BGE Large EN, Meta Llama 3.1 8B Instruct, Gemma 3 12B, Qwen3 Next 80B A3B Instruct\
+    Supported models: `GPT 5.4`, `GPT 5`, `GPT 5 Nano`, `Opus 4.6`, `Sonnet 4.6`, `Gemini 2.5 Pro`, `Gemini 2.5 Flash`, `BGE Large EN`, `Meta Llama 3.1 8B Instruct`, `Gemma 3 12B`, `Qwen3 Next 80B A3B Instruct`\
     **Additional Requirement:** Databricks Model Serving endpoint or AI Gateway endpoint
+* **GitHub Copilot**\
+  Supported models: `Claude Sonnet 4.5`, `Claude Sonnet 4.6`, `Claude Haiku 4.5`, `GPT-4.1`, `GPT-4o`, `GPT-4o mini`, `GPT-5 mini`, `GPT-5.2`, `GPT-5.4`, `Gemini 2.5 Pro`, `Gemini 3.1 Pro` (Preview), `Gemini 3 Flash` (Preview), `Grok Code Fast 1`, `Raptor mini` (Preview)
 {% endhint %}
 {% endstep %}
 
