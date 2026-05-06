@@ -38,8 +38,7 @@ NODE_ENV=production
 PORT=5500
 AGENTIC_MODE=true
 
-# Uses the Docker service name since both your containers run in the same compose stack
-MCP_SERVER_URL=http://mcp-server:4000
+MCP_SERVER_URL=<YOUR_AKTO_MCP_SERVER_URL>
 
 # Required when you're using GitHub Copilot
 DASHBOARD_URL=<YOUR_AKTO_DASHBOARD_URL>
@@ -51,6 +50,8 @@ AKTO_API_KEY=<YOUR_AKTO_API_KEY>
 | Variable | What to set |
 |---|---|
 | `ANTHROPIC_API_KEY` | Leave it empty — you're using GitHub Copilot instead. |
+| `AGENTIC_MODE` | Must be set to `true`. |
+| `MCP_SERVER_URL` | Your Akto MCP server URL. |
 | `DASHBOARD_URL` | Your Akto Agentic AI Security Dashboard's base URL. |
 | `AKTO_API_KEY` | Your Akto API key for authenticating with the Akto dashboard. |
 {% endstep %}
