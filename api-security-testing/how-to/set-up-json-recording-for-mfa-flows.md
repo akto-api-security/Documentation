@@ -64,6 +64,18 @@ After exporting the JSON recording file, you must add your TOTP seed's **secret 
 🔑 The `secretKey` is your TOTP seed secret — the same key used by your authenticator app (e.g., Google Authenticator, Authy). It is typically provided as a Base32 string when you first set up MFA for the account.
 {% endhint %}
 
+**Don't know your TOTP secret key?** If you only have the QR code (e.g., a screenshot from when MFA was set up), you can extract the secret key from it:
+
+1. Go to [https://scanqr.org/#scan](https://scanqr.org/#scan).
+2. Upload your MFA QR code image.
+3. The decoded URL will look like:
+
+```
+otpauth://totp/MyApp:user@example.com?secret=ABCD1EFGHIJK2LMNO&issuer=MyApp
+```
+
+4. Copy the value after `secret=` — that is your `secretKey`.
+
 {% hint style="warning" %}
 ⚠️ Keep this file secure. It contains your TOTP secret key and should not be shared or committed to version control.
 {% endhint %}
