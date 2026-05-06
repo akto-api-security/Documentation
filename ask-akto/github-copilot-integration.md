@@ -50,6 +50,10 @@ Add your token to Akto so it can call GitHub Copilot:
 4. Enter a **Name**, paste your token into the **API Key** field, and pick a supported **Model**
 5. Click **Save**
 
+{% hint style="warning" %}
+Only models that your GitHub Copilot subscription has access to will work. While configuring, make sure to pick a model that's actually available to you — otherwise the integration will fail.
+{% endhint %}
+
 For more details on each field and the full list of supported models, see the [Agent Configuration](../integrations/agent-configuration.md) guide.
 {% endstep %}
 
