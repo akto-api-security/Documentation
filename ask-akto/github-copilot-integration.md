@@ -20,6 +20,26 @@ Make sure you have:
 
 {% stepper %}
 {% step %}
+#### Generate Your GitHub Copilot API Key
+
+You need a GitHub **fine-grained personal access token** to authenticate with GitHub Copilot. Here's how to generate one:
+
+1. Go to [github.com](https://github.com) and click your **profile picture** → **Settings**
+2. Scroll to the bottom of the left sidebar and click **Developer settings**
+3. Go to **Personal access tokens** → **Fine-grained tokens**
+4. Click **Generate new token**
+5. Give your token a recognizable name (e.g., `akto-copilot`) and set an expiration that suits your policy
+6. Under **Permissions** → **Account permissions**, add the following three permissions, all set to **Read-only**:
+   * **Copilot Chat**
+   * **Copilot Editor Context**
+   * **Copilot Requests**
+7. Click **Generate token** at the bottom
+8. **Copy your token immediately** — GitHub will only show it once
+
+You'll use this token as your API key in the next step.
+{% endstep %}
+
+{% step %}
 #### Configure GitHub Copilot as Your Model
 
 Head to the [Agent Configuration](../integrations/agent-configuration.md) guide and select **GitHub Copilot** as your agent when adding a model.
