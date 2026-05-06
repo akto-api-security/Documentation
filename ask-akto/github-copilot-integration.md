@@ -86,6 +86,10 @@ AKTO_API_KEY=<YOUR_AKTO_API_KEY>
 | `MCP_SERVER_URL` | Your Akto MCP server URL. |
 | `DASHBOARD_URL` | Your Akto Agentic AI Security Dashboard's base URL. |
 | `AKTO_API_KEY` | Your Akto API key for authenticating with the Akto dashboard. |
+
+{% hint style="warning" %}
+Make sure you add **all** of the environment variables listed above — including the empty ones like `ANTHROPIC_API_KEY=""`. Missing any of them might cause the service to misbehave or fail to start.
+{% endhint %}
 {% endstep %}
 
 {% step %}
