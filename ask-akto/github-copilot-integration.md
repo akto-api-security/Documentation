@@ -1,4 +1,4 @@
-# Run Ask Akto with GitHub Copilot
+# Run with GitHub Copilot
 
 ## Overview
 
@@ -22,7 +22,7 @@ Make sure you have:
 {% step %}
 #### Configure GitHub Copilot as Your Model
 
-Head to the [Agent Configuration](agent-configuration.md) guide and select **GitHub Copilot** as your agent when adding a model.
+Head to the [Agent Configuration](../integrations/agent-configuration.md) guide and select **GitHub Copilot** as your agent when adding a model.
 {% endstep %}
 
 {% step %}
@@ -52,7 +52,7 @@ AKTO_API_KEY=<YOUR_AKTO_API_KEY>
 |---|---|
 | `ANTHROPIC_API_KEY` | Leave it empty — you're using GitHub Copilot instead. |
 | `DASHBOARD_URL` | Your Akto Agentic AI Security Dashboard's base URL. |
-| `AKTO_API_KEY` | Your API key for authenticating with the Akto dashboard. |
+| `AKTO_API_KEY` | Your Akto API key for authenticating with the Akto dashboard. |
 {% endstep %}
 
 {% step %}
@@ -67,3 +67,12 @@ docker compose down && docker compose up -d
 To confirm everything is running, follow the [Verify Connectivity](self-hosted-deployment.md#verify-connectivity) steps from the base deployment guide.
 {% endstep %}
 {% endstepper %}
+
+## Support
+
+If you need help with the deployment:
+
+* **Discord Community**: Join our community at [discord.gg/Wpc6xVME4s](https://discord.gg/Wpc6xVME4s)
+* **Email Support**: Contact us at [support@akto.io](mailto:support@akto.io)
+
+Our team is available 24/7 to assist you with setup, troubleshooting, and best practices.
