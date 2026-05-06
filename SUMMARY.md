@@ -258,6 +258,7 @@
   * [Configure Pre-request Script](api-security-testing/how-to/configure-pre-request-script.md)
   * [Create a Test Role](api-security-testing/how-to/create-a-test-role.md)
   * [Set Up JSON Recording for Auth Tokens](api-security-testing/how-to/set-up-json-recording-for-auth-tokens.md)
+  * [Set Up JSON Recording for MFA Flows](api-security-testing/how-to/set-up-json-recording-for-mfa-flows.md)
   * [Edit Auth Flow in Test Roles](api-security-testing/how-to/edit-auth-flow-in-test-roles.md)
   * [Restrict Access to a Test Role Using RBAC](api-security-testing/how-to/restrict-test-role-rbac.md)
   * [Play in Test Editor Playground](api-security-testing/how-to/play-in-test-editor-playground.md)
