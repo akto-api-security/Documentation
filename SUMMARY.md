@@ -52,6 +52,7 @@
   * [Endpoint Shield Details](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/view-endpoint-shield-details.md)
   * [Skills Discovery](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/skills-discovery.md)
   * [Audit Data - Akto Atlas](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/audit-data-akto-atlas.md)
+  * [Users and Devices](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/users-and-devices.md)
 
 ## Akto Argus: Agentic AI Security for Homegrown AI
 
