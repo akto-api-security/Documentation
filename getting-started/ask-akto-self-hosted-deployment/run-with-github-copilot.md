@@ -12,9 +12,14 @@ You can use this integration only with **on-premises deployments**.
 
 Make sure you have:
 
-* A running self-hosted Akto deployment — if you don't have one yet, follow the [Self-Hosted Deployment](./) guide first
+* A running self-hosted Ask Akto deployment if you don't have one yet, follow the [Self-Hosted Deployment](./) guide first
 * Your GitHub Copilot access with a valid API key
 * Admin access to your Akto dashboard
+*   The following variable added to your **Akto API Security Dashboard env file**, and the service restarted to apply it:
+
+    ```bash
+    AKTO_MCP_SERVER_URL=<your-mcp-server-url>
+    ```
 
 ## Configuration
 
