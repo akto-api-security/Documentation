@@ -43,7 +43,7 @@ This guide organizes scanners into two main categories:
 
 Each scanner entry includes its purpose, detection capabilities, risk prevention benefits, real-world use cases, and example detections.
 
-## INPUT/PROMPT SCANNERS
+## INPUT/PROMPT GUARDRAILS
 
 Input scanners analyse user messages before they reach your AI models. These scanners protect against malicious inputs, policy violations, and security threats.
 
@@ -459,8 +459,6 @@ Input scanners analyse user messages before they reach your AI models. These sca
 * Detected Intent: Sensitive Data Exfiltration
 * Enforced Output: "Request blocked: disallowed intent detected"
 
-
-
 Here are the **two separate scanner entries**, aligned with your format and naming:
 
 ***
@@ -496,7 +494,7 @@ Here are the **two separate scanner entries**, aligned with your format and nami
 
 ***
 
-## OUTPUT SCANNERS
+## OUTPUT GUARDRAILS
 
 Output scanners validate AI-generated responses before they reach users. These scanners prevent data leaks, ensure quality, and maintain safety standards.
 
