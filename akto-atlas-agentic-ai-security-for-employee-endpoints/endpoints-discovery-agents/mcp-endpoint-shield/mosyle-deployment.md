@@ -59,7 +59,7 @@ Permissions to create/edit and manage:
 
 {% stepper %}
 {% step %}
-#### **Prepare the Installation Script**
+**Prepare the Installation Script**
 
 **1. Obtain credentials from Akto**
 
@@ -83,14 +83,14 @@ AKTO_API_BASE_URL=""    # your Akto base URL (e.g. https://<account-id>-guardrai
 All other values (hook flags, wrap flags) can be left at their defaults or adjusted as needed.
 
 {% hint style="warning" %}
-### **Security Note**
+#### **Security Note**
 
 Do not commit `install.sh` with a real token to version control. Keep the filled-in copy local or in a secrets manager.
 {% endhint %}
 {% endstep %}
 
 {% step %}
-#### **Upload to Mosyle**
+**Upload to Mosyle**
 
 **1. Create Custom Command profile**
 
@@ -119,7 +119,7 @@ Click the **Execution Settings** tab and configure:
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 {% hint style="info" %}
-### **Why this configuration?**
+#### **Why this configuration?**
 
 This combination runs the script on each user sign-in until it succeeds, then stops. If the download fails or no user is logged in, it retries automatically at the next sign-in.
 
@@ -130,7 +130,7 @@ Leave all other options unchecked. Click **Save** to create the profile.
 {% endstep %}
 
 {% step %}
-#### **Deploy to Devices**
+**Deploy to Devices**
 
 **1. Add Profile Assignment Based on Your Preferences**
 
@@ -153,7 +153,7 @@ Go to **Management** → **Custom Commands**, select your profile, and click **V
 {% endstep %}
 
 {% step %}
-#### **Verify Installation**
+**Verify Installation**
 
 **Verify on target device**
 
@@ -196,7 +196,7 @@ tail -30 /var/log/akto-mcp-endpoint-shield-install.log
 3. Edit the script in Mosyle and save — Mosyle will re-run it on next sign-in
 
 {% hint style="danger" %}
-### **Force Upgrade**:
+#### **Force Upgrade**:
 
 The script skips reinstallation if the binary is already present. To force an upgrade, run the uninstall script first (see below), then the install script will run again on next sign-in.
 {% endhint %}

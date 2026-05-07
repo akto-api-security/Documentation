@@ -163,6 +163,7 @@
     * [Third Party Agents](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/third-party-agents.md)
     * [Tags](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/tags.md)
     * [AI Agent Context Graph](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/api-dependency-graph.md)
+    * [Agent Architecture & Trace Analysis](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/agent-architecture-and-trace-analysis.md)
     * [Sensitive Data](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/sensitive-data.md)
     * [Fill Data Type](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/fill-data-type.md)
     * [Alerts](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/alerts.md)
