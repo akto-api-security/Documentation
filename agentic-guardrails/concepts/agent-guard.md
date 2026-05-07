@@ -4,7 +4,7 @@
 
 Akto's Agent Guard provides a comprehensive security layer for AI-powered applications through intelligent scanners that detect and prevent threats in real-time. This reference guide covers all scanners available in the Agent Guard system.
 
-## What are Guardrail Scanners?
+## What are Guardrails?
 
 Guardrail scanners are specialized security modules that analyze content flowing through your AI systems. They act as intelligent checkpoints 🔍, examining both user inputs and AI-generated outputs to identify security threats, policy violations, data leaks, and content safety issues before they cause harm.
 
@@ -12,12 +12,12 @@ Guardrail scanners are specialized security modules that analyze content flowing
 
 Akto's Agent Guard operates on a dual-layer approach:
 
-* **Input Layer**: Scanners validate user messages before they reach your AI models, blocking malicious prompts, credential leaks, and policy violations
-* **Output Layer**: Scanners verify AI-generated responses before delivery to users, preventing data exposure, harmful content, and compliance violations
+* **Input Layer**: Guardrails validate user messages before they reach your AI models, blocking malicious prompts, credential leaks, and policy violations
+* **Output Layer**: Guardrails verify AI-generated responses before delivery to users, preventing data exposure, harmful content, and compliance violations
 
-Each scanner specializes in detecting specific guardrail categories, from credential exposure and prompt injection attacks to toxic content and sensitive data leaks. Scanners can be combined to create custom security policies tailored to your application's needs.
+Each scanner specializes in detecting specific guardrail categories, from credential exposure and prompt injection attacks to toxic content and sensitive data leaks. Guardrails can be combined to create custom security policies tailored to your application's needs.
 
-## When to Use Which Scanners
+## When to Use Which Guardrails
 
 **🤖 For Agentic Applications**:
 
@@ -34,12 +34,12 @@ Each scanner specializes in detecting specific guardrail categories, from creden
 * Implement comprehensive scanner suites covering security, compliance, and content policies
 * Layer multiple scanners for defense-in-depth protection
 
-## Scanner Categories
+## Guardrail Categories
 
 This guide organizes scanners into two main categories:
 
-* **📥 Input/Prompt Scanners**: Protect against threats in user messages
-* **📤 Output Scanners**: Ensure safety and compliance in AI responses
+* **📥 Input/Prompt Guardrails**: Protect against threats in user messages
+* **📤 Output Guardrails**: Ensure safety and compliance in AI responses
 
 Each scanner entry includes its purpose, detection capabilities, risk prevention benefits, real-world use cases, and example detections.
 
@@ -47,7 +47,7 @@ Each scanner entry includes its purpose, detection capabilities, risk prevention
 
 Input scanners analyse user messages before they reach your AI models. These scanners protect against malicious inputs, policy violations, and security threats.
 
-### 1. 🔐 Secrets Scanner
+### 1. 🔐 Secrets Guardrail
 
 **Purpose**: Detects exposed credentials, API keys, tokens, and passwords in user messages.
 
@@ -75,7 +75,7 @@ Input scanners analyse user messages before they reach your AI models. These sca
 
 ***
 
-### 2. Toxicity Scanner ⚡
+### 2. Toxicity Guardrail ⚡
 
 **Purpose**: Identifies offensive, abusive, or harmful language in user inputs.
 
@@ -105,7 +105,7 @@ Input scanners analyse user messages before they reach your AI models. These sca
 
 ***
 
-### 3. PromptInjection Scanner ⚡
+### 3. PromptInjection Guardrail ⚡
 
 **Purpose**: Detects attempts to manipulate AI system instructions or bypass security controls.
 
@@ -135,7 +135,7 @@ Input scanners analyse user messages before they reach your AI models. These sca
 
 ***
 
-### 4. 💻 BanCode Scanner
+### 4. 💻 BanCode Guardrail
 
 **Purpose**: Detects code snippets, scripts, or programming commands in user messages.
 
@@ -163,7 +163,7 @@ Input scanners analyse user messages before they reach your AI models. These sca
 
 ***
 
-### 5. 🏢 BanCompetitors Scanner
+### 5. 🏢 BanCompetitors Guardrail
 
 **Purpose**: Identifies and blocks mentions of competitor brands, products, or services.
 
@@ -190,7 +190,7 @@ Input scanners analyse user messages before they reach your AI models. These sca
 
 ***
 
-### 6. 🚫 BanSubstrings Scanner
+### 6. 🚫 BanSubstrings Guardrail
 
 **Purpose**: Blocks messages containing specific words, phrases, or character patterns.
 
@@ -217,7 +217,7 @@ Input scanners analyse user messages before they reach your AI models. These sca
 
 ***
 
-### 7. 📛 BanTopics Scanner
+### 7. 📛 BanTopics Guardrail
 
 **Purpose**: Identifies messages discussing prohibited subjects or sensitive topics.
 
@@ -245,7 +245,7 @@ Input scanners analyse user messages before they reach your AI models. These sca
 
 ***
 
-### 8. 👨‍💻 Code Scanner
+### 8. 👨‍💻 Code Guardrail
 
 **Purpose**: Detects and identifies programming language used in messages.
 
@@ -271,7 +271,7 @@ Input scanners analyse user messages before they reach your AI models. These sca
 
 ***
 
-### 9. 🗑️ Gibberish Scanner
+### 9. 🗑️ Gibberish Guardrail
 
 **Purpose**: Filters nonsensical, random, or meaningless text.
 
@@ -298,7 +298,7 @@ Input scanners analyse user messages before they reach your AI models. These sca
 
 ***
 
-### 10. 🌍 Language Scanner
+### 10. 🌍 Language Guardrail
 
 **Purpose**: Validates that messages are in expected/allowed languages.
 
@@ -324,7 +324,7 @@ Input scanners analyse user messages before they reach your AI models. These sca
 
 ***
 
-### 11. 😊 Sentiment Scanner
+### 11. 😊 Sentiment Guardrail
 
 **Purpose**: Analyzes emotional tone and sentiment in user messages.
 
@@ -351,7 +351,7 @@ Input scanners analyse user messages before they reach your AI models. These sca
 
 ***
 
-### 12. ⏱️ TokenLimit Scanner
+### 12. ⏱️ TokenLimit Guardrail
 
 **Purpose**: Enforces maximum length limits on user messages.
 
@@ -377,7 +377,7 @@ Input scanners analyse user messages before they reach your AI models. These sca
 
 ***
 
-### 13. 🎭 Anonymize Scanner
+### 13. 🎭 Anonymize Guardrail
 
 **Purpose**: Automatically removes or masks personally identifiable information (PII).
 
@@ -405,7 +405,7 @@ Input scanners analyse user messages before they reach your AI models. These sca
 
 ***
 
-### 14. **Behavioural Anomaly Scanner**
+### 14. **Behavioural Anomaly Guardrail**
 
 **Purpose:** Identifies abnormal or suspicious input patterns based on historical interaction behavior.
 
@@ -433,7 +433,7 @@ Input scanners analyse user messages before they reach your AI models. These sca
 
 ***
 
-### 15. Intent Scanner
+### 15. Intent Guardrail
 
 **Purpose:** Enforces policies based on the inferred intent of incoming requests.
 
@@ -498,7 +498,7 @@ Here are the **two separate scanner entries**, aligned with your format and nami
 
 Output scanners validate AI-generated responses before they reach users. These scanners prevent data leaks, ensure quality, and maintain safety standards.
 
-### 1. 🔒 Sensitive Scanner ⚡
+### 1. 🔒 Sensitive Guardrail ⚡
 
 **Purpose**: Detects personally identifiable information (PII) and sensitive data in AI outputs.
 
@@ -531,7 +531,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
-### 2. 🔗 MaliciousURLs Scanner ⚡
+### 2. 🔗 MaliciousURLs Guardrail ⚡
 
 **Purpose**: Identifies suspicious, malicious, or inappropriate URLs in AI responses.
 
@@ -561,7 +561,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
-### 3. ⚖️ Bias Scanner ⚡
+### 3. ⚖️ Bias Guardrail ⚡
 
 **Purpose**: Detects discriminatory, biased, or unfair content in AI responses.
 
@@ -592,7 +592,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
-### 4. 🎯 Relevance Scanner ⚡
+### 4. 🎯 Relevance Guardrail ⚡
 
 **Purpose**: Ensures AI responses are relevant and on-topic to user queries.
 
@@ -621,7 +621,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
-### 5. 🚫 NoRefusal Scanner ⚡
+### 5. 🚫 NoRefusal Guardrail ⚡
 
 **Purpose**: Detects when AI inappropriately refuses to answer legitimate queries.
 
@@ -650,7 +650,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
-### 6. ☠️ Toxicity Scanner (Output) ⚡
+### 6. ☠️ Toxicity Guardrail (Output) ⚡
 
 **Purpose**: Identifies offensive, harmful, or inappropriate content in AI-generated responses.
 
@@ -680,7 +680,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
-### 7. 💻 BanCode Scanner (Output)
+### 7. 💻 BanCode Guardrail (Output)
 
 **Purpose**: Detects code snippets or scripts in AI-generated responses.
 
@@ -707,7 +707,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
-### 8. 🏢 BanCompetitors Scanner (Output)
+### 8. 🏢 BanCompetitors Guardrail (Output)
 
 **Purpose**: Flags competitor mentions in AI-generated responses.
 
@@ -734,7 +734,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
-### 9. 🚫 BanSubstrings Scanner (Output)
+### 9. 🚫 BanSubstrings Guardrail (Output)
 
 **Purpose**: Blocks AI responses containing specific prohibited words or phrases.
 
@@ -760,7 +760,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
-### 10. 📛 BanTopics Scanner (Output)
+### 10. 📛 BanTopics Guardrail (Output)
 
 **Purpose**: Identifies prohibited subjects or sensitive topics in AI responses.
 
@@ -788,7 +788,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
-### 11. 👨‍💻 Code Scanner (Output)
+### 11. 👨‍💻 Code Guardrail (Output)
 
 **Purpose**: Identifies programming languages in AI-generated responses.
 
@@ -814,7 +814,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
-### 12. 🌍 Language Scanner (Output)
+### 12. 🌍 Language Guardrail (Output)
 
 **Purpose**: Validates that AI responses are in expected languages.
 
@@ -840,7 +840,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
-### 13. 😊 Sentiment Scanner (Output)
+### 13. 😊 Sentiment Guardrail (Output)
 
 **Purpose**: Analyzes emotional tone in AI-generated responses.
 
@@ -867,7 +867,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
-### 14. 🔓 Deanonymize Scanner
+### 14. 🔓 Deanonymize Guardrail
 
 **Purpose**: Restores previously anonymized data when safe and authorized.
 
@@ -892,7 +892,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
-### 15. Behavioural Anomaly Scanner (Output)
+### 15. Behavioural Anomaly Guardrail (Output)
 
 **Purpose:** Detects abnormal or inconsistent output patterns based on expected agent behaviour.
 
@@ -920,7 +920,7 @@ Output scanners validate AI-generated responses before they reach users. These s
 
 ***
 
-### 16. Intent Scanner (Output)
+### 16. Intent Guardrail (Output)
 
 **Purpose:** Ensures outputs align with the intended purpose of the original request.
 
@@ -1026,7 +1026,7 @@ Multiple policies can be combined to enforce layered controls. See: [create-guar
 
 ## Configuration Best Practices
 
-### Scanner Selection
+### Guardrail Selection
 
 **High-Risk Applications** (Banking, Healthcare):
 
@@ -1072,7 +1072,7 @@ Akto's Agent Guard delivers comprehensive AI security through specialized scanne
 
 **Input Protection**:
 
-* **Security Scanners**: Secrets, PromptInjection - Defend against attacks and credential leaks
+* **Security Guardrails**: Secrets, PromptInjection - Defend against attacks and credential leaks
 * **Content Safety**: Toxicity, BanTopics, BanSubstrings - Enforce content policies
 * **Quality Control**: Gibberish, Language, TokenLimit - Maintain input quality
 * **Policy Enforcement**: BanCode, BanCompetitors, Code - Apply business rules
@@ -1119,7 +1119,7 @@ Akto's Agent Guard delivers comprehensive AI security through specialized scanne
 ## Getting Started
 
 * **Identify Your Use Case**: Review the configuration examples to find patterns matching your application
-* **Select Core Scanners**: Start with 3-5 scanners covering your primary risks (e.g., Secrets + PromptInjection + Toxicity)
+* **Select Core Guardrails**: Start with 3-5 scanners covering your primary risks (e.g., Secrets + PromptInjection + Toxicity)
 * **Configure Thresholds**: Begin with balanced mode (0.5-0.7) and tune based on your false positive tolerance
 * **Deploy Incrementally**: Enable scanners in monitoring mode first, then enforce blocking policies
 * **Monitor & Optimize**: Track detection patterns and adjust scanner combinations over time
