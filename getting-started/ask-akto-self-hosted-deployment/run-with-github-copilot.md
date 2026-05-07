@@ -87,7 +87,7 @@ AKTO_API_KEY=<YOUR_AKTO_API_KEY>
 
 **What you need to set (GitHub Copilot specific)**
 
-<table><thead><tr><th width="237.70703125">Variable</th><th>What to set</th></tr></thead><tbody><tr><td><code>ANTHROPIC_API_KEY</code></td><td>Leave it empty — you're using GitHub Copilot instead.</td></tr><tr><td><code>AGENTIC_MODE</code></td><td>Must be set to <code>true</code>.</td></tr><tr><td><code>MCP_SERVER_URL</code></td><td>Your Akto MCP server URL.</td></tr><tr><td><code>DASHBOARD_URL</code></td><td>Your Akto Agentic AI Security Dashboard's base URL.</td></tr><tr><td><code>AKTO_API_KEY</code></td><td>Your Akto API key for authenticating with the Akto dashboard.</td></tr></tbody></table>
+<table><thead><tr><th width="237.70703125">Variable</th><th>What to set</th></tr></thead><tbody><tr><td><code>ANTHROPIC_API_KEY</code></td><td>Leave it empty — you're using GitHub Copilot instead.</td></tr><tr><td><code>AGENTIC_MODE</code></td><td>Must be set to <code>true</code>.</td></tr><tr><td><code>MCP_SERVER_URL</code></td><td>Your Akto MCP server URL.</td></tr><tr><td><code>DASHBOARD_URL</code></td><td>Your Akto Agentic AI Security Dashboard's base URL.</td></tr><tr><td><code>AKTO_API_KEY</code></td><td>Your Akto API key for authenticating with the Akto dashboard. Generate it from Settings → Integrations → Automation → Akto API.</td></tr></tbody></table>
 
 {% hint style="warning" %}
 Make sure you add **all** of the environment variables listed above — including the empty ones like `ANTHROPIC_API_KEY=""`. Missing any of them might cause the service to misbehave or fail to start.
