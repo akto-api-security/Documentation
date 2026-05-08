@@ -11,7 +11,7 @@ You can use Microsoft Defender Live Response to deploy the Akto MCP Endpoint Shi
 Microsoft Defender integration requires the following environment configuration.
 
 * Administrator access to the **Microsoft Defender portal**
-* **Microsoft Defender for Endpoint license**
+* **Microsoft Defender for Endpoint Plan 2** license (Live Response is a Plan 2-only capability)
 * Devices onboarded to **Microsoft Defender for Endpoint**
 * Supported operating systems: **macOS, Windows, Linux**
 
@@ -29,6 +29,34 @@ Verify device enrolment before running queries or deploying hooks.
 3. Confirm that device status shows **Active**.
 
 Active device status confirms that Microsoft Defender receives endpoint telemetry.
+
+### Required Microsoft Entra Application Permissions
+
+Akto authenticates to Microsoft Defender using the OAuth 2.0 client credentials flow against an app registration in your Microsoft Entra tenant. Grant the app registration the following **Microsoft Threat Protection** / **WindowsDefenderATP** API permissions (all **Application** type, not Delegated), then **grant admin consent** in the Entra portal.
+
+| Permission | Type | Why Akto needs it |
+| --- | --- | --- |
+| `AdvancedQuery.Read.All` | Application | Run KQL Advanced Hunting queries (`POST /api/advancedqueries/run`) — used to discover installed AI software (`DeviceTvmSoftwareInventory`) and AI CLI process activity (`DeviceProcessEvents`). |
+| `Machine.ReadWrite.All` | Application | List onboarded devices (`GET /api/machines`), read live-response action status (`GET /api/machineactions/{id}`), and obtain the result download link (`GET /api/machineactions/{id}/GetLiveResponseResultDownloadLink`). Microsoft requires `Machine.ReadWrite.All` (not just `Machine.Read.All`) for the download-link endpoint. |
+| `Machine.LiveResponse` | Application | Initiate a Live Response session on a device (`POST /api/machines/{id}/runliveresponse`) — used to push and execute Akto's MCP/skill discovery scripts. |
+| `Library.Manage` | Application | Upload discovery scripts to the Live Response file library (`POST /api/libraryfiles`) before they can be invoked on devices. |
+
+#### Additional Defender configuration (separate from API permissions)
+
+API permissions alone are not sufficient for Live Response. Confirm the following on the Defender side:
+
+1. **Live Response feature enabled** — In the Defender portal: `Settings → Endpoints → Advanced features → Live Response` must be **On**. For Linux/macOS targets, also enable `Live Response for servers` and `Live Response unsigned script execution` if your scripts are unsigned.
+2. **Device group automated remediation level** — Each device group used by Akto must have an automated remediation level of at least **Standard**. Live Response API calls return HTTP 400 (`Forbidden — needs minimum remediation level`) for devices in groups configured as **No remediation**.
+3. **Defender RBAC scope** — If your tenant uses Defender role-based access (rather than the default *Use basic permissions* model), the app registration's service principal must be assigned a custom Defender role that grants both **View data** and **Active remediation actions**, scoped to the device groups Akto should reach.
+
+#### Common 403 errors and what they mean
+
+| Error message | Missing permission |
+| --- | --- |
+| `Missing application roles. API required roles: Machine.Read.All, Machine.ReadWrite.All` | `Machine.ReadWrite.All` not consented on the app registration. |
+| `Missing application roles. API required roles: AdvancedQuery.Read.All` | `AdvancedQuery.Read.All` not consented on the app registration. |
+| `Forbidden — needs minimum remediation level` | Device group has automated remediation set to **No remediation** — raise it to **Standard** or higher. |
+| `ActiveRequestAlreadyExists` (HTTP 400, not 403) | A prior Live Response action on the same device hasn't finished. Akto retries automatically after cancelling the stale action. |
 
 ## Steps to Deploy
 
