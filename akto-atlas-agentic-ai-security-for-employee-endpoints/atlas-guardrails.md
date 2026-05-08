@@ -16,11 +16,11 @@ Atlas embeds enforcement into the same agents that already discover AI activity 
 
 ## What Atlas Guardrails Cover
 
-* **Sensitive data exposure** — block prompts containing PII, secrets, source code, or other regulated data before they reach external AI tools.
-* **Unsafe prompts and jailbreaks** — detect prompt injection, jailbreak patterns, and policy-violating instructions on the endpoint.
-* **Risky MCP tool calls** — restrict destructive shell commands, file system access, and unvetted MCP tools from executing on the device.
-* **Shadow AI usage** — enforce guardrails on AI tools and MCP servers that fall outside your approved list.
-* **Personal account usage** — detect sign-ins to AI tools using personal email domains and restrict access to organization-approved accounts only.
+* **Sensitive data exposure** - block prompts containing PII, secrets, source code, or other regulated data before they reach external AI tools.
+* **Unsafe prompts and jailbreaks** - detect prompt injection, jailbreak patterns, and policy-violating instructions on the endpoint.
+* **Risky MCP tool calls -** restrict destructive shell commands, file system access, and unvetted MCP tools from executing on the device.
+* **Shadow AI usage** - enforce guardrails on AI tools and MCP servers that fall outside your approved list.
+* **Personal account usage** - detect sign-ins to AI tools using personal email domains and restrict access to organization-approved accounts only.
 
 Atlas ships with 20+ built-in guardrail policies covering input and output threats. See [**Agent Guard**](../agentic-guardrails/concepts/agent-guard.md) for the full list of scanners and what each one detects.
 
@@ -29,6 +29,10 @@ Atlas ships with 20+ built-in guardrail policies covering input and output threa
 Guardrails run inside the same Atlas components that you deploy for discovery — browser extensions, IDE hooks, and the MCP Endpoint Shield. Each component intercepts AI traffic on the device, applies input guardrails to the request and output guardrails to the response, and either forwards, redacts, or blocks based on your policies. Every decision is reported back to the Akto dashboard for monitoring and audit.
 
 ```mermaid
+---
+config:
+  theme: redux-color
+---
 sequenceDiagram
     participant User
     participant Hooks as Hooks<br/>(Akto Guardrails)
@@ -44,20 +48,21 @@ sequenceDiagram
     Note over Hooks: Response guardrails
     end
     Hooks ->> User: Final Response<br/>(valid / blocked / redacted)
-    Hooks ->> Akto: Log Data<br/>(Event / Threat)```
+    Hooks ->> Akto: Log Data<br/>(Event / Threat)
+```
 
 ## Where Guardrails Plug In
 
-* [**Browser Extensions**](endpoints-discovery-agents/browser-extensions/README.md) — apply guardrails to prompts and responses on web-based AI tools.
-* [**MCP Endpoint Shield**](endpoints-discovery-agents/mcp-endpoint-shield/README.md) — enforce guardrails on local MCP traffic across the device.
-* [**IDE Hooks**](endpoints-discovery-agents/cursor-hooks.md) — validate chat prompts, agent responses, and MCP tool calls inside Cursor, Claude, Copilot, Gemini, and other supported IDEs.
+* [**Browser Extensions**](endpoints-discovery-agents/browser-extensions/) - apply guardrails to prompts and responses on web-based AI tools.
+* [**MCP Endpoint Shield**](endpoints-discovery-agents/mcp-endpoint-shield/) - enforce guardrails on local MCP traffic across the device.
+* [**IDE Hooks**](endpoints-discovery-agents/) - validate chat prompts, agent responses, and MCP tool calls inside Cursor, Claude, Copilot, Gemini, and other supported IDEs.
 
 ## What You Can Do
 
 * Map skills and tools to guardrail policies and enforce them per user, device, or collection.
-* Track endpoint-level guardrail effectiveness through the [AI Security Posture](endpoint-security-posture.md) dashboard.
+* Track endpoint-level guardrail effectiveness through the AI Security Posture dashboard.
 * Review every blocked or allowed event with full endpoint, user, and device context.
 
 ## Learn More
 
-For a deep dive into guardrail scanners, policies, threat dashboards, and remediation workflows, see the [**Agentic Guardrails**](../agentic-guardrails/overview/README.md) section.
+For a deep dive into guardrail scanners, policies, threat dashboards, and remediation workflows, see the [**Agentic Guardrails**](/broken/pages/GqT7atAXg9l9FDBVe7BX) section.

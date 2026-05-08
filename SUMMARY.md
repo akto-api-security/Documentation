@@ -14,7 +14,6 @@
 ## Akto Atlas: Agentic AI Security for Employee Endpoints
 
 * [Overview](akto-atlas-agentic-ai-security-for-employee-endpoints/overview.md)
-* [Atlas Guardrails](akto-atlas-agentic-ai-security-for-employee-endpoints/atlas-guardrails.md)
 * [AI Discovery Connectors](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/README.md)
   * [Browser Extensions](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/README.md)
     * [Chrome](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/chrome/README.md)
@@ -54,11 +53,11 @@
   * [Skills Discovery](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/skills-discovery.md)
   * [Audit Data - Akto Atlas](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/audit-data-akto-atlas.md)
   * [Users and Devices](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/users-and-devices.md)
+* [Atlas Guardrails](akto-atlas-agentic-ai-security-for-employee-endpoints/atlas-guardrails.md)
 
 ## Akto Argus: Agentic AI Security for Homegrown AI
 
 * [Overview](akto-argus-agentic-ai-security-for-homegrown-ai/overview.md)
-* [Argus Guardrails](akto-argus-agentic-ai-security-for-homegrown-ai/argus-guardrails.md)
 * [Connectors](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/README.md)
   * [MCP Import](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/mcp-import.md)
   * [AI Agent Security](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/README.md)
@@ -320,6 +319,7 @@
   * [Export Vulnerability Report](akto-argus-agentic-ai-security-for-homegrown-ai/issues/export-vulnerability-report.md)
 * [Compliance](akto-argus-agentic-ai-security-for-homegrown-ai/compliance/README.md)
   * [Bot Policy](akto-argus-agentic-ai-security-for-homegrown-ai/compliance/bot-policy.md)
+* [Argus Guardrails](akto-argus-agentic-ai-security-for-homegrown-ai/argus-guardrails.md)
 
 ## Agentic Guardrails
 

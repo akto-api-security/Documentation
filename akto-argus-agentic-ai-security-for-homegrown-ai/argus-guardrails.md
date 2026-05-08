@@ -37,7 +37,7 @@ sequenceDiagram
     participant Akto as Akto Dashboard
 
     Agent->>Engine: Inspect request
-    Note over Engine: Input guardrails<br/>(prompt injection, schema,<br/>PII, rate limits)
+    Note over Engine: Input guardrails
     alt Blocked
         Engine-->>Agent: Block with reason
         Engine-->>Akto: Log security event
@@ -46,7 +46,7 @@ sequenceDiagram
         Agent->>AI: Forward the Request
         AI-->>Agent: Response
         Agent->>Engine: Inspect response
-        Note over Engine: Output guardrails<br/>(data leakage,<br/>policy violations, redaction)
+        Note over Engine: Output guardrails
         Engine-->>Agent: Response<br/>(original / redacted)
         Engine-->>Akto: Log event
     end
@@ -54,9 +54,9 @@ sequenceDiagram
 
 ## Where Guardrails Plug In
 
-* [**MCP Proxy**](../agentic-guardrails/overview/akto-mcp-proxy.md) — enforce guardrails on traffic to and from your MCP servers.
-* [**AI Agent Proxy**](../agentic-guardrails/overview/akto-agent-proxy.md) — enforce guardrails on traffic to and from your homegrown AI agents.
-* [**Connectors**](connectors/README.md) — route production traffic through Akto's proxy from any of the supported deployment targets.
+* [**MCP Proxy**](../agentic-guardrails/overview/akto-mcp-proxy.md) - enforce guardrails on traffic to and from your MCP servers.
+* [**AI Agent Proxy**](../agentic-guardrails/overview/akto-agent-proxy.md) - enforce guardrails on traffic to and from your homegrown AI agents.
+* [**Connectors**](connectors/) - route production traffic through Akto's proxy from any of the supported deployment targets.
 
 ## What You Can Do
 
@@ -66,4 +66,4 @@ sequenceDiagram
 
 ## Learn More
 
-For a deep dive into guardrail scanners, policy creation, threat dashboards, and remediation workflows, see the [**Agentic Guardrails**](../agentic-guardrails/overview/README.md) section.
+For a deep dive into guardrail scanners, policy creation, threat dashboards, and remediation workflows, see the [**Agentic Guardrails**](../agentic-guardrails/overview/) section.
