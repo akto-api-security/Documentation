@@ -626,6 +626,72 @@ Here are the **two separate scanner entries**, aligned with your format and nami
 
 ***
 
+### 21. Regex Pattern Guardrail
+
+**Purpose:** Detects and filters sensitive information using custom regex patterns.
+
+**What it Does:**
+
+* Matches content against configured regex patterns
+* Detects custom sensitive data formats
+* Filters or blocks matching inputs and outputs
+* Supports organization-specific pattern definitions
+
+**Risk Prevention:** Prevents exposure of sensitive information that follows identifiable patterns or formats.
+
+**Use Cases:**
+
+* Detecting custom identifiers or tokens
+* Filtering internal reference numbers
+* Preventing exposure of account or employee IDs
+* Enforcing organization-specific data protection rules
+
+**Example Transformation:**
+
+* Configured Regex Pattern:\
+  `\d{3}-\d{2}-\d{4}`
+* Input:\
+  "Customer SSN: 123-45-6789"
+* Detected Match:\
+  `123-45-6789`
+* Enforced Output:\
+  "Customer SSN: \[REDACTED]"
+
+***
+
+### 22. Personal Account Guardrail (Atlas only)
+
+**Purpose:** Detects and blocks access from users authenticated using personal accounts instead of organization-approved accounts.
+
+**What it Does:**
+
+* Identifies personal email domains during authentication
+* Validates user accounts against approved organization domains
+* Detects sign-ins using non-corporate accounts
+* Restricts access for unauthorized personal accounts
+
+**Risk Prevention:** Prevents unauthorized access, data leakage, and policy violations caused by usage of unmanaged personal accounts.
+
+**Use Cases:**
+
+* Enforcing enterprise-only account access
+* Blocking Gmail or personal email sign-ins
+* Restricting access to organization-managed users
+* Preventing unauthorized external access
+
+**Example Transformation:**
+
+* User Sign-In:\
+  `john.doe@gmail.com`
+* Allowed Domain:\
+  `@company.com`
+* Detected Issue:\
+  Personal account detected
+* Enforced Output:\
+  "Access blocked: personal accounts are not allowed"
+
+***
+
 ## OUTPUT GUARDRAILS
 
 Output scanners validate AI-generated responses before they reach users. These scanners prevent data leaks, ensure quality, and maintain safety standards.
