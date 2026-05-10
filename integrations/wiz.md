@@ -10,8 +10,8 @@ Before setting up the Wiz Integration, ensure you have:
 #### Wiz Service Account
 
 A wiz service account with the following permission scopes is required by the integration:
-1. create:external_data_ingestion
-2. read:vulnerabilities
+1. **create:external_data_ingestion**
+2. **read:vulnerabilities**
 
 #### Tenant Data Center
 
