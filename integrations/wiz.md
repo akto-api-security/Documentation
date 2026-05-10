@@ -7,9 +7,9 @@ Seamlessly enhance your web application security with Akto's Wiz integration. En
 
 Before setting up the Wiz Integration, ensure you have:
 
-#### Active Wiz Service Account
+#### Wiz Service Account
 
-A wiz service account with the following permission scopes:
+A wiz service account with the following permission scopes is required by the integration:
 1. create:external_data_ingestion
 2. read:vulnerabilities
 
@@ -17,7 +17,7 @@ A wiz service account with the following permission scopes:
 
 1. At the top right of your Wiz portal, click the user icon > **Tenant Info**.
 2. At the left side, click **Data Center and Regions**.
-3. Copy your **Tenant Data Center**.
+3. Make a note of your **Tenant Data Center**.
 {% endhint %}
 
 ## Quick Setup Steps
