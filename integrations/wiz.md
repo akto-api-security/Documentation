@@ -29,7 +29,7 @@ A wiz service account with the following permission scopes:
 * Go to **Settings > Integrations**.
 * Find and click **"Configure"** next to Wiz.
 
-    <div data-with-frame="true"><figure><img src="https://3128331180-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Ftog5ODwYfqPOf4eQhsOC%2Fuploads%2FAmdkZyhqgvwU4csPZxkc%2Fimage.png?alt=media&#x26;token=b9ef54d6-9b92-435d-8cbc-c299af5808ad" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../.gitbook/assets/integrations-automations-list-wiz-highlight.png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -40,7 +40,7 @@ A wiz service account with the following permission scopes:
     1. Enter **Client ID**
     2. Enter **Client Secret**
 
-    <div data-with-frame="true"><figure><img src="https://3128331180-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Ftog5ODwYfqPOf4eQhsOC%2Fuploads%2FvYvG5hCaJNMC6xP7cuZz%2Fimage.png?alt=media&#x26;token=4218e9cf-62e8-4a64-bdc2-6804d4b14629" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../.gitbook/assets/wiz-integration-1.png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 {% endstep %}
 
