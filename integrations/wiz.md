@@ -1,6 +1,6 @@
 # Wiz
 
-Placeholder
+Seamlessly enhance your web application security with Akto's Wiz integration. Enrich your wiz dashboard with API vulnerabilities discovered by Akto.
 
 {% hint style="info" %}
 ## Prerequisites
