@@ -1,19 +1,24 @@
+---
+hidden: true
+---
+
 # Wiz
 
 Seamlessly enhance your web application security with Akto's Wiz integration. Enrich your wiz dashboard with API vulnerabilities discovered by Akto.
 
 {% hint style="info" %}
-## Prerequisites
+### Prerequisites
 
 Before setting up the Wiz Integration, ensure you have:
 
-#### Wiz Service Account
+**Wiz Service Account**
 
 A wiz service account with the following permission scopes is required by the integration:
-1. **create:external_data_ingestion**
+
+1. **create:external\_data\_ingestion**
 2. **read:vulnerabilities**
 
-#### Tenant Data Center
+**Tenant Data Center**
 
 1. At the top right of your Wiz portal, click the user icon > **Tenant Info**.
 2. At the left side, click **Data Center and Regions**.
@@ -24,28 +29,28 @@ A wiz service account with the following permission scopes is required by the in
 
 {% stepper %}
 {% step %}
-#### **Access Integrations**
+**Access Integrations**
 
 * Go to **Settings > Integrations**.
-* Find and click **"Configure"** next to Wiz.
+*   Find and click **"Configure"** next to Wiz.
 
     <div data-with-frame="true"><figure><img src="../.gitbook/assets/integrations-automations-list-wiz-highlight.png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
-#### **Enter Wiz Details**
+**Enter Wiz Details**
 
 1. Enter **Tenant Data Center**.
-2. Enter wiz service account details
+2.  Enter wiz service account details
+
     1. Enter **Client ID**
     2. Enter **Client Secret**
 
     <div data-with-frame="true"><figure><img src="../.gitbook/assets/wiz-integration-1.png" alt="" width="563"><figcaption></figcaption></figure></div>
-
 {% endstep %}
 
 {% step %}
-#### **Save Configuration**
+**Save Configuration**
 
 * Click **"Save"** to finalise.
 {% endstep %}
