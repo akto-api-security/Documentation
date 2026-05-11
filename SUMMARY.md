@@ -341,6 +341,7 @@
 * [Web Application Firewall(WAF)](integrations/waf/README.md)
   * [AWS WAF](integrations/waf/aws-waf.md)
   * [Cloudflare WAF](integrations/waf/cloudflare-waf.md)
+* [New Relic](integrations/new-relic.md)
 
 ## Alerts
 
