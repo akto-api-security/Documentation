@@ -18,7 +18,7 @@ Make sure you have:
 *   The following variable added to your **Akto API Security Dashboard env file**, and the service restarted to apply it:
 
     ```bash
-    AKTO_MCP_SERVER_URL=<your-mcp-server-url>
+    AKTO_MCP_SERVER_URL=<your-agentic-testing-server-url>
     ```
 
 ## Configuration
