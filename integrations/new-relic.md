@@ -1,6 +1,6 @@
 # New Relic
 
-Send metrics and heartbeart events from Akto's hybrid modules to your New Relic dashboard.
+Send metrics and heartbeat events from Akto's hybrid modules to your New Relic dashboard.
 
 {% hint style="info" %}
 ### Prerequisites
