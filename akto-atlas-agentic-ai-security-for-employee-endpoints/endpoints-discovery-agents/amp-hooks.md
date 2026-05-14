@@ -66,9 +66,7 @@ Contact [support@akto.io](mailto:support@akto.io) to get the Akto guardrail hook
 {% step %}
 **Configure Hooks in settings.json**
 
-Add the Akto-provided hook configuration to `~/.config/amp/settings.json`.
-
-Amp hooks use `send-user-message` to intercept and cancel a tool call before execution, and `redact-tool-input` to scrub sensitive data from stored tool inputs after execution:
+Add the Akto-provided hook configuration to `~/.config/amp/settings.json`:
 
 ```json
 {
@@ -79,7 +77,7 @@ Amp hooks use `send-user-message` to intercept and cancel a tool call before exe
       "on": {
         "event": "tool:pre-execute",
         "tool": ["<tool_name>"],
-        "input.contains": "<exact-string-to-match>"
+        "input.contains": "..."
       },
       "action": {
         ...
