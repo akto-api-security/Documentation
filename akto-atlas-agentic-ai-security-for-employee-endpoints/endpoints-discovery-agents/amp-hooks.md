@@ -82,8 +82,7 @@ Amp hooks use `send-user-message` to intercept and cancel a tool call before exe
         "input.contains": "<exact-string-to-match>"
       },
       "action": {
-        "type": "send-user-message",
-        "message": "<guardrail message sent to the agent>"
+        ...
       }
     },
     {
@@ -94,22 +93,12 @@ Amp hooks use `send-user-message` to intercept and cancel a tool call before exe
         "tool": ["<tool_name>"]
       },
       "action": {
-        "type": "redact-tool-input",
-        "redactedInput": {
-          "data": "<replacement text>"
-        }
+        ...
       }
     }
   ]
 }
 ```
-
-**Key points:**
-
-* `send-user-message` — only valid with `tool:pre-execute`; cancels the tool call and sends the message to the agent
-* `redact-tool-input` — only valid with `tool:post-execute`; replaces the stored tool input with the value in `redactedInput`
-* `input.contains` — exact string match only; does not support regex or pattern matching
-* `tool` — array of tool names the rule applies to
 
 {% endstep %}
 {% endstepper %}
@@ -118,7 +107,7 @@ Once configured, Akto Guardrails will automatically run its checks on every tool
 
 ## Resources
 
-* **Amp Manual — Hooks**: <https://ampcode.com/manual#hooks>
+* **Amp Manual — Hooks**: <https://ampcode.com/manual>
 * **GitHub**: <https://github.com/akto-api-security/akto>
 * **Support**: <support@akto.io>
 * **Community**: <https://www.akto.io/community>
