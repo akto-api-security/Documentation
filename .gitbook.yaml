@@ -64,6 +64,7 @@ redirects:
   traffic-connections/traffic-data-sources/envoy: "/traffic-connector/api-gateways/envoy"
   traffic-connections/traffic-data-sources/envoy-1: "/traffic-connector/api-gateways/envoy-1"
   traffic-connections/traffic-data-sources/docker: "/traffic-connector/virtual-machines/docker"
+  traffic-connections/traffic-data-sources/vm-ssl-no-docker: "/traffic-connector/virtual-machines/vm-ssl-no-docker"
   traffic-connections/traffic-data-sources/tcp-agent: "/traffic-connector/virtual-machines/tcp-agent"
   traffic-connections/traffic-data-sources/ebpf: "/traffic-connector/ebpf/ebpf"
   traffic-connections/traffic-data-sources/ebpf-mtls: "/traffic-connector/ebpf/ebpf-mtls"
