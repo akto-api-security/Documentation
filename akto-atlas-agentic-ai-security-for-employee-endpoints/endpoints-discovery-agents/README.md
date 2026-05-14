@@ -12,6 +12,7 @@ Get started immediately with endpoint-based discovery agents that require no inf
 * [Neovim Hooks](neovim-hooks.md) - Lua plugin for Neovim AI plugins security (avante, copilot, codecompanion, windsurf + more)
 * [OpenCode Hooks](opencode-hooks.md) - Zero-installation security hooks for OpenCode (monitors chat + MCP tools)
 * [Hermes Hooks](hermes-hooks.md) - Zero-installation security hooks for Hermes (monitors chat + MCP tools)
+* [Amp Hooks](amp-hooks.md) - Zero-installation security hooks for Amp (monitors tool executions + MCP tools)
 * [Deploy via SentinelOne](deploy-via-sentinelone.md) - Connect SentinelOne to discover AI agents and deploy guardrails on managed endpoints
 * [Agentic Shield](agentic-shield.md) - Application-level shield for real-time discovery and protection of AI agent interactions
 
