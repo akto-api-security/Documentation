@@ -33,12 +33,6 @@
 * [Ask Akto Self-Hosted Deployment](getting-started/ask-akto-self-hosted-deployment/README.md)
   * [Run with GitHub Copilot](getting-started/ask-akto-self-hosted-deployment/run-with-github-copilot.md)
 
-## DAST
-
-* [Getting Started with Akto DAST](dast/akto-dast.md)
-* [Getting Started with Akto DAST (On-Prem)](dast/akto-dast-on-premise.md)
-* [View DAST Scans](dast/view-dast-scans.md)
-
 ## Traffic Connector
 
 * [Traffic Data Sources](traffic-connector/traffic-data-sources.md)
@@ -316,6 +310,12 @@
   * [Export Visualisation and Report](api-protection/how-to/export-visualisation-and-report.md)
   * [Create Internal Workflow Item](api-protection/how-to/create-internal-workflow-item.md)
   * [Export Activity to Custom Webhook](api-protection/how-to/export-activity-to-custom-webhook.md)
+
+## DAST
+
+* [Getting Started with Akto DAST](dast/akto-dast.md)
+* [Getting Started with Akto DAST (On-Prem)](dast/akto-dast-on-premise.md)
+* [View DAST Scans](dast/view-dast-scans.md)
 
 ## Integrations
 
