@@ -464,7 +464,7 @@ rm -rf ~/.codex/hooks/
 # 4. Remove Akto logs (optional - keeps historical data if skipped)
 rm -rf ~/.codex/akto/
 
-# 5. No restart needed - Codex CLI reads config on each invocation
+# 5. No restart needed - Codex reads config on each invocation (CLI and Desktop)
 ```
 
 ### Selective Removal (Keep Logs)
@@ -517,7 +517,7 @@ After uninstallation, Codex CLI and Codex Desktop will operate without Akto secu
 set -e
 AKTO_URL="${1:-https://your-akto-instance.com}"
 
-echo "🔧 Installing Akto Guardrails for Codex CLI..."
+echo "🔧 Installing Akto Guardrails for Codex (CLI & Desktop)..."
 
 # Enable feature flag
 mkdir -p ~/.codex
