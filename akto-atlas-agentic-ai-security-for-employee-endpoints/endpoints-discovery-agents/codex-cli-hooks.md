@@ -1,11 +1,11 @@
-# Codex CLI Hooks
+# Codex CLI & Desktop Hooks
 
-Akto Guardrails for Codex CLI provides comprehensive security monitoring and validation for both **chat interactions** and **tool executions**. It intercepts prompts before sending to Codex, validates tool calls before execution, blocks risky behavior, and reports all events to your Akto dashboard.
+Akto Guardrails for Codex provides comprehensive security monitoring and validation for both **chat interactions** and **tool executions** — and works with both **Codex CLI** and **Codex Desktop**. It intercepts prompts before sending to Codex, validates tool calls before execution, blocks risky behavior, and reports all events to your Akto dashboard.
 
 ## Key Features
 
 * ✅ **Zero Installation** - No standalone apps to install
-* ✅ **Transparent Integration** - Uses Codex CLI's native hook mechanism
+* ✅ **Transparent Integration** - Uses Codex's native hook mechanism (CLI and Desktop)
 * ✅ **Real-time Protection** - Validates every prompt and tool call
 * ✅ **Centralized Monitoring** - All events reported to Akto dashboard
 * ✅ **Flexible Deployment** - Supports Argus and Atlas modes
@@ -14,7 +14,7 @@ Akto Guardrails for Codex CLI provides comprehensive security monitoring and val
 
 ## How It Works
 
-Codex CLI's hook system executes custom scripts at four critical points:
+Codex's hook system (shared by both CLI and Desktop) executes custom scripts at four critical points:
 
 ```mermaid
 sequenceDiagram
@@ -66,7 +66,7 @@ sequenceDiagram
 3. `PreToolUse` - Validates tool requests before execution (blocks if malicious)
 4. `PostToolUse` - Ingests tool input/output after execution (observational only)
 
-> **Note:** Codex CLI currently only supports the `Bash` tool for `PreToolUse` and `PostToolUse` hooks.
+> **Note:** Codex currently only supports the `Bash` tool for `PreToolUse` and `PostToolUse` hooks (both CLI and Desktop).
 
 ## File Structure
 
@@ -105,7 +105,7 @@ sequenceDiagram
 
 ### Prerequisites
 
-* Codex CLI installed
+* Codex CLI or Codex Desktop installed
 * Akto instance URL
 * Python 3.7+
 * macOS, Linux, or Windows with bash/zsh
@@ -116,7 +116,7 @@ sequenceDiagram
 {% step %}
 **Enable Codex Hooks Feature Flag**
 
-Codex CLI hooks are experimental. Enable them in `~/.codex/config.toml`:
+Codex hooks are experimental. Enable them in `~/.codex/config.toml` (used by both CLI and Desktop):
 
 ```toml
 [features]
@@ -313,9 +313,8 @@ tail -f ~/.codex/akto/logs/*.log
 
 Test by running a Codex command:
 
-```bash
-codex "What is 2+2?"
-```
+* **CLI**: `codex "What is 2+2?"`
+* **Desktop**: Open Codex Desktop and send a message in the chat
 
 You should see log entries indicating validation occurred.
 {% endstep %}
@@ -448,7 +447,7 @@ If Akto is unreachable:
 
 ## Uninstallation
 
-To completely remove Akto hooks from Codex CLI:
+To completely remove Akto hooks from Codex CLI or Codex Desktop:
 
 ### Complete Removal
 
@@ -500,13 +499,12 @@ test -d ~/.codex/hooks && echo "⚠️  Hook scripts still exist" || echo "✅ H
 test -d ~/.codex/akto && echo "ℹ️  Logs still present" || echo "✅ Logs removed"
 ```
 
-### Restore Codex CLI to Default
+### Restore Codex to Default
 
-After uninstallation, Codex CLI will operate without Akto security monitoring. Test with:
+After uninstallation, Codex CLI and Codex Desktop will operate without Akto security monitoring. Test with:
 
-```bash
-codex "Test message"
-```
+* **CLI**: `codex "Test message"`
+* **Desktop**: Open Codex Desktop and send a message — no hook logs should appear
 
 ## Enterprise Deployment
 
@@ -574,7 +572,7 @@ EOFHOOKS
 
 echo "✅ Installation complete!"
 echo "📍 Akto instance: ${AKTO_URL}"
-echo "Test with: codex 'What is 2+2?'"
+echo "Test with: codex 'What is 2+2?' (CLI) or open Codex Desktop and send a message"
 ```
 
 **Deploy to developers:**
@@ -605,7 +603,8 @@ chmod +x ~/.codex/hooks/*.sh
 # 6. Create hooks.json (see step 5 above)
 
 # 7. Test
-codex "What is 2+2?"
+# CLI: codex "What is 2+2?"
+# Desktop: open Codex Desktop and send a message
 ```
 
 ## Resources
