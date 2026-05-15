@@ -56,6 +56,26 @@ A wiz service account with the following permission scopes is required by the in
 {% endstep %}
 {% endstepper %}
 
+## Creating Wiz Findings
+
+{% stepper %}
+{% step %}
+**Access Issue**
+
+1. Go to **Reports > Issues**.
+2. Click on an **Issue**.
+
+{% endstep %}
+
+{% step %}
+**Create Finding**
+
+Click on the **Create Wiz Finding** button to create a finding in Wiz.
+
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/wiz-integration-finding.png" alt="" width="563"><figcaption></figcaption></figure></div>
+{% endstep %}
+{% endstepper %}
+
 ## Get Support for your Akto setup
 
 There are multiple ways to request support from Akto. We are 24X7 available on the following:
