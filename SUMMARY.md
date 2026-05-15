@@ -87,12 +87,6 @@
   * [Connect Akto with Azure Container App](traffic-connector/azure-services/connect-akto-with-azure-container-app.md)
   * [Connect Akto with Azure Functions](traffic-connector/azure-services/connect-akto-with-azure-functions.md)
 * [Akto SDK](traffic-connector/akto-sdk.md)
-* [Source Code](traffic-connector/source-code/README.md)
-  * [GitHub](traffic-connector/source-code/github.md)
-  * [Bitbucket](traffic-connector/source-code/bitbucket.md)
-  * [GitLab](traffic-connector/source-code/gitlab.md)
-  * [API inventory from source code](traffic-connector/source-code/api-inventory-from-source-code.md)
-  * [Source code installation](traffic-connector/source-code/source-code-installation.md)
 * [Virtual Machines](traffic-connector/virtual-machines/README.md)
   * [Connect Akto with Docker](traffic-connector/virtual-machines/docker.md)
   * [Connect Akto on TLS service](traffic-connector/virtual-machines/docker-ssl.md)
@@ -140,7 +134,6 @@
   * [Risk Score](api-inventory-1/concepts/risk-score.md)
   * [Auth types](api-inventory-1/concepts/auth-types.md)
   * [Access Type](api-inventory-1/concepts/access-type.md)
-  * [API discovery from source code](api-inventory-1/concepts/api-inventory-from-source-code.md)
   * [Advanced Filter Option](api-inventory-1/concepts/advanced-filter-option.md)
   * [Threat Issues](api-inventory/concepts/threat-issues.md)
 * [How-To](api-inventory-1/how-to/README.md)
@@ -173,8 +166,6 @@
   * [Configure alerts on API changes](api-inventory-1/how-to/configure-alerts-on-api-changes.md)
   * [Create a custom collection](api-inventory-1/how-to/how-to-create-a-custom-collection.md)
   * [Redact sensitive data](api-inventory-1/how-to/redact-sensitive-data.md)
-  * [Extract APIs from github hosted source code using our Github Action](api-inventory-1/how-to/extract-apis-from-source-code-gha.md)
-  * [Extract APIs from source code using our Docker based CLI](api-inventory-1/how-to/extract-apis-from-source-code-docker-cli.md)
   * [Remove Bad Endpoints](api-inventory-1/how-to/remove-bad-endpoints.md)
   * [Bulk De-Merge APIs](api-inventory/how-to/bulk-de-merge-apis.md)
   * [Inspect Schema of an API Collection](api-inventory/how-to/inspect-schema-of-an-api-collection.md)
@@ -394,7 +385,6 @@
   * [Fetch Data](api-reference/threat-protection/fetch-data.md)
   * [Modify Data](api-reference/threat-protection/modify-data.md)
 * [DAST](api-reference/dast.md)
-* [Code Analysis](api-reference/code-analysis.md)
 
 ***
 
