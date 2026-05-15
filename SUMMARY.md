@@ -26,6 +26,7 @@
     * [Whitelist Paths](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/whitelist-paths.md)
     * [Mosyle MDM Deployment](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/mosyle-deployment.md)
     * [MacOS Installation](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/macos-installation.md)
+  * [Akto System Proxy](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/akto-system-proxy.md)
   * [OpenClaw (Clawdbot) Visibility](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/openclaw-clawdbot-visibility.md)
   * [Cursor Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/cursor-hooks.md)
   * [Claude CLI Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/claude-cli-hooks.md)
