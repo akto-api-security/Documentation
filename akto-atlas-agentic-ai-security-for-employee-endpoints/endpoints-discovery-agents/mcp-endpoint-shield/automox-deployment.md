@@ -48,9 +48,11 @@ When remediation runs successfully, the installer:
 
 Contact **support@akto.io** to request the installer build.
 
+## Deployment Steps
+
 {% stepper %}
 {% step %}
-**Obtain the installer from Akto**
+### Obtain the installer from Akto
 
 **Contact Akto Support**
 
@@ -71,11 +73,11 @@ Note the **exact** file name (e.g. `akto-endpoint-shield-setup-1.1.5.exe`). The 
 {% endstep %}
 
 {% step %}
-**Create the Worklet policy in Automox**
+### Create the Worklet policy in Automox
 
 You can either start from the **Worklet Catalog** template or create a **custom policy** from scratch. Both approaches use the same evaluation/remediation scripts and uploaded `.exe`.
 
-### Option A — Start from the catalog (recommended)
+#### Option A — Start from the catalog (recommended)
 
 1. In Automox, go to **Automate → Worklet Catalog**.
 2. Open **EXE Software Installation (System Wide-All Users)** (Windows, Automox Verified).
@@ -85,7 +87,7 @@ You can either start from the **Worklet Catalog** template or create a **custom 
 
 4. Continue with the next step below.
 
-### Option B — Create a custom Worklet policy
+#### Option B — Create a custom Worklet policy
 
 1. Go to **Automate → Policies → Create Policy**.
 2. Choose **Worklet** and **Windows**.
@@ -94,7 +96,7 @@ You can either start from the **Worklet Catalog** template or create a **custom 
 {% endstep %}
 
 {% step %}
-**Configure policy info**
+### Configure policy info
 
 On the policy **Info** tab:
 
@@ -118,7 +120,7 @@ On the policy **Info** tab:
 {% endstep %}
 
 {% step %}
-**Upload the installer (Payload)**
+### Upload the installer (Payload)
 
 1. Open the **Payload** (file upload) section.
 2. Click **Upload File** and select your `akto-endpoint-shield-setup-<version>.exe`.
@@ -129,7 +131,7 @@ Automox stages the file next to the worklet scripts on each device (under its ex
 {% endstep %}
 
 {% step %}
-**Evaluation code**
+### Evaluation code
 
 Paste this script into **Evaluation Code** (PowerShell). It must be **self-contained** — do not call helper functions defined only in remediation (Automox runs evaluation and remediation in **separate** processes).
 
@@ -178,7 +180,7 @@ Use this only after you confirm tasks are created successfully on pilot devices.
 {% endstep %}
 
 {% step %}
-**Remediation code**
+### Remediation code
 
 Paste this into **Remediation Code**. Update `$fileName` to match your uploaded installer **exactly**.
 
@@ -235,7 +237,7 @@ exit 0
 {% endstep %}
 
 {% step %}
-**Schedule and notifications**
+### Schedule and notifications
 
 | Setting | Recommendation |
 |---------|----------------|
@@ -248,14 +250,14 @@ Save the policy (**Save Policy**), then **Run Policy** on a pilot device or wait
 {% endstep %}
 
 {% step %}
-**Verify deployment**
+### Verify deployment
 
-### In Automox
+#### In Automox
 
 * **Activity Log** — look for policy `akto-mcp-windows-installer`; success shows `Installer ExitCode=0` and `Success: C:\Program Files\...`
 * **Device logs** — `policy_*_remediate` / `policy_*_test` entries
 
-### On the Windows device (PowerShell)
+#### On the Windows device (PowerShell)
 
 ```powershell
 # Binary (64-bit path)
@@ -274,7 +276,7 @@ Get-Content "C:\Windows\System32\config\systemprofile\.akto-endpoint-shield\conf
 Get-Content "$env:LOCALAPPDATA\akto-endpoint-shield\logs\agent.log" -Tail 30 -ErrorAction SilentlyContinue
 ```
 
-### Test API token (optional)
+#### Test API token (optional)
 
 ```bash
 export TOKEN='your-jwt-from-config-env'
@@ -301,27 +303,27 @@ Installing via Automox does **not** mean all hooks are active immediately.
 
 ## Troubleshooting
 
-### Evaluation error: `Get-AktoBinaryPath` is not recognized
+#### Evaluation error: `Get-AktoBinaryPath` is not recognized
 
 Evaluation and remediation are separate runs. Use the evaluation script in the steps above with inline paths — no custom functions.
 
-### Remediation error: binary missing under `Program Files (x86)`
+#### Remediation error: binary missing under `Program Files (x86)`
 
 Automox often runs 32-bit PowerShell where `$env:ProgramFiles` points to **x86**. Use `${env:ProgramW6432}` as in the scripts above.
 
-### `COMMAND TIMED OUT`
+#### `COMMAND TIMED OUT`
 
 Install or validation took too long. Remediation script includes a 5-minute wait; increase Automox worklet timeout if needed. Check `C:\Windows\Temp\akto-endpoint-shield-install.log`.
 
-### Binary installed but no `MCPEndpointShield*` tasks
+#### Binary installed but no `MCPEndpointShield*` tasks
 
 Re-run the installer or repair install. Check Inno log for post-install task registration. Agent may not auto-start until tasks exist.
 
-### Agent logs show `401 Unauthorized` to `ultron.akto.io`
+#### Agent logs show `401 Unauthorized` to `ultron.akto.io`
 
 Token invalid, expired, or wrong `config.env` path for the process context. Verify token with curl; request a new installer from Akto; ensure SYSTEM and user profiles have correct `config.env` if needed.
 
-### `config.env` only under SYSTEM profile
+#### `config.env` only under SYSTEM profile
 
 Normal for Automox (SYSTEM install). The agent loads config from the **user home** when running as the logged-in user. For MDM-wide deploy, align with Akto on copying config to user profiles or per-user install strategies if required.
 
@@ -341,7 +343,7 @@ After uninstall, evaluation should return non-compliant and remediation can rein
 
 * [MDM Deployment](mdm-deployment.md) — Intune, Jamf, and other MDM platforms
 * [Mosyle MDM Deployment](mosyle-deployment.md) — macOS MDM
-* [README](README.md) — product overview and manual setup
+* [Endpoint Shield](README.md) — product overview and manual setup
 
 ## Get Support
 
