@@ -48,10 +48,10 @@ When remediation runs successfully, the installer:
 
 Contact **support@akto.io** to request the installer build.
 
-## Step 1: Obtain the installer from Akto
-
 {% stepper %}
 {% step %}
+**Obtain the installer from Akto**
+
 **Contact Akto Support**
 
 Email **support@akto.io** (or your Akto account team) with:
@@ -64,16 +64,14 @@ Akto will return:
 
 * `akto-endpoint-shield-setup-<version>.exe` — silent Inno Setup installer with your token and URLs baked in
 * Optional: evaluation and remediation scripts (also in this document)
-{% endstep %}
 
-{% step %}
 **Verify the file name**
 
 Note the **exact** file name (e.g. `akto-endpoint-shield-setup-1.1.5.exe`). The remediation script must use the **same** name as the uploaded payload.
 {% endstep %}
-{% endstepper %}
 
-## Step 2: Create the Worklet policy in Automox
+{% step %}
+**Create the Worklet policy in Automox**
 
 You can either start from the **Worklet Catalog** template or create a **custom policy** from scratch. Both approaches use the same evaluation/remediation scripts and uploaded `.exe`.
 
@@ -85,15 +83,18 @@ You can either start from the **Worklet Catalog** template or create a **custom 
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/automox-worklet-catalog-exe-install.png" alt="Automox Worklet Catalog - EXE Software Installation" width="563"><figcaption>Worklet Catalog — EXE Software Installation (System Wide-All Users)</figcaption></figure></div>
 
-4. Continue with [Step 3](#step-3-configure-policy-info) below.
+4. Continue with the next step below.
 
 ### Option B — Create a custom Worklet policy
 
 1. Go to **Automate → Policies → Create Policy**.
 2. Choose **Worklet** and **Windows**.
-3. Continue with Step 3.
+3. Continue with the next step.
 
-## Step 3: Configure policy info
+{% endstep %}
+
+{% step %}
+**Configure policy info**
 
 On the policy **Info** tab:
 
@@ -114,7 +115,10 @@ On the policy **Info** tab:
 
 **Inputs / Secrets:** Not required when the API token is embedded in the installer at build time.
 
-## Step 4: Upload the installer (Payload)
+{% endstep %}
+
+{% step %}
+**Upload the installer (Payload)**
 
 1. Open the **Payload** (file upload) section.
 2. Click **Upload File** and select your `akto-endpoint-shield-setup-<version>.exe`.
@@ -122,7 +126,10 @@ On the policy **Info** tab:
 
 Automox stages the file next to the worklet scripts on each device (under its exec directory).
 
-## Step 5: Evaluation code
+{% endstep %}
+
+{% step %}
+**Evaluation code**
 
 Paste this script into **Evaluation Code** (PowerShell). It must be **self-contained** — do not call helper functions defined only in remediation (Automox runs evaluation and remediation in **separate** processes).
 
@@ -168,7 +175,10 @@ if (-not $agentTask) { Write-Output "Binary present but agent task missing"; exi
 Use this only after you confirm tasks are created successfully on pilot devices.
 {% endhint %}
 
-## Step 6: Remediation code
+{% endstep %}
+
+{% step %}
+**Remediation code**
 
 Paste this into **Remediation Code**. Update `$fileName` to match your uploaded installer **exactly**.
 
@@ -222,7 +232,10 @@ exit 0
 * Do **not** check `C:\Program Files (x86)\...` — the 64-bit installer places files under **`C:\Program Files\Akto Endpoint Shield`**.
 {% endhint %}
 
-## Step 7: Schedule and notifications
+{% endstep %}
+
+{% step %}
+**Schedule and notifications**
 
 | Setting | Recommendation |
 |---------|----------------|
@@ -232,7 +245,10 @@ exit 0
 
 Save the policy (**Save Policy**), then **Run Policy** on a pilot device or wait for the schedule.
 
-## Step 8: Verify deployment
+{% endstep %}
+
+{% step %}
+**Verify deployment**
 
 ### In Automox
 
@@ -271,6 +287,8 @@ curl -sS -w "\nHTTP %{http_code}\n" \
 ```
 
 Expect **HTTP 200**. **401** means expired or wrong token — contact Akto for a new build or update `config.env`.
+{% endstep %}
+{% endstepper %}
 
 ## Hooks, MCP wrap, and system proxy
 
@@ -285,7 +303,7 @@ Installing via Automox does **not** mean all hooks are active immediately.
 
 ### Evaluation error: `Get-AktoBinaryPath` is not recognized
 
-Evaluation and remediation are separate runs. Use the [evaluation script above](#step-5-evaluation-code) with inline paths — no custom functions.
+Evaluation and remediation are separate runs. Use the evaluation script in the steps above with inline paths — no custom functions.
 
 ### Remediation error: binary missing under `Program Files (x86)`
 
