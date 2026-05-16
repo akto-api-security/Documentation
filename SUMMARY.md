@@ -22,6 +22,7 @@
     * [Safari](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/safari.md)
   * [MCP Endpoint Shield](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/README.md)
     * [MDM Deployment](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/mdm-deployment.md)
+    * [Automox Deployment](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/automox-deployment.md)
     * [Jamf MDM Deployment](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/jamf-mdm-deployment.md)
     * [Whitelist Paths](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/whitelist-paths.md)
     * [Mosyle MDM Deployment](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/mosyle-deployment.md)

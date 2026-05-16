@@ -25,6 +25,7 @@ Akto MCP Endpoint Shield integrates with leading MDM solutions:
 * ✅ **Mosyle** (Apple devices)
 * ✅ **ManageEngine** (Cross-platform)
 * ✅ **IBM MaaS360**
+* ✅ **Automox** (Windows Worklets — see [Automox Deployment](automox-deployment.md))
 * ✅ **Any standard MDM** supporting package deployment
 
 ### Key MDM Capabilities
@@ -175,6 +176,10 @@ if ($service.Status -eq "Running") {
 * Assign to device groups
 {% endstep %}
 {% endstepper %}
+
+{% hint style="info" %}
+**Automox:** For Windows fleet deployment via Automox Worklets (Inno Setup `.exe` + evaluation/remediation scripts), use [Automox Deployment](automox-deployment.md) instead of MSI.
+{% endhint %}
 
 ### **For Linux (Fleet, Canonical Landscape)**
 
