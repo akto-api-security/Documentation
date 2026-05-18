@@ -73,6 +73,44 @@ A paid [Copilot Studio license](https://learn.microsoft.com/en-us/microsoft-copi
 
 Your self-hosted Akto **Data Ingestion Service** must be deployed and reachable from the Akto Argus connector. The connector forwards each conversation pair to this endpoint.
 
+### 5. Required Permissions
+
+Two distinct sets of permissions are involved in this integration. Note the difference — confusing them is the most common setup mistake.
+
+#### 5a. Permissions for the person running the setup (one-time)
+
+The user performing **Part 1** of the setup needs a Dataverse [security role](https://learn.microsoft.com/en-us/power-platform/admin/security-roles-privileges) that grants the following privileges in the target environment, because the setup creates a new application user and assigns a role to it:
+
+| Privilege | Entity | Why it's needed |
+| --- | --- | --- |
+| `prvCreateSystemUser` | User (SystemUser) | Create the new application user record |
+| `prvReadSystemUser` | User (SystemUser) | List existing users to detect duplicates |
+| `prvAppendSystemUser` | User (SystemUser) | Attach the user to the business unit |
+| `prvReadRole` | Security Role | List roles assignable to the app user |
+| `prvAssignRole` | Security Role | Bind a role to the new application user |
+
+The simplest way to satisfy all of these is to assign yourself the built-in **System Administrator** role for the target environment. If your organization restricts that role, ask the tenant's [Global administrator or Dynamics 365 administrator](https://learn.microsoft.com/en-us/power-platform/admin/manage-high-privileged-admin-roles) to either run the setup for you or temporarily grant the role.
+
+These permissions are **only** needed at setup time — they are not used by the connector at runtime.
+
+#### 5b. Permissions for the application user (used by Akto at runtime)
+
+The Dataverse application user that Akto authenticates as needs only **read access on two tables**. No write, delete, or admin privileges are required.
+
+| Privilege | Entity | Logical name | Used by |
+| --- | --- | --- | --- |
+| **Read** (Organization scope) | Bot | `bot` | `GET /api/data/v9.1/bots` — agent discovery |
+| **Read** (Organization scope) | Conversation Transcript | `conversationtranscript` | `GET /api/data/v9.1/conversationtranscripts` — traffic ingestion |
+
+You have two ways to grant these:
+
+* **Recommended (least privilege)**: Create a [custom security role](https://learn.microsoft.com/en-us/power-platform/admin/create-edit-security-role) with **Read = Organization** on the **Bot** and **Conversation Transcript** tables and nothing else. Assign that role to the application user.
+* **Faster (broader access)**: Assign the built-in [**Bot Transcript Viewer**](https://learn.microsoft.com/en-us/microsoft-copilot-studio/admin-share-bots#assign-the-bot-transcript-viewer-security-role-during-agent-sharing) role (covers `conversationtranscript` reads) plus the built-in **Environment Maker** role (covers `bot` reads). This grants more than strictly necessary; prefer the custom role in production.
+
+{% hint style="warning" %}
+Do **not** assign **System Administrator** to the application user. It is far broader than needed and violates the principle of least privilege — the connector only reads two tables.
+{% endhint %}
+
 ## Steps to Connect
 
 ### Part 1 — Set Up Microsoft Entra ID and Dataverse Access
@@ -113,7 +151,7 @@ The secret value is shown only once. If you navigate away before copying it, you
 {% step %}
 **Create a Dataverse Application User**
 
-The Microsoft Entra app must be bound to an [application user](https://learn.microsoft.com/en-us/power-platform/admin/manage-application-users) inside Dataverse before it can read data.
+The Microsoft Entra app must be bound to an [application user](https://learn.microsoft.com/en-us/power-platform/admin/manage-application-users) inside Dataverse before it can read data. You need the setup-time permissions listed in [Prerequisites § 5a](#5a-permissions-for-the-person-running-the-setup-one-time) to complete this step.
 
 1. Open the [Power Platform admin center](https://admin.powerplatform.microsoft.com).
 2. Select **Manage** → **Environments** → select your target environment.
@@ -121,10 +159,28 @@ The Microsoft Entra app must be bound to an [application user](https://learn.mic
 4. Select **+ New app user**.
 5. In the side panel, select **+ Add an app** and search for the app registration you created in Step 1. Select it and choose **Add**.
 6. Select the appropriate **Business unit** (typically the default).
-7. Assign a [security role](https://learn.microsoft.com/en-us/power-platform/admin/security-roles-privileges) that grants read access to the `bot` and `conversationtranscript` tables. Options:
-   * **Quickest**: Assign the **System Administrator** role.
-   * **Least privilege (recommended)**: [Create a custom security role](https://learn.microsoft.com/en-us/power-platform/admin/create-edit-security-role) with read access on the **Bot** and **Conversation transcript** tables only.
+7. Assign the runtime security role described in [Prerequisites § 5b](#5b-permissions-for-the-application-user-used-by-akto-at-runtime). Choose **one** of:
+   * **Custom role (recommended)** — A role you create in advance with **Read = Organization** on the **Bot** and **Conversation Transcript** tables only.
+   * **Built-in fallback** — **Bot Transcript Viewer** + **Environment Maker** (grants more than required, but works out of the box).
 8. Select **Create**.
+{% endstep %}
+
+{% step %}
+**(Optional but recommended) Create a Custom Security Role for the App User**
+
+If you want the least-privilege option from [Prerequisites § 5b](#5b-permissions-for-the-application-user-used-by-akto-at-runtime), create the custom role **before** assigning it to the application user above. Full reference: Microsoft's [Create or edit a security role](https://learn.microsoft.com/en-us/power-platform/admin/create-edit-security-role) guide.
+
+1. Open the [Power Platform admin center](https://admin.powerplatform.microsoft.com).
+2. Select **Manage** → **Environments** → select your target environment.
+3. Open **Settings** → **Users + permissions** → **Security roles**.
+4. Select **+ New role**.
+5. **Details** tab — enter a name (e.g. `Akto Copilot Connector`) and select a business unit (typically the root).
+6. **Tables** tab → search for `Bot` → set **Read** to **Organization** (full green circle). Leave all other privileges blank.
+7. Search for `Conversation Transcript` → set **Read** to **Organization**. Leave all other privileges blank.
+8. **Miscellaneous Privileges** tab — leave everything unchecked.
+9. Select **Save and Close**.
+
+Return to **Step 3** above and assign this role to the application user.
 {% endstep %}
 
 {% step %}
@@ -261,7 +317,24 @@ This is the most common issue. Work through the checks below in order:
 
 **`403 Forbidden`**
 
-* The Microsoft Entra app exists but has no permission inside Dataverse. Verify that a corresponding **Application user** exists in the Power Platform environment (Part 1, Step 3) and that it has a [security role](https://learn.microsoft.com/en-us/power-platform/admin/security-roles-privileges) granting read access on the `bot` and `conversationtranscript` tables.
+* The Microsoft Entra app exists but has no permission inside Dataverse. Verify that a corresponding **Application user** exists in the Power Platform environment (Part 1, Step 3).
+* Confirm the application user's security role grants **Read** on **both** the `bot` and `conversationtranscript` tables at **Organization** scope — see [Prerequisites § 5b](#5b-permissions-for-the-application-user-used-by-akto-at-runtime). Business Unit scope is **not** sufficient, because transcripts created by other users won't be visible.
+* If you assigned only the **Bot Transcript Viewer** role, add **Environment Maker** as well — Bot Transcript Viewer alone does not grant read on the `bot` table.
+
+### "There was a problem adding ... to this environment"
+
+Full error pattern:
+
+```
+There was a problem adding '<app-name>' to this environment.
+Principal user (Id=..., type=8, roleCount=..., privilegeCount=..., ...
+```
+
+This is raised by Power Platform when **you** (the person clicking **Create**) do not have permission to add a new application user. The principal user described in the error is your account, not the app you're trying to add.
+
+* Verify your own user has the privileges listed in [Prerequisites § 5a](#5a-permissions-for-the-person-running-the-setup-one-time).
+* The simplest fix is to have a tenant admin assign you the **System Administrator** role in the target environment, then retry. Once setup is complete, you can remove the role.
+* If `roleCount` in the error is `0` or `1`, your account is missing a Dataverse security role entirely — open [Power Platform admin center](https://admin.powerplatform.microsoft.com) → environment → **Settings → Users + permissions → Users**, open your user, and confirm role assignments.
 
 ### Connection Test Fails
 
