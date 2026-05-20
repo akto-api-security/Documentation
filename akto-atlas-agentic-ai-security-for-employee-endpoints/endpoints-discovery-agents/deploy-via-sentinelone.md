@@ -90,7 +90,7 @@ Enable **Claude CLI Hooks** to monitor and secure Claude CLI assistant usage on 
 
 **OpenClaw Guardrails**
 
-Enable **OpenClaw Guardrails** to install MCP Endpoint Shield guardrails for OpenClaw (Clawdbot).
+Enable **OpenClaw Guardrails** to install AI Endpoint Shield guardrails for OpenClaw (Clawdbot).
 
 OpenClaw requires additional model/runtime fields in the setup form, such as:
 

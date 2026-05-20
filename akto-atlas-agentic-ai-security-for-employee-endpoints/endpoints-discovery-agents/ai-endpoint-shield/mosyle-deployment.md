@@ -1,6 +1,6 @@
 ---
 description: >-
-  Deploy MCP Endpoint Shield across your organization using a single script via
+  Deploy AI Endpoint Shield across your organization using a single script via
   Mosyle MDM.
 ---
 
@@ -8,7 +8,7 @@ description: >-
 
 ## Overview
 
-MCP Endpoint Shield can be deployed enterprise-wide via **Mosyle MDM** (Mobile Device Management) for seamless, automated installation across your organization's macOS devices.
+AI Endpoint Shield can be deployed enterprise-wide via **Mosyle MDM** (Mobile Device Management) for seamless, automated installation across your organization's macOS devices.
 
 ## Why Use MDM Deployment?
 
@@ -29,7 +29,7 @@ MDM deployment provides significant advantages over manual installation:
 
 ## Prerequisites
 
-Before deploying MCP Endpoint Shield via Mosyle, ensure you have the following:
+Before deploying AI Endpoint Shield via Mosyle, ensure you have the following:
 
 ### 1. Akto Credentials
 

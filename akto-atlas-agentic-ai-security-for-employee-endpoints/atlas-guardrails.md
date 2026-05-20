@@ -26,7 +26,7 @@ Atlas ships with 20+ built-in guardrail policies covering input and output threa
 
 ## How It Works
 
-Guardrails run inside the same Atlas components that you deploy for discovery — browser extensions, IDE hooks, and the MCP Endpoint Shield. Each component intercepts AI traffic on the device, applies input guardrails to the request and output guardrails to the response, and either forwards, redacts, or blocks based on your policies. Every decision is reported back to the Akto dashboard for monitoring and audit.
+Guardrails run inside the same Atlas components that you deploy for discovery — browser extensions, IDE hooks, and the AI Endpoint Shield. Each component intercepts AI traffic on the device, applies input guardrails to the request and output guardrails to the response, and either forwards, redacts, or blocks based on your policies. Every decision is reported back to the Akto dashboard for monitoring and audit.
 
 ```mermaid
 ---

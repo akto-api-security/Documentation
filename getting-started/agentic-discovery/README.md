@@ -17,7 +17,7 @@ Navigate to **Quick Start** in your Akto dashboard and select your preferred dis
 Deploy discovery agents to continuously monitor your infrastructure. Includes API Gateways, eBPF, Kubernetes, manual import, and MCP Recon.
 
 **[Endpoints Discovery Agents](../../akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/)**
-Get started immediately without infrastructure setup. Includes browser extensions, secure web networks, MCP endpoint shield, and agentic shield.
+Get started immediately without infrastructure setup. Includes browser extensions, secure web networks, AI endpoint shield, and agentic shield.
 
 ### Step 3: Configure Your Discovery Agent
 

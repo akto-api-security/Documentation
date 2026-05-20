@@ -8,7 +8,7 @@ coverY: 0
 
 Secure your AI agents, MCP servers, and agentic applications with complete visibility, automated scanning, and real-time protection. Get started in minutes by choosing what you need.
 
-<table data-card-size="large" data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Akto Atlas : Agentic AI Security For Employee Endpoints</strong></td><td>Browser extensions, secure web networks, MCP endpoint shield, and agentic shield</td><td><a href="/broken/pages/WFusT0tNpWX5VAT3cUEh">Broken link</a></td></tr><tr><td><strong>Akto Argus: Agentic AI Security For Homegrown AI</strong></td><td>Browser extensions, secure web networks, MCP endpoint shield, and agentic shield</td><td><a href="/broken/pages/FVjtSz2WygwVQWQKAiZW">Broken link</a></td></tr></tbody></table>
+<table data-card-size="large" data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Akto Atlas : Agentic AI Security For Employee Endpoints</strong></td><td>Browser extensions, secure web networks, AI endpoint shield, and agentic shield</td><td><a href="/broken/pages/WFusT0tNpWX5VAT3cUEh">Broken link</a></td></tr><tr><td><strong>Akto Argus: Agentic AI Security For Homegrown AI</strong></td><td>Browser extensions, secure web networks, AI endpoint shield, and agentic shield</td><td><a href="/broken/pages/FVjtSz2WygwVQWQKAiZW">Broken link</a></td></tr></tbody></table>
 
 ***
 

@@ -1,6 +1,6 @@
-# Whitelist Paths — MCP Endpoint Shield
+# Whitelist Paths — AI Endpoint Shield
 
-This page lists all file system paths that should be whitelisted in your security software (EDR, antivirus, or endpoint protection) to allow the Akto MCP Endpoint Shield to function correctly on macOS.
+This page lists all file system paths that should be whitelisted in your security software (EDR, antivirus, or endpoint protection) to allow the Akto AI Endpoint Shield to function correctly on macOS.
 
 > **Note:** `*` in paths is a wildcard covering all usernames (e.g., `/Users/*/` matches `/Users/john/`).
 
@@ -109,5 +109,5 @@ Whitelist these only if your security software raises alerts on file write activ
 
 ## Related Documentation
 
-* [Jamf MDM Deployment](jamf-mdm-deployment.md) — Step-by-step guide to deploying MCP Endpoint Shield via Jamf Pro or Jamf Now
-* [MCP Endpoint Shield Overview](README.md) — Manual installation and general overview
+* [Jamf MDM Deployment](jamf-mdm-deployment.md) — Step-by-step guide to deploying AI Endpoint Shield via Jamf Pro or Jamf Now
+* [AI Endpoint Shield Overview](README.md) — Manual installation and general overview

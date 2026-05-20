@@ -54,7 +54,7 @@ This gives your security team full visibility into which AI services are being a
 
 ## Prerequisites
 
-* **MCP Endpoint Shield** installed on the device (the system proxy is bundled with it)
+* **AI Endpoint Shield** installed on the device (the system proxy is bundled with it)
 * Access to **Settings → Proxy Patterns** in the Akto dashboard
 
 ## Configuration
