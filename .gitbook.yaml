@@ -96,8 +96,14 @@ redirects:
   api-security-testing/how-to/run-tests-in-cicd: ci-cd/how-to/run-tests-in-cicd.md
   api-security-testing/how-to/configure-testing-in-cloud: api-security-testing/how-to/install-testing-module-in-your-cloud.md
 
-# AI Endpoint Shield Redirect (renamed from mcp-endpoint-shield)
+# AI Endpoint Shield Redirects (renamed from mcp-endpoint-shield)
   akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/README.md
+  akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/mdm-deployment: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/mdm-deployment.md
+  akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/automox-deployment: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/automox-deployment.md
+  akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/jamf-mdm-deployment: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/jamf-mdm-deployment.md
+  akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/whitelist-paths: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/whitelist-paths.md
+  akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/mosyle-deployment: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/mosyle-deployment.md
+  akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/macos-installation: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/macos-installation.md
 
 # Agentic AI Security Redirects
   akto-argus-agentic-ai-security-for-homegrown-ai/connectors/mcp-proxy: agentic-guardrails/overview/akto-mcp-proxy.md
