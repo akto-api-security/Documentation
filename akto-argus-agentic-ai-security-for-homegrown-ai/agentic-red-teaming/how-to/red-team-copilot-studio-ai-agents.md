@@ -67,43 +67,26 @@ Go to **API Permissions** > **Add a permission**.
 {% endstep %}
 
 {% step %}
-Select the **APIs my organization uses** tab.
+Select the **APIs my organization uses** tab. Search for **Power Platform API** and add the following delegated permission:
+
+* `CopilotStudio.Copilots.Invoke`
 {% endstep %}
 
 {% step %}
-Search for **Power Automate** (also listed as "Microsoft Flow Service").
+Click **Add a permission** again. Search for **Power Automate** (also listed as "Microsoft Flow Service") and add the following delegated permissions:
+
+* `User`
+* `Flows.Read.All`
 {% endstep %}
 
 {% step %}
-Select **Delegated permissions** > select **User**.
-{% endstep %}
-
-{% step %}
-Click **Add permissions**, then click **Grant admin consent**.
+Click **Grant admin consent**.
 {% endstep %}
 {% endstepper %}
 
 {% hint style="info" %}
 Power Automate exposes delegated permissions only — there are no application-level permissions for `service.flow.microsoft.com`. Client credentials flow still works because Power Automate validates the token's `aud` and `oid` claims, not specific scopes.
 {% endhint %}
-
-### Note the Service Principal Object ID
-
-This is required when restricting who can trigger the flow.
-
-{% stepper %}
-{% step %}
-Go to **Microsoft Entra** > **Enterprise applications**.
-{% endstep %}
-
-{% step %}
-Search for your app by name.
-{% endstep %}
-
-{% step %}
-Note the **Object ID** — this is **different** from the Application (Client) ID.
-{% endstep %}
-{% endstepper %}
 
 ***
 
@@ -347,14 +330,3 @@ Click **Run Scan** to start. Akto will send adversarial prompts to your Copilot 
 ***
 
 ## Troubleshooting
-
-| Issue | Likely Cause | Fix |
-|---|---|---|
-| `MisMatchingOAuthClaims` on flow call | Wrong scope in token request | Use double slash: `https://service.flow.microsoft.com//.default` |
-| `401 Unauthorized` on token request | Wrong client ID, secret, or tenant ID | Double-check app registration values in Entra |
-| `403 Forbidden` on flow call | Wrong Object ID in Allowed Users, or admin consent not granted | Use the Enterprise Application Object ID (not the Client/App ID); re-check the Add API Permissions section |
-| Trigger URL is blank | Flow not saved yet | Save the flow first — the URL only appears after the first save |
-| Agent returns empty response | Using "Execute Agent" instead of "Execute Agent and wait" | Switch to the "Execute Agent and wait" action |
-| Field `latestResponse` not found | Wrong field name | The correct field is `lastResponse` (not `latestResponse`) |
-| Flow works but agent gives no reply | Agent is unpublished | Publish the agent in Copilot Studio before testing |
-| Token accepted but flow returns 403 | "Specific users" mode but wrong Object ID entered | Paste the **Object ID** from Enterprise Applications, not the App ID from App Registrations |
