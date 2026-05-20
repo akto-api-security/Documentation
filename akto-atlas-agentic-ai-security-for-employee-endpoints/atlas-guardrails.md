@@ -54,7 +54,7 @@ sequenceDiagram
 ## Where Guardrails Plug In
 
 * [**Browser Extensions**](endpoints-discovery-agents/browser-extensions/) - apply guardrails to prompts and responses on web-based AI tools.
-* [**MCP Endpoint Shield**](endpoints-discovery-agents/mcp-endpoint-shield/) - enforce guardrails on local MCP traffic across the device.
+* [**AI Endpoint Shield**](endpoints-discovery-agents/ai-endpoint-shield/) - enforce guardrails on local MCP traffic across the device.
 * [**IDE Hooks**](endpoints-discovery-agents/) - validate chat prompts, agent responses, and MCP tool calls inside Cursor, Claude, Copilot, Gemini, and other supported IDEs.
 
 ## What You Can Do
