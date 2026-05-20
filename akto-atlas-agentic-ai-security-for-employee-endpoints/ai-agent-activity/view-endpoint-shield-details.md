@@ -59,4 +59,4 @@ This tab provides a chronological log of the agent’s activity. You can track w
 
 ## Learn More
 
-To understand how Endpoint Shield works at a conceptual level, including architecture, workflow, and protection mechanics, refer to the [**MCP** **Endpoint Shield**](https://docs.akto.io/mcp-endpoint-shield)**.**
+To understand how Endpoint Shield works at a conceptual level, including architecture, workflow, and protection mechanics, refer to the [**AI Endpoint Shield**](https://docs.akto.io/ai-endpoint-shield)**.**

@@ -1,8 +1,8 @@
-# MCP Endpoint Shield
+# AI Endpoint Shield
 
 ## Overview
 
-MCP Endpoint Shield provides **runtime security** and auto-discovery of local MCP servers configured on your machine. It acts as a protective layer between the MCP client (e.g., Cursor, VS Code, Claude) and the MCP servers, requiring no changes to your setup.
+AI Endpoint Shield provides **runtime security** and auto-discovery of local MCP servers configured on your machine. It acts as a protective layer between the MCP client (e.g., Cursor, VS Code, Claude) and the MCP servers, requiring no changes to your setup.
 
 ## What is Agentic Endpoint Shield?
 
@@ -29,7 +29,7 @@ Endpoint Shield continuously monitors employee devices to identify and track:
 
 ## Auto-Detection
 
-Akto MCP Endpoint Shield automatically detects MCP client configurations:
+Akto AI Endpoint Shield automatically detects MCP client configurations:
 
 * **Cursor** → Reads `~/.cursor/mcp.json`
 * **Visual Studio Code** → Reads `.vscode/mcp.json` inside your workspace
@@ -38,7 +38,7 @@ Akto MCP Endpoint Shield automatically detects MCP client configurations:
 For each detected MCP server config:
 
 1. The JSON file is parsed.
-2. Each server entry is automatically wrapped with **Akto MCP Endpoint Shield**.
+2. Each server entry is automatically wrapped with **Akto AI Endpoint Shield**.
 3. Your MCP clients transparently run through the shield without requiring manual reconfiguration.
 
 {% hint style="warning" %}
@@ -65,7 +65,7 @@ You don’t need to manually edit your MCP config files — the wrapper handles 
 }
 ```
 
-**Automatically wrapped file (after Akto MCP Endpoint Shield):**
+**Automatically wrapped file (after Akto AI Endpoint Shield):**
 
 ```json
 {
@@ -99,13 +99,13 @@ Here how the wrap looks in the code:
 
 ## Manual Setup
 
-Follow these steps to manually set up and run MCP Endpoint Shield to protect your MCP servers.
+Follow these steps to manually set up and run AI Endpoint Shield to protect your MCP servers.
 
 ### Prerequisites
 
 * You have the `mcp-endpoint-shield` binary available
 * You have an Akto API token
-* uninstall MCP Endpoint Shield if installed previously using installers
+* uninstall AI Endpoint Shield if installed previously using installers
 
 {% stepper %}
 {% step %}
@@ -483,7 +483,7 @@ When installed and running as a systemd service on Linux:
 
 ### Windows
 
-When MCP Endpoint Shield runs on Windows, agent logs are stored in the user’s local application data directory:
+When AI Endpoint Shield runs on Windows, agent logs are stored in the user’s local application data directory:
 
 ```powershell
 %LOCALAPPDATA%\akto-mcp-endpoint-shield\logs\
