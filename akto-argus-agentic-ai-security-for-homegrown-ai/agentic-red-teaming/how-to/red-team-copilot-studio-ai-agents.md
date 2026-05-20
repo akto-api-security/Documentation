@@ -28,7 +28,7 @@ Go to [Microsoft Entra](https://entra.microsoft.com) > **App registrations** > *
 {% endstep %}
 
 {% step %}
-Give the app a name (e.g., `AktoFlowCaller`) and set supported account types to **Single tenant**.
+Give the app a name and set supported account types to **Single tenant**.
 {% endstep %}
 
 {% step %}
@@ -96,7 +96,15 @@ This flow is the HTTP endpoint that Akto will call. It forwards the prompt to yo
 
 {% stepper %}
 {% step %}
-Go to [Power Automate](https://make.powerautomate.com) and create a new **Instant cloud flow**. Give it a name and click **Skip** on the template screen.
+Go to [Power Automate](https://make.powerautomate.com).
+{% endstep %}
+
+{% step %}
+From the top-right, select the **Environment** where your Copilot Studio agent was created.
+{% endstep %}
+
+{% step %}
+In the left nav, click **Create**. Under the **Start from blank** section, select **Instant cloud flow**.
 {% endstep %}
 
 {% step %}
