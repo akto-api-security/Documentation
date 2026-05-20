@@ -2,7 +2,7 @@
 
 ## Overview
 
-Akto MCP Endpoint Shield provides **enterprise-grade Mobile Device Management (MDM) support** for seamless deployment and centralized management across your organization's devices.
+Akto AI Endpoint Shield provides **enterprise-grade Mobile Device Management (MDM) support** for seamless deployment and centralized management across your organization's devices.
 
 ### Why MDM Integration Matters
 
@@ -16,7 +16,7 @@ In enterprise environments, manually configuring security tools on hundreds or t
 
 ### Supported MDM Platforms
 
-Akto MCP Endpoint Shield integrates with leading MDM solutions:
+Akto AI Endpoint Shield integrates with leading MDM solutions:
 
 * ✅ **Microsoft Intune** (Windows, macOS)
 * ✅ **Jamf Pro** (macOS, iOS)
@@ -56,7 +56,7 @@ Akto MCP Endpoint Shield integrates with leading MDM solutions:
 * Active Akto account with API token
 * MDM platform with package deployment capability
 * Administrator access to MDM console
-* MCP Endpoint Shield installer package (.pkg for macOS, .msi for Windows, .deb for Linux)
+* AI Endpoint Shield installer package (.pkg for macOS, .msi for Windows, .deb for Linux)
 
 ## Step 1: Prepare the Installation Package
 
@@ -97,7 +97,7 @@ Akto MCP Endpoint Shield integrates with leading MDM solutions:
             <key>PayloadIdentifier</key>
             <string>com.akto.mcp-endpoint-shield.config</string>
             <key>PayloadDisplayName</key>
-            <string>Akto MCP Endpoint Shield Configuration</string>
+            <string>Akto AI Endpoint Shield Configuration</string>
             <key>PayloadEnabled</key>
             <true/>
             <key>PayloadUUID</key>
@@ -337,12 +337,12 @@ Criteria:
 {% tabs %}
 {% tab title="For Jamf Pro" %}
 1. Navigate to **Computers** → **Inventory**
-2. Search for application: `Akto MCP Endpoint Shield`
+2. Search for application: `Akto AI Endpoint Shield`
 3. View **Installation Status** and **Version**
 {% endtab %}
 
 {% tab title="For Microsoft Intune:" %}
-1. Go to **Apps** → **All apps** → `Akto MCP Endpoint Shield`
+1. Go to **Apps** → **All apps** → `Akto AI Endpoint Shield`
 2. Check **Device install status**
 3. Review **Installation errors** if any
 {% endtab %}
@@ -486,7 +486,7 @@ if ($installedVersion -lt $latestVersion) {
 
 #### 🔍 Auto-Detection
 
-Akto MCP Endpoint Shield automatically detects MCP client configurations:
+Akto AI Endpoint Shield automatically detects MCP client configurations:
 
 * **Cursor** → Reads `~/.cursor/mcp.json`
 * **Visual Studio Code** → Reads `.vscode/mcp.json` inside your workspace
@@ -495,7 +495,7 @@ Akto MCP Endpoint Shield automatically detects MCP client configurations:
 For each detected MCP server config:
 
 1. The JSON file is parsed.
-2. Each server entry is automatically wrapped with **Akto MCP Endpoint Shield**.
+2. Each server entry is automatically wrapped with **Akto AI Endpoint Shield**.
 3. Your MCP clients transparently run through the shield without requiring manual reconfiguration.
 
 👉 You don’t need to manually edit your MCP config files — the wrapper handles this for you.
@@ -520,7 +520,7 @@ For each detected MCP server config:
 }
 ```
 
-**Automatically wrapped file (after Akto MCP Endpoint Shield):**
+**Automatically wrapped file (after Akto AI Endpoint Shield):**
 
 ```json
 {
@@ -552,13 +552,13 @@ For each detected MCP server config:
 
 ## 🔧 Manual Setup
 
-Follow these steps to manually set up and run MCP Endpoint Shield to protect your MCP servers.
+Follow these steps to manually set up and run AI Endpoint Shield to protect your MCP servers.
 
 ### Prerequisites
 
 * You have the `mcp-endpoint-shield` binary available
 * You have an Akto API token
-* uninstall MCP Endpoint Shield if installed previously using installers
+* uninstall AI Endpoint Shield if installed previously using installers
 
 {% stepper %}
 {% step %}

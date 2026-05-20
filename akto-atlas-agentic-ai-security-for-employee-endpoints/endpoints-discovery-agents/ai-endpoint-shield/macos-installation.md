@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document is designed for MacOS Installation and end-user reference. It explains the installation flow of **MCP Endpoint Shield** on macOS and the permissions users may be prompted to approve.
+This document is designed for MacOS Installation and end-user reference. It explains the installation flow of **AI Endpoint Shield** on macOS and the permissions users may be prompted to approve.
 
 ## Steps Guide
 
@@ -10,7 +10,7 @@ This document is designed for MacOS Installation and end-user reference. It expl
 {% step %}
 **Gatekeeper Security Warning on First Launch**
 
-When the user double-clicks the **MCP Endpoint Shield Installer**, macOS may display a warning stating that the application could not be verified and was blocked to protect the system.
+When the user double-clicks the **AI Endpoint Shield Installer**, macOS may display a warning stating that the application could not be verified and was blocked to protect the system.
 
 <figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
 
@@ -43,7 +43,7 @@ After approval, the installer wizard launches.
 
 The introduction screen explains:
 
-* What MCP Endpoint Shield does
+* What AI Endpoint Shield does
 * The installation location (user directory)
 * That no root or administrator permissions are required
 
@@ -73,7 +73,7 @@ After installation, macOS displays a notification indicating that **mcp\_endpoin
 
 This means:
 
-* MCP Endpoint Shield runs automatically in the background
+* AI Endpoint Shield runs automatically in the background
 * It starts on user login
 * It can be managed via **Login Items & Extensions**
 
@@ -83,7 +83,7 @@ This is required for continuous endpoint monitoring.
 {% step %}
 **Folder Access Permissions (Optional)**
 
-After installation, MCP Endpoint Shield may request permission to access specific folders in the user’s home directory:
+After installation, AI Endpoint Shield may request permission to access specific folders in the user’s home directory:
 
 * Desktop
 * Documents

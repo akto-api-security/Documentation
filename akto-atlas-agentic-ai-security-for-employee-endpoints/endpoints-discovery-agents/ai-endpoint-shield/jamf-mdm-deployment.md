@@ -2,7 +2,7 @@
 
 ### Overview
 
-MCP Endpoint Shield can be deployed enterprise-wide via **Jamf Pro** for seamless, automated installation across your organization's macOS devices.
+AI Endpoint Shield can be deployed enterprise-wide via **Jamf Pro** for seamless, automated installation across your organization's macOS devices.
 
 #### Why Use MDM Deployment?
 
@@ -468,7 +468,7 @@ tail -f /var/log/jamf.log
 
 ### Related Documentation
 
-* [MCP Endpoint Shield Overview](./) - General installation and manual setup
+* [AI Endpoint Shield Overview](./) - General installation and manual setup
 * [Cursor Hooks](../cursor-hooks.md) - Alternative: Zero-installation hooks for Cursor IDE
 * [Claude CLI Hooks](../claude-cli-hooks.md) - Alternative: Zero-installation hooks for Claude CLI
 * [Gemini CLI Hooks](../gemini-cli-hooks.md) - Alternative: Zero-installation hooks for Gemini CLI
@@ -504,25 +504,25 @@ The legacy approach used three separate scripts and required uploading a `.pkg` 
 
 #### install\_from\_staging.sh
 
-* **Purpose**: Installs MCP Endpoint Shield in user context
+* **Purpose**: Installs AI Endpoint Shield in user context
 * **Run as**: Logged-in user (NOT root)
 * **Auto-detects**: Package from Jamf cache
 
 #### uninstall.sh
 
-* **Purpose**: Removes MCP Endpoint Shield from user's system
+* **Purpose**: Removes AI Endpoint Shield from user's system
 
 ### Legacy Upload Steps
 
 1. Upload `mcp-endpoint-shield-Jamf-Installer.pkg` via **Settings** → **Computer Management** → **Packages**
-2. Upload `deploy_token.sh` as "MCP Endpoint Shield - Deploy Token" with parameters:
+2. Upload `deploy_token.sh` as "AI Endpoint Shield - Deploy Token" with parameters:
    * Parameter 4: `AKTO_API_TOKEN`
    * Parameter 5: `AKTO_API_BASE_URL`
-3. Upload `install_from_staging.sh` as "MCP Endpoint Shield - Install User Package"
+3. Upload `install_from_staging.sh` as "AI Endpoint Shield - Install User Package"
 4. Create policy with:
    * **Script 1**: Deploy Token (Priority: Before) — with token parameters
    * **Script 2**: Install User Package (Priority: After)
-   * **Package**: MCP Endpoint Shield pkg
+   * **Package**: AI Endpoint Shield pkg
    * **Frequency**: Once per user per computer
 
 ### Legacy File Locations

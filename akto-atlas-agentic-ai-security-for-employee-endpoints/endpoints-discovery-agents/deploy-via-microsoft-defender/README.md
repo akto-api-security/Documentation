@@ -4,7 +4,7 @@
 
 Microsoft Defender for Endpoint provides centralized visibility and remote management for enterprise devices. Microsoft Defender Live Response allows you to run scripts remotely on managed devices.
 
-You can use Microsoft Defender Live Response to deploy the Akto MCP Endpoint Shield hook on developer machines. Hook installation enables Akto to monitor agent interactions from tools such as Cursor, Claude, or Gemini.
+You can use Microsoft Defender Live Response to deploy the Akto AI Endpoint Shield hook on developer machines. Hook installation enables Akto to monitor agent interactions from tools such as Cursor, Claude, or Gemini.
 
 ## Prerequisites
 
@@ -63,7 +63,7 @@ API permissions alone are not sufficient for Live Response. Confirm the followin
 The deployment workflow consists of two stages:
 
 1. Optional visibility queries to identify AI agents and MCP usage across devices.
-2. Installation of the Akto MCP Endpoint Shield hook on developer machines.
+2. Installation of the Akto AI Endpoint Shield hook on developer machines.
 
 {% stepper %}
 {% step %}
@@ -171,9 +171,9 @@ You can modify the query to add or remove file names depending on the MCP config
 {% endstep %}
 
 {% step %}
-**Request the MCP Endpoint Shield Hook Script from Akto**
+**Request the AI Endpoint Shield Hook Script from Akto**
 
-MCP Endpoint Shield deployment requires a hook installation script provided by Akto.
+AI Endpoint Shield deployment requires a hook installation script provided by Akto.
 
 {% hint style="info" %}
 Contact the **Akto support team at** [**support@akto.io**](mailto:support@akto.io) to obtain the required hook script.
@@ -198,7 +198,7 @@ Example script files include:
 * `install_cursor_hooks.sh`
 * `install_claude_hooks.sh`
 
-6. Add a description such as **Akto – Install MCP Endpoint Shield hooks**.
+6. Add a description such as **Akto – Install AI Endpoint Shield hooks**.
 7. Click **Save**.
 
 The script must exist in the Live Response library before execution. Upload the script again whenever the script version changes.
