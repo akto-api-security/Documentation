@@ -25,6 +25,8 @@ This app registration lets you obtain an access token to call the Power Automate
 {% stepper %}
 {% step %}
 Go to [Microsoft Entra](https://entra.microsoft.com) > **App registrations** > **New registration**.
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/1. App Registration.png" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -40,6 +42,8 @@ Note down:
 
 * **Application (Client) ID**
 * **Directory (Tenant) ID**
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/2. App Registration IDs.png" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
 {% endstepper %}
 
@@ -109,13 +113,15 @@ In the left nav, click **Create**. Under the **Start from blank** section, selec
 
 {% step %}
 Click **Add Trigger** and search for **"When an HTTP request is received"** — select it.
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/3. Flow Trigger.png" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 In the trigger settings, set **"Who can trigger the flow?"** to:
 
 * **Any user in my tenant** — for broad access, or
-
+* **Specific users in my tenant** — paste the **Object ID** from Step 1 (the Enterprise Application Object ID, not the Client ID)
 {% endstep %}
 
 {% step %}
@@ -130,10 +136,14 @@ Add a sample JSON body to auto-generate the schema:
 
 {% step %}
 **Save the flow first** — the trigger URL is only generated after saving. Copy the **HTTP POST URL** from the trigger card.
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/8. Trigger Url.png" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 Click **+** to add a new step, search for **Microsoft Copilot Studio**, and select **"Execute Agent and wait"**.
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/4. Flow Execute Agent and wait.png" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -146,10 +156,14 @@ Configure the action:
 * **Agent**: select your published agent
 * Click **Advanced parameters** and select **Message**
 * In the **Message** field, click **Add dynamic content** → select `query`
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/5. Flow Execute Agent Body.png" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 Click **+** to add another step — search for and select **Response** (from the Request connector).
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/6. Flow Response.png" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -162,6 +176,8 @@ Set the following fields:
 ```
 addProperty(json('{}'), 'lastResponse', outputs('Execute_Agent_and_wait')?['body/lastResponse'])
 ```
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/7. Flow Response Body.png" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
