@@ -113,40 +113,39 @@ In the left nav, click **Create**. Under the **Start from blank** section, selec
 {% step %}
 Click **Add Trigger** and search for **"When an HTTP request is received"** — select it.
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/3. Flow Trigger.png" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 In the trigger settings, set **"Who can trigger the flow?"** to:
 
-* **Any user in my tenant** — for broad access, or
-* **Specific users in my tenant** — paste the **Object ID** from Step 1 (the Enterprise Application Object ID, not the Client ID)
-{% endstep %}
+* **Any user in my tenant** — for broad access
 
 {% step %}
-Add a sample JSON body to auto-generate the schema:
+Click on "Use sample payload to generate schema" and add the below payload
 
 ```json
 {
   "query": "hello"
 }
 ```
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/3. Flow Trigger.png" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 **Save the flow first** — the trigger URL is only generated after saving. Copy the **HTTP POST URL** from the trigger card.
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/8. Trigger Url.png" alt=""><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/9. Trigger Http Url.jpg" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 Click **+** to add a new step, search for **Microsoft Copilot Studio**, and select **"Execute Agent and wait"**.
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/4. Flow Execute Agent and wait.png" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 Connect your Copilot Studio account (provide a connection name and authenticate with OAuth).
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/10. CopilotStudioConnection.png" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -156,13 +155,14 @@ Configure the action:
 * Click **Advanced parameters** and select **Message**
 * In the **Message** field, click **Add dynamic content** → select `query`
 
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/4. Flow Execute Agent and wait.png" alt=""><figcaption></figcaption></figure></div>
+
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/5. Flow Execute Agent Body.png" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 Click **+** to add another step — search for and select **Response** (from the Request connector).
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/6. Flow Response.png" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -175,6 +175,8 @@ Set the following fields:
 ```
 addProperty(json('{}'), 'lastResponse', outputs('Execute_Agent_and_wait')?['body/lastResponse'])
 ```
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/6. Flow Response.png" alt=""><figcaption></figcaption></figure></div>
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/7. Flow Response Body.png" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
@@ -353,3 +355,109 @@ Click **Run Scan** to start. Akto will send adversarial prompts to your Copilot 
 ***
 
 ## Troubleshooting
+
+### HTTP 401 on flow trigger — `MisMatchingOAuthClaims`
+
+**Symptom:** Flow returns HTTP 401 with `"One or more claims either missing or does not match with the open authentication access control policy"`.
+
+**Cause:** Token acquired with single slash in scope (`https://service.flow.microsoft.com/.default`). The `aud` claim in the JWT does not match what the flow expects.
+
+**Fix:** Use double slash in the scope: `https://service.flow.microsoft.com//.default`. The trailing slash is part of the resource URI — `.default` appends after it, producing `//`. To verify, paste the token at [jwt.ms](https://jwt.ms) and confirm `aud` is `https://service.flow.microsoft.com/`.
+
+***
+
+### HTTP 401 or 403 — token audience mismatch
+
+**Symptom:** Token looks valid but the flow rejects it.
+
+**Cause:** Token was obtained for the wrong resource — common mistakes are using `https://management.azure.com/.default` or `https://api.powerplatform.com/.default`.
+
+**Fix:** The only correct scope for HTTP-triggered flows is `https://service.flow.microsoft.com//.default`. Check the `aud` field at [jwt.ms](https://jwt.ms).
+
+***
+
+### HTTP 403 despite correct token
+
+**Cause (A) — Admin consent not granted:** API permissions are listed in the app registration but the green "Granted" checkmark is missing.
+
+**Fix:** Go to **Azure Portal** → App Registration → **API permissions** → click **Grant admin consent for \[tenant]**.
+
+**Cause (B) — Trigger restricted to specific users:** The "When an HTTP request is received" trigger is set to "Specific users in my tenant". Service principals are not users and will be rejected.
+
+**Fix:** In the trigger settings, set **"Who can trigger the flow?"** to **"Any user in my tenant"**. Save the flow.
+
+***
+
+### Flow trigger URL shows a placeholder — no URL to copy
+
+**Cause:** Power Automate generates the trigger URL only after the first save. It is not shown in an unsaved/draft flow.
+
+**Fix:** Save the flow first, then open the trigger step to copy the URL.
+
+***
+
+### `:443` in the trigger URL causes failures
+
+**Symptom:** Requests fail or the URL is rejected when pasted into Akto or other tools.
+
+**Cause:** Power Automate includes the explicit port `:443` in the generated URL. Some tools reject URLs with the default HTTPS port explicitly stated.
+
+**Fix:** Remove `:443` from the URL before using it — e.g., change `https://xxx.api.powerplatform.com:443/powerautomate/...` to `https://xxx.api.powerplatform.com/powerautomate/...`.
+
+***
+
+### "Execute Agent and wait" returns empty or null response
+
+**Cause (A) — Wrong action used:** If you used **"Execute Agent"** (fire-and-forget) instead of **"Execute Agent and wait"**, the flow proceeds before the agent responds and no output is returned.
+
+**Fix:** Replace the action with **"Execute Agent and wait"**.
+
+**Cause (B) — Wrong expression path:** The expression `outputs('Execute_Agent_and_wait')?['body/lastResponse']` can return null if the path is incorrect for your flow version.
+
+**Fix:** Use `body('Execute_Agent_and_wait')?['lastResponse']` instead. To inspect the actual output structure, open the flow run history and expand the "Execute Agent and wait" step.
+
+***
+
+### Agent not found / not listed in the flow designer
+
+**Cause (A) — Agent is in Draft state:** The connector only surfaces published agents.
+
+**Fix:** In Copilot Studio, open the agent and click **Publish**. Wait for publication to complete before configuring the flow step.
+
+**Cause (B) — Environment mismatch:** The flow and the agent are in different Power Platform environments. The connector only lists agents from its own environment.
+
+**Fix:** Confirm both are in the same environment. Check the environment switcher (top-right) at [make.powerautomate.com](https://make.powerautomate.com) and [copilotstudio.microsoft.com](https://copilotstudio.microsoft.com) — they must match.
+
+***
+
+### Connector step fails with "Connection invalid" or "Fix connection"
+
+**Cause:** The OAuth connection used by the "Execute Agent and wait" step expired or was invalidated (token expired after 90 days of inactivity, or the connection owner's account changed).
+
+**Fix:** In the flow, click the connection reference on the "Execute Agent and wait" step and re-authenticate. For team-owned flows, use a dedicated service account as the connection owner so it does not break when individuals leave.
+
+To re-authenticate directly: go to **Power Automate** → **Data** → **Connections** → find the Microsoft Copilot Studio connection → click **Fix connection**.
+
+***
+
+### HTTP 504 / caller times out after ~2 minutes
+
+**Cause:** Power Automate enforces a hard 120-second limit on synchronous HTTP responses. If the flow does not reach the "Response" step within that window, the caller receives a timeout — regardless of subscription tier.
+
+***
+
+### HTTP 401 errors appear mid-scan after initially succeeding
+
+**Cause:** Access tokens issued via client credentials expire after ~60 minutes. A long-running scan will eventually hit this limit.
+
+**Fix:** Re-request a token using the same client credentials before the token expires. Cache the token and its `expires_in` value; refresh when within 5 minutes of expiry. There is no refresh token in the client credentials flow — POST to the token endpoint again with the same `client_id` and `client_secret`.
+
+If you configured a Test Role in Akto with the token endpoint, Akto handles this automatically during scans.
+
+***
+
+### Premium license warning — flow won't run
+
+**Cause:** Both the HTTP trigger and the Microsoft Copilot Studio connector are premium features. The flow owner needs a Power Automate Premium license.
+
+**Fix:** Assign a **Power Automate Premium** (per-user or per-flow) license to the account that owns the flow. Each agent invocation via "Execute Agent and wait" also consumes Copilot Studio message credits — ensure your tenant has sufficient capacity.
