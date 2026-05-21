@@ -12,8 +12,7 @@ This guide walks you through setting up automated red teaming for AI Agents buil
 * A **published** AI Agent in Copilot Studio (draft agents won't work)
 * Admin access to the Microsoft account used for testing
 * Access to [Microsoft Entra](https://entra.microsoft.com)
-* Access to [Power Automate](https://make.powerautomate.com)
-
+* Access to [Power Automate](https://make.powerautomate.com). A premium subscription of **Power Automate** is required.
 ***
 
 ## Step 1: Create an App Registration in Microsoft Entra
