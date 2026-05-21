@@ -63,7 +63,11 @@ Set an expiry and click **Add**.
 {% endstep %}
 {% endstepper %}
 
-### Add API Permissions
+### Add API Permissions (Optional)
+
+{% hint style="info" %}
+API permissions are not required for most tenants. Power Automate's HTTP trigger only validates the token's `aud`, `iss`, and `tid` claims — it does not check specific scopes or roles. Skip this section and proceed to Step 2. If you run into authentication errors while triggering the flow, come back and add these permissions.
+{% endhint %}
 
 {% stepper %}
 {% step %}
@@ -77,10 +81,9 @@ Select the **APIs my organization uses** tab. Search for **Power Platform API** 
 {% endstep %}
 
 {% step %}
-Click **Add a permission** again. Search for **Power Automate** (also listed as "Microsoft Flow Service") and add the following delegated permissions:
+Click **Add a permission** again. Search for **Power Automate** (also listed as "Microsoft Flow Service") and add the following delegated permission:
 
 * `User`
-* `Flows.Read.All`
 {% endstep %}
 
 {% step %}
@@ -91,10 +94,6 @@ Granting admin consent requires the **Application Administrator** or **Global Ad
 {% endhint %}
 {% endstep %}
 {% endstepper %}
-
-{% hint style="info" %}
-Power Automate exposes delegated permissions only — there are no application-level permissions for `service.flow.microsoft.com`. Client credentials flow still works because Power Automate validates the token's `aud` and `oid` claims, not specific scopes.
-{% endhint %}
 
 ***
 
