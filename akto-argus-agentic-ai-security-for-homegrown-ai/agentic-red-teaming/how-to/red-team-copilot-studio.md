@@ -143,7 +143,7 @@ Click **+** to add a new step, search for **Microsoft Copilot Studio**, and sele
 {% endstep %}
 
 {% step %}
-Connect your Copilot Studio account (provide a connection name and authenticate with OAuth).
+Connect your Copilot Studio account if not connected (provide a connection name and authenticate with OAuth).
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/10. CopilotStudioConnection.png" alt=""><figcaption></figcaption></figure></div>
 {% endstep %}
