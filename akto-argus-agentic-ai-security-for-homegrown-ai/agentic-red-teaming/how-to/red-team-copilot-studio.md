@@ -10,9 +10,10 @@ This guide walks you through setting up automated red teaming for AI Agents buil
 ## Prerequisites
 
 * A **published** AI Agent in Copilot Studio (draft agents won't work)
-* Admin access to the Microsoft account used for testing
-* Access to [Microsoft Entra](https://entra.microsoft.com)
-* Access to [Power Automate](https://make.powerautomate.com). A premium subscription of **Power Automate** is required.
+* A Microsoft account with:
+  * Permission to create App Registrations and add API permissions in Microsoft Entra
+  * Permission to create flows in Power Automate
+* **Power Automate Premium** license (per-user or per-flow) — the HTTP trigger and Copilot Studio connector are both premium features
 ***
 
 ## Step 1: Create an App Registration in Microsoft Entra
@@ -84,6 +85,10 @@ Click **Add a permission** again. Search for **Power Automate** (also listed as 
 
 {% step %}
 Click **Grant admin consent**.
+
+{% hint style="warning" %}
+Granting admin consent requires the **Application Administrator** or **Global Administrator** role in Microsoft Entra. If you don't have this access, ask your Microsoft 365 administrator to grant consent on your behalf — or ask them to create the app registration and assign the permissions entirely.
+{% endhint %}
 {% endstep %}
 {% endstepper %}
 
