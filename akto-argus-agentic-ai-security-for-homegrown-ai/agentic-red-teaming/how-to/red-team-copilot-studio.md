@@ -112,13 +112,13 @@ In the left nav, click **Create**. Under the **Start from blank** section, selec
 
 {% step %}
 Click **Add Trigger** and search for **"When an HTTP request is received"** — select it.
-
 {% endstep %}
 
 {% step %}
 In the trigger settings, set **"Who can trigger the flow?"** to:
 
 * **Any user in my tenant** — for broad access
+{% endstep %}
 
 {% step %}
 Click on "Use sample payload to generate schema" and add the below payload
