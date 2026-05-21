@@ -275,6 +275,7 @@
     * [Conduct Role-Based Scanning](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/conduct-role-based-testing.md)
     * [Run Scans in CLI using Akto](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/run-tests-in-cli-using-akto.md)
     * [Create and Edit Auth Types](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/create-and-edit-auth-types.md)
+    * [Red Team Copilot Studio AI Agents](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/red-team-copilot-studio-ai-agents.md)
 * [Probe Library](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/README.md)
   * [MCP Security Probe Library](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/mcp-security-library.md)
   * [AI Agent Security Probe Library](akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/ai-agent-security-library.md)
