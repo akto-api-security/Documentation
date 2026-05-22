@@ -114,16 +114,8 @@ Akto will verify the key and begin pulling your organiasation's activity data.
 
 Once connected, data from Anthropic flows into the following areas of your Akto Atlas dashboard:
 
-* **Agentic AI Discovery → Agentic Assets**: A **Claude Compliance** asset appears, representing all discovered Claude usage across your organisation
-* **AI Security Posture**: Risk signals derived from employee Claude usage patterns, for example, file uploads to personal chats, unusual access-failed events, or sharing of org projects externally
-
-### Implementing Async Guardrail
-
-Akto applies **asynchronous guardrails** to Claude Compliance data.&#x20;
-
-After activity is pulled from the Anthropic Compliance API, Akto evaluates the events against your configured security policies, flagging violations such as sensitive data in chat messages, unexpected file sharing, or anomalous access patterns and surfaces them as alerts in your dashboard.
-
-Learn More about [Akto Guardrails](../atlas-guardrails.md).
+* **Agentic AI Discovery → [Agentic Assets](../ai-agent-activity/agentic-assets/README.md)**: A **Claude Compliance** asset appears, representing all discovered Claude usage across your organisation
+* **[Atlas Guardrails](../atlas-guardrails.md)**: Akto applies **asynchronous guardrails** to Claude Compliance data — after activity is pulled from the Anthropic Compliance API, Akto evaluates events against your configured security policies, flagging violations such as sensitive data in chat messages, unexpected file sharing, or anomalous access patterns, and surfaces them as alerts
 
 ## Troubleshooting
 
