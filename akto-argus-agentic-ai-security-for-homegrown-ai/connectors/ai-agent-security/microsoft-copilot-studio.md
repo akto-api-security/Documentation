@@ -153,6 +153,19 @@ The secret value is shown only once. If you navigate away before copying it, you
 
 The Microsoft Entra app must be bound to an [application user](https://learn.microsoft.com/en-us/power-platform/admin/manage-application-users) inside Dataverse before it can read data. You need the setup-time permissions listed in [Prerequisites § 5a](#5a-permissions-for-the-person-running-the-setup-one-time) to complete this step.
 
+{% hint style="info" %}
+**If you hit `There was a problem adding ...` or `We couldn't be able to fetch app users` (missing `prvReadApplicationUser`) on the default environment, self-elevate first.**
+
+Per [Microsoft's Dataverse security role documentation](https://learn.microsoft.com/en-us/power-platform/admin/database-security#environments-with-a-dataverse-database), tenant-level roles (Global Admin, Power Platform Admin, Dynamics 365 Service Admin) are no longer automatically granted the **System Administrator** Dataverse role on the default environment. Self-elevate before continuing:
+
+1. Open the [Power Platform admin center](https://admin.powerplatform.microsoft.com).
+2. Select **Manage** → **Environments** → select your target environment (e.g. **Default**).
+3. In the top toolbar (or under the **More** menu), select **Membership** → **Add me**.
+4. Confirm the **System Administrator** role is granted to your user, then reload the **Application users** page.
+
+If your tenant uses [Entra Privileged Identity Management for Power Platform](https://learn.microsoft.com/en-us/power-platform/admin/manage-high-privileged-admin-roles), activate the eligible Dataverse System Administrator assignment instead. The PowerShell cmdlet `Set-AdminPowerAppEnvironmentRoleAssignment` does **not** work on environments with a Dataverse database (returns `403 Forbidden`) — use the **Membership** UI.
+{% endhint %}
+
 1. Open the [Power Platform admin center](https://admin.powerplatform.microsoft.com).
 2. Select **Manage** → **Environments** → select your target environment.
 3. Open **Settings** → **Users + permissions** → [**Application users**](https://learn.microsoft.com/en-us/power-platform/admin/manage-application-users#create-an-application-user).
