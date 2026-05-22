@@ -281,7 +281,7 @@ Select **Save**, then **Publish** the agent so both new topics go live.
 {% endstepper %}
 
 {% hint style="warning" %}
-The response guardrail runs **asynchronously**. The user always receives the AI response immediately; Akto scans it in the background and surfaces violations on the dashboard. If you need to block responses inline, contact Akto support — sync response blocking requires additional configuration.
+The response guardrail runs **asynchronously**. The user always receives the AI response immediately; Akto scans it in the background and surfaces violations on the dashboard.
 {% endhint %}
 
 ## Verify the Integration
@@ -296,12 +296,11 @@ The response guardrail runs **asynchronously**. The user always receives the AI 
 ### Request guardrail does not fire
 
 * Confirm the topic trigger is **"A message is received"** and that **Priority** is `0`. A non-zero priority lets other topics match first.
-* Confirm the agent has been **published** after the topic was added — unpublished changes do not run in the test pane on some tenants.
 
 ### `Allowed` is always `true` even for malicious prompts
 
-* Verify the `host` header in the request body matches an agent that has Akto policies attached. Akto evaluates guardrails per host — an unknown host falls through with `Allowed: true`.
-* Confirm `guardrails=true` is present in the `http-proxy` query string. Without it, Akto only ingests traffic and does not return a verdict.
+* Check your **guardrail policies** configuration in the Akto dashboard — make sure the policies you expect to trigger are enabled and have rules covering the prompt you tested.
+* Check whether **guardrails are enabled for this specific agent** in the Akto dashboard. An agent without guardrails enabled will fall through with `Allowed: true`.
 
 ### Block message shows raw JSON instead of the reason
 
@@ -309,7 +308,7 @@ The response guardrail runs **asynchronously**. The user always receives the AI 
 
 ### `4xx` or `5xx` from the HTTP request
 
-* Verify the Akto host is reachable from Microsoft's outbound IP ranges. If the host is internal-only, the HTTP request action cannot reach it — expose the `http-proxy` endpoint via a reverse proxy or use the [async connector](connect-akto-async.md) instead.
+* Verify the Akto host is reachable from Microsoft's outbound IP ranges. If the host is internal-only, the HTTP request action cannot reach it.
 * Inspect the **Activity** log of the topic run in the Copilot Studio test pane for the exact status code and response body.
 
 ## Get Support
