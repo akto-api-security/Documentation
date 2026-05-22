@@ -257,6 +257,32 @@ If you did not save the value when it was created, return to the Azure portal, g
 {% endstep %}
 
 {% step %}
+**(Optional) Enter Bot IDs to scope ingestion**
+
+By default, Akto ingests transcripts for **every** Copilot agent in the Dataverse environment. To restrict ingestion to specific agents, paste their bot GUIDs (comma-separated) into the **Bot IDs (Optional)** field.
+
+Leave the field empty to ingest all agents.
+
+**How to find a bot GUID**
+
+1. Go to [copilotstudio.microsoft.com](https://copilotstudio.microsoft.com) and pick the target environment.
+2. Select **Agents** in the left navigation and open the agent you want to scope.
+3. Look at the browser URL — it has the form:
+   ```
+   .../environments/<env-id>/bots/<bot-id>/...
+   ```
+4. Copy the GUID that appears **after** `/bots/`. That is the bot ID.
+
+Repeat for every agent you want to include and separate the GUIDs with commas.
+
+* Format: `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx,yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy`
+
+{% hint style="info" %}
+The bot GUID in the URL is the same value returned by `botid` on the Dataverse `bot` table. Only transcripts whose `botid` matches one of the supplied GUIDs will be ingested.
+{% endhint %}
+{% endstep %}
+
+{% step %}
 **Enter the Data Ingestion Service URL**
 
 In the **URL for Data Ingestion Service** field, enter the base URL of your self-hosted Akto Data Ingestion Service.
