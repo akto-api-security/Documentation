@@ -12,13 +12,10 @@ Akto uses the Anthropic Compliance API's **Activity Feed** and **Objects APIs** 
 
 | Data Category             | What Akto Discovers                                           |
 | ------------------------- | ------------------------------------------------------------- |
-| **Authentication events** | SSO logins, magic link usage, session revocations             |
 | **Chat activity**         | Chats created, viewed, updated, or deleted by users           |
-| **File operations**       | Files uploaded to or deleted from Claude chats and projects   |
-| **Project activity**      | Projects created, archived, shared, or deleted                |
-| **Admin actions**         | API key creation, workspace changes, org setting updates      |
 | **User & org management** | Invite accepted/rejected, user role changes, group membership |
 | **MCP server events**     | MCP server additions, removals, and tool policy updates       |
+| **Skills Activity**       | Skills created, replaced, or deleted                          |
 
 ## How It Works
 
@@ -32,10 +29,10 @@ Anthropic Compliance API
         │  Stream to ingestion service
         ▼
   Akto Dashboard
-  (Agentic AI Discovery, Security Posture, Audit Data)
+  (Agentic AI Discovery, Security Posture)
 ```
 
-Akto polls the Anthropic Compliance API at regular intervals using your **Compliance Access Key** (for Claude.ai) or **Admin Key** (for Claude Console / API). All ingested events appear in your Akto dashboard for investigation, alerting, and reporting.
+Akto polls the Anthropic Compliance API at regular intervals using your **Compliance Access Key** (for Claude.ai). All ingested events appear in your Akto dashboard for investigation, alerting, and reporting.
 
 ## Prerequisites
 
@@ -45,10 +42,9 @@ Before setting up the connector, ensure:
 * Your Akto **Data Ingestion Service URL** is available (visible in your Akto instance settings)
 * You have the appropriate Anthropic key for your product:
 
-| Product                  | Key Type              | Who Creates It                       |
-| ------------------------ | --------------------- | ------------------------------------ |
-| **Claude.ai**            | Compliance Access Key | Primary Owner of the Claude.ai org   |
-| **Claude Console / API** | Admin Key             | Organization admin in Claude Console |
+| Product       | Key Type              | Who Creates It                     |
+| ------------- | --------------------- | ---------------------------------- |
+| **Claude.ai** | Compliance Access Key | Primary Owner of the Claude.ai org |
 
 {% hint style="info" %}
 **Admin keys** (Claude Console) only grant access to the Activity Feed. They cannot access chat, file, or project content — those endpoints are exclusive to Claude.ai Compliance Access Keys.
@@ -104,13 +100,13 @@ Under **Platform connectors**, locate the **Anthropic** card and click **Connect
 {% step %}
 In the **Set up guide** panel that opens on the right, fill in the following fields:
 
-<table><thead><tr><th width="329.39453125">Field</th><th>Value</th></tr></thead><tbody><tr><td><strong>API key</strong></td><td>Your Compliance Access Key (or Admin Key for Console/API)</td></tr><tr><td><strong>API base URL</strong> <em>(optional)</em></td><td>Leave as <code>https://api.anthropic.com</code> unless Anthropic has given you a custom endpoint for your tenant</td></tr><tr><td><strong>URL for Data Ingestion Service</strong></td><td>Your Akto instance's ingestion URL (e.g., <code>https://ingestion.your-akto.com</code>)</td></tr></tbody></table>
+<table><thead><tr><th width="297.84375">Field</th><th>Value</th></tr></thead><tbody><tr><td><strong>API key</strong></td><td>Your Compliance Access Key (or Admin Key for Console/API)</td></tr><tr><td><strong>API base URL</strong> <em>(optional)</em></td><td>Leave as <code>https://api.anthropic.com</code> unless Anthropic has given you a custom endpoint for your tenant</td></tr><tr><td><strong>URL for Data Ingestion Service</strong></td><td>Your Akto instance's ingestion URL (e.g., <code>https://ingestion.your-akto.com</code>)</td></tr></tbody></table>
 {% endstep %}
 
 {% step %}
 Click **Import** to save the configuration and start ingestion.
 
-Akto will verify the key and begin pulling your organization's activity data.
+Akto will verify the key and begin pulling your organiasation's activity data.
 {% endstep %}
 {% endstepper %}
 
@@ -126,6 +122,8 @@ Once connected, data from Anthropic flows into the following areas of your Akto 
 Akto applies **asynchronous guardrails** to Claude Compliance data.&#x20;
 
 After activity is pulled from the Anthropic Compliance API, Akto evaluates the events against your configured security policies, flagging violations such as sensitive data in chat messages, unexpected file sharing, or anomalous access patterns and surfaces them as alerts in your dashboard.
+
+Learn More about [Akto Guardrails](../atlas-guardrails.md).
 
 ## Troubleshooting
 
