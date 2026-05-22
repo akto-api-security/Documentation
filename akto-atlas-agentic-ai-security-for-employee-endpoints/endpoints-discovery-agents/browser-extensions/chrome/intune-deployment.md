@@ -109,8 +109,6 @@ mjcadlphyjmonhffggcpinejpageieeh;https://akto-chrome-ext.s3.ap-south-1.amazonaws
 3. In Chrome, open `chrome://policy` and verify Chrome extension policies are applied.
 4. Confirm activity is visible in Akto after users browse monitored domains.
 
-<div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/intune-chrome-step-6-devices-overview.png" alt="Intune devices overview page after policy creation" width="563"><figcaption>Use Intune device views to monitor profile rollout.</figcaption></figure></div>
-
 ## Troubleshooting
 
 * **Extension not installed:** Verify the value format is exactly `<extension_id>;<update_xml_url>`.
