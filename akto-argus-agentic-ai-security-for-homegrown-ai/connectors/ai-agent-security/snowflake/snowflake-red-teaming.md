@@ -6,8 +6,6 @@ description: Red team your Snowflake AI agents and Cortex endpoints with Akto.
 
 Akto lets you run security probes against Snowflake-based AI agents and Cortex endpoints. This guide walks you through generating a Snowflake Programmatic Access Token (PAT), configuring a Scan Role, and running a red teaming scan.
 
----
-
 ## Step 1: Generate a Snowflake PAT Token
 
 Akto uses a Snowflake Programmatic Access Token (PAT) to authenticate scan requests against your Snowflake endpoints. You can generate one via the Snowflake UI or via a SQL query.
@@ -16,32 +14,40 @@ Akto uses a Snowflake Programmatic Access Token (PAT) to authenticate scan reque
 
 {% stepper %}
 {% step %}
-Log in to [Snowsight](https://app.snowflake.com).
+Log in to [Snowflake](https://app.snowflake.com).
 {% endstep %}
 
 {% step %}
 From the left navigation, go to **Governance & Security**.
+
+<div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/image (114).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 Select the **user** you want to generate the token for.
+
+<div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/image (133).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 Under the **Programmatic Access Tokens** section, click **Generate Token**.
+
+<div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/image (143).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 Fill in the token details:
 
-* **Name** — a descriptive label for the token (e.g. `akto-red-teaming`)
-* **Comment** — an optional note for context
-* **Expiry** — set an appropriate expiry duration
-* **Role** — grant access to the relevant Snowflake role
+* **Name** - a descriptive label for the token (e.g. `akto-red-teaming`)
+* **Comment** - an optional note for context
+* **Expiry** - set an appropriate expiry duration
+* **Role** - grant access to the relevant Snowflake role
+
+<div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/image (158).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
-Click **Generate**. Copy and save the token — it will not be shown again.
+Click **Generate**. Copy and save the token - it will not be shown again.
 {% endstep %}
 {% endstepper %}
 
@@ -59,7 +65,7 @@ ALTER USER <your_username> ADD PROGRAMMATIC ACCESS TOKEN <token_name>
 Copy and store the token immediately. Snowflake does not allow you to retrieve it again after generation.
 {% endhint %}
 
----
+***
 
 ## Step 2: Configure a Scan Role
 
@@ -69,19 +75,13 @@ Follow the [Create a Scan Role](../../../agentic-red-teaming/how-to/create-a-tes
 
 ### Snowflake Scan Role Configuration
 
-| Field | Value |
-|---|---|
-| **Role Name** | e.g. `snowflake-test-role` |
-| **Endpoint condition** | `Endpoint` → `contains` → `snowflakecomputing.com` |
-| **Auth type** | Hard-coded |
-| **Header Key** | `Authorization` |
-| **Header Value** | `Bearer <your-pat-token>` |
+<table><thead><tr><th width="352.53125">Field</th><th>Value</th></tr></thead><tbody><tr><td><strong>Role Name</strong></td><td>e.g. <code>snowflake-test-role</code></td></tr><tr><td><strong>Endpoint condition</strong></td><td><code>Endpoint</code> → <code>contains</code> → <code>snowflakecomputing.com</code></td></tr><tr><td><strong>Auth type</strong></td><td>Hard-coded</td></tr><tr><td><strong>Header Key</strong></td><td><code>Authorization</code></td></tr><tr><td><strong>Header Value</strong></td><td><code>Bearer &#x3C;your-pat-token></code></td></tr></tbody></table>
 
 {% hint style="info" %}
 The endpoint condition `snowflakecomputing.com` ensures this auth token is applied only to Snowflake requests and not to any other agentic traffic.
 {% endhint %}
 
----
+***
 
 ## Step 3: Run Red Teaming Scan
 
@@ -111,7 +111,7 @@ Click **Run once now** to start the scan.
 
 For a full description of all scan execution parameters, see [Run Scan](../../../agentic-red-teaming/how-to/run-test.md).
 
----
+***
 
 ### Get Support for your Akto setup
 
