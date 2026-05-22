@@ -85,6 +85,19 @@ Now, force installation enables automatic deployment to all managed Chrome users
 {% endstep %}
 {% endstepper %}
 
+## Enterprise Deployment Using Microsoft Intune (Windows)
+
+You can deploy and force-install the Akto Security Chrome extension to Intune-managed Windows devices using a Settings Catalog profile.
+
+Akto provides two required values:
+
+* Extension ID
+* Update XML URL
+
+Follow the full step-by-step guide here:
+
+* [Intune Deployment (Windows)](intune-deployment.md)
+
 ## Deployment using ZIP File
 
 ### Prerequisites
