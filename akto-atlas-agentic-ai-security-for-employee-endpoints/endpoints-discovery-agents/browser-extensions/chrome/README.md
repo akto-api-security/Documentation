@@ -33,7 +33,7 @@ You can gather the following information before starting deployment:
 * Update XML URL provided by the Akto Support team
 
 {% hint style="info" %}
-#### **Support Contact**
+**Support Contact**
 
 You can request the extension ID, custom extension URL, and update XML URL from the Akto Support team at [**support@akto.io**](mailto:support@akto.io).
 {% endhint %}

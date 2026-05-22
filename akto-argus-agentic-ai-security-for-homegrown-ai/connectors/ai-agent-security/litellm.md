@@ -56,7 +56,7 @@ SYNC_MODE=true              # true = block violations, false = async logging onl
 ```
 
 {% hint style="warning" %}
-#### **Note**
+**Note**
 
 `SYNC_MODE` determines behavior:
 
@@ -249,7 +249,7 @@ If the LiteLLM virtual keys have a `key_alias` configured (e.g., `"search-agent"
 If the key belongs to a team with a `team_alias` configured (e.g., `"search-agents"`), the connector uses it as the collection name. This groups all traffic from keys within that team into a single collection. No changes to the end user's code are required.
 
 {% hint style="info" %}
-#### **Priority**
+**Priority**
 
 The resolution order is: `metadata.agent_name` (highest) → `key_alias` → `team_alias` (lowest). When multiple sources are available, the highest priority value is used.
 {% endhint %}

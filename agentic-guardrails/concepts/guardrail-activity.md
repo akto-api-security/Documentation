@@ -56,7 +56,7 @@ The activity list provides a detailed, event-level view of all guardrail detecti
 </details>
 
 {% hint style="info" %}
-#### Search and Filters
+**Search and Filters**
 
 You can refine the activity list using the search bar and the following filters:
 

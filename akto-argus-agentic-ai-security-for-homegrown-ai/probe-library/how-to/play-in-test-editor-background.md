@@ -8,7 +8,7 @@ You can run a probe from the editor against a selected agentic component. Verify
 
 {% stepper %}
 {% step %}
-#### Select a Probe YAML
+**Select a Probe YAML**
 
 Select any default probe of your choice and replace the 3 sections (selection\_filters, execute, validate) with the above YAML text. Please refer the [edit-test.md](edit-test.md "mention") section for a better understanding of how to edit a probe YAML. (Note: link refers to the Probe Editor page)
 
@@ -16,7 +16,7 @@ You can change the Probe YAML. [Learn here](../concepts/template-yamls/).
 {% endstep %}
 
 {% step %}
-#### **Select your Sample Agent Component For Probing**
+**Select your Sample Agent Component For Probing**
 
 Click on the agent component endpoint to select the component you want to check for probing the above YAML.
 
@@ -26,7 +26,7 @@ Click on save. You will now see your sample agent component request and response
 {% endstep %}
 
 {% step %}
-#### Run Probe
+**Run Probe**
 
 Click on Run Probe at the Top right.
 
@@ -45,7 +45,7 @@ Selecting **Run Probe** opens the **Probe configuration** dialog. The dialog def
 {% endstep %}
 
 {% step %}
-#### Validate probe results
+**Validate probe results**
 
 We ran the above probe and discovered the vulnerability. In the bottom-right section, you will see the text "HIGH" indicating the severity level of the vulnerability.
 
@@ -55,7 +55,7 @@ In this example, we requested a `limit of 100 entities` from the server, and rec
 {% endstep %}
 
 {% step %}
-#### Save your probe
+**Save your probe**
 
 Click on **Save** to save your probe. You can now run this probe on all your agent components in the component inventory.
 {% endstep %}

@@ -55,7 +55,7 @@ Click on `Save` button and verify that the auth is created.
 {% endstepper %}
 
 {% hint style="info" %}
-#### Note
+**Note**
 
 If you want to use the auth token only for a specific account, you can add `Header condition`.
 
@@ -185,7 +185,7 @@ Click on `Save`
 {% endstepper %}
 
 {% hint style="warning" %}
-#### **Notes**
+**Notes**
 
 1. Please enter the keys only in the format shown in the images. Do not enter any additional details.
 2. If you have a `P12` type key you can convert it to a `PEM` key using the commands given below. Here `client.p12` is your original key, `client.crt` is the client certificate and `client.key` is the client private key. While running these commands, you may be asked for an `Import Password`. You can leave that blank.
@@ -245,7 +245,7 @@ Advanced Settings allow you to control **which authentication configuration is a
 Since a Scan Role can have multiple auth setups (Hard-coded token, Automated token, TLS Authentication, Tokens from Traffic, etc.), Advanced Settings help Akto determine **which token should be used for a specific request**.
 
 {% hint style="info" %}
-#### Use case
+**Use case**
 
 * The same role is used across multiple accounts.
 * You want to apply an auth token only for specific tenants.
@@ -254,7 +254,7 @@ Since a Scan Role can have multiple auth setups (Hard-coded token, Automated tok
 
 **Configure Header Conditions**
 
-Follow these steps to configure  Header Conditions:
+Follow these steps to configure Header Conditions:
 
 {% stepper %}
 {% step %}
@@ -285,7 +285,7 @@ Click on **Save** to apply the configuration.
 {% endstepper %}
 
 {% hint style="warning" %}
-#### Important Behaviour
+**Important Behaviour**
 
 * Advanced Settings act as conditional routing for auth configurations.
 * An auth configuration without Advanced Settings behaves as a fallback/default.
@@ -310,7 +310,7 @@ When the Scan Role runs on a collection:
    * The auth configuration without any Advanced Settings acts as the default.
 
 {% hint style="warning" %}
-#### **Important**
+**Important**
 
 If multiple auth configurations match the same request (for example, they have the same regex), Akto uses the **first configured or first discovered token** during evaluation.
 
@@ -318,7 +318,7 @@ The order of configuration in UI determines which token gets applied.
 {% endhint %}
 
 {% hint style="success" %}
-#### Example Scenario
+**Example Scenario**
 
 A Scan Role has two auth configurations:
 
@@ -334,4 +334,3 @@ A Scan Role has two auth configurations:
 * For ones that do not match the regex\
   → The **Automated Auth token** (without Advanced Settings) is used by default.
 {% endhint %}
-

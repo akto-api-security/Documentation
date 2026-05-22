@@ -14,7 +14,7 @@ Use the steps below to deploy the Worker and attach it to your zones.
 
 {% stepper %}
 {% step %}
-#### Deploy the Guardrails Worker
+**Deploy the Guardrails Worker**
 
 Use the Worker script from Akto’s published source:
 
@@ -64,7 +64,7 @@ Configure these in the Worker’s **Settings → Variables** (plain vars) and **
 {% endstep %}
 
 {% step %}
-#### Configure Worker Routing
+**Configure Worker Routing**
 
 Attach the Worker to the hostnames and paths that should pass through Akto mirroring (and Guardrails when enabled):
 
@@ -79,7 +79,7 @@ Traffic matching the route is handled by this Worker; everything else is unchang
 {% endstep %}
 
 {% step %}
-#### Verify the setup
+**Verify the setup**
 
 1. **Ingestion:** Generate API traffic on a routed hostname. In **Akto Dashboard → API Collections** (e.g. by hostname), confirm new endpoints and traffic appear as with the standard Cloudflare proxy connector.
 2. **Guardrails:** With `APPLY_AKTO_GUARDRAILS` enabled, exercise a **POST** or **PUT** (or other non-GET/DELETE) path that should be guarded. Confirm allowed traffic still reaches your origin; intentionally trigger a policy that **blocks** and confirm the client receives **400** with the JSON error shape; if your policies **modify** payloads, confirm the client sees the rewritten body.

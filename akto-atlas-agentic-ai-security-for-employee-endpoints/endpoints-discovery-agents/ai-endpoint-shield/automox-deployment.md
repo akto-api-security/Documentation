@@ -1,7 +1,7 @@
 ---
 description: >-
-  Deploy Akto Endpoint Shield on Windows endpoints using an Automox Worklet policy
-  with a customer-specific Inno Setup installer.
+  Deploy Akto Endpoint Shield on Windows endpoints using an Automox Worklet
+  policy with a customer-specific Inno Setup installer.
 ---
 
 # Automox Deployment
@@ -52,7 +52,7 @@ Contact **support@akto.io** to request the installer build.
 
 {% stepper %}
 {% step %}
-### Obtain the installer from Akto
+#### Obtain the installer from Akto
 
 **Contact Akto Support**
 
@@ -73,41 +73,40 @@ Note the **exact** file name (e.g. `akto-endpoint-shield-setup-1.1.5.exe`). The 
 {% endstep %}
 
 {% step %}
-### Create the Worklet policy in Automox
+#### Create the Worklet policy in Automox
 
 You can either start from the **Worklet Catalog** template or create a **custom policy** from scratch. Both approaches use the same evaluation/remediation scripts and uploaded `.exe`.
 
-#### Option A — Start from the catalog (recommended)
+**Option A — Start from the catalog (recommended)**
 
 1. In Automox, go to **Automate → Worklet Catalog**.
 2. Open **EXE Software Installation (System Wide-All Users)** (Windows, Automox Verified).
 3. Click **Create Policy**.
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/automox-worklet-catalog-exe-install.png" alt="Automox Worklet Catalog - EXE Software Installation" width="563"><figcaption>Worklet Catalog — EXE Software Installation (System Wide-All Users)</figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/automox-worklet-catalog-exe-install.png" alt="Automox Worklet Catalog - EXE Software Installation" width="563"><figcaption><p>Worklet Catalog — EXE Software Installation (System Wide-All Users)</p></figcaption></figure></div>
 
 4. Continue with the next step below.
 
-#### Option B — Create a custom Worklet policy
+**Option B — Create a custom Worklet policy**
 
 1. Go to **Automate → Policies → Create Policy**.
 2. Choose **Worklet** and **Windows**.
 3. Continue with the next step.
-
 {% endstep %}
 
 {% step %}
-### Configure policy info
+#### Configure policy info
 
 On the policy **Info** tab:
 
-| Field | Example |
-|--------|---------|
-| **Policy name** | `akto-mcp-windows-installer` |
-| **Operating system** | **Windows** |
-| **Notes** | `Silent Inno deploy; token baked at build` |
-| **Groups** | Target group(s), e.g. `windows` or a pilot group |
+| Field                | Example                                          |
+| -------------------- | ------------------------------------------------ |
+| **Policy name**      | `akto-mcp-windows-installer`                     |
+| **Operating system** | **Windows**                                      |
+| **Notes**            | `Silent Inno deploy; token baked at build`       |
+| **Groups**           | Target group(s), e.g. `windows` or a pilot group |
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/automox-policy-info.png" alt="Automox policy info - name, Windows, groups" width="563"><figcaption>Policy Info — name, OS, and device groups</figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/automox-policy-info.png" alt="Automox policy info - name, Windows, groups" width="563"><figcaption><p>Policy Info — name, OS, and device groups</p></figcaption></figure></div>
 
 {% hint style="warning" %}
 **Pilot first:** Assign a **small test group** before rolling out to all Windows devices.
@@ -116,22 +115,20 @@ On the policy **Info** tab:
 **Device targeting:** Leave off unless you need attribute filters within the group.
 
 **Inputs / Secrets:** Not required when the API token is embedded in the installer at build time.
-
 {% endstep %}
 
 {% step %}
-### Upload the installer (Payload)
+#### Upload the installer (Payload)
 
 1. Open the **Payload** (file upload) section.
 2. Click **Upload File** and select your `akto-endpoint-shield-setup-<version>.exe`.
 3. Confirm the uploaded name matches what you use in remediation (e.g. `akto-endpoint-shield-setup-1.1.5.exe`).
 
 Automox stages the file next to the worklet scripts on each device (under its exec directory).
-
 {% endstep %}
 
 {% step %}
-### Evaluation code
+#### Evaluation code
 
 Paste this script into **Evaluation Code** (PowerShell). It must be **self-contained** — do not call helper functions defined only in remediation (Automox runs evaluation and remediation in **separate** processes).
 
@@ -162,7 +159,7 @@ Write-Output "Not installed. Checked: $binPath"
 exit 1
 ```
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/automox-evaluation-code.png" alt="Automox evaluation code for Akto Endpoint Shield" width="563"><figcaption>Payload upload and Evaluation Code (use the script above — not Get-AktoBinaryPath)</figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/automox-evaluation-code.png" alt="Automox evaluation code for Akto Endpoint Shield" width="563"><figcaption><p>Payload upload and Evaluation Code (use the script above — not Get-AktoBinaryPath)</p></figcaption></figure></div>
 
 {% hint style="danger" %}
 **Do not use `Get-AktoBinaryPath` in evaluation only.** That function is not defined unless you duplicate it in the same script block. Using it causes `CommandNotFoundException` and policy errors.
@@ -171,16 +168,17 @@ exit 1
 {% hint style="info" %}
 **Optional stricter check:** To require scheduled tasks as well, add after `$arp`:
 
-<pre class="language-powershell"><code class="lang-powershell">$agentTask = Get-ScheduledTask -TaskName "MCPEndpointShieldAgent" -ErrorAction SilentlyContinue
-if (-not $agentTask) { Write-Output "Binary present but agent task missing"; exit 1 }</code></pre>
+```powershell
+$agentTask = Get-ScheduledTask -TaskName "MCPEndpointShieldAgent" -ErrorAction SilentlyContinue
+if (-not $agentTask) { Write-Output "Binary present but agent task missing"; exit 1 }
+```
 
 Use this only after you confirm tasks are created successfully on pilot devices.
 {% endhint %}
-
 {% endstep %}
 
 {% step %}
-### Remediation code
+#### Remediation code
 
 Paste this into **Remediation Code**. Update `$fileName` to match your uploaded installer **exactly**.
 
@@ -233,31 +231,29 @@ exit 0
 * Do **not** use `-Verb RunAs` — the worklet already runs elevated as **SYSTEM**.
 * Do **not** check `C:\Program Files (x86)\...` — the 64-bit installer places files under **`C:\Program Files\Akto Endpoint Shield`**.
 {% endhint %}
-
 {% endstep %}
 
 {% step %}
-### Schedule and notifications
+#### Schedule and notifications
 
-| Setting | Recommendation |
-|---------|----------------|
-| **Schedule** | Custom — pilot: run once soon; production: recurring or on check-in |
-| **Missed run** | Enable *run on next check-in* so offline devices get the install later |
-| **Automatic restart** | **Do not** restart devices after worklet completion |
+| Setting               | Recommendation                                                         |
+| --------------------- | ---------------------------------------------------------------------- |
+| **Schedule**          | Custom — pilot: run once soon; production: recurring or on check-in    |
+| **Missed run**        | Enable _run on next check-in_ so offline devices get the install later |
+| **Automatic restart** | **Do not** restart devices after worklet completion                    |
 
 Save the policy (**Save Policy**), then **Run Policy** on a pilot device or wait for the schedule.
-
 {% endstep %}
 
 {% step %}
-### Verify deployment
+#### Verify deployment
 
-#### In Automox
+**In Automox**
 
 * **Activity Log** — look for policy `akto-mcp-windows-installer`; success shows `Installer ExitCode=0` and `Success: C:\Program Files\...`
 * **Device logs** — `policy_*_remediate` / `policy_*_test` entries
 
-#### On the Windows device (PowerShell)
+**On the Windows device (PowerShell)**
 
 ```powershell
 # Binary (64-bit path)
@@ -276,7 +272,7 @@ Get-Content "C:\Windows\System32\config\systemprofile\.akto-endpoint-shield\conf
 Get-Content "$env:LOCALAPPDATA\akto-endpoint-shield\logs\agent.log" -Tail 30 -ErrorAction SilentlyContinue
 ```
 
-#### Test API token (optional)
+**Test API token (optional)**
 
 ```bash
 export TOKEN='your-jwt-from-config-env'
@@ -343,7 +339,7 @@ After uninstall, evaluation should return non-compliant and remediation can rein
 
 * [MDM Deployment](mdm-deployment.md) — Intune, Jamf, and other MDM platforms
 * [Mosyle MDM Deployment](mosyle-deployment.md) — macOS MDM
-* [Endpoint Shield](README.md) — product overview and manual setup
+* [Endpoint Shield](/broken/pages/NqjmCrj3pJiEUPqR6JwK) — product overview and manual setup
 
 ## Get Support
 

@@ -23,7 +23,7 @@
 
 {% stepper %}
 {% step %}
-#### Create the Deployment Directory
+**Create the Deployment Directory**
 
 Create a directory that stores the Docker Compose configuration and environment files.
 
@@ -36,7 +36,7 @@ The directory acts as the working location for the deployment.
 {% endstep %}
 
 {% step %}
-#### Create Docker Compose File
+**Create Docker Compose File**
 
 Create a `docker-compose.yml` file with the following configuration:
 
@@ -70,7 +70,7 @@ The Docker Compose configuration defines two services:
 {% endstep %}
 
 {% step %}
-#### Create Environment Files
+**Create Environment Files**
 
 Two environment files configure runtime behavior for the containers.
 
@@ -121,7 +121,7 @@ DEBUG=true
 {% endstep %}
 
 {% step %}
-#### Start the Services
+**Start the Services**
 
 ```bash
 # From the deployment directory
@@ -141,7 +141,7 @@ mcp-server        Up ...        0.0.0.0:4000->4000/tcp
 {% endstep %}
 
 {% step %}
-#### Verify Connectivity
+**Verify Connectivity**
 
 You can verify that both services started successfully by checking the health endpoints.
 

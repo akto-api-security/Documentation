@@ -164,7 +164,7 @@ Agent mode started. Press Ctrl+C to stop...
 * Watch for changes and auto-update configs
 
 {% hint style="info" %}
-#### **Note:**
+**Note:**
 
 If you want the agent to run in the background, use:
 
@@ -532,7 +532,7 @@ Each wrapped STDIO MCP server gets its own log file named after the `--name` att
 * **Fix**: Use full path (`./mcp-endpoint-shield` or `/usr/local/bin/mcp-endpoint-shield`) or add to PATH with `export PATH=$PATH:/path/to/binary/directory`.
 
 {% hint style="success" %}
-#### Akto Security Scope
+**Akto Security Scope**
 
 * **Transparency**: Safe traffic is never altered.
 * **Clarity**: Unsafe traffic always results in a clear JSON-RPC error.

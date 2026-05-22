@@ -334,7 +334,7 @@ curl -X POST "https://your-akto-instance.com/api/ingestData" \
 ```
 
 {% hint style="info" %}
-#### **Important Notes**
+**Important Notes**
 
 1. **Bedrock Logging Configuration**: The Lambda function automatically enables Bedrock model invocation logging on first run if not enabled
 2. **Processing Schedule**: Logs are processed every 5 minutes via EventBridge

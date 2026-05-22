@@ -95,7 +95,7 @@ Optionally enter a value in the **Table Prefix (Optional)** field to scope agent
 Enter the URL of your **self-hosted data ingestion service** in the **URL for Data Ingestion Service** field in order to forward agent execution and telemetry data into your environment for processing.
 
 {% hint style="warning" %}
-#### Note
+**Note**
 
 * The ingestion service must be deployed and exposed in your infrastructure.
 * The URL must be reachable from Akto.

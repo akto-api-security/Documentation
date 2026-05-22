@@ -54,7 +54,7 @@ Navigate to:
     <div data-with-frame="true"><figure><img src="../../.gitbook/assets/Screenshot 2026-03-20 at 6.57.36 PM.png" alt="" width="375"><figcaption></figcaption></figure></div>
 
 {% hint style="info" %}
-#### **Note**
+**Note**
 
 Entering a valid Okta API token enables automatic group name suggestions in the mapping interface. Akto retrieves available groups from Okta, which helps reduce manual errors while defining mappings.
 {% endhint %}
@@ -140,7 +140,7 @@ Save the configuration.
 {% endstepper %}
 
 {% hint style="warning" %}
-#### Role Override on Okta SSO Login
+**Role Override on Okta SSO Login**
 
 When you sign in using Okta SSO, your role in Akto is based on your current Okta group. If your group (and role) has changed in Okta, your role in Akto will automatically update and override your previous role the next time you log in.
 {% endhint %}

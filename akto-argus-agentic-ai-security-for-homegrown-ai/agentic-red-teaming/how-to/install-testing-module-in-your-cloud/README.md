@@ -84,7 +84,7 @@ Install the [docker](https://github.com/akto-api-security/infra/blob/feature/qui
     ```
 
 {% hint style="warning" %}
-#### Anthropic API Key Required
+**Anthropic API Key Required**
 
 You **must** replace your actual **Anthropic API Key** in the env file.
 {% endhint %}
@@ -102,7 +102,7 @@ You can also reference the original template is [here](https://github.com/akto-a
     ```
 
 {% hint style="danger" %}
-#### I**mportant Requirements**
+**Important Requirements**
 
 * You must replace `<your-database-abstractor-token>` with the actual **Database Abstractor Service Token (JWT)** copied from the Step 3 of [#copy-the-jwt-token](./#copy-the-jwt-token "mention").
 * Ensure **both files** below are in the **same directory**:

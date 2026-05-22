@@ -18,7 +18,7 @@ The Akto Salesforce connector automatically:
 
 {% stepper %}
 {% step %}
-#### Enable AgentForce in Salesforce
+**Enable AgentForce in Salesforce**
 
 1. Log in to your Salesforce account with administrator privileges
 2. Navigate to **Setup** > **Feature Activation**
@@ -27,7 +27,7 @@ The Akto Salesforce connector automatically:
 {% endstep %}
 
 {% step %}
-#### Create a Connected App
+**Create a Connected App**
 
 1. In Salesforce, go to **Setup** > **Apps** > **App Manager**
 2. Click **New Connected App**
@@ -43,7 +43,7 @@ The Akto Salesforce connector automatically:
 {% endstep %}
 
 {% step %}
-#### Retrieve Credentials
+**Retrieve Credentials**
 
 1. In the Connected App details, locate:
    * **Consumer Key**: Copy this value
@@ -52,7 +52,7 @@ The Akto Salesforce connector automatically:
 {% endstep %}
 
 {% step %}
-#### Configure Akto Connector
+**Configure Akto Connector**
 
 In Akto, provide the following information:
 
@@ -64,7 +64,7 @@ In Akto, provide the following information:
 {% endstep %}
 
 {% step %}
-#### Authorize the Connection
+**Authorize the Connection**
 
 1. Click **Connect** in Akto
 2. You will be redirected to Salesforce for authorization

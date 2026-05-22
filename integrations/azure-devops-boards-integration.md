@@ -12,7 +12,7 @@ Follow these steps to integrate Azure DevOps Boards with Akto:
 
 {% stepper %}
 {% step %}
-#### **Azure DevOps Board URL**
+**Azure DevOps Board URL**
 
 * Enter the base URL of your Azure DevOps board dashboard.
 * Example:
@@ -21,21 +21,21 @@ Follow these steps to integrate Azure DevOps Boards with Akto:
 {% endstep %}
 
 {% step %}
-#### **Organization**
+**Organization**
 
 * Input the name of your Azure DevOps organization.
 * This is the unique identifier for your DevOps environment.
 {% endstep %}
 
 {% step %}
-#### **Personal Auth Token**
+**Personal Auth Token**
 
 * Generate a Personal Access Token (PAT) in Azure DevOps with the necessary permissions (typically, work item read/write).
 * Enter the token here to authorize Akto to create and manage work items.
 {% endstep %}
 
 {% step %}
-#### **Projects**
+**Projects**
 
 * List the project names where the work items should be created.
 * Use a comma-separated format for multiple projects (e.g., `Project1,Project2`).

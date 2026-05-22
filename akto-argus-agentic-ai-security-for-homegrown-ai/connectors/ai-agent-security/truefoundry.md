@@ -97,7 +97,7 @@ Use this for a simpler and faster setup:
 
 {% stepper %}
 {% step %}
-#### Go to External Providers
+**Go to External Providers**
 
 * Open **AI Gateway**
 * Navigate to **External Providers / Guardrails**
@@ -105,7 +105,7 @@ Use this for a simpler and faster setup:
 {% endstep %}
 
 {% step %}
-#### Configure Akto
+**Configure Akto**
 
 Fill in the required fields:
 
@@ -124,7 +124,7 @@ Fill in the required fields:
     * `Enforce but ignore on error` → fail-open on errors
     * `Audit` → log only, no blocking
 * **Base URL**
-  * Enter your Akto guardrail service url.&#x20;
+  * Enter your Akto guardrail service url.
   * Contact the **Akto Support Team** to get this URL.
   *   Example:
 
@@ -136,14 +136,14 @@ Fill in the required fields:
 {% endstep %}
 
 {% step %}
-#### Save the Provider
+**Save the Provider**
 
 * Click **Save**
 * Akto is now available as a selectable guardrail provider
 {% endstep %}
 
 {% step %}
-#### Attach to Your Gateway Flow
+**Attach to Your Gateway Flow**
 
 * Select Akto while configuring:
   * Model routes, or
@@ -151,10 +151,10 @@ Fill in the required fields:
 {% endstep %}
 
 {% step %}
-#### Validate
+**Validate**
 
 * Send test requests through the gateway
-* Confirm Akto is enforcing policies&#x20;
+* Confirm Akto is enforcing policies
 {% endstep %}
 {% endstepper %}
 

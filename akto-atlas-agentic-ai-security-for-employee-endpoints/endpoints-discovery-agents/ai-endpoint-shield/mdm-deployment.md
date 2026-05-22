@@ -618,7 +618,7 @@ Agent mode started. Press Ctrl+C to stop...
 * Watch for changes and auto-update configs
 
 {% hint style="info" %}
-#### **Note**
+**Note**
 
 If you want the agent to run in the background, use:
 
@@ -831,7 +831,7 @@ Open your MCP client (Cursor, VS Code, Claude Desktop) and try using your wrappe
 {% endstepper %}
 
 {% hint style="success" %}
-#### ⚙️ Common Flags
+**⚙️ Common Flags**
 
 * `--name <project_name>` → Friendly label used in logs and insights
 * `--akto-api-token <token>` → Your Akto API token
@@ -865,7 +865,7 @@ This protects:
 * **HTTP servers** (remote MCP servers) via proxy
 
 {% hint style="info" %}
-#### 🔐 Enterprise Best Practices for MDM Deployments
+**🔐 Enterprise Best Practices for MDM Deployments**
 
 **1. Token Management**
 

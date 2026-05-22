@@ -13,7 +13,7 @@ You can view skills by navigating through the Akto Atlas interface:
 The Skills table shows endpoint coverage, sensitive data indicators, and last observed activity for each skill. The visibility into usage patterns helps you make informed enforcement decisions.
 
 {% hint style="info" %}
-#### Skill Discovery Updates
+**Skill Discovery Updates**
 
 Akto continuously identifies skills configured in your agents.
 
@@ -117,5 +117,5 @@ You can:
 
 Refer to:
 
-* [Agentic Guardrails](../../agentic-guardrails/overview/README.md)
+* [Agentic Guardrails](../../agentic-guardrails/overview/)
 * [Guardrail Policies](../../agentic-guardrails/concepts/threat-policy.md)

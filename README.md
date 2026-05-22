@@ -22,7 +22,7 @@ Probe your AI agents and MCP servers with 1000+ specialized security probes. Ide
 
 ***
 
-## [Agentic Guardrails](agentic-guardrails/overview/README.md)
+## [Agentic Guardrails](agentic-guardrails/overview/)
 
 Deploy real-time protection for your production agents. Block threats as they occur, enforce schema conformance, and prevent exploits before they impact your systems.
 
@@ -35,7 +35,7 @@ Deploy real-time protection for your production agents. Block threats as they oc
 <table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Hybrid SaaS Deployment</strong></td><td>Deploy Akto in your cloud</td><td><a href="akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md">hybrid-saas.md</a></td></tr></tbody></table>
 
 {% hint style="success" %}
-#### Akto Support
+**Akto Support**
 
 Contact our support team at **support@akto.io** or use in-app Intercom to reach out for help and guidance.
 {% endhint %}

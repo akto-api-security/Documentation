@@ -27,7 +27,7 @@ Before integrating Akto with LangChain, ensure you have:
 * `httpx` package installed
 * Akto guardrails service endpoint (your `AKTO_DATA_INGESTION_URL`)
 
----
+***
 
 ## Option 1: LangChain Hooks (Recommended)
 
@@ -109,7 +109,7 @@ LOG_PAYLOADS=false         # Log full payloads — privacy-sensitive (default: "
 ```
 
 {% hint style="warning" %}
-#### **Note**
+**Note**
 
 `AKTO_SYNC_MODE` determines behavior:
 
@@ -156,15 +156,15 @@ Then verify in the Akto dashboard:
 
 ### Configuration Reference
 
-| Variable                | Required | Default              | Description                                        |
-| ----------------------- | -------- | -------------------- | -------------------------------------------------- |
-| `AKTO_DATA_INGESTION_URL` | Yes   |                      | Akto service base URL                              |
-| `AKTO_SYNC_MODE`        | No       | `true`               | `true` to block on violation, `false` for log-only |
-| `AKTO_TIMEOUT`          | No       | `5`                  | HTTP timeout in seconds                            |
-| `LOG_LEVEL`             | No       | `INFO`               | Logging level                                      |
-| `LOG_PAYLOADS`          | No       | `false`              | Log full request/response payloads (privacy-sensitive) |
-| `LANGCHAIN_API_HOST`    | No       | `api.langchain.com`  | Host header used in the proxy payload              |
-| `LANGCHAIN_API_PATH`    | No       | `/langchain/chat`    | Path used in the proxy payload                     |
+| Variable                  | Required | Default             | Description                                            |
+| ------------------------- | -------- | ------------------- | ------------------------------------------------------ |
+| `AKTO_DATA_INGESTION_URL` | Yes      |                     | Akto service base URL                                  |
+| `AKTO_SYNC_MODE`          | No       | `true`              | `true` to block on violation, `false` for log-only     |
+| `AKTO_TIMEOUT`            | No       | `5`                 | HTTP timeout in seconds                                |
+| `LOG_LEVEL`               | No       | `INFO`              | Logging level                                          |
+| `LOG_PAYLOADS`            | No       | `false`             | Log full request/response payloads (privacy-sensitive) |
+| `LANGCHAIN_API_HOST`      | No       | `api.langchain.com` | Host header used in the proxy payload                  |
+| `LANGCHAIN_API_PATH`      | No       | `/langchain/chat`   | Path used in the proxy payload                         |
 
 ### Handling Blocked Requests
 
@@ -184,7 +184,7 @@ except ValueError as e:
         print(f"Request blocked: {e}")
 ```
 
----
+***
 
 ## Option 2: LangSmith Connector
 
@@ -247,7 +247,7 @@ This will start monitoring your LangChain applications and send API traffic data
 * Recent execution traces
 * Input and output data
 
----
+***
 
 ## Get Support for your Akto setup
 

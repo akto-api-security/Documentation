@@ -23,7 +23,7 @@ This method only works for **custom models** deployed on Vertex AI. It does not 
 
 {% stepper %}
 {% step %}
-#### **Enable BigQuery Logging**
+**Enable BigQuery Logging**
 
 First, configure your Vertex AI Custom Deployed Model endpoint to log predictions to BigQuery.
 
@@ -47,7 +47,7 @@ gcloud ai endpoints update ENDPOINT_ID \
 {% endstep %}
 
 {% step %}
-#### **Create IAM Service Account**
+**Create IAM Service Account**
 
 Create a dedicated Service Account for Akto (e.g., `akto-bq-reader`). This account will need permissions to read from your BigQuery dataset and execute query jobs.
 
@@ -98,7 +98,7 @@ gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
 {% endstep %}
 
 {% step %}
-#### **Configure Authentication**
+**Configure Authentication**
 
 Choose an authentication method based on your deployment. Akto supports **Application Default Credentials (ADC)** and **Service Account Key Files**.
 
