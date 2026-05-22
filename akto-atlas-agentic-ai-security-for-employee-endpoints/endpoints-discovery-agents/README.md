@@ -15,4 +15,5 @@ Get started immediately with endpoint-based discovery agents that require no inf
 * [Amp Hooks](amp-hooks.md) - Zero-installation security hooks for Amp (monitors tool executions + MCP tools)
 * [Deploy via SentinelOne](deploy-via-sentinelone.md) - Connect SentinelOne to discover AI agents and deploy guardrails on managed endpoints
 * [Agentic Shield](agentic-shield.md) - Application-level shield for real-time discovery and protection of AI agent interactions
+* [Anthropic Connector](anthropic-connector.md) - Pull compliance activity data from Claude.ai, Claude Console, and Claude API directly into Akto via the Anthropic Compliance API
 
