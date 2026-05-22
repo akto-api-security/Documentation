@@ -14,7 +14,7 @@ This visibility helps you identify agentic workloads running in Snowflake and as
 
 Before setting up the Snowflake connector, ensure you have completed the following:
 
-1. **Traffic Processor** – Configure your Traffic Processor first. Follow the [Hybrid SaaS Setup Guide](../others/hybrid-saas.md) for detailed instructions.
+1. **Traffic Processor** – Configure your Traffic Processor first. Follow the [Hybrid SaaS Setup Guide](../../others/hybrid-saas.md) for detailed instructions.
 2. **Snowflake Account** – Active Snowflake account with Cortex AI capabilities enabled
 3. **Authentication Credentials** – One of the following authentication methods:
    * Username and password
