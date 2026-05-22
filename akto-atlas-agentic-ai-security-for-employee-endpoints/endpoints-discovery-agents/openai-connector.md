@@ -46,31 +46,15 @@ Before setting up the connector, ensure:
 Admin API keys are available to **ChatGPT Enterprise** and **OpenAI API** organisations. You must be an Owner of the organisation to create one.
 {% endhint %}
 
-## Create an Admin API Key in OpenAI
+## Setup
 
 {% stepper %}
 {% step %}
-Log into the **OpenAI Platform** as an **Owner** of your organisation.
+**Create an Admin API key in OpenAI**
+
+In the OpenAI Platform, go to **Settings → Organisation → Admin keys** and create a new key. Copy and securely store it — it is shown only once.
 {% endstep %}
 
-{% step %}
-Go to **Settings → Organisation → Admin keys**.
-{% endstep %}
-
-{% step %}
-Click **Create new secret key**.
-
-Name your key (e.g., `Akto Atlas Integration`) and set an expiry appropriate for your security policy.
-{% endstep %}
-
-{% step %}
-Copy and **securely store** the generated key — it is shown only once.
-{% endstep %}
-{% endstepper %}
-
-## Connect in Akto Atlas
-
-{% stepper %}
 {% step %}
 Open your **Akto Atlas** dashboard and navigate to **Connectors**.
 {% endstep %}
