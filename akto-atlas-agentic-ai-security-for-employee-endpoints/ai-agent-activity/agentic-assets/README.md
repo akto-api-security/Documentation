@@ -40,6 +40,12 @@ The table lists all discovered agentic assets.
 * Type filter: Filters assets by agentic system type
 {% endhint %}
 
+{% hint style="info" %}
+**Personal Account Badge**
+
+Endpoints originating from personal accounts are flagged with a personal account badge on the Asset page, making them easier to identify at a glance.
+{% endhint %}
+
 ## Navigating into an Agentic Asset
 
 Selecting an agentic asset opens the **Agentic Asset Details** view.\
