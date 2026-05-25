@@ -57,6 +57,17 @@ You can copy the request in two formats:
 * **Curl**
 * **Burp**
 {% endtab %}
+
+{% tab title="Session Context" %}
+Displays the full session context surrounding the activity, helping you understand the broader sequence of interactions that led to the guardrail violation.
+{% endtab %}
+
+{% tab title="Remediation" %}
+Provides **rule-specific remediation guidance** tailored to the guardrail type that triggered the activity. Each remediation view includes:
+
+* **Immediate actions** – Steps to take right away, such as identifying the exact rule violated and verifying whether the activity was intentional or a leak.
+* **Structural fixes** – Long-term recommendations to address the root cause, such as enabling masking, implementing server-side redaction, using Anonymize mode, enforcing data minimisation, or initiating a compliance response.
+{% endtab %}
 {% endtabs %}
 
 ### **Update the Status**
