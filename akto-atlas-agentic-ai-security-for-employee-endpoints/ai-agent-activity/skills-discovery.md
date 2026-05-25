@@ -21,6 +21,12 @@ Akto continuously identifies skills configured in your agents.
 Regular updates keep your inventory aligned with agent configuration changes.
 {% endhint %}
 
+## Malicious Skill Detection
+
+Malicious skill detection with risk scoring is available across the **Skills**, **Users & Devices**, and **Agentic Assets** views. This enables faster identification and prioritisation of risky AI agent skills across your environment.
+
+Each skill is evaluated and assigned a risk score, helping you quickly surface high-risk capabilities and take action before they are exploited.
+
 ## Blocking Skills Capability
 
 ### Block Skills by Device
