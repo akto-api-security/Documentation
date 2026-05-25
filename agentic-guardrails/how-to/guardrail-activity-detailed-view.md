@@ -56,6 +56,8 @@ You can copy the request in two formats:
 
 * **Curl**
 * **Burp**
+
+Flagged response payloads are highlighted directly in the guardrail activity view, making it easier to spot and review violations at a glance.
 {% endtab %}
 
 {% tab title="Session Context" %}
