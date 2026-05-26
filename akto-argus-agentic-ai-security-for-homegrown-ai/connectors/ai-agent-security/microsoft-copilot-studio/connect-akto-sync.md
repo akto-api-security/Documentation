@@ -88,7 +88,7 @@ Select **+** below the trigger → **Advanced → Send HTTP request**.
 
 | Field | Value |
 | --- | --- |
-| URL | `https://<your-akto-host>/api/http-proxy?ingest_data=true&guardrails=true` |
+| URL | `https://<akto-guardrails-url>/api/http-proxy?ingest_data=true&guardrails=true` |
 | Method | `POST` |
 
 **Body** — select **JSON Content**, then **Edit formula**, and paste:
@@ -217,7 +217,7 @@ Select **+** below the trigger → **Advanced → Send HTTP request**.
 
 | Field | Value |
 | --- | --- |
-| URL | `https://<your-akto-host>/api/http-proxy?ingest_data=true&guardrails=true` |
+| URL | `https://<akto-guardrails-url>/api/http-proxy?ingest_data=true&guardrails=true` |
 | Method | `POST` |
 
 **Body** — select **JSON Content**, then **Edit formula**, and paste:
