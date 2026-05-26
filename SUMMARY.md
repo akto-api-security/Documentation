@@ -337,6 +337,7 @@
 * [Get Started](agentic-guardrails/overview/README.md)
   * [MCP Proxy](agentic-guardrails/overview/akto-mcp-proxy.md)
   * [AI Agent Proxy](agentic-guardrails/overview/akto-agent-proxy.md)
+  * [Egress Proxy](agentic-guardrails/overview/akto-egress-proxy.md)
 * [Concepts](agentic-guardrails/concepts/README.md)
   * [Agent Guard](agentic-guardrails/concepts/agent-guard.md)
   * [Schema Conformance](agentic-guardrails/concepts/schema-conformance.md)
