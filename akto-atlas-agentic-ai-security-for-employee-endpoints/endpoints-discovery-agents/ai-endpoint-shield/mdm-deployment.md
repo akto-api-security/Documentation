@@ -129,56 +129,21 @@ Akto AI Endpoint Shield integrates with leading MDM solutions:
 {% endstep %}
 {% endstepper %}
 
-### **For Windows (Intune, ManageEngine)**
+### **For Windows (Microsoft Intune)**
 
-{% stepper %}
-{% step %}
-**Download the installer:**
+{% hint style="success" %}
+**Recommended:** Fleet deployment on Windows uses a **ZIP installer + Intune platform script** with automatic updates from Akto-hosted storage. See the full guide: **[Intune MDM Deployment (Windows)](intune-mdm-deployment.md)**.
+{% endhint %}
 
-* Contact Akto Support to get `akto-mcp-endpoint-shield.msi`
-* Upload to your MDM software repository
-{% endstep %}
+Summary:
 
-{% step %}
-**Create installation script:**
-
-```powershell
-# install-mcp-shield.ps1
-$ErrorActionPreference = "Stop"
-
-# Set environment variables
-[System.Environment]::SetEnvironmentVariable("AKTO_API_TOKEN", "YOUR-AKTO-API-TOKEN", [System.EnvironmentVariableTarget]::Machine)
-[System.Environment]::SetEnvironmentVariable("AKTO_PROJECT_NAME", "default", [System.EnvironmentVariableTarget]::Machine)
-
-# Install package
-Start-Process msiexec.exe -ArgumentList "/i akto-mcp-endpoint-shield.msi /quiet /norestart" -Wait
-
-# Verify installation
-$serviceName = "MCP-Endpoint-Shield"
-$service = Get-Service -Name $serviceName -ErrorAction SilentlyContinue
-if ($service.Status -eq "Running") {
-    Write-Output "Installation successful - Service is running"
-    exit 0
-} else {
-    Write-Error "Installation failed - Service not running"
-    exit 1
-}
-```
-{% endstep %}
-
-{% step %}
-**Configure in Intune:**
-
-* Go to **Apps** → **Windows apps** → **Add**
-* Select **Line-of-business app**
-* Upload the `.msi` file
-* Add the PowerShell script as a post-install action
-* Assign to device groups
-{% endstep %}
-{% endstepper %}
+* Akto provides `install.ps1`, `MANIFEST_URL`, and optional direct ZIP URL
+* You upload the script to **Devices → Scripts** in Intune (run as **SYSTEM**, 64-bit PowerShell)
+* Script parameters: `MANIFEST_URL`, optional `INSTALLER_URL`, `AKTO_API_TOKEN`, `AKTO_API_BASE_URL`
+* Schedule daily for auto-update; no per-tenant installer build required
 
 {% hint style="info" %}
-**Automox:** For Windows fleet deployment via Automox Worklets (Inno Setup `.exe` + evaluation/remediation scripts), use [Automox Deployment](automox-deployment.md) instead of MSI.
+**Automox:** For Automox Worklets (alternative Windows path), see [Automox Deployment](automox-deployment.md).
 {% endhint %}
 
 ### **For Linux (Fleet, Canonical Landscape)**
