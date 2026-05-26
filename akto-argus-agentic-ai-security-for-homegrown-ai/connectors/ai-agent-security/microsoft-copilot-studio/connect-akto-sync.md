@@ -36,7 +36,7 @@ User
 ## Prerequisites
 
 * A **Microsoft Copilot Studio** agent you can edit (Author or Maker role on the agent).
-* A reachable **Akto host** (cloud or self-hosted) and the corresponding `http-proxy` URL.
+* The **Akto Guardrails URL** — provisioned and shared by Akto.
 * Permission to publish the agent after the new topics are added.
 
 {% hint style="info" %}
