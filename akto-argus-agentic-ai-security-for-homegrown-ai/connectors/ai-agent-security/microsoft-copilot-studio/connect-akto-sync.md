@@ -72,6 +72,8 @@ Name it `Akto Request Guardrail` and select **Save**.
 
 {% hint style="info" %}
 Priority `0` ensures this topic fires on **every** user message before any other topic — including agent-defined intents.
+
+If another topic shares the same priority, Copilot Studio may not guarantee which fires first — meaning the guardrail could be skipped. Ensure no other topic in your agent is set to priority `0`.
 {% endhint %}
 {% endstep %}
 
