@@ -39,10 +39,6 @@ User
 * The **Akto Guardrails URL** — provisioned and shared by Akto.
 * Permission to publish the agent after the new topics are added.
 
-{% hint style="info" %}
-The sync integration runs **alongside** the async Dataverse connector — there is no need to disable one to use the other. Many customers run both: sync for blocking, async for offline red-teaming on the same conversations.
-{% endhint %}
-
 ## Steps to Connect
 
 ### Part 1 — Request Guardrail (blocking)
