@@ -4,7 +4,6 @@
 
 Akto Egress Proxy is a transparent mitmproxy-based security layer that intercepts and governs outbound AI API calls made by your agents or applications to LLM providers (OpenAI, Anthropic, Amazon Bedrock). It applies request and response guardrails on every AI API call — without requiring any changes to your agent code.
 
-Unlike the [AI Agent Proxy](akto-agent-proxy.md) (which secures incoming user traffic to your agent) or the [MCP Proxy](akto-mcp-proxy.md) (which secures MCP server communications), the Egress Proxy focuses on the outbound leg: what your agent sends to and receives from LLM APIs.
 
 ## Key Features
 
@@ -40,15 +39,17 @@ flowchart LR
 
 ## Deployment
 
-### Prerequisites
+{% hint style="info" %}
+**Prerequisites**
 
 * Docker and Docker Compose installed
 * An Akto instance (self-hosted or cloud) with your `AKTO_URL`
 * Your AI agent or application running as a Docker container
+{% endhint %}
 
 {% stepper %}
 {% step %}
-**Clone the repository**
+### Clone the repository
 
 ```bash
 git clone https://github.com/akto-api-security/akto-ai-egress.git
@@ -57,7 +58,7 @@ cd akto-ai-egress
 {% endstep %}
 
 {% step %}
-**Set environment variables**
+### Set environment variables
 
 ```bash
 export AKTO_URL=https://akto.example.com   # your Akto instance base URL
@@ -72,7 +73,7 @@ export ANTHROPIC_API_KEY=sk-ant-...        # (only needed for the bundled exampl
 {% endstep %}
 
 {% step %}
-**Start the proxy**
+### Start the proxy
 
 ```bash
 docker compose up --build
@@ -89,7 +90,7 @@ On first run, mitmproxy auto-generates its CA certificate inside the `mitmproxy-
 {% endstep %}
 
 {% step %}
-**Connect your own agent**
+### Connect your own agent
 
 To route your existing agent through the proxy instead of the bundled example, add it to `docker-compose.yml` with the proxy env vars and the CA cert mount:
 
@@ -134,7 +135,7 @@ The `mitmproxy-data/mitmproxy-ca-cert.pem` file is created automatically on firs
 {% endstep %}
 
 {% step %}
-**Verify**
+### Verify
 
 Confirm the proxy is intercepting traffic by checking its logs:
 
@@ -146,7 +147,7 @@ You should see `[AKTO] URL: <your-akto-url>/api/http-proxy` on startup, and `eva
 {% endstep %}
 {% endstepper %}
 
-### Supported AI Providers
+## Supported AI Providers
 
 The proxy selectively intercepts traffic only to these hosts; all other traffic passes through unmodified:
 
@@ -155,55 +156,29 @@ The proxy selectively intercepts traffic only to these hosts; all other traffic 
 * `chatgpt.com`
 * `*.amazonaws.com` (Amazon Bedrock)
 
-{% hint style="warning" %}
+You can extend this list by editing the `--ignore-hosts` regex in the `docker-compose.yml` to include additional AI provider hostnames.
+
+{% hint style="info" %}
 **All outbound traffic is routed through the proxy container**
 
-Because `HTTP_PROXY` / `HTTPS_PROXY` are set on the agent container, every outbound request — not just AI API calls — is sent through the mitmproxy process as a network hop. mitmproxy only performs SSL interception and guardrail evaluation on the AI provider hosts listed above; all other traffic is tunnelled through without inspection.
-
-However, this means:
-* **Single point of failure**: if the proxy container goes down, all outbound network access from the agent is lost, not just LLM calls.
-* **Added latency**: non-AI traffic also traverses the extra network hop.
-* **Blast radius awareness**: ensure your Docker networking and restart policies account for proxy availability if the agent makes other critical external calls.
+Because `HTTP_PROXY` / `HTTPS_PROXY` are set on the agent container, every outbound request — not just AI API calls — is sent through the mitmproxy process as a network hop. Mitmproxy only performs SSL interception and guardrail evaluation on the AI provider hosts listed above; all other traffic is tunnelled through without inspection.
 {% endhint %}
 
 ## How Guardrails Work
 
 See [Guardrail Schema](../concepts/guardrail-schema.md) for the full data model and [Agent Guard](../concepts/agent-guard.md) for how guardrails are evaluated against agentic traffic.
 
-### Request Guardrails
-
-When your agent sends a prompt to an LLM, the proxy:
-
-1. Extracts the `messages` array from the request body
-2. Sends it to Akto's guardrails endpoint with `?guardrails=true&ingest_data=true`
-3. Evaluates Akto's response:
+The proxy evaluates both the outbound request (prompt sent to the LLM) and the inbound response (LLM output) against Akto's guardrails. For each, Akto returns one of three decisions:
 
 | Akto Decision | Proxy Behaviour |
 |---|---|
-| `Allowed: true` | Request forwarded to LLM unchanged |
-| `Modified: true` | Request body replaced with `ModifiedPayload` before forwarding |
-| `Allowed: false` or `behaviour: block` | Returns `403` with JSON error; LLM is never called |
+| `Allowed: true` | Request or response forwarded unchanged |
+| `Modified: true` | Payload replaced with `ModifiedPayload` before forwarding |
+| `Allowed: false` or `behaviour: block` | Returns `403` with `{"error": "<reason>"}` and header `X-Akto-Guardrails-Decision: blocked`; the LLM is never called on a blocked request |
 
-### Response Guardrails
+## Guardrail Configuration
 
-After the LLM responds, the proxy runs the same evaluation against the response body with `?response_guardrails=true&ingest_data=true`. The same allow / modify / block logic applies.
-
-### Block Response Format
-
-When a request or response is blocked, the agent receives:
-
-```json
-{
-  "error": "<reason from Akto guardrail>",
-  "metadata": {}
-}
-```
-
-with HTTP status `403` and header `X-Akto-Guardrails-Decision: blocked`.
-
-## Configuration
-
-All guardrail rules are configured in the Akto dashboard — no proxy restart is required when policies change.
+All guardrail policies are configured in the Akto dashboard — no proxy restart is required when policies change.
 
 * [Create guardrail policies](../how-to/create-guardrail-policies.md) — set up rules for prompt injection detection, PII filtering, disallowed topics, and response redaction
 * [Manage guardrail policies](../how-to/manage-guardrail-policies.md) — edit, clone, or delete existing policies
@@ -218,16 +193,6 @@ All intercepted traffic is ingested into Akto (`ingest_data=true`) and visible i
 * [Guardrail Activity](../concepts/guardrail-activity.md) — view all guardrail events, decisions, and flagged payloads
 * [Guardrail Activity — Detailed View](../how-to/guardrail-activity-detailed-view.md) — inspect individual blocked or modified requests
 * [Threat Dashboard](../concepts/threat-dashboard.md) — monitor threat actors, IPs, and anomalous LLM usage patterns
-
-## Comparing Akto Proxy Options
-
-| | [AI Agent Proxy](akto-agent-proxy.md) | [MCP Proxy](akto-mcp-proxy.md) | Egress Proxy |
-|---|---|---|---|
-| **Intercepts** | User → Agent traffic | MCP Client → MCP Server | Agent → LLM Provider |
-| **Use case** | Protect agent from malicious user inputs | Govern MCP tool calls | Control what agents send to / receive from LLMs |
-| **Deployment** | In front of your agent | In front of your MCP server | Behind your agent (outbound) |
-| **Code changes needed** | Route user traffic to proxy port | Update MCP server URL | Set `HTTP_PROXY` env vars |
-| **SSL interception** | No | No | Yes (mitmproxy CA cert required) |
 
 ## Get Support
 
