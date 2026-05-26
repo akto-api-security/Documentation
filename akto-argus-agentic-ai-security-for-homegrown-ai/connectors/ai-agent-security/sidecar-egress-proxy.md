@@ -1,4 +1,4 @@
-# Akto Egress Proxy
+# Sidecar Egress Proxy
 
 ## Overview
 
