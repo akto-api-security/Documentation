@@ -116,6 +116,10 @@ In the left nav, click **Create**. Under the **Start from blank** section, selec
 
 {% step %}
 Click **Add Trigger** and search for **"When an HTTP request is received"** — select it.
+
+{% hint style="info" %}
+Akto sends requests to your Power Automate flow from the IP address **135.119.57.229**. If your flow or network has IP allowlisting enabled, add this IP to your allowlist.
+{% endhint %}
 {% endstep %}
 
 {% step %}
