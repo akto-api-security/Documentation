@@ -129,16 +129,16 @@ Akto AI Endpoint Shield integrates with leading MDM solutions:
 {% endstep %}
 {% endstepper %}
 
-### **For Windows (Microsoft Intune)**
+### **For Windows (MDM)**
 
 {% hint style="success" %}
-**Recommended:** Fleet deployment on Windows uses a **ZIP installer + Intune platform script** with automatic updates from Akto-hosted storage. See the full guide: **[Intune MDM Deployment (Windows)](intune-mdm-deployment.md)**.
+**Recommended:** Fleet deployment on Windows uses a **ZIP installer + PowerShell script** (`install.ps1`) with automatic updates from Akto-hosted storage. Works with any MDM that can run scripts as SYSTEM. See **[Windows MDM Deployment](windows-mdm-deployment.md)**.
 {% endhint %}
 
 Summary:
 
 * Akto provides `install.ps1`, `MANIFEST_URL`, and optional direct ZIP URL
-* You upload the script to **Devices → Scripts** in Intune (run as **SYSTEM**, 64-bit PowerShell)
+* Upload the script to your MDM (run as **SYSTEM**, 64-bit PowerShell)
 * Script parameters: `MANIFEST_URL`, optional `INSTALLER_URL`, `AKTO_API_TOKEN`, `AKTO_API_BASE_URL`
 * Schedule daily for auto-update; no per-tenant installer build required
 
