@@ -2,19 +2,19 @@
 
 ## Overview
 
-Deploy **Akto Endpoint Shield** to Windows endpoints from NinjaOne using Akto's Windows `install.ps1`.
+Deploy **Akto Endpoint Shield** to Windows endpoints from NinjaOne using a script directly stored in NinjaOne Automation Library (**Option A**).
 
 {% hint style="info" %}
 Replace placeholder values before rollout:
 
-* `<AKTO_WINDOWS_INSTALL_PS1_URL>`
+* `<AKTO_WINDOWS_INSTALLER_EXE_URL>`
 {% endhint %}
 
 ## Prerequisites
 
 * NinjaOne admin access with script and policy permissions
 * Windows device policy in NinjaOne
-* Akto-hosted Windows script URL (`install.ps1`)
+* Akto-hosted Windows installer URL (`.exe`)
 * Pilot device group for staged rollout
 
 ## Deployment Steps
@@ -37,20 +37,34 @@ In NinjaOne:
 {% step %}
 ### Use this script content
 
+Download direct script file:
+
+* [akto-endpoint-shield-ninjaone-windows.ps1](scripts/ninjaone/akto-endpoint-shield-ninjaone-windows.ps1)
+
+<details>
+<summary><strong>Show script</strong></summary>
+
 ```powershell
 $ErrorActionPreference = "Stop"
 
-$scriptUrl = "<AKTO_WINDOWS_INSTALL_PS1_URL>"
-$tmpScript = Join-Path $env:TEMP "akto-endpoint-shield-install.ps1"
+$installerUrl = "<AKTO_WINDOWS_INSTALLER_EXE_URL>"
+$installerPath = Join-Path $env:TEMP "akto-endpoint-shield-setup.exe"
+$installerArgs = "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-"
 
-Write-Host "[Akto] Downloading installer script..."
-Invoke-WebRequest -Uri $scriptUrl -OutFile $tmpScript -UseBasicParsing
+Write-Host "[Akto] Downloading installer..."
+Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath -UseBasicParsing
 
-Write-Host "[Akto] Running installer script..."
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File $tmpScript -Silent
+Write-Host "[Akto] Running installer..."
+$p = Start-Process -FilePath $installerPath -ArgumentList $installerArgs -Wait -PassThru
 
-Write-Host "[Akto] Installation script finished."
+if ($null -eq $p -or $p.ExitCode -ne 0) {
+    throw "Akto installer failed. Exit code: $($p.ExitCode)"
+}
+
+Write-Host "[Akto] Installation finished successfully."
 ```
+
+</details>
 
 {% hint style="warning" %}
 Keep **Run As = System** so scheduled tasks and Program Files installation succeed.
@@ -91,7 +105,7 @@ Expected:
 ### Script fails in NinjaOne
 
 * Confirm script runs as **System**
-* Confirm endpoint can download `<AKTO_WINDOWS_INSTALL_PS1_URL>`
+* Confirm endpoint can download `<AKTO_WINDOWS_INSTALLER_EXE_URL>`
 * Check NinjaOne script output and local PowerShell logs
 
 ### Install succeeds but services not visible

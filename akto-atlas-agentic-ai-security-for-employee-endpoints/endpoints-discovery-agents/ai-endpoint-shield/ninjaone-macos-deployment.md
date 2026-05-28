@@ -2,19 +2,19 @@
 
 ## Overview
 
-Deploy **Akto Endpoint Shield** to macOS endpoints from NinjaOne using Akto's macOS `.sh` installation script.
+Deploy **Akto Endpoint Shield** to macOS endpoints from NinjaOne using a script directly stored in NinjaOne Automation Library (**Option A**).
 
 {% hint style="info" %}
 Replace placeholder values before rollout:
 
-* `<AKTO_MACOS_INSTALL_SH_URL>`
+* `<AKTO_MACOS_PKG_URL>`
 {% endhint %}
 
 ## Prerequisites
 
 * NinjaOne admin access with script and policy permissions
 * macOS device policy in NinjaOne
-* Akto-hosted macOS script URL (`install.sh`)
+* Akto-hosted macOS package URL (`.pkg`)
 * Pilot device group for staged rollout
 
 ## Deployment Steps
@@ -37,25 +37,33 @@ In NinjaOne:
 {% step %}
 ### Use this script content
 
+Download direct script file:
+
+* [akto-endpoint-shield-ninjaone-macos.sh](scripts/ninjaone/akto-endpoint-shield-ninjaone-macos.sh)
+
+<details>
+<summary><strong>Show script</strong></summary>
+
 ```bash
 #!/bin/bash
 set -euo pipefail
 
-SCRIPT_URL="<AKTO_MACOS_INSTALL_SH_URL>"
-TMP_SCRIPT="/tmp/akto-endpoint-shield-install.sh"
+PKG_URL="<AKTO_MACOS_PKG_URL>"
+PKG_PATH="/tmp/akto-endpoint-shield.pkg"
 
-echo "[Akto] Downloading install script..."
-curl -fsSL "$SCRIPT_URL" -o "$TMP_SCRIPT"
-chmod +x "$TMP_SCRIPT"
+echo "[Akto] Downloading package..."
+curl -fsSL "$PKG_URL" -o "$PKG_PATH"
 
-echo "[Akto] Running install script..."
-bash "$TMP_SCRIPT"
+echo "[Akto] Installing package..."
+installer -pkg "$PKG_PATH" -target /
 
 echo "[Akto] Installation script finished."
 ```
 
+</details>
+
 {% hint style="info" %}
-If your Akto script expects token/base URL or manifest variables, include them before `bash "$TMP_SCRIPT"` in the same script.
+If you use customer-specific signed packages, keep one package URL per tenant/version.
 {% endhint %}
 {% endstep %}
 
@@ -93,8 +101,8 @@ Expected:
 ### Script exits early
 
 * Confirm script runs as **System**
-* Verify download from `<AKTO_MACOS_INSTALL_SH_URL>` succeeds
-* Ensure required variables are set if your Akto script expects them
+* Verify download from `<AKTO_MACOS_PKG_URL>` succeeds
+* Confirm the package is signed and valid for managed installs
 
 ### Binary missing after run
 

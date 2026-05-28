@@ -38,6 +38,13 @@ In NinjaOne Automation Library, create a PowerShell script (Run As: System) name
 {% step %}
 ### Use this script content
 
+Download direct script file:
+
+* [akto-chrome-ninjaone-force-install.ps1](scripts/akto-chrome-ninjaone-force-install.ps1)
+
+<details>
+<summary><strong>Show script</strong></summary>
+
 ```powershell
 $ErrorActionPreference = "Stop"
 
@@ -51,6 +58,8 @@ if (-not (Test-Path $regPath)) {
 New-ItemProperty -Path $regPath -Name "1" -PropertyType String -Value $extensionValue -Force | Out-Null
 Write-Host "[Akto] Chrome extension force-install policy set: $extensionValue"
 ```
+
+</details>
 {% endstep %}
 
 {% step %}
