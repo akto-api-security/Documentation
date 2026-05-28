@@ -18,7 +18,7 @@ Navigate to [app.akto.io](https://app.akto.io) in your browser.
 
 On the login page, click the **Sign up** link at the bottom of the form.
 
-<figure><img src="../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure>
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -57,4 +57,4 @@ After logging in, Akto redirects you based on your organisation's status:
 * **Organisation already registered:** you are automatically taken to your organisation's dashboard. If your organisation has an active Akto plan, signing up with your org domain automatically grants you **Member** role access across whichever Akto products your organisation is enrolled in (Akto Argus, Akto Atlas, or both).
 *   **Organisation not yet registered:** You will see a **Contact Sales** page. Reach out to the Akto team at [support@akto.io](mailto:support@akto.io) and they will provision your organisation and grant you access.
 
-    <figure><img src="../.gitbook/assets/image (165).png" alt="" width="563"><figcaption></figcaption></figure>
+    <div data-with-frame="true"><figure><img src="../.gitbook/assets/image (165).png" alt="" width="563"><figcaption></figcaption></figure></div>
