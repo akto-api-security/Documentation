@@ -253,7 +253,7 @@ Anomaly detection will enable proactive identification of abnormal patterns and 
 
 **Tool Misuse**
 
-&#x20;Evaluate tool invocation patterns and blocks suspicious activity.
+Evaluate tool invocation patterns and blocks suspicious activity.
 
 * Enable tool misuse detection to identify unauthorized or unsafe tool usage by agents.
 
@@ -269,7 +269,7 @@ Detect cases where tool behavior does not align with declared metada
 
 * Enable mismatch detection to identify inconsistencies between tool name and description.
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 </details>
 
@@ -300,7 +300,7 @@ Enable enforcement based on traffic direction:
 
 You can enable either option independently or both together based on enforcement requirements.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (3).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 </details>
 
@@ -331,7 +331,7 @@ The playground allows your team to validate guardrail behaviour before updating 
 * The playground evaluates the prompt using the selected guardrail configuration and displays the enforcement result.
 * You can also use the **Quick Test Prompts** provided in the playground to test common scenarios such as sensitive data exposure, prompt injection attempts, or abusive language.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 Playground probing helps your security team verify that guardrail conditions correctly detect violations and return the expected blocked response message before the policy is finalized.
 

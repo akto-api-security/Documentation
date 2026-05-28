@@ -4,7 +4,6 @@
 
 Akto Egress Proxy is a transparent mitmproxy-based security layer that intercepts and governs outbound AI API calls made by your agents or applications to LLM providers (OpenAI, Anthropic, Amazon Bedrock). It applies request and response guardrails on every AI API call — without requiring any changes to your agent code.
 
-
 ## Key Features
 
 * **Outbound LLM Guardrails**: Inspect and enforce policies on every prompt your agent sends to OpenAI, Anthropic, or Bedrock before it reaches the provider
@@ -66,10 +65,10 @@ export APP_NAME=my-ai-agent                # identifies your app in Akto guardra
 export ANTHROPIC_API_KEY=sk-ant-...        # (only needed for the bundled example agent)
 ```
 
-| Variable | Required | Description |
-|---|---|---|
-| `AKTO_URL` | Yes | Base URL of your Akto instance (e.g. `https://akto.example.com`). The proxy appends `/api/http-proxy`. |
-| `APP_NAME` | Yes | Name of your application. Sent as the `host` header to Akto so traffic is grouped per app in the dashboard. |
+| Variable   | Required | Description                                                                                                 |
+| ---------- | -------- | ----------------------------------------------------------------------------------------------------------- |
+| `AKTO_URL` | Yes      | Base URL of your Akto instance (e.g. `https://akto.example.com`). The proxy appends `/api/http-proxy`.      |
+| `APP_NAME` | Yes      | Name of your application. Sent as the `host` header to Akto so traffic is grouped per app in the dashboard. |
 {% endstep %}
 
 {% step %}
@@ -81,10 +80,10 @@ docker compose up --build
 
 The included `docker-compose.yml` starts two containers:
 
-| Container | Role |
-|---|---|
-| `akto-egress-proxy` | mitmproxy on port `8087`, runs `akto_guardrails.py` addon |
-| `anthropic-agent` | Example Anthropic agent, pre-configured to route through the proxy |
+| Container           | Role                                                               |
+| ------------------- | ------------------------------------------------------------------ |
+| `akto-egress-proxy` | mitmproxy on port `8087`, runs `akto_guardrails.py` addon          |
+| `anthropic-agent`   | Example Anthropic agent, pre-configured to route through the proxy |
 
 On first run, mitmproxy auto-generates its CA certificate inside the `mitmproxy-data/` volume. The example agent container already mounts and trusts this cert.
 {% endstep %}
@@ -129,8 +128,7 @@ services:
 ```
 
 {% hint style="info" %}
-**CA Certificate**
-The `mitmproxy-data/mitmproxy-ca-cert.pem` file is created automatically on first run (Step 3). Mount it into your agent container as a trusted CA so HTTPS interception works without certificate errors.
+**CA Certificate** The `mitmproxy-data/mitmproxy-ca-cert.pem` file is created automatically on first run (Step 3). Mount it into your agent container as a trusted CA so HTTPS interception works without certificate errors.
 {% endhint %}
 {% endstep %}
 
@@ -166,23 +164,23 @@ Because `HTTP_PROXY` / `HTTPS_PROXY` are set on the agent container, every outbo
 
 ## How Guardrails Work
 
-See [Guardrail Schema](../concepts/guardrail-schema.md) for the full data model and [Agent Guard](../concepts/agent-guard.md) for how guardrails are evaluated against agentic traffic.
+See [Guardrail Schema](concepts/guardrail-schema.md) for the full data model and [Agent Guard](concepts/agent-guard.md) for how guardrails are evaluated against agentic traffic.
 
 The proxy evaluates both the outbound request (prompt sent to the LLM) and the inbound response (LLM output) against Akto's guardrails. For each, Akto returns one of three decisions:
 
-| Akto Decision | Proxy Behaviour |
-|---|---|
-| `Allowed: true` | Request or response forwarded unchanged |
-| `Modified: true` | Payload replaced with `ModifiedPayload` before forwarding |
+| Akto Decision                          | Proxy Behaviour                                                                                                                           |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `Allowed: true`                        | Request or response forwarded unchanged                                                                                                   |
+| `Modified: true`                       | Payload replaced with `ModifiedPayload` before forwarding                                                                                 |
 | `Allowed: false` or `behaviour: block` | Returns `403` with `{"error": "<reason>"}` and header `X-Akto-Guardrails-Decision: blocked`; the LLM is never called on a blocked request |
 
 ## Guardrail Configuration
 
 All guardrail policies are configured in the Akto dashboard — no proxy restart is required when policies change.
 
-* [Create guardrail policies](../how-to/create-guardrail-policies.md) — set up rules for prompt injection detection, PII filtering, disallowed topics, and response redaction
-* [Manage guardrail policies](../how-to/manage-guardrail-policies.md) — edit, clone, or delete existing policies
-* [Enable or disable guardrails](../how-to/enable-or-disable-guardrails.md) — toggle guardrails per policy without deleting them
+* [Create guardrail policies](how-to/create-guardrail-policies.md) — set up rules for prompt injection detection, PII filtering, disallowed topics, and response redaction
+* [Manage guardrail policies](how-to/manage-guardrail-policies.md) — edit, clone, or delete existing policies
+* [Enable or disable guardrails](how-to/enable-or-disable-guardrails.md) — toggle guardrails per policy without deleting them
 
 Policies are scoped per app using the `APP_NAME` identifier set in your environment variables.
 
@@ -190,9 +188,9 @@ Policies are scoped per app using the `APP_NAME` identifier set in your environm
 
 All intercepted traffic is ingested into Akto (`ingest_data=true`) and visible in the dashboard under your `APP_NAME`:
 
-* [Guardrail Activity](../concepts/guardrail-activity.md) — view all guardrail events, decisions, and flagged payloads
-* [Guardrail Activity — Detailed View](../how-to/guardrail-activity-detailed-view.md) — inspect individual blocked or modified requests
-* [Threat Dashboard](../concepts/threat-dashboard.md) — monitor threat actors, IPs, and anomalous LLM usage patterns
+* [Guardrail Activity](concepts/guardrail-activity.md) — view all guardrail events, decisions, and flagged payloads
+* [Guardrail Activity — Detailed View](how-to/guardrail-activity-detailed-view.md) — inspect individual blocked or modified requests
+* [Threat Dashboard](concepts/threat-dashboard.md) — monitor threat actors, IPs, and anomalous LLM usage patterns
 
 ## Get Support
 

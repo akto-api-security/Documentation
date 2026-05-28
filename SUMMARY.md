@@ -339,7 +339,7 @@
 * [Get Started](agentic-guardrails/overview/README.md)
   * [MCP Proxy](agentic-guardrails/overview/akto-mcp-proxy.md)
   * [AI Agent Proxy](agentic-guardrails/overview/akto-agent-proxy.md)
-  * [AI LLM Proxy](agentic-guardrails/overview/akto-llm-proxy.md)
+  * [AI LLM Proxy](agentic-guardrails/overview/ai-llm-proxy.md)
 * [Concepts](agentic-guardrails/concepts/README.md)
   * [Agent Guard](agentic-guardrails/concepts/agent-guard.md)
   * [Schema Conformance](agentic-guardrails/concepts/schema-conformance.md)
@@ -394,7 +394,7 @@
 
 ## Account Management
 
-* [Sign Up](account-management/sign-up.md)
+* [Sign Up in Akto](account-management/sign-up.md)
 * [Invite User](account-management/invite-user/README.md)
   * [Change role of a User](account-management/invite-user/change-role-of-a-user.md)
 * [Create a New Account](account-management/create-a-new-account.md)
