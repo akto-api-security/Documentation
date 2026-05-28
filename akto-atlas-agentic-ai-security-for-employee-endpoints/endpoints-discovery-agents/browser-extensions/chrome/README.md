@@ -98,6 +98,19 @@ Follow the full step-by-step guide here:
 
 * [Intune Deployment (Windows)](intune-deployment.md)
 
+## Enterprise Deployment Using NinjaOne (Windows)
+
+You can deploy and force-install the Akto Security Chrome extension to NinjaOne-managed Windows devices using a PowerShell automation script and Chrome force-install policy.
+
+Akto provides two required values:
+
+* Extension ID
+* Update XML URL
+
+Follow the full step-by-step guide here:
+
+* [NinjaOne Deployment (Windows)](ninjaone-deployment.md)
+
 ## Deployment using ZIP File
 
 ### Prerequisites
