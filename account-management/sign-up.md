@@ -52,9 +52,9 @@ Once your email is verified, go back to [app.akto.io](https://app.akto.io) and l
 
 ## Access Your Dashboard
 
-After logging in, Akto redirects you based on your organisation's status:
+After logging in, one of two things will happen:
 
-* **Organisation already registered:** you are automatically taken to your organisation's dashboard. If your organisation has an active Akto plan, signing up with your org domain automatically grants you **Member** role access across whichever Akto products your organisation is enrolled in (Akto Argus, Akto Atlas, or both).
-*   **Organisation not yet registered:** You will see a **Contact Sales** page. Reach out to the Akto team at [support@akto.io](mailto:support@akto.io) and they will provision your organisation and grant you access.
+* **Your organisation is already registered with Akto:** You are automatically taken to your organisation's dashboard. If your organisation has an active Akto plan, signing up with your org domain automatically grants you **Member** role access across whichever Akto products your organisation is enrolled in (Akto Argus, Akto Atlas, or both).
+* **Any other case:** You will land on the **Contact Sales** page. This includes scenarios where your organisation is not yet onboarded, does not have an active plan, or your domain is not linked to an existing Akto account. Reach out to the Akto team at [support@akto.io](mailto:support@akto.io) and they will provision your organisation and grant you access.
 
-    <div data-with-frame="true"><figure><img src="../.gitbook/assets/image (165).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (165).png" alt="" width="563"><figcaption></figcaption></figure></div>
