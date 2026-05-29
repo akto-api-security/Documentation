@@ -54,6 +54,8 @@ When remediation runs successfully, the installer:
 
 The **Automox remediation script** then copies config to every interactive user profile and restarts the agent.
 
+**Why a manual restart was needed before:** Earlier remediation runs could exit early (e.g. `SYSTEM config missing` from 32-bit path redirect) **before** reaching the restart step. Once user config had a token, evaluation returned **compliant** and Automox **skipped remediation entirely** — leaving a stale agent process running without the token. Updated scripts fix both issues: `Sysnative` for SYSTEM config, evaluation checks `agentHealthy`, and remediation uses explicit stop/start with Activity Log output.
+
 ## Prerequisites
 
 * **Automox** account with permission to create Worklet policies
@@ -151,8 +153,8 @@ Paste this script into **Evaluation Code** (PowerShell). It must be **self-conta
 
 **Compliance rules:**
 
-* **Exit `0`** → compliant (binary, agent task, and user config with token)
-* **Exit `1`** → run remediation (install and/or config repair)
+* **Exit `0`** → compliant (binary, agent task, user config with token, agent process restarted after config)
+* **Exit `1`** → run remediation (install, config repair, and/or agent restart)
 
 ```powershell
 # Akto Endpoint Shield - Evaluation
@@ -173,21 +175,42 @@ $arp = Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninsta
 $agentTask = Get-ScheduledTask -TaskName "MCPEndpointShieldAgent" -ErrorAction SilentlyContinue
 
 $userHasToken = $false
+$agentHealthy = $true
 Get-CimInstance Win32_UserProfile -ErrorAction SilentlyContinue | ForEach-Object {
   if ($_.Special -or -not $_.LocalPath) { return }
   if ($_.SID -notmatch '^S-1-5-21-') { return }
   $userCfg = Join-Path $_.LocalPath ".akto-endpoint-shield\config\config.env"
   if ((Test-Path -LiteralPath $userCfg) -and (Select-String -LiteralPath $userCfg -Pattern '^AKTO_API_TOKEN=' -Quiet)) {
     $userHasToken = $true
+    $agentLog = Join-Path $_.LocalPath "AppData\Local\akto-endpoint-shield\logs\agent.log"
+    if (-not (Test-Path -LiteralPath $agentLog)) {
+      $agentHealthy = $false
+      return
+    }
+    $startupLine = Select-String -LiteralPath $agentLog -Pattern "startup env" -ErrorAction SilentlyContinue |
+      Select-Object -Last 1
+    if (-not $startupLine) {
+      $agentHealthy = $false
+      return
+    }
+    if ($startupLine.Line -match 'AKTO_API_TOKEN.*\(not set\)') {
+      $agentHealthy = $false
+      return
+    }
+    $cfgTime = (Get-Item -LiteralPath $userCfg).LastWriteTime
+    $logTime = (Get-Item -LiteralPath $agentLog).LastWriteTime
+    if ($cfgTime -gt $logTime) {
+      $agentHealthy = $false
+    }
   }
 }
 
-if ($binPath -and $arp -and $agentTask -and $userHasToken) {
+if ($binPath -and $arp -and $agentTask -and $userHasToken -and $agentHealthy) {
   Write-Output "Compliant: $binPath"
   exit 0
 }
 
-Write-Output "Non-compliant. binary=$([bool]$binPath) task=$([bool]$agentTask) userToken=$userHasToken"
+Write-Output "Non-compliant. binary=$([bool]$binPath) task=$([bool]$agentTask) userToken=$userHasToken agentHealthy=$agentHealthy"
 exit 1
 ```
 
@@ -198,7 +221,7 @@ exit 1
 {% endhint %}
 
 {% hint style="info" %}
-**Already installed but 401 errors?** If the binary and tasks exist but `userToken=False`, evaluation returns non-compliant and remediation runs **config propagation only** (no reinstall needed if binary is present).
+**Already installed but 401 errors?** If the binary and tasks exist but `userToken=False` or `agentHealthy=False`, evaluation returns non-compliant and remediation runs **config propagation + task restart** (no reinstall needed if binary is present).
 {% endhint %}
 {% endstep %}
 
@@ -335,11 +358,29 @@ Get-CimInstance Win32_UserProfile -ErrorAction SilentlyContinue | ForEach-Object
   Write-Output "Synced config: $userCfg"
 }
 
-Restart-ScheduledTask -TaskName "MCPEndpointShieldAgent" -ErrorAction SilentlyContinue | Out-Null
-Restart-ScheduledTask -TaskName "MCPEndpointShieldHTTP" -ErrorAction SilentlyContinue | Out-Null
-Restart-ScheduledTask -TaskName "MCPEndpointShieldDetector" -ErrorAction SilentlyContinue | Out-Null
+$taskNames = @("MCPEndpointShieldAgent", "MCPEndpointShieldHTTP", "MCPEndpointShieldDetector")
+foreach ($taskName in $taskNames) {
+  $task = Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue
+  if (-not $task) {
+    Write-Output "Task not found (skipped): $taskName"
+    continue
+  }
+  try {
+    Stop-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue
+    Start-Sleep -Seconds 3
+    Start-ScheduledTask -TaskName $taskName -ErrorAction Stop
+    Write-Output "Restarted: $taskName"
+  }
+  catch {
+    Write-Output "Restart via ScheduledTasks failed for $taskName - trying schtasks"
+    & schtasks.exe /End /TN $taskName 2>$null | Out-Null
+    Start-Sleep -Seconds 3
+    & schtasks.exe /Run /TN $taskName 2>$null | Out-Null
+    Write-Output "Restarted via schtasks: $taskName"
+  }
+}
 
-Write-Output "Success: $binPath (config propagated to user profiles)"
+Write-Output "Success: $binPath (config propagated; tasks restarted)"
 exit 0
 ```
 
@@ -373,7 +414,7 @@ Save the policy (**Save Policy**), then **Run Policy** on a pilot device or wait
 
 **In Automox**
 
-* **Activity Log** — look for `Installed:` or `Binary present:` and `Synced config:` lines
+* **Activity Log** — look for `Installed:` or `Binary present:`, `Synced config:`, and `Restarted: MCPEndpointShieldAgent`
 * **Device logs** — `policy_*_remediate` / `policy_*_test` entries
 
 **On the Windows device (PowerShell — run as the logged-in user)**
@@ -465,21 +506,22 @@ Re-run the policy. Check Inno log for task registration failures.
 **Most common cause:** user `config.env` has only `AGENT_ID`, no `AKTO_API_TOKEN`.
 
 1. Confirm in agent log: `AKTO_API_TOKEN": "(not set)"` on startup
-2. Confirm SYSTEM has token: `Get-Content C:\Windows\System32\config\systemprofile\.akto-endpoint-shield\config\config.env`
-3. **Re-run the Automox policy** — remediation syncs SYSTEM → all user profiles
-4. Or manual one-off (elevated PowerShell):
+2. Confirm SYSTEM has token (from 64-bit or Sysnative path):
 
 ```powershell
-$src = "C:\Windows\System32\config\systemprofile\.akto-endpoint-shield\config\config.env"
-$dst = "C:\Users\YOUR_USER\.akto-endpoint-shield\config\config.env"
-$agentId = (Get-Content $dst -EA SilentlyContinue | Where-Object { $_ -match '^AGENT_ID=' })
-New-Item -Force -ItemType Directory (Split-Path $dst) | Out-Null
-Copy-Item $src $dst -Force
-if ($agentId) { Add-Content $dst $agentId }
-Restart-ScheduledTask -TaskName MCPEndpointShieldAgent
+Get-Content "$env:WINDIR\Sysnative\config\systemprofile\.akto-endpoint-shield\config\config.env"
 ```
 
+3. **Re-run the Automox policy** — remediation syncs SYSTEM → all user profiles and **restarts** agent tasks
+4. Evaluation stays non-compliant (`agentHealthy=False`) until the agent logs a fresh startup **after** config sync — no manual restart needed
+
 If token is present in user config but API still returns 401, the JWT is invalid/expired — request a new build from Akto.
+
+#### Token in user config but agent still returns 401
+
+Evaluation may report `userToken=True agentHealthy=False` when config was synced but the agent process was never restarted (e.g. a prior remediation run exited before the restart step).
+
+**Fix:** Re-run the Automox policy. Updated evaluation detects stale agents and remediation performs an explicit stop/start with logging (`Restarted: MCPEndpointShieldAgent` in Activity Log).
 
 #### `config.env` only under SYSTEM profile
 
