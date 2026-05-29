@@ -205,7 +205,14 @@ exit 1
 {% step %}
 #### Remediation code
 
-Paste this into **Remediation Code**. Update `$fileName` to match your uploaded installer **exactly**.
+Paste this into **Remediation Code** only (not Evaluation). Update `$fileName` to match your uploaded installer **exactly**.
+
+{% hint style="danger" %}
+**Copy-paste rules for Automox:**
+* Paste **only** the PowerShell lines below — **not** the ` ```powershell ` fences
+* Do **not** combine Evaluation and Remediation into one field
+* Use a plain ASCII hyphen `-`, not special Unicode dashes, if you edit strings manually
+{% endhint %}
 
 This script:
 
@@ -216,6 +223,7 @@ This script:
 
 ```powershell
 # Akto Endpoint Shield - Remediation (install + config propagation)
+# No functions - flat script for Automox compatibility
 
 $fileName  = "akto-endpoint-shield-setup-1.1.5.exe"
 $arguments = "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /LOG=C:\Windows\Temp\akto-endpoint-shield-install.log"
@@ -223,48 +231,13 @@ $arguments = "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /LOG=C:\Windows\Temp
 $pf64 = ${env:ProgramW6432}
 if (-not $pf64) { $pf64 = "C:\Program Files" }
 
-$binCandidates = @(
-  (Join-Path $pf64 "Akto Endpoint Shield\akto-endpoint-shield.exe")
-  (Join-Path $pf64 "MCP Endpoint Shield\akto-endpoint-shield.exe")
-)
-
+$bin1 = Join-Path $pf64 "Akto Endpoint Shield\akto-endpoint-shield.exe"
+$bin2 = Join-Path $pf64 "MCP Endpoint Shield\akto-endpoint-shield.exe"
 $systemCfg = Join-Path $env:SystemRoot "System32\config\systemprofile\.akto-endpoint-shield\config\config.env"
 
-function Get-InteractiveProfilePaths {
-  $paths = New-Object 'System.Collections.Generic.HashSet[string]'
-  Get-CimInstance Win32_UserProfile -ErrorAction SilentlyContinue | ForEach-Object {
-    if ($_.Special -or -not $_.LocalPath) { return }
-    if ($_.SID -notmatch '^S-1-5-21-') { return }
-    if (Test-Path -LiteralPath $_.LocalPath) { [void]$paths.Add($_.LocalPath) }
-  }
-  return @($paths)
-}
-
-function Sync-ConfigToUserProfiles {
-  if (-not (Test-Path -LiteralPath $systemCfg)) {
-    Write-Error "SYSTEM config missing: $systemCfg"
-    exit 1
-  }
-  $content = Get-Content -LiteralPath $systemCfg -Raw
-  foreach ($profilePath in Get-InteractiveProfilePaths) {
-    $userCfg = Join-Path $profilePath ".akto-endpoint-shield\config\config.env"
-    $cfgDir = Split-Path -Parent $userCfg
-    if (-not (Test-Path -LiteralPath $cfgDir)) {
-      New-Item -ItemType Directory -Path $cfgDir -Force | Out-Null
-    }
-    $agentId = $null
-    if (Test-Path -LiteralPath $userCfg) {
-      $agentId = Get-Content -LiteralPath $userCfg -ErrorAction SilentlyContinue |
-        Where-Object { $_ -match '^AGENT_ID=' } | Select-Object -First 1
-    }
-    $out = $content.TrimEnd()
-    if ($agentId -and $out -notmatch '(?m)^AGENT_ID=') { $out = "$out`n$agentId" }
-    Set-Content -LiteralPath $userCfg -Value $out -Encoding UTF8
-    Write-Output "Synced config: $userCfg"
-  }
-}
-
-$binPath = $binCandidates | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
+$binPath = $null
+if (Test-Path -LiteralPath $bin1) { $binPath = $bin1 }
+elseif (Test-Path -LiteralPath $bin2) { $binPath = $bin2 }
 
 if (-not $binPath) {
   $sPath = Split-Path $script:MyInvocation.MyCommand.Path -Parent
@@ -280,36 +253,72 @@ if (-not $binPath) {
     exit 1
   }
   $deadline = (Get-Date).AddMinutes(5)
-  while (-not ($binPath = ($binCandidates | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1)) -and (Get-Date) -lt $deadline) {
+  do {
+    if (Test-Path -LiteralPath $bin1) { $binPath = $bin1; break }
+    if (Test-Path -LiteralPath $bin2) { $binPath = $bin2; break }
     Start-Sleep -Seconds 15
-  }
+  } while ((Get-Date) -lt $deadline)
   if (-not $binPath) {
-    Write-Error "Binary missing after install. Checked: $($binCandidates -join ', ')"
+    Write-Error "Binary missing after install. Checked: $bin1 ; $bin2"
     if (Test-Path "C:\Windows\Temp\akto-endpoint-shield-install.log") {
       Get-Content "C:\Windows\Temp\akto-endpoint-shield-install.log" -Tail 30
     }
     exit 1
   }
   Write-Output "Installed: $binPath"
-} else {
-  Write-Output "Binary present: $binPath — running config sync (repair)"
+}
+else {
+  Write-Output "Binary present: $binPath - running config sync"
   if (-not (Test-Path -LiteralPath $systemCfg)) {
     $sPath = Split-Path $script:MyInvocation.MyCommand.Path -Parent
     $fPath = Join-Path $sPath $fileName
     if (Test-Path -LiteralPath $fPath) {
-      Write-Output "SYSTEM config missing — re-running installer"
+      Write-Output "SYSTEM config missing - re-running installer"
       $p = Start-Process -FilePath $fPath -ArgumentList $arguments -Wait -PassThru
-      if ($null -eq $p -or $p.ExitCode -ne 0) { Write-Error "Installer failed. ExitCode=$($p.ExitCode)"; exit 1 }
+      if ($null -eq $p -or $p.ExitCode -ne 0) {
+        Write-Error "Installer failed. ExitCode=$($p.ExitCode)"
+        exit 1
+      }
       Start-Sleep -Seconds 30
     }
   }
 }
 
-Sync-ConfigToUserProfiles
-
-foreach ($task in @("MCPEndpointShieldAgent", "MCPEndpointShieldHTTP", "MCPEndpointShieldDetector")) {
-  Restart-ScheduledTask -TaskName $task -ErrorAction SilentlyContinue | Out-Null
+if (-not (Test-Path -LiteralPath $systemCfg)) {
+  Write-Error "SYSTEM config missing: $systemCfg"
+  exit 1
 }
+
+$configContent = Get-Content -LiteralPath $systemCfg -Raw
+$configContent = $configContent.TrimEnd()
+
+Get-CimInstance Win32_UserProfile -ErrorAction SilentlyContinue | ForEach-Object {
+  if ($_.Special -or -not $_.LocalPath) { return }
+  if ($_.SID -notmatch '^S-1-5-21-') { return }
+  if (-not (Test-Path -LiteralPath $_.LocalPath)) { return }
+
+  $userCfg = Join-Path $_.LocalPath ".akto-endpoint-shield\config\config.env"
+  $cfgDir = Split-Path -Parent $userCfg
+  if (-not (Test-Path -LiteralPath $cfgDir)) {
+    New-Item -ItemType Directory -Path $cfgDir -Force | Out-Null
+  }
+
+  $out = $configContent
+  if (Test-Path -LiteralPath $userCfg) {
+    $agentId = Get-Content -LiteralPath $userCfg -ErrorAction SilentlyContinue |
+      Where-Object { $_ -match '^AGENT_ID=' } | Select-Object -First 1
+    if ($agentId -and ($out -notlike "*AGENT_ID=*")) {
+      $out = $out + [Environment]::NewLine + $agentId
+    }
+  }
+
+  Set-Content -LiteralPath $userCfg -Value $out -Encoding UTF8
+  Write-Output "Synced config: $userCfg"
+}
+
+Restart-ScheduledTask -TaskName "MCPEndpointShieldAgent" -ErrorAction SilentlyContinue | Out-Null
+Restart-ScheduledTask -TaskName "MCPEndpointShieldHTTP" -ErrorAction SilentlyContinue | Out-Null
+Restart-ScheduledTask -TaskName "MCPEndpointShieldDetector" -ErrorAction SilentlyContinue | Out-Null
 
 Write-Output "Success: $binPath (config propagated to user profiles)"
 exit 0
@@ -397,6 +406,16 @@ Installing via Automox does **not** mean all hooks are active immediately.
 #### Evaluation error: `Get-AktoBinaryPath` is not recognized
 
 Evaluation and remediation are separate runs. Use the scripts above with inline paths — no shared custom functions.
+
+#### Remediation error: `Unexpected token '}'`
+
+PowerShell **ParserError** at two consecutive `}` lines — the script never ran. Common causes:
+
+* Pasted markdown fences (` ```powershell `) into the Automox editor
+* Pasted **Evaluation + Remediation** into one field
+* Extra `}` from copy/paste (often when using `function` blocks)
+
+**Fix:** Clear the Remediation field and paste only the **flat remediation script** from this doc (no `function` keywords). Save policy and re-run.
 
 #### Remediation error: binary missing under `Program Files (x86)`
 
