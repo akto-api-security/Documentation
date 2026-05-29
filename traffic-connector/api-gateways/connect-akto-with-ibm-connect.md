@@ -96,7 +96,7 @@ global-policy: 1.0.0
 info:
   name: akto_global_post
   title: Akto IBM Agent PostRequest
-  version: 1.0.0
+  version: 1.1.0
 gateways:
   - datapower-api-gateway
 assembly:
@@ -106,6 +106,9 @@ assembly:
         title: akto-ibm-agent
         source: |
           var urlopen = require("urlopen");
+
+          var ingestionBaseUrl = "http://data-ingestion-service-ip";
+          var samplingRate = 1.0; // 1.0 = 100%, 0.1 = 10%, 0.5 = 50%
 
           var friendlyHttpStatus = {
             '200': 'OK',
@@ -215,6 +218,10 @@ assembly:
 
             var start_time = context.get("start_time");
 
+            if (Math.random() > samplingRate) {
+              return;
+            }
+
             context.message.body.readAsBuffer(function (error, buffer) {
               var res_body = "";
               if (!error && buffer != null && buffer.length > 0) {
@@ -248,23 +255,38 @@ assembly:
                 ]
               };
 
-              var request_final = {
-                target: "https://"+<data-ingestion-service-ip>+"/api/ingestData",
-                method: "POST",
-                headers: {
-                  "content-type": "application/json",
-                },
-                timeout: 5,
-                data: JSON.stringify(sendData),
+              var healthCheckRequest = {
+                target: ingestionBaseUrl + "/healthCheck",
+                method: "GET",
+                timeout: 1,
               };
 
-              urlopen.open(request_final, function (error, response) {
-                if (error) {
-                  console.error(
-                    "error: " + error + " info: connection failed trying to secure backup"
-                  );
+              urlopen.open(healthCheckRequest, function (healthError, healthResponse) {
+                if (healthError) {
+                  console.error("Health check failed, skipping data ingestion: " + healthError);
                   return;
                 }
+                healthResponse.discard();
+
+                var request_final = {
+                  target: ingestionBaseUrl + "/api/ingestData",
+                  method: "POST",
+                  headers: {
+                    "content-type": "application/json",
+                  },
+                  timeout: 1,
+                  data: JSON.stringify(sendData),
+                };
+
+                urlopen.open(request_final, function (error, response) {
+                  if (error) {
+                    console.error(
+                      "error: " + error + " info: connection failed trying to secure backup"
+                    );
+                    return;
+                  }
+                  response.discard();
+                });
               });
             });
           }
