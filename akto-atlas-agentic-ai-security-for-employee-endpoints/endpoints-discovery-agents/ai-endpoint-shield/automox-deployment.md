@@ -233,7 +233,18 @@ if (-not $pf64) { $pf64 = "C:\Program Files" }
 
 $bin1 = Join-Path $pf64 "Akto Endpoint Shield\akto-endpoint-shield.exe"
 $bin2 = Join-Path $pf64 "MCP Endpoint Shield\akto-endpoint-shield.exe"
-$systemCfg = Join-Path $env:SystemRoot "System32\config\systemprofile\.akto-endpoint-shield\config\config.env"
+
+# Automox runs 32-bit PowerShell: plain System32 redirects to SysWOW64 (config is NOT there).
+# Sysnative reaches the real 64-bit System32 from 32-bit processes.
+$systemCfgCandidates = @(
+  (Join-Path ${env:WINDIR} "Sysnative\config\systemprofile\.akto-endpoint-shield\config\config.env")
+  (Join-Path $env:SystemRoot "System32\config\systemprofile\.akto-endpoint-shield\config\config.env")
+)
+$systemCfg = $null
+foreach ($candidate in $systemCfgCandidates) {
+  if (Test-Path -LiteralPath $candidate) { $systemCfg = $candidate; break }
+}
+if (-not $systemCfg) { $systemCfg = $systemCfgCandidates[0] }
 
 $binPath = $null
 if (Test-Path -LiteralPath $bin1) { $binPath = $bin1 }
@@ -266,6 +277,9 @@ if (-not $binPath) {
     exit 1
   }
   Write-Output "Installed: $binPath"
+  foreach ($candidate in $systemCfgCandidates) {
+    if (Test-Path -LiteralPath $candidate) { $systemCfg = $candidate; break }
+  }
 }
 else {
   Write-Output "Binary present: $binPath - running config sync"
@@ -280,14 +294,19 @@ else {
         exit 1
       }
       Start-Sleep -Seconds 30
+      foreach ($candidate in $systemCfgCandidates) {
+        if (Test-Path -LiteralPath $candidate) { $systemCfg = $candidate; break }
+      }
     }
   }
 }
 
 if (-not (Test-Path -LiteralPath $systemCfg)) {
-  Write-Error "SYSTEM config missing: $systemCfg"
+  Write-Error "SYSTEM config missing. Checked: $($systemCfgCandidates -join ' ; ')"
   exit 1
 }
+
+Write-Output "Using SYSTEM config: $systemCfg"
 
 $configContent = Get-Content -LiteralPath $systemCfg -Raw
 $configContent = $configContent.TrimEnd()
@@ -327,7 +346,9 @@ exit 0
 {% hint style="warning" %}
 * Do **not** use `-Verb RunAs` — the worklet already runs elevated as **SYSTEM**.
 * Use **`${env:ProgramW6432}`** — Automox often runs 32-bit PowerShell where `$env:ProgramFiles` is Program Files (x86).
+* Use **`Sysnative`** for SYSTEM `config.env` — plain `System32\...` from 32-bit PowerShell redirects to SysWOW64 where the file does not exist.
 * Install folder may be **`Akto Endpoint Shield`** or legacy **`MCP Endpoint Shield`** — scripts above handle both.
+* Set **`$fileName`** to your uploaded payload exactly (e.g. `Akto-Endpoint-Shield-Comscore-1.1.5.exe`).
 {% endhint %}
 {% endstep %}
 
@@ -416,6 +437,16 @@ PowerShell **ParserError** at two consecutive `}` lines — the script never ran
 * Extra `}` from copy/paste (often when using `function` blocks)
 
 **Fix:** Clear the Remediation field and paste only the **flat remediation script** from this doc (no `function` keywords). Save policy and re-run.
+
+#### Remediation error: `SYSTEM config missing`
+
+Automox runs **32-bit PowerShell**. The path `C:\Windows\System32\config\systemprofile\...` is redirected to **SysWOW64**, so `config.env` looks missing even when it exists.
+
+**Fix:** Use the updated remediation script with **`Sysnative`** (in this doc). Verify on the device:
+
+```powershell
+Test-Path "$env:WINDIR\Sysnative\config\systemprofile\.akto-endpoint-shield\config\config.env"
+```
 
 #### Remediation error: binary missing under `Program Files (x86)`
 
