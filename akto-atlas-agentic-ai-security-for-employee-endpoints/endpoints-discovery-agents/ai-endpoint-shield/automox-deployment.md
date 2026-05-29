@@ -6,155 +6,57 @@ description: >-
 
 # Automox Deployment
 
-## Overview
-
-**Akto Endpoint Shield** can be deployed to managed Windows laptops and desktops using **Automox Worklets**. Automox runs a compliance check (evaluation script) on each device; if the shield is not installed or misconfigured, it silently runs remediation.
-
-This guide covers:
-
-* Obtaining a **customer-specific** `akto-endpoint-shield-setup-<version>.exe` from Akto (token embedded at build time)
-* Creating an Automox **Worklet policy** with evaluation and remediation PowerShell
-* **Config propagation** — required because Automox runs as SYSTEM (see below)
-* Uploading the installer and targeting device groups
-* Verifying installation and troubleshooting common issues
+Deploy **Akto Endpoint Shield** to Windows laptops via an Automox **Worklet** policy. The policy checks each device and silently installs or repairs the shield when needed — no user action required.
 
 {% hint style="info" %}
-**Windows installer type:** Akto ships an **Inno Setup `.exe`**, not an MSI. Use an Automox **Worklet** with a file payload (or the **EXE Software Installation** catalog worklet as a starting point).
+Akto ships an **Inno Setup `.exe`** (not MSI). Use a Worklet with a file payload. Start from **Automate → Worklet Catalog → EXE Software Installation (System Wide-All Users)** or create a custom Windows Worklet.
 {% endhint %}
 
-### Why Automox
+### Important: Automox runs as SYSTEM
 
-* **Silent, unattended install** on fleet devices (runs as SYSTEM)
-* **Compliance loop** — reinstall or repair only when evaluation reports non-compliant
-* **Central scheduling** and group targeting
-* **Activity logs** per device for install success or failure
-
-### Automox runs as SYSTEM — config must be propagated
-
-Automox worklets run elevated as **SYSTEM**. The Inno installer writes `config.env` to the **SYSTEM profile**:
-
-`C:\Windows\System32\config\systemprofile\.akto-endpoint-shield\config\config.env`
-
-The agent scheduled task remaps to the **logged-in user** and reads:
-
-`C:\Users\<user>\.akto-endpoint-shield\config\config.env`
-
-If that user file is missing `AKTO_API_TOKEN` (often only `AGENT_ID` is present), the agent logs **`401 Unauthorized`** to `ultron.akto.io` even though install succeeded.
-
-**The remediation script in this guide always propagates config from SYSTEM to all interactive user profiles** — on fresh install, upgrade, and repair of already-installed devices.
-
-### What the installer does
-
-When remediation runs successfully, the installer:
-
-* Installs to `C:\Program Files\Akto Endpoint Shield\` (fresh install) or may keep legacy `C:\Program Files\MCP Endpoint Shield\` on upgrade
-* Writes `config.env` with embedded token to the **SYSTEM** profile
-* Registers scheduled tasks (`MCPEndpointShieldHTTP`, `MCPEndpointShieldAgent`, `MCPEndpointShieldDetector`)
-* Bundles hook and system-proxy scripts (hooks stay **off** until enabled in the Akto dashboard unless your build sets otherwise)
-
-The **Automox remediation script** then copies config to every interactive user profile and restarts the agent.
-
-**Why a manual restart was needed before:** Earlier remediation runs could exit early (e.g. `SYSTEM config missing` from 32-bit path redirect) **before** reaching the restart step. Once user config had a token, evaluation returned **compliant** and Automox **skipped remediation entirely** — leaving a stale agent process running without the token. Updated scripts fix both issues: `Sysnative` for SYSTEM config, evaluation checks `agentHealthy`, and remediation uses explicit stop/start with Activity Log output.
+The installer writes `config.env` to the **SYSTEM** profile. The agent reads it from the **logged-in user's** profile. The remediation script copies config to every user profile and restarts agent tasks — this is required for the agent to authenticate.
 
 ## Prerequisites
 
-* **Automox** account with permission to create Worklet policies
-* **Windows 10/11** devices (64-bit) enrolled in Automox
-* **Akto account** and API token (Akto builds the installer with your token — you do not paste the token into Automox)
-* Network access from endpoints to:
-  * `https://*.akto.io` (guardrails / API)
-  * `https://ultron.akto.io` (database abstractor — default in builds)
+* Automox account with Worklet policy permissions
+* Windows 10/11 (64-bit) devices enrolled in Automox
+* Customer-specific installer from Akto (token embedded at build time)
+* Network access to `https://*.akto.io` and `https://ultron.akto.io`
 
-Contact **support@akto.io** to request the installer build.
+Email **support@akto.io** with your Akto account ID, API token, and target version to request the installer.
 
 ## Deployment Steps
 
 {% stepper %}
 {% step %}
-#### Obtain the installer from Akto
+#### Get the installer
 
-**Contact Akto Support**
-
-Email **support@akto.io** (or your Akto account team) with:
-
-* Your **Akto account ID** / guardrails URL (e.g. `https://<account-id>-guardrails.akto.io`)
-* **API token** to embed (or ask Akto to use your existing org token)
-* Target **version** (e.g. `1.1.5`)
-
-Akto will return:
-
-* `akto-endpoint-shield-setup-<version>.exe` — silent Inno Setup installer with your token and URLs baked in
-* Optional: evaluation and remediation scripts (also in this document)
-
-**Verify the file name**
-
-Note the **exact** file name (e.g. `akto-endpoint-shield-setup-1.1.5.exe`). The remediation script must use the **same** name as the uploaded payload.
+Akto provides `akto-endpoint-shield-setup-<version>.exe` (or a customer-named build). Note the **exact file name** — you will use it in the remediation script.
 {% endstep %}
 
 {% step %}
-#### Create the Worklet policy in Automox
+#### Create the Worklet policy
 
-You can either start from the **Worklet Catalog** template or create a **custom policy** from scratch. Both approaches use the same evaluation/remediation scripts and uploaded `.exe`.
+1. **Automate → Worklet Catalog → EXE Software Installation (System Wide-All Users)** → **Create Policy**  
+   Or: **Automate → Policies → Create Policy → Worklet → Windows**
 
-**Option A — Start from the catalog (recommended)**
+2. **Info tab:** Set policy name, OS = Windows, target device group(s). Pilot a small group first.
 
-1. In Automox, go to **Automate → Worklet Catalog**.
-2. Open **EXE Software Installation (System Wide-All Users)** (Windows, Automox Verified).
-3. Click **Create Policy**.
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/automox-policy-info.png" alt="Automox policy info" width="563"><figcaption><p>Policy Info — name, OS, and device groups</p></figcaption></figure></div>
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/automox-worklet-catalog-exe-install.png" alt="Automox Worklet Catalog - EXE Software Installation" width="563"><figcaption><p>Worklet Catalog — EXE Software Installation (System Wide-All Users)</p></figcaption></figure></div>
+3. **Payload:** Upload your `.exe` installer.
 
-4. Continue with the next step below.
-
-**Option B — Create a custom Worklet policy**
-
-1. Go to **Automate → Policies → Create Policy**.
-2. Choose **Worklet** and **Windows**.
-3. Continue with the next step.
-{% endstep %}
-
-{% step %}
-#### Configure policy info
-
-On the policy **Info** tab:
-
-| Field                | Example                                          |
-| -------------------- | ------------------------------------------------ |
-| **Policy name**      | `akto-mcp-windows-installer`                     |
-| **Operating system** | **Windows**                                      |
-| **Notes**            | `Silent Inno deploy; token baked at build`       |
-| **Groups**           | Target group(s), e.g. `windows` or a pilot group |
-
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/automox-policy-info.png" alt="Automox policy info - name, Windows, groups" width="563"><figcaption><p>Policy Info — name, OS, and device groups</p></figcaption></figure></div>
-
-{% hint style="warning" %}
-**Pilot first:** Assign a **small test group** before rolling out to all Windows devices.
-{% endhint %}
-
-**Device targeting:** Leave off unless you need attribute filters within the group.
-
-**Inputs / Secrets:** Not required when the API token is embedded in the installer at build time.
-{% endstep %}
-
-{% step %}
-#### Upload the installer (Payload)
-
-1. Open the **Payload** (file upload) section.
-2. Click **Upload File** and select your `akto-endpoint-shield-setup-<version>.exe`.
-3. Confirm the uploaded name matches what you use in remediation (e.g. `akto-endpoint-shield-setup-1.1.5.exe`).
-
-Automox stages the file next to the worklet scripts on each device (under its exec directory).
+4. **Schedule:** Run once for pilot, then recurring for production. Enable _run on next check-in_ for offline devices. Do **not** restart devices after worklet completion.
 {% endstep %}
 
 {% step %}
 #### Evaluation code
 
-Paste this script into **Evaluation Code** (PowerShell). It must be **self-contained** — do not call helper functions defined only in remediation (Automox runs evaluation and remediation in **separate** processes).
+Paste into **Evaluation Code** only. Exit `0` = compliant, exit `1` = run remediation.
 
-**Compliance rules:**
-
-* **Exit `0`** → compliant (binary, agent task, user config with token, agent process restarted after config)
-* **Exit `1`** → run remediation (install, config repair, and/or agent restart)
+{% hint style="danger" %}
+Paste **only** the PowerShell lines — not markdown fences. Evaluation and remediation are separate fields and separate processes.
+{% endhint %}
 
 ```powershell
 # Akto Endpoint Shield - Evaluation
@@ -214,39 +116,16 @@ Write-Output "Non-compliant. binary=$([bool]$binPath) task=$([bool]$agentTask) u
 exit 1
 ```
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/automox-evaluation-code.png" alt="Automox evaluation code for Akto Endpoint Shield" width="563"><figcaption><p>Payload upload and Evaluation Code</p></figcaption></figure></div>
-
-{% hint style="danger" %}
-**Do not use `Get-AktoBinaryPath`.** Evaluation and remediation are separate runs — custom functions defined in one block are not available in the other.
-{% endhint %}
-
-{% hint style="info" %}
-**Already installed but 401 errors?** If the binary and tasks exist but `userToken=False` or `agentHealthy=False`, evaluation returns non-compliant and remediation runs **config propagation + task restart** (no reinstall needed if binary is present).
-{% endhint %}
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/automox-evaluation-code.png" alt="Automox evaluation code" width="563"><figcaption><p>Payload and Evaluation Code</p></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 #### Remediation code
 
-Paste this into **Remediation Code** only (not Evaluation). Update `$fileName` to match your uploaded installer **exactly**.
-
-{% hint style="danger" %}
-**Copy-paste rules for Automox:**
-* Paste **only** the PowerShell lines below — **not** the ` ```powershell ` fences
-* Do **not** combine Evaluation and Remediation into one field
-* Use a plain ASCII hyphen `-`, not special Unicode dashes, if you edit strings manually
-{% endhint %}
-
-This script:
-
-1. Installs (or re-runs) the Inno `.exe` if the binary is missing
-2. **Always propagates** `config.env` from SYSTEM to all interactive user profiles (fixes Automox token issue)
-3. Preserves per-user `AGENT_ID` lines
-4. Restarts agent tasks
+Paste into **Remediation Code** only. Set `$fileName` to match your uploaded installer exactly.
 
 ```powershell
 # Akto Endpoint Shield - Remediation (install + config propagation)
-# No functions - flat script for Automox compatibility
 
 $fileName  = "akto-endpoint-shield-setup-1.1.5.exe"
 $arguments = "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /LOG=C:\Windows\Temp\akto-endpoint-shield-install.log"
@@ -257,8 +136,6 @@ if (-not $pf64) { $pf64 = "C:\Program Files" }
 $bin1 = Join-Path $pf64 "Akto Endpoint Shield\akto-endpoint-shield.exe"
 $bin2 = Join-Path $pf64 "MCP Endpoint Shield\akto-endpoint-shield.exe"
 
-# Automox runs 32-bit PowerShell: plain System32 redirects to SysWOW64 (config is NOT there).
-# Sysnative reaches the real 64-bit System32 from 32-bit processes.
 $systemCfgCandidates = @(
   (Join-Path ${env:WINDIR} "Sysnative\config\systemprofile\.akto-endpoint-shield\config\config.env")
   (Join-Path $env:SystemRoot "System32\config\systemprofile\.akto-endpoint-shield\config\config.env")
@@ -372,7 +249,6 @@ foreach ($taskName in $taskNames) {
     Write-Output "Restarted: $taskName"
   }
   catch {
-    Write-Output "Restart via ScheduledTasks failed for $taskName - trying schtasks"
     & schtasks.exe /End /TN $taskName 2>$null | Out-Null
     Start-Sleep -Seconds 3
     & schtasks.exe /Run /TN $taskName 2>$null | Out-Null
@@ -385,151 +261,50 @@ exit 0
 ```
 
 {% hint style="warning" %}
-* Do **not** use `-Verb RunAs` — the worklet already runs elevated as **SYSTEM**.
-* Use **`${env:ProgramW6432}`** — Automox often runs 32-bit PowerShell where `$env:ProgramFiles` is Program Files (x86).
-* Use **`Sysnative`** for SYSTEM `config.env` — plain `System32\...` from 32-bit PowerShell redirects to SysWOW64 where the file does not exist.
-* Install folder may be **`Akto Endpoint Shield`** or legacy **`MCP Endpoint Shield`** — scripts above handle both.
-* Set **`$fileName`** to your uploaded payload exactly (e.g. `Akto-Endpoint-Shield-Comscore-1.1.5.exe`).
+Update `$fileName` to your uploaded installer (e.g. `Akto-Endpoint-Shield-Comscore-1.1.5.exe`). Do not use `-Verb RunAs` — the worklet already runs as SYSTEM.
 {% endhint %}
 {% endstep %}
 
 {% step %}
-#### Schedule and notifications
+#### Save and run
 
-| Setting               | Recommendation                                                         |
-| --------------------- | ---------------------------------------------------------------------- |
-| **Schedule**          | Custom — pilot: run once soon; production: recurring or on check-in    |
-| **Missed run**        | Enable _run on next check-in_ so offline devices get the install later |
-| **Automatic restart** | **Do not** restart devices after worklet completion                    |
+**Save Policy**, then **Run Policy** on a pilot device.
 
-{% hint style="info" %}
-**Repair existing broken installs:** Run the policy once on devices that already have the binary but show 401 errors. Evaluation will report non-compliant (`userToken=False`); remediation will sync config without a full reinstall.
-{% endhint %}
+In **Activity Log**, confirm:
 
-Save the policy (**Save Policy**), then **Run Policy** on a pilot device or wait for the schedule.
-{% endstep %}
-
-{% step %}
-#### Verify deployment
-
-**In Automox**
-
-* **Activity Log** — look for `Installed:` or `Binary present:`, `Synced config:`, and `Restarted: MCPEndpointShieldAgent`
-* **Device logs** — `policy_*_remediate` / `policy_*_test` entries
-
-**On the Windows device (PowerShell — run as the logged-in user)**
-
-```powershell
-# Find binary (Akto or legacy MCP folder)
-$pf64 = ${env:ProgramW6432}
-$bin = Get-ChildItem "$pf64\*Endpoint Shield\akto-endpoint-shield.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
-$bin.FullName
-& $bin.FullName --version
-
-# Scheduled tasks
-Get-ScheduledTask -TaskName "MCPEndpointShield*" -ErrorAction SilentlyContinue |
-  Format-Table TaskName, State
-
-# User config must include AKTO_API_TOKEN (not just AGENT_ID)
-Select-String -Path "$env:USERPROFILE\.akto-endpoint-shield\config\config.env" -Pattern "^AKTO_API_TOKEN="
-
-# Agent startup — token should NOT be "(not set)"
-Select-String -Path "$env:LOCALAPPDATA\akto-endpoint-shield\logs\agent.log" -Pattern "startup env" | Select-Object -Last 1
-
-# Agent logs
-Get-Content "$env:LOCALAPPDATA\akto-endpoint-shield\logs\agent.log" -Tail 20 -ErrorAction SilentlyContinue
-```
-
-**Test API token (PowerShell)**
-
-```powershell
-$token = (Get-Content "$env:USERPROFILE\.akto-endpoint-shield\config\config.env" |
-  Where-Object { $_ -match '^AKTO_API_TOKEN=' }) -replace '^AKTO_API_TOKEN=',''
-Invoke-WebRequest -Method POST -Uri "https://ultron.akto.io/api/fetchMcpAuditInfo" `
-  -Headers @{ Authorization = $token; "Content-Type" = "application/json" } `
-  -Body '{"updatedAfter":0}' -UseBasicParsing
-```
-
-Expect **HTTP 200**. **401** from curl with a valid-looking token in user config means expired/wrong JWT — contact Akto for a new installer build.
+* `Installed:` or `Binary present:`
+* `Synced config:`
+* `Restarted: MCPEndpointShieldAgent`
+* Final line: `Compliant: ...` on the next evaluation run
 {% endstep %}
 {% endstepper %}
 
-## Hooks, MCP wrap, and system proxy
+## Verify (optional)
 
-The installer embeds feature flags in `config.env`. **Defaults are `false`** (opt-in):
+On a device, confirm tasks are running and the agent has a token:
 
-* Hook installers (Claude, Cursor, Copilot, etc.) run when flags are enabled in the **Akto dashboard** or in `config.env`
-* **System proxy (Atlas)** requires dashboard **SwitchProxyMode** and/or `ENABLE_SYSTEM_PROXY=true`
+```powershell
+Get-ScheduledTask -TaskName "MCPEndpointShield*" | Format-Table TaskName, State
+Select-String -Path "$env:USERPROFILE\.akto-endpoint-shield\config\config.env" -Pattern "^AKTO_API_TOKEN="
+Select-String -Path "$env:LOCALAPPDATA\akto-endpoint-shield\logs\agent.log" -Pattern "startup env" | Select-Object -Last 1
+```
 
-Installing via Automox does **not** mean all hooks are active immediately.
+The startup log line should show the token is set (not `(not set)`).
+
+## Hooks and system proxy
+
+Hook installers and system proxy are **off by default**. Enable them in the **Akto dashboard** or via flags in `config.env`.
 
 ## Troubleshooting
 
-#### Evaluation error: `Get-AktoBinaryPath` is not recognized
-
-Evaluation and remediation are separate runs. Use the scripts above with inline paths — no shared custom functions.
-
-#### Remediation error: `Unexpected token '}'`
-
-PowerShell **ParserError** at two consecutive `}` lines — the script never ran. Common causes:
-
-* Pasted markdown fences (` ```powershell `) into the Automox editor
-* Pasted **Evaluation + Remediation** into one field
-* Extra `}` from copy/paste (often when using `function` blocks)
-
-**Fix:** Clear the Remediation field and paste only the **flat remediation script** from this doc (no `function` keywords). Save policy and re-run.
-
-#### Remediation error: `SYSTEM config missing`
-
-Automox runs **32-bit PowerShell**. The path `C:\Windows\System32\config\systemprofile\...` is redirected to **SysWOW64**, so `config.env` looks missing even when it exists.
-
-**Fix:** Use the updated remediation script with **`Sysnative`** (in this doc). Verify on the device:
-
-```powershell
-Test-Path "$env:WINDIR\Sysnative\config\systemprofile\.akto-endpoint-shield\config\config.env"
-```
-
-#### Remediation error: binary missing under `Program Files (x86)`
-
-Automox often runs 32-bit PowerShell where `$env:ProgramFiles` points to **x86**. Scripts use `${env:ProgramW6432}`.
-
-#### `COMMAND TIMED OUT`
-
-Install or config sync took too long. Increase Automox worklet timeout; check `C:\Windows\Temp\akto-endpoint-shield-install.log`.
-
-#### Binary installed but no `MCPEndpointShield*` tasks
-
-Re-run the policy. Check Inno log for task registration failures.
-
-#### Agent logs show `401 Unauthorized` to `ultron.akto.io`
-
-**Most common cause:** user `config.env` has only `AGENT_ID`, no `AKTO_API_TOKEN`.
-
-1. Confirm in agent log: `AKTO_API_TOKEN": "(not set)"` on startup
-2. Confirm SYSTEM has token (from 64-bit or Sysnative path):
-
-```powershell
-Get-Content "$env:WINDIR\Sysnative\config\systemprofile\.akto-endpoint-shield\config\config.env"
-```
-
-3. **Re-run the Automox policy** — remediation syncs SYSTEM → all user profiles and **restarts** agent tasks
-4. Evaluation stays non-compliant (`agentHealthy=False`) until the agent logs a fresh startup **after** config sync — no manual restart needed
-
-If token is present in user config but API still returns 401, the JWT is invalid/expired — request a new build from Akto.
-
-#### Token in user config but agent still returns 401
-
-Evaluation may report `userToken=True agentHealthy=False` when config was synced but the agent process was never restarted (e.g. a prior remediation run exited before the restart step).
-
-**Fix:** Re-run the Automox policy. Updated evaluation detects stale agents and remediation performs an explicit stop/start with logging (`Restarted: MCPEndpointShieldAgent` in Activity Log).
-
-#### `config.env` only under SYSTEM profile
-
-Expected after Inno install via Automox. The **remediation script** in this guide fixes it automatically. Re-run the policy on affected devices.
-
-#### New user account created after deploy
-
-The new user will not have `config.env` until the next policy run (evaluation detects `userToken=False`). Use a recurring schedule or run the policy when onboarding new users.
+| Issue | Fix |
+| ----- | --- |
+| `Unexpected token '}'` or `Get-AktoBinaryPath` not recognized | Paste only the flat scripts above — no markdown fences, no `function` blocks, separate Evaluation and Remediation fields |
+| `SYSTEM config missing` | Use the remediation script above (uses `Sysnative` path for 32-bit Automox) |
+| `COMMAND TIMED OUT` | Increase worklet timeout; check `C:\Windows\Temp\akto-endpoint-shield-install.log` |
+| `401 Unauthorized` in agent logs | Re-run policy. Evaluation reports `userToken=False` or `agentHealthy=False`; remediation syncs config and restarts tasks |
+| Token present but API returns 401 | JWT expired — request a new installer from Akto |
+| New user after deploy | Recurring schedule picks them up on next run (`userToken=False`) |
 
 ## Uninstall
 
@@ -537,26 +312,16 @@ The new user will not have `config.env` until the next policy run (evaluation de
 $pf64 = ${env:ProgramW6432}
 foreach ($dir in @("Akto Endpoint Shield", "MCP Endpoint Shield")) {
   $unins = Join-Path $pf64 "$dir\unins000.exe"
-  if (Test-Path -LiteralPath $unins) {
-    & $unins /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
-    break
-  }
+  if (Test-Path -LiteralPath $unins) { & $unins /VERYSILENT /SUPPRESSMSGBOXES /NORESTART; break }
 }
 ```
 
-Or **Settings → Apps → Akto Endpoint Shield → Uninstall**.
-
-After uninstall, evaluation should return non-compliant and remediation can reinstall on the next policy run (if desired).
-
 ## Related documentation
 
-* [MDM Deployment](mdm-deployment.md) — Intune, Jamf, and other MDM platforms
-* [Mosyle MDM Deployment](mosyle-deployment.md) — macOS MDM
-* [README](README.md) — product overview and manual setup
+* [MDM Deployment](mdm-deployment.md)
+* [README](README.md)
 
 ## Get Support
 
-1. In-app **Intercom** on the Akto dashboard
-2. [Discord community](https://www.akto.io/community)
-3. **support@akto.io**
-4. [Contact us](https://www.akto.io/contact-us)
+* **support@akto.io**
+* In-app Intercom on the Akto dashboard
