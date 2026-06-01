@@ -345,6 +345,7 @@
 
 ## Account Management
 
+* [Sign Up](account-management/sign-up.md)
 * [Invite User](account-management/invite-user/README.md)
   * [Change role of a User](account-management/invite-user/change-role-of-a-user.md)
 * [Create a New Account](account-management/create-a-new-account.md)
