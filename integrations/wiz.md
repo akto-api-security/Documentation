@@ -3,7 +3,7 @@
 Seamlessly enhance your web application security with Akto's Wiz integration. Enrich your wiz dashboard with API vulnerabilities discovered by Akto.
 
 {% hint style="info" %}
-#### Prerequisites
+**Prerequisites**
 
 Before setting up the Wiz Integration, ensure you have:
 
@@ -60,7 +60,6 @@ A wiz service account with the following permission scopes is required by the in
 
 1. Go to **Reports > Issues**.
 2. Click on an **Issue**.
-
 {% endstep %}
 
 {% step %}

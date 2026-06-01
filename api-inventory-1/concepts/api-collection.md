@@ -43,12 +43,12 @@ The following table describes all available search and filter options for API in
 <figure><img src="../../.gitbook/assets/Feb 9 Screenshot from CloudConvert.webp" alt="" width="563"><figcaption></figcaption></figure>
 
 {% hint style="info" %}
-#### Include and Exclude Filtering Behaviour
+**Include and Exclude Filtering Behaviour**
 
 Each filter supports **include** and **exclude** modes.
 
-* Include mode restricts results to matching APIs.&#x20;
-*   Exclude mode removes matching APIs from the result set.&#x20;
+* Include mode restricts results to matching APIs.
+*   Exclude mode removes matching APIs from the result set.
 
     <figure><img src="../../.gitbook/assets/image (175).png" alt="" width="333"><figcaption></figcaption></figure>
 

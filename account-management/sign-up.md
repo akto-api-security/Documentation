@@ -1,4 +1,4 @@
-# Sign Up in Akto
+# Sign Up
 
 ## Overview
 
@@ -17,6 +17,8 @@ Navigate to [app.akto.io](https://app.akto.io) in your browser.
 #### Click "Sign Up"
 
 On the login page, click the **Sign up** link at the bottom of the form.
+
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (153).png" alt="" width="375"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -55,4 +57,4 @@ After logging in, one of two things will happen:
 * **Your organisation is already registered with Akto:** You are automatically taken to your organisation's dashboard. If your organisation has an active Akto plan, signing up with your org domain automatically grants you **Member** role access to the Akto API Security product.
 * **Any other case:** You will land on the **Access Restricted** page. This includes scenarios where your organisation is not yet onboarded, does not have an active plan, or your domain is not linked to an existing Akto account. Click **Contact Sales** to reach out to the Akto team and they will provision your organisation and grant you access.
 
-<figure><img src="../.gitbook/assets/sign-up-access-restricted.png" alt=""><figcaption><p>Access Restricted page</p></figcaption></figure>
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/sign-up-access-restricted.png" alt="" width="563"><figcaption><p>Access Restricted page</p></figcaption></figure></div>

@@ -73,7 +73,7 @@ Regular review of skipped test cases helps you refine filter logic and maintain 
 
 {% stepper %}
 {% step %}
-#### Navigate to Test Results
+**Navigate to Test Results**
 
 1. Log in to the Akto Dashboard.
 2. Open **API Security Testing** from the left navigation panel.
@@ -82,7 +82,7 @@ Regular review of skipped test cases helps you refine filter logic and maintain 
 {% endstep %}
 
 {% step %}
-#### Filter by Skipped Test Cases
+**Filter by Skipped Test Cases**
 
 Scroll to the results table.\
 Above the table, select the **Skipped** filter to display only skipped test cases.
@@ -91,7 +91,7 @@ The table displays the issue name and associated error message.
 {% endstep %}
 
 {% step %}
-#### Review the Detailed Error Message
+**Review the Detailed Error Message**
 
 Select a specific skipped test case from the table.\
 Open the test result details panel.

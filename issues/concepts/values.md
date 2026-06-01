@@ -1,6 +1,6 @@
 # Evidence
 
-The Evidence tab in the Issue details provides in-depth information about the specific API interactions associated with the detected vulnerability. When examining an issue, the evidence tab offers detailed insights into the API calls that triggered the security concern.&#x20;
+The Evidence tab in the Issue details provides in-depth information about the specific API interactions associated with the detected vulnerability. When examining an issue, the evidence tab offers detailed insights into the API calls that triggered the security concern.
 
 This includes both the requests sent to the API and the responses received, allowing for a comprehensive analysis of the vulnerability context.
 
@@ -26,7 +26,7 @@ The response section usually shows:
 Analysing the response data is essential for understanding how the API reacted to the potentially vulnerable request and what information may have been exposed.
 
 {% hint style="info" %}
-#### Change Legend in Evidence
+**Change Legend in Evidence**
 
 The legend under the Evidence tab explains how Akto highlights differences between compared requests and responses.
 
@@ -40,7 +40,7 @@ The legend under the Evidence tab explains how Akto highlights differences betwe
 
     Marks fields or values that exist in both comparisons but have different values.
 
-![](<../../.gitbook/assets/image (177).png>)
+<img src="../../.gitbook/assets/image (177).png" alt="" data-size="original">
 {% endhint %}
 
 ### Usage
