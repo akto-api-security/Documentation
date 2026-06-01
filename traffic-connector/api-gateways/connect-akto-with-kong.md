@@ -158,41 +158,71 @@ The ingest backend is a set of services that receive traffic metadata from the K
 
 This is the fastest way to get started. You need a Linux server with at least **4 vCPUs and 8 GB RAM**.
 
-The deployment files are available at:\
-`https://github.com/akto-api-security/infra/tree/feature/quick-setup/guardrail-service-e2e-setup`
+The Docker Compose file is available at:\
+[`docker-compose-mini-runtime-data-ingestion.yaml`](https://github.com/akto-api-security/infra/blob/feature/quick-setup/docker-compose-mini-runtime-data-ingestion.yaml)
 
 {% stepper %}
 {% step %}
-**Clone the Setup Repository**
+**Clone the Repository**
 
 ```bash
 git clone -b feature/quick-setup https://github.com/akto-api-security/infra.git
-cd infra/guardrail-service-e2e-setup
+cd infra
 ```
 
 {% endstep %}
 
 {% step %}
-**Set Up Environment Files**
+**Configure Environment Files**
 
-Navigate into the `docker-compose` folder, then copy each template and fill in your Akto API token:
+Two env files must be present alongside the compose file before you start the services.
+
+**`docker-mini-runtime.env`** — controls the runtime service. The only value you must change is your Akto API token:
 
 ```bash
-cd docker-compose
-
-# Kafka IP (only variable substituted by docker-compose itself)
-cp .env.example .env
-# Edit .env — set AKTO_KAFKA_IP to your server's private IP
-
-# Service env files — copy each template and replace <YOUR_AKTO_API_TOKEN>
-cp docker-mini-runtime.env.template     docker-mini-runtime.env
-cp data-ingestion-docker.env.template   data-ingestion-docker.env
+# Create the file (it does not have a template to copy in this repo — create it fresh)
+cat > docker-mini-runtime.env <<EOF
+AKTO_CONFIG_NAME=staging
+AKTO_KAFKA_TOPIC_NAME=akto.api.logs
+AKTO_KAFKA_BROKER_URL=kafka1:19092
+AKTO_KAFKA_BROKER_MAL=localhost:29092
+AKTO_KAFKA_GROUP_ID_CONFIG=asdf
+AKTO_KAFKA_MAX_POLL_RECORDS_CONFIG=100
+AKTO_ACCOUNT_NAME=Helios
+AKTO_TRAFFIC_BATCH_SIZE=100
+AKTO_TRAFFIC_BATCH_TIME_SECS=10
+USE_HOSTNAME=true
+AKTO_INSTANCE_TYPE=RUNTIME
+DATABASE_ABSTRACTOR_SERVICE_URL=https://cyborg.akto.io
+DATABASE_ABSTRACTOR_SERVICE_TOKEN=<YOUR_AKTO_API_TOKEN>
+RUNTIME_MODE=hybrid
+AKTO_THREAT_ENABLED=true
+EOF
 ```
 
-Open each `.env` file you just created and replace every `<YOUR_AKTO_API_TOKEN>` with your token from the Akto dashboard (Settings → API Tokens).
+Replace `<YOUR_AKTO_API_TOKEN>` with your token from the Akto dashboard.
+
+**`data-ingestion-docker.env`** — controls the data ingestion service. No changes needed for a standard setup:
+
+```bash
+cat > data-ingestion-docker.env <<EOF
+AKTO_TRAFFIC_BATCH_SIZE=100
+AKTO_TRAFFIC_BATCH_TIME_SECS=10
+AKTO_KAFKA_BROKER_URL=kafka1:19092
+AKTO_KAFKA_PRODUCER_BATCH_SIZE=10
+AKTO_KAFKA_PRODUCER_LINGER_MS=10
+AKTO_KAFKA_TOPIC_NAME=akto.api.logs
+EOF
+```
+
+You also need to set `AKTO_KAFKA_IP` to your server's private IP. Create a `.env` file in the same directory:
+
+```bash
+echo "AKTO_KAFKA_IP=<YOUR_SERVER_PRIVATE_IP>" > .env
+```
 
 {% hint style="warning" %}
-Never publish `.env` files in public — they contain your API token.
+Never commit these env files to version control — they contain your API token.
 {% endhint %}
 {% endstep %}
 
@@ -200,17 +230,18 @@ Never publish `.env` files in public — they contain your API token.
 **Start the Services**
 
 ```bash
-docker compose up -d
+docker compose -f docker-compose-mini-runtime-data-ingestion.yaml up -d
 ```
 
 This starts the following services:
 
-| Service                     | Port | Purpose                                                                |
-| --------------------------- | ---- | ---------------------------------------------------------------------- |
-| `zoo1`                      | 2181 | ZooKeeper (Kafka coordination)                                         |
-| `kafka1`                    | 9092 | Kafka message broker                                                   |
-| `akto-api-security-runtime` | —    | Processes API traffic from Kafka for discovery and schema inference    |
-| `data-ingestion-service`    | 8080 | Receives traffic from Kong and ingests it — **this is the plugin endpoint** |
+| Service                     | Host Port | Purpose                                                                     |
+| --------------------------- | --------- | --------------------------------------------------------------------------- |
+| `zoo1`                      | 2181      | ZooKeeper (Kafka coordination)                                              |
+| `kafka1`                    | 9092      | Kafka message broker                                                        |
+| `akto-api-security-runtime` | —         | Processes API traffic from Kafka for discovery and schema inference         |
+| `data-ingestion-service`    | **9091**  | Receives traffic from Kong and ingests it — **this is the plugin endpoint** |
+| `redis`                     | 6379      | Used by the threat detection service                                        |
 
 {% endstep %}
 
@@ -218,20 +249,14 @@ This starts the following services:
 **Verify All Services Are Running**
 
 ```bash
-docker compose ps
+docker compose -f docker-compose-mini-runtime-data-ingestion.yaml ps
 ```
 
 All services should show status `Up`. If any are restarting, check their logs:
 
 ```bash
-docker compose logs data-ingestion-service
-docker compose logs akto-api-security-runtime
-```
-
-Test the ingest endpoint directly:
-
-```bash
-curl -sf http://localhost:8080/health && echo "data-ingestion OK"
+docker compose -f docker-compose-mini-runtime-data-ingestion.yaml logs data-ingestion-service
+docker compose -f docker-compose-mini-runtime-data-ingestion.yaml logs akto-api-security-runtime
 ```
 
 {% endstep %}
@@ -239,27 +264,29 @@ curl -sf http://localhost:8080/health && echo "data-ingestion OK"
 {% step %}
 **Update the Kong Plugin with the Service URL**
 
-Your ingest service is now available at `http://<YOUR_SERVER_IP>:8080`. Update the Kong plugin configuration:
+Your ingest service is now available at `http://<YOUR_SERVER_IP>:9091`. Update the Kong plugin configuration:
 
 ```bash
 # Update an existing plugin (replace <PLUGIN_ID> with your plugin's ID)
 curl -X PATCH http://localhost:8001/plugins/<PLUGIN_ID> \
-  --data "config.service_url=http://<YOUR_SERVER_IP>:8080"
+  --data "config.service_url=http://<YOUR_SERVER_IP>:9091"
 ```
 
 Or if you haven't enabled the plugin yet, use this URL in the Step 2 commands above.
 
 {% hint style="info" %}
-If your Kong instance and ingest server are on different networks, make sure port `8080` is accessible from the Kong host. If you want HTTPS, place a reverse proxy (nginx, Caddy) or load balancer in front of the ingest service.
+If your Kong instance and ingest server are on different networks, make sure port `9091` is accessible from the Kong host. If you want HTTPS, place a reverse proxy (nginx, Caddy) or load balancer in front of the ingest service.
 {% endhint %}
 {% endstep %}
 {% endstepper %}
 
 ***
 
-### Option B: Kubernetes (Helm Charts)
+### Option B: Kubernetes (Helm Chart)
 
-Use this option if your infrastructure runs on Kubernetes.
+Use this option if your infrastructure runs on Kubernetes. The `akto-mini-runtime` chart deploys Kafka, the runtime, and the data ingestion service together in a single release.
+
+Chart source: [`charts/mini-runtime`](https://github.com/akto-api-security/helm-charts/tree/master/charts/mini-runtime)
 
 {% stepper %}
 {% step %}
@@ -273,32 +300,28 @@ helm repo update
 {% endstep %}
 
 {% step %}
-**Install the Charts in Order**
-
-Deploy the following two charts **in the exact order shown**. The second chart depends on the first.
-
-**Chart 1 — Database Abstractor**
-
-Sets up the data access layer.
+**Install the Chart**
 
 ```bash
-helm install akto-database-abstractor akto/akto-setup-database-abstractor \
+helm install akto-mini-runtime akto/akto-mini-runtime \
   -n <NAMESPACE> \
-  --set mongo.aktoMongoConn="<MONGODB_CONNECTION_STRING>"
-```
-
-**Chart 2 — Data Ingestion + Runtime**
-
-Processes and stores the traffic captured by the Kong plugin.
-
-```bash
-helm install akto-mrs-runtime-combined akto/akto-mrs-runtime-combined \
-  -n <NAMESPACE> \
-  --set mini_runtime.aktoApiSecurityRuntime.env.databaseAbstractorUrl="https://ultron.akto.io" \
+  --create-namespace \
+  --set mini_runtime.aktoApiSecurityRuntime.env.databaseAbstractorUrl="https://cyborg.akto.io" \
   --set mini_runtime.aktoApiSecurityRuntime.env.databaseAbstractorToken="<YOUR_AKTO_API_TOKEN>" \
-  --set mini_runtime.aktoApiSecurityRuntime.env.aktoLogLevel="INFO"
+  --set mini_runtime.aktoApiSecurityRuntime.env.aktoLogLevel="WARN"
 ```
 
+Replace `<YOUR_AKTO_API_TOKEN>` with your token from the Akto dashboard.
+
+{% hint style="info" %}
+To customise resource limits, replicas, external Kafka, or other settings, download the default `values.yaml` and pass it with `-f values.yaml`:
+
+```bash
+helm show values akto/akto-mini-runtime > values.yaml
+# edit values.yaml, then:
+helm install akto-mini-runtime akto/akto-mini-runtime -n <NAMESPACE> -f values.yaml
+```
+{% endhint %}
 {% endstep %}
 
 {% step %}
@@ -308,7 +331,7 @@ helm install akto-mrs-runtime-combined akto/akto-mrs-runtime-combined \
 kubectl get pods -n <NAMESPACE>
 ```
 
-You should see pods for both charts in `Running` status. If any pod is stuck in `CrashLoopBackOff` or `Pending`, check its logs:
+You should see pods for Kafka, the runtime, and the data ingestion service all in `Running` status. If any pod is stuck in `CrashLoopBackOff` or `Pending`, check its logs:
 
 ```bash
 kubectl logs -n <NAMESPACE> <POD_NAME>
@@ -320,10 +343,10 @@ kubectl logs -n <NAMESPACE> <POD_NAME>
 **Get the Ingest Service URL**
 
 ```bash
-kubectl get services -n <NAMESPACE> | grep data-ingestion
+kubectl get services -n <NAMESPACE>
 ```
 
-Use the service's `CLUSTER-IP` (for in-cluster access) or set up an `Ingress` / `LoadBalancer` service for external access. Update the Kong plugin `config.service_url` with this URL.
+Locate the `data-ingestion-service` entry. Use its `CLUSTER-IP` and port `9091` for in-cluster access (e.g., `http://data-ingestion-service.<NAMESPACE>.svc.cluster.local:9091`), or set up an `Ingress` / `LoadBalancer` service for access from outside the cluster. Update the Kong plugin `config.service_url` with this URL.
 {% endstep %}
 {% endstepper %}
 
