@@ -141,6 +141,30 @@ You will be prompted to log in once with your Microsoft account. Once you do, Ak
 {% stepper %}
 {% step %}
 Navigate to **AI Agent Discovery** and open the collection that contains your imported Copilot Studio agent.
+
+Verify that `bot-environment-id` and `bot-schemaname` are present in the collection tags. If not, expand the section below.
+
+{% details summary="How to get and add bot-environment-id and bot-schemaname" %}
+
+These tags are required for Akto to correctly target your Copilot Studio agent during red teaming.
+
+**Get the values from Copilot Studio**
+
+1. Log in to [https://copilotstudio.microsoft.com](https://copilotstudio.microsoft.com).
+2. Go to the **Agents** page and select your agent.
+3. Click **Settings** > **Advanced** > **Metadata**.
+4. Copy the **Environment ID** and **Schema name** values.
+
+**Add them to the agent collection in Akto**
+
+Once you have the values, add them as tags on the agent collection. Refer to [Create New Tags](../../agentic-ai-discovery/how-to/create-new-tags.md) for step-by-step instructions.
+
+Add the following tags:
+
+* `bot-environment-id=<your-environment-id>`
+* `bot-schemaname=<your-schema-name>`
+
+{% enddetails %}
 {% endstep %}
 
 {% step %}
