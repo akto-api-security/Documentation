@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide walks you through red teaming AI Agents built on Microsoft Copilot Studio using Akto. Akto connects directly to your Copilot Studio agent via Microsoft OAuth — you register an app in Microsoft Entra, create a scan role in Akto with those credentials, and Akto handles token refresh automatically so you can run adversarial tests without any manual re-authentication.
+This guide walks you through red teaming AI Agents built on Microsoft Copilot Studio using Akto. Akto connects directly to your Copilot Studio AI Agents using Microsoft Login provided in Scan Roles. You register an app in Microsoft Entra, create a scan role in Akto with your Microsoft Login, and Akto handles token refresh automatically so you can run adversarial tests.
 
 ## Prerequisites
 
@@ -81,12 +81,6 @@ Select the **APIs my organization uses** tab. Search for **Power Platform API** 
 {% endstep %}
 
 {% step %}
-(Optional) Click **Add a permission** again. Search for **Power Automate** (also listed as "Microsoft Flow Service") and add the following delegated permission:
-
-* `User`
-{% endstep %}
-
-{% step %}
 (Optional) Click **Grant admin consent**.
 
 {% hint style="info" %}
@@ -136,6 +130,10 @@ Click **Save & Connect with Microsoft** and complete the login prompt.
 {% hint style="info" %}
 You will be prompted to log in once with your Microsoft account. Once you do, Akto will obtain a refresh token that stays valid for **90 days**.
 {% endhint %}
+
+You might be prompted to grant consent to invoke Copilot Studio and other basic permissions. Read the permissions carefully and accept them.
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/11. Microsoft Consent.png" alt="Microsoft Consent"><figcaption>Microsoft Consent</figcaption></figure></div>
 {% endstep %}
 {% endstepper %}
 
