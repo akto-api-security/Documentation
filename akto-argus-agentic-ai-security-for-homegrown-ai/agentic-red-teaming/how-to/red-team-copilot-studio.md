@@ -206,10 +206,6 @@ Add the following tags:
 {% endstep %}
 
 {% step %}
-Select the agent endpoint you want to red team.
-{% endstep %}
-
-{% step %}
 Click **Run Scan** to open the scan configuration panel.
 {% endstep %}
 
