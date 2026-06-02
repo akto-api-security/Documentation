@@ -28,12 +28,16 @@ Give the app a name and set supported account types to **Single tenant**.
 {% endstep %}
 
 {% step %}
-Configure the Redirect URI. Select platform as **Web** and add [https://app.akto.io/copilot/oauth/callback](https://app.akto.io/copilot/oauth/callback) as the URI.
+Configure the Redirect URI
 
-Click **Register**.
+*   Select platform as **Web** and add the following as the URI:
+
+    <pre data-overflow="wrap"><code>https://app.akto.io/copilot/oauth/callback
+    </code></pre>
+* Click **Register**.
 
 {% hint style="info" %}
-You will be prompted to log in once with your Microsoft account. Once you do, Akto will obtain a refresh token that stays valid for **90 days**.
+You will be prompted to log in once with your Microsoft account when you [create the scan role](red-team-copilot-studio.md#id-2.-create-a-scan-role-in-akto). Once you do, Akto will obtain a refresh token that stays valid for **90 days**.
 {% endhint %}
 {% endstep %}
 
@@ -107,7 +111,7 @@ Under **Details**, enter a name for the scan role (e.g. `agent-red-teaming`).
 {% step %}
 Under **Role endpoint conditions**, set:
 
-* **Endpoint** | **contains** | `/`&#x20;
+* **Endpoint** | **contains** | `/`
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (174).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
