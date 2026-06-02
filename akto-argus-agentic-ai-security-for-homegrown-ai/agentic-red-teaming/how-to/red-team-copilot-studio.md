@@ -111,6 +111,10 @@ Under **Role endpoint conditions**, set:
 {% endstep %}
 
 {% step %}
+Click **Save** on the top left. Then navigate back to **Roles** and select the role you created.
+{% endstep %}
+
+{% step %}
 Scroll down to **Authentication details** > **Token details** and select **Copilot Studio (Microsoft OAuth)**.
 {% endstep %}
 
