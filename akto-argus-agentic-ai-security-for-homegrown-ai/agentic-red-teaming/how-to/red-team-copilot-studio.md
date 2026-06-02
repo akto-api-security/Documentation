@@ -1,4 +1,8 @@
-# Red Team Copilot Studio AI Agents
+# Copilot Studio Red Teaming — Direct OAuth Login
+
+{% hint style="info" %}
+Use this guide if you have more than one agent to test. This setup requires an interactive user login to invoke the AI agents.
+{% endhint %}
 
 ## Overview
 

@@ -1,8 +1,8 @@
----
-hidden: true
----
+# Copilot Studio Red Teaming — Power Automate Flow
 
-# Red Teaming Copilot Studio Agent
+{% hint style="info" %}
+Use this guide if you are red teaming a single Copilot Studio agent.
+{% endhint %}
 
 ## Overview
 
