@@ -9,6 +9,7 @@ This guide walks you through red teaming AI Agents built on Microsoft Copilot St
 * A **published** AI Agent in Copilot Studio (draft agents won't work)
 * A Microsoft account with permission to create App Registrations and add API permissions in Microsoft Entra
 * Access to [Microsoft Entra](https://entra.microsoft.com)
+* Akto sends requests to your Copilot Studio AI Agents from the IP address **135.119.57.229**. If your network has IP allowlisting enabled, add this IP to your allowlist.
 
 ## 1. Create an App Registration in Microsoft Entra
 
