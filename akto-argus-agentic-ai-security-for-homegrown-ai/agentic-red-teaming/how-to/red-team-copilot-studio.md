@@ -147,6 +147,8 @@ You will be prompted to log in once with your Microsoft account. Once you do, Ak
 {% step %}
 Navigate to **AI Agent Discovery** and open the collection that contains your imported Copilot Studio agent.
 
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/Screenshot 2026-06-02 at 5.34.52 PM.png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 Verify that `bot-environment-id` and `bot-schemaname` are present in the collection tags. If not, expand the section below.
 
 <details>
