@@ -137,7 +137,29 @@ You might be prompted to grant consent to invoke Copilot Studio and other basic 
 {% endstep %}
 {% endstepper %}
 
-## 3. Run a Red Teaming Scan
+## 3. Add Description to Your Agent
+
+Providing a description helps Akto craft more targeted attack prompts specific to your agent's context.
+
+{% stepper %}
+{% step %}
+In the Akto Dashboard, go to **AI Agent Discovery**.
+{% endstep %}
+
+{% step %}
+Select any agent (collection).
+{% endstep %}
+
+{% step %}
+Below the agent name at the top, click **Add Description**.
+{% endstep %}
+
+{% step %}
+Add relevant information about your agent and press **Enter**.
+{% endstep %}
+{% endstepper %}
+
+## 4. Run a Red Teaming Scan
 
 {% stepper %}
 {% step %}
