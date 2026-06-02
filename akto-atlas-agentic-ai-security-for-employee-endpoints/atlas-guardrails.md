@@ -65,4 +65,4 @@ sequenceDiagram
 
 ## Learn More
 
-For a deep dive into guardrail scanners, policies, threat dashboards, and remediation workflows, see the [**Agentic Guardrails**](/broken/pages/GqT7atAXg9l9FDBVe7BX) section.
+For a deep dive into guardrail scanners, policies, threat dashboards, and remediation workflows, see the [**Agentic Guardrails**](https://app.gitbook.com/s/tog5ODwYfqPOf4eQhsOC/agentic-guardrails) section.

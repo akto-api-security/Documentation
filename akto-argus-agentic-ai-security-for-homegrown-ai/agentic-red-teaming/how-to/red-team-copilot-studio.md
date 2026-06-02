@@ -1,5 +1,4 @@
-
-# Red Teaming Copilot Studio AI Agents with Akto
+# Red Team Copilot Studio AI Agents
 
 ## Overview
 
@@ -23,7 +22,7 @@ This app registration lets you obtain an access token to call the Power Automate
 {% step %}
 Go to [Microsoft Entra](https://entra.microsoft.com) > **App registrations** > **New registration**.
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/1. App Registration.png" alt=""><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/1. App Registration.png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -33,14 +32,16 @@ Give the app a name and set supported account types to **Single tenant**.
 {% step %}
 Configure Redirect URI.
 
-(For Microsoft Copilot Studio) Select platform as **Web** and add `<leave-space-for-now-will-add-later>` as URI.
+(For Microsoft Copilot Studio) Select platform as **Web** and add [https://app.akto.io/copilot/oauth/callback](https://app.akto.io/copilot/oauth/callback) as URI.
 
 Click **Register**.
 {% endstep %}
 
+{% step %}
 {% hint style="info" %}
 You will be prompted to log in once with your Microsoft account. Once you do, Akto will obtain a refresh token that stays valid for **90 days**.
 {% endhint %}
+{% endstep %}
 
 {% step %}
 Note down:
@@ -48,7 +49,7 @@ Note down:
 * **Application (Client) ID**
 * **Directory (Tenant) ID**
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/2. App Registration IDs.png" alt=""><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/2. App Registration IDs.png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 {% endstepper %}
 
@@ -76,7 +77,7 @@ Go to **API Permissions** > **Add a permission**.
 {% endstep %}
 
 {% step %}
-Select the **APIs my organization uses** tab. Search for **Power Platform API** and add the following delegated permission:
+Select the **APIs my organization uses** tab. Search for **Power Platform API** and add the following **delegated permission**:
 
 * `CopilotStudio.Copilots.Invoke`
 {% endstep %}
@@ -112,7 +113,9 @@ Under **Details**, enter a name for the scan role (e.g. `agent-red-teaming`).
 {% step %}
 Under **Role endpoint conditions**, set:
 
-* **Endpoint** | **contains** | `/`
+* **Endpoint** | **contains** | `/`&#x20;
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (174).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -124,7 +127,9 @@ Fill in the credentials from Step 1:
 
 * **Tenant ID**: your Directory (Tenant) ID
 * **Client ID**: your Application (Client) ID
-* **Client Secret**: the secret value you copied
+*   **Client Secret**: the secret value you copied
+
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/Screenshot 2026-06-02 at 3.45.50 PM.png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -144,7 +149,9 @@ Navigate to **AI Agent Discovery** and open the collection that contains your im
 
 Verify that `bot-environment-id` and `bot-schemaname` are present in the collection tags. If not, expand the section below.
 
-{% details summary="How to get and add bot-environment-id and bot-schemaname" %}
+<details>
+
+<summary>How to get and add bot-environment-id and bot-schemaname</summary>
 
 These tags are required for Akto to correctly target your Copilot Studio agent during red teaming.
 
@@ -153,7 +160,9 @@ These tags are required for Akto to correctly target your Copilot Studio agent d
 1. Log in to [https://copilotstudio.microsoft.com](https://copilotstudio.microsoft.com).
 2. Go to the **Agents** page and select your agent.
 3. Click **Settings** > **Advanced** > **Metadata**.
-4. Copy the **Environment ID** and **Schema name** values.
+4.  Copy the **Environment ID** and **Schema name** values.
+
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/Screenshot 2026-06-02 at 3.50.24 PM.png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 **Add them to the agent collection in Akto**
 
@@ -164,7 +173,7 @@ Add the following tags:
 * `bot-environment-id=<your-environment-id>`
 * `bot-schemaname=<your-schema-name>`
 
-{% enddetails %}
+</details>
 {% endstep %}
 
 {% step %}
@@ -180,11 +189,11 @@ Choose the red teaming tests you want to execute against the agent.
 {% endstep %}
 
 {% step %}
-In the **Roles** section, select the scan role you created in Step 2. This ensures Akto uses your Copilot Studio credentials and automatically refreshes the access token during the scan.
+In the **Roles** section, select the scan role you **created in Step 2**.
 {% endstep %}
 
 {% step %}
-Click **Run Scan** to start. Akto will send adversarial prompts to your Copilot Studio agent and analyze the responses.
+Click **Run Scan** to start.
 {% endstep %}
 {% endstepper %}
 
