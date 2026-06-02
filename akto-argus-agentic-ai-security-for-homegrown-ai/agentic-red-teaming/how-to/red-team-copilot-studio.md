@@ -2,19 +2,17 @@
 
 ## Overview
 
-This guide walks you through setting up automated red teaming for AI Agents built on Microsoft Copilot Studio using Akto. A Power Automate flow acts as the HTTP bridge between Akto and your Copilot Studio agent — Akto sends adversarial prompts to the flow, the flow forwards them to your agent, and the responses come back for analysis.
+This guide walks you through red teaming AI Agents built on Microsoft Copilot Studio using Akto. Akto connects directly to your Copilot Studio agent via Microsoft OAuth — you register an app in Microsoft Entra, create a scan role in Akto with those credentials, and Akto handles token refresh automatically so you can run adversarial tests without any manual re-authentication.
 
 ## Prerequisites
 
 * A **published** AI Agent in Copilot Studio (draft agents won't work)
-* A Microsoft account with:
-  * Permission to create App Registrations and add API permissions in Microsoft Entra
-  * Permission to create flows in Power Automate
-* **Power Automate Premium** license (per-user or per-flow) — the HTTP trigger and Copilot Studio connector are both premium features
+* A Microsoft account with permission to create App Registrations and add API permissions in Microsoft Entra
+* Access to [Microsoft Entra](https://entra.microsoft.com)
 
-## 1. Create an App Re gistration in Microsoft Entra
+## 1. Create an App Registration in Microsoft Entra
 
-This app registration lets you obtain an access token to call the Power Automate flow programmatically.
+This app registration allows Akto to authenticate with Microsoft Copilot Studio on your behalf using OAuth.
 
 ### Register the App
 
@@ -30,14 +28,10 @@ Give the app a name and set supported account types to **Single tenant**.
 {% endstep %}
 
 {% step %}
-Configure Redirect URI.
-
-(For Microsoft Copilot Studio) Select platform as **Web** and add [https://app.akto.io/copilot/oauth/callback](https://app.akto.io/copilot/oauth/callback) as URI.
+Configure the Redirect URI. Select platform as **Web** and add [https://app.akto.io/copilot/oauth/callback](https://app.akto.io/copilot/oauth/callback) as the URI.
 
 Click **Register**.
-{% endstep %}
 
-{% step %}
 {% hint style="info" %}
 You will be prompted to log in once with your Microsoft account. Once you do, Akto will obtain a refresh token that stays valid for **90 days**.
 {% endhint %}
@@ -65,7 +59,7 @@ Set an expiry and click **Add**.
 {% endstep %}
 
 {% step %}
-**Copy the secret value immediately** — it is not shown again.
+**Copy the secret value immediately**: it is not shown again.
 {% endstep %}
 {% endstepper %}
 
@@ -92,7 +86,7 @@ Select the **APIs my organization uses** tab. Search for **Power Platform API** 
 (Optional) Click **Grant admin consent**.
 
 {% hint style="info" %}
-Granting admin consent requires the **Application Administrator** or **Global Administrator** role in Microsoft Entra. If you don't have this access, you can skip this step — users will be prompted to consent individually when they authenticate.
+Granting admin consent requires the **Application Administrator** or **Global Administrator** role in Microsoft Entra. If you don't have this access, you can skip this step: users will be prompted to consent individually when they authenticate.
 {% endhint %}
 {% endstep %}
 {% endstepper %}
@@ -203,7 +197,7 @@ Click **Run Scan** to start.
 
 If you need assistance with the Copilot Studio connector:
 
-* **In-app Chat** — Use the chat widget in your Akto dashboard for instant support.
-* **Discord Community** — Join our community at [discord.gg/Wpc6xVME4s](https://discord.gg/Wpc6xVME4s).
-* **Email Support** — Contact us at [support@akto.io](mailto:support@akto.io).
-* **Contact Form** — Submit a support request at [https://www.akto.io/contact-us](https://www.akto.io/contact-us).
+* **In-app Chat**: Use the chat widget in your Akto dashboard for instant support.
+* **Discord Community**: Join our community at [discord.gg/Wpc6xVME4s](https://discord.gg/Wpc6xVME4s).
+* **Email Support**: Contact us at [support@akto.io](mailto:support@akto.io).
+* **Contact Form**: Submit a support request at [https://www.akto.io/contact-us](https://www.akto.io/contact-us).
