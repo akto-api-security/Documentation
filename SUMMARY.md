@@ -344,6 +344,7 @@
   * [MCP Proxy](agentic-guardrails/overview/akto-mcp-proxy.md)
   * [AI Agent Proxy](agentic-guardrails/overview/akto-agent-proxy.md)
   * [AI LLM Proxy](agentic-guardrails/overview/ai-llm-proxy.md)
+  * [Guardrails as API](agentic-guardrails/overview/guardrails-api.md)
 * [Concepts](agentic-guardrails/concepts/README.md)
   * [Agent Guard](agentic-guardrails/concepts/agent-guard.md)
   * [Schema Conformance](agentic-guardrails/concepts/schema-conformance.md)
