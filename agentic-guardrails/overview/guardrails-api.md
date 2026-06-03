@@ -1,5 +1,7 @@
 ---
-description: Use the Akto Guardrails HTTP API to inspect and ingest AI agent traffic directly
+description: >-
+  Use the Akto Guardrails HTTP API to inspect and ingest AI agent traffic
+  directly
 ---
 
 # Guardrails as API
@@ -40,18 +42,11 @@ GET https://<GUARDRAILS_SERVICE_URL>/api/http-proxy
 
 All three parameters are required:
 
-| Parameter             | Value  | Description                                                                              |
-| --------------------- | ------ | ---------------------------------------------------------------------------------------- |
-| `guardrails`          | `true` | Run guardrail checks on the request payload                                              |
-| `response_guardrails` | `true` | Run guardrail checks on the response payload                                             |
-| `ingest_data`         | `true` | Send the interaction to the Akto dashboard for monitoring and visibility                 |
+<table><thead><tr><th width="225.015625">Parameter</th><th width="114.375">Value</th><th>Description</th></tr></thead><tbody><tr><td><code>guardrails</code></td><td><code>true</code></td><td>Run guardrail checks on the request payload</td></tr><tr><td><code>response_guardrails</code></td><td><code>true</code></td><td>Run guardrail checks on the response payload</td></tr><tr><td><code>ingest_data</code></td><td><code>true</code></td><td>Send the interaction to the Akto dashboard for monitoring and visibility</td></tr></tbody></table>
 
 ### Headers
 
-| Header          | Required | Description                                                  |
-| --------------- | -------- | ------------------------------------------------------------ |
-| `authorization` | Yes      | Your Akto API token                                          |
-| `Content-Type`  | Yes      | `application/json`                                           |
+<table><thead><tr><th width="218.23046875">Header</th><th width="187.65234375">Required</th><th>Description</th></tr></thead><tbody><tr><td><code>authorization</code></td><td>Yes</td><td>Your Akto API token</td></tr><tr><td><code>Content-Type</code></td><td>Yes</td><td><code>application/json</code></td></tr></tbody></table>
 
 ### Request Body
 
@@ -81,25 +76,7 @@ The body represents one HTTP interaction (a request/response pair from your AI a
 
 #### Field Reference
 
-| Field              | Type             | Description                                                                                      |
-| ------------------ | ---------------- | ------------------------------------------------------------------------------------------------ |
-| `path`             | string           | The API path of the upstream call (e.g. `/v1/messages`, `/v1/chat/completions`)                  |
-| `requestHeaders`   | stringified JSON | Headers sent with the request. The `host` value becomes the **collection name** in Akto          |
-| `responseHeaders`  | stringified JSON | Headers received with the response. Pass `"{}"` if not available                                 |
-| `method`           | string           | HTTP method of the upstream call (e.g. `POST`, `GET`)                                            |
-| `requestPayload`   | stringified JSON | Body of the request sent to the LLM or agent. Use `{"body": "<content>"}` format                 |
-| `responsePayload`  | stringified JSON | Body of the response received from the LLM or agent. Use `{"body": "<content>"}` format          |
-| `ip`               | string           | IP address of the caller. Use `"127.0.0.1"` if not applicable                                    |
-| `time`             | string           | Unix timestamp in **milliseconds** of when the interaction occurred                               |
-| `statusCode`       | string           | HTTP status code of the upstream response (e.g. `"200"`, `"500"`)                                |
-| `type`             | string or null   | Set to `null` unless instructed otherwise                                                         |
-| `status`           | string           | Same as `statusCode`                                                                              |
-| `akto_account_id`  | string           | Your Akto account ID. Use `"1000000"` unless the Akto support team specifies otherwise            |
-| `akto_vxlan_id`    | string           | Set to `"0"` unless instructed otherwise                                                          |
-| `is_pending`       | string           | Set to `"false"`                                                                                  |
-| `source`           | string           | Traffic source label. Use `"MIRRORING"` for agentic traffic                                       |
-| `tag`              | stringified JSON | Labels attached to the interaction. The `source` key inside the tag must match the product: `"AGENTIC"` for Akto Argus, `"ENDPOINT"` for Akto Atlas |
-| `contextSource`    | string           | Identifies the product context: `"AGENTIC"` for Akto Argus (homegrown AI), `"ENDPOINT"` for Akto Atlas (employee endpoints) |
+<table><thead><tr><th width="200.21875">Field</th><th width="198.09765625">Type</th><th>Description</th></tr></thead><tbody><tr><td><code>path</code></td><td>string</td><td>The API path of the upstream call (e.g. <code>/v1/messages</code>, <code>/v1/chat/completions</code>)</td></tr><tr><td><code>requestHeaders</code></td><td>stringified JSON</td><td>Headers sent with the request. The <code>host</code> value becomes the <strong>collection name</strong> in Akto</td></tr><tr><td><code>responseHeaders</code></td><td>stringified JSON</td><td>Headers received with the response. Pass <code>"{}"</code> if not available</td></tr><tr><td><code>method</code></td><td>string</td><td>HTTP method of the upstream call (e.g. <code>POST</code>, <code>GET</code>)</td></tr><tr><td><code>requestPayload</code></td><td>stringified JSON</td><td>Body of the request sent to the LLM or agent. Use <code>{"body": "&#x3C;content>"}</code> format</td></tr><tr><td><code>responsePayload</code></td><td>stringified JSON</td><td>Body of the response received from the LLM or agent. Use <code>{"body": "&#x3C;content>"}</code> format</td></tr><tr><td><code>ip</code></td><td>string</td><td>IP address of the caller. Use <code>"127.0.0.1"</code> if not applicable</td></tr><tr><td><code>time</code></td><td>string</td><td>Unix timestamp in <strong>milliseconds</strong> of when the interaction occurred</td></tr><tr><td><code>statusCode</code></td><td>string</td><td>HTTP status code of the upstream response (e.g. <code>"200"</code>, <code>"500"</code>)</td></tr><tr><td><code>type</code></td><td>string or null</td><td>Set to <code>null</code> unless instructed otherwise</td></tr><tr><td><code>status</code></td><td>string</td><td>Same as <code>statusCode</code></td></tr><tr><td><code>akto_account_id</code></td><td>string</td><td>Your Akto account ID. Use <code>"1000000"</code> unless the Akto support team specifies otherwise</td></tr><tr><td><code>akto_vxlan_id</code></td><td>string</td><td>Set to <code>"0"</code> unless instructed otherwise</td></tr><tr><td><code>is_pending</code></td><td>string</td><td>Set to <code>"false"</code></td></tr><tr><td><code>source</code></td><td>string</td><td>Traffic source label. Use <code>"MIRRORING"</code> for agentic traffic</td></tr><tr><td><code>tag</code></td><td>stringified JSON</td><td>Labels attached to the interaction. The <code>source</code> key inside the tag must match the product: <code>"AGENTIC"</code> for Akto Argus</td></tr><tr><td><code>contextSource</code></td><td>string</td><td>Identifies the product context: <code>"AGENTIC"</code> for Akto Argus (homegrown AI</td></tr></tbody></table>
 
 {% hint style="info" %}
 **Collection Naming**
