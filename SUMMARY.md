@@ -334,6 +334,7 @@
   * [AWS WAF](integrations/waf/aws-waf.md)
   * [Cloudflare WAF](integrations/waf/cloudflare-waf.md)
 * [New Relic](integrations/new-relic.md)
+* [OpenTelemetry](integrations/opentelemetry.md)
 * [Wiz](integrations/wiz.md)
 
 ## Alerts
