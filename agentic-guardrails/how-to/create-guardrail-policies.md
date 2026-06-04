@@ -288,6 +288,8 @@ Block outbound traffic by host or path pattern to prevent agents from reaching u
 
 The **Blocked patterns** list displays all configured entries. You can review and remove patterns from this list at any time.
 
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (175).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 {% hint style="info" %}
 Akto sits between your agents and their outbound traffic. When a request is made, Akto checks the destination host or path against the blocked patterns and denies any match before it reaches the target.
 {% endhint %}
