@@ -17,11 +17,11 @@ Before setting up the OpenTelemetry Integration, ensure you have the HTTP header
 * Go to **Settings > Integrations**.
 *   Find and click **"Configure"** next to OpenTelemetry.
 
-    <div data-with-frame="true"><figure><img src="../.gitbook/assets/integrations-monitoring-list-new-relic-highlight.png" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../.gitbook/assets/integrations-monitoring-list-opentelemetry-highlight.png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
-**Enter OpenTelemetry Endpoint Details**
+**Enter OpenTelemetry (OTLP) Endpoint Details**
 
 1. Enter **OTLP endpoint**.
 2. Enter authentication details.
@@ -30,12 +30,12 @@ Before setting up the OpenTelemetry Integration, ensure you have the HTTP header
     2. Enter **API Key**.
 
     {% hint style="info" %}
-    #### Prerequisites
+    If your OpenTelemetry endpoint requires a prefix before the API Key, please include the prefix when entering the API Key.
 
-    Before setting up the OpenTelemetry Integration, ensure you have the HTTP header name and value (API key) for authentication with the OpenTelemetry endpoint.
+    For example: Basic <api-key-here>
     {% endhint %}
 
-    <div data-with-frame="true"><figure><img src="../.gitbook/assets/wiz-integration-1.png" alt="" width="563"><figcaption></figcaption></figure></div>
+    <div data-with-frame="true"><figure><img src="../.gitbook/assets/opentelemetry-integration-1.png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
