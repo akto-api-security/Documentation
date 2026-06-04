@@ -692,6 +692,39 @@ Here are the **two separate scanner entries**, aligned with your format and nami
 
 ***
 
+### 23. Block Host/Path Guardrail
+
+**Purpose:** Prevents agents from making outbound requests to unauthorised hosts or paths.
+
+**What it Does:**
+
+* Intercepts outbound agent traffic before it reaches the destination
+* Matches the target host or path against configured blocked patterns
+* Supports wildcard matching using `*` for flexible pattern coverage
+* Blocks requests to specific domains, full hosts, or path prefixes
+
+**Risk Prevention:** Prevents agents from communicating with unauthorised external services, competitor platforms, or known data-exfiltration endpoints.
+
+**Use Cases:**
+
+* Blocking access to AI platforms (e.g. `chatgpt.com`, `claude.ai`, `gemini.google.com`)
+* Preventing requests to specific API paths across any host (e.g. `*/v1/chat/completions`)
+* Restricting agent traffic to approved internal or external services only
+* Enforcing data residency or compliance boundaries
+
+**Example Transformation:**
+
+* Agent Request:\
+  Outbound call to `claude.ai/v1/chat/completions`
+* Configured Pattern:\
+  `claude.ai`
+* Detected Issue:\
+  Destination matches a blocked host pattern
+* Enforced Output:\
+  "Request blocked: destination host is not permitted"
+
+***
+
 ## OUTPUT GUARDRAILS
 
 Output scanners validate AI-generated responses before they reach users. These scanners prevent data leaks, ensure quality, and maintain safety standards.
