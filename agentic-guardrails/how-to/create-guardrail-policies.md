@@ -26,7 +26,7 @@ The guardrail policies list displays existing policies and provides access to po
 
 ### Fill the Configuration Form
 
-The configuration form is organised into nine sections, each targeting a specific enforcement layer.
+The configuration form is organised into multiple sections, each targeting a specific enforcement layer.
 
 <details>
 
@@ -275,7 +275,28 @@ Detect cases where tool behavior does not align with declared metada
 
 <details>
 
-<summary>10. Server and Application Settings</summary>
+<summary>10. Block host / path</summary>
+
+Block outbound traffic by host or path pattern to prevent agents from reaching unauthorised external services or endpoints.
+
+**Add a Blocked Pattern**
+
+* Enter a host or path pattern in the **Host or path pattern** field.
+* Select **Add** to include the pattern in the blocked list.
+
+**Manage Blocked Patterns**
+
+The **Blocked patterns** list displays all configured entries. You can review and remove patterns from this list at any time.
+
+{% hint style="info" %}
+Akto sits between your agents and their outbound traffic. When a request is made, Akto checks the destination host or path against the blocked patterns and denies any match before it reaches the target.
+{% endhint %}
+
+</details>
+
+<details>
+
+<summary>11. Server and Application Settings</summary>
 
 You define where the guardrail policy is enforced and how violations are handled.
 
