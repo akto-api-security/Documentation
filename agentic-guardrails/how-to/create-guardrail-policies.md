@@ -298,7 +298,7 @@ Prevent users with personal or consumer email accounts from accessing the AI age
 
 * Enable **personal account blocking** to restrict access to organisation-managed accounts only.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (175).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (177).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 </details>
 
@@ -335,7 +335,7 @@ Enable enforcement based on traffic direction:
 
 You can enable either option independently or both together based on enforcement requirements.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (3).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (176).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 </details>
 
