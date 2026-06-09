@@ -18,7 +18,41 @@ There could be multiple reasons why you'd want to install probing module within 
 2. Go to Quick Start > Hybrid Saas > Click on “Connect” button
 3. Copy the JWT token (marked in red) \[ Also referred as `Database Abstractor Token` later]
 
-You then have to use a Linux VM to install Akto AI Red Teaming module in your cloud manually.
+You then have to use a Linux VM or a Helm chart to install Akto AI Red Teaming module in your cloud.
+
+## Setup with Helm Chart
+
+{% stepper %}
+{% step %}
+**Add the Akto Helm Repository**
+
+Run the following commands to add and update the Akto Helm repo:
+
+```bash
+helm repo add akto https://akto-api-security.github.io/helm-charts
+helm repo update
+```
+{% endstep %}
+
+{% step %}
+**Install the Chart**
+
+Run the following command, replacing `<key>` with your **Anthropic API Key** and `<token>` with the **Database Abstractor Token** copied from [#copy-the-jwt-token](./#copy-the-jwt-token "mention"):
+
+```bash
+helm install akto-mini-testing akto/akto-mini-testing \
+  --set testing.agentTesting.enabled=true \
+  --set testing.agentTesting.env.anthropicApiKey="<key>" \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<token>"
+```
+
+{% hint style="warning" %}
+**Anthropic API Key Required**
+
+You **must** replace `<key>` with your actual **Anthropic API Key** and `<token>` with the **Database Abstractor Service Token (JWT)**.
+{% endhint %}
+{% endstep %}
+{% endstepper %}
 
 ## Setup Linux VM
 
