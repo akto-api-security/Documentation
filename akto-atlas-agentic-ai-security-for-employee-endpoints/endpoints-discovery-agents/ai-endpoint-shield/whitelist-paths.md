@@ -1,113 +1,123 @@
 # Whitelist Paths — AI Endpoint Shield
 
-This page lists all file system paths that should be whitelisted in your security software (EDR, antivirus, or endpoint protection) to allow the Akto AI Endpoint Shield to function correctly on macOS.
+If an endpoint management tool is deployed in your organization, add the Akto AI Endpoint Shield binary paths as exclusions to prevent the tool from blocking or quarantining the process.
 
-> **Note:** `*` in paths is a wildcard covering all usernames (e.g., `/Users/*/` matches `/Users/john/`).
-
----
-
-## Priority Order
-
-Add paths in the following order of importance. Start with Section 1 — it alone resolves most conflicts.
-
-| Priority | Section | What it covers |
-|----------|---------|----------------|
-| **1 — Critical** | Binaries & Executables | Process execution blocks |
-| **2 — High** | Hook Scripts (Claude CLI & Cursor) | Hook execution blocks |
-| **3 — Medium** | LaunchAgent Plists | Background service alerts |
-| **4 — Low** | Staging & Install Paths | Install-time transient alerts |
-| **5 — Informational** | Logs & App Data | File write alerts |
+> Only the binary paths need to be excluded. Unlike broader EDR whitelisting, exclusions scoped to the executable paths are sufficient for normal operation.
 
 ---
 
-## 1. Binaries & Executables
+## Paths to Exclude
 
-These are the primary process paths evaluated on launch. **Whitelist these first.**
+These paths apply to all endpoint management tools (Microsoft Defender, SentinelOne, CrowdStrike, and others).
 
 | Path | Description |
 |------|-------------|
-| `/Users/*/.akto-mcp-endpoint-shield/bin/mcp-endpoint-shield` | Main Go binary |
-| `/Users/*/.akto-mcp-endpoint-shield/bin/mcp_endpoint_shield.sh` | User-level wrapper shell script |
-| `/usr/local/bin/mcp_endpoint_shield.sh` | System-level detector wrapper script |
+| `/usr/local/bin/akto-endpoint-shield` | Main binary (MDM/Jamf install) |
+| `~/.akto-endpoint-shield/bin/akto-endpoint-shield` | User-level binary |
 
 ---
 
-## 2. Hook Scripts — Claude CLI
+## Configure for MS Defender Endpoint
 
-| Path | Description |
-|------|-------------|
-| `/Users/*/.claude/hooks/akto-validate-prompt.py` | Prompt validation hook |
-| `/Users/*/.claude/hooks/akto-validate-response.py` | Response validation hook |
-| `/Users/*/.claude/hooks/akto-validate-prompt-wrapper.sh` | Prompt wrapper script |
-| `/Users/*/.claude/hooks/akto-validate-response-wrapper.sh` | Response wrapper script |
-| `/Users/*/.claude/hooks/akto_machine_id.py` | Machine ID generator |
+The following steps are specific to **Microsoft Defender for Endpoint**. For other tools, refer to your vendor's documentation for adding process or path exclusions.
 
----
+### Directly on the Mac
 
-## 3. Hook Scripts — Cursor IDE
+Run these commands on each machine (no MDM required):
 
-| Path | Description |
-|------|-------------|
-| `/Users/*/.cursor/hooks/akto/akto-validate-chat-prompt.py` | Chat prompt validation |
-| `/Users/*/.cursor/hooks/akto/akto-validate-chat-response.py` | Chat response validation |
-| `/Users/*/.cursor/hooks/akto/akto-validate-mcp-request.py` | MCP request validation |
-| `/Users/*/.cursor/hooks/akto/akto-validate-mcp-response.py` | MCP response validation |
-| `/Users/*/.cursor/hooks/akto/akto-validate-chat-prompt-wrapper.sh` | Chat prompt wrapper |
-| `/Users/*/.cursor/hooks/akto/akto-validate-chat-response-wrapper.sh` | Chat response wrapper |
-| `/Users/*/.cursor/hooks/akto/akto-validate-mcp-request-wrapper.sh` | MCP request wrapper |
-| `/Users/*/.cursor/hooks/akto/akto-validate-mcp-response-wrapper.sh` | MCP response wrapper |
-| `/Users/*/.cursor/hooks/akto/akto_machine_id.py` | Machine ID generator |
+{% stepper %}
+{% step %}
+Add the process and path exclusions:
 
----
+```bash
+sudo mdatp exclusion process add --name akto-endpoint-shield
+mdatp exclusion path add --path /usr/local/bin/akto-endpoint-shield
+mdatp exclusion folder add --path ~/.akto-endpoint-shield/bin/
+```
+{% endstep %}
 
-## 4. LaunchAgent Plists
+{% step %}
+Verify the exclusions were applied:
 
-These define the background services launched at user login. Whitelist these if your security software monitors `launchctl` activity.
-
-| Path | Description |
-|------|-------------|
-| `/Users/*/Library/LaunchAgents/io.akto.mcp-endpoint-shield.plist` | HTTP proxy service |
-| `/Users/*/Library/LaunchAgents/io.akto.mcp-endpoint-shield-agent.plist` | Auto-discovery agent service |
-| `/Users/*/Library/LaunchAgents/io.akto.mcp-endpoint-shield-detector.plist` | MCP detector service |
+```bash
+mdatp exclusion list
+```
+{% endstep %}
+{% endstepper %}
 
 ---
 
-## 5. Staging & Install Paths
+### Via Jamf Pro
 
-Active only during Jamf installation. Whitelist as transient execution paths if your security software raises alerts during the install phase.
+Deploy a custom Microsoft Defender configuration profile with the preference domain `com.microsoft.wdav`.
 
-| Path | Description |
-|------|-------------|
-| `/tmp/akto-mcp-endpoint-shield-staging/` | Package staging directory |
-| `/tmp/akto-mcp-endpoint-shield-staging/.akto-mcp-endpoint-shield/bin/mcp-endpoint-shield` | Staged binary |
-| `/Library/Application Support/JAMF/Waiting Room/` | Jamf package cache |
+{% stepper %}
+{% step %}
+In Jamf Pro, navigate to **Computers** → **Configuration Profiles** → **+ New**.
+{% endstep %}
+
+{% step %}
+Add a payload: **Application & Custom Settings**.
+{% endstep %}
+
+{% step %}
+Set **Preference Domain**: `com.microsoft.wdav`.
+{% endstep %}
+
+{% step %}
+Upload or paste the following JSON:
+
+```json
+{
+  "antivirusEngine": {
+    "exclusions": [
+      { "type": "path", "path": "/usr/local/bin/akto-endpoint-shield" },
+      { "type": "folder", "path": "/Users/" }
+    ]
+  }
+}
+```
+
+> Microsoft Defender on macOS does not expand `~` in exclusion paths. Using `/Users/` as a folder exclusion covers `~/.akto-endpoint-shield/` for all users on the machine.
+{% endstep %}
+
+{% step %}
+Set **Scope** to target the relevant computers or groups.
+{% endstep %}
+
+{% step %}
+Save and deploy.
+{% endstep %}
+{% endstepper %}
 
 ---
 
-## 6. Log Directories
+### Via Microsoft Intune
 
-Whitelist these only if your security software raises alerts on file write activity.
+{% stepper %}
+{% step %}
+Go to **Endpoint Security** → **Antivirus** → **Create Policy**.
+{% endstep %}
 
-| Path | Description |
-|------|-------------|
-| `/var/log/akto-mcp-endpoint-shield/` | System-level log directory |
-| `/var/log/akto-mcp-endpoint-shield-install.log` | Installation log |
-| `/var/log/akto-mcp-endpoint-shield-uninstall.log` | Uninstallation log |
-| `/var/log/akto-mcp-endpoint-shield-deploy-token.log` | Token deployment log |
-| `/Users/*/.akto-mcp-endpoint-shield/logs/` | User-level log directory |
+{% step %}
+Select **Platform: macOS** and **Profile: Microsoft Defender Antivirus**.
+{% endstep %}
+
+{% step %}
+Under **Antivirus engine** → **Exclusions**, add the two paths above.
+{% endstep %}
+
+{% step %}
+Assign the policy to the relevant device group and save.
+{% endstep %}
+{% endstepper %}
 
 ---
 
-## 7. Application Data Directory
+## Get Support for your Akto setup
 
-| Path | Description |
-|------|-------------|
-| `/Users/*/.akto-mcp-endpoint-shield/` | Root application directory (`bin/`, `config/`, `logs/`) |
-| `/Users/*/.akto-mcp-endpoint-shield/config/config.env` | Token and configuration file |
+There are multiple ways to request support from Akto. We are available on the following:
 
----
-
-## Related Documentation
-
-* [Jamf MDM Deployment](jamf-mdm-deployment.md) — Step-by-step guide to deploying AI Endpoint Shield via Jamf Pro or Jamf Now
-* [AI Endpoint Shield Overview](README.md) — Manual installation and general overview
+1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
+2. Join our [discord channel](https://www.akto.io/community) for community support.
+3. Contact [support@akto.io](mailto:support@akto.io) for email support.
