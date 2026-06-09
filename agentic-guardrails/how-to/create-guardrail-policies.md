@@ -275,24 +275,30 @@ Detect cases where tool behavior does not align with declared metada
 
 <details>
 
-<summary>10. Block host / path</summary>
+<summary>10. Access Restrictions</summary>
+
+Configure controls to restrict which hosts, paths, and account types can interact with your agents.
+
+**Block host / path**
 
 Block outbound traffic by host or path pattern to prevent agents from reaching unauthorised external services or endpoints.
-
-**Add a Blocked Pattern**
 
 * Enter a host or path pattern in the **Host or path pattern** field.
 * Select **Add** to include the pattern in the blocked list.
 
-**Manage Blocked Patterns**
-
 The **Blocked patterns** list displays all configured entries. You can review and remove patterns from this list at any time.
-
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (175).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 {% hint style="info" %}
 Akto sits between your agents and their outbound traffic. When a request is made, Akto checks the destination host or path against the blocked patterns and denies any match before it reaches the target.
 {% endhint %}
+
+**Block personal accounts**
+
+Prevent users with personal or consumer email accounts from accessing the AI agent. Enterprise accounts using company email domains are allowed through.
+
+* Enable **personal account blocking** to restrict access to organisation-managed accounts only.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (175).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 </details>
 
@@ -300,13 +306,19 @@ Akto sits between your agents and their outbound traffic. When a request is made
 
 <summary>11. Server and Application Settings</summary>
 
-You define where the guardrail policy is enforced and how violations are handled.
+Configure which servers the guardrail should be applied to and specify whether it applies to requests, responses, or both.
 
-**Select Deployment Targets**
+**Server Targeting**
 
-Akto enforces the policy to all the servers and agents or on selective MCP servers and agent servers where the guardrail policy should be applied.
+Choose how the guardrail is deployed across your infrastructure:
 
-**Configure Rule Behaviour**
+* **Apply to all**: Applies the guardrail to all servers. A count of affected servers is displayed as a link — select it to view the full list.
+* **Edit servers**: Manually select the specific servers to target. Choose from:
+  * **MCP Servers**: Select the MCP servers where the guardrail should be applied.
+  * **Agent Servers**: Select the agent servers where the guardrail should be applied.
+  * **Browser LLMs**: Select the browser LLMs where the guardrail should be applied.
+
+**Rule Behaviour**
 
 Choose how Akto responds when a guardrail condition is triggered:
 
