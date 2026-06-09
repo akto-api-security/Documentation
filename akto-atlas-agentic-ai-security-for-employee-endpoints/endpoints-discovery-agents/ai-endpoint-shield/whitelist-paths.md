@@ -10,10 +10,18 @@ If an endpoint management tool is deployed in your organization, add the Akto AI
 
 These paths apply to all endpoint management tools (Microsoft Defender, SentinelOne, CrowdStrike, and others).
 
+**macOS**
+
 | Path | Description |
 |------|-------------|
 | `/usr/local/bin/akto-endpoint-shield` | Main binary (MDM/Jamf install) |
 | `~/.akto-endpoint-shield/bin/akto-endpoint-shield` | User-level binary |
+
+**Windows**
+
+| Path | Description |
+|------|-------------|
+| `C:\Program Files\Akto Endpoint Shield\akto-endpoint-shield.exe` | Main binary |
 
 ---
 
@@ -21,7 +29,9 @@ These paths apply to all endpoint management tools (Microsoft Defender, Sentinel
 
 The following steps are specific to **Microsoft Defender for Endpoint**. For other tools, refer to your vendor's documentation for adding process or path exclusions.
 
-### Directly on the Mac
+### macOS
+
+#### Directly on the Mac
 
 Run these commands on each machine (no MDM required):
 
@@ -47,7 +57,7 @@ mdatp exclusion list
 
 ---
 
-### Via Jamf Pro
+#### Via Jamf Pro
 
 Deploy a custom Microsoft Defender configuration profile with the preference domain `com.microsoft.wdav`.
 
@@ -92,7 +102,7 @@ Save and deploy.
 
 ---
 
-### Via Microsoft Intune
+#### Via Microsoft Intune
 
 {% stepper %}
 {% step %}
@@ -105,6 +115,58 @@ Select **Platform: macOS** and **Profile: Microsoft Defender Antivirus**.
 
 {% step %}
 Under **Antivirus engine** → **Exclusions**, add the two paths above.
+{% endstep %}
+
+{% step %}
+Assign the policy to the relevant device group and save.
+{% endstep %}
+{% endstepper %}
+
+---
+
+### Windows
+
+#### Directly on the Windows Machine
+
+Run the following commands in an **elevated PowerShell** session:
+
+{% stepper %}
+{% step %}
+Add the process and path exclusions:
+
+```powershell
+Add-MpPreference -ExclusionProcess "akto-endpoint-shield.exe"
+Add-MpPreference -ExclusionPath "C:\Program Files\Akto Endpoint Shield\"
+```
+{% endstep %}
+
+{% step %}
+Verify the exclusions were applied:
+
+```powershell
+Get-MpPreference | Select-Object -ExpandProperty ExclusionProcess
+Get-MpPreference | Select-Object -ExpandProperty ExclusionPath
+```
+{% endstep %}
+{% endstepper %}
+
+---
+
+#### Via Microsoft Intune
+
+{% stepper %}
+{% step %}
+Go to **Endpoint Security** → **Antivirus** → **Create Policy**.
+{% endstep %}
+
+{% step %}
+Select **Platform: Windows 10, Windows 11, and Windows Server** and **Profile: Microsoft Defender Antivirus**.
+{% endstep %}
+
+{% step %}
+Under **Microsoft Defender Antivirus Exclusions**, add:
+- **Process exclusions**: `akto-endpoint-shield.exe`
+- **Path exclusions**: `C:\Program Files\Akto Endpoint Shield\`
 {% endstep %}
 
 {% step %}
