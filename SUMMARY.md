@@ -30,7 +30,6 @@
     * [NinjaOne Deployment (Windows)](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/ninjaone-windows-deployment.md)
     * [NinjaOne Deployment (macOS)](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/ninjaone-macos-deployment.md)
     * [Whitelist Paths](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/whitelist-paths.md)
-    * [Microsoft Defender Exclusions](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/microsoft-defender-exclusions.md)
     * [Mosyle MDM Deployment](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/mosyle-deployment.md)
     * [MacOS Installation](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/macos-installation.md)
   * [Akto System Proxy](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/akto-system-proxy.md)
