@@ -151,24 +151,26 @@ chmod +x ~/.cursor/hooks/akto/*.sh
 {% endstep %}
 
 {% step %}
-**Configure Akto Ingestion URL** ⚠️ **CRITICAL STEP**
+**Configure Akto Ingestion URL and API Token** ⚠️ **CRITICAL STEP**
 
 {% hint style="warning" %}
-All wrapper scripts contain placeholder `{{AKTO_DATA_INGESTION_URL}}` that **must be replaced** with your actual Akto instance URL.
+All wrapper scripts contain the placeholders `{{AKTO_DATA_INGESTION_URL}}` and `{{AKTO_API_TOKEN}}` that **must be replaced** — the URL with your actual Akto instance URL, and the token with your Akto API token. If your deployment does not require auth, set the token to an empty string so the placeholder is removed (an unsubstituted `{{AKTO_API_TOKEN}}` would be sent as an invalid `Authorization` header).
 {% endhint %}
 
 **Automated replacement:**
 
 ```bash
-# Set your Akto ingestion URL
+# Set your Akto ingestion URL and API token
 AKTO_URL="https://your-akto-instance.com"
+AKTO_API_TOKEN="your-akto-api-token"   # leave empty ("") if your deployment doesn't require auth
 
 # Update all wrapper scripts
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.cursor/hooks/akto/*-wrapper.sh
+sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN}|g" ~/.cursor/hooks/akto/*-wrapper.sh
 sed -i.bak 's|export DEVICE_ID="{{DEVICE_ID (optional)}}"||g' ~/.cursor/hooks/akto/*-wrapper.sh
 
 # Verify replacement
-grep "AKTO_DATA_INGESTION_URL" ~/.cursor/hooks/akto/*-wrapper.sh
+grep -E "AKTO_DATA_INGESTION_URL|AKTO_API_TOKEN" ~/.cursor/hooks/akto/*-wrapper.sh
 ```
 
 **Manual replacement (alternative):**
@@ -177,12 +179,14 @@ Edit each wrapper script and replace:
 
 ```bash
 AKTO_DATA_INGESTION_URL="{{AKTO_DATA_INGESTION_URL}}"
+AKTO_API_TOKEN="{{AKTO_API_TOKEN}}"
 ```
 
 With:
 
 ```bash
 AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
+AKTO_API_TOKEN="your-akto-api-token"
 ```
 
 Files to update:
@@ -306,6 +310,7 @@ Override defaults via environment variables:
 ```bash
 export MODE="atlas"
 export AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
+export AKTO_API_TOKEN="your-akto-api-token"
 export AKTO_SYNC_MODE="true"
 export AKTO_TIMEOUT="5"
 ```
@@ -431,6 +436,7 @@ After uninstallation, Cursor will operate without Akto security monitoring. No r
 
 set -e
 AKTO_URL="${1:-https://your-akto-instance.com}"
+AKTO_API_TOKEN="${2:-}"   # optional: pass your Akto API token as the 2nd argument
 
 echo "🔧 Installing Akto Guardrails for Cursor..."
 
@@ -452,8 +458,9 @@ curl -s "${HOOKS_BASE}/akto_machine_id.py" -o ~/.cursor/hooks/akto/akto_machine_
 # Make executable
 chmod +x ~/.cursor/hooks/akto/*.sh
 
-# Configure URL and strip optional placeholders
+# Configure URL and token, strip optional placeholders
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.cursor/hooks/akto/*-wrapper.sh
+sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN}|g" ~/.cursor/hooks/akto/*-wrapper.sh
 sed -i.bak 's|export DEVICE_ID="{{DEVICE_ID (optional)}}"||g' ~/.cursor/hooks/akto/*-wrapper.sh
 
 # Create hooks.json
@@ -487,9 +494,11 @@ mkdir -p ~/.cursor/hooks/akto ~/.cursor/akto/chat-logs ~/.cursor/akto/mcp-logs
 
 # 2. Download all hook scripts from GitHub (see step 2 above)
 
-# 3. ⚠️ Configure Akto URL (REQUIRED)
+# 3. ⚠️ Configure Akto URL and API token (REQUIRED)
 AKTO_URL="https://your-akto-instance.com"
+AKTO_API_TOKEN="your-akto-api-token"   # leave empty ("") if your deployment doesn't require auth
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.cursor/hooks/akto/*-wrapper.sh
+sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN}|g" ~/.cursor/hooks/akto/*-wrapper.sh
 sed -i.bak 's|export DEVICE_ID="{{DEVICE_ID (optional)}}"||g' ~/.cursor/hooks/akto/*-wrapper.sh
 
 # 4. Make executable

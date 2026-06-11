@@ -120,23 +120,25 @@ chmod +x ~/.gemini/hooks/*.py ~/.gemini/hooks/*.sh
 {% endstep %}
 
 {% step %}
-**Configure Akto Ingestion URL** ⚠️ **CRITICAL STEP**
+**Configure Akto Ingestion URL and API Token** ⚠️ **CRITICAL STEP**
 
 {% hint style="warning" %}
-All wrapper scripts contain placeholder `{{AKTO_DATA_INGESTION_URL}}` that **must be replaced** with your actual Akto instance URL.
+All wrapper scripts contain the placeholders `{{AKTO_DATA_INGESTION_URL}}` and `{{AKTO_API_TOKEN}}` that **must be replaced** — the URL with your actual Akto instance URL, and the token with your Akto API token. If your deployment does not require auth, set the token to an empty string so the placeholder is removed (an unsubstituted `{{AKTO_API_TOKEN}}` would be sent as an invalid `Authorization` header).
 {% endhint %}
 
 **Automated replacement:**
 
 ```bash
-# Set your Akto ingestion URL
+# Set your Akto ingestion URL and API token
 AKTO_URL="https://your-akto-instance.com"
+AKTO_API_TOKEN="your-akto-api-token"   # leave empty ("") if your deployment doesn't require auth
 
 # Update all wrapper scripts
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.gemini/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN}|g" ~/.gemini/hooks/*-wrapper.sh
 
 # Verify replacement
-grep "AKTO_DATA_INGESTION_URL" ~/.gemini/hooks/*-wrapper.sh
+grep -E "AKTO_DATA_INGESTION_URL|AKTO_API_TOKEN" ~/.gemini/hooks/*-wrapper.sh
 ```
 
 **Manual replacement (alternative):**
@@ -145,12 +147,14 @@ Edit each wrapper script and replace:
 
 ```bash
 AKTO_DATA_INGESTION_URL="{{AKTO_DATA_INGESTION_URL}}"
+AKTO_API_TOKEN="{{AKTO_API_TOKEN}}"
 ```
 
 With:
 
 ```bash
 AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
+AKTO_API_TOKEN="your-akto-api-token"
 ```
 
 Files to update:
@@ -271,6 +275,7 @@ Override defaults via environment variables (e.g. in `~/.bashrc` or `~/.zshrc`):
 ```bash
 export MODE="atlas"
 export AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
+export AKTO_API_TOKEN="your-akto-api-token"
 export AKTO_SYNC_MODE="true"
 export AKTO_TIMEOUT="5"
 ```
@@ -410,6 +415,7 @@ gemini
 
 set -e
 AKTO_URL="${1:-https://your-akto-instance.com}"
+AKTO_API_TOKEN="${2:-}"   # optional: pass your Akto API token as the 2nd argument
 
 echo "🔧 Installing Akto Guardrails for Gemini CLI..."
 
@@ -427,8 +433,9 @@ curl -s "${HOOKS_BASE}/akto_machine_id.py" -o ~/.gemini/hooks/akto_machine_id.py
 # Make executable
 chmod +x ~/.gemini/hooks/*.py ~/.gemini/hooks/*.sh
 
-# Configure URL
+# Configure URL and token
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.gemini/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN}|g" ~/.gemini/hooks/*-wrapper.sh
 
 # Create settings.json
 cat > ~/.gemini/settings.json << 'EOFSETTINGS'
@@ -485,9 +492,11 @@ mkdir -p ~/.gemini/hooks ~/.gemini/akto/chat-logs
 
 # 2. Download all hook scripts from GitHub (see step 2 above)
 
-# 3. ⚠️ Configure Akto URL (REQUIRED)
+# 3. ⚠️ Configure Akto URL and API token (REQUIRED)
 AKTO_URL="https://your-akto-instance.com"
+AKTO_API_TOKEN="your-akto-api-token"   # leave empty ("") if your deployment doesn't require auth
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.gemini/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN}|g" ~/.gemini/hooks/*-wrapper.sh
 
 # 4. Make executable
 chmod +x ~/.gemini/hooks/*.py ~/.gemini/hooks/*.sh

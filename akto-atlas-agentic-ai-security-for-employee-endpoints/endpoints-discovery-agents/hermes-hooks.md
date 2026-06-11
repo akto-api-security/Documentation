@@ -313,6 +313,7 @@ plugins:
     enabled: true
     config:
       AKTO_DATA_INGESTION_URL: "https://your-akto-instance.com/guardrails"
+      AKTO_API_TOKEN: "your-akto-api-token"
       AKTO_SYNC_MODE: "true"
       AKTO_TIMEOUT: "5"
       LOG_LEVEL: "INFO"
