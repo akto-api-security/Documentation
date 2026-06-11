@@ -285,6 +285,9 @@ Set these to customize the plugin behavior:
 # REQUIRED
 export AKTO_DATA_INGESTION_URL="https://your-akto-instance.com/guardrails"
 
+# OPTIONAL - Authentication
+export AKTO_API_TOKEN=""                    # API token sent as the Authorization header
+
 # OPTIONAL - Behavior
 export AKTO_SYNC_MODE="true"                # "true" (blocking) or "false" (logging only)
 export AKTO_TIMEOUT="5"                     # Request timeout in seconds

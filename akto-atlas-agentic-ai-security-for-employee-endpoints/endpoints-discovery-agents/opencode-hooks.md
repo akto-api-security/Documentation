@@ -277,6 +277,9 @@ Set these to customize the plugin behavior:
 # REQUIRED
 export AKTO_DATA_INGESTION_URL="https://your-akto-instance.com/guardrails"
 
+# OPTIONAL - Authentication
+export AKTO_API_TOKEN=""                    # Bearer token sent as the Authorization header
+
 # OPTIONAL - Logging
 export LOG_LEVEL="INFO"                     # DEBUG, INFO, WARNING, ERROR
 export LOG_PAYLOADS="false"                 # Set to "true" for verbose payload logging
@@ -300,7 +303,7 @@ Edit `~/.opencode/plugins/settings.json` to customize (optional):
   "version": "1.0.0",
   "configuration": {
     "required": ["AKTO_DATA_INGESTION_URL"],
-    "optional": ["AKTO_TIMEOUT", "LOG_LEVEL", "LOG_PAYLOADS", "MODE"]
+    "optional": ["AKTO_API_TOKEN", "AKTO_TIMEOUT", "LOG_LEVEL", "LOG_PAYLOADS", "MODE"]
   },
   "hooks": {
     "experimental.chat.messages.transform": {

@@ -327,6 +327,7 @@ You should see log entries indicating validation occurred.
 ```bash
 MODE="atlas"                                            # "argus" or "atlas"
 AKTO_DATA_INGESTION_URL="{{AKTO_DATA_INGESTION_URL}}"  # ⚠️ MUST REPLACE
+AKTO_API_TOKEN="{{AKTO_API_TOKEN}}"                    # Akto API token (Authorization header)
 AKTO_SYNC_MODE="true"                                  # "true" or "false"
 AKTO_TIMEOUT="5"                                       # Timeout in seconds
 AKTO_CONNECTOR="codex_cli"                             # Connector identifier

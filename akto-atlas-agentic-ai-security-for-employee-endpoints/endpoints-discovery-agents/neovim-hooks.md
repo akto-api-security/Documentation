@@ -228,6 +228,7 @@ Test by using any supported AI plugin. Akto will validate the prompt and ingest 
 ```lua
 require("akto").setup({
   akto_url         = "",      -- Akto backend URL (required)
+  akto_api_token   = "",      -- Akto API token sent as the Authorization header (optional)
   sync_mode        = true,    -- true: block before LLM call, false: observe after
   timeout          = 5,       -- seconds for guardrails check and ingestion calls
   plenary_hook     = true,    -- enable hook for plenary.curl + plenary.job
