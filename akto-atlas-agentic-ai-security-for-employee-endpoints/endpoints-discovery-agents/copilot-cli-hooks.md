@@ -202,11 +202,11 @@ All wrapper scripts contain two placeholders that **must be replaced** before ho
 ```bash
 # Set your values
 AKTO_URL="https://your-akto-instance.com"
-AKTO_TOKEN="your-akto-api-token"
+AKTO_API_TOKEN="your-akto-api-token"
 
 # Update all wrapper scripts
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" .github/hooks/*-wrapper.sh
-sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_TOKEN}|g" .github/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN}|g" .github/hooks/*-wrapper.sh
 
 # Verify replacements
 grep -E "AKTO_DATA_INGESTION_URL|AKTO_API_TOKEN" .github/hooks/*-wrapper.sh
@@ -216,12 +216,12 @@ grep -E "AKTO_DATA_INGESTION_URL|AKTO_API_TOKEN" .github/hooks/*-wrapper.sh
 
 ```powershell
 $AKTO_URL = "https://your-akto-instance.com"
-$AKTO_TOKEN = "your-akto-api-token"
+$AKTO_API_TOKEN = "your-akto-api-token"
 
 Get-ChildItem ".github\hooks\*-wrapper.ps1" | ForEach-Object {
   (Get-Content $_.FullName) `
     -replace '{{AKTO_DATA_INGESTION_URL}}', $AKTO_URL `
-    -replace '{{AKTO_API_TOKEN}}', $AKTO_TOKEN |
+    -replace '{{AKTO_API_TOKEN}}', $AKTO_API_TOKEN |
     Set-Content $_.FullName
 }
 
@@ -481,16 +481,16 @@ What the block does:
 3. Changes the relative `./.github/hooks/akto-validate-*.py` reference inside each wrapper to an **absolute path** (e.g. `/Users/you/.github/hooks/akto-validate-*.py`). User-level wrappers are invoked from whatever directory the user launched Copilot CLI from, so relative paths would not resolve.
 4. Adds `export AKTO_CONNECTOR="github_copilot_cli"` (or `$env:AKTO_CONNECTOR` on Windows). Without this the connector defaults to `vscode` and CLI traffic is mis-attributed in the Akto dashboard.
 
-**macOS / Linux — first, edit the two values at the top of the block** (`AKTO_URL` and `AKTO_TOKEN`) with your real Akto instance URL and API token. Then copy the entire block, paste it into your terminal, and press Enter:
+**macOS / Linux — first, edit the two values at the top of the block** (`AKTO_URL` and `AKTO_API_TOKEN`) with your real Akto instance URL and API token. Then copy the entire block, paste it into your terminal, and press Enter:
 
 ```bash
 AKTO_URL="https://your-akto-instance.com"      # <-- replace with your Akto instance URL
-AKTO_TOKEN="your-akto-api-token"                # <-- replace with your Akto API token
+AKTO_API_TOKEN="your-akto-api-token"                # <-- replace with your Akto API token
 HOOKS_DIR="$HOME/.github/hooks"
 
 # 1 + 2. Credentials
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" "$HOOKS_DIR"/*-wrapper.sh
-sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_TOKEN}|g" "$HOOKS_DIR"/*-wrapper.sh
+sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN}|g" "$HOOKS_DIR"/*-wrapper.sh
 
 # 3. Relative .py paths -> absolute
 sed -i.bak "s|\./\.github/hooks/akto-validate-|${HOOKS_DIR}/akto-validate-|g" "$HOOKS_DIR"/*-wrapper.sh
@@ -513,11 +513,11 @@ grep -l '{{' "$HOOKS_DIR"/*-wrapper.sh || echo "✓ all placeholders substituted
 cat ~/.github/hooks/akto-validate-prompt-wrapper.sh
 ```
 
-**Windows (PowerShell) — first, edit the two values at the top of the block** (`$AKTO_URL` and `$AKTO_TOKEN`) with your real Akto instance URL and API token. Then copy the entire block, paste it into PowerShell, and press Enter:
+**Windows (PowerShell) — first, edit the two values at the top of the block** (`$AKTO_URL` and `$AKTO_API_TOKEN`) with your real Akto instance URL and API token. Then copy the entire block, paste it into PowerShell, and press Enter:
 
 ```powershell
 $AKTO_URL   = "https://your-akto-instance.com"      # <-- replace with your Akto instance URL
-$AKTO_TOKEN = "your-akto-api-token"                  # <-- replace with your Akto API token
+$AKTO_API_TOKEN = "your-akto-api-token"                  # <-- replace with your Akto API token
 $HOOKS_DIR  = "$env:USERPROFILE\.github\hooks"
 $HOOKS_DIR_ESCAPED = $HOOKS_DIR -replace '\\', '\\'
 
@@ -525,7 +525,7 @@ Get-ChildItem "$HOOKS_DIR\*-wrapper.ps1" | ForEach-Object {
   $content = Get-Content $_.FullName -Raw
   $content = $content `
     -replace '{{AKTO_DATA_INGESTION_URL}}', $AKTO_URL `
-    -replace '{{AKTO_API_TOKEN}}', $AKTO_TOKEN `
+    -replace '{{AKTO_API_TOKEN}}', $AKTO_API_TOKEN `
     -replace '\.github\\hooks\\akto-validate-', "$HOOKS_DIR_ESCAPED\akto-validate-"
   # Add AKTO_CONNECTOR right after CONTEXT_SOURCE
   $content = $content -replace '(\$env:CONTEXT_SOURCE\s*=.*)', "`$1`r`n`$env:AKTO_CONNECTOR = `"github_copilot_cli`""
@@ -987,10 +987,10 @@ done
 chmod +x "${PROJECT_DIR}/.github/hooks"/*.py "${PROJECT_DIR}/.github/hooks"/*.sh
 
 # Configure placeholders
-AKTO_TOKEN="${3:-}"
+AKTO_API_TOKEN="${3:-}"
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" \
   "${PROJECT_DIR}/.github/hooks"/*-wrapper.sh
-sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_TOKEN}|g" \
+sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN}|g" \
   "${PROJECT_DIR}/.github/hooks"/*-wrapper.sh
 
 echo "Installation complete! Akto instance: ${AKTO_URL}"
@@ -1050,9 +1050,9 @@ mkdir -p .github/hooks
 
 # 3. ⚠️ Configure placeholders (REQUIRED)
 AKTO_URL="https://your-akto-instance.com"
-AKTO_TOKEN="your-akto-api-token"
+AKTO_API_TOKEN="your-akto-api-token"
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" .github/hooks/*-wrapper.sh
-sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_TOKEN}|g" .github/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN}|g" .github/hooks/*-wrapper.sh
 
 # 4. Make executable
 chmod +x .github/hooks/*.py .github/hooks/*.sh

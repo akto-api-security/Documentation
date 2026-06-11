@@ -91,7 +91,7 @@ sequenceDiagram
 **Key Files:**
 
 * **Wrapper scripts (`.sh`)**: Set environment variables, invoke Python scripts
-  * ⚠️ **Contains `{{AKTO_DATA_INGESTION_URL}}`, `{{AKTO_TOKEN}}`, `{{AKTO_HOST}}` placeholders** — must be replaced with your real values
+  * ⚠️ **Contains `{{AKTO_DATA_INGESTION_URL}}`, `{{AKTO_API_TOKEN}}`, `{{AKTO_HOST}}` placeholders** — must be replaced with your real values
 * **Python scripts (`.py`)**: Core validation logic and Akto API communication
 * **`akto_helpers.py`**: Provides `get_device_ip()` (LAN IP used in the `ip` payload field)
 * **`settings.json`**: Links Claude CLI hook events to wrapper scripts
@@ -242,14 +242,14 @@ EOF
 **Configure Token and Host**
 
 ```bash
-AKTO_TOKEN_VALUE="your-akto-token"
+AKTO_API_TOKEN_VALUE="your-akto-token"
 AKTO_HOST_VALUE="api.anthropic.com"   # or your custom host, e.g. my-proxy.corp.example.com
 
-sed -i.bak "s|{{AKTO_TOKEN}}|${AKTO_TOKEN_VALUE}|g" ~/.claude/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN_VALUE}|g" ~/.claude/hooks/*-wrapper.sh
 sed -i.bak "s|{{AKTO_HOST}}|${AKTO_HOST_VALUE}|g"   ~/.claude/hooks/*-wrapper.sh
 
 # Verify
-grep -E "AKTO_TOKEN|AKTO_HOST" ~/.claude/hooks/*-wrapper.sh
+grep -E "AKTO_API_TOKEN|AKTO_HOST" ~/.claude/hooks/*-wrapper.sh
 ```
 
 `AKTO_HOST` becomes the `host` request header value in every mirrored payload.
@@ -310,7 +310,7 @@ A fully configured Argus mode wrapper script:
 ```bash
 #!/bin/bash
 export AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
-export AKTO_TOKEN="your-akto-token"
+export AKTO_API_TOKEN="your-akto-token"
 export AKTO_HOST="my-proxy.corp.example.com"
 export CONTEXT_SOURCE="AGENTIC"
 export AKTO_SYNC_MODE="true"
@@ -328,7 +328,7 @@ exec python3 "$HOME/.claude/hooks/akto-validate-prompt.py" "$@"
 | Variable | Required | Default | Description |
 |---|---|---|---|
 | `AKTO_DATA_INGESTION_URL` | Yes | — | Your Akto instance URL |
-| `AKTO_TOKEN` | Yes | — | Authorization token for Akto API |
+| `AKTO_API_TOKEN` | Yes | — | Authorization token for Akto API |
 | `AKTO_HOST` | No | `https://api.anthropic.com` | `host` header value in mirrored requests |
 | `CONTEXT_SOURCE` | No | `AGENTIC` | Payload `contextSource` field and `tags["source"]` value |
 | `AKTO_SYNC_MODE` | No | `true` | `true` = blocking, `false` = observe only |
@@ -344,7 +344,7 @@ Override wrapper script values via shell environment:
 
 ```bash
 export AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
-export AKTO_TOKEN="your-akto-token"
+export AKTO_API_TOKEN="your-akto-token"
 export AKTO_HOST="my-proxy.corp.example.com"
 export CONTEXT_SOURCE="AGENTIC"
 export AKTO_SYNC_MODE="true"
@@ -393,7 +393,7 @@ curl -s -o /dev/null -w "%{http_code}" \
   "${AKTO_DATA_INGESTION_URL}/api/http-proxy?akto_connector=claude_code_cli"
 
 # Verify URL and token in wrapper scripts
-grep -E "AKTO_DATA_INGESTION_URL|AKTO_TOKEN" ~/.claude/hooks/*-wrapper.sh
+grep -E "AKTO_DATA_INGESTION_URL|AKTO_API_TOKEN" ~/.claude/hooks/*-wrapper.sh
 ```
 
 ### Check Logs for Errors
@@ -469,7 +469,7 @@ test -d ~/.claude/akto && echo "ℹ️  Logs still present" || echo "✅ Logs re
 
 set -e
 AKTO_URL="${1:-https://your-akto-instance.com}"
-AKTO_TOKEN_VALUE="${2:-}"
+AKTO_API_TOKEN_VALUE="${2:-}"
 AKTO_HOST_VALUE="${3:-}"   # Optional: custom hostname
 
 echo "🔧 Installing Akto Guardrails for Claude CLI (Argus mode)..."
@@ -493,7 +493,7 @@ chmod +x ~/.claude/hooks/*.sh
 
 # Replace placeholders in all wrapper scripts
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.claude/hooks/*-wrapper.sh
-[ -n "${AKTO_TOKEN_VALUE}" ] && sed -i.bak "s|{{AKTO_TOKEN}}|${AKTO_TOKEN_VALUE}|g" ~/.claude/hooks/*-wrapper.sh
+[ -n "${AKTO_API_TOKEN_VALUE}" ] && sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN_VALUE}|g" ~/.claude/hooks/*-wrapper.sh
 sed -i.bak "s|{{AKTO_HOST}}|${AKTO_HOST_VALUE:-api.anthropic.com}|g" ~/.claude/hooks/*-wrapper.sh
 
 # Create settings.json
@@ -571,10 +571,10 @@ mkdir -p ~/.claude/hooks ~/.claude/akto/logs
 
 # 3. ⚠️ Replace placeholders (REQUIRED)
 AKTO_URL="https://your-akto-instance.com"
-AKTO_TOKEN_VALUE="your-akto-token"
+AKTO_API_TOKEN_VALUE="your-akto-token"
 AKTO_HOST_VALUE="api.anthropic.com"   # or your custom host
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g"     ~/.claude/hooks/*-wrapper.sh
-sed -i.bak "s|{{AKTO_TOKEN}}|${AKTO_TOKEN_VALUE}|g"          ~/.claude/hooks/*-wrapper.sh
+sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN_VALUE}|g"          ~/.claude/hooks/*-wrapper.sh
 sed -i.bak "s|{{AKTO_HOST}}|${AKTO_HOST_VALUE}|g"            ~/.claude/hooks/*-wrapper.sh
 
 # 4. Make scripts executable
