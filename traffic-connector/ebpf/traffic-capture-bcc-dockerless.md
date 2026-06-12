@@ -1,4 +1,4 @@
-# Akto Traffic Collector Platform Specific (bare Linux)
+# Akto eBPF Traffic Collector Platform Specific (bare Linux)
 
 This document is for **clients** who install the **dockerless** eBPF bundle (Go binary + module.cc(bcc) + shell wrappers), distributed as a versioned **`.tar.gz`**.
 
@@ -8,7 +8,7 @@ Tarball naming convention:
 
 ---
 
-## Platform download URLs
+## Platform Downloads
 
 | Platform | Download URL |
 |----------|-------------|
