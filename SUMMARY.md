@@ -39,6 +39,7 @@
 * [eBPF](traffic-connector/ebpf/README.md)
   * [Connect Akto with eBPF](traffic-connector/ebpf/ebpf.md)
   * [Connect Akto with eBPF on mTLS](traffic-connector/ebpf/ebpf-mtls.md)
+  * [Akto eBPF Traffic Collector Platform Specific](traffic-connector/ebpf/traffic-capture-bcc-dockerless.md)
 * [Kubernetes](traffic-connector/kubernetes/README.md)
   * [Connect Akto with Kubernetes in AWS](traffic-connector/kubernetes/kubernetes.md)
   * [Connect Akto eBPF with Kubernetes](traffic-connector/kubernetes/epbf.md)
