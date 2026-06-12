@@ -7,12 +7,11 @@ Running security tests in Akto involves assessing specific parts of your API end
 To run tests in Akto, you must have at least one [**test role**](create-a-test-role.md) configured in your account. Without a test role, no tests can be executed — the testing engine uses test roles to define the identity (and its associated auth credentials) under which API requests are replayed during a scan.
 
 {% hint style="info" %}
-**Authenticated scans deliver the best results.** We strongly encourage you to set an auth token before running tests. The quickest way to get started is by [configuring a hard-coded auth token](create-a-test-role.md#1-hard-coded-auth-token). If you still wish to run an unauthenticated scan, [create an auth token](create-a-test-role.md) using a dummy header — for example, `x-dummy-auth: true`.
+**Authenticated scans deliver the best results.** We strongly encourage you to set an auth token before running tests. The quickest way to get started is by [configuring a hard-coded auth token](create-a-test-role.md#1-hard-coded-auth-token). If you still wish to run an unauthenticated scan, follow the same steps but use a dummy header — for example, `x-dummy-auth: true`.
 {% endhint %}
 
-In the demonstration below, let's run tests on <mark style="color:red;">`/rest/product/search`</mark> endpoint within **demo\_collection**.
-
-For example, we'll be running all the test categories on the <mark style="color:red;">`/rest/products/search`</mark> endpoint of the **demo\_collection** API.
+## Running a Test
+In the demonstration below, let's run tests on <mark style="color:red;">`/rest/products/search`</mark> endpoint within **demo\_collection**.
 
 {% @arcade/embed url="https://app.arcade.software/share/uH7TcfV5by6oJ1L4SAvG" flowId="uH7TcfV5by6oJ1L4SAvG" %}
 
