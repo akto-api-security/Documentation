@@ -116,3 +116,18 @@ sudo EBPF_ROOT=/opt/akto/ebpf /opt/akto/ebpf/uninstall-ebpf-bcc-host.sh -y
 ```
 
 Omit **`-y`** for an interactive confirmation (requires a TTY).
+
+#### What’s Happening Behind the Scenes?
+
+* **eBPF hooks into your Linux kernel** to capture real-time traffic—even if it’s encrypted (TLS).
+* No code changes, no traffic proxying, no SSL termination.
+* The collector forwards API traces to Akto for real-time inventory and security analysis.
+
+## Get Support for your Akto setup
+
+There are multiple ways to request support from Akto. We are 24X7 available on the following:
+
+1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
+2. Join our [discord channel](https://www.akto.io/community) for community support.
+3. Contact `help@akto.io` for email support.
+4. Contact us [here](https://www.akto.io/contact-us).
