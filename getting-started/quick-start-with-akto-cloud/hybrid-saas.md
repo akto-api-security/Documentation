@@ -124,6 +124,25 @@ kubectl get svc -n <namespace>
 11. Run `docker-compose -f docker-compose-mini-runtime.yml up -d` . If you are using new version of `docker`, you should use `docker compose` instead of `docker-compose`
 12. Run `systemctl enable /usr/lib/systemd/system/docker.service` to ensure Docker starts up in case of instance restarts
 
+## How to Set a Custom Mini-Runtime Module Name
+
+In your `docker-compose-mini-runtime.yml` file, add the environment variable `MINI_RUNTIME_NAME` under the `akto-mini-runtime` service.
+
+```yaml
+version: '3.8'
+services:
+  akto-mini-runtime:
+    image: public.ecr.aws/aktosecurity/akto-api-security-mini-runtime:latest
+    environment:
+      DATABASE_ABSTRACTOR_SERVICE_TOKEN: <Paste_token_here>
+      MINI_RUNTIME_NAME: <your_mini_runtime_name>
+    restart: always
+```
+
+Replace `<your_mini_runtime_name>` with the desired module name (e.g., `staging_runtime`, `us_east_1`, `qa_env`).
+
+This name will be listed in the **Select Testing Module** dropdown when configuring a test.
+
 ## Notes:
 
 1. Ensure internet connectivity in Traffic aggregator service.
