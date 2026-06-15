@@ -14,21 +14,58 @@ Akto MCP Proxy is a security and governance layer that sits between MCP (Model C
 
 ## Architecture
 
-```
-┌─────────────┐        ┌─────────────────┐        ┌──────────────┐
-│ MCP Client  │───────▶│  Akto MCP Proxy │───────▶│  MCP Server  │
-└─────────────┘        └─────────────────┘        └──────────────┘
-                              │
-                              ▼
-                       ┌──────────────────┐
-                       │ Guardrail Detection │
-                       │   & Guardrails   │
-                       └──────────────────┘
+```mermaid
+flowchart LR
+    client["MCP Client"]
+
+    subgraph proxy["Akto MCP Proxy"]
+        engine["Guardrail Engine\ninspect · enforce · log"]
+    end
+
+    server["MCP Server"]
+
+    client -->|"Request"| engine
+    engine -. "🚫 Blocked" .-> client
+    engine -->|"Forwarded request"| server
+    server -->|"Response"| engine
+    engine -->|"Response"| client
 ```
 
 ### Cloud setup
 
-<figure><img src="../../.gitbook/assets/akto-mcp-proxy-cloud.png" alt=""><figcaption></figcaption></figure>
+```mermaid
+flowchart TB
+    subgraph dev["Your Environment"]
+        client["MCP Client\n(Claude · Cursor · VS Code)"]
+    end
+
+    subgraph akto["☁️ Akto Cloud"]
+        subgraph proxy["mcp-proxy.akto.io"]
+            req["Inspect Request"]
+            decision{"Guardrail Check"}
+            block["Block & Alert"]
+            fwd["Forward Request"]
+            res["Inspect & Filter Response"]
+
+            req --> decision
+            decision -- "Threat detected" --> block
+            decision -- "Safe" --> fwd
+            fwd --> res
+        end
+
+        dash["Akto Dashboard\nPolicies · Audit Logs · Alerts"]
+        dash -.->|"policy rules"| decision
+        block -.->|"alert"| dash
+        res -.->|"log"| dash
+    end
+
+    mcp["MCP Server\n(zero config changes)"]
+
+    client -->|"① Request  (URL points to proxy)"| req
+    block -->|"② Blocked"| client
+    fwd <-->|"③ ④  Request & Response"| mcp
+    res -->|"⑤ Filtered Response"| client
+```
 
 ## How It Works
 
