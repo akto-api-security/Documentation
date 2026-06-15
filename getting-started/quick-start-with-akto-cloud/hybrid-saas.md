@@ -141,8 +141,6 @@ services:
 
 Replace `<your_mini_runtime_name>` with the desired module name (e.g., `staging_runtime`, `us_east_1`, `qa_env`).
 
-This name will be listed in the **Select Testing Module** dropdown when configuring a test.
-
 ## Notes:
 
 1. Ensure internet connectivity in Traffic aggregator service.
