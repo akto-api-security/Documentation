@@ -189,6 +189,88 @@ Or remove the managed hook restriction entirely. After updating:
 3. Restart Codex.
 4. Verify hook discovery and execution.
 
+#### How an Administrator Can Change Codex MDM Configuration
+
+Administrators should modify the source profile in the MDM console rather than editing files on individual devices. The settings visible on a Mac under `defaults read /Library/Managed\ Preferences/com.openai.codex` are generated from that profile.
+
+<details>
+
+<summary>Jamf Pro</summary>
+
+1. Log in to Jamf Pro.
+2. Navigate to **Computers** → **Configuration Profiles**.
+3. Locate the profile managing `com.openai.codex`.
+4. Open the profile and review **Application & Custom Settings** → **Custom Schema** / Property List payloads.
+5. Find the key `com.openai.codex` and inspect `requirements_toml_base64`.
+6. Decode and modify the TOML configuration as required.
+7. Save the profile and redeploy or wait for device check-in.
+
+</details>
+
+<details>
+
+<summary>Kandji</summary>
+
+1. Open Kandji Admin Portal.
+2. Navigate to **Library** → **Custom Profiles**.
+3. Locate the profile containing `com.openai.codex`.
+4. Review the payload and modify the `requirements_toml_base64` value.
+5. Save and assign the updated profile.
+6. Force a device sync if required.
+
+</details>
+
+<details>
+
+<summary>Microsoft Intune</summary>
+
+1. Open Intune Admin Center.
+2. Navigate to **Devices** → **Configuration Profiles**.
+3. Locate the profile managing Codex and open **Custom Settings**.
+4. Review the preference domain `com.openai.codex`.
+5. Update the managed configuration, save, and assign the profile.
+6. Sync target devices.
+
+</details>
+
+<details>
+
+<summary>Mosyle</summary>
+
+1. Open Mosyle Dashboard.
+2. Navigate to **Management** → **Profiles**.
+3. Locate the profile containing `com.openai.codex`.
+4. Modify the payload, save changes, and push the updated profile.
+
+</details>
+
+**What settings to change**
+
+Inspect the decoded TOML for any hook restrictions, for example:
+
+```toml
+managed-hooks-only = true
+hooks_enabled = false
+codex_hooks = false
+```
+
+To permit user-defined local hooks, update or remove the restricting settings:
+
+```toml
+managed-hooks-only = false
+hooks_enabled = true
+```
+
+**Validation after deployment**
+
+On a managed Mac, confirm the updated configuration is present:
+
+```bash
+defaults read /Library/Managed\ Preferences/com.openai.codex
+```
+
+Then restart Codex, ensure local hook files exist under `~/.codex/hooks/` or `~/.codex/hooks.json`, and verify hook discovery through Codex logs.
+
 #### Local User Configuration
 
 Once organizational restrictions are removed, users enable hooks locally:
