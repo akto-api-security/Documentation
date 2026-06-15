@@ -326,7 +326,9 @@ You should see log entries indicating validation occurred.
 
 ## Configuration Reference
 
-### Wrapper Script Variables
+<details>
+
+<summary>Wrapper Script Variables</summary>
 
 ```bash
 MODE="atlas"                                            # "argus" or "atlas"
@@ -340,7 +342,11 @@ LOG_LEVEL="INFO"                                       # DEBUG, INFO, WARNING, E
 LOG_PAYLOADS="false"                                   # Log payload previews
 ```
 
-### Environment Variables (Optional)
+</details>
+
+<details>
+
+<summary>Environment Variables (Optional)</summary>
 
 Override defaults via environment variables in `~/.zshrc` or `~/.bashrc`:
 
@@ -362,7 +368,11 @@ Then reload your shell:
 source ~/.zshrc
 ```
 
-### Codex API Host Auto-Detection
+</details>
+
+<details>
+
+<summary>Codex API Host Auto-Detection</summary>
 
 The Codex API host and path are automatically resolved from the same environment variables Codex CLI uses:
 
@@ -372,7 +382,11 @@ The Codex API host and path are automatically resolved from the same environment
 | `OPENAI_API_KEY` set | `api.openai.com` | `/v1/responses` |
 | ChatGPT browser login | `chatgpt.com` | `/backend-api/codex/responses` |
 
-### Hook Input Fields
+</details>
+
+<details>
+
+<summary>Hook Input Fields</summary>
 
 All hooks receive a common JSON payload on stdin, plus event-specific fields:
 
@@ -383,9 +397,13 @@ All hooks receive a common JSON payload on stdin, plus event-specific fields:
 | `PreToolUse` | `tool_name`, `tool_use_id`, `tool_input` |
 | `PostToolUse` | `tool_name`, `tool_use_id`, `tool_input`, `tool_response` |
 
+</details>
+
 ## Troubleshooting
 
-### Hooks Not Executing
+<details>
+
+<summary>Hooks Not Executing</summary>
 
 ```bash
 # 1. Verify hooks feature flag is enabled
@@ -405,7 +423,11 @@ python3 --version
 tail -f ~/.codex/akto/logs/*.log
 ```
 
-### Ingestion URL Not Configured
+</details>
+
+<details>
+
+<summary>Ingestion URL Not Configured</summary>
 
 ```bash
 # Check if placeholder still exists
@@ -416,7 +438,11 @@ AKTO_URL="https://your-akto-instance.com"
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.codex/hooks/*-wrapper.sh
 ```
 
-### Check Logs for Errors
+</details>
+
+<details>
+
+<summary>Check Logs for Errors</summary>
 
 ```bash
 # View individual logs
@@ -432,7 +458,11 @@ grep "API CALL FAILED" ~/.codex/akto/logs/*.log
 grep "BLOCKING" ~/.codex/akto/logs/*.log
 ```
 
-### Events Not in Dashboard
+</details>
+
+<details>
+
+<summary>Events Not in Dashboard</summary>
 
 ```bash
 # Test API connectivity
@@ -444,18 +474,26 @@ curl -X POST "${AKTO_DATA_INGESTION_URL}/api/v1/events" \
 grep "AKTO_DATA_INGESTION_URL" ~/.codex/hooks/*-wrapper.sh
 ```
 
-### Service Unavailable
+</details>
+
+<details>
+
+<summary>Service Unavailable</summary>
 
 If Akto is unreachable:
 
 * With `AKTO_SYNC_MODE=true`: hooks fail open and allow execution (fail-safe)
 * With `AKTO_SYNC_MODE=false`: hooks skip ingestion silently
 
+</details>
+
 ## Uninstallation
 
 To completely remove Akto hooks from Codex CLI or Codex Desktop:
 
-### Complete Removal
+<details>
+
+<summary>Complete Removal</summary>
 
 ```bash
 # 1. Remove hook configuration
@@ -473,7 +511,11 @@ rm -rf ~/.codex/akto/
 # 5. No restart needed - Codex reads config on each invocation (CLI and Desktop)
 ```
 
-### Selective Removal (Keep Logs)
+</details>
+
+<details>
+
+<summary>Selective Removal (Keep Logs)</summary>
 
 ```bash
 # Remove only hooks and configuration
@@ -483,7 +525,11 @@ rm -rf ~/.codex/hooks/
 # Akto logs preserved in ~/.codex/akto/
 ```
 
-### Backup Before Removal
+</details>
+
+<details>
+
+<summary>Backup Before Removal</summary>
 
 ```bash
 # Backup configuration and logs before removal
@@ -494,7 +540,11 @@ cp -r ~/.codex/akto/ ~/akto-backup/codex-akto-logs/ 2>/dev/null
 # Then proceed with removal steps above
 ```
 
-### Verify Removal
+</details>
+
+<details>
+
+<summary>Verify Removal</summary>
 
 ```bash
 # Check that hooks are removed
@@ -505,16 +555,26 @@ test -d ~/.codex/hooks && echo "⚠️  Hook scripts still exist" || echo "✅ H
 test -d ~/.codex/akto && echo "ℹ️  Logs still present" || echo "✅ Logs removed"
 ```
 
-### Restore Codex to Default
+</details>
+
+<details>
+
+<summary>Restore Codex to Default</summary>
 
 After uninstallation, Codex CLI and Codex Desktop will operate without Akto security monitoring. Test with:
 
 * **CLI**: `codex "Test message"`
 * **Desktop**: Open Codex Desktop and send a message — no hook logs should appear
 
+</details>
+
 ## Enterprise Deployment
 
 ### Automated Deployment Script
+
+<details>
+
+<summary>deploy-codex-cli-hooks.sh</summary>
 
 ```bash
 #!/bin/bash
@@ -583,39 +643,116 @@ echo "📍 Akto instance: ${AKTO_URL}"
 echo "Test with: codex 'What is 2+2?' (CLI) or open Codex Desktop and send a message"
 ```
 
+</details>
+
 **Deploy to developers:**
 
 ```bash
 curl -fsSL https://your-org.com/deploy-codex-cli-hooks.sh | bash -s https://your-akto-instance.com
 ```
 
-## Quick Setup Summary
+## Enabling Local Hooks in Managed Environments
+
+In managed environments, organizational policies may override local Codex hook configuration. This section helps administrators identify and resolve restrictions so that local hooks can execute.
+
+### Configuration Precedence
+
+Codex evaluates configuration sources in this order — higher-precedence sources win:
+
+1. Cloud-managed requirements (ChatGPT Business / Enterprise)
+2. macOS managed preferences (MDM)
+3. Local user configuration (`~/.codex/config.toml`)
+4. Other defaults
+
+### Scenario 1: Cloud-Managed Requirements
+
+Organization administrators should review settings in the ChatGPT administration environment under:
+
+* Codex Settings → Managed Requirements
+* Policies → Developer Tools Settings
+* Hooks Restrictions / Managed Hooks Configuration
+
+Look for settings that disable hooks globally or restrict execution to organization-managed hooks only:
+
+```toml
+hooks_enabled = false
+managed-hooks-only = true
+```
+
+**To allow local hooks**, ensure:
+
+```toml
+hooks_enabled = true
+managed-hooks-only = false
+```
+
+Or remove the restriction entirely.
+
+### Scenario 2: macOS Managed Preferences (MDM)
+
+MDM-managed Codex configuration is delivered through the preference domain `com.openai.codex` via platforms such as Jamf Pro, Kandji, Microsoft Intune, Mosyle, or VMware Workspace ONE.
+
+**Check current managed configuration on the device:**
 
 ```bash
-# 1. Enable feature flag in ~/.codex/config.toml
-# [features]
-# codex_hooks = true
+# View installed profiles
+profiles show
+# or
+sudo profiles show
 
-# 2. Create directories
-mkdir -p ~/.codex/hooks ~/.codex/akto/logs
-
-# 3. Download all hook scripts from GitHub (see step 3 above)
-
-# 4. ⚠️ Configure Akto URL and API token (REQUIRED)
-AKTO_URL="https://your-akto-instance.com"
-AKTO_API_TOKEN="your-akto-api-token"   # leave empty ("") if your deployment doesn't require auth
-sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.codex/hooks/*-wrapper.sh
-sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN}|g" ~/.codex/hooks/*-wrapper.sh
-
-# 5. Make executable
-chmod +x ~/.codex/hooks/*.sh
-
-# 6. Create hooks.json (see step 5 above)
-
-# 7. Test
-# CLI: codex "What is 2+2?"
-# Desktop: open Codex Desktop and send a message
+# Read managed preferences
+defaults read /Library/Managed\ Preferences/com.openai.codex
 ```
+
+Locate the `requirements_toml_base64` field, decode it, and inspect for restrictions such as:
+
+```toml
+hooks_enabled = false
+managed-hooks-only = true
+codex_hooks = false
+```
+
+**To allow local hooks**, update the MDM profile so that:
+
+```toml
+hooks_enabled = true
+managed-hooks-only = false
+```
+
+Or remove the managed hook restriction entirely. After updating:
+
+1. Save the configuration.
+2. Push the updated profile to managed devices.
+3. Restart Codex.
+4. Verify hook discovery and execution.
+
+### Local User Configuration
+
+Once organizational restrictions are removed, users enable hooks locally:
+
+```toml
+# ~/.codex/config.toml
+[features]
+codex_hooks = true
+```
+
+Hook files can then be placed in `~/.codex/hooks/` or `~/.codex/hooks.json`.
+
+### Validation
+
+After enabling local hooks:
+
+1. Restart Codex.
+2. Execute an action that should trigger a hook.
+3. Verify logs show events such as:
+
+```
+Hook discovered
+Hook started
+Hook completed
+```
+
+If hooks are not discovered, re-check cloud-managed requirements and MDM-managed preferences, as they take precedence over local configuration.
 
 ## Resources
 
