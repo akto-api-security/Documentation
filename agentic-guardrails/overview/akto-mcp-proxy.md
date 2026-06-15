@@ -34,37 +34,21 @@ flowchart LR
 ### Cloud setup
 
 ```mermaid
-flowchart TB
-    subgraph dev["Your Environment"]
-        client["MCP Client\n(Claude · Cursor · VS Code)"]
+flowchart LR
+    subgraph akto["Akto"]
+        guardrails["Guardrails Module"]
     end
 
-    subgraph akto["☁️ Akto Cloud"]
-        subgraph proxy["mcp-proxy.akto.io"]
-            req["Inspect Request"]
-            decision{"Guardrail Check"}
-            block["Block & Alert"]
-            fwd["Forward Request"]
-            res["Inspect & Filter Response"]
+    subgraph vpc["Customer Cloud  (AWS VPC)"]
+        lb["Load Balancer / API Gateway"]
+        proxy["Proxy\n(EC2 or sidecar)"]
+        mcp["MCP Server"]
 
-            req --> decision
-            decision -- "Threat detected" --> block
-            decision -- "Safe" --> fwd
-            fwd --> res
-        end
-
-        dash["Akto Dashboard\nPolicies · Audit Logs · Alerts"]
-        dash -.->|"policy rules"| decision
-        block -.->|"alert"| dash
-        res -.->|"log"| dash
+        lb --> proxy
+        proxy --> mcp
     end
 
-    mcp["MCP Server\n(zero config changes)"]
-
-    client -->|"① Request  (URL points to proxy)"| req
-    block -->|"② Blocked"| client
-    fwd <-->|"③ ④  Request & Response"| mcp
-    res -->|"⑤ Filtered Response"| client
+    proxy <-->|"Analyze tool calls in real time\n[Private Secure Connection]"| guardrails
 ```
 
 ## How It Works
