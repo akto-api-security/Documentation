@@ -14,21 +14,42 @@ Akto MCP Proxy is a security and governance layer that sits between MCP (Model C
 
 ## Architecture
 
-```
-┌─────────────┐        ┌─────────────────┐        ┌──────────────┐
-│ MCP Client  │───────▶│  Akto MCP Proxy │───────▶│  MCP Server  │
-└─────────────┘        └─────────────────┘        └──────────────┘
-                              │
-                              ▼
-                       ┌──────────────────┐
-                       │ Guardrail Detection │
-                       │   & Guardrails   │
-                       └──────────────────┘
+```mermaid
+flowchart LR
+    client["MCP Client"]
+
+    subgraph proxy["Akto MCP Proxy"]
+        engine["Guardrail Engine\ninspect · enforce · log"]
+    end
+
+    server["MCP Server"]
+
+    client -->|"Request"| engine
+    engine -. "🚫 Blocked" .-> client
+    engine -->|"Forwarded request"| server
+    server -->|"Response"| engine
+    engine -->|"Response"| client
 ```
 
 ### Cloud setup
 
-<figure><img src="../../.gitbook/assets/akto-mcp-proxy-cloud.png" alt=""><figcaption></figcaption></figure>
+```mermaid
+flowchart LR
+    subgraph akto["Akto"]
+        guardrails["Guardrails Module"]
+    end
+
+    subgraph vpc["Customer Cloud  (AWS VPC)"]
+        lb["Load Balancer / API Gateway"]
+        proxy["Proxy\n(EC2 or sidecar)"]
+        mcp["MCP Server"]
+
+        lb --> proxy
+        proxy --> mcp
+    end
+
+    proxy <-->|"Analyze tool calls in real time\n[Private Secure Connection]"| guardrails
+```
 
 ## How It Works
 
