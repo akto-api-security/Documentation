@@ -211,6 +211,7 @@
 ## API Security Testing
 
 * [Concepts](api-security-testing/concepts/README.md)
+  * [Smart Automated Testing](api-security-testing/concepts/smart-automated-testing.md)
   * [Severity Levels](api-security-testing/concepts/severity-levels.md)
   * [Test](api-security-testing/concepts/test.md)
   * [Result types](api-security-testing/concepts/result-types.md)

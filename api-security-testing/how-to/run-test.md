@@ -20,8 +20,12 @@ In the demonstration below, let's run tests on <mark style="color:red;">`/rest/p
 
 In the demonstration above, we performed tests on the <mark style="color:red;">`/rest/products/search`</mark> endpoint from the **demo\_collection** API.
 
+### Smart Automated Testing
+
+Check **Smart Automated Testing** in the test configuration panel to have Akto's AI agent execute the tests. See [Smart Automated Testing](../concepts/smart-automated-testing.md) for details.
+
 ### Add/modify/delete headers/params
 
 Easily add, modify, or remove headers like “x-forwarded-for” or “x-no-alarm” directly from the test configuration, without editing YAML files.
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=”../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png” alt=””><figcaption></figcaption></figure>
