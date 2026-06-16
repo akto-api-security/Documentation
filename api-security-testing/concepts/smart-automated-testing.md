@@ -18,27 +18,37 @@ The agent follows a **Think → Plan → Act → Observe** loop, repeating until
 | **Plan (Attempt N)** | Before sending a request, the agent decides exactly what to change and why — e.g., swap the auth token with a different user's token, alter an object ID, or craft a malformed payload. |
 | **Action (Attempt N)** | The agent sends the crafted HTTP request. The full request is logged: method, URL, headers, and body. |
 | **Observation (Attempt N)** | The agent reads the response — status code, body, headers — and judges whether it indicates a vulnerable or secure state. If the response is not conclusive, it adjusts and tries again. |
-
-Attempts continue sequentially, with each one improving on the last based on what the previous observation revealed. The final step is **Vulnerability Validation**, where the agent makes a definitive determination based on all accumulated evidence.
-
-### Vulnerability Validation
-
-At the end of the loop, the agent validates the vulnerability by checking the key indicators defined in the test scenario — for example:
-
-- HTTP response code is `2XX`
-- Response body matches the baseline by more than 90%
-- No error message is present in the body
-
-If the criteria are met, the issue is flagged as confirmed.
+| **Vulnerability Validation** | After all attempts, the agent checks the key indicators defined in the test scenario — e.g., HTTP response code is `2XX`, response body matches the baseline by more than 90%, no error message present. If criteria are met, the issue is flagged as confirmed. |
 
 ## How to Run Smart Automated Tests
 
 Smart Automated Testing runs the same way as standard tests — you select the tests you want to run, and the AI agent executes them.
 
-1. Go to **Testing** and open a collection or endpoint.
-2. Click **Run Test** and select the tests (by test name or category).
-3. Choose **Smart Automated Testing** as the testing mode.
-4. The agent will reference the selected test definitions and begin the execution loop.
+{% stepper %}
+{% step %}
+### Open Testing
+
+Go to **Testing** and open a collection or endpoint.
+{% endstep %}
+
+{% step %}
+### Select Tests
+
+Click **Run Test** and select the tests by name or category.
+{% endstep %}
+
+{% step %}
+### Enable Smart Automated Testing
+
+Check **Smart Automated Testing** in the test configuration panel.
+{% endstep %}
+
+{% step %}
+### Run
+
+The agent references the selected test definitions and begins the execution loop.
+{% endstep %}
+{% endstepper %}
 
 The agent uses the test ID and its associated YAML definition to understand the scenario — what vulnerability to test for, what parameters to manipulate, and what response conditions confirm a finding.
 
