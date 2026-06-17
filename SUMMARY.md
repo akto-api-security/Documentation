@@ -73,6 +73,7 @@
   * [Sidecar Egress Proxy](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/sidecar-egress-proxy.md)
   * [AI Agent Security](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/README.md)
     * [AWS Bedrock](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/connect-akto-with-aws-bedrock.md)
+    * [AWS Bedrock AgentCore](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/aws-bedrock-agentcore.md)
     * [Hugging Face](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/connect-akto-with-huggingface.md)
     * [Databricks](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/databricks.md)
     * [N8N](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/n8n.md)
