@@ -102,7 +102,7 @@
   * [API Import: WSDL in Akto](traffic-connector/manual/wsdl.md)
 * [Third Party Software](traffic-connector/third-party-software/README.md)
   * [Connect Akto with Imperva](traffic-connector/third-party-software/imperva.md)
-  * [Connect Akto with Wiz](integrations/wiz.md#connecting-wiz-traffic-source)
+  * [Connect Akto with Wiz](integrations/wiz.md#connect-wiz-traffic-source)
 * [Configure TLS on kafka](traffic-connector/kafka-tls-in-kubernetes.md)
 * [Configure SASL Authentication on kafka](traffic-connector/kafka-sasl-in-kubernetes.md)
 * [Configure external kafka](traffic-connector/external-kafka-in-kuberneters.md)
