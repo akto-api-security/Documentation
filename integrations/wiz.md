@@ -1,20 +1,11 @@
 # Wiz
 
-Seamlessly enhance your web application security with Akto's Wiz integration. Enrich your wiz dashboard with API vulnerabilities discovered by Akto.
+Seamlessly enhance your API security posture with Akto's Wiz integration. Connect Wiz as a traffic source to periodically import your API endpoints into Akto's inventory, and enrich your Wiz dashboard with API vulnerabilities discovered by Akto.
 
 {% hint style="info" %}
 **Prerequisites**
 
-Before setting up the Wiz Integration, ensure you have:
-
-**Wiz Service Account**
-
-A wiz service account with the following permission scopes is required by the integration:
-
-1. **create:external\_data\_ingestion**
-2. **read:system\_activities**
-
-**Tenant Data Center**
+Before setting up the Wiz integration, ensure you have a Wiz service account and your **Tenant Data Center**:
 
 1. At the top right of your Wiz portal, click the user icon > **Tenant Info**.
 2. At the left side, click **Data Center and Regions**.
@@ -52,7 +43,36 @@ A wiz service account with the following permission scopes is required by the in
 {% endstep %}
 {% endstepper %}
 
+## Connecting Wiz Traffic Source
+
+Once the integration is configured, you can connect Wiz as a traffic source. This will periodically import API endpoints discovered by Wiz into Akto's API inventory.
+
+{% hint style="info" %}
+**Prerequisites**
+
+Your Wiz service account must have the following scope:
+
+* **read:api\_endpoints**
+{% endhint %}
+
+{% stepper %}
+{% step %}
+**Connect Traffic Source**
+
+After saving the integration, click **"Connect"** under the **Connect Wiz traffic source** section.
+{% endstep %}
+{% endstepper %}
+
 ## Creating Wiz Findings
+
+{% hint style="info" %}
+**Prerequisites**
+
+Your Wiz service account must have the following scopes:
+
+* **create:external\_data\_ingestion**
+* **read:system\_activities**
+{% endhint %}
 
 {% stepper %}
 {% step %}
