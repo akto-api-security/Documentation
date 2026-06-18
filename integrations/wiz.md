@@ -5,11 +5,13 @@ Seamlessly enhance your API security posture with Akto's Wiz integration. Connec
 {% hint style="info" %}
 **Prerequisites**
 
-Before setting up the Wiz integration, ensure you have a Wiz service account and your **Tenant Data Center**:
+Before setting up the Wiz integration, ensure you have:
 
-1. At the top right of your Wiz portal, click the user icon > **Tenant Info**.
-2. At the left side, click **Data Center and Regions**.
-3. Make a note of your **Tenant Data Center**.
+* A Wiz service account
+* Your **Tenant Data Center** — to find it:
+  1. At the top right of your Wiz portal, click the user icon > **Tenant Info**.
+  2. On the left side, click **Data Center and Regions**.
+  3. Make a note of your **Tenant Data Center**.
 {% endhint %}
 
 ## Quick Setup Steps
@@ -43,7 +45,7 @@ Before setting up the Wiz integration, ensure you have a Wiz service account and
 {% endstep %}
 {% endstepper %}
 
-## Connecting Wiz Traffic Source
+## Connect Wiz Traffic Source
 
 Once the integration is configured, you can connect Wiz as a traffic source. This will periodically import API endpoints discovered by Wiz into Akto's API inventory.
 
