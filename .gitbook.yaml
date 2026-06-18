@@ -1,6 +1,7 @@
 root: ./
 
 redirects:
+  traffic-connector/manual/imperva: "/traffic-connector/third-party-software/imperva"
   help: "/getting-started/quick-start-with-akto-cloud"
   api-inventory: "/api-inventory-1/concepts/api-endpoints"
   api-inventory/api-inventory: "/api-inventory-1/concepts/api-endpoints"
