@@ -21,95 +21,68 @@ Akto continuously identifies skills configured in your agents.
 Regular updates keep your inventory aligned with agent configuration changes.
 {% endhint %}
 
+## Discovery Sources
+
+Akto discovers skill files across every surface where AI agents are configured and run. Discovery covers:
+
+* **Local developer workstations** — skill files used by IDE-based agents such as Cursor, VS Code, and Claude Code
+* **Source code repositories** — skill files committed to GitHub, GitLab, and Bitbucket, including nested directories such as `.claude/skills/`
+* **CI/CD pipelines** — skill files present in pipeline configurations and build environments
+* **MCP servers and AI agent runtimes** — skills loaded and exposed by locally running or networked MCP servers
+* **Local developer skill directories** — skills loaded from developer-managed local paths outside of version control
+* **Third-party registries and marketplaces** — skills pulled in from external sources or community registries
+
+## Skill Inventory
+
+Akto generates and maintains a continuous inventory of all skills currently in use across your environment. The inventory captures skill source, hosting location, associated agents, and last observed activity — giving you a complete, up-to-date picture of your skill footprint.
+
 ## Malicious Skill Detection
 
-Malicious skill detection with risk scoring is available across the **Skills**, **Users & Devices**, and **Agentic Assets** views. This enables faster identification and prioritisation of risky AI agent skills across your environment.
+Akto marks a skill as malicious based on static analysis of its content. When a skill is discovered, Akto uses the fetch mechanism to retrieve the full content of the skill file — including `skills.md`, `.claude/skills/`, and equivalent files across IDEs, repositories, CI/CD pipelines, and MCP servers. Akto then inspects that content across three risk dimensions to determine whether the skill is safe, suspicious, or malicious. Analysis runs at discovery time and on every subsequent change detected in the file.
 
-Each skill is evaluated and assigned a risk score, helping you quickly surface high-risk capabilities and take action before they are exploited.
+Each skill is evaluated and assigned a risk score, helping you quickly surface high-risk capabilities and take action before they are exploited. Risk scores are visible across the **Skills**, **Users & Devices**, and **Agentic Assets** views.
 
-## Blocking Skills Capability
+### Sensitive Data Exposure
 
-### Block Skills by Device
+Akto scans the fetched skill file content for credentials and sensitive identifiers embedded in skill instructions, examples, or metadata.
 
-You can block a skill directly from the Skills view by selecting the devices where enforcement should apply. Device selection automatically includes all agents running on the selected endpoints.
+**What Akto Detects**
 
-This approach helps you restrict a capability only where required while allowing normal operation elsewhere.
+* Hardcoded API keys, tokens, and secrets
+* Internal URLs and private endpoints exposed in skill descriptions
+* Business logic or environment-specific configuration leaked into skill text
+* Whether exposure indicates accidental leakage (e.g., a copy-paste artifact) vs. intentional exfiltration logic (e.g., a skill designed to forward credentials outbound)
 
-**Steps to Block a Skill for Selected Devices**
 
-{% stepper %}
-{% step %}
-Navigate to the **Skills** tab under Agentic Assets.
-{% endstep %}
+### Malicious Instructions & Prompt Injection
 
-{% step %}
-Select the skill that you want to restrict and open its skill details view.
-{% endstep %}
+Akto analyzes the fetched skill file content for injected or adversarial directives embedded in natural-language instructions, descriptions, and examples.
 
-{% step %}
-Select the endpoint IDs (devices) where you want to block the skill.
+**What Akto Detects**
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
-{% endstep %}
+* Prompt injection patterns: instructions designed to override system behavior or hijack the agent's context
+* Obfuscated or hidden instructions using Unicode tricks, whitespace manipulation, or non-printable characters
+* Instructions that conflict with the stated skill purpose (e.g., a "summarize document" skill that also appends environment variables to outbound requests)
+* Instruction smuggling embedded in skill descriptions, examples, or templates — where executable directives are disguised as documentation
 
-{% step %}
-Click **Block skill** from the action bar at the bottom.
-{% endstep %}
+Akto uses LLM-assisted semantic analysis to evaluate natural-language instructions that evade pattern-based detection.
 
-{% step %}
-Confirm the blocking action.
-{% endstep %}
-{% endstepper %}
+{% hint style="info" %}
+**Runtime Enforcement**
 
-**Expected Result After Blocking**
+At runtime, if an injected instruction surfaces during execution, the **PromptInjection Guardrail** in Agent Guard enforces blocking. See [Agent Guard → PromptInjection Guardrail](../../agentic-guardrails/concepts/agent-guard.md) for detection logic and configuration.
+{% endhint %}
 
-Akto prevents execution of the selected skill on all chosen devices.\
-All agents running on the selected endpoint IDs lose access to the blocked skill.\
-Agents on other devices continue to use the skill without interruption.
 
-### Block Skills by Agent
+### Embedded Code & Script Risks
 
-You can block skills for a specific agent within a specific device using the Users and Devices view. Agent-level enforcement allows you to apply tighter controls without affecting other agents on the same device.
+Akto inspects execution blocks referenced or embedded in the fetched skill file content — including shell commands, pre-execution hooks, and linked script paths.
 
-This approach supports environments where different agents require different access levels.
+**What Akto Detects**
 
-#### **Steps to Block Skills for a Specific Agent**
-
-{% stepper %}
-{% step %}
-Navigate to **Users and Devices**.
-{% endstep %}
-
-{% step %}
-Select the device where you want to enforce the restriction.
-{% endstep %}
-
-{% step %}
-Open the list of agents associated with the selected device and select the agent.
-
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (2) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
-{% endstep %}
-
-{% step %}
-Choose the skills that you want to block.
-
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (3) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
-{% endstep %}
-
-{% step %}
-Click **Block Skills** from the action bar.
-{% endstep %}
-
-{% step %}
-Confirm the blocking action.
-{% endstep %}
-{% endstepper %}
-
-#### **Expected Result After Blocking**
-
-Akto blocks execution of the selected skills only for the chosen agent on the selected device.\
-Other agents on the same device retain access unless explicitly restricted.\
-Agents on other devices continue to operate without any impact.
+* Reverse shells and data exfiltration logic in associated `/scripts/` directories
+* Unsafe system commands embedded in dynamic execution blocks
+* Dependency risks: unverified, unpinned, or typosquatted packages referenced by the skill
 
 ## Continue with Guardrails
 
@@ -125,3 +98,4 @@ Refer to:
 
 * [Agentic Guardrails](../../agentic-guardrails/overview/)
 * [Guardrail Policies](../../agentic-guardrails/concepts/threat-policy.md)
+* [Skill Inspection & Enforcement](./skill-inspection-and-enforcement.md)
