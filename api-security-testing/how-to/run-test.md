@@ -22,7 +22,7 @@ In the demonstration above, we performed tests on the <mark style="color:red;">`
 
 ### Smart Automated Testing
 
-Check **Smart Automated Testing** in the test configuration panel to have Akto's AI agent execute the tests. See [Smart Automated Testing](../concepts/smart-automated-testing.md) for details.
+Check **Smart Automated Testing** in the test configuration panel to have Akto's AI agent execute the tests. See [Smart Automated Testing](../concepts/smart-automated-testing.md) for details and [Set Up Smart Automated Testing](set-up-smart-automated-testing.md) for installation.
 
 ### Add/modify/delete headers/params
 

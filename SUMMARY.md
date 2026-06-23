@@ -233,6 +233,7 @@
   * [Install testing module in your Cloud](api-security-testing/how-to/install-testing-module-in-your-cloud/README.md)
     * [Ephemeral Storage for Hybrid Runtime](api-security-testing/how-to/install-testing-module-in-your-cloud/ephemeral-storage-for-hybrid-runtime.md)
     * [gRPC Testing in Hybrid Testing Module](api-security-testing/how-to/install-testing-module-in-your-cloud/grpc-testing-in-hybrid-testing-module.md)
+  * [Set Up Smart Automated Testing](api-security-testing/how-to/set-up-smart-automated-testing.md)
   * [Create Custom Test Suites](api-security-testing/how-to/create-custom-test-suites.md)
   * [Recalculate Issue Counts](api-security-testing/how-to/recalculate-issue-counts.md)
   * [Testing Module Selector in Akto](api-security-testing/how-to/testing-module-selector-in-akto.md)
