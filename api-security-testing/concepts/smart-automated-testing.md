@@ -64,3 +64,16 @@ Each Smart Automated Testing run produces a detailed **AI Execution Trace** visi
 | Attempts | Single pass | Multiple attempts, each improving on the last |
 | Transparency | Request/response logs | Full reasoning trace (Thinking, Plan, Action, Observation) |
 | Validation | Rule-based matchers | AI-driven judgment with evidence |
+
+## Setup
+
+Smart Automated Testing requires the **AI Automated Testing** agent running alongside your hybrid testing module. See [Set Up Smart Automated Testing](../how-to/set-up-smart-automated-testing.md) for installation and configuration.
+
+## Get Support for your Akto setup
+
+There are multiple ways to request support from Akto. We are 24x7 available on the following:
+
+1. In-app `intercom` support — message us inside the Akto dashboard and someone will reply.
+2. Join our [discord channel](https://www.akto.io/community) for community support.
+3. Contact `help@akto.io` for email support.
+4. Reach us [here](https://www.akto.io/contact-us).
