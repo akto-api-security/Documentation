@@ -118,8 +118,25 @@ git clone https://github.com/akto-api-security/akto_aws_bedrock_discovery.git
 # Navigate to the solution directory
 cd akto_aws_bedrock_discovery
 
-# Make scripts executable
-chmod +x simple-deploy.sh test-solution.sh
+#Navigate to CloudFormation Directory
+cd cloudformation
+
+#Edit Your Environment Parameters
+#Choose your environment and edit the parameters file:
+
+#for development
+nano parameters/dev-parameters.json
+
+#for production
+nano parameters/prod-parameters.json
+
+#Update these values:
+- `S3BucketName`: Your existing S3 bucket
+- `DataIngestionEndpoint`: Your AKTO API endpoint
+- `AktoApiKey`: Your AKTO authentication key
+
+#Make Deployment Script Executable
+chmod +x scripts/deploy.sh
 ```
 {% endstep %}
 
@@ -144,37 +161,35 @@ Before running the deployment, gather this information:
 
 Execute the deployment script:
 
+Choose which environment to deploy to:
 ```bash
-./simple-deploy.sh
+#Development:
+
+./scripts/deploy.sh dev
+```
+```bash
+#Production:
+```bash
+./scripts/deploy.sh prod
 ```
 
-The script will prompt you for the required information:
+The script will:
+- ✅ Build the Lambda package automatically
+- ✅ Create all AWS resources (roles, Lambda, EventBridge)
+- ✅ Configure everything with one command
+- ✅ Show you the results
 
 ```
-🚀 AKTO Bedrock Monitor - Simple Manual Deployment
-=================================================
+ Deployment completed successfully!
 
-📊 Deployment Information:
-   AWS Account ID: 123456789***
-   AWS Region: us-east-1
+📊 Retrieving stack outputs...
+---------
+|OutputKey|OutputValue|
+---------
+|LambdaFunctionName|akto-bedrock-log-processor-123456|
+|LambdaFunctionArn|arn:aws:lambda:us-east-1:123456:function:...|
+|EventBridgeRuleName|akto-bedrock-schedule-123456|
 
-S3 Bucket Configuration:
-  - S3 bucket name is REQUIRED for Bedrock logging
-  - The bucket should already exist and be accessible
-  - Lambda will configure Bedrock to log to this bucket
-
-Enter S3 bucket name (required): my-company-bedrock-logs-2024
-✅ Using S3 bucket: my-company-bedrock-logs-2024
-
-AKTO Data Ingestion Configuration:
-  - Data ingestion service URL is REQUIRED
-  - API key is REQUIRED for authentication
-
-Enter AKTO Data Ingestion URL (e.g., https://your-akto-instance.com/api/ingestData): https://my-akto.company.com/api/ingestData
-✅ Using Data Ingestion URL: https://my-akto.company.com/api/ingestData
-
-Enter AKTO API Key: ak_live_xxxxxxxxxxxxxxxxxxxx
-✅ Using API Key: ak_live_...
 ```
 {% endstep %}
 
@@ -274,7 +289,7 @@ aws bedrock-runtime invoke-model \
 **Check Lambda Logs:**
 
 ```bash
-aws logs tail /aws/lambda/akto-bedrock-log-processor-YOUR_ACCOUNT_ID --follow
+aws logs tail /aws/lambda/akto-bedrock-log-processor-cf-YOUR_ACCOUNT_ID --follow
 ```
 
 **Check S3 for Bedrock Logs:**
