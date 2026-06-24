@@ -5,50 +5,50 @@ redirects:
 # General
   help: getting-started/quick-start-with-akto-cloud.md
 
-# API Inventory
-  api-inventory: api-inventory/concepts/api-endpoints.md
-  api-inventory/api-inventory: api-inventory/concepts/api-endpoints.md
-  api-inventory/api-collections: api-inventory/concepts/api-collection.md
-  api-inventory/handeling-shadow-apis: api-inventory/concepts/meta-properties-of-api-endpoint.md
-  api-inventory/unauthenticated-apis: api-inventory/concepts/meta-properties-of-api-endpoint.md
-  api-inventory/detecting-changes-in-apis: api-inventory/concepts/api-changes.md
-  api-inventory/detecting-changes-in-apis/webhook-alerts: api-inventory/concepts/alerts.md
-  api-inventory/auth-types: api-inventory/concepts/auth-types.md
-  api-inventory/sensitive-data: api-inventory/concepts/sensitive-data.md
-  api-inventory/api-documentation: api-inventory/how-to/create-swagger-file-using-akto.md
-  api-inventory/data-types: api-inventory/concepts/data-type.md
+# API Inventory (now Agentic AI Discovery)
+  api-inventory: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/endpoints/README.md
+  api-inventory/api-inventory: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/endpoints/README.md
+  api-inventory/api-collections: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/collections/README.md
+  api-inventory/handeling-shadow-apis: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/meta-properties-of-api-endpoint.md
+  api-inventory/unauthenticated-apis: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/meta-properties-of-api-endpoint.md
+  api-inventory/detecting-changes-in-apis: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/recent-changes.md
+  api-inventory/detecting-changes-in-apis/webhook-alerts: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/alerts.md
+  api-inventory/auth-types: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/auth-types.md
+  api-inventory/sensitive-data: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/sensitive-data.md
+  api-inventory/api-documentation: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/how-to/create-swagger-file-using-akto.md
+  api-inventory/data-types: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/data-types.md
 
-# Test Editor
-  test-editor/overview: test-editor/concepts/overview.md
-  test-editor/test-library: test-editor/concepts/test-library.md
-  test-editor/test-library/local-file-inclusion-with-akto: test-editor/concepts/template-yamls/local-file-inclusion-with-akto.md
-  test-editor/concepts/test-library/local-file-inclusion-with-akto: test-editor/concepts/template-yamls/local-file-inclusion-with-akto.md
-  test-editor/test-yaml-syntax-one-pager: test-editor/concepts/test-yaml.md
-  test-editor/test-yaml-syntax-detailed: test-editor/concepts/test-yaml-syntax-detailed.md
-  test-editor/test-yaml-syntax-detailed/id: test-editor/concepts/test-yaml-syntax-detailed/id.md
-  test-editor/test-yaml-syntax-detailed/info: test-editor/concepts/test-yaml-syntax-detailed/info.md
-  test-editor/test-yaml-syntax-detailed/api-selection-filters: test-editor/concepts/test-yaml-syntax-detailed/api-selection-filters.md
-  test-editor/test-yaml-syntax-detailed/execute: test-editor/concepts/test-yaml-syntax-detailed/execute.md
-  test-editor/test-yaml-syntax-detailed/auth: test-editor/concepts/test-yaml-syntax-detailed/auth.md
-  test-editor/test-yaml-syntax-detailed/validation: test-editor/concepts/test-yaml-syntax-detailed/validation.md
-  test-editor/editing-built-in-test: test-editor/how-to/edit-test.md
-  test-editor/writing-custom-tests: test-editor/how-to/create-a-custom-test.md
+# Test Editor (now AI Red Teaming)
+  test-editor/overview: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/README.md
+  test-editor/test-library: akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/README.md
+  test-editor/test-library/local-file-inclusion-with-akto: akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/README.md
+  test-editor/concepts/test-library/local-file-inclusion-with-akto: akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/README.md
+  test-editor/test-yaml-syntax-one-pager: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/README.md
+  test-editor/test-yaml-syntax-detailed: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/README.md
+  test-editor/test-yaml-syntax-detailed/id: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/README.md
+  test-editor/test-yaml-syntax-detailed/info: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/README.md
+  test-editor/test-yaml-syntax-detailed/api-selection-filters: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/README.md
+  test-editor/test-yaml-syntax-detailed/execute: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/README.md
+  test-editor/test-yaml-syntax-detailed/auth: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/README.md
+  test-editor/test-yaml-syntax-detailed/validation: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/README.md
+  test-editor/editing-built-in-test: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/README.md
+  test-editor/writing-custom-tests: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/README.md
 
-# Security Testing
-  testing/run-tests-in-cicd: api-security-testing/how-to/run-tests-in-cicd.md
-  testing/github_integration_testing: api-security-testing/how-to/setup-github-integration-for-ci-cd.md
-  testing/github_integration_testing/github_app_integration: api-security-testing/how-to/setup-github-integration-for-ci-cd/create-github-app.md
-  testing/run-test: api-security-testing/how-to/run-test.md
-  testing/create-user-config: api-security-testing/concepts/user-config.md
-  testing/run-tests-in-cli-using-akto: api-security-testing/how-to/run-tests-in-cli-using-akto.md
-  testing/test-results: api-security-testing/concepts/test-result.md
-  testing/test-library: test-editor/concepts/test-library.md
-  testing/user-roles: api-security-testing/concepts/test-role.md
-  testing/run-test-in-graphql: api-security-testing/how-to/secure-graphql-apis-using-akto.md
-  api-security-testing/how-to/setup-github-integration-for-ci-cd/create-github-app: ci-cd/github-actions/create-github-app.md
-  api-security-testing/how-to/add-test-to-ci-cd-pipeline: ci-cd/how-to/add-test-to-ci-cd-pipeline.md
-  api-security-testing/how-to/run-tests-in-cicd: ci-cd/how-to/run-tests-in-cicd.md
-  api-security-testing/how-to/configure-testing-in-cloud: api-security-testing/how-to/install-testing-module-in-your-cloud.md
+# Security Testing (now AI Red Teaming + CI/CD Integrations)
+  testing/run-tests-in-cicd: integrations/ci-cd-integrations/how-to/run-tests-in-cicd.md
+  testing/github_integration_testing: integrations/ci-cd-integrations/README.md
+  testing/github_integration_testing/github_app_integration: integrations/ci-cd-integrations/github-actions/create-github-app.md
+  testing/run-test: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/run-test.md
+  testing/create-user-config: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/user-config.md
+  testing/run-tests-in-cli-using-akto: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/run-tests-in-cli-using-akto.md
+  testing/test-results: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/test-result.md
+  testing/test-library: akto-argus-agentic-ai-security-for-homegrown-ai/probe-library/README.md
+  testing/user-roles: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/test-role.md
+  testing/run-test-in-graphql: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/run-test.md
+  api-security-testing/how-to/setup-github-integration-for-ci-cd/create-github-app: integrations/ci-cd-integrations/github-actions/create-github-app.md
+  api-security-testing/how-to/add-test-to-ci-cd-pipeline: integrations/ci-cd-integrations/how-to/add-test-to-ci-cd-pipeline.md
+  api-security-testing/how-to/run-tests-in-cicd: integrations/ci-cd-integrations/how-to/run-tests-in-cicd.md
+  api-security-testing/how-to/configure-testing-in-cloud: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/install-testing-module-in-your-cloud/README.md
 
 # Traffic Connections
   add-api-data/integrations: traffic-connections/traffic-data-sources.md
