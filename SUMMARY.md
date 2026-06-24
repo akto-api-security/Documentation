@@ -349,6 +349,7 @@
   * [Guardrails as API](agentic-guardrails/overview/guardrails-api.md)
 * [Concepts](agentic-guardrails/concepts/README.md)
   * [Agent Guard](agentic-guardrails/concepts/agent-guard.md)
+  * [Session-Based Guardrails](agentic-guardrails/concepts/session-guardrails.md)
   * [Schema Conformance](agentic-guardrails/concepts/schema-conformance.md)
   * [Guardrail Actors](agentic-guardrails/concepts/threat-actors.md)
   * [Threat Dashboard](agentic-guardrails/concepts/threat-dashboard.md)
