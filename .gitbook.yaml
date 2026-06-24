@@ -50,60 +50,60 @@ redirects:
   api-security-testing/how-to/run-tests-in-cicd: integrations/ci-cd-integrations/how-to/run-tests-in-cicd.md
   api-security-testing/how-to/configure-testing-in-cloud: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/install-testing-module-in-your-cloud/README.md
 
-# Traffic Connections
-  add-api-data/integrations: traffic-connections/traffic-data-sources.md
-  traffic-connections/traffic-data-sources: traffic-connector/traffic-data-sources.md
-  traffic-connections/traffic-data-sources/hybrid-saas: getting-started/traffic-processor/hybrid-saas.md
-  traffic-connections/traffic-data-sources/amazon-aws: traffic-connector/mirroring/amazon-aws.md
-  traffic-connections/traffic-data-sources/aws-eks: traffic-connector/aws-services/aws-eks.md
-  traffic-connections/traffic-data-sources/aws-fargate: traffic-connector/aws-services/aws-fargate.md
-  traffic-connections/traffic-data-sources/aws-ecs: traffic-connector/aws-services/aws-ecs.md
-  traffic-connections/traffic-data-sources/aws-beanstalk: traffic-connector/aws-services/aws-beanstalk.md
-  traffic-connections/traffic-data-sources/kubernetes: traffic-connector/kubernetes/kubernetes.md
-  traffic-connections/traffic-data-sources/aws-api-gateway: traffic-connector/aws-services/aws-api-gateway.md
-  traffic-connections/traffic-data-sources/kong: traffic-connector/api-gateways/kong.md
-  traffic-connections/traffic-data-sources/nginx: traffic-connector/api-gateways/nginx.md
-  traffic-connections/traffic-data-sources/envoy: traffic-connector/api-gateways/envoy.md
-  traffic-connections/traffic-data-sources/envoy-1: traffic-connector/api-gateways/envoy-1.md
-  traffic-connections/traffic-data-sources/docker: traffic-connector/virtual-machines/docker.md
-  traffic-connections/traffic-data-sources/tcp-agent: traffic-connector/virtual-machines/tcp-agent.md
-  traffic-connections/traffic-data-sources/ebpf: traffic-connector/ebpf/ebpf.md
-  traffic-connections/traffic-data-sources/ebpf-mtls: traffic-connector/ebpf/ebpf-mtls.md
-  traffic-connections/traffic-data-sources/data-processor: getting-started/traffic-processor.md
-  traffic-connections/traffic-data-sources/har-file-upload: traffic-connector/manual/har-file-upload.md
-  traffic-connections/traffic-data-sources/google-cloud-gcp: traffic-connector/mirroring/google-cloud-gcp.md
-  traffic-connections/traffic-data-sources/burp-suite: traffic-connector/manual/burp-suite.md
-  traffic-connections/traffic-data-sources/postman: traffic-connector/manual/postman.md
-  traffic-connections/traffic-data-sources/openapi: traffic-connector/manual/openapi.md
-  traffic-connections/traffic-data-sources/akto-sdk: traffic-connector/akto-sdk.md
+# Traffic Connections (now Connectors > Others)
+  add-api-data/integrations: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md
+  traffic-connections/traffic-data-sources: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md
+  traffic-connections/traffic-data-sources/hybrid-saas: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md
+  traffic-connections/traffic-data-sources/amazon-aws: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/mirroring/amazon-aws.md
+  traffic-connections/traffic-data-sources/aws-eks: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/aws-eks.md
+  traffic-connections/traffic-data-sources/aws-fargate: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/aws-fargate.md
+  traffic-connections/traffic-data-sources/aws-ecs: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/aws-ecs.md
+  traffic-connections/traffic-data-sources/aws-beanstalk: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/aws-beanstalk.md
+  traffic-connections/traffic-data-sources/kubernetes: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/kubernetes/kubernetes.md
+  traffic-connections/traffic-data-sources/aws-api-gateway: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/aws-api-gateway.md
+  traffic-connections/traffic-data-sources/kong: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/api-gateways/connect-akto-with-kong.md
+  traffic-connections/traffic-data-sources/nginx: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/api-gateways/nginx.md
+  traffic-connections/traffic-data-sources/envoy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/api-gateways/envoy.md
+  traffic-connections/traffic-data-sources/envoy-1: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/api-gateways/envoy-1.md
+  traffic-connections/traffic-data-sources/docker: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/virtual-machines/docker.md
+  traffic-connections/traffic-data-sources/tcp-agent: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/virtual-machines/tcp-agent.md
+  traffic-connections/traffic-data-sources/ebpf: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/ebpf/ebpf.md
+  traffic-connections/traffic-data-sources/ebpf-mtls: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/ebpf/ebpf-mtls.md
+  traffic-connections/traffic-data-sources/data-processor: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md
+  traffic-connections/traffic-data-sources/har-file-upload: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/manual-import.md
+  traffic-connections/traffic-data-sources/google-cloud-gcp: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/mirroring/google-cloud-gcp.md
+  traffic-connections/traffic-data-sources/burp-suite: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/manual-import.md
+  traffic-connections/traffic-data-sources/postman: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/manual-import.md
+  traffic-connections/traffic-data-sources/openapi: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/manual-import.md
+  traffic-connections/traffic-data-sources/akto-sdk: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/akto-sdk.md
 
-# Getting Started & Deployment
-  getting-started/aws-deploy: getting-started/quick-start-with-akto-self-hosted/aws-deploy.md
-  getting-started/aws-multi-vpc-deploy: getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-multi-vpc-deploy.md
-  getting-started/aws-cross-region-vpc-deploy: getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-cross-region-vpc-deploy.md
-  getting-started/helm-deploy: getting-started/quick-start-with-akto-self-hosted/helm-deploy.md
-  getting-started/heroku: getting-started/quick-start-with-akto-self-hosted/heroku.md
-  getting-started/openshift-deploy: getting-started/quick-start-with-akto-self-hosted/openshift-deploy.md
-  getting-started/gcp-deploy: getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md
-  getting-started/azure-deploy: getting-started/quick-start-with-akto-self-hosted/azure-deploy.md
-  getting-started/aws-ssl: getting-started/quick-start-with-akto-self-hosted/aws-ssl.md
-  getting-started/quick-start-with-akto-self-hosted/helm-deploy: getting-started/traffic-processor/helm-deploy.md
-  getting-started/quick-start-with-akto-self-hosted/gcp-deploy: getting-started/traffic-processor/gcp-deploy.md
-  getting-started/quick-start-with-akto-self-hosted/azure-deploy: getting-started/traffic-processor/azure-deploy.md
-  getting-started/quick-start-with-akto-self-hosted/openshift-deploy: getting-started/traffic-processor/openshift-deploy.md
-  getting-started/quick-start-with-akto-self-hosted/heroku: getting-started/traffic-processor/heroku.md
-  getting-started/quick-start-with-akto-self-hosted/aws-ssl: getting-started/akto-self-hosted/aws-ssl.md
-  getting-started/proxy-setup: getting-started/advanced-topics/proxy-setup.md
-  getting-started/move-self-hosted-to-saas: getting-started/advanced-topics/move-self-hosted-to-saas.md
-  getting-started/traffic-processor/hybrid-saas: getting-started/quick-start-with-akto-cloud/hybrid-saas.md
-  getting-started/traffic-processor/helm-deploy: getting-started/quick-start-with-akto-self-hosted/helm-deploy.md
-  getting-started/traffic-processor/azure-deploy: getting-started/quick-start-with-akto-self-hosted/azure-deploy.md
-  getting-started/traffic-processor/openshift-deploy: getting-started/quick-start-with-akto-self-hosted/openshift-deploy.md
-  getting-started/traffic-processor/heroku: getting-started/quick-start-with-akto-self-hosted/heroku.md
-  getting-started/traffic-processor/gcp-deploy: getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md
-  getting-started/traffic-processor/aws-ssl: getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-ssl.md
-  getting-started/advanced-topics/move-self-hosted-to-saas: getting-started/quick-start-with-akto-cloud/move-self-hosted-to-saas.md
-  getting-started/advanced-topics/proxy-setup: getting-started/quick-start-with-akto-cloud/proxy-setup.md
+# Getting Started & Deployment (now Connectors)
+  getting-started/aws-deploy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/README.md
+  getting-started/aws-multi-vpc-deploy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/README.md
+  getting-started/aws-cross-region-vpc-deploy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/README.md
+  getting-started/helm-deploy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/kubernetes/kubernetes.md
+  getting-started/heroku: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md
+  getting-started/openshift-deploy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/kubernetes/kubernetes.md
+  getting-started/gcp-deploy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/gcp-services/README.md
+  getting-started/azure-deploy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/azure-services/README.md
+  getting-started/aws-ssl: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/README.md
+  getting-started/quick-start-with-akto-self-hosted/helm-deploy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/kubernetes/kubernetes.md
+  getting-started/quick-start-with-akto-self-hosted/gcp-deploy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/gcp-services/README.md
+  getting-started/quick-start-with-akto-self-hosted/azure-deploy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/azure-services/README.md
+  getting-started/quick-start-with-akto-self-hosted/openshift-deploy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/kubernetes/kubernetes.md
+  getting-started/quick-start-with-akto-self-hosted/heroku: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md
+  getting-started/quick-start-with-akto-self-hosted/aws-ssl: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/README.md
+  getting-started/proxy-setup: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md
+  getting-started/move-self-hosted-to-saas: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md
+  getting-started/traffic-processor/hybrid-saas: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md
+  getting-started/traffic-processor/helm-deploy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/kubernetes/kubernetes.md
+  getting-started/traffic-processor/azure-deploy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/azure-services/README.md
+  getting-started/traffic-processor/openshift-deploy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/kubernetes/kubernetes.md
+  getting-started/traffic-processor/heroku: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md
+  getting-started/traffic-processor/gcp-deploy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/gcp-services/README.md
+  getting-started/traffic-processor/aws-ssl: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/README.md
+  getting-started/advanced-topics/move-self-hosted-to-saas: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md
+  getting-started/advanced-topics/proxy-setup: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md
 
 # SSO
   sso/azuread-saml: account/sso/azuread-saml.md
