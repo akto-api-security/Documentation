@@ -40,33 +40,15 @@ Akto generates and maintains a continuous inventory of all skills currently in u
 
 ## Malicious Skill Detection
 
-Akto marks a skill as malicious based on static analysis of its content. When a skill is discovered, Akto uses the fetch mechanism to retrieve the full content of the skill file — including `skills.md`, `.claude/skills/`, and equivalent files across IDEs, repositories, CI/CD pipelines, and MCP servers. Akto then inspects that content across three risk dimensions to determine whether the skill is safe, suspicious, or malicious. Analysis runs at discovery time and on every subsequent change detected in the file.
+When a skill is discovered, Akto analyzes its content for security risks. Each skill is evaluated and assigned a risk score, helping you quickly surface high-risk capabilities and take action before they are exploited. Risk scores are visible across the **Skills**, **Users & Devices**, and **Agentic Assets** views.
 
-Each skill is evaluated and assigned a risk score, helping you quickly surface high-risk capabilities and take action before they are exploited. Risk scores are visible across the **Skills**, **Users & Devices**, and **Agentic Assets** views.
+Akto detects risks across three risk categories:
 
-### Sensitive Data Exposure
+* **Sensitive Data Exposure** — hardcoded credentials and sensitive identifiers in skill content
+* **Malicious Instructions & Prompt Injection** — injected or adversarial directives designed to override agent behavior
+* **Embedded Code & Script Risks** — unsafe execution logic, reverse shells, and dependency vulnerabilities
 
-Akto scans the fetched skill file content for credentials and sensitive identifiers embedded in skill instructions, examples, or metadata.
-
-**What Akto Detects**
-
-* Hardcoded API keys, tokens, and secrets
-* Internal URLs and private endpoints exposed in skill descriptions
-* Business logic or environment-specific configuration leaked into skill text
-* Whether exposure indicates accidental leakage (e.g., a copy-paste artifact) vs. intentional exfiltration logic (e.g., a skill designed to forward credentials outbound)
-
-### Malicious Instructions & Prompt Injection
-
-Akto analyzes the fetched skill file content for injected or adversarial directives embedded in natural-language instructions, descriptions, and examples.
-
-**What Akto Detects**
-
-* Prompt injection patterns: instructions designed to override system behavior or hijack the agent's context
-* Obfuscated or hidden instructions using Unicode tricks, whitespace manipulation, or non-printable characters
-* Instructions that conflict with the stated skill purpose (e.g., a "summarize document" skill that also appends environment variables to outbound requests)
-* Instruction smuggling embedded in skill descriptions, examples, or templates — where executable directives are disguised as documentation
-
-Akto uses LLM-assisted semantic analysis to evaluate natural-language instructions that evade pattern-based detection.
+Analysis runs at discovery time and on every subsequent change detected. For detailed threat context and examples of each risk category, see [OWASP Agentic Skills Top 10](./owasp-agentic-skills-top-10.md).
 
 {% hint style="info" %}
 **Runtime Enforcement**
@@ -74,48 +56,11 @@ Akto uses LLM-assisted semantic analysis to evaluate natural-language instructio
 At runtime, if an injected instruction surfaces during execution, the **PromptInjection Guardrail** in Agent Guard enforces blocking. See [Agent Guard → PromptInjection Guardrail](../../../agentic-guardrails/concepts/agent-guard.md) for detection logic and configuration.
 {% endhint %}
 
-### Embedded Code & Script Risks
-
-Akto inspects execution blocks referenced or embedded in the fetched skill file content — including shell commands, pre-execution hooks, and linked script paths.
-
-**What Akto Detects**
-
-* Reverse shells and data exfiltration logic in associated `/scripts/` directories
-* Unsafe system commands embedded in dynamic execution blocks
-* Dependency risks: unverified, unpinned, or typosquatted packages referenced by the skill
-
 ***
 
-## Runtime Detection & Enforcement
+## Auditing Skills
 
-Akto monitors agent behavior at runtime to detect dangerous actions triggered by skill execution and enforce policy-based restrictions in real time.
-
-### What Akto Monitors
-
-* **Agent tool usage** — file access, shell commands, and network calls initiated by skill execution
-* **Skill-triggered system actions** — system-level operations spawned directly by a skill
-* **Data movement** — files, environment variables, or sensitive content leaving the endpoint
-* **Outbound network activity** — destinations contacted during or after skill execution
-
-### What Akto Detects
-
-* Data exfiltration: environment variable leakage, credential forwarding, or file uploads to external destinations
-* Unauthorized filesystem activity: access to sensitive paths such as `.env` files or credential stores
-* Anomalous tool invocation patterns: unusual sequences or frequencies of tool calls that indicate abuse
-* Pre-authorized dangerous tools configured within skill definitions
-
-### Enforcement
-
-Akto enforces controls in real time without requiring manual intervention:
-
-* **Block dangerous commands** immediately upon detection
-* **Restrict filesystem access** to sensitive paths based on policy
-* **Limit outbound destinations** to approved endpoints only
-
-**Integrations**
-
-* **EDR / XDR platforms** — Akto correlates skill-triggered events with endpoint telemetry for unified threat visibility
-* **Runtime agent gateways and proxies** — Akto integrates with agent middleware to enforce controls at the execution layer
+Once you identify skills that are malicious, over-privileged, or pose a risk to your environment, Akto gives you fine-grained controls to block them at the device or agent level.
 
 ### Block Skills by Device
 
@@ -127,7 +72,7 @@ This approach helps you restrict a capability only where required while allowing
 
 {% stepper %}
 {% step %}
-Navigate to the **Skills** tab under Agentic Assets.
+Navigate the **Skills** tab under Agentic Assets.
 {% endstep %}
 
 {% step %}
@@ -198,6 +143,39 @@ Confirm the blocking action.
 Akto blocks execution of the selected skills only for the chosen agent on the selected device.\
 Other agents on the same device retain access unless explicitly restricted.\
 Agents on other devices continue to operate without any impact.
+
+***
+
+## Akto Guardrails
+
+Akto monitors agent behavior at runtime to detect dangerous actions triggered by skill execution and enforce policy-based restrictions in real time through agentic guardrails.
+
+### What Akto Monitors
+
+* **Agent tool usage** — file access, shell commands, and network calls initiated by skill execution
+* **Skill-triggered system actions** — system-level operations spawned directly by a skill
+* **Data movement** — files, environment variables, or sensitive content leaving the endpoint
+* **Outbound network activity** — destinations contacted during or after skill execution
+
+### What Akto Detects
+
+* Data exfiltration: environment variable leakage, credential forwarding, or file uploads to external destinations
+* Unauthorized filesystem activity: access to sensitive paths such as `.env` files or credential stores
+* Anomalous tool invocation patterns: unusual sequences or frequencies of tool calls that indicate abuse
+* Pre-authorized dangerous tools configured within skill definitions
+
+### Enforcement
+
+Akto enforces controls in real time without requiring manual intervention:
+
+* **Block dangerous commands** immediately upon detection
+* **Restrict filesystem access** to sensitive paths based on policy
+* **Limit outbound destinations** to approved endpoints only
+
+**Integrations**
+
+* **EDR / XDR platforms** — Akto correlates skill-triggered events with endpoint telemetry for unified threat visibility
+* **Runtime agent gateways and proxies** — Akto integrates with agent middleware to enforce controls at the execution layer
 
 ***
 
