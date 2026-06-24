@@ -169,7 +169,7 @@ Choose which environment to deploy to:
 ```
 ```bash
 #Production:
-```bash
+
 ./scripts/deploy.sh prod
 ```
 
@@ -179,7 +179,7 @@ The script will:
 - ✅ Configure everything with one command
 - ✅ Show you the results
 
-```
+```bash
  Deployment completed successfully!
 
 📊 Retrieving stack outputs...
@@ -205,7 +205,7 @@ The script will automatically:
 
 **Expected Output:**
 
-```
+```bash
 📦 Building Lambda package...
 ✅ Lambda package created
 
