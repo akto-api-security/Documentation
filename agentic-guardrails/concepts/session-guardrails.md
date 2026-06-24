@@ -26,6 +26,10 @@ Akto's guardrail evaluation operates in two modes:
 
 ## Standard vs Session-Based Guardrails
 
+<details>
+
+<summary>Comparison Table</summary>
+
 | Aspect | Standard Guardrails | Session-Based Guardrails |
 |--------|-------------------|-------------------------|
 | **Analysis Scope** | Individual prompt | Session conversation history |
@@ -34,6 +38,8 @@ Akto's guardrail evaluation operates in two modes:
 | **Threat Detection** | Single-prompt threats | Multi-interaction patterns |
 | **Activation** | Always active | Via `X-Session-ID` header |
 | **Use Case** | Quick, stateless checks | Behavioral analysis, anomaly detection |
+
+</details>
 
 ## When to Use Session-Based Guardrails
 
@@ -50,11 +56,25 @@ Deploy session-based guardrails when you need to detect threats that span multip
 
 Enabling session-based guardrails is automatic and requires no configuration on Akto's side.
 
-### Steps:
+{% stepper %}
+{% step %}
+#### Generate a Session ID
 
-1. **Generate a Session ID**: Your agent generates a unique identifier for each user session
-2. **Include in Request Header**: Attach the session ID to the `X-Session-ID` header when sending requests to Akto's guardrail service
-3. **Automatic Activation**: Akto automatically detects the session ID and enables session-based threat detection
+Your agent generates a unique identifier for each user session
+{% endstep %}
+
+{% step %}
+#### Include in Request Header
+
+Attach the session ID to the `X-Session-ID` header when sending requests to Akto's guardrail service
+{% endstep %}
+
+{% step %}
+#### Automatic Activation
+
+Akto automatically detects the session ID and enables session-based threat detection
+{% endstep %}
+{% endstepper %}
 
 ### Example Request Header
 
@@ -77,23 +97,23 @@ If you want session-based guardrails enabled for your agents, please contact the
 
 ## Benefits of Session-Based Guardrails
 
-### 1. Enhanced Threat Detection
+#### 1. Enhanced Threat Detection
 Detects sophisticated attacks that disguise themselves across multiple interactions rather than appearing malicious in a single prompt.
 
-### 2. Behavioral Context
+#### 2. Behavioral Context
 Provides guardrails with the full conversation context, enabling detection of behavioral drift and anomalous patterns.
 
-### 3. Anomaly Scoring
+#### 3. Anomaly Scoring
 Correlates actions across a session timeline to identify statistically unusual behavior that would appear benign in isolation.
 
-### 4. Compliance & Audit
+#### 4. Compliance & Audit
 Maintains session-scoped audit trails for compliance requirements, enabling investigation of user behavior across full sessions.
 
-### 5. User-Centric Detection
+#### 5. User-Centric Detection
 Moves from prompt-level detection to user-session-level detection, reducing false positives caused by legitimate context switches.
 
 ## Related Concepts
 
 - [[agent-guard]] — Complete reference of all guardrail types and their capabilities
 - [[guardrail-activity]] — Monitoring and analyzing guardrail detections across sessions
-- [[threat-dashboard]] — Dashboard visualization of threats including session-scoped analysis
+- [Create Guardrail Policies](../how-to/create-guardrail-policies.md) — Learn how to configure and deploy guardrail policies for your agents
