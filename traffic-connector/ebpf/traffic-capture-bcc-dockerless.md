@@ -8,7 +8,7 @@ Tarball naming convention:
 
 ---
 
-## Platform download URLs
+## Platform Downloads 
 
 | Platform | Download URL |
 |----------|-------------|
