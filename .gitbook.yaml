@@ -3,7 +3,7 @@ root: ./
 redirects:
 
 # General
-  help: getting-started/quick-start-with-akto-cloud.md
+  help: troubleshooting/support.md
 
 # API Inventory (now Agentic AI Discovery)
   api-inventory: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/endpoints/README.md
