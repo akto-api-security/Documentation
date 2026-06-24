@@ -22,7 +22,6 @@ Akto's guardrail evaluation operates in two modes:
 - Correlate patterns across multiple prompts within a session
 - Detect threats that emerge only when viewed across a timeline
 
-**Automatic Activation**: Session-based guardrails activate automatically when your agent includes a session ID in the request header. No additional configuration is required on Akto's side.
 
 ## Standard vs Session-Based Guardrails
 
@@ -55,6 +54,8 @@ Deploy session-based guardrails when you need to detect threats that span multip
 ## How to Enable Session-Based Guardrails
 
 Enabling session-based guardrails is automatic and requires no configuration on Akto's side.
+
+**Automatic Activation**: Session-based guardrails activate automatically when your agent includes a session ID in the request header. No additional configuration is required on Akto's side.
 
 {% stepper %}
 {% step %}
@@ -95,25 +96,8 @@ Session IDs can be passed via:
 If you want session-based guardrails enabled for your agents, please contact the Akto support team for assistance with provisioning and setup.
 {% endhint %}
 
-## Benefits of Session-Based Guardrails
-
-#### 1. Enhanced Threat Detection
-Detects sophisticated attacks that disguise themselves across multiple interactions rather than appearing malicious in a single prompt.
-
-#### 2. Behavioral Context
-Provides guardrails with the full conversation context, enabling detection of behavioral drift and anomalous patterns.
-
-#### 3. Anomaly Scoring
-Correlates actions across a session timeline to identify statistically unusual behavior that would appear benign in isolation.
-
-#### 4. Compliance & Audit
-Maintains session-scoped audit trails for compliance requirements, enabling investigation of user behavior across full sessions.
-
-#### 5. User-Centric Detection
-Moves from prompt-level detection to user-session-level detection, reducing false positives caused by legitimate context switches.
-
 ## Related Concepts
 
-- [[agent-guard]] — Complete reference of all guardrail types and their capabilities
-- [[guardrail-activity]] — Monitoring and analyzing guardrail detections across sessions
+- [Agent Guard](agent-guard.md) — Complete reference of all guardrail types and their capabilities
+- [Guardrail Activity](guardrail-activity.md) — Monitoring and analyzing guardrail detections across sessions
 - [Create Guardrail Policies](../how-to/create-guardrail-policies.md) — Learn how to configure and deploy guardrail policies for your agents
