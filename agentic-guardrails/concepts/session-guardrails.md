@@ -22,12 +22,9 @@ Akto's guardrail evaluation operates in two modes:
 - Correlate patterns across multiple prompts within a session
 - Detect threats that emerge only when viewed across a timeline
 
-
-## Standard vs Session-Based Guardrails
-
 <details>
 
-<summary>Comparison Table</summary>
+<summary>Standard vs Session-Based Guardrails</summary>
 
 | Aspect | Standard Guardrails | Session-Based Guardrails |
 |--------|-------------------|-------------------------|
@@ -67,7 +64,7 @@ Your agent generates a unique identifier for each user session
 {% step %}
 #### Include in Request Header
 
-Attach the session ID to the `X-Session-ID` header when sending requests to Akto's guardrail service
+Attach the session ID to the `x-session-id` header when sending requests to Akto's guardrail service
 {% endstep %}
 
 {% step %}
@@ -86,9 +83,9 @@ X-Session-ID: session_abc123xyz789
 ### Integration Points
 
 Session IDs can be passed via:
-- **Guardrail Service API**: Include `X-Session-ID` header in direct API calls
+- **Guardrail Service API**: Include `x-Session-id` header in direct API calls
 - **Proxy Integration**: Proxy layer forwards the session ID header to Akto
-- **Other Integration Methods**: Any integration that preserves the `X-Session-ID` header
+- **Other Integration Methods**: Any integration that preserves the `x-session-id` header
 
 {% hint style="info" %}
 **Need Help**
