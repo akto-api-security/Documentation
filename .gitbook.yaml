@@ -106,6 +106,9 @@ redirects:
   akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/macos-installation: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/macos-installation.md
 
 # Agentic AI Security Redirects
+  akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/skill-inspection-and-enforcement: akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-skills/skills-discovery.md
+  akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/skills-discovery: akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-skills/README.md
+  akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/owasp-agentic-skills-top-10: akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-skills/owasp-agentic-skills-top-10.md
   akto-argus-agentic-ai-security-for-homegrown-ai/connectors/mcp-proxy: agentic-guardrails/overview/akto-mcp-proxy.md
   akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-proxy: agentic-guardrails/overview/akto-agent-proxy.md
   agentic-guardrails/overview/akto-egress-proxy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/sidecar-egress-proxy.md
