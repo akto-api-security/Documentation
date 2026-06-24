@@ -1,7 +1,11 @@
 root: ./
 
 redirects:
+
+# General
   help: getting-started/quick-start-with-akto-cloud.md
+
+# API Inventory
   api-inventory: api-inventory/concepts/api-endpoints.md
   api-inventory/api-inventory: api-inventory/concepts/api-endpoints.md
   api-inventory/api-collections: api-inventory/concepts/api-collection.md
@@ -13,6 +17,8 @@ redirects:
   api-inventory/sensitive-data: api-inventory/concepts/sensitive-data.md
   api-inventory/api-documentation: api-inventory/how-to/create-swagger-file-using-akto.md
   api-inventory/data-types: api-inventory/concepts/data-type.md
+
+# Test Editor
   test-editor/overview: test-editor/concepts/overview.md
   test-editor/test-library: test-editor/concepts/test-library.md
   test-editor/test-library/local-file-inclusion-with-akto: test-editor/concepts/template-yamls/local-file-inclusion-with-akto.md
@@ -27,6 +33,8 @@ redirects:
   test-editor/test-yaml-syntax-detailed/validation: test-editor/concepts/test-yaml-syntax-detailed/validation.md
   test-editor/editing-built-in-test: test-editor/how-to/edit-test.md
   test-editor/writing-custom-tests: test-editor/how-to/create-a-custom-test.md
+
+# Security Testing
   testing/run-tests-in-cicd: api-security-testing/how-to/run-tests-in-cicd.md
   testing/github_integration_testing: api-security-testing/how-to/setup-github-integration-for-ci-cd.md
   testing/github_integration_testing/github_app_integration: api-security-testing/how-to/setup-github-integration-for-ci-cd/create-github-app.md
@@ -37,19 +45,13 @@ redirects:
   testing/test-library: test-editor/concepts/test-library.md
   testing/user-roles: api-security-testing/concepts/test-role.md
   testing/run-test-in-graphql: api-security-testing/how-to/secure-graphql-apis-using-akto.md
+  api-security-testing/how-to/setup-github-integration-for-ci-cd/create-github-app: ci-cd/github-actions/create-github-app.md
+  api-security-testing/how-to/add-test-to-ci-cd-pipeline: ci-cd/how-to/add-test-to-ci-cd-pipeline.md
+  api-security-testing/how-to/run-tests-in-cicd: ci-cd/how-to/run-tests-in-cicd.md
+  api-security-testing/how-to/configure-testing-in-cloud: api-security-testing/how-to/install-testing-module-in-your-cloud.md
+
+# Traffic Connections
   add-api-data/integrations: traffic-connections/traffic-data-sources.md
-  getting-started/aws-deploy: getting-started/quick-start-with-akto-self-hosted/aws-deploy.md
-  getting-started/aws-multi-vpc-deploy: getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-multi-vpc-deploy.md
-  getting-started/aws-cross-region-vpc-deploy: getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-cross-region-vpc-deploy.md
-  getting-started/helm-deploy: getting-started/quick-start-with-akto-self-hosted/helm-deploy.md
-  getting-started/heroku: getting-started/quick-start-with-akto-self-hosted/heroku.md
-  getting-started/openshift-deploy: getting-started/quick-start-with-akto-self-hosted/openshift-deploy.md
-  getting-started/gcp-deploy: getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md
-  getting-started/azure-deploy: getting-started/quick-start-with-akto-self-hosted/azure-deploy.md
-  getting-started/aws-ssl: getting-started/quick-start-with-akto-self-hosted/aws-ssl.md
-  sso/azuread-saml: account/sso/azuread-saml.md
-  sso/okta-oidc: account/sso/okta-oidc.md
-  sso/github-oidc: account/sso/github-oidc.md
   traffic-connections/traffic-data-sources: traffic-connector/traffic-data-sources.md
   traffic-connections/traffic-data-sources/hybrid-saas: getting-started/traffic-processor/hybrid-saas.md
   traffic-connections/traffic-data-sources/amazon-aws: traffic-connector/mirroring/amazon-aws.md
@@ -74,6 +76,17 @@ redirects:
   traffic-connections/traffic-data-sources/postman: traffic-connector/manual/postman.md
   traffic-connections/traffic-data-sources/openapi: traffic-connector/manual/openapi.md
   traffic-connections/traffic-data-sources/akto-sdk: traffic-connector/akto-sdk.md
+
+# Getting Started & Deployment
+  getting-started/aws-deploy: getting-started/quick-start-with-akto-self-hosted/aws-deploy.md
+  getting-started/aws-multi-vpc-deploy: getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-multi-vpc-deploy.md
+  getting-started/aws-cross-region-vpc-deploy: getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-cross-region-vpc-deploy.md
+  getting-started/helm-deploy: getting-started/quick-start-with-akto-self-hosted/helm-deploy.md
+  getting-started/heroku: getting-started/quick-start-with-akto-self-hosted/heroku.md
+  getting-started/openshift-deploy: getting-started/quick-start-with-akto-self-hosted/openshift-deploy.md
+  getting-started/gcp-deploy: getting-started/quick-start-with-akto-self-hosted/gcp-deploy.md
+  getting-started/azure-deploy: getting-started/quick-start-with-akto-self-hosted/azure-deploy.md
+  getting-started/aws-ssl: getting-started/quick-start-with-akto-self-hosted/aws-ssl.md
   getting-started/quick-start-with-akto-self-hosted/helm-deploy: getting-started/traffic-processor/helm-deploy.md
   getting-started/quick-start-with-akto-self-hosted/gcp-deploy: getting-started/traffic-processor/gcp-deploy.md
   getting-started/quick-start-with-akto-self-hosted/azure-deploy: getting-started/traffic-processor/azure-deploy.md
@@ -91,12 +104,13 @@ redirects:
   getting-started/traffic-processor/aws-ssl: getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-ssl.md
   getting-started/advanced-topics/move-self-hosted-to-saas: getting-started/quick-start-with-akto-cloud/move-self-hosted-to-saas.md
   getting-started/advanced-topics/proxy-setup: getting-started/quick-start-with-akto-cloud/proxy-setup.md
-  api-security-testing/how-to/setup-github-integration-for-ci-cd/create-github-app: ci-cd/github-actions/create-github-app.md
-  api-security-testing/how-to/add-test-to-ci-cd-pipeline: ci-cd/how-to/add-test-to-ci-cd-pipeline.md
-  api-security-testing/how-to/run-tests-in-cicd: ci-cd/how-to/run-tests-in-cicd.md
-  api-security-testing/how-to/configure-testing-in-cloud: api-security-testing/how-to/install-testing-module-in-your-cloud.md
 
-# AI Endpoint Shield Redirects (renamed from mcp-endpoint-shield)
+# SSO
+  sso/azuread-saml: account/sso/azuread-saml.md
+  sso/okta-oidc: account/sso/okta-oidc.md
+  sso/github-oidc: account/sso/github-oidc.md
+
+# AI Endpoint Shield (renamed from MCP Endpoint Shield)
   akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/README.md
   akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/mdm-deployment: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/mdm-deployment.md
   akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/automox-deployment: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/automox-deployment.md
@@ -105,23 +119,25 @@ redirects:
   akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/mosyle-deployment: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/mosyle-deployment.md
   akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/macos-installation: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/macos-installation.md
 
-# Agentic AI Security Redirects
-  akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/skill-inspection-and-enforcement: akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-skills/skills-discovery.md
+# Akto Atlas — Agentic Skills
+  akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/skill-inspection-and-enforcement: akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-skills/README.md
   akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/skills-discovery: akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-skills/README.md
   akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/owasp-agentic-skills-top-10: akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-skills/owasp-agentic-skills-top-10.md
+
+# Akto Argus — Agentic AI Security
   akto-argus-agentic-ai-security-for-homegrown-ai/connectors/mcp-proxy: agentic-guardrails/overview/akto-mcp-proxy.md
   akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-proxy: agentic-guardrails/overview/akto-agent-proxy.md
   agentic-guardrails/overview/akto-egress-proxy: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/sidecar-egress-proxy.md
   guardrails/concepts/threat-actors: agentic-guardrails/concepts/threat-actors.md
   akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/claude-code-cli: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/claude-cli-hooks.md
+  akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/opencode: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/opencode-hooks.md
   akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/README.md
   akto-argus-agentic-ai-security-for-homegrown-ai/homegrown-discovery-agents/traffic-data-sources: akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md
   akto-argus-agentic-ai-security-for-homegrown-ai/issues/consistent-issue-fingerprinting: akto-argus-agentic-ai-security-for-homegrown-ai/issues/README.md
   akto-argus-agentic-ai-security-for-homegrown-ai/issues/consistent-issue-status-tracking: akto-argus-agentic-ai-security-for-homegrown-ai/issues/README.md
   akto-argus-agentic-ai-security-for-homegrown-ai/issues/view-an-issue: akto-argus-agentic-ai-security-for-homegrown-ai/issues/README.md
-  akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/opencode: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/opencode-hooks.md
 
-# Agentic AI Discovery Repositioning Redirects (GITBOOK-179)
+# Agentic AI Discovery Repositioning (GITBOOK-179)
   akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/page-1: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/README.md
   agentic-ai-discovery/get-started: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/README.md
   agentic-ai-discovery/concepts: akto-argus-agentic-ai-security-for-homegrown-ai/agentic-ai-discovery/concepts/README.md
