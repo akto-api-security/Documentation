@@ -6,8 +6,6 @@ The OWASP Agentic Skills Top 10 is a community-driven framework that identifies 
 
 This page maps each OWASP risk to how Akto detects and addresses it across your environment.
 
-***
-
 ## AST01 — Malicious Skills
 
 **Severity: Critical**
@@ -26,8 +24,6 @@ Rogue skills designed to steal data or execute unauthorized actions. The ClawHav
 
 * Each skill is assigned a risk score based on findings, surfaced across the **Skills**, **Users & Devices**, and **Agentic Assets** views
 * Findings are recorded in the audit database and available for review, reporting, and SOC forwarding
-
-***
 
 ## AST02 — Supply Chain Compromise
 
@@ -48,7 +44,7 @@ Attacks on skill distribution channels — typosquatting, backdoored packages, c
 * Skills from all sources — including third-party registries and community marketplaces — are subject to full LLM-based analysis regardless of where they originated
 * Any skill appearing from an unrecognized publisher or registry is flagged for review and included in the risk scoring pipeline
 
-***
+
 
 ## AST03 — Over-Privileged Skills
 
@@ -69,7 +65,7 @@ Skills request more permissions than their function requires. Research has ident
 * Tool-call approval policies ensure privileged actions require explicit authorization before execution
 * Skills identified as over-privileged can be blocked at the device or agent level without affecting other skills in your environment
 
-***
+
 
 ## AST04 — Insecure Metadata
 
@@ -85,8 +81,6 @@ Unsafe deserialization of skill configuration files creates opportunities for co
 * Akto scores each tool based on how well its name and description match its actual declared behavior — a low match score surfaces skills where metadata has been manipulated to conceal malicious intent
 * Both skills and MCP tools are evaluated for impersonation signals, flagging components where stated identity cannot be corroborated by declared behavior
 
-***
-
 ## AST05 — Untrusted External Instructions
 
 **Severity: High**
@@ -100,8 +94,6 @@ Skills that fetch instructions from remote URLs introduce a runtime supply chain
 * Akto's LLM-based skill analysis inspects skill files for instructions that reference or delegate behavior to remote-controlled endpoints
 * Skills that pull content from external URLs at runtime are flagged as high-risk regardless of what is currently at those URLs, since an attacker can change that content at any time after installation
 * Flagged skills surface in the **Skills** view with elevated risk scores for immediate review and action
-
-***
 
 ## AST06 — Weak Isolation
 
@@ -121,8 +113,6 @@ Skills execute without sufficient separation from the host environment. Host-mod
 * Skills with identified isolation weaknesses can be blocked at the device or agent level, preventing execution until the configuration is remediated
 * Runtime monitoring enforces filesystem and network access restrictions, providing a defense-in-depth layer even when host-level isolation is not configured
 
-***
-
 ## AST07 — Update Drift
 
 **Severity: Medium**
@@ -139,9 +129,7 @@ Skills drift from their approved versions due to silent updates, patch lag, or f
 
 **Visibility**
 
-* Revalidation findings appear in the same **Skills** and **Agentic Assets** views as initial discovery findings, giving your team a consistent place to track changes in skill risk posture over time
-
-***
+* Revalidation findings appear in the same **Skills** and **Agentic Assets** views as initial discovery findings, giving your team a consistent place to track changes in skill risk posture over time.
 
 ## AST08 — Poor Scanning
 
@@ -168,8 +156,6 @@ Akto applies multiple detection layers to address the limitations of single-meth
 
 * Custom guardrails configurable to your environment extend detection coverage to organization-specific threat patterns
 
-***
-
 ## AST09 — No Governance
 
 **Severity: Medium**
@@ -194,7 +180,6 @@ Organizations lack skill inventories, approval workflows, and audit logging. Wit
 * Threat events are forwarded to your SOC for continuous monitoring and response
 * Compliance reports covering skill inventory and usage history are available for audit purposes
 
-***
 
 ## AST10 — Cross-Platform Reuse
 

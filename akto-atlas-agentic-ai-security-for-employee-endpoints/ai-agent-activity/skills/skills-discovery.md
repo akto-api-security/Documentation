@@ -8,7 +8,7 @@ You can view skills by navigating through the Akto Atlas interface:
 
 * **Akto Atlas → Agentic AI Discovery → Agentic Assets → Skills tab**
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (5).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (5).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 The Skills table shows endpoint coverage, sensitive data indicators, and last observed activity for each skill. The visibility into usage patterns helps you make informed enforcement decisions.
 
@@ -69,7 +69,7 @@ Akto uses LLM-assisted semantic analysis to evaluate natural-language instructio
 {% hint style="info" %}
 **Runtime Enforcement**
 
-At runtime, if an injected instruction surfaces during execution, the **PromptInjection Guardrail** in Agent Guard enforces blocking. See [Agent Guard → PromptInjection Guardrail](../../agentic-guardrails/concepts/agent-guard.md) for detection logic and configuration.
+At runtime, if an injected instruction surfaces during execution, the **PromptInjection Guardrail** in Agent Guard enforces blocking. See [Agent Guard → PromptInjection Guardrail](../../../agentic-guardrails/concepts/agent-guard.md) for detection logic and configuration.
 {% endhint %}
 
 ### Embedded Code & Script Risks
@@ -135,7 +135,7 @@ Select the skill that you want to restrict and open its skill details view.
 {% step %}
 Select the endpoint IDs (devices) where you want to block the skill.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -173,13 +173,13 @@ Select the device where you want to enforce the restriction.
 {% step %}
 Open the list of agents associated with the selected device and select the agent.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (2) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (2) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 Choose the skills that you want to block.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (3) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -247,5 +247,5 @@ You can:
 
 Refer to:
 
-* [Agentic Guardrails](../../agentic-guardrails/overview/)
-* [Guardrail Policies](../../agentic-guardrails/concepts/threat-policy.md)
+* [Agentic Guardrails](../../../agentic-guardrails/overview/)
+* [Guardrail Policies](../../../agentic-guardrails/concepts/threat-policy.md)
