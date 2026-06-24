@@ -29,7 +29,8 @@ Rogue skills designed to steal data or execute unauthorized actions. The ClawHav
 
 **Severity: Critical**
 
-Attacks on skill distribution channels - typosquatting, backdoored packages, compromised publishers, or malicious updates introduced before a skill reaches the developer. Example: Claude Code CVE-2025-59536.
+Attacks on skill distribution channels - typosquatting, backdoored packages, compromised publishers, or malicious updates introduced before a skill reaches the developer.\
+**Example:** Claude Code CVE-2025-59536.
 
 **How Akto Addresses It**
 
@@ -99,7 +100,8 @@ Skills that fetch instructions from remote URLs introduce a runtime supply chain
 
 **Severity: High**
 
-Skills execute without sufficient separation from the host environment. Host-mode execution gives a compromised skill direct access to the underlying system. Example: OpenClaw host-mode execution.
+Skills execute without sufficient separation from the host environment. Host-mode execution gives a compromised skill direct access to the underlying system.\
+**Example:** OpenClaw host-mode execution.
 
 **How Akto Addresses It**
 
@@ -117,7 +119,8 @@ Skills execute without sufficient separation from the host environment. Host-mod
 
 **Severity: Medium**
 
-Skills drift from their approved versions due to silent updates, patch lag, or failed updates. An attacker who gains access to a registry can push a compromised version of a previously trusted skill without triggering any visible change. Example: ClawJacked CVE-2026-28363.
+Skills drift from their approved versions due to silent updates, patch lag, or failed updates. An attacker who gains access to a registry can push a compromised version of a previously trusted skill without triggering any visible change.\
+**Example:** ClawJacked CVE-2026-28363.
 
 **How Akto Addresses It**
 
@@ -185,7 +188,8 @@ Organizations lack skill inventories, approval workflows, and audit logging. Wit
 
 **Severity: Medium**
 
-Malicious skills are ported across ecosystems - Claude Code, Cursor, VS Code, MCP servers - to maximize reach. Metadata loss during conversion weakens the security controls applied to the original skill. Example: ClawHub to skills.sh migrations.
+Malicious skills are ported across ecosystems - Claude Code, Cursor, VS Code, MCP servers - to maximize reach. Metadata loss during conversion weakens the security controls applied to the original skill.\
+**Example:** ClawHub to skills.sh migrations.
 
 **How Akto Addresses It**
 

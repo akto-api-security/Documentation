@@ -1,8 +1,10 @@
-# Skills Discovery
+# Agentic Skills
 
 ## Overview
 
-Skills Discovery helps you understand what actions your AI agents can perform across your environment. Each skill represents a callable capability exposed by an agent and mapped to underlying APIs or system operations.
+Agentic Skills are callable capabilities exposed by AI agents, each skill represents an action your agents can perform, mapped to underlying APIs or system operations. As skills become a primary attack vector for credential theft, prompt injection, and data exfiltration, understanding and securing your skill footprint is critical.
+
+Akto discovers skills across your entire environment, analyzes each skill file for security risks, and enforces controls to prevent malicious skill execution.
 
 You can view skills by navigating through the Akto Atlas interface:
 
@@ -237,7 +239,7 @@ Detection rates are measured against a benchmark set of known-malicious skill sa
 
 ## Continue with Guardrails
 
-Skills Discovery shows available capabilities. Guardrails control execution.
+Agentic Skills shows you what your agents can do. Guardrails control what they are allowed to do.
 
 You can:
 
