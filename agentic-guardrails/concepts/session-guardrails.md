@@ -77,7 +77,7 @@ Akto automatically detects the session ID and enables session-based threat detec
 ### Example Request Header
 
 ```
-X-Session-ID: session_abc123xyz789
+x-session-id: session_abc123xyz789
 ```
 
 ### Integration Points
