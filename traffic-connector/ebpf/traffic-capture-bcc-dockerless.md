@@ -8,12 +8,13 @@ Tarball naming convention:
 
 ---
 
-## Platform Downloads
+## Platform Downloads 
 
 | Platform | Download URL |
 |----------|-------------|
 | Amazon Linux 2 — kernel 5.10, x86_64 | `https://akto.blob.core.windows.net/traffic-collector-binaries/akto-mirroring-module-1.0.0-amzn2-5.10-x86_64.tar.gz` |
 | Amazon Linux 2023 — kernel 6.1, x86_64 | `https://akto.blob.core.windows.net/traffic-collector-binaries/akto-mirroring-module-1.0.0-amzn2023-6.1-x86_64.tar.gz` |
+| Amazon Linux 2023 — kernel 6.1, aarch64 | `https://akto.blob.core.windows.net/traffic-collector-binaries/akto-mirroring-module-1.0.0-amzn2023-6.1-aarch64.tar.gz` |
 
 Contact Akto for a download URL if your platform is not listed.
 
@@ -63,6 +64,7 @@ Run it once after unpacking:
 |----------|--------|
 | Amazon Linux 2 (kernel 5.10, x86\_64) | `sudo bash /ebpf/amzn2-5.10-x86_64-setup.sh` |
 | Amazon Linux 2023 (kernel 6.1, x86\_64) | `sudo bash /ebpf/amzn2023-6.1-x86_64-setup.sh` |
+| Amazon Linux 2023 (kernel 6.1, aarch64) | `sudo bash /ebpf/amzn2023-6.1-aarch64-setup.sh` |
 
 For reference, upstream BCC installation docs: https://github.com/iovisor/bcc/blob/master/INSTALL.md
 
