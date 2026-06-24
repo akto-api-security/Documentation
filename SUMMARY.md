@@ -61,7 +61,7 @@
     * [Take Bulk Actions](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-components/take-bulk-actions.md)
   * [Endpoint Shield Details](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/view-endpoint-shield-details.md)
   * [Skills](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/skills/README.md)
-    * [Skills Discovery](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/skills/skills-discovery.md)
+    * [OWASP Agentic Skills Top 10](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/skills/owasp-agentic-skills-top-10.md)
   * [Audit Data - Akto Atlas](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/audit-data-akto-atlas.md)
   * [Users and Devices](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/users-and-devices.md)
 * [Atlas Guardrails](akto-atlas-agentic-ai-security-for-employee-endpoints/atlas-guardrails.md)

@@ -1,200 +1,251 @@
-# OWASP Agentic Skills Top 10
+# Skills Discovery
 
 ## Overview
 
-The OWASP Agentic Skills Top 10 is a community-driven framework that identifies the most critical security risks associated with AI agent skills. Skills are callable capabilities exposed by AI agents — and as their adoption grows, so does their attack surface.
+Skills Discovery helps you understand what actions your AI agents can perform across your environment. Each skill represents a callable capability exposed by an agent and mapped to underlying APIs or system operations.
 
-This page maps each OWASP risk to how Akto detects and addresses it across your environment.
+You can view skills by navigating through the Akto Atlas interface:
 
-## AST01 — Malicious Skills
+* **Akto Atlas → Agentic AI Discovery → Agentic Assets → Skills tab**
 
-**Severity: Critical**
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (5).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
-Rogue skills designed to steal data or execute unauthorized actions. The ClawHavoc campaign (February 2026) identified 1,184 confirmed malicious skills distributed through public registries.
+The Skills table shows endpoint coverage, sensitive data indicators, and last observed activity for each skill. The visibility into usage patterns helps you make informed enforcement decisions.
 
-**How Akto Addresses It**
+{% hint style="info" %}
+**Skill Discovery Updates**
 
-**Detection**
+Akto continuously identifies skills configured in your agents.
 
-* AI Endpoint Shield scans every discovered skill file using LLM-based analysis at discovery time and on every subsequent change, checking for malicious patterns including credential theft, data exfiltration, prompt injection, and system modification
-* MCP tools exposed by MCP servers are evaluated using LLM scoring to identify malicious intent
-* Skills discovered across all sources — workstations, repositories, CI/CD pipelines, MCP servers, local directories, and third-party registries — are all subject to the same analysis regardless of origin
+**New skills are discovered every 6 hours.**\
+Regular updates keep your inventory aligned with agent configuration changes.
+{% endhint %}
 
-**Risk Scoring & Visibility**
+## Discovery Sources
 
-* Each skill is assigned a risk score based on findings, surfaced across the **Skills**, **Users & Devices**, and **Agentic Assets** views
-* Findings are recorded in the audit database and available for review, reporting, and SOC forwarding
+Akto discovers skill files across every surface where AI agents are configured and run. Discovery covers:
 
-## AST02 — Supply Chain Compromise
+* **Local developer workstations** — skill files used by IDE-based agents such as Cursor, VS Code, and Claude Code
+* **Source code repositories** — skill files committed to GitHub, GitLab, and Bitbucket, including nested directories such as `.claude/skills/`
+* **CI/CD pipelines** — skill files present in pipeline configurations and build environments
+* **MCP servers and AI agent runtimes** — skills loaded and exposed by locally running or networked MCP servers
+* **Local developer skill directories** — skills loaded from developer-managed local paths outside of version control
+* **Third-party registries and marketplaces** — skills pulled in from external sources or community registries
 
-**Severity: Critical**
+## Skill Inventory
 
-Attacks on skill distribution channels — typosquatting, backdoored packages, compromised publishers, or malicious updates introduced before a skill reaches the developer. Example: Claude Code CVE-2025-59536.
+Akto generates and maintains a continuous inventory of all skills currently in use across your environment. The inventory captures skill source, hosting location, associated agents, and last observed activity — giving you a complete, up-to-date picture of your skill footprint.
 
-**How Akto Addresses It**
+## Malicious Skill Detection
 
-**Inventory & Tracking**
+Akto marks a skill as malicious based on static analysis of its content. When a skill is discovered, Akto uses the fetch mechanism to retrieve the full content of the skill file — including `skills.md`, `.claude/skills/`, and equivalent files across IDEs, repositories, CI/CD pipelines, and MCP servers. Akto then inspects that content across three risk dimensions to determine whether the skill is safe, suspicious, or malicious. Analysis runs at discovery time and on every subsequent change detected in the file.
 
-* Akto generates and maintains a full inventory of installed skills and MCP components across your environment, capturing skill source, hosting location, associated agents, and last observed activity
-* AI Endpoint Shield continuously tracks which skills and MCP servers are present and active on each endpoint, giving you visibility into what entered your environment and when
-* The inventory provides an audit trail that makes it possible to trace exactly when a component appeared and which agents were exposed
+Each skill is evaluated and assigned a risk score, helping you quickly surface high-risk capabilities and take action before they are exploited. Risk scores are visible across the **Skills**, **Users & Devices**, and **Agentic Assets** views.
 
-**Detection**
+### Sensitive Data Exposure
 
-* Skills from all sources — including third-party registries and community marketplaces — are subject to full LLM-based analysis regardless of where they originated
-* Any skill appearing from an unrecognized publisher or registry is flagged for review and included in the risk scoring pipeline
+Akto scans the fetched skill file content for credentials and sensitive identifiers embedded in skill instructions, examples, or metadata.
 
+**What Akto Detects**
 
+* Hardcoded API keys, tokens, and secrets
+* Internal URLs and private endpoints exposed in skill descriptions
+* Business logic or environment-specific configuration leaked into skill text
+* Whether exposure indicates accidental leakage (e.g., a copy-paste artifact) vs. intentional exfiltration logic (e.g., a skill designed to forward credentials outbound)
 
-## AST03 — Over-Privileged Skills
+### Malicious Instructions & Prompt Injection
 
-**Severity: High**
+Akto analyzes the fetched skill file content for injected or adversarial directives embedded in natural-language instructions, descriptions, and examples.
 
-Skills request more permissions than their function requires. Research has identified hundreds of skills unnecessarily accessing credentials and sensitive files through overly broad permission declarations.
+**What Akto Detects**
 
-**How Akto Addresses It**
+* Prompt injection patterns: instructions designed to override system behavior or hijack the agent's context
+* Obfuscated or hidden instructions using Unicode tricks, whitespace manipulation, or non-printable characters
+* Instructions that conflict with the stated skill purpose (e.g., a "summarize document" skill that also appends environment variables to outbound requests)
+* Instruction smuggling embedded in skill descriptions, examples, or templates — where executable directives are disguised as documentation
 
-**Detection**
+Akto uses LLM-assisted semantic analysis to evaluate natural-language instructions that evade pattern-based detection.
 
-* Akto detects dangerous permission configurations including unrestricted shell access, permission bypass flags, and wildcard filesystem or network access declared in skill definitions
-* Weakened isolation settings that expand a skill's access beyond its intended scope are flagged during analysis
-* Skills with excessive or dangerous permission declarations receive elevated risk scores, surfaced across the Skills and Agentic Assets views for immediate prioritization
+{% hint style="info" %}
+**Runtime Enforcement**
 
-**Enforcement**
+At runtime, if an injected instruction surfaces during execution, the **PromptInjection Guardrail** in Agent Guard enforces blocking. See [Agent Guard → PromptInjection Guardrail](../../../agentic-guardrails/concepts/agent-guard.md) for detection logic and configuration.
+{% endhint %}
 
-* Tool-call approval policies ensure privileged actions require explicit authorization before execution
-* Skills identified as over-privileged can be blocked at the device or agent level without affecting other skills in your environment
+### Embedded Code & Script Risks
 
+Akto inspects execution blocks referenced or embedded in the fetched skill file content — including shell commands, pre-execution hooks, and linked script paths.
 
+**What Akto Detects**
 
-## AST04 — Insecure Metadata
+* Reverse shells and data exfiltration logic in associated `/scripts/` directories
+* Unsafe system commands embedded in dynamic execution blocks
+* Dependency risks: unverified, unpinned, or typosquatted packages referenced by the skill
 
-**Severity: High**
+***
 
-Unsafe deserialization of skill configuration files creates opportunities for code injection and parser exploitation. Attackers also weaponize skill manifests through typosquatting and vendor impersonation — such as fake publisher accounts mimicking trusted organizations — delivering malicious payloads via YAML structures inside skill files.
+## Runtime Detection & Enforcement
 
-**How Akto Addresses It**
+Akto monitors agent behavior at runtime to detect dangerous actions triggered by skill execution and enforce policy-based restrictions in real time.
 
-**Detection**
+### What Akto Monitors
 
-* Akto's LLM-based skill analysis inspects skill configuration files for suspicious payloads and malicious content embedded within YAML and Markdown manifests
-* Akto scores each tool based on how well its name and description match its actual declared behavior — a low match score surfaces skills where metadata has been manipulated to conceal malicious intent
-* Both skills and MCP tools are evaluated for impersonation signals, flagging components where stated identity cannot be corroborated by declared behavior
+* **Agent tool usage** — file access, shell commands, and network calls initiated by skill execution
+* **Skill-triggered system actions** — system-level operations spawned directly by a skill
+* **Data movement** — files, environment variables, or sensitive content leaving the endpoint
+* **Outbound network activity** — destinations contacted during or after skill execution
 
-## AST05 — Untrusted External Instructions
+### What Akto Detects
 
-**Severity: High**
+* Data exfiltration: environment variable leakage, credential forwarding, or file uploads to external destinations
+* Unauthorized filesystem activity: access to sensitive paths such as `.env` files or credential stores
+* Anomalous tool invocation patterns: unusual sequences or frequencies of tool calls that indicate abuse
+* Pre-authorized dangerous tools configured within skill definitions
 
-Skills that fetch instructions from remote URLs introduce a runtime supply chain risk — the skill file itself may appear safe, but the behavior it loads at runtime can be changed by an attacker at any time after installation. Anthropic's own documentation warns that fetched URLs may contain malicious instructions. A proof-of-concept demonstrated potential takeover of 26,000 agents through this vector.
+### Enforcement
 
-**How Akto Addresses It**
+Akto enforces controls in real time without requiring manual intervention:
 
-**Detection**
+* **Block dangerous commands** immediately upon detection
+* **Restrict filesystem access** to sensitive paths based on policy
+* **Limit outbound destinations** to approved endpoints only
 
-* Akto's LLM-based skill analysis inspects skill files for instructions that reference or delegate behavior to remote-controlled endpoints
-* Skills that pull content from external URLs at runtime are flagged as high-risk regardless of what is currently at those URLs, since an attacker can change that content at any time after installation
-* Flagged skills surface in the **Skills** view with elevated risk scores for immediate review and action
+**Integrations**
 
-## AST06 — Weak Isolation
+* **EDR / XDR platforms** — Akto correlates skill-triggered events with endpoint telemetry for unified threat visibility
+* **Runtime agent gateways and proxies** — Akto integrates with agent middleware to enforce controls at the execution layer
 
-**Severity: High**
+### Block Skills by Device
 
-Skills execute without sufficient separation from the host environment. Host-mode execution gives a compromised skill direct access to the underlying system. Example: OpenClaw host-mode execution.
+You can block a skill directly from the Skills view by selecting the devices where enforcement should apply. Device selection automatically includes all agents running on the selected endpoints.
 
-**How Akto Addresses It**
+This approach helps you restrict a capability only where required while allowing normal operation elsewhere.
 
-**Detection**
+**Steps to Block a Skill for Selected Devices**
 
-* Akto detects isolation weaknesses in skill configurations including disabled sandbox settings, permissions that allow unsandboxed command execution, excluded command restrictions, filesystem and network scope expansion, and weakened nested sandbox modes
-* Isolation posture is assessed at discovery time and factored directly into the skill's risk score
+{% stepper %}
+{% step %}
+Navigate to the **Skills** tab under Agentic Assets.
+{% endstep %}
 
-**Enforcement**
+{% step %}
+Select the skill that you want to restrict and open its skill details view.
+{% endstep %}
 
-* Skills with identified isolation weaknesses can be blocked at the device or agent level, preventing execution until the configuration is remediated
-* Runtime monitoring enforces filesystem and network access restrictions, providing a defense-in-depth layer even when host-level isolation is not configured
+{% step %}
+Select the endpoint IDs (devices) where you want to block the skill.
 
-## AST07 — Update Drift
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+{% endstep %}
 
-**Severity: Medium**
+{% step %}
+Click **Block skill** from the action bar at the bottom.
+{% endstep %}
 
-Skills drift from their approved versions due to silent updates, patch lag, or failed updates. An attacker who gains access to a registry can push a compromised version of a previously trusted skill without triggering any visible change. Example: ClawJacked CVE-2026-28363.
+{% step %}
+Confirm the blocking action.
+{% endstep %}
+{% endstepper %}
 
-**How Akto Addresses It**
+**Expected Result After Blocking**
 
-**Continuous Revalidation**
+Akto prevents execution of the selected skill on all chosen devices.\
+All agents running on the selected endpoint IDs lose access to the blocked skill.\
+Agents on other devices continue to use the skill without interruption.
 
-* Skills are periodically revalidated approximately every 6 hours — newly malicious behavior introduced through an update is identified at the next revalidation cycle
-* MCP tool definitions are revalidated continuously as tool list responses are observed, providing near-real-time coverage as definitions change
-* If a skill passes initial analysis but is later modified to include malicious content, the change is caught at revalidation and the skill's risk score is updated accordingly
+### Block Skills by Agent
 
-**Visibility**
+You can block skills for a specific agent within a specific device using the Users and Devices view. Agent-level enforcement allows you to apply tighter controls without affecting other agents on the same device.
 
-* Revalidation findings appear in the same **Skills** and **Agentic Assets** views as initial discovery findings, giving your team a consistent place to track changes in skill risk posture over time.
+This approach supports environments where different agents require different access levels.
 
-## AST08 — Poor Scanning
+**Steps to Block Skills for a Specific Agent**
 
-**Severity: Medium**
+{% stepper %}
+{% step %}
+Navigate to **Users and Devices**.
+{% endstep %}
 
-Security scanners that rely on pattern matching fail to detect behavioral and semantic threats. Attackers bypass detection through obfuscation, natural-language variation, and splitting malicious directives across multiple fields.
+{% step %}
+Select the device where you want to enforce the restriction.
+{% endstep %}
 
-**How Akto Addresses It**
+{% step %}
+Open the list of agents associated with the selected device and select the agent.
 
-Akto applies multiple detection layers to address the limitations of single-method scanning:
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (2) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+{% endstep %}
 
-**Static Analysis**
+{% step %}
+Choose the skills that you want to block.
 
-* Static policy rules covering 500+ threat patterns catch known malicious signatures and configurations
-* Sensitive data and secret detection identifies credentials and internal identifiers embedded in skill content
-* Prompt injection detection flags adversarial instructions targeting agent behavior
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+{% endstep %}
 
-**Semantic Analysis**
+{% step %}
+Click **Block Skills** from the action bar.
+{% endstep %}
 
-* LLM-based semantic analysis evaluates natural-language instructions that evade rule-based detection through obfuscation, variation, or splitting across fields
-* Component-level analysis for skills and MCP tools correlates findings across the skill file and its associated metadata
+{% step %}
+Confirm the blocking action.
+{% endstep %}
+{% endstepper %}
 
-**Custom Coverage**
+**Expected Result After Blocking**
 
-* Custom guardrails configurable to your environment extend detection coverage to organization-specific threat patterns
+Akto blocks execution of the selected skills only for the chosen agent on the selected device.\
+Other agents on the same device retain access unless explicitly restricted.\
+Agents on other devices continue to operate without any impact.
 
-## AST09 — No Governance
+***
 
-**Severity: Medium**
+## Governance & Compliance
 
-Organizations lack skill inventories, approval workflows, and audit logging. Without governance controls, security teams have no visibility into which skills are in use, who introduced them, or whether they have been reviewed. Research identified 53,000+ exposed instances with no security monitoring.
+### Skill Allowlists & Approval Workflows
 
-**How Akto Addresses It**
+Akto gives you controls to govern which skills can be introduced and activated across your environment.
 
-**Inventory & Audit**
+* Maintain **approved skill registries** and allowlists to define which skills are permitted
+* Require **approval workflows** before new skills can be introduced to a team or project
+* Enforce **code review gates** so skill files go through review before activation
+* Apply **policy gating** to prevent skills from being activated without explicit authorization
 
-* Akto generates and maintains a continuous inventory of all skills in use across your environment, capturing skill source, hosting location, associated agents, and last observed activity
-* Review outcomes for each discovered component are tracked in the audit database and available for compliance reporting
+### Usage Tracking & Compliance Reporting
 
-**Governance Controls**
+* Track skill usage across teams, projects, and devices
+* Generate compliance reports covering skill inventory and usage history
+* Align skill governance with security and regulatory requirements
 
-* Audit policies enforce tool-call approvals, requiring explicit authorization for sensitive actions
-* Approved component lists restrict which skills and MCP servers can be active in your environment
-* Approval workflows, code review gates, and policy gating govern which skills can be introduced and activated across teams and projects
+***
 
-**SOC Visibility**
+## Detection Coverage
 
-* Threat events are forwarded to your SOC for continuous monitoring and response
-* Compliance reports covering skill inventory and usage history are available for audit purposes
+Akto measures detection effectiveness across four key risk categories for skills:
 
+| Risk Category | What Is Measured |
+|---|---|
+| **Prompt Injection** | Detection rate for injected instructions within skill files |
+| **Malicious Scripts** | Detection rate for dangerous execution logic embedded in or linked from skills |
+| **Credential Leakage** | Detection rate for hardcoded secrets and sensitive identifiers in skill content |
+| **Supply Chain Attacks** | Detection rate for compromised or malicious skills introduced via third-party registries or repositories |
 
-## AST10 — Cross-Platform Reuse
+{% hint style="info" %}
+Detection rates are measured against a benchmark set of known-malicious skill samples covering each risk category. Methodology details are available on request.
+{% endhint %}
 
-**Severity: Medium**
+***
 
-Malicious skills are ported across ecosystems — Claude Code, Cursor, VS Code, MCP servers — to maximize reach. Metadata loss during conversion weakens the security controls applied to the original skill. Example: ClawHub to skills.sh migrations.
+## Continue with Guardrails
 
-**How Akto Addresses It**
+Skills Discovery shows available capabilities. Guardrails control execution.
 
-**Cross-Platform Discovery**
+You can:
 
-* Akto discovers and analyzes skill files across all major platforms and runtimes — Claude Code, Cursor, VS Code, MCP servers, CI/CD pipelines, and third-party registries — from a single deployment
-* Every skill is evaluated independently regardless of its origin platform, ensuring that skills ported from another ecosystem are fully re-analyzed upon discovery
+* Map skills to guardrail policies
+* Enforce restrictions on sensitive actions
+* Monitor violations
 
-**Unified Risk Visibility**
+Refer to:
 
-* Risk scores and findings are consistent regardless of the platform a skill was discovered on, preventing coverage gaps that arise when security controls are applied per-platform rather than per-skill
-* The unified inventory means that the same skill appearing under different names or formats across platforms is visible and accounted for in one place
+* [Agentic Guardrails](../../../agentic-guardrails/overview/)
+* [Guardrail Policies](../../../agentic-guardrails/concepts/threat-policy.md)
