@@ -97,6 +97,9 @@ Set the following environment variables in your shell or `.env` file:
 # Required: Akto Data Ingestion Service URL
 AKTO_DATA_INGESTION_URL=https://<YOUR_AKTO_INSTANCE_URL>
 
+# Required: Unique identifier for this LangChain application in Akto
+PROJECT_NAME=my-langchain-agent
+
 # Optional: Operation mode (default: "true")
 AKTO_SYNC_MODE=true        # true = block violations, false = async log-only
 
@@ -159,6 +162,7 @@ Then verify in the Akto dashboard:
 | Variable                  | Required | Default             | Description                                            |
 | ------------------------- | -------- | ------------------- | ------------------------------------------------------ |
 | `AKTO_DATA_INGESTION_URL` | Yes      |                     | Akto service base URL                                  |
+| `PROJECT_NAME`            | Yes      |                     | Unique identifier for this LangChain application in Akto |
 | `AKTO_SYNC_MODE`          | No       | `true`              | `true` to block on violation, `false` for log-only     |
 | `AKTO_TIMEOUT`            | No       | `5`                 | HTTP timeout in seconds                                |
 | `LOG_LEVEL`               | No       | `INFO`              | Logging level                                          |
