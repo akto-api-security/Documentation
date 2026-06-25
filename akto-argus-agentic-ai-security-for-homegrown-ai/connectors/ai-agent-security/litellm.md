@@ -260,6 +260,47 @@ If the key belongs to a team with a `team_alias` configured (e.g., `"search-agen
 The resolution order is: `metadata.agent_name` (highest) → `key_alias` → `team_alias` (lowest). When multiple sources are available, the highest priority value is used.
 {% endhint %}
 
+## Session-Based Guardrails
+
+The connector supports session tracking, which lets the Akto guardrails service correlate multiple requests belonging to the same conversation or user session. This enables session-aware policies such as malicious-session detection and session-summary injection.
+
+To enable this, send an `x-session-id` header on the request to the LiteLLM proxy. When present, the connector captures it and forwards it to the Akto guardrails service, which groups requests sharing the same session ID.
+
+{% tabs %}
+{% tab title="OpenAI SDK" %}
+```python
+from openai import OpenAI
+
+client = OpenAI(base_url="http://localhost:4000", api_key="sk-...")
+
+response = client.chat.completions.create(
+    model="gpt-4",
+    messages=[{"role": "user", "content": "Hello!"}],
+    extra_headers={"x-session-id": "session-abc-123"}
+)
+```
+{% endtab %}
+
+{% tab title="curl" %}
+```bash
+curl -X POST http://localhost:4000/chat/completions \
+  -H "Authorization: Bearer sk-..." \
+  -H "Content-Type: application/json" \
+  -H "x-session-id: session-abc-123" \
+  -d '{
+    "model": "gpt-4",
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }'
+```
+{% endtab %}
+{% endtabs %}
+
+{% hint style="info" %}
+**Note**
+
+Session tracking is optional. Requests without an `x-session-id` header are processed normally and are simply not associated with a session. Session-based features on the guardrails service are controlled by the `SESSION_ENABLED` setting (enabled by default).
+{% endhint %}
+
 ## How It Works
 
 ### Request Flow (SYNC\_MODE=true)
