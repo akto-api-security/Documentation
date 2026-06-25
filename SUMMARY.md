@@ -85,6 +85,7 @@
       * [Connect to Akto (Block Mode)](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/microsoft-copilot-studio/connect-akto-sync.md)
       * [Proxy MCP Server via Akto](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/microsoft-copilot-studio/proxy-mcp-via-akto.md)
     * [LiteLLM](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/litellm.md)
+    * [Dify](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/dify.md)
     * [Azure AI Foundry](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/azure-ai-foundry.md)
     * [Snowflake](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/snowflake/README.md)
       * [Snowflake Red Teaming](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/snowflake/snowflake-red-teaming.md)
