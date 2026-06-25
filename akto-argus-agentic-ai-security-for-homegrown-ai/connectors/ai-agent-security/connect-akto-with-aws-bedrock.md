@@ -472,6 +472,15 @@ aws lambda invoke \
 {% endtab %}
 {% endtabs %}
 
+{% hint style="info" %}
+**Important Notes**
+
+1. **Bedrock Logging Configuration**: The Lambda function automatically enables Bedrock model invocation logging on first run if not enabled
+2. **Processing Schedule**: Logs are processed every 5 minutes via EventBridge
+3. **Data Format**: Conversations are formatted in AKTO StandardMessage format with security tags
+4. **Security**: All data remains in your AWS account; no external access required
+{% endhint %}
+
 ## What Happens Next
 
 Once deployed, the system will:
