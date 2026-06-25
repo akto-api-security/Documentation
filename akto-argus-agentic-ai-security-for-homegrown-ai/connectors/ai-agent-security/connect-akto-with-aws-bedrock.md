@@ -52,10 +52,13 @@ flowchart LR
 
 Before running the deployment, gather this information:
 
-1. **AKTO Data Ingestion URL**: Your AKTO endpoint
+1. **S3 Bucket Name**: A unique bucket name for storing Bedrock logs where you have enabled model invocation logging
+   * Example: `my-company-bedrock-logs-2026`
+   * Must be globally unique across all AWS accounts
+2. **AKTO Data Ingestion URL**: Your AKTO endpoint
    * Format: `https://your-akto-instance.com/api/ingestData`
    * Contact AKTO support team to obtain your Data Ingestion URL
-2. **AKTO API Key**: Authentication key for your AKTO instance
+3. **AKTO API Key**: Authentication key for your AKTO instance
    * Navigate to: **AKTO Argus** → **Connectors** → **Setup Guardrails**
    * Copy the API key from there
 {% endstep %}
@@ -72,13 +75,13 @@ Before running the deployment, gather this information:
 **Create Stack**
 
 1. Click **Create stack**
-2.  Select **Amazon S3 URL**
-
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (179).png" alt="" width="563"><figcaption></figcaption></figure></div>
+2. Select **Amazon S3 URL**
 3.  Enter the CloudFormation template URL:
 
     <pre data-overflow="wrap"><code>https://lambda-code-akto.s3.ap-southeast-1.amazonaws.com/client-aws-cf-template.yaml
     </code></pre>
+
+    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (180).png" alt="" width="563"><figcaption></figcaption></figure></div>
 4. Click **Next.**
 {% endstep %}
 
@@ -91,11 +94,14 @@ Fill in the form with your information:
 
 **Parameters:**
 
-* **S3BucketName**: `my-bedrock-logs`
+* **S3BucketName**: Enter the S3 bucket name you gathered in Step 1
+  * Example: `my-company-bedrock-logs-2026`
 * **DataIngestionEndpoint**: `<URL-obtained-from-akto-team>`
-* **AktoApiKey**: `<Akto-API-Key>`
+* **AktoApiKey**: `<Akto-API-Key>`&#x20;
 
-Click **Next**
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (181).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
+Click **Next.**
 {% endstep %}
 
 {% step %}
