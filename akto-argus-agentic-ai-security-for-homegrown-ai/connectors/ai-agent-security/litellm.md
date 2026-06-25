@@ -46,14 +46,31 @@ curl -O https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp
 Add the following environment variables to the LiteLLM environment (`.env` file or system environment):
 
 ```bash
+# URL of this LiteLLM proxy instance (used as the default collection host)
 LITELLM_URL=http://your-litellm-instance-url
 
 # Akto's Data Ingestion Service URL
 DATA_INGESTION_SERVICE_URL=http://data-ingestion-service-url
 
+# Akto API token used to authenticate to the Data Ingestion Service
+AKTO_API_TOKEN=<your-akto-guardrail-service-token>
+
 # Optional: Operation Mode
 SYNC_MODE=true              # true = block violations, false = async logging only, default true
+
+# Optional: timeout (in seconds) for calls to the Data Ingestion Service
+TIMEOUT=5                   # default 5
 ```
+
+The connector reads these variables (`custom_hooks.py`):
+
+| Variable | Required | Default | Description |
+| --- | --- | --- | --- |
+| `DATA_INGESTION_SERVICE_URL` | Yes | — | Akto Data Ingestion Service endpoint the hook sends traffic and validation requests to. |
+| `AKTO_API_TOKEN` | Yes | empty | Token sent in the `Authorization` header to the Data Ingestion Service. Obtain from **Akto Argus → Connectors → Setup Guardrail**. |
+| `LITELLM_URL` | No | `http://localhost:4000` | This proxy's URL; its host is used as the default collection name when no agent identity is present. |
+| `SYNC_MODE` | No | `true` | `true` blocks violations before the LLM call; `false` validates asynchronously (log only). |
+| `TIMEOUT` | No | `5` | Timeout in seconds for HTTP calls to the Data Ingestion Service. |
 
 {% hint style="warning" %}
 **Note**
@@ -92,16 +109,9 @@ The required change is adding `callbacks: [custom_hooks.proxy_handler_instance]`
 
 {% tabs %}
 {% tab title="Using LiteLLM Directly" %}
-Ensure `custom_hooks.py` is in the same directory as `config.yaml`:
+Ensure `custom_hooks.py` is in the same directory as `config.yaml`, then start LiteLLM with the environment variables from the previous step set:
 
 ```bash
-# Set environment variables
-export LITELLM_URL=http://your-litellm-instance-url
-export DATA_INGESTION_SERVICE_URL=http://data-ingestion-service-url
-export AKTO_API_TOKEN=<your-akto-guardrail-service-token>
-export SYNC_MODE=true
-
-# Start LiteLLM
 litellm --config config.yaml
 ```
 
@@ -124,6 +134,7 @@ services:
     environment:
       - LITELLM_URL=${LITELLM_URL}
       - DATA_INGESTION_SERVICE_URL=${DATA_INGESTION_SERVICE_URL}
+      - AKTO_API_TOKEN=${AKTO_API_TOKEN}
       - SYNC_MODE=${SYNC_MODE}
     # ... rest of config ...
 ```
