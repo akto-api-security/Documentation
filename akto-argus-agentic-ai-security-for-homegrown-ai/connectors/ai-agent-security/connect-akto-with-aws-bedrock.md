@@ -472,54 +472,6 @@ aws lambda invoke \
 {% endtab %}
 {% endtabs %}
 
-## Troubleshooting **Common Issues**
-
-### **1. Permission Denied Errors**
-
-```bash
-# Check your AWS credentials
-aws sts get-caller-identity
-
-# Ensure you have sufficient IAM permissions
-aws iam list-attached-user-policies --user-name YOUR_USERNAME
-```
-
-### **2. S3 Bucket Already Exists**
-
-```bash
-# Choose a different bucket name or check if you own it
-aws s3 ls s3://your-bucket-name
-```
-
-### **3. Lambda Function Not Processing**
-
-```bash
-# Check Lambda logs for errors
-aws logs describe-log-groups --log-group-name-prefix "/aws/lambda/akto-bedrock"
-
-# View recent logs
-aws logs tail /aws/lambda/akto-bedrock-log-processor-YOUR_ACCOUNT_ID --follow
-```
-
-### **4. AKTO Connection Issues**
-
-```bash
-# Test connectivity to your AKTO instance
-curl -X POST "https://your-akto-instance.com/api/ingestData" \
-     -H "Content-Type: application/json" \
-     -H "X-API-KEY: your-api-key" \
-     -d '{"test": "connection"}'
-```
-
-{% hint style="info" %}
-**Important Notes**
-
-1. **Bedrock Logging Configuration**: The Lambda function automatically enables Bedrock model invocation logging on first run if not enabled
-2. **Processing Schedule**: Logs are processed every 5 minutes via EventBridge
-3. **Data Format**: Conversations are formatted in AKTO StandardMessage format with security tags
-4. **Security**: All data remains in your AWS account; no external access required
-{% endhint %}
-
 ## What Happens Next
 
 Once deployed, the system will:
