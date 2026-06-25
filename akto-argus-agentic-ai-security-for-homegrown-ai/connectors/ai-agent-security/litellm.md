@@ -98,11 +98,17 @@ Ensure `custom_hooks.py` is in the same directory as `config.yaml`:
 # Set environment variables
 export LITELLM_URL=http://your-litellm-instance-url
 export DATA_INGESTION_SERVICE_URL=http://data-ingestion-service-url
+export AKTO_API_TOKEN=<your-akto-guardrail-service-token>
 export SYNC_MODE=true
 
 # Start LiteLLM
 litellm --config config.yaml
 ```
+
+{% hint style="info" %}
+The Akto API Token can be obtained from **Akto Argus -> Connectors -> Setup Guardrail**.\
+![](<../../../.gitbook/assets/image (178).png>)
+{% endhint %}
 {% endtab %}
 
 {% tab title="Using Docker" %}
