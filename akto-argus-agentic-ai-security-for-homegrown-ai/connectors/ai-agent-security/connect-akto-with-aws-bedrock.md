@@ -90,7 +90,8 @@ Before running the deployment, gather this information:
 
 Fill in the form with your information:
 
-* **Stack name**: `akto-bedrock-discovery` (must be lowercase, no spaces)
+* **Stack name**: Enter a name for your stack (must be lowercase, no spaces)
+  * Example: `akto-bedrock-discovery-prod`
 
 **Parameters:**
 
