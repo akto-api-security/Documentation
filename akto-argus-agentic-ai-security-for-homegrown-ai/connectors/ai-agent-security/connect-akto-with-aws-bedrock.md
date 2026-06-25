@@ -44,6 +44,9 @@ flowchart LR
 
 ## Step-by-Step Setup
 
+{% tabs %}
+{% tab title="Deploy via AWS CLI" %}
+
 {% stepper %}
 {% step %}
 **Install AWS CLI if not installed**
@@ -206,32 +209,45 @@ The script will automatically:
 **Expected Output:**
 
 ```bash
-📦 Building Lambda package...
-✅ Lambda package created
+✅ Lambda package built successfully
 
-🔧 Creating IAM role...
-✅ IAM role created and configured
+📤 Uploading Lambda package to S3 (5.4 MB, may take 1-2 minutes)...
+upload: ../akto-bedrock-processor.zip to s3://akto-aws-bedrock-logs-02/lambda-code/akto-bedrock-processor.zip
+✅ Lambda package uploaded to S3: s3://akto-aws-bedrock-logs-02/lambda-code/akto-bedrock-processor.zip
 
-🔧 Creating Lambda function...
-✅ Lambda function created/updated
+🔧 Updating Lambda function code: akto-bedrock-log-processor-cf-041877753357
+✅ Lambda function code updated successfully!
 
-🔧 Creating EventBridge schedule...
-✅ EventBridge schedule created
+🔧 Updating CloudFormation stack: akto-bedrock-discovery-prod
+⏳ Waiting for stack update to complete...
+✅ Stack updated successfully!
+
+## 📊 Retrieving stack outputs...
+
+|                                                                   DescribeStacks                                                                   |
++------------------------------+----------------------+----------------------------------------------------------------------------------------------+
+|          Description         |      OutputKey       |                                         OutputValue                                          |
++------------------------------+----------------------+----------------------------------------------------------------------------------------------+
+|  ARN of the Lambda function  |  LambdaFunctionArn   |  arn:aws:lambda:us-east-1:xxxxxx:function:akto-bedrock-log-processor-cf-xxxxxx   |
+|  Name of the Lambda function |  LambdaFunctionName  |  akto-bedrock-log-processor-cf-xxxxxx                                               |
+|  Name of the EventBridge rule|  EventBridgeRuleName |  akto-bedrock-schedule-cf-xxxxxx                                                       |
+|  CloudFormation stack name   |  StackName           |  akto-bedrock-discovery-prod                                                                 |
++------------------------------+----------------------+----------------------------------------------------------------------------------------------+
 
 🎉 Deployment completed successfully!
 
-📋 What was created:
-   • Lambda Function: akto-bedrock-log-processor-123456789012
-   • IAM Role: akto-bedrock-processor-role-123456789012
-   • EventBridge Rule: akto-bedrock-schedule-123456789012 (runs every 5 minutes)
-   • Using existing S3 Bucket: my-company-bedrock-logs-2024
-
 🔍 Next steps:
-1. Generate some AWS Bedrock conversations
-2. Monitor Lambda logs: aws logs tail /aws/lambda/akto-bedrock-log-processor-123456789*** --follow
-3. Test manually: aws lambda invoke --function-name akto-bedrock-log-processor-123456789*** --payload '{}' response.json
 
-🎯 The system will automatically process Bedrock logs every 5 minutes!
+1. Generate some AWS Bedrock conversations
+2. Monitor Lambda logs:
+aws logs tail /aws/lambda/akto-bedrock-log-processor-xxxxxx --follow --region us-east-1
+3. Test manually:
+aws lambda invoke --function-name akto-bedrock-log-processor-xxxxxx --region us-east-1 response.json
+
+📌 CloudFormation Stack Information:
+Stack Name: akto-bedrock-discovery-prod
+Region: us-east-1
+Environment: prod
 ```
 {% endstep %}
 
@@ -308,6 +324,143 @@ aws lambda invoke \
 ```
 {% endstep %}
 {% endstepper %}
+
+{% endtab %}
+
+{% tab title="Deploy via AWS Console" %}
+
+{% stepper %}
+{% step %}
+**Prepare Your Information**
+
+Before running the deployment, gather this information:
+
+1. **S3 Bucket Name**: A unique bucket name for storing Bedrock logs where you have enabled model invocation logging
+   * Example: `my-company-bedrock-logs-2026`
+   * Must be globally unique across all AWS accounts
+2. **AKTO Data Ingestion URL**: Your AKTO endpoint
+   * Format: `https://your-akto-instance.com/api/ingestData`
+   * Replace `your-akto-instance.com` with your actual AKTO domain/IP
+3. **AKTO API Key**: Authentication key for your AKTO instance
+   * Obtain from your AKTO dashboard
+   * Example: `ak_live_xxxxxxxxxxxxxxxxxxxx`
+{% endstep %}
+
+{% step %}
+**Open CloudFormation**
+
+1. Sign in to AWS Console
+2. Search for "CloudFormation"
+3. Click **CloudFormation** service
+{% endstep %}
+
+{% step %}
+**Create Stack**
+
+1. Click **Create stack**
+2. Select **Amazon S3 URL**
+3. Enter the CloudFormation template URL: `https://lambda-code-akto.s3.ap-southeast-1.amazonaws.com/client-aws-cf-template.yaml`
+4. Click **Next**
+{% endstep %}
+
+{% step %}
+**Enter Stack Details**
+
+Fill in the form with your information:
+
+* **Stack name**: `akto-bedrock-discovery-prod` (must be lowercase, no spaces)
+
+**Parameters:**
+
+* **S3BucketName**: `my-bedrock-logs`
+* **DataIngestionEndpoint**: `https://your-instance.akto.io/api/ingestData`
+* **AktoApiKey**: `sk-1234567890abcdef...` (shown as dots for security)
+
+Click **Next**
+{% endstep %}
+
+{% step %}
+**Configure Stack Options**
+
+1. Leave defaults (no changes needed)
+2. Scroll down to **Acknowledgment**
+3. ✅ Check: "I acknowledge that AWS CloudFormation might create IAM resources with custom names"
+
+⚠️ **Important!** CloudFormation needs to create the Lambda execution role.
+
+4. Click **Create stack**
+{% endstep %}
+
+{% step %}
+**Wait for Completion**
+
+CloudFormation will create the following resources:
+
+* ✅ Lambda Execution Role
+* ✅ Lambda Function (akto-bedrock-log-processor-cf-<account-id>)
+* ✅ EventBridge Execution Role
+* ✅ EventBridge Schedule Rule
+
+**Expected Status:**
+
+```
+akto-bedrock-discovery-prod - CREATE_IN_PROGRESS
+├─ LambdaExecutionRole - CREATE_COMPLETE ✓
+├─ AktoBedrocklambdaFunction - CREATE_COMPLETE ✓
+├─ EventBridgeExecutionRole - CREATE_COMPLETE ✓
+├─ BedrocktogProcessingScheduleRule - CREATE_COMPLETE ✓
+└─ akto-bedrock-discovery-prod - CREATE_COMPLETE ✓
+```
+
+⏳ **Typical time: 2-3 minutes**
+{% endstep %}
+
+{% step %}
+**Verify Success**
+
+1. **Stack Status** should show: **CREATE_COMPLETE** (green)
+2. Click **Outputs** tab
+3. You should see:
+   * LambdaFunctionName
+   * LambdaFunctionArn
+   * EventBridgeRuleName
+
+✅ **Deployment successful!**
+{% endstep %}
+
+{% step %}
+**Check Lambda Function**
+
+1. Search for "Lambda" in AWS Console
+2. Click **Lambda**
+3. Look for function: `akto-bedrock-log-processor-cf-<account-id>`
+4. Click on it
+5. Should show: **Last modified: just now**
+{% endstep %}
+
+{% step %}
+**Check EventBridge Schedule**
+
+1. Search for "EventBridge" in AWS Console
+2. Click **EventBridge**
+3. Click **Rules** (left sidebar)
+4. Look for: `akto-bedrock-schedule-cf-<account-id>`
+5. Should show: **State: Enabled** ✅
+{% endstep %}
+
+{% step %}
+**Check Lambda Logs**
+
+1. From Lambda function page, click **Monitor** tab
+2. Click **View CloudWatch logs**
+3. Should see log stream with recent entries
+
+✅ **Everything working!**
+{% endstep %}
+{% endstepper %}
+
+{% endtab %}
+{% endtabs %}
 
 ## Troubleshooting **Common Issues**
 
