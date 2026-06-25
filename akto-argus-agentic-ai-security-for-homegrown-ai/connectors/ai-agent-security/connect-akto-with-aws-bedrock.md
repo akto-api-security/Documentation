@@ -112,7 +112,7 @@ Click **Next.**
 3. ✅ Check: "I acknowledge that AWS CloudFormation might create IAM resources with custom names"
 
 {% hint style="warning" %}
-CloudFormation needs to create the Lambda execution role.
+CloudFormation needs this acknowledgement to create the Lambda execution role.
 {% endhint %}
 
 4. Click **Create stack**
