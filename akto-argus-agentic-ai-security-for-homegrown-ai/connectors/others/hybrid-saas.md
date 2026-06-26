@@ -14,11 +14,11 @@ description: Learn how to send agentic traffic data to Akto SaaS from your cloud
 
 4\. Open the **Setup Guardrail** card and copy your token from there.
 
-### Installing Traffic connector
+## Installing Traffic connector
 
 You can use either a CloudFormation template, Terraform template or a Helm chart to install Traffic aggregator in your env.
 
-#### Terraform
+### Terraform
 
 1. To install using Terraform, use the Terraform script [here](https://github.com/akto-api-security/infra/blob/mini_runtime_tf_script/templates/mini-runtime.tf).
    1. Please make sure you install it in a private subnet from your application VPC.
@@ -28,7 +28,7 @@ You can use either a CloudFormation template, Terraform template or a Helm chart
 4. The next step is to install a traffic connector.
    1. You can use the above copied `AktoNLBIP` as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `akto-N-.....amazonaws.com:9092`)
 
-#### CloudFormation template
+### CloudFormation template
 
 1. To install using CloudFormation, run the Cloudformation template [here](https://raw.githubusercontent.com/akto-api-security/infra/feature/quick-setup/templates/mini-runtime.yml).
 
@@ -41,7 +41,7 @@ ii) This private subnet should also have network connectivity (typically via NAT
 4. The next step is to install a traffic connector.
    1. You can use the above copied `AktoNLBIP` as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `akto-N-.....amazonaws.com:9092`)
 
-#### Helm chart
+### Helm chart
 
 1\. If you have K8s clusters, you can use helm chart to install Traffic aggregator.
 
@@ -118,7 +118,7 @@ kubectl get svc -n <namespace>
 8. Run `docker-compose -f docker-compose-mini-runtime.yml up -d`
 9. Run `systemctl enable /usr/lib/systemd/system/docker.service` to ensure Docker starts up in case of instance restarts
 
-## Notes:
+## Important Notes
 
 1. Ensure internet connectivity in Traffic aggregator service.
 2. In case of closed network, please whitelist (https://cyborg.akto.io)
