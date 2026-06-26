@@ -26,12 +26,8 @@ wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/featur
 ### 1.2 Retrieve the Akto Token
 
 1. Log in to the [Akto Dashboard](https://app.akto.io/).
-2.  Navigate to the **Quick Start** tab.
-
-    <figure><img src="../../../../.gitbook/assets/Quick-Start.png" alt=""><figcaption></figcaption></figure>
-3.  Select **Hybrid SaaS Connector** and copy the token shown under **Runtime Service Command**.
-
-    <figure><img src="../../../../.gitbook/assets/HybridSaaSConnector.png" alt=""><figcaption></figcaption></figure>
+2. Go to **Connectors** in the left nav.
+3. Open the **Setup Guardrail** card and copy your token.
 
 ### 1.3 Configure the Environment File
 

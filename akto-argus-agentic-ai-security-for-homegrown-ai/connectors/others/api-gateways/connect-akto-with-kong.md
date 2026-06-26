@@ -11,7 +11,7 @@ Before you begin, make sure you have:
 * Kong Gateway **2.0 or later** already running with your AI agent or MCP server registered as a Kong service/route
 * Access to Kong's Admin API (default: `http://localhost:8001`)
 * A server or Kubernetes cluster to host the Akto guardrail backend
-* Your **Akto API Token** (available from your Akto dashboard → Quick Start → Hybrid SaaS → Connect → Copy your `databaseAbstractorToken`)
+* Your **Akto API Token** (go to **Akto Argus → Connectors → Setup Guardrail** card and copy your token)
 
 ---
 
