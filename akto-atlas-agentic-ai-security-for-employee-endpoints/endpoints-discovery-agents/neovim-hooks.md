@@ -225,6 +225,8 @@ Test by using any supported AI plugin. Akto will validate the prompt and ingest 
 
 ### Setup Options
 
+You can obtain the API token (`akto_api_token`) from **Akto Atlas → Connectors → Setup Guardrail** card.
+
 ```lua
 require("akto").setup({
   akto_url         = "",      -- Akto backend URL (required)

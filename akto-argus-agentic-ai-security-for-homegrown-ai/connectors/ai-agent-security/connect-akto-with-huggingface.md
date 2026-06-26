@@ -78,7 +78,7 @@ export LOG_LEVEL=INFO
 
 ```
 
-* `AKTO_API_TOKEN`: Akto ingestion token (from Akto dashboard)
+* `AKTO_API_TOKEN`: Akto ingestion token (go to **Akto Argus → Connectors → Setup Guardrail** card to obtain it)
 * `AKTO_API_BASE_URL`: Akto proxy ingestion server
 * `APP_URL`: Upstream target (the HF Private Inference Endpoint URL)
 * `LOG_LEVEL`: Logging verbosity

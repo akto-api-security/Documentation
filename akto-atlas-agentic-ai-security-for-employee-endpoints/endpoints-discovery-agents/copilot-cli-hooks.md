@@ -192,7 +192,7 @@ foreach ($file in $files) {
 {% hint style="warning" %}
 All wrapper scripts contain two placeholders that **must be replaced** before hooks will work:
 - `{{AKTO_DATA_INGESTION_URL}}` — your Akto instance URL (required for event ingestion)
-- `{{AKTO_API_TOKEN}}` — your Akto API token (required for agent registration auth)
+- `{{AKTO_API_TOKEN}}` — your Akto API token (required for agent registration auth; obtain from **Akto Atlas → Connectors → Setup Guardrail** card)
 
 `DATABASE_ABSTRACTOR_SERVICE_URL` is built into the hooks and defaults to `https://cyborg.akto.io` automatically — no action needed for SaaS users.
 {% endhint %}

@@ -152,7 +152,7 @@ Go to **Configuration → Environment variables → Edit → Add environment var
 | Key | Value |
 |---|---|
 | `AKTO_DATA_INGESTION_URL` | `https://your-akto-instance.com` |
-| `AKTO_API_TOKEN` | your Akto API token (in the Akto Dashboard, go to Quick Start, click Connect on the Setup Guardrails card, and copy your token) |
+| `AKTO_API_TOKEN` | your Akto API token (go to **Akto Argus → Connectors → Setup Guardrail** card and copy your token) |
 
 Click **Save**.
 {% endstep %}

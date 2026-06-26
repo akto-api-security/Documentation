@@ -131,7 +131,7 @@ The wrapper scripts ship with placeholders that must be replaced before hooks ca
 | Placeholder | Purpose |
 | --- | --- |
 | `{{AKTO_DATA_INGESTION_URL}}` | Akto data ingestion base URL (no trailing slash) |
-| `{{AKTO_API_TOKEN}}` | API token sent as `Authorization` on ingestion `POST` and on cyborg heartbeat |
+| `{{AKTO_API_TOKEN}}` | API token sent as `Authorization` on ingestion `POST` and on cyborg heartbeat. Obtain from **Akto Atlas → Connectors → Setup Guardrail** card. |
 | `{{DATABASE_ABSTRACTOR_SERVICE_URL}}` | Cyborg / database-abstractor base URL for heartbeat; for Akto SaaS replace with `https://cyborg.akto.io` |
 
 **macOS / Linux (`sed`):**

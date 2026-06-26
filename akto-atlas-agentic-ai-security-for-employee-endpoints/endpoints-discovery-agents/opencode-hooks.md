@@ -271,7 +271,7 @@ tail -f ~/.config/opencode/akto/logs/akto-guardrails.log
 
 ### Environment Variables
 
-Set these to customize the plugin behavior:
+Set these to customize the plugin behavior. You can obtain the `AKTO_API_TOKEN` from **Akto Atlas → Connectors → Setup Guardrail** card.
 
 ```bash
 # REQUIRED
