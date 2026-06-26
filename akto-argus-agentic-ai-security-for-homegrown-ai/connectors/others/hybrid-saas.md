@@ -4,15 +4,15 @@ description: Learn how to send agentic traffic data to Akto SaaS from your cloud
 
 # Connect Akto with Hybrid SaaS
 
+## Getting API Token
+
 1\. Go to [app.akto.io](https://app.akto.io)
 
 2\. Login/Signup into your account.
 
-3\. Click on Quick Start tab in left nav.
+3\. Click on **Connectors** in the left nav.
 
-4\. Search for Hybrid SaaS Connector and click connect.
-
-<figure><img src="../../../.gitbook/assets/HybridSaaSConnector.png" alt=""><figcaption></figcaption></figure>
+4\. Open the **Setup Guardrail** card and copy your token from there.
 
 ### Installing Traffic connector
 
@@ -23,7 +23,7 @@ You can use either a CloudFormation template, Terraform template or a Helm chart
 1. To install using Terraform, use the Terraform script [here](https://github.com/akto-api-security/infra/blob/mini_runtime_tf_script/templates/mini-runtime.tf).
    1. Please make sure you install it in a private subnet from your application VPC.
    2. This private subnet should also have network connectivity (typically via NAT).
-2. You can use `https://cyborg.akto.io` as `DatabaseAbstractorUrl` . For `DatabaseAbstractorToken` you can copy it from the helm install command in the above screenshot.
+2. You can use `https://cyborg.akto.io` as `DatabaseAbstractorUrl` . For `DatabaseAbstractorToken`, refer to the [Getting API Token](#getting-api-token) section above.
 3. Once complete, copy `akto_nlb_dns` from the output.
 4. The next step is to install a traffic connector.
    1. You can use the above copied `AktoNLBIP` as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `akto-N-.....amazonaws.com:9092`)
@@ -36,7 +36,7 @@ i) Please make sure you install it in a private subnet from your application VPC
 
 ii) This private subnet should also have network connectivity (typically via NAT).
 
-2. You can use `https://cyborg.akto.io` as `DatabaseAbstractorUrl` . For `DatabaseAbstractorToken` you can copy it from the helm install command in the above screenshot.
+2. You can use `https://cyborg.akto.io` as `DatabaseAbstractorUrl` . For `DatabaseAbstractorToken`, refer to the [Getting API Token](#getting-api-token) section above.
 3. Once complete, go to the **Output** section of CloudFormation Stack and copy `AktoNLBIP`.
 4. The next step is to install a traffic connector.
    1. You can use the above copied `AktoNLBIP` as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `akto-N-.....amazonaws.com:9092`)
@@ -118,7 +118,7 @@ kubectl get svc -n <namespace>
 ```
 
 6. Modify ${AKTO\_KAFKA\_IP} in the `docker-compose-mini-runtime.yml` with the ip of your instance on which runtime will be deployed
-7. Replace the value of `DATABASE_ABSTRACTOR_SERVICE_TOKEN` in `docker-mini-runtime.yml` with the token value copied from Akto's Hybrid Saas Connector in the quick start menu. Also Replace the value of `AKTO_KAFKA_BROKER_URL` with \<instance\_ip>:9092. Also Replace the value of `AKTO_THREAT_PROTECTION_BACKEND_TOKEN` and `DATABASE_ABSTRACTOR_SERVICE_TOKEN` in `docker-threat-detection.env` with the token value copied from Akto's Hybrid Saas Connector in the quick start menu.
+7. Replace the value of `DATABASE_ABSTRACTOR_SERVICE_TOKEN` in `docker-mini-runtime.yml` with the token from the [Getting API Token](#getting-api-token) section above. Also replace the value of `AKTO_KAFKA_BROKER_URL` with \<instance\_ip>:9092. Also replace the value of `AKTO_THREAT_PROTECTION_BACKEND_TOKEN` and `DATABASE_ABSTRACTOR_SERVICE_TOKEN` in `docker-threat-detection.env` with the same token.
 8. Run `docker-compose -f docker-compose-mini-runtime.yml up -d`
 9. Run `systemctl enable /usr/lib/systemd/system/docker.service` to ensure Docker starts up in case of instance restarts
 
