@@ -51,8 +51,6 @@ ii) This private subnet should also have network connectivity (typically via NAT
 helm repo add akto https://akto-api-security.github.io/helm-charts/
 ```
 
-<figure><img src="../../../.gitbook/assets/helm-repo-add.png" alt=""><figcaption></figcaption></figure>
-
 3. Install akto-mini-runtime helm chart in your kubernetes cluster.
    1.  Directly using database abstractor token
 
@@ -69,8 +67,6 @@ helm repo add akto https://akto-api-security.github.io/helm-charts/
        ```bash
        helm install akto-mini-runtime akto/akto-mini-runtime -n <your-namespace> --set mini_runtime.aktoApiSecurityRuntime.env.useSecretsForDatabaseAbstractorToken=true --set mini_runtime.aktoApiSecurityRuntime.env.databaseAbstractorTokenSecrets.existingSecret=<my-secret>
        ```
-
-<figure><img src="../../../.gitbook/assets/helm-repo-install.png" alt=""><figcaption></figcaption></figure>
 
 4\. Running the above commands in your k8s cluster will deploy a new Akto Traffic aggregator service.
 
