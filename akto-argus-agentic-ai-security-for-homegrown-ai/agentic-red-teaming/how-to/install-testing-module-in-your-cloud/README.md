@@ -15,8 +15,8 @@ There could be multiple reasons why you'd want to install probing module within 
 ## Copy the JWT Token
 
 1. Login to Akto dashboard at [app.akto.io](https://app.akto.io)
-2. Go to Quick Start > Hybrid Saas > Click on “Connect” button
-3. Copy the JWT token (marked in red) \[ Also referred as `Database Abstractor Token` later]
+2. Go to **Connectors** in the left nav.
+3. Open the **Setup Guardrail** card and copy your token (also referred to as the database abstractor token in later steps).
 
 You then have to use a Linux VM or a Helm chart to install Akto AI Red Teaming module in your cloud.
 
