@@ -29,15 +29,11 @@ wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/featur
 
 4\. Go to https://app.akto.io, and create your akto account. Login into your Account
 
-5\. Click on Quick Start tab in left nav.
+5\. Go to **Connectors** in the left nav.
 
-<figure><img src="../../../../.gitbook/assets/Quick-Start.png" alt=""><figcaption></figcaption></figure>
+6\. Open the **Setup Guardrail** card and copy your token.
 
-6\. Search for Hybrid SaaS Connector and click connect.
-
-<figure><img src="../../../../.gitbook/assets/HybridSaaSConnector.png" alt=""><figcaption></figcaption></figure>
-
-7\. Copy the token value under `Runtime Service Command` section. Replace the token string with the earlier copied value in docker-mini-runtime.env file.
+7\. Replace the token string with the copied value in the docker-mini-runtime.env file.
 
 ```plaintext
 DATABASE_ABSTRACTOR_SERVICE_TOKEN=token
