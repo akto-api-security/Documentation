@@ -154,8 +154,6 @@ redirects:
   traffic-connector/source-code/github: "/readme"
   traffic-connector/source-code/gitlab: "/readme"
   traffic-connector/source-code/bitbucket: "/readme"
-  api-inventory/concepts/api-inventory-from-source-code: "/traffic-connector/traffic-data-sources"
-  api-inventory/how-to/extract-apis-from-source-code-gha: "/traffic-connector/traffic-data-sources"
   api-inventory/how-to/extract-apis-from-source-code-docker-cli: "/traffic-connector/traffic-data-sources"
   api-inventory-1/concepts/api-inventory-from-source-code: "/readme"
   api-inventory-1/how-to/extract-apis-from-source-code-docker-cli: "/readme"

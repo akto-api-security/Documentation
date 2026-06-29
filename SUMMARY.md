@@ -139,6 +139,7 @@
   * [Access Type](api-inventory-1/concepts/access-type.md)
   * [Advanced Filter Option](api-inventory-1/concepts/advanced-filter-option.md)
   * [Threat Issues](api-inventory/concepts/threat-issues.md)
+  * [API Inventory from Source Code](api-inventory/concepts/api-inventory-from-source-code.md)
 * [How-To](api-inventory-1/how-to/README.md)
   * [Enable Tree view for API collections](api-inventory-1/how-to/enable-tree-view-for-api-collections.md)
   * [Export an API Collection to Postman](api-inventory-1/how-to/export-an-api-collection-to-postman.md)
@@ -172,6 +173,7 @@
   * [Remove Bad Endpoints](api-inventory-1/how-to/remove-bad-endpoints.md)
   * [Bulk De-Merge APIs](api-inventory/how-to/bulk-de-merge-apis.md)
   * [Inspect Schema of an API Collection](api-inventory/how-to/inspect-schema-of-an-api-collection.md)
+  * [Extract APIs from Source Code using GitHub Actions](api-inventory/how-to/extract-apis-from-source-code-gha.md)
 
 ***
 
