@@ -29,8 +29,8 @@ redirects:
   test-editor/editing-built-in-test: "/test-editor/how-to/edit-test"
   test-editor/writing-custom-tests: "/test-editor/how-to/create-a-custom-test"
   testing/run-tests-in-cicd: "/api-security-testing/how-to/run-tests-in-cicd"
-  testing/github_integration_testing: "/integrations/ci-cd-integrations/github-actions/create-github-app"
-  testing/github_integration_testing/github_app_integration: "/integrations/ci-cd-integrations/github-actions/create-github-app"
+  testing/github_integration_testing: integrations/ci-cd-integrations/github-actions/create-github-app.md
+  testing/github_integration_testing/github_app_integration: integrations/ci-cd-integrations/github-actions/create-github-app.md
   testing/run-test: "/api-security-testing/how-to/run-test"
   testing/create-user-config: "/api-security-testing/concepts/user-config"
   testing/run-tests-in-cli-using-akto: "/api-security-testing/how-to/run-tests-in-cli-using-akto"
@@ -38,8 +38,8 @@ redirects:
   testing/test-library: "/test-editor/concepts/test-library"
   testing/user-roles: "/api-security-testing/concepts/test-role"
   testing/run-test-in-graphql: "/api-security-testing/how-to/secure-graphql-apis-using-akto"
-  add-api-data/integrations: "/traffic-connector/traffic-data-sources"
-  getting-started/aws-deploy: "/getting-started/quick-start-with-akto-self-hosted/aws-deploy"
+  add-api-data/integrations: traffic-connector/traffic-data-sources.md
+  getting-started/aws-deploy: getting-started/quick-start-with-akto-self-hosted/aws-deploy/README.md
   getting-started/aws-multi-vpc-deploy: "/getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-multi-vpc-deploy"
   getting-started/aws-cross-region-vpc-deploy: "/getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-cross-region-vpc-deploy"
   getting-started/helm-deploy: "/getting-started/quick-start-with-akto-self-hosted/helm-deploy"
@@ -65,7 +65,7 @@ redirects:
   traffic-connections/traffic-data-sources/envoy: "/traffic-connector/api-gateways/envoy"
   traffic-connections/traffic-data-sources/envoy-1: "/traffic-connector/api-gateways/envoy-1"
   traffic-connections/traffic-data-sources/docker: "/traffic-connector/virtual-machines/docker"
-  traffic-connections/traffic-data-sources/vm-ssl-no-docker: "/traffic-connector/virtual-machines/vm-ssl-no-docker"
+  traffic-connections/traffic-data-sources/vm-ssl-no-docker: traffic-connector/virtual-machines/vm-ssl-no-docker.md
   traffic-connections/traffic-data-sources/tcp-agent: "/traffic-connector/virtual-machines/tcp-agent"
   traffic-connections/traffic-data-sources/ebpf: "/traffic-connector/ebpf/ebpf"
   traffic-connections/traffic-data-sources/ebpf-mtls: "/traffic-connector/ebpf/ebpf-mtls"
@@ -96,7 +96,7 @@ redirects:
   api-security-testing/how-to/setup-github-integration-for-ci-cd/create-github-app: "/integrations/ci-cd-integrations/github-actions/create-github-app"
   api-security-testing/how-to/add-test-to-ci-cd-pipeline: "/integrations/ci-cd-integrations/how-to/add-test-to-ci-cd-pipeline"
   api-security-testing/how-to/run-tests-in-cicd: "/integrations/ci-cd-integrations/how-to/run-tests-in-cicd"
-  api-security-testing/how-to/configure-testing-in-cloud: "/api-security-testing/how-to/install-testing-module-in-your-cloud"
+  api-security-testing/how-to/configure-testing-in-cloud: api-security-testing/how-to/install-testing-module-in-your-cloud/README.md
   getting-started/quickstart-with-akto-cloud/hybrid-saas: "/getting-started/quick-start-with-akto-cloud/hybrid-saas"
   api-inventory/how-to/set-environment-type: "/api-inventory-1/how-to/set-tags"
   api-inventory/how-to/create-new-tags: "/api-inventory-1/how-to/set-tags"
@@ -147,13 +147,13 @@ redirects:
   traffic-connector/workflow-automation/n8n: "/migration/agentic-ai-documentation"
   traffic-connector/workflow-automation/copilot-studio: "/migration/agentic-ai-documentation"
   ci-cd: "/migration/agentic-ai-documentation"
-  ai-endpoint-shield: "/migration/agentic-ai-documentation"
-  traffic-connector/source-code: "/readme"
-  traffic-connector/source-code/api-inventory-from-source-code: "/readme"
-  traffic-connector/source-code/source-code-installation: "/readme"
-  traffic-connector/source-code/github: "/readme"
-  traffic-connector/source-code/gitlab: "/readme"
-  traffic-connector/source-code/bitbucket: "/readme"
-  api-inventory-1/concepts/api-inventory-from-source-code: "/readme"
-  api-inventory-1/how-to/extract-apis-from-source-code-docker-cli: "/readme"
-  api-inventory-1/how-to/extract-apis-from-source-code-gha: "/readme"
+  ai-endpoint-shield: migration/agentic-ai-documentation.md
+  traffic-connector/source-code: README.md
+  traffic-connector/source-code/api-inventory-from-source-code: README.md
+  traffic-connector/source-code/source-code-installation: README.md
+  traffic-connector/source-code/github: README.md
+  traffic-connector/source-code/gitlab: README.md
+  traffic-connector/source-code/bitbucket: README.md
+  api-inventory-1/concepts/api-inventory-from-source-code: README.md
+  api-inventory-1/how-to/extract-apis-from-source-code-docker-cli: README.md
+  api-inventory-1/how-to/extract-apis-from-source-code-gha: README.md
