@@ -47,11 +47,6 @@ flowchart LR
 Reach out to the Akto support team via in-app intercom or using the contact links below. The team will provide the **CloudFormation Template (CFT)** and guide you through the full setup of the Amazon Quick connector in your AWS environment.
 {% endstep %}
 
-{% step %}
-**Provide your AWS environment details**
-
-The Akto team will let you know exactly what AWS account information and permissions are needed based on your setup.
-{% endstep %}
 
 {% step %}
 **Verify data in Akto**
