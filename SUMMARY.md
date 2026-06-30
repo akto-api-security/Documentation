@@ -97,6 +97,7 @@
     * [Salesforce](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/salesforce.md)
     * [Claude Agent SDK](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/claude-agent-sdk-hooks.md)
     * [Amazon Quick](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/connect-akto-with-amazon-quick.md)
+    * [Microsoft 365 Copilot](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/connect-akto-with-m365-copilot.md)
   * [AI Model Security](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-model-security.md)
   * [Others](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/README.md)
     * [Connect Akto with Hybrid SaaS](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md)
