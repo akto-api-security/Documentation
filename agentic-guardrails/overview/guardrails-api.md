@@ -96,7 +96,7 @@ POST https://<GUARDRAILS_SERVICE_URL>/api/validate/file
 
 ### Headers
 
-<table><thead><tr><th width="218">Header</th><th width="140">Required</th><th>Description</th></tr></thead><tbody><tr><td><code>authorization</code></td><td>Yes</td><td>Your Akto API token</td></tr></tbody></table>
+<table><thead><tr><th width="218">Header</th><th width="140">Required</th><th>Description</th></tr></thead><tbody><tr><td><code>Cookie</code></td><td>Yes</td><td>Your session cookie from the Akto dashboard</td></tr></tbody></table>
 
 ### Form Fields
 
