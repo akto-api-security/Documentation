@@ -66,6 +66,10 @@
   * [Audit Data - Akto Atlas](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/audit-data-akto-atlas.md)
   * [Users and Devices](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/users-and-devices.md)
 * [Atlas Guardrails](akto-atlas-agentic-ai-security-for-employee-endpoints/atlas-guardrails.md)
+* [NHI Governance](akto-atlas-agentic-ai-security-for-employee-endpoints/nhi-governance/README.md)
+  * [Identities](akto-atlas-agentic-ai-security-for-employee-endpoints/nhi-governance/identities.md)
+  * [Violations](akto-atlas-agentic-ai-security-for-employee-endpoints/nhi-governance/violations.md)
+  * [Create NHI Policies](akto-atlas-agentic-ai-security-for-employee-endpoints/nhi-governance/policies.md)
 
 ## Akto Argus: Agentic AI Security for Homegrown AI
 
