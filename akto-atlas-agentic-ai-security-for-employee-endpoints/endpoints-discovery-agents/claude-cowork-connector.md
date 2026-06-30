@@ -18,10 +18,9 @@ Claude Cowork exports OpenTelemetry (OTel) telemetry from within the Cowork VM. 
 
 ```mermaid
 flowchart LR
-    A[Claude Cowork\nDesktop VM] --> B[OTel Exporter\ninside VM]
-    B --> C[Akto OTLP\nCollector]
-    C --> D[Akto Data\nIngestion Service]
-    D --> E[Akto Dashboard]
+    A[Claude Cowork\nDesktop App] -->|pushes OTel events| B[Akto OTLP\nCollector]
+    B --> C[Akto Data\nIngestion Service]
+    C --> D[Akto Dashboard]
 ```
 
 {% hint style="info" %}
