@@ -84,6 +84,53 @@ The body represents one HTTP interaction (a request/response pair from your AI a
 The `host` value inside `requestHeaders` determines which collection this interaction appears under in the Akto dashboard. Use a consistent, descriptive hostname (e.g. `"my-agent.internal"`) to group traffic from the same agent together.
 {% endhint %}
 
+## File / Media Validation API
+
+Use this endpoint when the payload is a file (image, video, audio, PDF, etc.) rather than a JSON body. The endpoint accepts a `multipart/form-data` request and evaluates the file against your configured guardrail policies.
+
+### Endpoint
+
+```
+POST https://<GUARDRAILS_SERVICE_URL>/api/validate/file
+```
+
+### Headers
+
+<table><thead><tr><th width="218">Header</th><th width="140">Required</th><th>Description</th></tr></thead><tbody><tr><td><code>authorization</code></td><td>Yes</td><td>Your Akto API token</td></tr></tbody></table>
+
+### Form Fields
+
+All fields are sent as `multipart/form-data` parts:
+
+<table><thead><tr><th width="200">Field</th><th width="110">Required</th><th>Description</th></tr></thead><tbody><tr><td><code>file</code></td><td>Yes</td><td>The file to validate (binary upload)</td></tr><tr><td><code>contextSource</code></td><td>Yes</td><td>Product context. Use <code>"ENDPOINT"</code> for file/media traffic</td></tr><tr><td><code>path</code></td><td>Yes</td><td>API path where the file was submitted (e.g. <code>"/backend-api/files"</code>)</td></tr><tr><td><code>requestHeaders</code></td><td>Yes</td><td>Stringified JSON of request headers. The <code>host</code> value sets the collection name in Akto</td></tr><tr><td><code>method</code></td><td>Yes</td><td>HTTP method of the original upload (e.g. <code>"POST"</code>)</td></tr><tr><td><code>ip</code></td><td>Yes</td><td>IP address of the caller</td></tr><tr><td><code>time</code></td><td>Yes</td><td>Unix timestamp in <strong>milliseconds</strong> of when the interaction occurred</td></tr><tr><td><code>statusCode</code></td><td>Yes</td><td>HTTP status code (e.g. <code>"200"</code>)</td></tr><tr><td><code>status</code></td><td>Yes</td><td>Same as <code>statusCode</code></td></tr><tr><td><code>tag</code></td><td>Yes</td><td>Stringified JSON of labels (e.g. <code>{"gen-ai":"Gen AI"}</code>)</td></tr><tr><td><code>metadata</code></td><td>Yes</td><td>Stringified JSON of additional metadata. Can mirror <code>tag</code></td></tr></tbody></table>
+
+### Sample Request
+
+```bash
+curl --location 'https://<GUARDRAILS_SERVICE_URL>/api/validate/file' \
+--header 'accept: */*' \
+--header 'accept-language: en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7' \
+--header 'origin: chrome-extension://difbngmmemnlfoljdlbmfodmijnaphoo' \
+--header 'priority: u=1, i' \
+--header 'sec-fetch-dest: empty' \
+--header 'sec-fetch-mode: cors' \
+--header 'sec-fetch-site: none' \
+--header 'sec-fetch-storage-access: active' \
+--header 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36' \
+--header 'Cookie: <YOUR_SESSION_COOKIE>' \
+--form 'file=@"/path/to/your/file.mp4"' \
+--form 'contextSource="ENDPOINT"' \
+--form 'path="/backend-api/files"' \
+--form 'requestHeaders="{\"host\":\"your-agent.example.com\"}"' \
+--form 'method="POST"' \
+--form 'ip="49.37.170.77"' \
+--form 'time="1780821900129"' \
+--form 'statusCode="200"' \
+--form 'status="200"' \
+--form 'tag="{\"gen-ai\":\"Gen AI\",\"browser-llm\":\"Browser LLM\",\"browser-llm-account-type\":\"personal\"}"' \
+--form 'metadata="{\"gen-ai\":\"Gen AI\",\"browser-llm\":\"Browser LLM\",\"browser-llm-account-type\":\"personal\"}"'
+```
+
 ## Steps to Test
 
 {% stepper %}
@@ -132,6 +179,37 @@ curl --location --request GET \
     "tag": "{\"gen-ai\":\"Gen AI\",\"source\":\"AGENTIC\"}",
     "contextSource": "AGENTIC"
   }'
+```
+{% endstep %}
+
+{% step %}
+**Send a file for validation (optional)**
+
+To test file/media guardrails, use the `/api/validate/file` endpoint instead:
+
+```bash
+curl --location 'https://<GUARDRAILS_SERVICE_URL>/api/validate/file' \
+--header 'accept: */*' \
+--header 'accept-language: en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7' \
+--header 'origin: chrome-extension://difbngmmemnlfoljdlbmfodmijnaphoo' \
+--header 'priority: u=1, i' \
+--header 'sec-fetch-dest: empty' \
+--header 'sec-fetch-mode: cors' \
+--header 'sec-fetch-site: none' \
+--header 'sec-fetch-storage-access: active' \
+--header 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36' \
+--header 'Cookie: <YOUR_SESSION_COOKIE>' \
+--form 'file=@"/path/to/your/file.mp4"' \
+--form 'contextSource="ENDPOINT"' \
+--form 'path="/backend-api/files"' \
+--form 'requestHeaders="{\"host\":\"your-agent.example.com\"}"' \
+--form 'method="POST"' \
+--form 'ip="49.37.170.77"' \
+--form 'time="1780821900129"' \
+--form 'statusCode="200"' \
+--form 'status="200"' \
+--form 'tag="{\"gen-ai\":\"Gen AI\",\"browser-llm\":\"Browser LLM\",\"browser-llm-account-type\":\"personal\"}"' \
+--form 'metadata="{\"gen-ai\":\"Gen AI\",\"browser-llm\":\"Browser LLM\",\"browser-llm-account-type\":\"personal\"}"'
 ```
 {% endstep %}
 
