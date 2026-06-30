@@ -40,20 +40,7 @@ flowchart LR
 
 ## Steps to Connect
 
-{% stepper %}
-{% step %}
-**Contact Akto Support**
-
 Reach out to the Akto support team via in-app intercom or using the contact links below. The team will provide the **CloudFormation Template (CFT)** and guide you through the full setup of the Amazon Quick connector in your AWS environment.
-{% endstep %}
-
-
-{% step %}
-**Verify data in Akto**
-
-Once connected, confirm that Amazon Quick activity appears in your Akto Argus dashboard under **Agentic AI Discovery**.
-{% endstep %}
-{% endstepper %}
 
 ## Get Support for your Akto setup
 

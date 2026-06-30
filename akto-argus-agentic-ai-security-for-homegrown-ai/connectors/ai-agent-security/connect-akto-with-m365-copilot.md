@@ -35,26 +35,10 @@ flowchart LR
 | Category | What Akto Discovers |
 |---|---|
 | **Copilot interactions** | User prompts and responses across M365 apps |
-| **Accessed resources** | Files, emails, and documents Copilot accessed |
-| **Security signals** | Jailbreak attempts and prompt injection detections |
-| **Agent activity** | Copilot Studio agents invoked |
-| **Admin operations** | Plugin and policy changes |
 
 ## Steps to Connect
 
-{% stepper %}
-{% step %}
-**Contact Akto Support**
-
 Reach out to the Akto support team via in-app intercom or using the contact links below. The team will guide you through connecting your Microsoft 365 environment to Akto.
-{% endstep %}
-
-{% step %}
-**Verify data in Akto**
-
-Once connected, confirm that Microsoft 365 Copilot activity appears in your Akto Argus dashboard under **Agentic AI Discovery**.
-{% endstep %}
-{% endstepper %}
 
 ## Get Support for your Akto setup
 
