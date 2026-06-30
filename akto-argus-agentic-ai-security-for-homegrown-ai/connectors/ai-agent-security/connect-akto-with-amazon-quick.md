@@ -44,7 +44,7 @@ flowchart LR
 {% step %}
 **Contact Akto Support**
 
-Reach out to the Akto support team via in-app intercom or using the contact links below. The team will provide all the necessary configuration requirements and guide you through connecting your Amazon Quick environment to Akto.
+Reach out to the Akto support team via in-app intercom or using the contact links below. The team will provide the **CloudFormation Template (CFT)** and guide you through the full setup of the Amazon Quick connector in your AWS environment.
 {% endstep %}
 
 {% step %}
@@ -66,6 +66,6 @@ There are multiple ways to request support from Akto. We are 24X7 available on t
 
 1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
 2. Join our [discord channel](https://www.akto.io/community) for community support.
-3. Email our support team for direct help.
+3. Email us at [support@akto.io](mailto:support@akto.io) for direct help.
 4. Contact us [here](https://www.akto.io/contact-us).
 
