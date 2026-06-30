@@ -16,12 +16,12 @@ The Akto Amazon Quick connector automatically:
 
 ## How It Works
 
-Amazon Quick Suite records all agent and chat activity as logs. Akto reads these logs asynchronously, evaluates them in the Guardrail Service against your configured security policies, and surfaces findings in your dashboard.
+Amazon Quick Suite records all agent and chat activity as logs. Akto reads these logs asynchronously, forwards them to Akto's Data Ingestion Service, and surfaces findings in your dashboard.
 
 ```mermaid
 flowchart LR
     A[Amazon Quick] --> B[Activity Logs]
-    B --> C[Akto Guardrail\nService]
+    B --> C[Akto Data\nIngestion Service]
     C --> D[Akto Dashboard]
 ```
 
