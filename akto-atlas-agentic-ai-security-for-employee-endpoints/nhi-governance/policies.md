@@ -2,7 +2,7 @@
 
 ## Overview
 
-The **Create NHI Policy** page allows you to define governance rules for Non-Human Identities discovered across employee endpoints. Each policy is built from a set of policy categories — token segregation, expiration tracking, and rotation enforcement — that Akto evaluates continuously against every NHI in scope.
+The **Create NHI Policy** page allows you to define governance rules for Non-Human Identities discovered across employee endpoints. Each policy is built from a set of policy categories token segregation, expiration tracking, and rotation enforcement that Akto evaluates continuously against every NHI in scope.
 
 When a NHI breaches a rule in an active policy, Akto raises a violation in the [Violations](violations.md) view and links it to the specific policy that was triggered.
 
@@ -22,7 +22,7 @@ The policies list displays all existing NHI policies and provides access to poli
 1. Locate the **Create Policy** button at the top-right corner of the Policies page.
 2. Select **Create Policy** to open the policy configuration wizard.
 
-The wizard walks through four policy categories in sequence. The left panel shows your progress across the steps — a red indicator means a required field in that step is incomplete.
+The wizard walks through four policy categories in sequence. The left panel shows your progress across the steps a red indicator means a required field in that step is incomplete.
 
 ### Configure the Policy
 
@@ -44,8 +44,8 @@ Optionally provide a plain-language description of what the policy enforces. Thi
 
 Control which NHIs and agents the policy applies to.
 
-* **Select Agents** — choose specific agentic assets (e.g. Claude CLI, Cursor, Windsurf) to target. Defaults to all agents.
-* **Select NHIs** — choose specific identities to target. Defaults to all discovered NHIs.
+* **Select Agents** choose specific agentic assets (e.g. Claude CLI, Cursor, Windsurf) to target. Defaults to all agents.
+* **Select NHIs** choose specific identities to target. Defaults to all discovered NHIs.
 
 Narrowing scope reduces noise by applying the policy only to the identities and agents where the rule is relevant.
 
@@ -63,7 +63,7 @@ Policy name is required. You cannot advance past this step or save the policy wi
 
 When enabled, Akto detects and flags cases where a single token is shared across multiple agent profiles or environments.
 
-Shared credentials increase the blast radius of a compromise — one leaked token can grant access across multiple unrelated services. This rule raises a violation when the same identity is observed on more than one distinct agent profile or environment.
+Shared credentials increase the blast radius of a compromise one leaked token can grant access across multiple unrelated services. This rule raises a violation when the same identity is observed on more than one distinct agent profile or environment.
 
 </details>
 
@@ -77,7 +77,7 @@ When enabled, Akto monitors token validity and flags credentials approaching the
 
 **Flag already expired tokens in active use**
 
-When enabled, Akto detects API calls or actions performed by an agent using an expired token. An expired token still in active use may indicate a misconfiguration — where a tool was not updated after rotation — or a security risk where an attacker is deliberately replaying a stolen credential.
+When enabled, Akto detects API calls or actions performed by an agent using an expired token. An expired token still in active use may indicate a misconfiguration where a tool was not updated after rotation or a security risk where an attacker is deliberately replaying a stolen credential.
 
 You can enable both options independently or together on the same policy.
 

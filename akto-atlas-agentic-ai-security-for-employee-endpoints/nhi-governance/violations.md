@@ -14,7 +14,7 @@ A line chart showing the total number of violations detected across the selected
 
 ### Violations by Severity
 
-A donut chart breaking down all violations by severity level — Critical, High, Medium, and Low. This helps you quickly understand the risk profile of your current violation backlog and prioritise which identities need attention first.
+A donut chart breaking down all violations by severity level Critical, High, Medium, and Low. This helps you quickly understand the risk profile of your current violation backlog and prioritise which identities need attention first.
 
 ## Violations Table
 
@@ -25,7 +25,7 @@ The table lists every violation raised across all NHIs.
 | Violation | A plain-language description of the specific breach |
 | Identity | The NHI the violation is attached to |
 | Agentic Asset | The agentic tool associated with the identity at the time of the breach |
-| Severity | The risk level — `Critical`, `High`, `Medium`, or `Low` |
+| Severity | The risk level `Critical`, `High`, `Medium`, or `Low` |
 | Policy | The policy rule that was breached |
 | Discovered | When Akto first raised this violation |
 
@@ -33,9 +33,9 @@ The table lists every violation raised across all NHIs.
 
 Use the filter tabs at the top of the table to narrow the view:
 
-* **All** — every violation regardless of status.
-* **Open** — violations that have not yet been resolved.
-* **Fixed** — violations that have been marked as fixed.
+* **All** every violation regardless of status.
+* **Open** violations that have not yet been resolved.
+* **Fixed** violations that have been marked as fixed.
 
 Use the **time filter** at the top-right of the page to scope the violation list and charts to a specific time window.
 
@@ -57,8 +57,8 @@ Select violations using the checkbox at the start of each row. A selection count
 {% step %}
 A bulk action bar appears at the bottom of the table with the following options:
 
-* **Mark as Fixed** — resolves the selected violations and moves them to the Fixed tab.
-* **Open Jira Ticket** — creates a Jira ticket for each selected violation to support internal tracking and remediation workflows.
+* **Mark as Fixed** resolves the selected violations and moves them to the Fixed tab.
+* **Open Jira Ticket** creates a Jira ticket for each selected violation to support internal tracking and remediation workflows.
 {% endstep %}
 {% endstepper %}
 
@@ -70,9 +70,9 @@ Clicking any row opens the **Violation Details** panel. The panel header shows t
 
 Expanding the **Action** dropdown gives you three options:
 
-* **Open Jira Ticket** — creates a Jira issue for this violation to track remediation in your existing workflow.
-* **Mark as Fixed** — resolves the violation and moves it to the Fixed tab. Use this once the underlying credential issue has been remediated.
-* **Update Policy** — navigates directly to the policy that triggered this violation so you can adjust its rules if needed.
+* **Open Jira Ticket** creates a Jira issue for this violation to track remediation in your existing workflow.
+* **Mark as Fixed** resolves the violation and moves it to the Fixed tab. Use this once the underlying credential issue has been remediated.
+* **Update Policy** navigates directly to the policy that triggered this violation so you can adjust its rules if needed.
 
 ### Violation Detail Tabs
 
@@ -84,7 +84,7 @@ The **Overview** tab provides the full context needed to understand and prioriti
 
 **Description**
 
-A plain-language explanation of what was detected — for example, which credential has which permission level on which service, and why that is a risk.
+A plain-language explanation of what was detected for example, which credential has which permission level on which service, and why that is a risk.
 
 **Policy Triggered**
 
@@ -100,7 +100,7 @@ The timestamp when Akto first raised this violation.
 
 **Why This Triggered**
 
-An explanation of the specific condition that caused the policy rule to fire — for example, why the credential's scope violates the policy's intent.
+An explanation of the specific condition that caused the policy rule to fire for example, why the credential's scope violates the policy's intent.
 
 **Blast Radius**
 
@@ -112,7 +112,7 @@ The **Remediation** tab provides step-by-step guidance for resolving the violati
 
 **Steps to Resolve**
 
-A numbered list of concrete actions to take — for example:
+A numbered list of concrete actions to take for example:
 
 1. Replace the credential with a scoped token that has only the permissions the agent actually requires.
 2. Limit permissions to the minimum required for the agent task.
@@ -123,7 +123,7 @@ After completing the steps, use **Mark as Fixed** from the Action menu to close 
 {% endtab %}
 
 {% tab title="Timeline" %}
-The **Timeline** tab shows a chronological record of events related to this violation — from the initial credential creation through to policy breach detection and any subsequent activity.
+The **Timeline** tab shows a chronological record of events related to this violation from the initial credential creation through to policy breach detection and any subsequent activity.
 
 Each entry shows a short description of the event and the date it occurred. Use the timeline to understand the full history of the identity's lifecycle and establish whether the issue is a misconfiguration or an active threat.
 {% endtab %}
