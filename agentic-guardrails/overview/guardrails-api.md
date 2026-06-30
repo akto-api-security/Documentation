@@ -27,7 +27,7 @@ Use this connector when:
 
 Before you start, you need:
 
-* An **Akto API token** — generate one from your Akto dashboard under **Settings → Integrations → API Tokens**
+* An **Akto API token** — follow the [Getting API Token](../../akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md#getting-api-token) steps in the Hybrid SaaS guide
 * Your **Guardrails Service URL** — contact the Akto support team to get the URL for your account. It follows the format `https://<account_id>-guardrails.akto.io`
 
 ## API Reference
@@ -96,7 +96,7 @@ POST https://<GUARDRAILS_SERVICE_URL>/api/validate/file
 
 ### Headers
 
-<table><thead><tr><th width="218">Header</th><th width="140">Required</th><th>Description</th></tr></thead><tbody><tr><td><code>Cookie</code></td><td>Yes</td><td>Your session cookie from the Akto dashboard</td></tr></tbody></table>
+<table><thead><tr><th width="218">Header</th><th width="140">Required</th><th>Description</th></tr></thead><tbody><tr><td><code>Authorization</code></td><td>Yes</td><td>Your Akto API token</td></tr></tbody></table>
 
 ### Form Fields
 
@@ -108,17 +108,8 @@ All fields are sent as `multipart/form-data` parts:
 
 ```bash
 curl --location 'https://<GUARDRAILS_SERVICE_URL>/api/validate/file' \
---header 'accept: */*' \
---header 'accept-language: en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7' \
---header 'origin: chrome-extension://difbngmmemnlfoljdlbmfodmijnaphoo' \
---header 'priority: u=1, i' \
---header 'sec-fetch-dest: empty' \
---header 'sec-fetch-mode: cors' \
---header 'sec-fetch-site: none' \
---header 'sec-fetch-storage-access: active' \
---header 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36' \
---header 'Cookie: <YOUR_SESSION_COOKIE>' \
---form 'file=@"/path/to/your/file.mp4"' \
+--header 'Authorization: <YOUR_AKTO_API_TOKEN>' \
+--form 'file=@"/path/to/file"' \
 --form 'contextSource="ENDPOINT"' \
 --form 'path="/backend-api/files"' \
 --form 'requestHeaders="{\"host\":\"your-agent.example.com\"}"' \
@@ -127,8 +118,8 @@ curl --location 'https://<GUARDRAILS_SERVICE_URL>/api/validate/file' \
 --form 'time="1780821900129"' \
 --form 'statusCode="200"' \
 --form 'status="200"' \
---form 'tag="{\"gen-ai\":\"Gen AI\",\"browser-llm\":\"Browser LLM\",\"browser-llm-account-type\":\"personal\"}"' \
---form 'metadata="{\"gen-ai\":\"Gen AI\",\"browser-llm\":\"Browser LLM\",\"browser-llm-account-type\":\"personal\"}"'
+--form 'tag="{\"gen-ai\":\"Gen AI\"}"' \
+--form 'metadata="{\"gen-ai\":\"Gen AI\"}"'
 ```
 
 ## Steps to Test
@@ -147,7 +138,7 @@ https://<account_id>-guardrails.akto.io
 {% step %}
 **Get your Akto API Token**
 
-In the Akto dashboard, go to **Settings → Integrations → API Tokens** and generate a token. Copy it — you will use it as the `authorization` header value.
+Follow the [Getting API Token](../../akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md#getting-api-token) steps in the Hybrid SaaS guide to get your token. Copy it — you will use it as the `Authorization` header value.
 {% endstep %}
 
 {% step %}
@@ -189,17 +180,8 @@ To test file/media guardrails, use the `/api/validate/file` endpoint instead:
 
 ```bash
 curl --location 'https://<GUARDRAILS_SERVICE_URL>/api/validate/file' \
---header 'accept: */*' \
---header 'accept-language: en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7' \
---header 'origin: chrome-extension://difbngmmemnlfoljdlbmfodmijnaphoo' \
---header 'priority: u=1, i' \
---header 'sec-fetch-dest: empty' \
---header 'sec-fetch-mode: cors' \
---header 'sec-fetch-site: none' \
---header 'sec-fetch-storage-access: active' \
---header 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36' \
---header 'Cookie: <YOUR_SESSION_COOKIE>' \
---form 'file=@"/path/to/your/file.mp4"' \
+--header 'Authorization: <YOUR_AKTO_API_TOKEN>' \
+--form 'file=@"/path/to/file"' \
 --form 'contextSource="ENDPOINT"' \
 --form 'path="/backend-api/files"' \
 --form 'requestHeaders="{\"host\":\"your-agent.example.com\"}"' \
@@ -208,8 +190,8 @@ curl --location 'https://<GUARDRAILS_SERVICE_URL>/api/validate/file' \
 --form 'time="1780821900129"' \
 --form 'statusCode="200"' \
 --form 'status="200"' \
---form 'tag="{\"gen-ai\":\"Gen AI\",\"browser-llm\":\"Browser LLM\",\"browser-llm-account-type\":\"personal\"}"' \
---form 'metadata="{\"gen-ai\":\"Gen AI\",\"browser-llm\":\"Browser LLM\",\"browser-llm-account-type\":\"personal\"}"'
+--form 'tag="{\"gen-ai\":\"Gen AI\"}"' \
+--form 'metadata="{\"gen-ai\":\"Gen AI\"}"'
 ```
 {% endstep %}
 
