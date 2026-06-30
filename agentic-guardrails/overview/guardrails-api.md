@@ -102,7 +102,7 @@ POST https://<GUARDRAILS_SERVICE_URL>/api/validate/file
 
 All fields are sent as `multipart/form-data` parts:
 
-<table><thead><tr><th width="200">Field</th><th width="110">Required</th><th>Description</th></tr></thead><tbody><tr><td><code>file</code></td><td>Yes</td><td>The file to validate (binary upload)</td></tr><tr><td><code>contextSource</code></td><td>Yes</td><td>Product context. Use <code>"ENDPOINT"</code> for file/media traffic</td></tr><tr><td><code>path</code></td><td>Yes</td><td>API path where the file was submitted (e.g. <code>"/backend-api/files"</code>)</td></tr><tr><td><code>requestHeaders</code></td><td>Yes</td><td>Stringified JSON of request headers. The <code>host</code> value sets the collection name in Akto</td></tr><tr><td><code>method</code></td><td>Yes</td><td>HTTP method of the original upload (e.g. <code>"POST"</code>)</td></tr><tr><td><code>ip</code></td><td>Yes</td><td>IP address of the caller</td></tr><tr><td><code>time</code></td><td>Yes</td><td>Unix timestamp in <strong>milliseconds</strong> of when the interaction occurred</td></tr><tr><td><code>statusCode</code></td><td>Yes</td><td>HTTP status code (e.g. <code>"200"</code>)</td></tr><tr><td><code>status</code></td><td>Yes</td><td>Same as <code>statusCode</code></td></tr><tr><td><code>tag</code></td><td>Yes</td><td>Stringified JSON of labels (e.g. <code>{"gen-ai":"Gen AI"}</code>)</td></tr><tr><td><code>metadata</code></td><td>Yes</td><td>Stringified JSON of additional metadata. Can mirror <code>tag</code></td></tr></tbody></table>
+<table><thead><tr><th width="200">Field</th><th width="110">Required</th><th>Description</th></tr></thead><tbody><tr><td><code>file</code></td><td>Yes</td><td>The file to validate (binary upload)</td></tr><tr><td><code>contextSource</code></td><td>Yes</td><td>Product context. Use <code>"ENDPOINT"</code> for Akto Atlas</td></tr><tr><td><code>path</code></td><td>Yes</td><td>API path where the file was submitted (e.g. <code>"/backend-api/files"</code>)</td></tr><tr><td><code>requestHeaders</code></td><td>Yes</td><td>Stringified JSON of request headers. The <code>host</code> value sets the collection name in Akto</td></tr><tr><td><code>method</code></td><td>Yes</td><td>HTTP method of the original upload (e.g. <code>"POST"</code>)</td></tr><tr><td><code>ip</code></td><td>Yes</td><td>IP address of the caller</td></tr><tr><td><code>time</code></td><td>Yes</td><td>Unix timestamp in <strong>milliseconds</strong> of when the interaction occurred</td></tr><tr><td><code>statusCode</code></td><td>Yes</td><td>HTTP status code (e.g. <code>"200"</code>)</td></tr><tr><td><code>status</code></td><td>Yes</td><td>Same as <code>statusCode</code></td></tr><tr><td><code>tag</code></td><td>Yes</td><td>Stringified JSON of labels (e.g. <code>{"gen-ai":"Gen AI"}</code>)</td></tr><tr><td><code>metadata</code></td><td>Yes</td><td>Stringified JSON of additional metadata. Can mirror <code>tag</code></td></tr></tbody></table>
 
 ### Sample Request
 
@@ -114,7 +114,7 @@ curl --location 'https://<GUARDRAILS_SERVICE_URL>/api/validate/file' \
 --form 'path="/backend-api/files"' \
 --form 'requestHeaders="{\"host\":\"your-agent.example.com\"}"' \
 --form 'method="POST"' \
---form 'ip="49.37.170.77"' \
+--form 'ip="<CLIENT_IP>"' \
 --form 'time="1780821900129"' \
 --form 'statusCode="200"' \
 --form 'status="200"' \
@@ -186,7 +186,7 @@ curl --location 'https://<GUARDRAILS_SERVICE_URL>/api/validate/file' \
 --form 'path="/backend-api/files"' \
 --form 'requestHeaders="{\"host\":\"your-agent.example.com\"}"' \
 --form 'method="POST"' \
---form 'ip="49.37.170.77"' \
+--form 'ip="<CLIENT_IP>"' \
 --form 'time="1780821900129"' \
 --form 'statusCode="200"' \
 --form 'status="200"' \
