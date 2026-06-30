@@ -1,12 +1,22 @@
-# Amazon Quick → Akto: Chat Log Connector Setup
+---
+description: Connect Akto with Amazon Quick
+---
+
+# Amazon Quick
 
 ## Overview
 
-This guide walks through connecting Amazon Quick to Akto, so that chat conversations from your Quick deployment are automatically sent to your Akto instance for security analysis.
+Amazon Quick Suite is an AWS-native agentic AI platform that lets employees query data, trigger workflows, and take actions across enterprise tools through natural language chat. Organizations use Amazon Quick to build and deploy AI-powered chat agents that connect to business systems like Jira, ServiceNow, Slack, and more.
 
-Amazon Quick delivers chat conversation logs through AWS's vended log delivery service. This solution captures those logs in an S3 bucket and uses a scheduled Lambda function to process and forward them to Akto.
+The Akto Amazon Quick connector automatically:
 
-## Architecture
+* Discovers all Amazon Quick chat agents and action connectors in your environment
+* Monitors chat conversations and agent interactions
+* Sends activity data to Akto for security analysis and guardrail enforcement
+
+## How It Works
+
+Amazon Quick Suite records all agent and chat activity through AWS's vended log delivery service. Akto reads these logs asynchronously, evaluates them in the Guardrail Service against your configured security policies, and surfaces findings in your dashboard.
 
 ```mermaid
 flowchart LR
@@ -14,181 +24,42 @@ flowchart LR
     B --> C[S3 Bucket]
     D[EventBridge\nschedule] --> E[Lambda]
     C --> E
-    E --> F[Akto Data\nIngestion API]
+    E --> F[Akto Guardrail\nService]
+    F --> G[Akto Dashboard]
 ```
 
-## Prerequisites
+{% hint style="info" %}
+**Async mode** — Akto reads from Amazon Quick logs after the fact. There is an inherent delay between an event occurring in Amazon Quick and it appearing in Akto.
+{% endhint %}
 
-- An active Amazon Quick instance with an Enterprise or Professional subscription
-- AWS CLI installed and configured with sufficient IAM permissions (Lambda, S3, EventBridge, IAM role creation, CloudWatch Logs delivery APIs)
-- An Akto instance with a reachable Data Ingestion API endpoint and API key
-- An S3 bucket to receive the logs (existing or to be created)
+## What Data is Collected
 
-## Setup
+| Category | What Akto Discovers |
+|---|---|
+| **Chat activity** | User queries, agent responses, conversation sessions |
+| **Action connector events** | External service actions triggered from Quick (Jira, Slack, ServiceNow, etc.) |
+| **Admin operations** | Connector creation/deletion, permission and policy changes |
+| **User & access management** | User additions, role changes, group membership updates |
+
+## Steps to Connect
 
 {% stepper %}
 {% step %}
-**Configure IAM permissions**
+**Contact Akto Support**
 
-Grant permission to deliver vended logs from your Quick account:
-
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "QuicksightLogDeliveryPermissions",
-      "Effect": "Allow",
-      "Action": "quicksight:AllowVendedLogDeliveryForResource",
-      "Resource": "arn:aws:quicksight:region:account-id:account/account-id"
-    }
-  ]
-}
-```
-
-If your destination S3 bucket uses a customer-managed KMS key, also add this to the key policy:
-
-```json
-{
-  "Effect": "Allow",
-  "Principal": {
-    "Service": "delivery.logs.amazonaws.com"
-  },
-  "Action": [
-    "kms:GenerateDataKey",
-    "kms:Decrypt"
-  ],
-  "Resource": "*",
-  "Condition": {
-    "StringEquals": {
-      "kms:EncryptionContext:SourceArn": "arn:partition:logs:region:account-id:*"
-    }
-  }
-}
-```
-
+Reach out to the Akto support team via in-app intercom or using the contact links below. The team will provide all the necessary configuration requirements and guide you through connecting your Amazon Quick environment to Akto.
 {% endstep %}
 
 {% step %}
-**Create the delivery source**
+**Provide your AWS environment details**
 
-```bash
-aws logs put-delivery-source \
-  --name quick-chat-logs-source \
-  --resource-arn arn:aws:quicksight:region:account-id:account/account-id \
-  --log-type CHAT_LOGS
-```
-
-Other available `--log-type` values: `AGENT_HOURS_LOGS`, `FEEDBACK_LOGS`, `INDEX_USAGE_LOGS`.
-
+The Akto team will let you know exactly what AWS account information and permissions are needed based on your setup.
 {% endstep %}
 
 {% step %}
-**Create the delivery destination (S3)**
+**Verify data in Akto**
 
-```bash
-aws logs put-delivery-destination \
-  --name quick-chat-logs-destination \
-  --delivery-destination-type S3 \
-  --delivery-destination-configuration destinationResourceArn=arn:aws:s3:::your-bucket-name
-```
-
-Note the returned destination ARN — you'll need it in the next step.
-
-{% endstep %}
-
-{% step %}
-**Create the delivery (link source to destination)**
-
-```bash
-aws logs create-delivery \
-  --delivery-source-name quick-chat-logs-source \
-  --delivery-destination-arn <destination-arn-from-step-3>
-```
-
-By default, several fields are **not** included in the delivered logs: `namespace`, `latency`, `time_to_first_token`, `surface_type`, and `web_search`. If you need these, pass them explicitly via `--record-fields` on this call.
-
-{% endstep %}
-
-{% step %}
-**Verify delivery is active**
-
-```bash
-aws logs describe-deliveries
-aws s3 ls s3://your-bucket-name/ --recursive
-```
-
-Generate a test chat conversation in Quick and confirm a new log object appears in the bucket.
-
-{% endstep %}
-
-{% step %}
-**Review the chat log schema**
-
-Each chat log record is a JSON object with fields including:
-
-```json
-{
-  "status_code": "success",
-  "namespace": "default",
-  "user_type": "ADMIN_PRO",
-  "conversation_id": "a11b2bbc-c123-3abc-a12b-12a34b5c678d",
-  "system_message_id": "a11b2bbc-c123-3abc-a12b-12a34b5c678d",
-  "user_message_id": "a11b2bbc-c123-3abc-a12b-12a34b5c678d",
-  "user_message": "Hi chat",
-  "agent_id": "a11b2bbc-c123-3abc-a12b-12a34b5c678d",
-  "flow_id": "a11b2bbc-c123-3abc-a12b-12a34b5c678d",
-  "system_text_message": "Hello user",
-  "surface_type": "WEB_EXPERIENCE",
-  "web_search": "true",
-  "user_selected_resources": [...],
-  "action_connectors": [...],
-  "cited_resource": [...],
-  "file_attachment": [...]
-}
-```
-
-`conversation_id` ties related messages together; `user_message` / `system_text_message` are the actual transcript content.
-
-{% endstep %}
-
-{% step %}
-**Deploy a Lambda function to forward logs to Akto**
-
-The Lambda should:
-1. List/read new objects in the S3 bucket since its last run
-2. Parse each JSON chat log record
-3. Map fields into Akto's expected ingestion format (e.g. `conversation_id` → conversation ID, `user_message`/`system_text_message` → transcript turns)
-4. POST the transformed payload to Akto:
-
-```bash
-curl -X POST "https://your-akto-instance.com/api/ingestData" \
-  -H "Content-Type: application/json" \
-  -H "X-API-KEY: your-akto-api-key" \
-  -d @transformed-payload.json
-```
-
-{% endstep %}
-
-{% step %}
-**Schedule the Lambda**
-
-Create an EventBridge rule to run the Lambda on a fixed interval (e.g. every 5 minutes), matching Akto's Bedrock connector pattern:
-
-```bash
-aws events put-rule \
-  --name quick-akto-log-schedule \
-  --schedule-expression "rate(5 minutes)"
-```
-
-{% endstep %}
-
-{% step %}
-**Test end-to-end**
-
-1. Have a real conversation in Amazon Quick
-2. Wait for the next scheduled Lambda run
-3. Confirm the conversation appears in the Akto dashboard
+Once connected, confirm that Amazon Quick activity appears in your Akto Argus dashboard under **Agentic AI Discovery**.
 {% endstep %}
 {% endstepper %}
 
