@@ -6,7 +6,7 @@ description: Add Akto guardrails to Glean agents using Glean's custom tools
 
 ## Overview
 
-Glean is an enterprise AI platform that lets teams build and deploy AI agents across their organisation. The Akto guardrails integration adds inline security enforcement to any Glean agent — every user message and agent response is evaluated by Akto before reaching the model or the end user, so prompt injection, PII leaks, and policy violations can be blocked in real time.
+Glean is an enterprise AI platform that lets teams build and deploy AI agents across their organisation. The Akto guardrails integration adds inline security enforcement to any Glean agent - every user message and agent response is evaluated by Akto before reaching the model or the end user, so prompt injection, PII leaks, and policy violations can be blocked in real time.
 
 The integration works through Glean's **Custom Tools** (formerly Actions). You create a custom tool that calls Akto's guardrails service, then attach it to whichever agents you want to protect.
 
@@ -24,12 +24,12 @@ flowchart LR
 ## Prerequisites
 
 * A **Glean** account with admin access to the Admin Console
-* The **Akto Guardrails service URL** — provisioned and shared by Akto
-* An **Akto API Token** — retrieved from Akto Argus → **Connectors → Setup Guardrail**
+* The **Akto Guardrails service URL** - provisioned and shared by Akto
+* An **Akto API Token** - retrieved from Akto Argus → **Connectors → Setup Guardrail**
 
 ## Steps to Connect
 
-### Part 1 — Create the Custom Tool
+### Part 1 - Create the Custom Tool
 
 {% stepper %}
 {% step %}
@@ -84,7 +84,7 @@ Under **Trigger Condition**, add a custom prompt that tells the agent when to in
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (185).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
-This prompt determines when the guardrail fires — for example, you can configure it to trigger on every user message so no input reaches the model unchecked.
+This prompt determines when the guardrail fires - for example, you can configure it to trigger on every user message so no input reaches the model unchecked.
 {% endstep %}
 
 {% step %}
@@ -233,8 +233,8 @@ Paste the token into the API Key field in the Glean tool form.
 
 Open the **Deploy** tab and expand the **Agents** section. Under **Allow teammates to add tools to agents**, select one of the following:
 
-* **Enable for all teammates** — any teammate can add this tool to agents.
-* **Enable for selected teammates** — only the teammates you specify can add this tool to agents.
+* **Enable for all teammates** - any teammate can add this tool to agents.
+* **Enable for selected teammates** - only the teammates you specify can add this tool to agents.
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (188).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
@@ -246,7 +246,7 @@ Click **Save**. The custom tool is now created and available to attach to agents
 {% endstep %}
 {% endstepper %}
 
-### Part 2 — Attach the Tool to an Agent
+### Part 2 - Attach the Tool to an Agent
 
 Repeat this for each agent you want to guardrail.
 
@@ -285,6 +285,12 @@ Click **Add**, then search for the tool by name (e.g. `Akto Guardrail`). Alterna
 Select the tool and confirm.
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (190).png" alt="" width="563"><figcaption></figcaption></figure></div>
+{% endstep %}
+
+{% step %}
+**Save the agent**
+
+Save the agent configuration. The Akto guardrail is now active on this agent and will evaluate every incoming message before it reaches the model.
 {% endstep %}
 {% endstepper %}
 
