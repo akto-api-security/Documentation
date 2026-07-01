@@ -12,16 +12,13 @@ The integration works through Glean's **Custom Tools** (formerly Actions). You c
 
 ## How It Works
 
-```
-User message
-     ↓
-Glean agent triggers Akto Custom Tool (on every message)
-     ↓
-Akto Guardrails Service evaluates the request
-     ↓ (allowed)
-Agent continues → AI model → Response → User
-     ↓ (blocked)
-Block reason returned to agent → User sees policy violation message
+```mermaid
+flowchart LR
+    A[User Message] --> B[Glean Agent\nAkto Custom Tool fires]
+    B --> C[Akto Guardrails Service\nevaluates the request]
+    C -->|Allowed| D[AI Model]
+    D --> E[Response → User]
+    C -->|Blocked| F[Block reason returned to User]
 ```
 
 ## Prerequisites
@@ -39,24 +36,34 @@ Block reason returned to agent → User sees policy violation message
 **Open the Admin Console**
 
 Log in to Glean as an admin. Navigate to the **Admin Console** and go to **Tools** in the left navigation.
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (182).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 **Create a new tool**
 
 Click **Add**, then select **Create from Scratch**. The custom tool form opens.
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (183).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 **Fill in the basic info**
 
 Give the tool a clear name (e.g. `Akto Guardrail`) and an optional description so agents and admins can identify it. Set the **Tool Type** to **Read**.
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (184).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 **Set the trigger condition**
 
 Under **Trigger Condition**, add a custom prompt that tells the agent when to invoke this tool.
+
+<details>
+
+<summary>Custom Prompt</summary>
 
 ```
 ### SYSTEM PRE-FLIGHT REAL-TIME GUARDRAIL ###
@@ -73,6 +80,10 @@ Under **Trigger Condition**, add a custom prompt that tells the agent when to in
    - Terminate the run immediately and output the RAW value from the "Reason" key exactly as it was received from the API response payload. Do not paraphrase, summarize, or alter this text. Even if it says "blocked by PII Policy Of Akto", display exactly that text block to the user as your entire response.
 ```
 
+</details>
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (185).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 This prompt determines when the guardrail fires — for example, you can configure it to trigger on every user message so no input reaches the model unchecked.
 {% endstep %}
 
@@ -81,7 +92,19 @@ This prompt determines when the guardrail fires — for example, you can configu
 
 Under **Functionality**, click **Get Started**, then paste the OpenAPI spec below.
 
-```
+{% hint style="warning" %}
+## Note
+
+In the script, replace the placeholder URL with your **Akto Guardrails service URL**.&#x20;
+
+Your Akto Guardrails service URL is provisioned by Akto. If you do not have it, contact Akto support or retrieve it from your Akto Argus dashboard under **Connectors → Setup Guardrail**.
+{% endhint %}
+
+<details>
+
+<summary>OpenAPI Spec</summary>
+
+```json
 openapi: 3.0.3
 info:
   title: Centralized Platform Guardrail Middleware
@@ -184,11 +207,9 @@ paths:
                     example: "block"
 ```
 
+</details>
 
-{% hint style="info" %}
-In the script, replace the placeholder URL with your **Akto Guardrails service URL**.
-Your Akto Guardrails service URL is provisioned by Akto. If you do not have it, contact Akto support or retrieve it from your Akto Argus dashboard under **Connectors → Setup Guardrail**.
-{% endhint %}
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (186).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -203,6 +224,8 @@ To retrieve your token:
 3. Copy the API token shown on that page.
 
 Paste the token into the API Key field in the Glean tool form.
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (187).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -212,6 +235,8 @@ Open the **Deploy** tab and expand the **Agents** section. Under **Allow teammat
 
 * **Enable for all teammates** — any teammate can add this tool to agents.
 * **Enable for selected teammates** — only the teammates you specify can add this tool to agents.
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (188).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -242,6 +267,8 @@ Find the agent you want to protect and click on it to open its detail view.
 **Open the agent setup**
 
 Click **View Agent Setup**. The agent configuration panel opens.
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (189).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -256,43 +283,10 @@ In the right-side navigation of the agent setup, click the **Tools** icon.
 Click **Add**, then search for the tool by name (e.g. `Akto Guardrail`). Alternatively, browse to it under the **Custom Tools** section.
 
 Select the tool and confirm.
-{% endstep %}
 
-{% step %}
-**Save the agent configuration**
-
-Save the agent. The Akto guardrail tool is now active — it will fire on the configured trigger for every conversation this agent handles.
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (190).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 {% endstepper %}
-
-## Verify the Integration
-
-1. Open the Glean agent you just updated and start a test conversation.
-2. Send a benign message — it should pass through normally.
-3. Send a prompt that violates one of your configured Akto policies (e.g. a known prompt-injection payload or a message containing mock PII). The agent should return the block reason from Akto instead of responding normally.
-4. Open the **Akto Argus** dashboard → **Traffic** and confirm the conversation appears with the corresponding guardrail verdict.
-
-## Troubleshooting
-
-**Guardrail tool does not fire**
-
-* Confirm the trigger condition prompt is specific enough to match incoming messages. An overly narrow trigger may let messages through without evaluation.
-* Verify the tool is saved and attached to the correct agent in the agent's Tools panel.
-
-**Authentication errors from the guardrail service**
-
-* Confirm the Akto API token is correct and has not expired.
-* Retrieve a fresh token from Akto Argus → **Connectors → Setup Guardrail** and update the tool's Authentication field.
-
-**Guardrail service URL returns `4xx` or `5xx`**
-
-* Verify the guardrails service URL is correct and reachable from Glean's outbound network. Replace the placeholder URL in the custom script with the exact URL from your Akto Argus dashboard.
-* Check whether your organisation's network egress policies block Glean from calling external endpoints.
-
-**All requests show `Allowed: true` even for test violations**
-
-* Confirm that guardrail policies are enabled and configured in your Akto dashboard.
-* Ensure the policies cover the threat categories you are testing (e.g. prompt injection, PII detection).
 
 ## Get Support
 
