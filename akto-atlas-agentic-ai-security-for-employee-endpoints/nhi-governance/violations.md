@@ -20,14 +20,9 @@ A donut chart breaking down all violations by severity level Critical, High, Med
 
 The table lists every violation raised across all NHIs.
 
-| Column | Description |
-| ------ | ----------- |
-| Violation | A plain-language description of the specific breach |
-| Identity | The NHI the violation is attached to |
-| Agentic Asset | The agentic tool associated with the identity at the time of the breach |
-| Severity | The risk level `Critical`, `High`, `Medium`, or `Low` |
-| Policy | The policy rule that was breached |
-| Discovered | When Akto first raised this violation |
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (202).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
+<table><thead><tr><th width="213.80859375">Column</th><th>Description</th></tr></thead><tbody><tr><td>Violation</td><td>A plain-language description of the specific breach</td></tr><tr><td>Identity</td><td>The NHI the violation is attached to</td></tr><tr><td>Agentic Asset</td><td>The agentic tool associated with the identity at the time of the breach</td></tr><tr><td>Severity</td><td>The risk level <code>Critical</code>, <code>High</code>, <code>Medium</code>, or <code>Low</code></td></tr><tr><td>Policy</td><td>The policy rule that was breached</td></tr><tr><td>Discovered</td><td>When Akto first raised this violation</td></tr></tbody></table>
 
 ### Filters
 
@@ -59,6 +54,8 @@ A bulk action bar appears at the bottom of the table with the following options:
 
 * **Mark as Fixed** resolves the selected violations and moves them to the Fixed tab.
 * **Open Jira Ticket** creates a Jira ticket for each selected violation to support internal tracking and remediation workflows.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (203).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 {% endstepper %}
 
@@ -74,6 +71,8 @@ Expanding the **Action** dropdown gives you three options:
 * **Mark as Fixed** resolves the violation and moves it to the Fixed tab. Use this once the underlying credential issue has been remediated.
 * **Update Policy** navigates directly to the policy that triggered this violation so you can adjust its rules if needed.
 
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (204).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 ### Violation Detail Tabs
 
 The panel is organised into three tabs.
@@ -82,29 +81,22 @@ The panel is organised into three tabs.
 {% tab title="Overview" %}
 The **Overview** tab provides the full context needed to understand and prioritise the violation.
 
-**Description**
+*   **Description**
 
-A plain-language explanation of what was detected for example, which credential has which permission level on which service, and why that is a risk.
+    A plain-language explanation of what was detected for example, which credential has which permission level on which service, and why that is a risk.
+*   **Policy Triggered**
 
-**Policy Triggered**
+    The name of the NHI policy whose rule was breached, linked directly to the policy configuration.
+* **Affected Resources**\
+  The downstream services exposed by this violation (e.g. GitHub Repos, GitHub Actions, AWS S3).
+* **Discovered**\
+  The timestamp when Akto first raised this violation.
+* **Why This Triggered**\
+  An explanation of the specific condition that caused the policy rule to fire for example, why the credential's scope violates the policy's intent.
+* **Blast Radius**\
+  A bulleted list of the potential consequences if the credential were compromised or misused, scoped to the actual permissions it holds.
 
-The name of the NHI policy whose rule was breached, linked directly to the policy configuration.
-
-**Affected Resources**
-
-The downstream services exposed by this violation (e.g. GitHub Repos, GitHub Actions, AWS S3).
-
-**Discovered**
-
-The timestamp when Akto first raised this violation.
-
-**Why This Triggered**
-
-An explanation of the specific condition that caused the policy rule to fire for example, why the credential's scope violates the policy's intent.
-
-**Blast Radius**
-
-A bulleted list of the potential consequences if the credential were compromised or misused, scoped to the actual permissions it holds.
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (205).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="Remediation" %}
@@ -119,6 +111,8 @@ A numbered list of concrete actions to take for example:
 3. Enable audit log streaming on the affected service and review recent API activity.
 4. Revoke or downgrade any admin-level scopes from the credential.
 
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (206).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 After completing the steps, use **Mark as Fixed** from the Action menu to close the violation.
 {% endtab %}
 
@@ -126,6 +120,8 @@ After completing the steps, use **Mark as Fixed** from the Action menu to close 
 The **Timeline** tab shows a chronological record of events related to this violation from the initial credential creation through to policy breach detection and any subsequent activity.
 
 Each entry shows a short description of the event and the date it occurred. Use the timeline to understand the full history of the identity's lifecycle and establish whether the issue is a misconfiguration or an active threat.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (207).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endtab %}
 {% endtabs %}
 

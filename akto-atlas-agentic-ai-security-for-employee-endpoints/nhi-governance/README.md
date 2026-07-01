@@ -1,6 +1,10 @@
 # NHI Governance
 
+## Overview
+
 **NHI Governance** gives you visibility and control over the Non-Human Identities (NHIs) that your employees' agentic tools create and use. These are the API keys, bearer tokens, and secrets that IDEs, AI coding assistants, and MCP-connected tools accumulate as they access external services on behalf of employees.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (191).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ## The Problem You Face
 
@@ -25,13 +29,7 @@ You get a continuous, centralised view of credential hygiene across your AI tool
 
 ## Key Concepts
 
-| Term | Meaning |
-| ---- | ------- |
-| Non-Human Identity (NHI) | A credential (API key, bearer token, secret) used by an agentic tool rather than a human user directly |
-| Agentic Asset | The AI tool or MCP server that holds or uses the NHI (e.g. Claude CLI, Cursor, Windsurf) |
-| Owner | The employee whose endpoint the credential was discovered on |
-| Expiry Status | Whether the credential is active, nearing expiry, expired, or disabled |
-| Violation | A breach of an NHI policy rule attached to an identity |
+<table><thead><tr><th width="231.43359375">Term</th><th>Meaning</th></tr></thead><tbody><tr><td>Non-Human Identity (NHI)</td><td>A credential (API key, bearer token, secret) used by an agentic tool rather than a human user directly</td></tr><tr><td>Agentic Asset</td><td>The AI tool or MCP server that holds or uses the NHI (e.g. Claude CLI, Cursor, Windsurf)</td></tr><tr><td>Owner</td><td>The employee whose endpoint the credential was discovered on</td></tr><tr><td>Expiry Status</td><td>Whether the credential is active, nearing expiry, expired, or disabled</td></tr><tr><td>Violation</td><td>A breach of an NHI policy rule attached to an identity</td></tr></tbody></table>
 
 ## What You Can Do
 

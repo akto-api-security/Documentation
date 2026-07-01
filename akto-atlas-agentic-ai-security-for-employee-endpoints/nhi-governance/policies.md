@@ -13,6 +13,8 @@ You can access NHI policy configuration from the Akto Atlas console.
 * Navigate to **Akto Atlas**.
 * Select **NHI Governance → Policies**.
 
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (201).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 The policies list displays all existing NHI policies and provides access to policy creation.
 
 ## Create an NHI Policy
@@ -21,6 +23,8 @@ The policies list displays all existing NHI policies and provides access to poli
 
 1. Locate the **Create Policy** button at the top-right corner of the Policies page.
 2. Select **Create Policy** to open the policy configuration wizard.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (200).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 The wizard walks through four policy categories in sequence. The left panel shows your progress across the steps a red indicator means a required field in that step is incomplete.
 
@@ -49,6 +53,8 @@ Control which NHIs and agents the policy applies to.
 
 Narrowing scope reduces noise by applying the policy only to the identities and agents where the rule is relevant.
 
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (196).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 {% hint style="info" %}
 Policy name is required. You cannot advance past this step or save the policy without providing a name.
 {% endhint %}
@@ -65,6 +71,8 @@ When enabled, Akto detects and flags cases where a single token is shared across
 
 Shared credentials increase the blast radius of a compromise one leaked token can grant access across multiple unrelated services. This rule raises a violation when the same identity is observed on more than one distinct agent profile or environment.
 
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (197).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 </details>
 
 <details>
@@ -79,7 +87,7 @@ When enabled, Akto monitors token validity and flags credentials approaching the
 
 When enabled, Akto detects API calls or actions performed by an agent using an expired token. An expired token still in active use may indicate a misconfiguration where a tool was not updated after rotation or a security risk where an attacker is deliberately replaying a stolen credential.
 
-You can enable both options independently or together on the same policy.
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (198).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 </details>
 
@@ -94,7 +102,7 @@ When enabled, Akto requires all API keys and tokens in scope to be rotated withi
 * Credentials that have passed the rotation deadline trigger a **High-severity violation**.
 * Credentials approaching the rotation deadline trigger a **Medium-severity reminder violation**.
 
-This ensures credentials are regularly cycled even when they have not expired, reducing the window of exposure if a credential is silently compromised.
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (199).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 </details>
 
