@@ -42,10 +42,10 @@ sequenceDiagram
 
 ### What gets guardrailed
 
-| MCP method | REQUEST interceptor | RESPONSE interceptor |
-|---|---|---|
-| `tools/call` | Validated; blocked or arguments rewritten | Result validated; blocked or redacted |
-| `tools/list`, `initialize`, `notifications/*`, `ping` | Passed through | Passed through |
+| MCP method                                            | REQUEST interceptor                       | RESPONSE interceptor                  |
+| ----------------------------------------------------- | ----------------------------------------- | ------------------------------------- |
+| `tools/call`                                          | Validated; blocked or arguments rewritten | Result validated; blocked or redacted |
+| `tools/list`, `initialize`, `notifications/*`, `ping` | Passed through                            | Passed through                        |
 
 ## What You'll Achieve
 
@@ -112,6 +112,8 @@ Before running the deployment, gather this information:
     <pre data-overflow="wrap"><code>https://lambda-code-akto-ap-south-1.s3.ap-south-1.amazonaws.com/UNIFIED_TEMPLATE.yaml
     </code></pre>
 4. Click **Next.**
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (208).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -132,7 +134,9 @@ Fill in the form with your information:
 * **DataIngestionEndpoint**: `<URL-obtained-from-akto-team>`
   * Example: `https://your-akto-instance.com/api/ingestData`
 * **S3BucketName**: S3 bucket name where your Bedrock conversation logs will be stored
-  * Example: `bedrock-logs-agents`
+  * Example: `bedrock-logs-agents`&#x20;
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (209).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 Click **Next.**
 {% endstep %}
@@ -256,10 +260,10 @@ Then set the entry point: **Runtime settings → Edit → Handler** = `handler.l
 
 Go to **Configuration → Environment variables → Edit → Add environment variable** and add both:
 
-| Key | Value |
-|---|---|
-| `AKTO_DATA_INGESTION_URL` | `https://your-akto-instance.com` |
-| `AKTO_API_TOKEN` | your Akto API token (go to **Akto Argus → Connectors → Setup Guardrail** card and copy your token) |
+| Key                       | Value                                                                                              |
+| ------------------------- | -------------------------------------------------------------------------------------------------- |
+| `AKTO_DATA_INGESTION_URL` | `https://your-akto-instance.com`                                                                   |
+| `AKTO_API_TOKEN`          | your Akto API token (go to **Akto Argus → Connectors → Setup Guardrail** card and copy your token) |
 
 Click **Save**.
 {% endstep %}
@@ -332,22 +336,22 @@ A blocked call returns a JSON-RPC error to the client instead of the tool result
 
 Only two settings are environment-driven; everything else is a fixed default tuned for the gateway use case.
 
-| Variable | Default | Description |
-|---|---|---|
-| `AKTO_DATA_INGESTION_URL` | *(required)* | Base URL of your Akto data ingestion service |
-| `AKTO_API_TOKEN` | *(required)* | Authorization token sent to the Akto API |
+| Variable                  | Default      | Description                                  |
+| ------------------------- | ------------ | -------------------------------------------- |
+| `AKTO_DATA_INGESTION_URL` | _(required)_ | Base URL of your Akto data ingestion service |
+| `AKTO_API_TOKEN`          | _(required)_ | Authorization token sent to the Akto API     |
 
 ## Guardrail Behaviour
 
 The interceptor reads the guardrail verdict from Akto and acts on the policy `behaviour`:
 
-| Verdict | Action at the gateway |
-|---|---|
-| Allowed | Traffic passes through |
-| Blocked (`block`) | Returns a JSON-RPC error; the tool never runs (REQUEST) or the result is replaced (RESPONSE) |
-| `warn` / `alert` | Traffic is **allowed and logged**: a gateway has no interactive resubmit path, so warnings cannot hard-block |
-| Modified | The tool arguments (REQUEST) or result (RESPONSE) are rewritten with Akto's redacted payload |
-| Akto error / timeout | **Fail-open**: traffic passes through so the gateway never breaks |
+| Verdict              | Action at the gateway                                                                                        |
+| -------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Allowed              | Traffic passes through                                                                                       |
+| Blocked (`block`)    | Returns a JSON-RPC error; the tool never runs (REQUEST) or the result is replaced (RESPONSE)                 |
+| `warn` / `alert`     | Traffic is **allowed and logged**: a gateway has no interactive resubmit path, so warnings cannot hard-block |
+| Modified             | The tool arguments (REQUEST) or result (RESPONSE) are rewritten with Akto's redacted payload                 |
+| Akto error / timeout | **Fail-open**: traffic passes through so the gateway never breaks                                            |
 
 {% hint style="info" %}
 Configure which tools and patterns to block, warn, or redact in the Akto dashboard under **Settings → Guardrails**. The interceptor enforces whatever policies you define there.
