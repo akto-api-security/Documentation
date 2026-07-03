@@ -70,10 +70,117 @@ sequenceDiagram
 
 ## Setup
 
-You can deploy either with the provided CLI script or manually from the AWS Console. Both attach the **same** Lambda to both interception points.
+You can deploy via CloudFormation, with the provided CLI script, or manually from the AWS Console. All three attach the **same** Lambda to both interception points.
 
 {% tabs %}
-{% tab title="Deploy with CLI (recommended)" %}
+{% tab title="Deploy via CloudFormation (recommended)" %}
+{% stepper %}
+{% step %}
+**Prepare Your Information**
+
+Before running the deployment, gather this information:
+
+1. **AKTO API Key**: Authentication key for your AKTO instance
+   * Navigate to: **AKTO Argus** → **Connectors** → **Setup Guardrails**
+   * Copy the API key from there
+2. **AWS Region**: The region where your AgentCore Gateway is deployed
+   * Example: `ap-south-1`
+3. **Gateway ID(s)**: One or more AgentCore Gateway IDs to attach the interceptor to (comma-separated)
+   * Example: `gateway-quick-start-9080a8`
+4. **AKTO Data Ingestion URL**: Your AKTO endpoint
+   * Format: `https://your-akto-instance.com/api/ingestData`
+   * Contact AKTO support team to obtain your Data Ingestion URL
+5. **S3 Bucket Name**: A bucket name for storing Bedrock conversation logs
+   * Example: `bedrock-logs-agents`
+{% endstep %}
+
+{% step %}
+**Open CloudFormation**
+
+1. Sign in to AWS Console
+2. Search for "CloudFormation"
+3. Click **CloudFormation** service
+{% endstep %}
+
+{% step %}
+**Create Stack**
+
+1. Click **Create stack**
+2. Select **Amazon S3 URL**
+3.  Enter the CloudFormation template URL:
+
+    <pre data-overflow="wrap"><code>https://lambda-code-akto-ap-south-1.s3.ap-south-1.amazonaws.com/UNIFIED_TEMPLATE.yaml
+    </code></pre>
+4. Click **Next.**
+{% endstep %}
+
+{% step %}
+**Enter Stack Details**
+
+Fill in the form with your information:
+
+* **Stack name**: Enter a name for your stack (must be lowercase, no spaces)
+  * Example: `aws-akto-discovery`
+
+**Parameters:**
+
+* **AktoApiKey**: `<Akto-API-Key>`
+* **AwsRegion**: AWS region where Bedrock resources are deployed
+  * Example: `ap-south-1`
+* **ClientGatewayIds**: AgentCore Gateway IDs to attach interceptor to (comma-separated)
+  * Example: `gateway-quick-start-9080a8`
+* **DataIngestionEndpoint**: `<URL-obtained-from-akto-team>`
+  * Example: `https://your-akto-instance.com/api/ingestData`
+* **S3BucketName**: S3 bucket name where your Bedrock conversation logs will be stored
+  * Example: `bedrock-logs-agents`
+
+Click **Next.**
+{% endstep %}
+
+{% step %}
+**Configure Stack Options**
+
+1. Leave defaults (no changes needed)
+2. Scroll down to **Acknowledgment**
+3. ✅ Check: "I acknowledge that AWS CloudFormation might create IAM resources with custom names"
+
+{% hint style="warning" %}
+CloudFormation needs this acknowledgement to create the Lambda execution role.
+{% endhint %}
+
+4. Click **Create stack**
+{% endstep %}
+
+{% step %}
+**Wait for Completion**
+
+CloudFormation will create the Lambda execution role, the interceptor Lambda function, and attach it (REQUEST + RESPONSE) to each gateway listed in **ClientGatewayIds**.
+
+**Expected Status:**
+
+```
+aws-akto-discovery - CREATE_IN_PROGRESS
+├─ LambdaExecutionRole - CREATE_COMPLETE ✓
+├─ AktoInterceptorLambdaFunction - CREATE_COMPLETE ✓
+└─ aws-akto-discovery - CREATE_COMPLETE ✓
+```
+
+⏳ **Typical time: 2-3 minutes**
+{% endstep %}
+
+{% step %}
+**Verify Success**
+
+1. **Stack Status** should show: **CREATE\_COMPLETE** (green)
+2. Click the **Outputs** tab
+3. You should see the interceptor Lambda's function name and ARN
+
+✅ **Deployment successful!**
+{% endstep %}
+{% endstepper %}
+{% endtab %}
+
+{% tab title="Deploy with CLI" %}
 {% stepper %}
 {% step %}
 **Clone the repository**
