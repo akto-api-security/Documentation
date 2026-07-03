@@ -37,19 +37,49 @@ helm repo update
 {% step %}
 **Install the Chart**
 
-Run the following command, replacing `<key>` with your **Anthropic API Key** and `<token>` with the **Database Abstractor Token** copied from [#copy-the-jwt-token](./#copy-the-jwt-token "mention"):
+Replace `<key>` with your **Anthropic API Key** and `<token>` with the **Database Abstractor Token** copied from [#copy-the-jwt-token](./#copy-the-jwt-token "mention"), then pick one of the following installation options.
 
-```bash
-helm install akto-mini-testing akto/akto-mini-testing \
-  --set testing.agentTesting.enabled=true \
-  --set testing.agentTesting.env.anthropicApiKey="<key>" \
-  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<token>"
-```
+1.  Directly using the key and token
+
+    {% code overflow="wrap" %}
+    ```bash
+    helm install akto-mini-testing akto/akto-mini-testing \
+      --set testing.agentTesting.enabled=true \
+      --set testing.agentTesting.env.anthropicApiKey="<key>" \
+      --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<token>"
+    ```
+    {% endcode %}
+2.  Storing the key and token in Kubernetes Secrets
+
+    {% code overflow="wrap" %}
+    ```bash
+    helm install akto-mini-testing akto/akto-mini-testing \
+      --set testing.agentTesting.enabled=true \
+      --set testing.agentTesting.env.useSecretsForAnthropicApiKey=true \
+      --set testing.agentTesting.env.anthropicApiKeySecrets.anthropicSecretKey="<key>" \
+      --set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true \
+      --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.token="<token>"
+    ```
+    {% endcode %}
+3.  Bringing your own existing Secrets
+
+    {% code overflow="wrap" %}
+    ```bash
+    helm install akto-mini-testing akto/akto-mini-testing \
+      --set testing.agentTesting.enabled=true \
+      --set testing.agentTesting.env.useSecretsForAnthropicApiKey=true \
+      --set testing.agentTesting.env.anthropicApiKeySecrets.existingSecret=<my-anthropic-secret> \
+      --set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true \
+      --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.existingSecret=<my-db-token-secret>
+    ```
+    {% endcode %}
+
+    Each existing secret must be of type `Opaque` and store its value under a key named `token`.
 
 {% hint style="warning" %}
 **Anthropic API Key Required**
 
-You **must** replace `<key>` with your actual **Anthropic API Key** and `<token>` with the **Database Abstractor Service Token (JWT)**.
+You **must** provide your actual **Anthropic API Key** and the **Database Abstractor Service Token (JWT)**, either directly or via a Kubernetes Secret.
 {% endhint %}
 {% endstep %}
 {% endstepper %}
