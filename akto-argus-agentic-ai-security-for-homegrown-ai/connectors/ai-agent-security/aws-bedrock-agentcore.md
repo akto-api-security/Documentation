@@ -4,13 +4,13 @@
 
 AWS Bedrock AgentCore is Amazon's managed platform for building and operating production AI agents. Its **Gateway** is a managed MCP endpoint that aggregates tools (Lambda, OpenAPI, and MCP servers) and serves them to your agents and MCP clients over a single URL.
 
-Akto secures this traffic with a **gateway interceptor** — an AWS Lambda function that AgentCore invokes on every request and response passing through the gateway. It validates MCP `tools/call` traffic against your Akto guardrail policies in real time: blocking disallowed tool calls, redacting sensitive tool results, and ingesting all tool activity into the Akto dashboard.
+Akto secures this traffic with a **gateway interceptor**: an AWS Lambda function that AgentCore invokes on every request and response passing through the gateway. It validates MCP `tools/call` traffic against your Akto guardrail policies in real time: blocking disallowed tool calls, redacting sensitive tool results, and ingesting all tool activity into the Akto dashboard.
 
 The interceptor code and deployment script are open source: [github.com/akto-api-security/aws-bedrock-agentcore](https://github.com/akto-api-security/aws-bedrock-agentcore).
 
 ## How It Works
 
-A single Lambda is attached to the gateway at two interception points — **REQUEST** (before the tool runs) and **RESPONSE** (after the tool returns). The same function handles both; it detects which phase it is from the event.
+A single Lambda is attached to the gateway at two interception points: **REQUEST** (before the tool runs) and **RESPONSE** (after the tool returns). The same function handles both; it detects which phase it is from the event.
 
 ```mermaid
 sequenceDiagram
@@ -49,17 +49,17 @@ sequenceDiagram
 
 ## What You'll Achieve
 
-✅ **Real-time tool-call guardrails** — block disallowed `tools/call` before the tool executes\
-✅ **Response redaction** — strip or block sensitive data in tool results before the client sees them\
-✅ **Full observability** — every MCP tool call and result is ingested into the Akto dashboard\
-✅ **Managed enforcement** — runs inside AWS as a gateway interceptor; no proxy or sidecar to operate\
-✅ **Fail-open by design** — if Akto is unreachable, traffic passes through so the gateway never breaks
+✅ **Real-time tool-call guardrails**: block disallowed `tools/call` before the tool executes\
+✅ **Response redaction**: strip or block sensitive data in tool results before the client sees them\
+✅ **Full observability**: every MCP tool call and result is ingested into the Akto dashboard\
+✅ **Managed enforcement**: runs inside AWS as a gateway interceptor; no proxy or sidecar to operate\
+✅ **Fail-open by design**: if Akto is unreachable, traffic passes through so the gateway never breaks
 
 ## Prerequisites
 
 ### AWS
 
-* An existing AgentCore **Gateway** (MCP protocol) — note its **Gateway ID** and **Region**
+* An existing AgentCore **Gateway** (MCP protocol): note its **Gateway ID** and **Region**
 * AWS credentials with permissions for `lambda:*`, `iam:CreateRole` / `PutRolePolicy` / `PassRole`, and `bedrock-agentcore-control:GetGateway` / `UpdateGateway`
 * For the CLI method: `aws` CLI v2, `jq`, and `zip` installed locally
 
@@ -215,7 +215,7 @@ GATEWAY_IDS=your-gateway-id          # one or many, comma/space separated
 ./deploy.sh
 ```
 
-The script auto-fetches your AWS account ID, creates the Lambda execution role if needed, packages and deploys the interceptor, then for each gateway in `GATEWAY_IDS` grants invoke permission and attaches the interceptor (REQUEST + RESPONSE, with request headers enabled). It is idempotent — safe to re-run.
+The script auto-fetches your AWS account ID, creates the Lambda execution role if needed, packages and deploys the interceptor, then for each gateway in `GATEWAY_IDS` grants invoke permission and attaches the interceptor (REQUEST + RESPONSE, with request headers enabled). It is idempotent: safe to re-run.
 {% endstep %}
 {% endstepper %}
 
@@ -265,7 +265,7 @@ Click **Save**.
 {% endstep %}
 
 {% step %}
-Copy the **Function ARN** shown at the top right of the function page — you'll need it in the next steps.
+Copy the **Function ARN** shown at the top right of the function page: you'll need it in the next steps.
 {% endstep %}
 
 {% step %}
@@ -297,8 +297,8 @@ The gateway calls the interceptor using its own execution role, so that role nee
 
 Back in the **Bedrock AgentCore** console → your **Gateway** → **Edit**, find the interceptor configuration and paste the **same** Function ARN into both fields:
 
-* **Request Interceptor Lambda ARN** → your function ARN — set **Pass request header** to **True**
-* **Response Interceptor Lambda ARN** → the **same** function ARN — set **Pass request header** to **True**
+* **Request Interceptor Lambda ARN** → your function ARN: set **Pass request header** to **True**
+* **Response Interceptor Lambda ARN** → the **same** function ARN: set **Pass request header** to **True**
 * Leave **Exclude the response body from the interceptor Lambda invocation** **unchecked**
 
 Click **Save** / **Update gateway**.
@@ -306,7 +306,7 @@ Click **Save** / **Update gateway**.
 {% endstepper %}
 
 {% hint style="warning" %}
-Set **Pass request header** to **True** on both interceptors — the interceptor forwards the `Mcp-Session-Id` header to Akto for session grouping; with it off, sessions can't be correlated. And keep **Exclude the response body** unchecked, or response-content guardrails become a no-op.
+Set **Pass request header** to **True** on both interceptors: the interceptor forwards the `Mcp-Session-Id` header to Akto for session grouping; with it off, sessions can't be correlated. And keep **Exclude the response body** unchecked, or response-content guardrails become a no-op.
 {% endhint %}
 {% endtab %}
 {% endtabs %}
@@ -345,9 +345,9 @@ The interceptor reads the guardrail verdict from Akto and acts on the policy `be
 |---|---|
 | Allowed | Traffic passes through |
 | Blocked (`block`) | Returns a JSON-RPC error; the tool never runs (REQUEST) or the result is replaced (RESPONSE) |
-| `warn` / `alert` | Traffic is **allowed and logged** — a gateway has no interactive resubmit path, so warnings cannot hard-block |
+| `warn` / `alert` | Traffic is **allowed and logged**: a gateway has no interactive resubmit path, so warnings cannot hard-block |
 | Modified | The tool arguments (REQUEST) or result (RESPONSE) are rewritten with Akto's redacted payload |
-| Akto error / timeout | **Fail-open** — traffic passes through so the gateway never breaks |
+| Akto error / timeout | **Fail-open**: traffic passes through so the gateway never breaks |
 
 {% hint style="info" %}
 Configure which tools and patterns to block, warn, or redact in the Akto dashboard under **Settings → Guardrails**. The interceptor enforces whatever policies you define there.
@@ -368,7 +368,7 @@ You should see your Lambda ARN with `interceptionPoints` of `["REQUEST","RESPONS
 
 ### Guardrails always allowing (fail-open)
 
-The interceptor is fail-open by design — any Akto error allows the request through. Check the Lambda logs:
+The interceptor is fail-open by design: any Akto error allows the request through. Check the Lambda logs:
 
 ```bash
 aws logs tail /aws/lambda/akto-guardrails-interceptor --region <region> | grep -i "fail-open\|error"
