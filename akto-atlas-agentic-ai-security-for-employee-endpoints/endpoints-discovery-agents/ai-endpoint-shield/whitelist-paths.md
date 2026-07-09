@@ -176,6 +176,83 @@ Assign the policy to the relevant device group and save.
 
 ---
 
+## Configure for CrowdStrike Falcon
+
+These steps apply to **Windows** machines managed by CrowdStrike Falcon. Forward this section to your IT / CrowdStrike administrator.
+
+### Windows
+
+#### Get the binary hash
+
+Before your CrowdStrike admin adds the exclusions, run the following on the affected machine and share the output hash with them.
+
+{% stepper %}
+{% step %}
+Open **PowerShell** and run:
+
+```powershell
+Get-FileHash "C:\Program Files\Akto Endpoint Shield\akto-endpoint-shield.exe" -Algorithm SHA256 |
+    Select-Object Hash, Path
+```
+{% endstep %}
+
+{% step %}
+Send the printed hash value to your CrowdStrike administrator along with the steps below.
+{% endstep %}
+{% endstepper %}
+
+---
+
+#### Falcon console exclusions
+
+Add the following exclusions in the **Falcon console**, scoped to the policy or device group that covers the affected machines.
+
+{% stepper %}
+{% step %}
+**ML exclusion — path**
+
+Go to **Configuration → ML Exclusions → Add Exclusion** and fill in:
+
+| Field | Value |
+|---|---|
+| Value | `C:\Program Files\Akto Endpoint Shield\akto-endpoint-shield.exe` |
+| Type | Windows |
+| Groups | *(select the device group)* |
+{% endstep %}
+
+{% step %}
+**ML exclusion — hash**
+
+Go to **Configuration → ML Exclusions → Add Exclusion** and fill in:
+
+| Field | Value |
+|---|---|
+| Value | *(SHA256 hash from the step above)* |
+| Type | SHA256 |
+| Groups | *(select the device group)* |
+{% endstep %}
+
+{% step %}
+**Prevention policy exclusion**
+
+Go to **Configuration → Prevention Policies → *(policy name)* → Exclusions** and add `akto-endpoint-shield.exe` as a process exclusion.
+
+This prevents behavioral detections from blocking the Akto process when it runs under the SYSTEM account at boot.
+{% endstep %}
+
+{% step %}
+**Sensor visibility exclusion** *(optional)*
+
+If Akto activity is generating excessive alerts in the Falcon dashboard, go to **Configuration → Sensor Visibility Exclusions → Add** and fill in:
+
+| Field | Value |
+|---|---|
+| Path | `C:\Program Files\Akto Endpoint Shield\` |
+{% endstep %}
+{% endstepper %}
+
+---
+
 ## Get Support for your Akto setup
 
 There are multiple ways to request support from Akto. We are available on the following:
