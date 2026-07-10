@@ -133,7 +133,9 @@ Fill in the form with your information:
   * Example: `gateway-quick-start-9080a8`
 * **DataIngestionEndpoint**: `<URL-obtained-from-akto-team>`
   * Example: `https://your-akto-instance.com/api/ingestData`
-* **S3BucketName**: S3 bucket name where your Bedrock conversation logs will be stored
+* **S3BucketName**: S3 bucket name where your Bedrock conversation logs will be stored via Model Invocation logging. 
+  * Make sure that you have enabled 'Model invocation logging' and the S3 bucket configured for invocation logs need to be provided.
+  * Go to Amazon Bedrock - Settings - Check 'Model invocation logging' and the S3 logging destination selected. If not enabled, there would be no discovery possible.
   * Example: `bedrock-logs-agents`&#x20;
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (209).png" alt="" width="563"><figcaption></figcaption></figure></div>
@@ -158,7 +160,7 @@ CloudFormation needs this acknowledgement to create the Lambda execution role.
 {% step %}
 **Wait for Completion**
 
-CloudFormation will create the Lambda execution role, the interceptor Lambda function, and attach it (REQUEST + RESPONSE) to each gateway listed in **ClientGatewayIds**.
+CloudFormation will create the Lambda execution role, the unified Lambda function for discovery from provided S3 bucket and intercepting gateway, the CloudFormation helper lambda to attach interceptor configuration  (REQUEST + RESPONSE) to each gateway listed in **ClientGatewayIds**.
 
 **Expected Status:**
 
