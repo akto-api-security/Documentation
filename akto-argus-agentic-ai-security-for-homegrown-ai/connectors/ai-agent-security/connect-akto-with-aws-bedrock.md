@@ -52,9 +52,10 @@ flowchart LR
 
 Before running the deployment, gather this information:
 
-1. **S3 Bucket Name**: A unique bucket name for storing Bedrock logs where you have enabled model invocation logging
+1. **S3 Bucket Name**: A bucket name for storing Bedrock logs where you have enabled model invocation logging
+   * Make sure that you have enabled 'Model invocation logging' and the S3 bucket configured for invocation logs need to be provided.
+   * Go to Amazon Bedrock - Settings - Check 'Model invocation logging' and the S3 logging destination selected. If not enabled, there would be no discovery possible.
    * Example: `my-company-bedrock-logs-2026`
-   * Must be globally unique across all AWS accounts
 2. **AKTO Data Ingestion URL**: Your AKTO endpoint
    * Format: `https://your-akto-instance.com/api/ingestData`
    * Contact AKTO support team to obtain your Data Ingestion URL
@@ -78,7 +79,7 @@ Before running the deployment, gather this information:
 2. Select **Amazon S3 URL**
 3.  Enter the CloudFormation template URL:
 
-    <pre data-overflow="wrap"><code>https://lambda-code-akto.s3.ap-southeast-1.amazonaws.com/client-aws-cf-template.yaml
+    <pre data-overflow="wrap"><code>https://lambda-code-akto-ap-south-1.s3.ap-south-1.amazonaws.com/client-aws-cf-template.yaml
     </code></pre>
 
     <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (180).png" alt="" width="563"><figcaption></figcaption></figure></div>
