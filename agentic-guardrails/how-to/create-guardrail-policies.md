@@ -70,6 +70,9 @@ Denied topics block specific concepts in user inputs or model responses.
 * Provide a **topic name**, **definition**, and optional **sample phrases**.
 * Use **+ Add** to include additional topics.
 * Select **Save Topic** after completing topic configuration.
+* Alternatively, select **Add Akto Default Topics** to instantly add Akto's predefined denied topics, grouped by category:
+  * **Safety-critical**: Weapons & Firearms, Explosives & Bombs, Self-harm & Suicide, Illegal Drugs.
+  * **Professional advice**: Medical / Health Advice, Financial / Investment Advice, Legal Advice.
 
 {% hint style="info" %}
 You can add up to **30 denied topics** per guardrail policy.
@@ -304,19 +307,47 @@ Prevent users with personal or consumer email accounts from accessing the AI age
 
 <details>
 
-<summary>11. Server and Application Settings</summary>
+<summary>11. Exceptions</summary>
+
+Configure phrases that this policy's own detectors should treat as safe and skip, without affecting how other guardrail policies evaluate the same traffic.
+
+**Ignore Phrases**
+
+* Enter a phrase in the **Ignore phrases** field (e.g. your product name or sample test data). Phrases are matched as a whole word by default.
+* Enable **Regex** to match the entry as a regular expression instead of literal text.
+* Enable **Case sensitive** to match the phrase's casing exactly.
+* Select **Add phrase** to include it in the ignored list.
+
+The **Ignored phrases** list displays a count of configured entries and lets you remove any phrase at any time.
+
+{% hint style="info" %}
+Ignore phrases only affect this policy's own detectors — other guardrail policies evaluated on the same traffic still see the real text.
+{% endhint %}
+
+</details>
+
+<details>
+
+<summary>12. Scope</summary>
 
 Configure which servers the guardrail should be applied to and specify whether it applies to requests, responses, or both.
 
-**Server Targeting**
+**Agentic Assets**
 
-Choose how the guardrail is deployed across your infrastructure:
+Choose which assets the guardrail is deployed across:
 
-* **Apply to all**: Applies the guardrail to all servers. A count of affected servers is displayed as a link — select it to view the full list.
-* **Edit servers**: Manually select the specific servers to target. Choose from:
-  * **MCP Servers**: Select the MCP servers where the guardrail should be applied.
-  * **Agent Servers**: Select the agent servers where the guardrail should be applied.
-  * **Browser LLMs**: Select the browser LLMs where the guardrail should be applied.
+* **Apply to all** (Recommended): Applies the guardrail to all assets. Counts of affected **Agents**, **MCP Servers**, and **LLMs** are displayed as links — select a link to view the full list.
+* **Select Agentic Assets**: Choose specific **Agents**, **MCP Servers**, and **LLMs** to target.
+
+**Teams & Roles**
+
+Choose which users the guardrail applies to:
+
+* **Apply to all** (Recommended): Applies the guardrail to all users in your organisation.
+* **Select Teams & Roles**: Choose specific **Teams** and **Roles**.
+  * Select the **Teams** dropdown and choose one or more teams.
+  * Select the **Roles** dropdown and choose one or more roles.
+  * Select **Clear all** to reset the selected teams and roles.
 
 **Rule Behaviour**
 
@@ -326,12 +357,12 @@ Choose how Akto responds when a guardrail condition is triggered:
 * **Warn**: Notifies the user and allows continuation after acknowledgment.
 * **Alert**: Generates an alert for review without blocking content.
 
-**Apply to Requests and Responses**
+**Application Settings**
 
-Enable enforcement based on traffic direction:
+Specify whether the guardrail should be applied to responses and/or requests:
 
-* **Apply to Requests**: Evaluates user inputs before processing.
-* **Apply to Responses**: Evaluates model outputs before delivery.
+* **Apply guardrail to requests**: Evaluates user inputs before processing.
+* **Apply guardrail to responses**: Evaluates model outputs before delivery.
 
 You can enable either option independently or both together based on enforcement requirements.
 
@@ -342,8 +373,8 @@ You can enable either option independently or both together based on enforcement
 {% hint style="warning" %}
 **Guardrail Deployment Scope Behaviour**
 
-By default, Akto does not apply a newly created guardrail policy to any server or agent server.\
-A guardrail policy becomes active only after you explicitly select the target **MCP servers** and **agent servers** in the **Server and Application Settings** section.
+By default, a newly created guardrail policy applies to **all** agentic assets — all **Agents**, **MCP Servers**, and **LLMs**.\
+To restrict enforcement, select **Select Agentic Assets** in the **Scope** section and choose the specific assets to target.
 {% endhint %}
 
 {% hint style="info" %}
