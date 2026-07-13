@@ -56,12 +56,10 @@ All events include standard correlation attributes: `session.id`, `organization.
 {% step %}
 **Get your Akto OTLP endpoint and token**
 
-Open your Akto Atlas dashboard and navigate to **Connectors**. Locate the **Claude Cowork** card and click **Connect**. Copy the provided:
+* **OTLP collector URL** — `https://kakashi.akto.io`
+* **Bearer token** — from **Connectors → Setup Guardrails**
 
-* **OTLP collector URL** — e.g., `https://otlp.your-akto-instance.com`
-* **Bearer token** — used to authenticate the telemetry push
 
-If the Claude Cowork connector card is not visible, contact Akto support to have it provisioned for your organization.
 {% endstep %}
 
 {% step %}
