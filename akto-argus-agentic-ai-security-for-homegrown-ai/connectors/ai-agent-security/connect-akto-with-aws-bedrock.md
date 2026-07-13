@@ -52,14 +52,24 @@ flowchart LR
 
 Before running the deployment, gather this information:
 
-1. **S3 Bucket Name**: A bucket name for storing Bedrock logs where you have enabled model invocation logging
+1. **S3 Bucket Name - LogsBucketName**: A bucket name where Bedrock logs are stored ie. where you have enabled model invocation logging
    * Make sure that you have enabled 'Model invocation logging' and the S3 bucket configured for invocation logs need to be provided.
    * Go to Amazon Bedrock - Settings - Check 'Model invocation logging' and the S3 logging destination selected. If not enabled, there would be no discovery possible.
    * Example: `my-company-bedrock-logs-2026`
-2. **AKTO Data Ingestion URL**: Your AKTO endpoint
+2. **LogsPrefix**: (Optional) S3 prefix path for Bedrock logs. Default: AWSLogs/
+    * Check 'Model invocation logging' and check the S3 location prefix configured for the bucket
+    * Example: S3 location : `s3://akto-aws-bedrock-logs-02/bedrock-logs/`
+    * In the above eg : LogsBucketName would be akto-aws-bedrock-logs-02 and LogsPrefix would be bedrock-logs/
+    * This is optional field, if user has not configured any prefix then by default AWSLogs/ will be configured
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/model_invocation.png" alt="" width="563"><figcaption></figcaption></figure></div>
+
+3.  **S3 Bucket Name - MarkersBucketName**: S3 bucket name to store AKTO marker files for processed conversations
+    * Example: `akto-marker-logs`
+4. **AKTO Data Ingestion URL**: Your AKTO endpoint
    * Format: `https://your-akto-instance.com/api/ingestData`
    * Contact AKTO support team to obtain your Data Ingestion URL
-3. **AKTO API Key**: Authentication key for your AKTO instance
+5. **AKTO API Key**: Authentication key for your AKTO instance
    * Navigate to: **AKTO Argus** → **Connectors** → **Setup Guardrails**
    * Copy the API key from there
 {% endstep %}
@@ -98,6 +108,9 @@ Fill in the form with your information:
 
 * **S3BucketName**: Enter the S3 bucket name you gathered in Step 1
   * Example: `my-company-bedrock-logs-2026`
+* **LogsPrefix**: (Optional) S3 prefix path for Bedrock logs
+  * Example: `bedrock-logs`
+* **MarkersBucketName**: S3 bucket name to store AKTO marker files
 * **DataIngestionEndpoint**: `<URL-obtained-from-akto-team>`
 * **AktoApiKey**: `<Akto-API-Key>`&#x20;
 
