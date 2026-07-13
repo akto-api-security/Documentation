@@ -6,6 +6,7 @@ Get started immediately with endpoint-based discovery agents that require no inf
 * [AI Endpoint Shield](ai-endpoint-shield/) - Specialised endpoint protection and discovery for Model Context Protocol interactions
 * [Cursor Hooks](cursor-hooks.md) - Zero-installation security hooks for Cursor IDE (monitors chat + MCP tools)
 * [Claude CLI Hooks](claude-cli-hooks.md) - Zero-installation security hooks for Claude CLI (monitors prompts + responses)
+* [Kiro CLI Hooks](kiro-cli-hooks.md) - Zero-installation security hooks for Kiro CLI (monitors prompts + tool calls)
 * [Codex CLI Hooks](codex-cli-hooks.md) - Zero-installation security hooks for OpenAI Codex CLI (monitors prompts, responses + tool calls)
 * [Gemini CLI Hooks](gemini-cli-hooks.md) - Zero-installation security hooks for Gemini CLI (monitors prompts + responses)
 * [Snowflake Cortex Code CLI Hooks](snowflake-cortex-cli-hooks.md) - Security hooks for Snowflake Cortex Code CLI (prompts + tool use via native Cortex hooks)
