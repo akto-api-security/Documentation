@@ -40,11 +40,13 @@ Clicking a session row opens a side panel with two tabs:
 
 {% tabs %}
 {% tab title="Overview" %}
-The Overview tab summarizes the session and visualizes the flow of the request.
+The Overview tab summarises the session and visualises the flow of the request.
 
 <table><thead><tr><th width="160">Field</th><th>What it tells you</th></tr></thead><tbody><tr><td><strong>Traces</strong></td><td>The number of individual traces recorded in this session</td></tr><tr><td><strong>Total tokens</strong></td><td>The combined input and output tokens consumed across the session</td></tr><tr><td><strong>Duration</strong></td><td>How long the session ran for</td></tr></tbody></table>
 
 Below the summary, a flow diagram shows how the request moved through your environment: **User → Application → LLM**. Each node identifies the specific user, application, and model involved (the LLM node shows **Unknown** if the model could not be identified). Use the **+**/**-** controls or the fullscreen icon to zoom and pan the diagram.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 The **Session Details** section lists:
 
@@ -59,6 +61,8 @@ Use the **Ask anything about this session...** box at the bottom of the panel to
 The Traces tab lists every individual trace recorded within the session, shown with its **Time**, a **Trace** preview, the **Application**, and the **Model** used.
 
 Use **Search traces** to filter by keyword, and the **Columns** and **Filters** panels to customize the view.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (210).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endtab %}
 {% endtabs %}
 
@@ -67,6 +71,8 @@ Use **Search traces** to filter by keyword, and the **Columns** and **Filters** 
 Click on a trace from the Traces tab to drill into that single request/response exchange.
 
 The top of the trace detail shows the **Application**, **Model**, **User**, **Duration**, and **Tokens in / out** for that specific trace.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (211).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 Below that, the **LLM** card shows the full exchange:
 

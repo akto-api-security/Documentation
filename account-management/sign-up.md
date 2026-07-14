@@ -17,8 +17,6 @@ Navigate to [app.akto.io](https://app.akto.io) in your browser.
 #### Click "Sign Up"
 
 On the login page, click the **Sign up** link at the bottom of the form.
-
-<div data-with-frame="true"><figure><img src="../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}

@@ -1,4 +1,4 @@
-# NinjaOne Deployment (Chrome Extension)
+# NinjaOne Deployment (Windows)
 
 Deploy the Akto Chrome extension on NinjaOne-managed Windows endpoints by setting Chrome force-install policy values.
 
@@ -14,13 +14,13 @@ Deploy the Akto Chrome extension on NinjaOne-managed Windows endpoints by settin
 
 Use this exact value:
 
-```text
+```
 <AKTO_CHROME_EXTENSION_ID>;<AKTO_CHROME_UPDATE_XML_URL>
 ```
 
 Example:
 
-```text
+```
 mjcadlphyjmonhffggcpinejpageieeh;https://akto-chrome-ext.s3.ap-south-1.amazonaws.com/akto-chrome-ext/update.xml
 ```
 
@@ -40,9 +40,10 @@ In NinjaOne Automation Library, create a PowerShell script (Run As: System) name
 
 Download direct script file:
 
-* [akto-chrome-ninjaone-force-install.ps1](scripts/akto-chrome-ninjaone-force-install.ps1)
+* [akto-chrome-ninjaone-force-install.ps1](https://github.com/akto-api-security/Documentation/blob/agentic_security/akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/chrome/scripts/akto-chrome-ninjaone-force-install.ps1)
 
 <details>
+
 <summary><strong>Show script</strong></summary>
 
 ```powershell

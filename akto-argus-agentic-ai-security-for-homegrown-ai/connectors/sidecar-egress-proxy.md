@@ -164,7 +164,7 @@ Because `HTTP_PROXY` / `HTTPS_PROXY` are set on the agent container, every outbo
 
 ## How Guardrails Work
 
-See [Guardrail Schema](concepts/guardrail-schema.md) for the full data model and [Agent Guard](concepts/agent-guard.md) for how guardrails are evaluated against agentic traffic.
+See [Guardrail Schema](https://github.com/akto-api-security/Documentation/blob/agentic_security/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/concepts/guardrail-schema.md) for the full data model and [Agent Guard](https://github.com/akto-api-security/Documentation/blob/agentic_security/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/concepts/agent-guard.md) for how guardrails are evaluated against agentic traffic.
 
 The proxy evaluates both the outbound request (prompt sent to the LLM) and the inbound response (LLM output) against Akto's guardrails. For each, Akto returns one of three decisions:
 
@@ -178,9 +178,9 @@ The proxy evaluates both the outbound request (prompt sent to the LLM) and the i
 
 All guardrail policies are configured in the Akto dashboard — no proxy restart is required when policies change.
 
-* [Create guardrail policies](how-to/create-guardrail-policies.md) — set up rules for prompt injection detection, PII filtering, disallowed topics, and response redaction
-* [Manage guardrail policies](how-to/manage-guardrail-policies.md) — edit, clone, or delete existing policies
-* [Enable or disable guardrails](how-to/enable-or-disable-guardrails.md) — toggle guardrails per policy without deleting them
+* [Create guardrail policies](https://github.com/akto-api-security/Documentation/blob/agentic_security/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/how-to/create-guardrail-policies.md) — set up rules for prompt injection detection, PII filtering, disallowed topics, and response redaction
+* [Manage guardrail policies](https://github.com/akto-api-security/Documentation/blob/agentic_security/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/how-to/manage-guardrail-policies.md) — edit, clone, or delete existing policies
+* [Enable or disable guardrails](https://github.com/akto-api-security/Documentation/blob/agentic_security/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/how-to/enable-or-disable-guardrails.md) — toggle guardrails per policy without deleting them
 
 Policies are scoped per app using the `APP_NAME` identifier set in your environment variables.
 
@@ -188,9 +188,9 @@ Policies are scoped per app using the `APP_NAME` identifier set in your environm
 
 All intercepted traffic is ingested into Akto (`ingest_data=true`) and visible in the dashboard under your `APP_NAME`:
 
-* [Guardrail Activity](concepts/guardrail-activity.md) — view all guardrail events, decisions, and flagged payloads
-* [Guardrail Activity — Detailed View](how-to/guardrail-activity-detailed-view.md) — inspect individual blocked or modified requests
-* [Threat Dashboard](concepts/threat-dashboard.md) — monitor threat actors, IPs, and anomalous LLM usage patterns
+* [Guardrail Activity](https://github.com/akto-api-security/Documentation/blob/agentic_security/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/concepts/guardrail-activity.md) — view all guardrail events, decisions, and flagged payloads
+* [Guardrail Activity — Detailed View](https://github.com/akto-api-security/Documentation/blob/agentic_security/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/how-to/guardrail-activity-detailed-view.md) — inspect individual blocked or modified requests
+* [Threat Dashboard](https://github.com/akto-api-security/Documentation/blob/agentic_security/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/concepts/threat-dashboard.md) — monitor threat actors, IPs, and anomalous LLM usage patterns
 
 ## Get Support
 

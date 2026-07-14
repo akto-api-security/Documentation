@@ -39,9 +39,10 @@ In NinjaOne:
 
 Download direct script file:
 
-* [akto-endpoint-shield-ninjaone-macos.sh](scripts/ninjaone/akto-endpoint-shield-ninjaone-macos.sh)
+* [akto-endpoint-shield-ninjaone-macos.sh](https://github.com/akto-api-security/Documentation/blob/agentic_security/akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/scripts/ninjaone/akto-endpoint-shield-ninjaone-macos.sh)
 
 <details>
+
 <summary><strong>Show script</strong></summary>
 
 ```bash

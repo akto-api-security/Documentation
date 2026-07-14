@@ -39,9 +39,10 @@ In NinjaOne:
 
 Download direct script file:
 
-* [akto-endpoint-shield-ninjaone-windows.ps1](scripts/ninjaone/akto-endpoint-shield-ninjaone-windows.ps1)
+* [akto-endpoint-shield-ninjaone-windows.ps1](https://github.com/akto-api-security/Documentation/blob/agentic_security/akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/scripts/ninjaone/akto-endpoint-shield-ninjaone-windows.ps1)
 
 <details>
+
 <summary><strong>Show script</strong></summary>
 
 ```powershell
