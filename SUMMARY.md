@@ -67,6 +67,7 @@
     * [OWASP Agentic Skills Top 10](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-skills/owasp-agentic-skills-top-10.md)
   * [Audit Data - Akto Atlas](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/audit-data-akto-atlas.md)
   * [Users and Devices](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/users-and-devices.md)
+  * [Traces](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/traces.md)
 * [NHI Governance](akto-atlas-agentic-ai-security-for-employee-endpoints/nhi-governance/README.md)
   * [Identities](akto-atlas-agentic-ai-security-for-employee-endpoints/nhi-governance/identities.md)
   * [Create NHI Policies](akto-atlas-agentic-ai-security-for-employee-endpoints/nhi-governance/policies.md)
