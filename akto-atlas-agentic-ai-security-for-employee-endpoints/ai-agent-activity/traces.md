@@ -76,8 +76,8 @@ The top of the trace detail shows the **Application**, **Model**, **User**, **Du
 
 Below that, the **LLM** card shows the full exchange:
 
-* **INPUT** – The complete prompt sent to the model, along with its token count
-* **OUTPUT** – The model's response, along with its token count
+* **INPUT**: The complete prompt sent to the model, along with its token count
+* **OUTPUT**: The model's response, along with its token count
 
 {% hint style="info" %}
 Use the breadcrumb at the top of the panel (e.g. session ID **/** trace ID) to navigate back to the parent session.
