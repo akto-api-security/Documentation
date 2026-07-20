@@ -16,6 +16,7 @@ Follow these steps to access Guardrail Activity:
    * **Active**
    * **Under Review**
    * **Ignored**
+   * **Need Approval** – events waiting on a reviewer decision for a **Human Approval** policy. See [Manage Human Approval Requests](manage-human-approval-requests.md).
 6. Click any activity to open its detailed drilldown view.
 
 {% hint style="success" %}

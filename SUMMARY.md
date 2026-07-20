@@ -380,6 +380,7 @@
   * [Access A Specific Guardrail Actor](agentic-guardrails/how-to/access-a-specific-guardrail-actor.md)
   * [Guardrail Activity Detailed View](agentic-guardrails/how-to/guardrail-activity-detailed-view.md)
   * [Take Action on Guardrails Events](agentic-guardrails/how-to/take-action-on-guardrails-events.md)
+  * [Manage Human Approval Requests](agentic-guardrails/how-to/manage-human-approval-requests.md)
   * [Create Internal Workflow Item](agentic-guardrails/how-to/create-internal-workflow-item.md)
   * [Understand Agentic Components](agentic-guardrails/how-to/understand-agentic-components.md)
   * [Export Visualisation and Report](agentic-guardrails/how-to/export-visualisation-and-report.md)

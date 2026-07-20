@@ -37,6 +37,7 @@ The activity list provides a detailed, event-level view of all guardrail detecti
 * **Active**
 * **Under Review**
 * **Ignored**
+* **Needs Approval** – Events triggered by a policy whose Rule Behaviour is set to **Human Approval**. See [Manage Human Approval Requests](../how-to/manage-human-approval-requests.md).
 
 <details>
 

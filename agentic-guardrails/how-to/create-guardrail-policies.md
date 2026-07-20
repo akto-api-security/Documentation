@@ -354,8 +354,8 @@ Choose which users the guardrail applies to:
 Choose how Akto responds when a guardrail condition is triggered:
 
 * **Block**: Stops the request or response when the condition is met.
-* **Warn**: Notifies the user and allows continuation after acknowledgment.
 * **Alert**: Generates an alert for review without blocking content.
+* **Human Approval**: Blocks the triggering attempt and sends it to the **Needs Approval** tab in Guardrail Activity for a reviewer to approve. See [Manage Human Approval Requests](manage-human-approval-requests.md) for the full workflow.
 
 **Application Settings**
 
