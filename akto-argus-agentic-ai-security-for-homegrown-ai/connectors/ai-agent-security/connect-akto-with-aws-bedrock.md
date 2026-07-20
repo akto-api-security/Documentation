@@ -16,7 +16,6 @@ flowchart LR
 
 
 ```
-
 ## What You'll Achieve
 
 ✅ **Automated Bedrock Monitoring**: Capture all AWS Bedrock agent conversations\
@@ -72,6 +71,8 @@ Before running the deployment, gather this information:
 5. **AKTO API Key**: Authentication key for your AKTO instance
    * Navigate to: **AKTO Argus** → **Connectors** → **Setup Guardrails**
    * Copy the API key from there
+6. **LambdaCodeVersion**: version
+   * Contact AKTO support team to obtain your Data Ingestion URL
 {% endstep %}
 
 {% step %}
@@ -89,7 +90,7 @@ Before running the deployment, gather this information:
 2. Select **Amazon S3 URL**
 3.  Enter the CloudFormation template URL:
 
-    <pre data-overflow="wrap"><code>https://lambda-code-akto-ap-south-1.s3.ap-south-1.amazonaws.com/client-aws-cf-template.yaml
+    <pre data-overflow="wrap"><code>https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v1.2/client-aws-cf-template.yaml
     </code></pre>
 
     <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (180).png" alt="" width="563"><figcaption></figcaption></figure></div>
@@ -110,8 +111,9 @@ Fill in the form with your information:
   * Example: `my-company-bedrock-logs-2026`
 * **LogsPrefix**: (Optional) S3 prefix path for Bedrock logs
   * Example: `bedrock-logs`
-* **MarkersBucketName**: S3 bucket name to store AKTO marker files
+* **MarkersBucketName**: S3 bucket name to store AKTO marker manifest file
 * **DataIngestionEndpoint**: `<URL-obtained-from-akto-team>`
+* **LambdaCodeVersion**: v1.2 `<Version-obtained-from-akto-team>`
 * **AktoApiKey**: `<Akto-API-Key>`&#x20;
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (181).png" alt="" width="563"><figcaption></figcaption></figure></div>
