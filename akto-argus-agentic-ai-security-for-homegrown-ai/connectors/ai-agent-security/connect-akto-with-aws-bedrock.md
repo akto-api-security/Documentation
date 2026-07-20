@@ -72,7 +72,7 @@ Before running the deployment, gather this information:
    * Navigate to: **AKTO Argus** → **Connectors** → **Setup Guardrails**
    * Copy the API key from there
 6. **LambdaCodeVersion**: version
-   * Contact AKTO support team to obtain your Data Ingestion URL
+   * Contact AKTO support team to obtain your lambda version
 {% endstep %}
 
 {% step %}
