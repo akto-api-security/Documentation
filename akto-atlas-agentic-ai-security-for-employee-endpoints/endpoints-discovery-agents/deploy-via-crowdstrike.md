@@ -23,6 +23,24 @@ Before connecting CrowdStrike to Akto, ensure the following:
 Your CrowdStrike API client should have sufficient scope to access endpoint inventory and run integration actions for your organization.
 {% endhint %}
 
+### How Akto Discovers AI Agents via CrowdStrike
+
+Akto uses the CrowdStrike Falcon **device inventory** API to list and read details of managed hosts, and the **Real Time Response (RTR)** API to run discovery scripts on those hosts that scan for installed AI coding tools, CLI agents, and MCP configuration files. The same RTR capability is used to push and execute the Akto guardrail hook installation scripts when you run guardrails from Akto.
+
+### Required CrowdStrike API Client Scopes
+
+Akto authenticates to CrowdStrike Falcon using the OAuth 2.0 client credentials flow (`Client ID` / `Client Secret`). When creating the API client in the Falcon console, grant it the following scopes:
+
+| Scope | Why Akto needs it |
+| --- | --- |
+| **Hosts: Read** | List managed devices and read device details, used to identify targets for discovery and guardrail deployment. |
+| **Real Time Response: Read** | Initiate and close RTR sessions (including batch sessions) on managed hosts. |
+| **Real Time Response (Admin): Write** | Upload/update discovery and guardrail scripts to the RTR script library, and run those scripts on hosts (`runscript`) to detect AI tools and install guardrail hooks. |
+
+{% hint style="warning" %}
+`Real Time Response (Admin): Write` is required even for read-only discovery, because uploading and executing scripts via RTR's `runscript` action requires the admin scope. An API client with only the base `Real Time Response: Read/Write` scope (non-admin) will get **403 Forbidden** errors on script upload and execution.
+{% endhint %}
+
 ## Steps to Integrate
 
 The integration flow has two stages:
