@@ -39,6 +39,8 @@ The detailed view provides complete context required for investigation and remed
 {% tab title="Overview" %}
 Presents the **description**, **details**, and **impact** of the activity, giving you a clear understanding of the activity.
 
+The tab also includes a **Compliance** section that maps the violation to the regulatory frameworks it affects, such as **NIST 800-53**, **OWASP Agentic Skills Top 10**, **ISO 27001**, and **SOC 2**, so you know which standards a detection impacts as it happens.
+
 <figure><img src="../../.gitbook/assets/image (57).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endtab %}
 
