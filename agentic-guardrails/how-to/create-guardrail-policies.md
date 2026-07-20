@@ -336,8 +336,12 @@ Configure which servers the guardrail should be applied to and specify whether i
 
 Choose which assets the guardrail is deployed across:
 
-* **Apply to all** (Recommended): Applies the guardrail to all assets. Counts of affected **Agents**, **MCP Servers**, and **LLMs** are displayed as links — select a link to view the full list.
+* **Apply to all** (Recommended): Applies the guardrail to all assets. Counts of affected **Agents**, **MCP Servers**, and **LLMs** are displayed as links, select a link to view the full list.
 * **Select Agentic Assets**: Choose specific **Agents**, **MCP Servers**, and **LLMs** to target.
+
+{% hint style="info" %}
+See how many MCP servers and agent servers a policy touches before you deploy it. **Apply to All** now shows the full scope up front.
+{% endhint %}
 
 **Teams & Roles**
 
