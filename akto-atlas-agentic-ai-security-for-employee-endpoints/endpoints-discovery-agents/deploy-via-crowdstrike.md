@@ -33,8 +33,8 @@ Akto authenticates to CrowdStrike Falcon using the OAuth 2.0 client credentials 
 
 | Scope | Why Akto needs it |
 | --- | --- |
-| **Hosts: Read** | List managed devices and read device details, used to identify targets for discovery and guardrail deployment. |
-| **Real Time Response: Read** | Initiate and close RTR sessions (including batch sessions) on managed hosts. |
+| **Hosts: Read** | List managed devices and read device details, which are used to identify targets for discovery and guardrail deployment. |
+| **Real Time Response: Read/Write** | Initiate and close RTR sessions (including batch sessions) on managed hosts. |
 | **Real Time Response (Admin): Write** | Upload/update discovery and guardrail scripts to the RTR script library, and run those scripts on hosts (`runscript`) to detect AI tools and install guardrail hooks. |
 
 {% hint style="warning" %}
@@ -63,7 +63,7 @@ The integration flow has two stages:
 * **Client ID**: CrowdStrike Falcon API client ID
 * **Client Secret**: CrowdStrike Falcon API client secret
 * **Base URL**: `https://api.crowdstrike.com` (leave empty to use the default CrowdStrike API endpoint)
-* **Data Ingestion Service URL**: your Akto ingestion endpoint (`AKTO_DATA_INGESTION_URL`), common URL used for data ingestion and guardrails
+* **Data Ingestion Service URL**: your Akto ingestion endpoint (`AKTO_DATA_INGESTION_URL`)
 * **Akto API Token**: common token used by all guardrail hook installs (`AKTO_API_TOKEN`)
 *   **Polling Interval (seconds)**: keep default or set based on your monitoring preference
 
@@ -90,13 +90,13 @@ You can then:
 **Configure and Run Guardrails**
 
 1. Open the CrowdStrike integration setup in Akto.
-2.  In **Guardrails Installation**, choose the guardrails you want to deploy for your CrowdStrike Falcon managed endpoints.
+2.  In **Guardrails Installation**, choose the guardrails you want to deploy for your CrowdStrike Falcon-managed endpoints.
 
     <div data-with-frame="true"><figure><img src="../../.gitbook/assets/crowdstrike(3).png" alt="" width="375"><figcaption></figcaption></figure></div>
 3. Select specific devices, or use **Run on all devices**.
 4. Click **Save & Run Guardrails**.
 
-Each guardrail installs the corresponding Akto hook on the selected devices, using `AKTO_DATA_INGESTION_URL` and `AKTO_API_TOKEN` as the default ingestion destination and auth token. Guardrails that require additional environment values (for example provider API keys or model IDs) will show those input fields dynamically in the setup panel.
+Each guardrail installs the corresponding Akto hook on the selected devices, using `AKTO_DATA_INGESTION_URL` and `AKTO_API_TOKEN` as the default ingestion destination and auth token.
 
 {% hint style="info" %}
 For guardrails that require additional environment values, Akto displays the required input fields dynamically in the setup panel.
