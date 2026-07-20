@@ -16,7 +16,6 @@ flowchart LR
 
 
 ```
-
 ## What You'll Achieve
 
 ✅ **Automated Bedrock Monitoring**: Capture all AWS Bedrock agent conversations\
