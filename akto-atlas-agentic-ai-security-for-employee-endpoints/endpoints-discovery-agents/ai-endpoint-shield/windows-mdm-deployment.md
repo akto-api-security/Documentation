@@ -83,7 +83,9 @@ Akto provides:
 
 | Script | Purpose |
 | ------ | ------- |
-| `install.ps1` | Install, upgrade, configure |
+| `install.ps1` | One-time install, credential provisioning, and configuration |
+| `Detect-AktoEndpointShield.ps1` | Checks installed version + task health; makes no changes (Intune Remediations detection script) |
+| `Remediate-AktoEndpointShield.ps1` | Repairs/updates in place, only when detection reports an issue |
 | `uninstall_windows.ps1` | Remove agent, tasks, and config (separate MDM assignment) |
 
 #### install.ps1 parameters
@@ -113,18 +115,57 @@ https://<akto-host>/atlas-installers/windows-installer/latest.json  https://<akt
 
 Environment variables (`MANIFEST_URL`, `AKTO_API_TOKEN`, `AKTO_API_BASE_URL`, `FORCE_REINSTALL`, etc.) are also supported if your MDM sets them instead of positional args.
 
+`Detect-AktoEndpointShield.ps1` and `Remediate-AktoEndpointShield.ps1` take **no parameters** — they read everything they need from the device after the one-time `install.ps1` provisioning step. That's what lets them run on Intune Remediations, which has no parameters field.
+
 ***
 
 ### Deploy via your MDM
 
 {% tabs %}
 {% tab title="Microsoft Intune" %}
-1. **Devices** → **Scripts** → **Add** → **Windows 10 and later**
-2. Upload `install.ps1`
-3. **Run as logged-on user:** No | **64-bit PowerShell:** Yes
-4. Paste script parameters (manifest, optional ZIP URL, token, base URL)
-5. Assign to groups; schedule **daily** for auto-update
-6. Review **Device status** under the script assignment
+Intune deployment has **two parts**: a one-time install via a **Win32 app**, and recurring auto-update via **Remediations**.
+
+Intune **Platform scripts** (Devices → Scripts and remediations → Platform scripts) has no field for passing your token and re-runs on every device check-in rather than installing once — so provisioning goes through a **Win32 app** instead, which supports a free-text install command and installs only once (governed by a detection rule).
+
+**Step 1 — One-time install (Win32 app)**
+
+1. **Package it.** Run the [Win32 Content Prep Tool](https://github.com/microsoft/Microsoft-Win32-Content-Prep-Tool) against a folder containing `install.ps1`, producing an `.intunewin` file.
+2. **Apps** → **Windows** → **Add** → **Windows app (Win32)**, and upload the `.intunewin` file.
+3. **Program:**
+   * Install command:
+
+     ```
+     powershell.exe -NoProfile -ExecutionPolicy Bypass -File install.ps1 "https://<manifest-url>/latest.json" "" "<TOKEN>" "https://<account-id>-guardrails.akto.io"
+     ```
+   * Uninstall command:
+
+     ```
+     powershell.exe -NoProfile -ExecutionPolicy Bypass -File uninstall_windows.ps1
+     ```
+   * Install behavior: **System**
+4. **Detection rules** — use a custom detection script (this is what makes the install genuinely one-time, so it isn't re-run on every check-in):
+
+   ```powershell
+   $cfg = "$env:SystemRoot\System32\config\systemprofile\.akto-endpoint-shield\config\config.env"
+   if ((Test-Path $cfg) -and (Select-String -Path $cfg -Pattern '^AKTO_API_TOKEN=\S+' -Quiet)) {
+       Write-Host "Installed"; exit 0
+   }
+   exit 1
+   ```
+5. **Assignments** — assign **Required** to your target device group(s).
+
+If detection ever reports "not installed" (for example after a bad uninstall), Intune automatically retries the install command within about 24 hours.
+
+**Step 2 — Recurring auto-update (Remediations)**
+
+1. **Devices** → **Scripts and remediations** → **Create script package**.
+2. **Basics** — name it, e.g. "Akto Endpoint Shield – Update & Self-heal".
+3. **Settings** — upload `Detect-AktoEndpointShield.ps1` as the detection script and `Remediate-AktoEndpointShield.ps1` as the remediation script.
+   * Run using logged-on credentials: **No**
+   * Enforce script signature check: **No**
+   * Run script in 64-bit PowerShell: **Yes**
+4. **Assignments** — target the same device group(s) as the Win32 app.
+5. **Schedule** — **Daily** (or every 4–6 hours). Both scripts are read-only until an issue is found, and the repair step is safe to re-run, so a tighter schedule is fine; Daily meets a "picks up a new release within a day" SLA.
 {% endtab %}
 
 {% tab title="Other MDM / RMM" %}
@@ -134,6 +175,8 @@ Environment variables (`MANIFEST_URL`, `AKTO_API_TOKEN`, `AKTO_API_BASE_URL`, `F
 4. Pass the four arguments (or set equivalent environment variables)
 5. Schedule at least **daily** on enrolled Windows devices
 6. Use your MDM's script success/failure reporting for validation
+
+Running `install.ps1` on a daily schedule handles updates on its own — it skips the download when the installed version already matches the manifest. If your MDM has a "detect, then remediate" primitive, you can instead run `Detect-AktoEndpointShield.ps1` on a schedule and run `Remediate-AktoEndpointShield.ps1` only when detection exits non-zero, mirroring the Intune Remediations flow.
 {% endtab %}
 {% endtabs %}
 
@@ -207,6 +250,8 @@ Also confirm success in your **MDM script reporting** and that the device appear
 | ------- | ------------ | ---------- |
 | Script fails immediately | Not running as SYSTEM or 32-bit PowerShell | Use 64-bit PowerShell as SYSTEM |
 | Wrong config / token | Arguments shifted in MDM | Fix parameter string; test locally with explicit `""` for arg 2 |
+| Win32 app keeps reinstalling every ~24h | Detection rule never matches (e.g. path typo) | Verify the detection script against a working device |
+| Device never gets the latest version | Remediation not assigned, or scheduled too infrequently | Confirm assignment + schedule in Intune; policy delivery can take up to 8 hours to reach a device after first assignment |
 | No upgrade | Manifest version mismatch | Contact Akto to align manifest and published ZIP |
 | No processes running | Tasks failed or binary exited | Check `%ProgramData%\akto-endpoint-shield\logs\*-wrapper.log` |
 | Download errors | Firewall / proxy | Allow HTTPS to manifest and ZIP URLs |
@@ -221,8 +266,11 @@ See [Whitelist Paths](whitelist-paths.md) for EDR exclusions (e.g. SentinelOne).
 | ---- | ------- |
 | `C:\Program Files\Akto Endpoint Shield\akto-endpoint-shield.exe` | Main binary |
 | `C:\Program Files\Akto Endpoint Shield\start-akto-mode.ps1` | Task wrapper |
-| `%USERPROFILE%\.akto-endpoint-shield\config\config.env` | User configuration |
-| `%ProgramData%\akto-endpoint-shield\logs\` | Install and wrapper logs |
+| `%SystemRoot%\System32\config\systemprofile\.akto-endpoint-shield\config\config.env` | Credentials + feature flags (SYSTEM) |
+| `%USERPROFILE%\.akto-endpoint-shield\config\config.env` | Per-user configuration |
+| `%ProgramData%\akto-endpoint-shield\logs\install.log` | Install log |
+| `%ProgramData%\akto-endpoint-shield\logs\remediation-detect.log` / `remediation-remediate.log` | Auto-update check / repair logs |
+| `%ProgramData%\akto-endpoint-shield\logs\` | Wrapper logs |
 
 ***
 
