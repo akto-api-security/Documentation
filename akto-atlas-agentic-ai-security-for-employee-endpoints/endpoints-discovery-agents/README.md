@@ -15,6 +15,7 @@ Get started immediately with endpoint-based discovery agents that require no inf
 * [Hermes Hooks](hermes-hooks.md) - Zero-installation security hooks for Hermes (monitors chat + MCP tools)
 * [Amp Hooks](amp-hooks.md) - Zero-installation security hooks for Amp (monitors tool executions + MCP tools)
 * [Deploy via SentinelOne](deploy-via-sentinelone.md) - Connect SentinelOne to discover AI agents and deploy guardrails on managed endpoints
+* [Deploy via CrowdStrike](deploy-via-crowdstrike.md) - Connect CrowdStrike Falcon to discover AI agents and deploy guardrails on managed endpoints
 * [Agentic Shield](agentic-shield.md) - Application-level shield for real-time discovery and protection of AI agent interactions
 * [Anthropic Connector](anthropic-connector.md) - Pull compliance activity data from Claude.ai, Claude Console, and Claude API directly into Akto via the Anthropic Compliance API
 * [OpenAI Connector](openai-connector.md) - Pull audit log and org activity data from ChatGPT and OpenAI directly into Akto via the OpenAI Admin API
