@@ -2,7 +2,7 @@
 
 ## Overview
 
-The **Users and Devices** page gives you a complete inventory of all users and devices discovered by Akto Atlas in your organization. It shows who is using AI agents, which MCP servers they connect to, and what agentic assets are associated with each user.
+The User and Devices page gives you a complete inventory of all users and devices discovered by Akto Atlas in your organisation. It shows who is using AI agents, which MCP servers they connect to, and what agentic assets are associated with each user.
 
 From here, you can:
 
@@ -47,10 +47,14 @@ Select one or more users using the checkboxes in the Users table.
 
 {% step %}
 Click **Edit team & role** from the action bar that appears at the bottom of the screen.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (214).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
 In the modal, enter a **Team** (e.g. Backend, DevOps) and a **User role** (e.g. Engineer, Architect).
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (213).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
