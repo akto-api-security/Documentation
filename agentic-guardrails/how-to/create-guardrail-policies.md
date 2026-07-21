@@ -370,7 +370,7 @@ Specify whether the guardrail should be applied to responses and/or requests:
 
 You can enable either option independently or both together based on enforcement requirements.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (176).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (212).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 </details>
 
