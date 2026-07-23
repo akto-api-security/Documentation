@@ -1,6 +1,6 @@
 # Get Started with Agentic Red Teaming
 
-Probe your AI agents, MCP servers, and AI models with 1000+ specialized security probes. Akto identifies vulnerabilities like prompt injections, tool abuse, and privilege escalation before attackers do.
+Probe your AI agents, MCP servers, and AI models with 4000+ specialized security probes. Akto identifies vulnerabilities like prompt injections, tool abuse, and privilege escalation before attackers do.
 
 ## Quick Start
 
@@ -33,7 +33,7 @@ Probe large language models and custom AI implementations for security vulnerabi
 Once imported:
 1. Navigate to **AI Red Teaming** in your dashboard
 2. Select the components you want to probe
-3. Choose from 1000+ specialized security probes
+3. Choose from 4000+ specialized security probes
 4. Click **Run Probes** to start probing
 
 ### Step 4: Review Results

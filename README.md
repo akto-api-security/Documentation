@@ -14,7 +14,7 @@ Secure your AI agents, MCP servers, and agentic applications with complete visib
 
 ## [Agentic Red Teaming](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/)
 
-Probe your AI agents and MCP servers with 1000+ specialized security probes. Identify vulnerabilities like prompt injections, tool abuse, and privilege escalation before attackers do.
+Probe your AI agents and MCP servers with 4000+ specialized security probes. Identify vulnerabilities like prompt injections, tool abuse, and privilege escalation before attackers do.
 
 **Import your components to start Red Teaming**
 

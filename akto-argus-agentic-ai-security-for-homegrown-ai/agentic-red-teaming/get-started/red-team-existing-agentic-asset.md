@@ -4,7 +4,7 @@ Run comprehensive security probes on your already discovered AI agents, MCP serv
 
 ## Run Security Probes
 
-Once your agentic assets are discovered and inventoried in Akto, you can immediately start probing them with [1000+ specialized security probes](../../probe-library/) designed for AI agents and MCP servers.
+Once your agentic assets are discovered and inventoried in Akto, you can immediately start probing them with [4000+ specialized security probes](../../probe-library/) designed for AI agents and MCP servers.
 
 ### Quick Steps
 

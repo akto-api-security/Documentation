@@ -7,4 +7,4 @@
 3. Find the specific endpoint in the list
 4. Click the "Run scan" button next to the endpoint
 
-Note: Akto runs 1000+ built-in probes covering OWASP Top 10, HackerOne top 10, and business logic vulnerabilities.
+Note: Akto runs 4000+ built-in probes covering OWASP Top 10, HackerOne top 10, and business logic vulnerabilities.

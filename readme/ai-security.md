@@ -26,7 +26,7 @@ Akto enables proactive security by running automated probes to uncover vulnerabi
 
 **Key Capabilities:**
 
-* 1000+ probe templates based on real-world LLM attack scenarios
+* 4000+ probe templates based on real-world LLM attack scenarios
 * Prebuilt and custom scan suites for LLM-specific APIs
 * Integration with CI/CD pipelines for shift-left scanning
 

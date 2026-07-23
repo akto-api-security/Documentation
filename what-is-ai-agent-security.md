@@ -45,7 +45,7 @@ Proactive vulnerability assessment specifically designed for AI systems. Akto pe
 
 **Key Capabilities:**
 
-* 1000+ AI-specific probe templates covering OWASP Top 10 for LLMs
+* 4000+ AI-specific probe templates covering OWASP Top 10 for LLMs
 * Automated red-teaming with adversarial prompt generation
 * Scanning for prompt injection, jailbreaking, and system prompt extraction
 * Supply chain vulnerability scanning for models and dependencies

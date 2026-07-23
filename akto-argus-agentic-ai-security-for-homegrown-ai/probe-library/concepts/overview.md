@@ -8,6 +8,6 @@ Akto Probe Library is the AI Red Teaming framework for teams protecting AI agent
 
 Probe Library consists of three blocks:
 
-1. [Probe Library](../agentic-security-categories.md) with 1000+ built-in probes for agentic security
+1. [Probe Library](../agentic-security-categories.md) with 4000+ built-in probes for agentic security
 2. [YAML](test-yaml.md) probe editor for custom probe creation
 3. Sample agent component requests and responses for scanning
