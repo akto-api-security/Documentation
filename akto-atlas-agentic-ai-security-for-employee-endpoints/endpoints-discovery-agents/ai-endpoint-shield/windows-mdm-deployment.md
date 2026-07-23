@@ -4,15 +4,20 @@
 
 AI Endpoint Shield can be deployed enterprise-wide on **Windows** through any **MDM or endpoint management platform** that can run PowerShell scripts as **SYSTEM** (for example Microsoft Intune, Workspace ONE, ManageEngine, Kandji for Windows, or custom RMM tools).
 
-A single **`install.ps1`** script downloads a generic ZIP from Akto-hosted storage, installs or upgrades the agent, applies your credentials, and keeps devices current via a version manifest.
+Akto provides the installer in two forms:
+
+* **Account-specific installer** — your **API token and guardrails base URL are already embedded**, so at deploy time you supply only the **manifest URL** (and optionally a direct installer URL).
+* **Universal installer** — one build shared across all clients; you pass the **token and base URL as parameters** at deploy time.
+
+Either way, a single **`install.ps1`** script downloads the versioned ZIP from Akto-hosted storage, installs or upgrades the agent, and keeps devices current via a version manifest.
 
 #### Why use MDM deployment?
 
 * **Zero-touch deployment** — no manual installs on each laptop
-* **Centralized credentials** — API token and guardrails URL passed as script parameters (not embedded in the ZIP)
+* **Flexible credentials** — an **account-specific installer** ships with your token + guardrails URL embedded (nothing sensitive in your MDM), or a **universal installer** takes them as parameters
 * **Automatic updates** — devices check a version manifest on each script run
 * **MDM-agnostic** — same script and parameters across vendors
-* **No per-customer installer builds** — one ZIP per release works for all tenants
+* **No per-customer builds required** — the universal installer works for every tenant; the account-specific installer simply pre-fills credentials
 
 {% hint style="info" %}
 For **macOS**, use [Jamf MDM Deployment](jamf-mdm-deployment.md). For Automox Worklets on Windows, see [Automox Deployment](automox-deployment.md).
@@ -26,36 +31,39 @@ For **macOS**, use [Jamf MDM Deployment](jamf-mdm-deployment.md). For Automox Wo
 | ------ | ------ |
 | Script execution | **SYSTEM** / LocalSystem (not the logged-on user) |
 | PowerShell | **64-bit** (`powershell.exe`, not 32-bit WOW64) |
-| Installer payload | Generic ZIP per version (hosted by Akto) |
-| Credentials | `AKTO_API_TOKEN` + `AKTO_API_BASE_URL` via MDM script parameters or environment variables |
+| Installer payload | Versioned ZIP per release (hosted by Akto) — account-specific (credentials embedded) or universal |
+| Credentials | `AKTO_API_TOKEN` + `AKTO_API_BASE_URL` — **embedded** in an account-specific installer, or passed via MDM script parameters/env vars with the universal installer |
 | Auto-update | `latest.json` manifest URL (provided by Akto) |
 | Install location | `C:\Program Files\Akto Endpoint Shield\` |
 | Services | Scheduled tasks `MCPEndpointShieldHTTP`, `MCPEndpointShieldAgent`, `MCPEndpointShieldDetector`, `MCPEndpointShieldSystemProxy` |
 | Config | Per-user and SYSTEM `config.env` under `.akto-endpoint-shield\config\` |
 
-This path uses **ZIP + `install.ps1`**, not an MSI or per-tenant `.exe` installer.
+This path uses **ZIP + `install.ps1`**, not an MSI installer.
 
 ***
 
 ### Prerequisites
 
-#### 1. AKTO\_API\_TOKEN
+#### 1. Akto installer package
 
-* From the Akto platform (Atlas / guardrails onboarding)
-* Store as a **secret** in your MDM where supported
+* Provided by Akto and contains `install.ps1` plus the versioned ZIP payload
+* **Account-specific installer:** your `AKTO_API_TOKEN` and `AKTO_API_BASE_URL` are already embedded — nothing else to supply
+* **Universal installer:** shared across all clients — you must pass the token and base URL (below) at deploy time
 
-#### 2. AKTO\_API\_BASE\_URL
-
-* Guardrails URL, e.g. `https://<account-id>-guardrails.akto.io`
-
-#### 3. MANIFEST\_URL
+#### 2. MANIFEST\_URL
 
 * Provided by Akto during onboarding
 * HTTPS URL to `latest.json` for auto-update
 
-#### 4. INSTALLER\_URL (optional)
+#### 3. INSTALLER\_URL (optional)
 
 * Direct HTTPS URL to the ZIP — fallback if the manifest cannot be fetched
+
+#### 4. AKTO\_API\_TOKEN + AKTO\_API\_BASE\_URL (universal installer only)
+
+* Only required with the **universal** installer — with an account-specific installer these are already embedded
+* `AKTO_API_TOKEN` — from the Akto platform (Atlas / guardrails onboarding); store as a **secret** in your MDM where supported
+* `AKTO_API_BASE_URL` — guardrails URL, e.g. `https://<account-id>-guardrails.akto.io`
 
 #### 5. MDM capabilities
 
@@ -96,24 +104,30 @@ Positional arguments (space-separated when your MDM supports a single parameter 
 | -------- | ---- | -------- | ----------- |
 | `$1` | `MANIFEST_URL` | Yes\* | HTTPS URL to `latest.json` |
 | `$2` | `INSTALLER_URL` | No | Direct ZIP URL if manifest fetch fails |
-| `$3` | `AKTO_API_TOKEN` | Yes | API token |
-| `$4` | `AKTO_API_BASE_URL` | Yes | Guardrails base URL |
+| `$3` | `AKTO_API_TOKEN` | Cond. | Required with the **universal** installer; already embedded in an account-specific installer |
+| `$4` | `AKTO_API_BASE_URL` | Cond. | Required with the **universal** installer; already embedded in an account-specific installer |
 
 \* Required unless only `INSTALLER_URL` / `INSTALLER_PATH` is used.
 
-**Example (with ZIP fallback):**
+**Example — account-specific installer** (credentials embedded, pass only the manifest URL):
 
-```text
-https://<akto-host>/atlas-installers/windows-installer/latest.json  https://<akto-host>/atlas-installers/windows-installer/<version>/akto-endpoint-shield-<version>.zip  <TOKEN>  https://<account-id>-guardrails.akto.io
+```powershell
+.\install.ps1 "https://<manifest-url>/latest.json"
 ```
 
-**Example (manifest only)** — local test in PowerShell:
+**Example — universal installer** (pass token + base URL; note the empty `""` placeholder for the unused installer URL so arguments don't shift):
 
 ```powershell
 .\install.ps1 "https://<manifest-url>/latest.json" "" "<TOKEN>" "https://<account-id>-guardrails.akto.io"
 ```
 
-Environment variables (`MANIFEST_URL`, `AKTO_API_TOKEN`, `AKTO_API_BASE_URL`, `FORCE_REINSTALL`, etc.) are also supported if your MDM sets them instead of positional args.
+**Example — universal installer with ZIP fallback** (single space-delimited string):
+
+```text
+https://<akto-host>/atlas-installers/windows-installer/latest.json  https://<akto-host>/atlas-installers/windows-installer/<version>/akto-endpoint-shield-<version>.zip  <TOKEN>  https://<account-id>-guardrails.akto.io
+```
+
+Environment variables (`MANIFEST_URL`, `AKTO_API_TOKEN`, `AKTO_API_BASE_URL`, `FORCE_REINSTALL`, etc.) are also supported if your MDM sets them instead of positional args. With an account-specific installer, `AKTO_API_TOKEN` / `AKTO_API_BASE_URL` are already embedded and can be omitted.
 
 `Detect-AktoEndpointShield.ps1` and `Remediate-AktoEndpointShield.ps1` take **no parameters** — they read everything they need from the device after the one-time `install.ps1` provisioning step. That's what lets them run on Intune Remediations, which has no parameters field.
 
@@ -125,14 +139,20 @@ Environment variables (`MANIFEST_URL`, `AKTO_API_TOKEN`, `AKTO_API_BASE_URL`, `F
 {% tab title="Microsoft Intune" %}
 Intune deployment has **two parts**: a one-time install via a **Win32 app**, and recurring auto-update via **Remediations**.
 
-Intune **Platform scripts** (Devices → Scripts and remediations → Platform scripts) has no field for passing your token and re-runs on every device check-in rather than installing once — so provisioning goes through a **Win32 app** instead, which supports a free-text install command and installs only once (governed by a detection rule).
+Intune **Platform scripts** (Devices → Scripts and remediations → Platform scripts) re-run on every device check-in rather than installing once (and have no field for the token the universal installer needs) — so provisioning goes through a **Win32 app** instead, which supports a free-text install command and installs only once (governed by a detection rule).
 
 **Step 1 — One-time install (Win32 app)**
 
 1. **Package it.** Run the [Win32 Content Prep Tool](https://github.com/microsoft/Microsoft-Win32-Content-Prep-Tool) against a folder containing `install.ps1`, producing an `.intunewin` file.
 2. **Apps** → **Windows** → **Add** → **Windows app (Win32)**, and upload the `.intunewin` file.
 3. **Program:**
-   * Install command:
+   * Install command — **account-specific installer** (credentials embedded, manifest URL only):
+
+     ```
+     powershell.exe -NoProfile -ExecutionPolicy Bypass -File install.ps1 "https://<manifest-url>/latest.json"
+     ```
+
+     With the **universal installer**, append the token and base URL (empty `""` for the unused installer URL so arguments don't shift):
 
      ```
      powershell.exe -NoProfile -ExecutionPolicy Bypass -File install.ps1 "https://<manifest-url>/latest.json" "" "<TOKEN>" "https://<account-id>-guardrails.akto.io"
@@ -172,7 +192,7 @@ If detection ever reports "not installed" (for example after a bad uninstall), I
 1. Create a **PowerShell** remediation or custom script policy
 2. Run as **SYSTEM** / **LocalSystem** with **highest** privileges
 3. Use **64-bit** PowerShell
-4. Pass the four arguments (or set equivalent environment variables)
+4. Pass the manifest URL (account-specific installer), or the manifest URL plus token and base URL (universal installer) — or set equivalent environment variables
 5. Schedule at least **daily** on enrolled Windows devices
 6. Use your MDM's script success/failure reporting for validation
 
@@ -181,7 +201,7 @@ Running `install.ps1` on a daily schedule handles updates on its own — it skip
 {% endtabs %}
 
 {% hint style="warning" %}
-If your MDM passes a single space-delimited string, confirm in a pilot that the token maps to argument 3 and the base URL to argument 4. Akto onboarding can provide a parameter string tested for your platform.
+With an **account-specific installer** you pass only the manifest URL, so there are no credentials to map. With the **universal installer**, if your MDM passes a single space-delimited string, confirm in a pilot that the token maps to argument 3 and the base URL to argument 4 — and pass an empty `""` for the unused installer URL (argument 2) so nothing shifts. Akto onboarding can provide a parameter string tested for your platform.
 {% endhint %}
 
 ***
@@ -205,7 +225,7 @@ The script **skips downloading** the ZIP when the installed version already matc
 1. Fetches `latest.json` from `MANIFEST_URL`
 2. Compares manifest `version` with `akto-endpoint-shield.exe --version`
 3. If needed, downloads ZIP, stops tasks, deploys to `C:\Program Files\Akto Endpoint Shield\`
-4. Writes `config.env` for interactive users and SYSTEM
+4. Writes `config.env` for interactive users and SYSTEM — from the credentials embedded in the installer, or from the token + base URL you passed
 5. Registers and starts scheduled tasks
 
 MCP client and hook settings are controlled from the **Akto dashboard** after install.
@@ -249,7 +269,7 @@ Also confirm success in your **MDM script reporting** and that the device appear
 | Symptom | Likely cause | What to do |
 | ------- | ------------ | ---------- |
 | Script fails immediately | Not running as SYSTEM or 32-bit PowerShell | Use 64-bit PowerShell as SYSTEM |
-| Wrong config / token | Arguments shifted in MDM | Fix parameter string; test locally with explicit `""` for arg 2 |
+| Wrong config / token (universal installer) | Arguments shifted in MDM | Fix parameter string; test locally with explicit `""` for arg 2. Or use an account-specific installer, which needs no credentials passed |
 | Win32 app keeps reinstalling every ~24h | Detection rule never matches (e.g. path typo) | Verify the detection script against a working device |
 | Device never gets the latest version | Remediation not assigned, or scheduled too infrequently | Confirm assignment + schedule in Intune; policy delivery can take up to 8 hours to reach a device after first assignment |
 | No upgrade | Manifest version mismatch | Contact Akto to align manifest and published ZIP |
