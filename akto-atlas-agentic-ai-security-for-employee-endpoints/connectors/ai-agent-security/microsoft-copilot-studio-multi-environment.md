@@ -45,6 +45,26 @@ To verify or enable it for each environment:
 Transcripts take **up to 30 minutes** to appear in Dataverse after a conversation ends. The default Dataverse retention for transcripts is 30 days; this can be extended (see [Change the default retention period](https://learn.microsoft.com/en-us/microsoft-copilot-studio/analytics-transcripts-powerapps#change-the-default-retention-period)).
 {% endhint %}
 
+#### 2.1 Enable via Environment Group (Recommended for Multiple Environments)
+
+Instead of enabling transcript saving one environment at a time, you can create an environment group in the Power Platform admin center and publish the **Accessing transcripts from conversations in Copilot Studio agents** rule on that group. This enables transcript saving in Dataverse across every environment in the group at once.
+
+1. Sign in to the [Power Platform admin center](https://admin.powerplatform.microsoft.com).
+2. Select **Manage** in the navigation pane, then select **Environment groups**.
+3. Select **New group**.
+4. In the **Create group** pane, enter a **Name** and **Description**, then select **Create**.
+5. Select the group you just created, then select **Add environments** in the command bar. Choose all the environments you want Akto to discover, then select **Add**.
+6. Select the **Rules** tab for the group.
+7. Select the **Accessing transcripts from conversations in Copilot Studio agents** rule to open its configuration panel.
+8. Turn on the setting to allow conversation transcripts and their associated metadata to be saved in Dataverse, then select **Save**.
+9. Select **Publish rules** in the command bar to apply the rule across every environment in the group.
+
+{% hint style="warning" %}
+Only published rules are enforced. If you configure the rule but skip **Publish rules**, none of the environments in the group will have transcript saving enabled.
+{% endhint %}
+
+For detailed steps, see Microsoft's [Create an environment group](https://learn.microsoft.com/en-us/power-platform/admin/environment-groups#create-an-environment-group) guide and the full list of [available rules](https://learn.microsoft.com/en-us/power-platform/admin/environment-groups-rules).
+
 ### 3. Copilot Studio License
 
 A paid [Copilot Studio license](https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing) must be assigned to the account that owns the agents in each environment. Trial licenses do not always sync conversation transcripts to Dataverse.
@@ -77,8 +97,6 @@ At runtime, the connector only reads two tables using this application user:
 {% hint style="info" %}
 If you require least-privilege access instead of System Administrator for the auto-provisioned application user, contact Akto support to discuss a custom role setup.
 {% endhint %}
-
-Before connecting in Part 2, you must [create an environment group](https://learn.microsoft.com/en-us/power-platform/admin/environment-groups#create-an-environment-group) in the Power Platform admin center that includes all the environments you want Akto to discover, and assign the application user's permissions at the group level. This step is required: Akto's auto-provisioning relies on the environment group to apply permissions consistently across every environment in the tenant, rather than configuring them one environment at a time.
 
 ## Steps to Connect
 
