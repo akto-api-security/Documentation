@@ -6,16 +6,16 @@ description: Connect Akto with Microsoft Copilot Studio
 
 ## Overview
 
-[Microsoft Copilot Studio](https://learn.microsoft.com/en-us/microsoft-copilot-studio/fundamentals-what-is-copilot-studio) is a low-code platform for building and deploying conversational AI agents and copilots. Connect Akto Argus to your Copilot Studio environment to discover deployed agents and ingest conversation transcripts for security analysis.
+[Microsoft Copilot Studio](https://learn.microsoft.com/en-us/microsoft-copilot-studio/fundamentals-what-is-copilot-studio) is a low-code platform for building and deploying conversational AI agents and copilots. Connect Akto Atlas to your Copilot Studio environment to discover deployed agents and ingest conversation transcripts for security analysis.
 
-Once connected, Akto Argus automatically:
+Once connected, Akto Atlas automatically:
 
 * **Discovers Copilot agents** configured in your Power Platform environment
 * **Ingests conversation transcripts** captured by Copilot Studio in Microsoft Dataverse
 * **Pairs user prompts with bot responses** to reconstruct full conversation flows
 * **Sends traffic to Akto** for prompt injection, PII, and policy-violation analysis
 
-The connector reads conversation transcripts from the [Dataverse Web API](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/overview) using a service principal — no changes are required to your Copilot Studio agents or their deployment.
+The connector reads conversation transcripts from the [Dataverse Web API](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/overview) using a service principal - no changes are required to your Copilot Studio agents or their deployment.
 
 ## How It Works
 
@@ -24,21 +24,21 @@ Microsoft Copilot Studio
          ↓ (transcripts persisted)
 Microsoft Dataverse  ──── (Dataverse Web API v9.1 + OAuth 2.0)
          ↓
-Akto Argus Connector  ── (every 5 minutes)
+Akto Atlas Connector  ── (every 5 minutes)
          ↓
 Akto Data Ingestion Service
          ↓
 Akto Dashboard
 ```
 
-1. **Polling** — The connector polls Dataverse on a recurring schedule (default: every 5 minutes) for new [conversation transcripts](https://learn.microsoft.com/en-us/microsoft-copilot-studio/analytics-transcripts-powerapps).
-2. **Authentication** — [OAuth 2.0 client-credentials flow](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-client-creds-grant-flow) using a Microsoft Entra ID app registration and a Dataverse application user.
-3. **Pairing** — Each transcript's `activities` array is parsed; user messages (`role: 1`) are paired with the next bot response (`role: 0`) to form request/response pairs.
-4. **Publishing** — Each pair is forwarded to your Akto Data Ingestion Service for ingestion into the Akto platform.
+1. **Polling** - The connector polls Dataverse on a recurring schedule (default: every 5 minutes) for new [conversation transcripts](https://learn.microsoft.com/en-us/microsoft-copilot-studio/analytics-transcripts-powerapps).
+2. **Authentication** - [OAuth 2.0 client-credentials flow](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-client-creds-grant-flow) using a Microsoft Entra ID app registration and a Dataverse application user.
+3. **Pairing** - Each transcript's `activities` array is parsed; user messages (`role: 1`) are paired with the next bot response (`role: 0`) to form request/response pairs.
+4. **Publishing** - Each pair is forwarded to your Akto Data Ingestion Service for ingestion into the Akto platform.
 
 ## Prerequisites
 
-Before setting up the Copilot Studio connector, ensure the following requirements are met. **Most setup issues are caused by missing prerequisites — please review them carefully.**
+Before setting up the Copilot Studio connector, ensure the following requirements are met. **Most setup issues are caused by missing prerequisites - please review them carefully.**
 
 ### 1. Supported Power Platform Environment
 
@@ -62,7 +62,7 @@ To verify or enable it:
 4. Ensure **"Allow conversation transcripts and their associated metadata to be saved in Dataverse"** is enabled, then **Save**.
 
 {% hint style="info" %}
-Transcripts take **up to 30 minutes** to appear in Dataverse after a conversation ends. The default Dataverse retention for transcripts is 30 days; this can be extended — see [Change the default retention period](https://learn.microsoft.com/en-us/microsoft-copilot-studio/analytics-transcripts-powerapps#change-the-default-retention-period).
+Transcripts take **up to 30 minutes** to appear in Dataverse after a conversation ends. The default Dataverse retention for transcripts is 30 days; this can be extended - see [Change the default retention period](https://learn.microsoft.com/en-us/microsoft-copilot-studio/analytics-transcripts-powerapps#change-the-default-retention-period).
 {% endhint %}
 
 ### 3. Copilot Studio License
@@ -71,11 +71,11 @@ A paid [Copilot Studio license](https://learn.microsoft.com/en-us/microsoft-copi
 
 ### 4. Akto Data Ingestion Service
 
-Your self-hosted Akto **Data Ingestion Service** must be deployed and reachable from the Akto Argus connector. The connector forwards each conversation pair to this endpoint.
+Your self-hosted Akto **Data Ingestion Service** must be deployed and reachable from the Akto Atlas connector. The connector forwards each conversation pair to this endpoint.
 
 ### 5. Required Permissions
 
-Two distinct sets of permissions are involved in this integration. Note the difference — confusing them is the most common setup mistake.
+Two distinct sets of permissions are involved in this integration. Note the difference - confusing them is the most common setup mistake.
 
 #### 5a. Permissions for the person running the setup (one-time)
 
@@ -91,7 +91,7 @@ The user performing **Part 1** of the setup needs a Dataverse [security role](ht
 
 The simplest way to satisfy all of these is to assign yourself the built-in **System Administrator** role for the target environment. If your organization restricts that role, ask the tenant's [Global administrator or Dynamics 365 administrator](https://learn.microsoft.com/en-us/power-platform/admin/manage-high-privileged-admin-roles) to either run the setup for you or temporarily grant the role.
 
-These permissions are **only** needed at setup time — they are not used by the connector at runtime.
+These permissions are **only** needed at setup time - they are not used by the connector at runtime.
 
 #### 5b. Permissions for the application user (used by Akto at runtime)
 
@@ -99,8 +99,8 @@ The Dataverse application user that Akto authenticates as needs only **read acce
 
 | Privilege | Entity | Logical name | Used by |
 | --- | --- | --- | --- |
-| **Read** (Organization scope) | Bot | `bot` | `GET /api/data/v9.1/bots` — agent discovery |
-| **Read** (Organization scope) | Conversation Transcript | `conversationtranscript` | `GET /api/data/v9.1/conversationtranscripts` — traffic ingestion |
+| **Read** (Organization scope) | Bot | `bot` | `GET /api/data/v9.1/bots` - agent discovery |
+| **Read** (Organization scope) | Conversation Transcript | `conversationtranscript` | `GET /api/data/v9.1/conversationtranscripts` - traffic ingestion |
 
 You have two ways to grant these:
 
@@ -108,12 +108,12 @@ You have two ways to grant these:
 * **Faster (broader access)**: Assign the built-in [**Bot Transcript Viewer**](https://learn.microsoft.com/en-us/microsoft-copilot-studio/admin-share-bots#assign-the-bot-transcript-viewer-security-role-during-agent-sharing) role (covers `conversationtranscript` reads) plus the built-in **Environment Maker** role (covers `bot` reads). This grants more than strictly necessary; prefer the custom role in production.
 
 {% hint style="warning" %}
-Do **not** assign **System Administrator** to the application user. It is far broader than needed and violates the principle of least privilege — the connector only reads two tables.
+Do **not** assign **System Administrator** to the application user. It is far broader than needed and violates the principle of least privilege - the connector only reads two tables.
 {% endhint %}
 
 ## Steps to Connect
 
-### Part 1 — Set Up Microsoft Entra ID and Dataverse Access
+### Part 1 - Set Up Microsoft Entra ID and Dataverse Access
 
 You only need to complete Part 1 once per Power Platform environment. The steps below mirror Microsoft's [confidential client app registration tutorial for Dataverse](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/walkthrough-register-app-azure-active-directory#confidential-client-app-registration).
 
@@ -127,7 +127,7 @@ You only need to complete Part 1 once per Power Platform environment. The steps 
    * **Name**: `akto-copilot-studio-connector` (or any meaningful name)
    * **Supported account types**: **Accounts in this organizational directory only (single tenant)**
 4. Select **Register**.
-5. On the **Overview** page, copy and save the following values — you will paste them into the Akto dashboard later:
+5. On the **Overview** page, copy and save the following values - you will paste them into the Akto dashboard later:
    * **Application (client) ID**
    * **Directory (tenant) ID**
 {% endstep %}
@@ -163,7 +163,7 @@ Per [Microsoft's Dataverse security role documentation](https://learn.microsoft.
 3. In the top toolbar (or under the **More** menu), select **Membership** → **Add me**.
 4. Confirm the **System Administrator** role is granted to your user, then reload the **Application users** page.
 
-If your tenant uses [Entra Privileged Identity Management for Power Platform](https://learn.microsoft.com/en-us/power-platform/admin/manage-high-privileged-admin-roles), activate the eligible Dataverse System Administrator assignment instead. The PowerShell cmdlet `Set-AdminPowerAppEnvironmentRoleAssignment` does **not** work on environments with a Dataverse database (returns `403 Forbidden`) — use the **Membership** UI.
+If your tenant uses [Entra Privileged Identity Management for Power Platform](https://learn.microsoft.com/en-us/power-platform/admin/manage-high-privileged-admin-roles), activate the eligible Dataverse System Administrator assignment instead. The PowerShell cmdlet `Set-AdminPowerAppEnvironmentRoleAssignment` does **not** work on environments with a Dataverse database (returns `403 Forbidden`) - use the **Membership** UI.
 {% endhint %}
 
 1. Open the [Power Platform admin center](https://admin.powerplatform.microsoft.com).
@@ -173,8 +173,8 @@ If your tenant uses [Entra Privileged Identity Management for Power Platform](ht
 5. In the side panel, select **+ Add an app** and search for the app registration you created in Step 1. Select it and choose **Add**.
 6. Select the appropriate **Business unit** (typically the default).
 7. Assign the runtime security role described in [Prerequisites § 5b](#5b-permissions-for-the-application-user-used-by-akto-at-runtime). Choose **one** of:
-   * **Custom role (recommended)** — A role you create in advance with **Read = Organization** on the **Bot** and **Conversation Transcript** tables only.
-   * **Built-in fallback** — **Bot Transcript Viewer** + **Environment Maker** (grants more than required, but works out of the box).
+   * **Custom role (recommended)** - A role you create in advance with **Read = Organization** on the **Bot** and **Conversation Transcript** tables only.
+   * **Built-in fallback** - **Bot Transcript Viewer** + **Environment Maker** (grants more than required, but works out of the box).
 8. Select **Create**.
 {% endstep %}
 
@@ -187,10 +187,10 @@ If you want the least-privilege option from [Prerequisites § 5b](#5b-permission
 2. Select **Manage** → **Environments** → select your target environment.
 3. Open **Settings** → **Users + permissions** → **Security roles**.
 4. Select **+ New role**.
-5. **Details** tab — enter a name (e.g. `Akto Copilot Connector`) and select a business unit (typically the root).
+5. **Details** tab - enter a name (e.g. `Akto Copilot Connector`) and select a business unit (typically the root).
 6. **Tables** tab → search for `Bot` → set **Read** to **Organization** (full green circle). Leave all other privileges blank.
 7. Search for `Conversation Transcript` → set **Read** to **Organization**. Leave all other privileges blank.
-8. **Miscellaneous Privileges** tab — leave everything unchecked.
+8. **Miscellaneous Privileges** tab - leave everything unchecked.
 9. Select **Save and Close**.
 
 Return to **Step 3** above and assign this role to the application user.
@@ -201,7 +201,7 @@ Return to **Step 3** above and assign this role to the application user.
 
 1. In the [Power Platform admin center](https://admin.powerplatform.microsoft.com), open **Manage** → **Environments**.
 2. Select your environment to view its details.
-3. Copy the **Environment URL** value — it has the form:
+3. Copy the **Environment URL** value - it has the form:
    * `https://<your-org>.crm.dynamics.com` (North America)
    * `https://<your-org>.crm<region>.dynamics.com` (other regions, e.g., `crm4` for EMEA)
 
@@ -209,13 +209,13 @@ For the full list of regional URL suffixes, see Microsoft's [Datacenter regions]
 {% endstep %}
 {% endstepper %}
 
-### Part 2 — Connect from the Akto Dashboard
+### Part 2 - Connect from the Akto Dashboard
 
 {% stepper %}
 {% step %}
-**Open the Copilot Studio Connector in Akto Argus**
+**Open the Copilot Studio Connector in Akto Atlas**
 
-1. Navigate to **Akto Argus** in your Akto dashboard.
+1. Navigate to **Akto Atlas** in your Akto dashboard.
 2. Open **Connectors**.
 3. Under **AI Agent Security**, locate the **Copilot Studio** connector card.
 4. Select **Connect** to open the setup dialog.
@@ -304,9 +304,9 @@ For each conversation transcript, the connector emits one record per **user mess
 
 Edge cases handled automatically:
 
-* **Bot greetings** (no preceding user prompt) — emitted with an empty `requestPayload`.
-* **Unanswered user prompts** — emitted with an empty `responsePayload`.
-* **Multiple bot replies** — each paired with the most recent user message.
+* **Bot greetings** (no preceding user prompt) - emitted with an empty `requestPayload`.
+* **Unanswered user prompts** - emitted with an empty `responsePayload`.
+* **Multiple bot replies** - each paired with the most recent user message.
 
 ## Troubleshooting
 
@@ -314,11 +314,11 @@ Edge cases handled automatically:
 
 This is the most common issue. Work through the checks below in order:
 
-1. **Environment type** — Confirm you are connected to a **Sandbox** or **Production** environment. Developer and Teams environments do not persist transcripts.
-2. **Transcript saving enabled** — Verify the **"Allow conversation transcripts and their associated metadata to be saved in Dataverse"** setting is ON (see Prerequisites, item 2).
-3. **Sync delay** — Transcripts can take up to 30 minutes to appear in Dataverse after a conversation ends. Have a test conversation and wait 30+ minutes before retesting.
-4. **License** — Confirm a **paid** Copilot Studio license is assigned to the account that owns the agents.
-5. **Transcripts visible in Power Apps** — Open [make.powerapps.com](https://make.powerapps.com), select your environment, go to **Tables** → search **Conversation Transcript** (see Microsoft's [download conversation transcripts guide](https://learn.microsoft.com/en-us/microsoft-copilot-studio/analytics-transcripts-powerapps)). If no rows appear there, the connector cannot ingest them either — fix the source first.
+1. **Environment type** - Confirm you are connected to a **Sandbox** or **Production** environment. Developer and Teams environments do not persist transcripts.
+2. **Transcript saving enabled** - Verify the **"Allow conversation transcripts and their associated metadata to be saved in Dataverse"** setting is ON (see Prerequisites, item 2).
+3. **Sync delay** - Transcripts can take up to 30 minutes to appear in Dataverse after a conversation ends. Have a test conversation and wait 30+ minutes before retesting.
+4. **License** - Confirm a **paid** Copilot Studio license is assigned to the account that owns the agents.
+5. **Transcripts visible in Power Apps** - Open [make.powerapps.com](https://make.powerapps.com), select your environment, go to **Tables** → search **Conversation Transcript** (see Microsoft's [download conversation transcripts guide](https://learn.microsoft.com/en-us/microsoft-copilot-studio/analytics-transcripts-powerapps)). If no rows appear there, the connector cannot ingest them either - fix the source first.
 
 ### Authentication Errors
 
@@ -331,8 +331,8 @@ This is the most common issue. Work through the checks below in order:
 **`403 Forbidden`**
 
 * The Microsoft Entra app exists but has no permission inside Dataverse. Verify that a corresponding **Application user** exists in the Power Platform environment (Part 1, Step 3).
-* Confirm the application user's security role grants **Read** on **both** the `bot` and `conversationtranscript` tables at **Organization** scope — see [Prerequisites § 5b](#5b-permissions-for-the-application-user-used-by-akto-at-runtime). Business Unit scope is **not** sufficient, because transcripts created by other users won't be visible.
-* If you assigned only the **Bot Transcript Viewer** role, add **Environment Maker** as well — Bot Transcript Viewer alone does not grant read on the `bot` table.
+* Confirm the application user's security role grants **Read** on **both** the `bot` and `conversationtranscript` tables at **Organization** scope - see [Prerequisites § 5b](#5b-permissions-for-the-application-user-used-by-akto-at-runtime). Business Unit scope is **not** sufficient, because transcripts created by other users won't be visible.
+* If you assigned only the **Bot Transcript Viewer** role, add **Environment Maker** as well - Bot Transcript Viewer alone does not grant read on the `bot` table.
 
 ### "There was a problem adding ... to this environment"
 
@@ -347,7 +347,7 @@ This is raised by Power Platform when **you** (the person clicking **Create**) d
 
 * Verify your own user has the privileges listed in [Prerequisites § 5a](#5a-permissions-for-the-person-running-the-setup-one-time).
 * The simplest fix is to have a tenant admin assign you the **System Administrator** role in the target environment, then retry. Once setup is complete, you can remove the role.
-* If `roleCount` in the error is `0` or `1`, your account is missing a Dataverse security role entirely — open [Power Platform admin center](https://admin.powerplatform.microsoft.com) → environment → **Settings → Users + permissions → Users**, open your user, and confirm role assignments.
+* If `roleCount` in the error is `0` or `1`, your account is missing a Dataverse security role entirely - open [Power Platform admin center](https://admin.powerplatform.microsoft.com) → environment → **Settings → Users + permissions → Users**, open your user, and confirm role assignments.
 
 ### Connection Test Fails
 
@@ -364,19 +364,19 @@ Dataverse enforces [service protection API limits](https://learn.microsoft.com/e
 
 ## Security and Privacy
 
-* **Credentials at rest** — The Microsoft Entra client secret is stored encrypted in Akto's secure configuration store and is never displayed back to the user after import.
-* **Least privilege** — Akto recommends [creating a custom Dataverse security role](https://learn.microsoft.com/en-us/power-platform/admin/create-edit-security-role) with read-only access to the `bot` and `conversationtranscript` tables, rather than System Administrator.
-* **Secret rotation** — Rotate the Microsoft Entra client secret per your organization's policy (see Microsoft's [credential management best practices](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal#option-3-create-a-new-client-secret)). After rotating, return to the connector and re-import with the new value.
-* **Network** — All Dataverse and ingestion traffic is sent over HTTPS.
-* **Data residency** — Conversation transcripts remain in your Dataverse environment; Akto reads them via the Web API. Pairs are then forwarded to your self-hosted Akto Data Ingestion Service.
+* **Credentials at rest** - The Microsoft Entra client secret is stored encrypted in Akto's secure configuration store and is never displayed back to the user after import.
+* **Least privilege** - Akto recommends [creating a custom Dataverse security role](https://learn.microsoft.com/en-us/power-platform/admin/create-edit-security-role) with read-only access to the `bot` and `conversationtranscript` tables, rather than System Administrator.
+* **Secret rotation** - Rotate the Microsoft Entra client secret per your organization's policy (see Microsoft's [credential management best practices](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal#option-3-create-a-new-client-secret)). After rotating, return to the connector and re-import with the new value.
+* **Network** - All Dataverse and ingestion traffic is sent over HTTPS.
+* **Data residency** - Conversation transcripts remain in your Dataverse environment; Akto reads them via the Web API. Pairs are then forwarded to your self-hosted Akto Data Ingestion Service.
 
 ## Get Support
 
 If you need assistance with the Copilot Studio connector:
 
-* **In-app Chat** — Use the chat widget in your Akto dashboard for instant support.
-* **Discord Community** — Join our community at [discord.gg/Wpc6xVME4s](https://discord.gg/Wpc6xVME4s).
-* **Email Support** — Contact us at [help@akto.io](mailto:help@akto.io).
-* **Contact Form** — Submit a support request at [https://www.akto.io/contact-us](https://www.akto.io/contact-us).
+* **In-app Chat** - Use the chat widget in your Akto dashboard for instant support.
+* **Discord Community** - Join our community at [discord.gg/Wpc6xVME4s](https://discord.gg/Wpc6xVME4s).
+* **Email Support** - Contact us at [help@akto.io](mailto:help@akto.io).
+* **Contact Form** - Submit a support request at [https://www.akto.io/contact-us](https://www.akto.io/contact-us).
 
 Our team is available 24/7 to help with setup, troubleshooting, and best practices.
