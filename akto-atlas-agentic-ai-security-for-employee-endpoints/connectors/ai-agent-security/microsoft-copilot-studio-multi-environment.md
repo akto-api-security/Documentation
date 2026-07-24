@@ -78,6 +78,8 @@ At runtime, the connector only reads two tables using this application user:
 If you require least-privilege access instead of System Administrator for the auto-provisioned application user, contact Akto support to discuss a custom role setup.
 {% endhint %}
 
+Before connecting in Part 2, you must [create an environment group](https://learn.microsoft.com/en-us/power-platform/admin/environment-groups#create-an-environment-group) in the Power Platform admin center that includes all the environments you want Akto to discover, and assign the application user's permissions at the group level. This step is required: Akto's auto-provisioning relies on the environment group to apply permissions consistently across every environment in the tenant, rather than configuring them one environment at a time.
+
 ## Steps to Connect
 
 ### Part 1 - Create an App Registration in Microsoft Entra
@@ -98,7 +100,17 @@ Give the app a name (e.g. `akto-copilot-studio-multi-env-connector`) and set sup
 {% endstep %}
 
 {% step %}
-Click **Register**.
+Configure the Redirect URI
+
+*   Select platform as **Web** and add the following as the URI:
+
+    <pre data-overflow="wrap"><code>https://app.akto.io/copilot/oauth/callback
+    </code></pre>
+* Click **Register**.
+
+{% hint style="info" %}
+You will be prompted to log in once with your Microsoft account when you [connect from the Akto dashboard](#part-2-connect-from-the-akto-dashboard) in Part 2.
+{% endhint %}
 {% endstep %}
 
 {% step %}
@@ -146,9 +158,12 @@ Select the **APIs my organization uses** tab. Search for **PowerApps Service** a
 {% hint style="info" %}
 **Why does Akto ask for a Microsoft interactive login?**
 
-When you enter your details in the Akto dashboard, you'll be asked to log in to your Microsoft account **once per tenant**. This is required to register the app you created in Part 1 with the Power Platform admin center.
+When you enter your details in the Akto dashboard, you'll be asked to log in to your Microsoft account **once per tenant**. This one-time login:
 
-This one-time login lets Akto automate the creation of application users in each environment, so you don't have to create them manually. Akto creates the application user with default access (**System Administrator**), and uses this application user to fetch conversation transcripts and agent information.
+* Registers the app you created in Part 1 with the Power Platform admin center
+* Lets Akto automate the creation of application users in each environment, so you don't have to create them manually
+* Creates each application user with default access (**System Administrator**)
+* Is used by Akto to fetch conversation transcripts and agent information via these application users
 {% endhint %}
 
 {% stepper %}
@@ -205,11 +220,21 @@ In the **URL for Data Ingestion Service** field, enter the base URL of your self
 {% endstep %}
 
 {% step %}
+**Complete Microsoft Sign-In**
+
+After entering your credentials, you will be taken to the Microsoft login page. Complete the sign-in with an account that has permission to register the app in the Power Platform admin center.
+
+{% hint style="info" %}
+This sign-in is required only once per tenant. See [Why does Akto ask for a Microsoft interactive login?](#part-2-connect-from-the-akto-dashboard) above for details.
+{% endhint %}
+{% endstep %}
+
+{% step %}
 **Review Discovered Environments**
 
-After entering your credentials, Akto will automatically discover all Power Platform environments in your tenant. A **Review discovered environments** section will appear showing:
+After completing the sign-in, Akto will automatically discover all Power Platform environments in your tenant. A **Review discovered environments** section will appear showing:
 
-* **Environment name** (e.g. "Production", "Akto.io (default)")
+* **Environment name** (e.g. "Production", "Default")
 * **Environment URL** (e.g., `https://org12345.crm.dynamics.com/`)
 
 Review the list to confirm all environments are present. Akto will provision an application user in each environment to read Copilot Studio transcripts.
@@ -230,7 +255,7 @@ If you don't see an expected environment, verify that:
 
 Akto will now:
 * Provision application users in each discovered environment
-* Start polling Copilot Studio transcripts from all environments every 5 minutes
+* Start polling Copilot Studio transcripts from all environments every 30 minutes
 * Begin importing conversation data to your Akto dashboard
 
 Conversations should begin appearing in your Akto dashboard within one or two polling cycles, provided transcripts exist in Dataverse for the polling window.
