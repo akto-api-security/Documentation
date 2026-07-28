@@ -24,29 +24,29 @@ Follow the steps in the [LangChain connector guide](langchain.md) to configure t
 Use this method if you want passive observability; collecting execution traces and API traffic after the fact without intercepting live requests.
 {% endhint %}
 
-### 2. Via Proxy
+### 2. Via Gateway
 
-Route your LangGraph agent's outbound LLM and tool calls through Akto's AI Agent Proxy. This gives you real-time inspection, guardrails enforcement, and response filtering on every request your agent makes, without modifying your application logic.
+Route your LangGraph agent's outbound LLM and tool calls through Akto's AI Agent Gateway. This gives you real-time inspection, guardrails enforcement, and response filtering on every request your agent makes, without modifying your application logic.
 
-#### 1. Set Up the AI Agent Proxy
+#### 1. Set Up the AI Agent Gateway
 
-Configure an **AI Agent Proxy** in your environment so LangGraph agent requests can pass through the proxy before reaching the upstream LLM or tool APIs.
+Configure an **AI Agent Gateway** in your environment so LangGraph agent requests can pass through the gateway before reaching the upstream LLM or tool APIs.
 
 ```mermaid
 graph LR
-    A[LangGraph Agent] --> B[Akto AI Agent Proxy]
+    A[LangGraph Agent] --> B[Akto AI Agent Gateway]
     B --> C[LLM Provider / Tool APIs]
 ```
 
 Akto Argus inspects prompts, evaluates guardrail policies, and filters responses before forwarding traffic to the upstream services.
 
-Refer to the [AI Agent Proxy guide](../../../agentic-guardrails/overview/akto-agent-proxy.md) for setup instructions.
+Refer to the [AI Agent Gateway guide](../../../agentic-guardrails/overview/akto-agent-proxy.md) for setup instructions.
 
-An enterprise platform team can deploy and manage the proxy within internal infrastructure. The deployed proxy endpoint becomes the `{PROXY_URL}` used in model routing configuration.
+An enterprise platform team can deploy and manage the gateway within internal infrastructure. The deployed gateway endpoint becomes the `{PROXY_URL}` used in model routing configuration.
 
-#### 2. Route Model Requests Through the Proxy
+#### 2. Route Model Requests Through the Gateway
 
-Update the model endpoint used by the LangGraph agent so requests pass through the proxy before reaching the model provider.
+Update the model endpoint used by the LangGraph agent so requests pass through the gateway before reaching the model provider.
 
 General model endpoint format:
 
@@ -54,7 +54,7 @@ General model endpoint format:
 https://{MODEL_HOST}/{MODEL_PATH}
 ```
 
-Proxy endpoint format:
+Gateway endpoint format:
 
 ```
 https://{PROXY_URL}/{MODEL_PATH}?openai_url=https://{MODEL_HOST}
@@ -63,7 +63,7 @@ https://{PROXY_URL}/{MODEL_PATH}?openai_url=https://{MODEL_HOST}
 | Configuration Element | Value                                                              |
 | --------------------- | ------------------------------------------------------------------ |
 | Model URL             | `https://{MODEL_HOST}/{MODEL_PATH}`                                |
-| Proxy URL Format      | `https://{PROXY_URL}/{MODEL_PATH}?openai_url=https://{MODEL_HOST}` |
+| Gateway URL Format    | `https://{PROXY_URL}/{MODEL_PATH}?openai_url=https://{MODEL_HOST}` |
 
 Akto Argus evaluates prompts, applies guardrail policies, and forwards the request to the upstream model provider.
 
@@ -77,7 +77,7 @@ Azure AI Foundry model endpoint:
 https://{AZURE_MODEL_URL}/openai/v1/
 ```
 
-Proxy endpoint format:
+Gateway endpoint format:
 
 ```
 https://{PROXY_URL}/openai/v1/?openai_url=https://{AZURE_MODEL_URL}
@@ -86,10 +86,10 @@ https://{PROXY_URL}/openai/v1/?openai_url=https://{AZURE_MODEL_URL}
 </details>
 
 {% hint style="warning" %}
-**Proxy URL usage**
+**Gateway URL usage**
 
-If your team deployed an AI Agent Proxy in the previous step, use the proxy endpoint from that deployment as `{PROXY_URL}`.\
-If your team prefers not to deploy a proxy, request a **managed proxy URL from the Akto support team** and use the provided endpoint as `{PROXY_URL}`.
+If your team deployed an AI Agent Gateway in the previous step, use the gateway endpoint from that deployment as `{PROXY_URL}`.\
+If your team prefers not to deploy a gateway, request a **managed gateway URL from the Akto support team** and use the provided endpoint as `{PROXY_URL}`.
 {% endhint %}
 
 {% hint style="info" %}
@@ -100,7 +100,7 @@ Use this method if you want active enforcement — intercepting and inspecting r
 
 ### 3. Via Hooks (Recommended)
 
-Akto provides `AktoGuardrailsMiddleware` — a class-based `AgentMiddleware` that hooks directly into the LangGraph agent lifecycle to enforce Akto guardrails on every model call. This requires no proxy and no external telemetry pipeline.
+Akto provides `AktoGuardrailsMiddleware` — a class-based `AgentMiddleware` that hooks directly into the LangGraph agent lifecycle to enforce Akto guardrails on every model call. This requires no gateway and no external telemetry pipeline.
 
 The middleware intercepts two points in the agent lifecycle:
 
@@ -258,7 +258,7 @@ except ValueError as e:
 {% hint style="info" %}
 **When to use this**
 
-Use this method if you want guardrails enforcement directly inside your LangGraph agent without deploying a separate proxy. It provides the same validation and blocking capabilities as the proxy approach, with a simpler setup.
+Use this method if you want guardrails enforcement directly inside your LangGraph agent without deploying a separate gateway. It provides the same validation and blocking capabilities as the gateway approach, with a simpler setup.
 {% endhint %}
 
 ## Get Support

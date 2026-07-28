@@ -2,13 +2,13 @@
 description: Route MCP server traffic from Copilot Studio agents through the Akto agent-proxy
 ---
 
-# Proxy MCP Server via Akto
+# Gateway MCP Server via Akto
 
 ## Overview
 
 Microsoft Copilot Studio agents can call external [Model Context Protocol (MCP)](https://modelcontextprotocol.io) servers as **tools**. By pointing the agent at Akto's `agent-proxy` instead of the MCP server directly, every tool call — both the request the agent makes and the response the MCP server returns — flows through Akto for inspection, policy enforcement, and audit.
 
-The proxy is fully transparent: the MCP server sees a normal request and returns a normal response. The agent sees the same MCP server contract. Akto sits in the middle.
+The gateway is fully transparent: the MCP server sees a normal request and returns a normal response. The agent sees the same MCP server contract. Akto sits in the middle.
 
 ## How It Works
 
@@ -22,22 +22,22 @@ https://<proxy-host>/agent-proxy/<target-mcp-host>/<path>
 Target MCP server  (e.g. docs.akto.io/~gitbook/mcp)
 ```
 
-The proxy URL is built by **dropping `https://`** from the target MCP server URL and **appending it to the Akto agent-proxy base**:
+The gateway URL is built by **dropping `https://`** from the target MCP server URL and **appending it to the Akto agent-proxy base**:
 
-| Target MCP server | Final proxy URL |
+| Target MCP server | Final gateway URL |
 | --- | --- |
 | `https://docs.akto.io/~gitbook/mcp` | `https://<proxy-host>/agent-proxy/docs.akto.io/~gitbook/mcp` |
 | `https://mcp.example.com/api/v1/mcp` | `https://<proxy-host>/agent-proxy/mcp.example.com/api/v1/mcp` |
 
 {% hint style="info" %}
-The proxy preserves the full path, query string, and request body of the original MCP server call. No changes are needed on the MCP server side.
+The gateway preserves the full path, query string, and request body of the original MCP server call. No changes are needed on the MCP server side.
 {% endhint %}
 
 ## Prerequisites
 
 * A **Microsoft Copilot Studio** agent you can edit (Author or Maker role on the agent).
 * The **full HTTPS URL** of the MCP server you want to expose to the agent.
-* The **Akto proxy host** (`<proxy-host>`) — provisioned and shared by Akto.
+* The **Akto gateway host** (`<proxy-host>`) — provisioned and shared by Akto.
 * Permission to publish the agent after the tool is added.
 
 ## Steps to Connect
@@ -75,7 +75,7 @@ From the **New tool** panel, choose **Model Context Protocol** (sometimes labell
 {% endstep %}
 
 {% step %}
-**Enter the proxy URL**
+**Enter the gateway URL**
 
 In the **URL** field, paste the Akto agent-proxy URL — **not** the raw MCP server URL.
 
@@ -90,26 +90,26 @@ https://<proxy-host>/agent-proxy/<mcp_server_url_without_https>
 | | |
 | --- | --- |
 | Target MCP Server | `https://docs.akto.io/~gitbook/mcp` |
-| Final Proxy URL | `https://<proxy-host>/agent-proxy/docs.akto.io/~gitbook/mcp` |
+| Final Gateway URL | `https://<proxy-host>/agent-proxy/docs.akto.io/~gitbook/mcp` |
 
 {% hint style="warning" %}
-Do **not** include `https://` after `/agent-proxy/`. The proxy expects only the host and path of the upstream MCP server.
+Do **not** include `https://` after `/agent-proxy/`. The gateway expects only the host and path of the upstream MCP server.
 {% endhint %}
 {% endstep %}
 
 {% step %}
 **Add the tool**
 
-Select **Add** at the bottom of the panel. Copilot Studio registers the proxy URL as the MCP endpoint for this tool.
+Select **Add** at the bottom of the panel. Copilot Studio registers the gateway URL as the MCP endpoint for this tool.
 {% endstep %}
 
 {% step %}
 **Connect**
 
-Select **Connect**. Copilot Studio performs an MCP handshake against the proxy URL — the proxy forwards the handshake to the upstream MCP server and returns the advertised tools list to the agent.
+Select **Connect**. Copilot Studio performs an MCP handshake against the gateway URL — the gateway forwards the handshake to the upstream MCP server and returns the advertised tools list to the agent.
 
 {% hint style="info" %}
-If the upstream MCP server requires authentication (API key, OAuth, etc.), Copilot Studio will prompt for it here. Credentials are sent through the proxy verbatim — Akto does not store them.
+If the upstream MCP server requires authentication (API key, OAuth, etc.), Copilot Studio will prompt for it here. Credentials are sent through the gateway verbatim — Akto does not store them.
 {% endhint %}
 {% endstep %}
 
@@ -133,13 +133,13 @@ Once finished, **Publish** the agent so the tool becomes available in conversati
 
 ### Tool fails to connect
 
-* Verify the proxy URL is correctly formatted: `https://<proxy-host>/agent-proxy/<host>/<path>` — no `https://` after `/agent-proxy/`, and no trailing slash.
+* Verify the gateway URL is correctly formatted: `https://<proxy-host>/agent-proxy/<host>/<path>` — no `https://` after `/agent-proxy/`, and no trailing slash.
 * Confirm the upstream MCP server is reachable from the Akto agent-proxy environment. If the MCP server is internal-only, contact Akto to allow-list it.
 
 ### MCP tools do not appear after Connect
 
 * The handshake against the upstream server may have failed silently. Try the original MCP URL directly in an MCP client to confirm it responds, then re-create the tool in Copilot Studio.
-* Check the Akto dashboard for proxy errors — the response from the upstream server is logged with the same trace ID.
+* Check the Akto dashboard for gateway errors — the response from the upstream server is logged with the same trace ID.
 
 ### Tool calls are not visible in Akto
 

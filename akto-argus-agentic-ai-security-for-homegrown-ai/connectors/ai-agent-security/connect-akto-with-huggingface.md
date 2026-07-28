@@ -2,9 +2,9 @@
 
 ## Overview
 
-This guide explains how to integrate **Akto AI Agent Proxy** with a **Hugging Face Private Inference Endpoint** used by customers to run private LLM inference. The proxy sits between the end user and the agent application (Option B) to monitor, enforce guardrails, and log model invocation traffic without modifying internal client code.
+This guide explains how to integrate **Akto AI Agent Gateway** with a **Hugging Face Private Inference Endpoint** used by customers to run private LLM inference. The gateway sits between the end user and the agent application (Option B) to monitor, enforce guardrails, and log model invocation traffic without modifying internal client code.
 
-Akto AI Agent Proxy provides:
+Akto AI Agent Gateway provides:
 
 * Guardrail enforcement on both requests and responses
 * Sensitive data redaction
@@ -14,11 +14,11 @@ Hugging Face’s Private Inference Endpoint provides a dedicated, managed model 
 
 ## **Prerequisites**
 
-Before integrating Akto Proxy:
+Before integrating Akto Gateway:
 
 1. A working **Hugging Face Private Inference Endpoint** configured with PrivateLink.
 2. AWS VPC where the endpoint service is reachable.
-3. The AI agent and Akto Proxy deployed in the same VPC or with network access to the PrivateLink interfaces.
+3. The AI agent and Akto Gateway deployed in the same VPC or with network access to the PrivateLink interfaces.
 4. Access credentials for Hugging Face inference (API token).
 
 ***
@@ -27,16 +27,16 @@ Before integrating Akto Proxy:
 
 ```mermaid
 flowchart LR
-    A[EndUser] --> B[Akto AI Agent Proxy] --> C[AI Agent App] --> D[HF Private Inference Endpoint]
+    A[EndUser] --> B[Akto AI Agent Gateway] --> C[AI Agent App] --> D[HF Private Inference Endpoint]
     B --> E[Logs and Guardrails Analytics]
 
 
 ```
 
 1. End user calls the **AI agent API**.
-2. **Akto Proxy** intercepts requests (guardrail enforcement).
-3. Proxy forwards to **HF Private Inference Endpoint** (via PrivateLink).
-4. Responses pass back through Akto Proxy.
+2. **Akto Gateway** intercepts requests (guardrail enforcement).
+3. Gateway forwards to **HF Private Inference Endpoint** (via PrivateLink).
+4. Responses pass back through Akto Gateway.
 5. Akto logs, analyzes and optionally redacts or blocks results.
 
 ## **Setup Steps**
@@ -56,9 +56,9 @@ Hugging Face does not log full request/response content by itself. You must capt
 {% endstep %}
 
 {% step %}
-**Deploy Akto AI Agent Proxy**
+**Deploy Akto AI Agent Gateway**
 
-Deploy the proxy in the same VPC where:
+Deploy the gateway in the same VPC where:
 
 * End user traffic enters
 * The AI agent application runs
@@ -66,9 +66,9 @@ Deploy the proxy in the same VPC where:
 {% endstep %}
 
 {% step %}
-**Configure Proxy Environment**
+**Configure Gateway Environment**
 
-Here is an example config for the proxy:
+Here is an example config for the gateway:
 
 ```bash
 export AKTO_API_TOKEN=<YOUR_AKTO_PROXY_TOKEN>
@@ -79,7 +79,7 @@ export LOG_LEVEL=INFO
 ```
 
 * `AKTO_API_TOKEN`: Akto ingestion token (go to **Akto Argus → Connectors → Setup Guardrail** card to obtain it)
-* `AKTO_API_BASE_URL`: Akto proxy ingestion server
+* `AKTO_API_BASE_URL`: Akto gateway ingestion server
 * `APP_URL`: Upstream target (the HF Private Inference Endpoint URL)
 * `LOG_LEVEL`: Logging verbosity
 {% endstep %}
@@ -89,8 +89,8 @@ export LOG_LEVEL=INFO
 
 Update the AI agent’s inference call configuration:
 
-* Set model base URL to the **Akto Proxy endpoint**
-* Pass Hugging Face authentication headers through proxy
+* Set model base URL to the **Akto Gateway endpoint**
+* Pass Hugging Face authentication headers through gateway
 
 For example:
 
@@ -102,7 +102,7 @@ HF_AUTHORIZATION=Bearer <HF_TOKEN>
 
 This ensures:
 
-* Traffic flows through Akto Proxy
+* Traffic flows through Akto Gateway
 * Akto captures all inference calls
 {% endstep %}
 
@@ -112,15 +112,15 @@ This ensures:
 Verify end-to-end flow:
 
 1. Send an inference request from the user
-2. Akto Proxy receives and logs the call
-3. Proxy enforces any guardrails
-4. Proxy forwards to HF Private Endpoint
-5. Response returns through Akto Proxy
+2. Akto Gateway receives and logs the call
+3. Gateway enforces any guardrails
+4. Gateway forwards to HF Private Endpoint
+5. Response returns through Akto Gateway
 6. Logs appear in Akto dashboard
 
 Look for:
 
-* Request/response pairs in proxy logs
+* Request/response pairs in gateway logs
 * Guardrail hits (if configured)
 * Redaction results
 {% endstep %}
@@ -128,7 +128,7 @@ Look for:
 
 ## **Security & Guardrails**
 
-Akto Proxy supports:
+Akto Gateway supports:
 
 * Request guardrails (input sanitization)
 * Response guardrails (filtering outputs)
@@ -150,7 +150,7 @@ Hugging Face Private Endpoints offer:
 
 They do **not log conversation content** by default.
 
-Akto Proxy will log:
+Akto Gateway will log:
 
 * Full request and response traces
 * Guardrail decision events
@@ -159,17 +159,17 @@ Akto Proxy will log:
 
 ## **Troubleshooting**
 
-* **Proxy cannot reach HF Endpoint**: Check PrivateLink and VPC routing.
-* **Auth failures**: Verify Hugging Face API token headers are passed by proxy.
+* **Gateway cannot reach HF Endpoint**: Check PrivateLink and VPC routing.
+* **Auth failures**: Verify Hugging Face API token headers are passed by gateway.
 * **No logs in Akto**: Confirm AKTO\_API\_TOKEN and ingestion config.
 * **Guardrail not triggering**: Validate rule pack configuration.
 
 ## **Summary**
 
-By integrating Akto AI Agent Proxy in front of a Hugging Face Private Inference Endpoint:
+By integrating Akto AI Agent Gateway in front of a Hugging Face Private Inference Endpoint:
 
 * You achieve guardrail enforcement without modifying the client code
 * You capture and monitor model invocation traffic
 * You gain observability of conversation logging
 
-Akto Proxy becomes the enforcement and observability layer for private HF model usage.
+Akto Gateway becomes the enforcement and observability layer for private HF model usage.

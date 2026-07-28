@@ -4,7 +4,7 @@
 
 Deploy Akto Guardrails in Block Mode on Snowflake using Snowpark Container Services (SPCS).
 
-In Block Mode, the Akto proxy intercepts traffic between your client and the Cortex Agent API. Each request and response is evaluated against your guardrail policies. Unsafe responses are blocked and replaced with a configurable fallback message.
+In Block Mode, the Akto gateway intercepts traffic between your client and the Cortex Agent API. Each request and response is evaluated against your guardrail policies. Unsafe responses are blocked and replaced with a configurable fallback message.
 
 ## Architecture
 
@@ -194,7 +194,7 @@ SHOW ENDPOINTS IN SERVICE AKTO_INTEGRATION.AKTO_GUARDRAIL.AKTO_GUARD_SERVICE;
 {% step %}
 **Generate a Programmatic Access Token (PAT)**
 
-The proxy authenticates to the Snowflake API using a PAT. Complete the steps below and then update the secret created in Step 3.
+The gateway authenticates to the Snowflake API using a PAT. Complete the steps below and then update the secret created in Step 3.
 
 ```sql
 -- Step 1: Create auth policy to bypass network policy requirement
@@ -208,7 +208,7 @@ ALTER USER <YOUR_USERNAME> ADD PROGRAMMATIC ACCESS TOKEN AKTO_PROXY_PAT
   ROLE_RESTRICTION = '<YOUR_ROLE>'
   DAYS_TO_EXPIRY = 90
   MINS_TO_BYPASS_NETWORK_POLICY_REQUIREMENT = 1440
-  COMMENT = 'PAT for Akto proxy service';
+  COMMENT = 'PAT for Akto gateway service';
 
 -- Step 3: Store the PAT in the secret created earlier
 ALTER SECRET AKTO_INTEGRATION.AKTO_GUARDRAIL.SNOWFLAKE_PAT_SECRET
@@ -223,7 +223,7 @@ Save the token value immediately after generating it — Snowflake will not disp
 {% step %}
 **Send a Sample Request**
 
-Use the public endpoint URL from Step 7 to send a request through the proxy.
+Use the public endpoint URL from Step 7 to send a request through the gateway.
 
 ```bash
 # Generate a JWT token (or use SSO)
@@ -265,7 +265,7 @@ Use this checklist to confirm the deployment is complete:
 
 ```sql
 -- ============================================================
--- Akto Guardrail Proxy — Production Setup
+-- Akto Guardrail Gateway — Production Setup
 -- ============================================================
 
 -- Step 1: Create image repository
@@ -289,7 +289,7 @@ CREATE SECRET IF NOT EXISTS AKTO_INTEGRATION.AKTO_GUARDRAIL.SNOWFLAKE_PAT_SECRET
   SECRET_STRING = '<YOUR_SNOWFLAKE_PAT>';
 
 -- Step 4: Create a dedicated service role (avoid using ACCOUNTADMIN)
--- The proxy calls agents via the Snowflake REST API using a PAT,
+-- The gateway calls agents via the Snowflake REST API using a PAT,
 -- so this role only needs access to its own infra — NOT to agent databases.
 -- CREATE ROLE IF NOT EXISTS AKTO_PROXY_ROLE;
 -- GRANT USAGE ON DATABASE AKTO_INTEGRATION TO ROLE AKTO_PROXY_ROLE;
@@ -388,7 +388,7 @@ SHOW ENDPOINTS IN SERVICE AKTO_INTEGRATION.AKTO_GUARDRAIL.AKTO_GUARD_SERVICE;
 --   ROLE_RESTRICTION = '<YOUR_ROLE>'
 --   DAYS_TO_EXPIRY = 90
 --   MINS_TO_BYPASS_NETWORK_POLICY_REQUIREMENT = 1440
---   COMMENT = 'PAT for Akto proxy service';
+--   COMMENT = 'PAT for Akto gateway service';
 --
 -- Step 3: Store PAT as a secret (update the secret created in Step 3 above)
 -- ALTER SECRET AKTO_INTEGRATION.AKTO_GUARDRAIL.SNOWFLAKE_PAT_SECRET SET SECRET_STRING = '<YOUR_PAT_TOKEN>';
