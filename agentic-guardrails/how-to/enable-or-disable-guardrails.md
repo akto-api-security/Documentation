@@ -2,7 +2,7 @@
 
 ## Overview
 
-Akto allows you to enable guardrails on specific agentic components discovered through the **Agent Proxy**. Automatic discovery identifies MCP tools, resources, and endpoints and lists the components inside the collection.
+Akto allows you to enable guardrails on specific agentic components discovered through the **Agent Gateway**. Automatic discovery identifies MCP tools, resources, and endpoints and lists the components inside the collection.
 
 Guardrails helps you to enforce runtime security policies on selected components. Guardrails evaluation applies only to the components where guardrails remain enabled.
 
@@ -16,7 +16,7 @@ Navigate to the **Agentic Collection** that contains the discovered components.
 {% endstep %}
 
 {% step %}
-Locate the **Agentic Components** list generated through the Agent Proxy discovery.
+Locate the **Agentic Components** list generated through the Agent Gateway discovery.
 {% endstep %}
 
 {% step %}

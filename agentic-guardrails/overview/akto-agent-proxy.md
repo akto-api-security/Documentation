@@ -1,8 +1,8 @@
-# AI Agent Proxy
+# AI Agent Gateway
 
 ## Overview
 
-AI Agent Proxy is a security layer that protects AI agent applications by intercepting, analyzing, and securing communications between end users and AI agents. It provides real-time guardrail detection, guardrails enforcement, and response filtering for AI agent deployments running in customer environments.
+AI Agent Gateway is a security layer that protects AI agent applications by intercepting, analyzing, and securing communications between end users and AI agents. It provides real-time guardrail detection, guardrails enforcement, and response filtering for AI agent deployments running in customer environments.
 
 ## Key Features
 
@@ -15,12 +15,12 @@ AI Agent Proxy is a security layer that protects AI agent applications by interc
 
 ## Architecture
 
-The AI Agent Proxy can be deployed as a Docker container or as a Kubernetes sidecar alongside your AI agent, providing a secure gateway for all AI agent traffic.
+The AI Agent Gateway can be deployed as a Docker container or as a Kubernetes sidecar alongside your AI agent, providing a secure gateway for all AI agent traffic.
 
 ```mermaid
 sequenceDiagram
     participant U as End User
-    participant P as AI Agent Proxy (Docker Container)   
+    participant P as AI Agent Gateway (Docker Container)   
     participant A as AI Agent Container
 
     U ->> P: 1.Send request
@@ -37,11 +37,11 @@ sequenceDiagram
 
 ### **Traffic Flow:**
 
-1. End user sends request to AI Agent Proxy endpoint
-2. Proxy performs guardrail detection and applies request guardrails
+1. End user sends request to AI Agent Gateway endpoint
+2. Gateway performs guardrail detection and applies request guardrails
 3. Valid requests are forwarded to AI agent container
-4. AI agent processes request and returns response to proxy
-5. Proxy receives response and applies response guardrails and redaction rules
+4. AI agent processes request and returns response to gateway
+5. Gateway receives response and applies response guardrails and redaction rules
 6. End user receives final response (original, blocked, or redacted)
 
 ## Deployment
@@ -50,13 +50,13 @@ sequenceDiagram
 
 * Docker installed on your VM
 * An AI agent application running as a Docker container
-* Network connectivity between proxy and AI agent containers
+* Network connectivity between gateway and AI agent containers
 
 ## **Docker Compose Setup**
 
 ### Locally running AI Agent
 
-Create a `docker-compose.yml` file to run both the AI agent and proxy containers:
+Create a `docker-compose.yml` file to run both the AI agent and gateway containers:
 
 ```yaml
 version: '3.8'
@@ -122,7 +122,7 @@ services:
 
 #### **Environment Variables**
 
-Configure the AI Agent Proxy with the following environment variables:
+Configure the AI Agent Gateway with the following environment variables:
 
 | Variable | Description | Required | Default |
 | -------- | ----------- | -------- | ------- |
@@ -130,7 +130,7 @@ Configure the AI Agent Proxy with the following environment variables:
 | `AKTO_API_BASE_URL` | URL for Akto data ingestion service (obtained from Akto dashboard) | Yes | - |
 | `APP_URL` | Base URL where your AI agent is running. For docker-compose use service name (e.g., `http://your-agent:3001`), for local scanning use localhost | Yes | - |
 | `PROJECT_NAME` | Unique identifier for this AI agent deployment | Yes | - |
-| `APP_TYPE` | Type of application being proxied: `agent` or `mcp-server` | Yes | `agent` |
+| `APP_TYPE` | Type of application behind the gateway: `agent` or `mcp-server` | Yes | `agent` |
 | `APP_SERVER_NAME` | Name to identify this agent server for policy filtering. If not set, will be automatically extracted from APP_URL hostname | No | (extracted from APP_URL) |
 | `AKTO_PROXY_PORT` | Port where AI Agent Shield will listen | No | `8080` |
 | `SKIP_THREAT` | Set to true to skip sending threat reports to Akto (useful for scanning) | No | `false` |
@@ -150,7 +150,7 @@ docker-compose up -d
 # Check container status
 docker-compose ps
 
-# View proxy logs
+# View gateway logs
 docker-compose logs -f akto-ai-agent-shield
 
 # View AI agent logs
@@ -159,7 +159,7 @@ docker-compose logs -f your-agent
 
 #### **Configure Your Application**
 
-Update your application to route AI agent requests through the proxy:
+Update your application to route AI agent requests through the gateway:
 
 **Before:**
 
@@ -227,7 +227,7 @@ data:
   # Application Type: "agent" or "mcp-server"
   APP_TYPE: "agent"
 
-  # Proxy Port
+  # Gateway Port
   AKTO_PROXY_PORT: "8080"
 
   # Guardrail Reporting (set to "true" to skip for scanning)
@@ -391,7 +391,7 @@ kubectl apply -f service.yaml
 ```
 External Request → Service (port 80) → Pod:
                                         ├─ akto-ai-agent-shield:8080 ← Traffic enters here
-                                        │         ↓ (localhost proxy)
+                                        │         ↓ (localhost gateway)
                                         └─ your-agent:<your-app-port> ← Receives filtered traffic
 ```
 
@@ -433,10 +433,10 @@ Navigate to **Akto Argus Dashboard → Settings → Guardrails** to configure yo
 
 ### **Container Logs**
 
-View real-time logs from the proxy:
+View real-time logs from the gateway:
 
 ```bash
-# Follow proxy logs (recommended)
+# Follow gateway logs (recommended)
 docker exec -it akto-ai-agent-shield sh -c "tail -n 1000 -f /var/log/akto-mcp-endpoint-shield/ai-agent-shield.log"
 
 # Alternative: View docker logs
@@ -451,7 +451,7 @@ docker logs --tail 100 akto-ai-agent-shield
 Connect to Akto dashboard for centralized monitoring:
 
 1. Login to [app.akto.io](https://app.akto.io)
-2. Navigate to Akto Argus Dashboard -> Connectors -> AI Agent Proxy
+2. Navigate to Akto Argus Dashboard -> Connectors -> AI Agent Gateway
 3. View real-time metrics:
    * Request volume and trends
    * Guardrail detection statistics

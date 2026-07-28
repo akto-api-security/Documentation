@@ -1,8 +1,8 @@
-# MCP Proxy
+# MCP Gateway
 
 ## Overview
 
-Akto MCP Proxy is a security and governance layer that sits between MCP (Model Context Protocol) clients and MCP servers. It enables organizations to implement guardrail protection, security policies, and guardrails for all MCP server requests while maintaining seamless connectivity to the original MCP servers.
+Akto MCP Gateway is a security and governance layer that sits between MCP (Model Context Protocol) clients and MCP servers. It enables organizations to implement guardrail protection, security policies, and guardrails for all MCP server requests while maintaining seamless connectivity to the original MCP servers.
 
 ## Key Features
 
@@ -18,7 +18,7 @@ Akto MCP Proxy is a security and governance layer that sits between MCP (Model C
 flowchart LR
     client["MCP Client"]
 
-    subgraph proxy["Akto MCP Proxy"]
+    subgraph gateway["Akto MCP Gateway"]
         engine["Guardrail Engine\ninspect · enforce · log"]
     end
 
@@ -41,19 +41,19 @@ flowchart LR
 
     subgraph vpc["Customer Cloud  (AWS VPC)"]
         lb["Load Balancer / API Gateway"]
-        proxy["Proxy\n(EC2 or sidecar)"]
+        gateway["Gateway\n(EC2 or sidecar)"]
         mcp["MCP Server"]
 
-        lb --> proxy
-        proxy --> mcp
+        lb --> gateway
+        gateway --> mcp
     end
 
-    proxy <-->|"Analyze tool calls in real time\n[Private Secure Connection]"| guardrails
+    gateway <-->|"Analyze tool calls in real time\n[Private Secure Connection]"| guardrails
 ```
 
 ## How It Works
 
-1. **Request Interception**: MCP clients send requests to the Akto proxy endpoint instead of directly to MCP servers
+1. **Request Interception**: MCP clients send requests to the Akto gateway endpoint instead of directly to MCP servers
 2. **Security Analysis**: Each request undergoes guardrail detection and policy validation
 3. **Policy Enforcement**: Requests are evaluated against configured guardrails
 4. **Request Forwarding**: Validated requests are forwarded to the original MCP server
@@ -63,9 +63,9 @@ flowchart LR
 
 ### Basic Setup
 
-To use Akto MCP Proxy, simply prepend your original MCP server URL with the Akto proxy endpoint. All existing authentication and credentials for your original MCP server remain unchanged.
+To use Akto MCP Gateway, simply prepend your original MCP server URL with the Akto gateway endpoint. All existing authentication and credentials for your original MCP server remain unchanged.
 
-**Proxy URL Format:**
+**Gateway URL Format:**
 
 ```
 https://mcp-proxy.akto.io/proxy/{protocol}/{host}/{path}
@@ -93,7 +93,7 @@ Where the original MCP server URL is transformed by:
     }
     ```
 
-    With Akto proxy:
+    With Akto gateway:
 
     ```json
     {
@@ -122,7 +122,7 @@ Where the original MCP server URL is transformed by:
     }
     ```
 
-    With Akto proxy:
+    With Akto gateway:
 
     ```json
     {
@@ -141,9 +141,9 @@ Where the original MCP server URL is transformed by:
 **Important Notes**
 
 * All original authentication credentials (API keys, tokens, etc.) remain the same
-* The proxy transparently forwards authentication headers to the original server
+* The gateway transparently forwards authentication headers to the original server
 * No changes required on the MCP server side
-* The proxy URL supports both HTTP/HTTPS and WebSocket protocols
+* The gateway URL supports both HTTP/HTTPS and WebSocket protocols
 {% endhint %}
 
 ### Advanced Configuration
@@ -198,7 +198,7 @@ threat_detection:
 
 ### 2. Access Control
 
-* **Authentication**: API key-based authentication for all proxy requests
+* **Authentication**: API key-based authentication for all gateway requests
 * **Authorization**: Role-based access control for different MCP operations
 * **IP Whitelisting**: Restrict access to approved IP addresses
 * **Session Management**: Secure session handling with automatic timeout
@@ -237,7 +237,7 @@ alerts:
 
 ## API Reference
 
-### Proxy Endpoints
+### Gateway Endpoints
 
 #### Health Check
 
@@ -275,8 +275,8 @@ Authorization: Bearer {api_key}
 
 ### Connection Timeout
 
-* Verify network connectivity to Akto proxy
-* Check firewall rules and proxy settings
+* Verify network connectivity to Akto gateway
+* Check firewall rules and gateway settings
 * Validate API key and authentication
 
 ### Request Blocked
@@ -287,9 +287,9 @@ Authorization: Bearer {api_key}
 
 ### Performance Degradation
 
-* Monitor proxy latency metrics
+* Monitor gateway latency metrics
 * Optimize guardrail rules for efficiency
-* Consider geographic proxy distribution
+* Consider geographic gateway distribution
 
 ## Get Support for your Akto setup
 

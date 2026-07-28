@@ -17,17 +17,17 @@ Deploy real-time protection for your AI agents and MCP servers. Akto Guardrails 
 
 1. Go to **Quick Start** in your Akto dashboard
 2. Scroll to the **Guardrails** section
-3. Choose the proxy type that matches your setup
+3. Choose the gateway type that matches your setup
 
-### Step 3: Configure Your Proxy
+### Step 3: Configure Your Gateway
 
-Select and configure the appropriate protection proxy:
+Select and configure the appropriate protection gateway:
 
 #### For MCP Servers
 
 Deploy real-time protection for Model Context Protocol servers, tools, and resources.
 
-→ [Set Up MCP Proxy](akto-mcp-proxy.md)
+→ [Set Up MCP Gateway](akto-mcp-proxy.md)
 
 **What it protects:**
 
@@ -40,7 +40,7 @@ Deploy real-time protection for Model Context Protocol servers, tools, and resou
 
 Deploy real-time protection for AI agents and LLM applications.
 
-→ [Set Up Agent Proxy](akto-agent-proxy.md)
+→ [Set Up Agent Gateway](akto-agent-proxy.md)
 
 **What it protects:**
 
@@ -51,10 +51,10 @@ Deploy real-time protection for AI agents and LLM applications.
 
 ### Step 4: Enable Protection
 
-Once your proxy is configured:
+Once your gateway is configured:
 
 1. Set environment variable: `AKTO_THREAT_ENABLED=true`
-2. Start routing traffic through the proxy
+2. Start routing traffic through the gateway
 3. Monitor threats in **Guardrails** dashboard
 4. Configure custom policies as needed
 

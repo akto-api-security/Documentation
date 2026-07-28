@@ -84,7 +84,7 @@ x-session-id: session_abc123xyz789
 
 Session IDs can be passed via:
 - **Guardrail Service API**: Include `x-Session-id` header in direct API calls
-- **Proxy Integration**: Proxy layer forwards the session ID header to Akto
+- **Gateway Integration**: Gateway layer forwards the session ID header to Akto
 - **Other Integration Methods**: Any integration that preserves the `x-session-id` header
 
 {% hint style="info" %}

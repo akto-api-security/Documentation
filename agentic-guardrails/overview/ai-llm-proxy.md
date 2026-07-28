@@ -1,2 +1,2 @@
-# AI LLM Proxy
+# AI LLM Gateway
 

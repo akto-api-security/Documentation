@@ -26,9 +26,9 @@ Probe your AI agents and MCP servers with 4000+ specialized security probes. Ide
 
 Deploy real-time protection for your production agents. Block threats as they occur, enforce schema conformance, and prevent exploits before they impact your systems.
 
-**Set up protection proxies**
+**Set up protection gateways**
 
-<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>MCP Proxy</strong></td><td>Real-time protection for MCP servers</td><td><a href="agentic-guardrails/overview/akto-mcp-proxy.md">akto-mcp-proxy.md</a></td></tr><tr><td><strong>Agent Proxy</strong></td><td>Real-time protection for AI agents</td><td><a href="agentic-guardrails/overview/akto-agent-proxy.md">akto-agent-proxy.md</a></td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>MCP Gateway</strong></td><td>Real-time protection for MCP servers</td><td><a href="agentic-guardrails/overview/akto-mcp-proxy.md">akto-mcp-proxy.md</a></td></tr><tr><td><strong>Agent Gateway</strong></td><td>Real-time protection for AI agents</td><td><a href="agentic-guardrails/overview/akto-agent-proxy.md">akto-agent-proxy.md</a></td></tr></tbody></table>
 
 ## Resources
 
