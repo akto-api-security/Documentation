@@ -2,7 +2,7 @@
 description: Route MCP server traffic from Copilot Studio agents through the Akto agent-proxy
 ---
 
-# Gateway MCP Server via Akto
+# Route MCP Server via Akto Gateway
 
 ## Overview
 

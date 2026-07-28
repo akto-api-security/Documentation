@@ -32,13 +32,13 @@ After Clawdbot successfully connects to AI Endpoint Shield, Akto Atlas can ident
 
 ## Visibility Mechanisms
 
-Akto Atlas provides visibility into OpenClaw activity through proxy-based request monitoring and event-based hook integrations.
+Akto Atlas provides visibility into OpenClaw activity through gateway-based request monitoring and event-based hook integrations.
 
-### Through AI Agent Proxy
+### Through AI Agent Gateway
 
-Akto Atlas can observe OpenClaw model requests when OpenClaw routes LLM traffic through the **Akto AI Agent Proxy**.
+Akto Atlas can observe OpenClaw model requests when OpenClaw routes LLM traffic through the **Akto AI Agent Gateway**.
 
-The AI Agent Proxy operates as a middleware layer between OpenClaw and the configured model provider. OpenClaw sends model requests to the proxy endpoint instead of directly calling the LLM provider.
+The AI Agent Gateway operates as a middleware layer between OpenClaw and the configured model provider. OpenClaw sends model requests to the gateway endpoint instead of directly calling the LLM provider.
 
 The request flow becomes:
 
@@ -48,38 +48,38 @@ flowchart LR
 User[User]
 Channel[Slack / Telegram]
 OpenClaw[OpenClaw]
-Proxy[Akto AI Agent Proxy]
+Gateway[Akto AI Agent Gateway]
 Model[Model Provider]
 
 User --> Channel
 Channel --> OpenClaw
-OpenClaw --> Proxy
-Proxy --> Model
-Model --> Proxy
-Proxy --> OpenClaw
+OpenClaw --> Gateway
+Gateway --> Model
+Model --> Gateway
+Gateway --> OpenClaw
 OpenClaw --> Channel
 Channel --> User
 ```
 
-The proxy records request metadata, applies guardrails, and forwards the request to the configured model provider. **Akto Atlas** receives the recorded metadata and associates the activity with the OpenClaw agent and the enterprise user.
+The gateway records request metadata, applies guardrails, and forwards the request to the configured model provider. **Akto Atlas** receives the recorded metadata and associates the activity with the OpenClaw agent and the enterprise user.
 
-Enterprise teams must configure OpenClaw to route model traffic through the proxy endpoint. Following are the configuration steps:
+Enterprise teams must configure OpenClaw to route model traffic through the gateway endpoint. Following are the configuration steps:
 
 {% stepper %}
 {% step %}
-**Set Up the AI Agent Proxy**
+**Set Up the AI Agent Gateway**
 
-Deploy the Akto AI Agent Proxy in the environment where OpenClaw sends model requests. The proxy acts as the intermediary between OpenClaw and the actual model provider.
+Deploy the Akto AI Agent Gateway in the environment where OpenClaw sends model requests. The gateway acts as the intermediary between OpenClaw and the actual model provider.
 
 Deployment instructions and architecture details are available in the following documentation: [akto-agent-proxy.md](../../agentic-guardrails/overview/akto-agent-proxy.md "mention")
 
-After completing the proxy deployment, note the proxy endpoint URL. OpenClaw uses the proxy endpoint as the model provider base URL.
+After completing the gateway deployment, note the gateway endpoint URL. OpenClaw uses the gateway endpoint as the model provider base URL.
 {% endstep %}
 
 {% step %}
 **Update the `openclaw.json` Configuration File**
 
-OpenClaw uses the `openclaw.json` configuration file to define model providers. Add a provider entry that routes model requests to the Akto AI Agent Proxy.
+OpenClaw uses the `openclaw.json` configuration file to define model providers. Add a provider entry that routes model requests to the Akto AI Agent Gateway.
 
 Example configuration:
 
@@ -101,8 +101,8 @@ Example configuration:
 }
 ```
 
-* The `baseUrl` parameter must reference the AI Agent Proxy endpoint instead of the direct model provider endpoint.
-* The `X-Original-Provider` header allows the proxy to forward the request to the correct model provider after applying guardrails.
+* The `baseUrl` parameter must reference the AI Agent Gateway endpoint instead of the direct model provider endpoint.
+* The `X-Original-Provider` header allows the gateway to forward the request to the correct model provider after applying guardrails.
 {% endstep %}
 
 {% step %}
@@ -127,11 +127,11 @@ Create or update the file `auth.profile.json` with the following configuration:
 }
 ```
 
-The authentication profile registers the proxy-backed provider so OpenClaw can route model requests through the AI Agent Proxy.
+The authentication profile registers the gateway-backed provider so OpenClaw can route model requests through the AI Agent Gateway.
 {% endstep %}
 {% endstepper %}
 
-After completing the configuration steps, OpenClaw sends model requests through the proxy. Akto Atlas observes the requests and records model interaction metadata.
+After completing the configuration steps, OpenClaw sends model requests through the gateway. Akto Atlas observes the requests and records model interaction metadata.
 
 ### Through Hooks
 
@@ -143,7 +143,7 @@ When OpenClaw triggers the message send or message receive hook, interaction met
 
 ### Through MS Defender for Endpoint
 
-In addition to **Proxy-based** and **Hook-based** visibility, OpenClaw also supports discovery via **Microsoft Defender for Endpoint**.
+In addition to **Gateway-based** and **Hook-based** visibility, OpenClaw also supports discovery via **Microsoft Defender for Endpoint**.
 
 This method enables endpoint-level visibility by integrating Defender with Akto Atlas.
 

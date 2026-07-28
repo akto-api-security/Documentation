@@ -38,7 +38,7 @@ Traditional AppSec and cloud security platforms were designed for deterministic 
 ### Enterprise-Ready Deployment
 
 * Deploy using Akto’s 50+ connectors, eBPF-based visibility, and cloud-native integrations.
-* Route traffic through Akto’s MCP Proxy or AI Gateway for centralized control.
+* Route traffic through Akto’s MCP Gateway or AI Gateway for centralized control.
 * Integrate with popular agent frameworks and platforms such as AWS Bedrock, n8n, and Databricks.
 
 ## Next Step: Homegrown Agentic Discovery

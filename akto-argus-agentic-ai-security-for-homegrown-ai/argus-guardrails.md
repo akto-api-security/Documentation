@@ -1,6 +1,6 @@
 # Argus Guardrails
 
-Akto Argus applies guardrails at runtime in front of the homegrown AI agents, MCP servers, and GenAI applications you ship to production. Guardrails sit in the request and response path of a centralized proxy, so every call your agents make is inspected, scored, and either allowed or blocked before it can cause harm.
+Akto Argus applies guardrails at runtime in front of the homegrown AI agents, MCP servers, and GenAI applications you ship to production. Guardrails sit in the request and response path of a centralized gateway, so every call your agents make is inspected, scored, and either allowed or blocked before it can cause harm.
 
 ## The Problem You Face
 
@@ -12,7 +12,7 @@ Production AI agents behave differently than traditional applications, and tradi
 
 ## How Argus Guardrails Help
 
-Argus routes traffic through the **Akto MCP Proxy** or **Akto AI Agent Proxy** and evaluates every request and response against your policies. Enforcement is centralized, consistent across all your agents, and tied directly to the threat dashboard so you can investigate and respond to events in one place.
+Argus routes traffic through the **Akto MCP Gateway** or **Akto AI Agent Gateway** and evaluates every request and response against your policies. Enforcement is centralized, consistent across all your agents, and tied directly to the threat dashboard so you can investigate and respond to events in one place.
 
 ## What Argus Guardrails Cover
 
@@ -54,9 +54,9 @@ sequenceDiagram
 
 ## Where Guardrails Plug In
 
-* [**MCP Proxy**](../agentic-guardrails/overview/akto-mcp-proxy.md) - enforce guardrails on traffic to and from your MCP servers.
-* [**AI Agent Proxy**](../agentic-guardrails/overview/akto-agent-proxy.md) - enforce guardrails on traffic to and from your homegrown AI agents.
-* [**Connectors**](connectors/) - route production traffic through Akto's proxy from any of the supported deployment targets.
+* [**MCP Gateway**](../agentic-guardrails/overview/akto-mcp-proxy.md) - enforce guardrails on traffic to and from your MCP servers.
+* [**AI Agent Gateway**](../agentic-guardrails/overview/akto-agent-proxy.md) - enforce guardrails on traffic to and from your homegrown AI agents.
+* [**Connectors**](connectors/) - route production traffic through Akto's gateway from any of the supported deployment targets.
 
 ## What You Can Do
 

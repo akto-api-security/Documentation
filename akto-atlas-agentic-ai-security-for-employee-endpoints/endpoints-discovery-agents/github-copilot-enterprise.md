@@ -7,7 +7,7 @@ This page explains how you can integrate **GitHub Copilot Enterprise** with Akto
 As an Akto user, you can secure Copilot Enterprise using two complementary integration layers:
 
 1. **Endpoint-level control via Copilot Hooks**
-2. **Model-level control via Akto Agent Proxy (custom model routing)**
+2. **Model-level control via Akto Agent Gateway (custom model routing)**
 
 Together, these provide visibility and enforcement both at the developer endpoint and before requests reach the AI model.
 
@@ -23,11 +23,11 @@ This integration allows you to:
 
 This layer secures Copilot usage directly at employee endpoints.
 
-## **2.** Model Routing (Agent Proxy)
+## **2.** Model Routing (Agent Gateway)
 
-To enforce guardrails before requests reach the AI provider, you can configure Copilot Enterprise to route model traffic through the **Akto Agent Proxy**.
+To enforce guardrails before requests reach the AI provider, you can configure Copilot Enterprise to route model traffic through the **Akto Agent Gateway**.
 
-Instead of allowing Copilot to directly access built-in models, you configure a **custom model endpoint** that points to Akto’s proxy.
+Instead of allowing Copilot to directly access built-in models, you configure a **custom model endpoint** that points to Akto’s gateway.
 
 Akto then:
 
@@ -41,21 +41,21 @@ This ensures centralized enforcement across all Copilot Enterprise users.
 
 Before configuring GitHub:
 
-* Ensure **Akto Agent Proxy is deployed and reachable**
-* Ensure the proxy is connected to:
+* Ensure **Akto Agent Gateway is deployed and reachable**
+* Ensure the gateway is connected to:
   * Azure Foundry **or**
   * An OpenAI-compatible backend
-* Validate that the proxy endpoint is functioning correctly
+* Validate that the gateway endpoint is functioning correctly
 
 {% hint style="warning" %}
 **Important**
 
-The Agent Proxy must already be connected to the target model backend before you configure it in GitHub. Misconfiguration will cause Copilot requests to fail.
+The Agent Gateway must already be connected to the target model backend before you configure it in GitHub. Misconfiguration will cause Copilot requests to fail.
 {% endhint %}
 
 ### **Configuration Steps in GitHub**
 
-After completing the prerequisites (including Akto Agent Proxy deployment), perform the following:
+After completing the prerequisites (including Akto Agent Gateway deployment), perform the following:
 
 {% stepper %}
 {% step %}
@@ -77,7 +77,7 @@ Locate the **Configured Models** section
 {% endstep %}
 
 {% step %}
-Disable all default or built-in models (if you want full proxy enforcement)
+Disable all default or built-in models (if you want full gateway enforcement)
 {% endstep %}
 
 {% step %}
@@ -94,7 +94,7 @@ Choose the appropriate provider type:
 {% endstep %}
 
 {% step %}
-Enter the **Akto Agent Proxy URL** as the model endpoint
+Enter the **Akto Agent Gateway URL** as the model endpoint
 
 *   For OpenAI-compatible
 
@@ -109,7 +109,7 @@ Enter the **Akto Agent Proxy URL** as the model endpoint
 {% endstep %}
 {% endstepper %}
 
-All Copilot Enterprise model requests will now flow through Akto Agent Proxy before reaching the selected backend.
+All Copilot Enterprise model requests will now flow through Akto Agent Gateway before reaching the selected backend.
 
 ## **Operational Flow**
 
@@ -118,18 +118,18 @@ Once fully configured:
 1. User interacts with Copilot
 2. (Optional) Copilot Hooks capture endpoint events
 3. Copilot sends model request
-4. Request is routed to **Akto Agent Proxy**
+4. Request is routed to **Akto Agent Gateway**
 5. Akto applies guardrails and validation
 6. Approved requests are forwarded to the backend model
-7. Responses return through the proxy to Copilot
+7. Responses return through the gateway to Copilot
 
 This provides layered security across the Copilot lifecycle.
 
 ## **Best Practices**
 
-* Use **both Copilot Hooks and Proxy routing** for complete coverage
+* Use **both Copilot Hooks and Gateway routing** for complete coverage
 * Disable direct access to built-in models to avoid bypass paths
-* Validate proxy connectivity before enterprise rollout
+* Validate gateway connectivity before enterprise rollout
 * Test with a limited user group before full deployment
 * Decide your enforcement posture (observe vs block) before enabling strict policies
 

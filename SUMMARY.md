@@ -101,7 +101,7 @@
     * [Microsoft Copilot Studio](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/microsoft-copilot-studio/README.md)
       * [Connect to Akto (Async Mode)](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/microsoft-copilot-studio/connect-akto-async.md)
       * [Connect to Akto (Block Mode)](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/microsoft-copilot-studio/connect-akto-sync.md)
-      * [Proxy MCP Server via Akto](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/microsoft-copilot-studio/proxy-mcp-via-akto.md)
+      * [Route MCP Server via Akto Gateway](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/microsoft-copilot-studio/proxy-mcp-via-akto.md)
     * [N8N](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/n8n.md)
     * [Portkey](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/portkey.md)
     * [Salesforce](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/salesforce.md)
