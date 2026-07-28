@@ -360,7 +360,6 @@
 * [Get Started](agentic-guardrails/overview/README.md)
   * [MCP Gateway](agentic-guardrails/overview/akto-mcp-proxy.md)
   * [AI Agent Gateway](agentic-guardrails/overview/akto-agent-proxy.md)
-  * [AI LLM Gateway](agentic-guardrails/overview/ai-llm-proxy.md)
   * [Guardrails as API](agentic-guardrails/overview/guardrails-api.md)
 * [Concepts](agentic-guardrails/concepts/README.md)
   * [Agent Guard](agentic-guardrails/concepts/agent-guard.md)
