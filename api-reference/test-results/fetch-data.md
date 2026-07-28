@@ -18,9 +18,9 @@
 [OpenAPI lastestscanresultv1](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/main/.gitbook/assets/AktoSwagger.json)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="lastestscanresultv1" path="/api/fetchRemediationInfo" method="post" %}
-[OpenAPI lastestscanresultv1](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/main/.gitbook/assets/AktoSwagger.json)
-{% endopenapi-operation %}
+{% swagger src="../../.gitbook/assets/AktoSwagger.json" path="/api/fetchRemediationInfo" method="post" %}
+[AktoSwagger.json](../../.gitbook/assets/AktoSwagger.json)
+{% endswagger %}
 
 {% openapi-operation spec="lastestscanresultv1" path="/api/fetchTestRunResultDetails" method="post" %}
 [OpenAPI lastestscanresultv1](https://raw.githubusercontent.com/akto-api-security/Documentation/refs/heads/main/.gitbook/assets/AktoSwagger.json)

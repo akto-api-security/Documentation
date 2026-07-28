@@ -9621,6 +9621,58 @@
           }
         }
       ]
+    },
+    "/api/fetchRemediationInfo" : {
+      "description" : "description",
+      "post" : {
+        "summary" : "POST request for endpoint /api/fetchRemediationInfo",
+        "operationId" : "/api/fetchRemediationInfo-POST",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "testId" : {
+                    "type" : "string",
+                    "example" : "tests-library-master/remediation/JWT_NONE_ALGO.md",
+                    "description" : "Path to the remediation markdown file. The 'tests-library-master/remediation/' prefix and the '.md' extension are constant; only the middle segment (e.g. JWT_NONE_ALGO) identifies the specific test. To find this id, click on the result heading in the dashboard (e.g. a vulnerable test result) and read it off the URL."
+                  }
+                },
+                "description" : "Sample description"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "description",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : "# Remediation\n\nEnsure the JWT verification library rejects tokens with `alg: none` and enforces an allow-list of expected signing algorithms..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+          "name" : "content-type",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "application/json"
+          }
+        }, {
+          "name" : "X-API-KEY",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "example" : "YOUR_API_KEY from Settings > Integrations > Akto APIs"
+          }
+        } ]
     }
   }
 }
