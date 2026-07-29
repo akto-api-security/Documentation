@@ -40,7 +40,7 @@ services:
     container_name: ai-automated-testing
     image: public.ecr.aws/aktosecurity/akto-ai-automated-testing:latest
     environment:
-      DATABASE_ABSTRACTOR_SERVICE_TOKEN: "<your-database-abstractor-token>"
+      DATABASE_ABSTRACTOR_TOKEN: "<your-database-abstractor-token>"
       AKTO_API_BASE: "https://ultron.akto.io"
     ports:
       - "8000:8000"
