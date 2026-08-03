@@ -221,7 +221,7 @@ spec:
 * Replace `<namespace>` with the Kubernetes namespace used in Steps 3.3 and 4.
 * For `AKTO_KAFKA_BROKER_MAL`, use the value of the `mini-runtime` service deployed in Step 1.1.
 * For `<LOG_GROUP_ARN>`, enter the value obtained in Step 1.2.5. (This is optional if you want to use multiple CloudWatch log groups)
-* Replace `<DATABASE_ABSTRACTOR_TOKEN>`, with the database abstractor token from Akto dashboard.
+* Replace `<DATABASE_ABSTRACTOR_TOKEN>`, with your token from **Akto Argus → Connectors → Setup Guardrail** card (also referred to as the database abstractor token).
 * For `<SESSION_NAME>`, use any name you want for the session.
 * Replace `<AWS_REGION>` with the AWS region where your EKS cluster is located.
 

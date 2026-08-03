@@ -194,7 +194,7 @@ cp data-ingestion-docker.env.template              data-ingestion-docker.env
 cp docker-account-job-executor.env.template        docker-account-job-executor.env
 ```
 
-Open each `.env` file you just created and replace every `<YOUR_AKTO_API_TOKEN>` with your token from the Akto dashboard (Settings → API Tokens).
+Open each `.env` file you just created and replace every `<YOUR_AKTO_API_TOKEN>` with your token from **Akto Argus → Connectors → Setup Guardrail** card.
 
 {% hint style="warning" %}
 Never publish `.env` files in the public — they contain your API token.

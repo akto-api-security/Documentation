@@ -126,8 +126,8 @@ Configure the AI Agent Gateway with the following environment variables:
 
 | Variable | Description | Required | Default |
 | -------- | ----------- | -------- | ------- |
-| `AKTO_API_TOKEN` | Authentication token from Akto dashboard | Yes | - |
-| `AKTO_API_BASE_URL` | URL for Akto data ingestion service (obtained from Akto dashboard) | Yes | - |
+| `AKTO_API_TOKEN` | Authentication token — obtain from **Akto Argus → Connectors → Setup Guardrail** card | Yes | - |
+| `AKTO_API_BASE_URL` | URL for Akto data ingestion service. Follows the format `https://<account_id>-guardrails.akto.io`; contact the Akto support team to get the URL for your account | Yes | - |
 | `APP_URL` | Base URL where your AI agent is running. For docker-compose use service name (e.g., `http://your-agent:3001`), for local scanning use localhost | Yes | - |
 | `PROJECT_NAME` | Unique identifier for this AI agent deployment | Yes | - |
 | `APP_TYPE` | Type of application behind the gateway: `agent` or `mcp-server` | Yes | `agent` |
