@@ -16,8 +16,8 @@ Before connecting CrowdStrike to Akto, ensure the following:
 
 * **CrowdStrike Falcon API Client** with a valid **Client ID** and **Client Secret**
 * **CrowdStrike Base URL** (defaults to `https://api.crowdstrike.com` if left empty)
-* **Akto Data Ingestion Service URL** (`AKTO_DATA_INGESTION_URL`)
-* **Akto API Token** (`AKTO_API_TOKEN`)
+* **Akto Data Ingestion Service URL** (`AKTO_DATA_INGESTION_URL`) — contact the Akto support team to get the URL for your account. It follows the format `https://<account_id>-guardrails.akto.io`
+* **Akto API Token** (`AKTO_API_TOKEN`) — see [Getting API Token](../../akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md#getting-api-token): open the **Setup Guardrail** card under **Connectors** in Akto and copy your token from there
 
 {% hint style="info" %}
 Your CrowdStrike API client should have sufficient scope to access endpoint inventory and run integration actions for your organization.
@@ -63,8 +63,8 @@ The integration flow has two stages:
 * **Client ID**: CrowdStrike Falcon API client ID
 * **Client Secret**: CrowdStrike Falcon API client secret
 * **Base URL**: `https://api.crowdstrike.com` (leave empty to use the default CrowdStrike API endpoint)
-* **Data Ingestion Service URL**: your Akto ingestion endpoint (`AKTO_DATA_INGESTION_URL`)
-* **Akto API Token**: common token used by all guardrail hook installs (`AKTO_API_TOKEN`)
+* **Data Ingestion Service URL**: your Akto ingestion endpoint (`AKTO_DATA_INGESTION_URL`), format `https://<account_id>-guardrails.akto.io`
+* **Akto API Token**: common token used by all guardrail hook installs (`AKTO_API_TOKEN`) — see [Getting API Token](../../akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md#getting-api-token)
 *   **Polling Interval (seconds)**: keep default or set based on your monitoring preference
 
     <div data-with-frame="true"><figure><img src="../../.gitbook/assets/crowdstrike.png" alt="" width="375"><figcaption></figcaption></figure></div>
