@@ -63,7 +63,7 @@ This path uses **ZIP + `install.ps1`**, not an MSI installer.
 
 * Only required with the **universal** installer — with an account-specific installer these are already embedded
 * `AKTO_API_TOKEN` — from the Akto platform (Atlas / guardrails onboarding); store as a **secret** in your MDM where supported
-* `AKTO_API_BASE_URL` — guardrails URL, e.g. `https://<account-id>-guardrails.akto.io`
+* `AKTO_API_BASE_URL` — guardrails URL, e.g. `https://<account_id>-guardrails.akto.io`
 
 #### 5. MDM capabilities
 
@@ -80,7 +80,7 @@ Your platform must support:
 Managed devices need HTTPS access to:
 
 * `MANIFEST_URL` and the ZIP host (often `*.amazonaws.com`)
-* `https://<account-id>-guardrails.akto.io`
+* `https://<account_id>-guardrails.akto.io`
 * `https://ultron.akto.io` (default data ingestion endpoint)
 
 ***
@@ -118,13 +118,13 @@ Positional arguments (space-separated when your MDM supports a single parameter 
 **Example — universal installer** (pass token + base URL; note the empty `""` placeholder for the unused installer URL so arguments don't shift):
 
 ```powershell
-.\install.ps1 "https://<manifest-url>/latest.json" "" "<TOKEN>" "https://<account-id>-guardrails.akto.io"
+.\install.ps1 "https://<manifest-url>/latest.json" "" "<TOKEN>" "https://<account_id>-guardrails.akto.io"
 ```
 
 **Example — universal installer with ZIP fallback** (single space-delimited string):
 
 ```text
-https://<akto-host>/atlas-installers/windows-installer/latest.json  https://<akto-host>/atlas-installers/windows-installer/<version>/akto-endpoint-shield-<version>.zip  <TOKEN>  https://<account-id>-guardrails.akto.io
+https://<akto-host>/atlas-installers/windows-installer/latest.json  https://<akto-host>/atlas-installers/windows-installer/<version>/akto-endpoint-shield-<version>.zip  <TOKEN>  https://<account_id>-guardrails.akto.io
 ```
 
 Environment variables (`MANIFEST_URL`, `AKTO_API_TOKEN`, `AKTO_API_BASE_URL`, `FORCE_REINSTALL`, etc.) are also supported if your MDM sets them instead of positional args. With an account-specific installer, `AKTO_API_TOKEN` / `AKTO_API_BASE_URL` are already embedded and can be omitted.
@@ -155,7 +155,7 @@ Intune **Platform scripts** (Devices → Scripts and remediations → Platform s
      With the **universal installer**, append the token and base URL (empty `""` for the unused installer URL so arguments don't shift):
 
      ```
-     powershell.exe -NoProfile -ExecutionPolicy Bypass -File install.ps1 "https://<manifest-url>/latest.json" "" "<TOKEN>" "https://<account-id>-guardrails.akto.io"
+     powershell.exe -NoProfile -ExecutionPolicy Bypass -File install.ps1 "https://<manifest-url>/latest.json" "" "<TOKEN>" "https://<account_id>-guardrails.akto.io"
      ```
    * Uninstall command:
 

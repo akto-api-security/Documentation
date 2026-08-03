@@ -94,8 +94,8 @@ curl -O https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp
 Set the following environment variables in your shell or `.env` file:
 
 ```bash
-# Required: Akto Data Ingestion Service URL
-AKTO_DATA_INGESTION_URL=https://<YOUR_AKTO_INSTANCE_URL>
+# Required: Akto Data Ingestion Service URL — contact the Akto support team to get the URL for your account
+AKTO_DATA_INGESTION_URL=https://<account_id>-guardrails.akto.io
 
 # Required: Unique identifier for this LangChain application in Akto
 PROJECT_NAME=my-langchain-agent
@@ -146,7 +146,7 @@ The middleware automatically handles both sync and async execution paths — no 
 Run your agent and check the logs for middleware initialization:
 
 ```
-AktoGuardrailsMiddleware initialized | connector=langchain sync_mode=True url=https://<YOUR_AKTO_INSTANCE_URL>
+AktoGuardrailsMiddleware initialized | connector=langchain sync_mode=True url=https://<account_id>-guardrails.akto.io
 ```
 
 Then verify in the Akto dashboard:

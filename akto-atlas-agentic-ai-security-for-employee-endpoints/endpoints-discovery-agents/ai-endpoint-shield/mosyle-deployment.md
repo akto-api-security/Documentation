@@ -34,7 +34,7 @@ Before deploying AI Endpoint Shield via Mosyle, ensure you have the following:
 ### 1. Akto Credentials
 
 * **AKTO\_API\_TOKEN:** obtain from your Akto platform dashboard
-* **AKTO\_API\_BASE\_URL:** your Akto instance URL (e.g. `https://<account-id>-guardrails.akto.io`)
+* **AKTO\_API\_BASE\_URL:** your Akto instance URL (e.g. `https://<account_id>-guardrails.akto.io`)
 
 ### 2. Installer URL
 
@@ -77,7 +77,7 @@ Open `install.sh` and fill in the CONFIG section at the top:
 ```bash
 PKG_URL=""              # installer URL provided by Akto
 AKTO_API_TOKEN=""       # your Akto API token
-AKTO_API_BASE_URL=""    # your Akto base URL (e.g. https://<account-id>-guardrails.akto.io)
+AKTO_API_BASE_URL=""    # your Akto base URL (e.g. https://<account_id>-guardrails.akto.io)
 ```
 
 All other values (hook flags, wrap flags) can be left at their defaults or adjusted as needed.

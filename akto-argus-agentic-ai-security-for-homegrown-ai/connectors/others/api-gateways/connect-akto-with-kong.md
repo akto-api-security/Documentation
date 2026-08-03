@@ -132,7 +132,7 @@ curl -X POST http://localhost:8001/plugins \
 ```
 
 Replace `<AKTO_GUARDRAIL_URL>` with your guardrail service URL:
-- **If Akto provided you a URL** (e.g., `https://17*******0-guardrails.akto.io`), use that directly.
+- **If Akto provided you a URL** — it follows the format `https://<account_id>-guardrails.akto.io`; contact the Akto support team to get the URL for your account.
 - **Otherwise**, complete Step 3 to self-host the backend and use the URL you get from there.
 
 {% hint style="info" %}

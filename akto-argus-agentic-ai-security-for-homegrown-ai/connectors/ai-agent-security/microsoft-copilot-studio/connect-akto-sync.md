@@ -36,7 +36,7 @@ User
 ## Prerequisites
 
 * A **Microsoft Copilot Studio** agent you can edit (Author or Maker role on the agent).
-* The **Akto Guardrails URL** — provisioned and shared by Akto.
+* The **Akto Guardrails URL** — provisioned and shared by Akto. Follows the format `https://<account_id>-guardrails.akto.io`; contact the Akto support team to get the URL for your account.
 * Permission to publish the agent after the new topics are added.
 
 ## Steps to Connect

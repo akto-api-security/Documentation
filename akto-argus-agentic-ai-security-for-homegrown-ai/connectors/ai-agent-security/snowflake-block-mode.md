@@ -38,6 +38,12 @@ sequenceDiagram
     end
 ```
 
+## Prerequisites
+
+* **`AKTO_BASE_URL`** (used as `<AKTO_GUARDRAILS_HOST>`) — your Guardrails service URL. Follows the format `https://<account_id>-guardrails.akto.io`; contact the Akto support team to get the URL for your account.
+* **`AKTO_ACCOUNT_ID`** — provided along with your Guardrails URL by the Akto support team.
+* **`AKTO_TOKEN_SECRET`** (`<YOUR_AKTO_TOKEN>`) — your Akto API token. See [Getting API Token](../others/hybrid-saas.md#getting-api-token): open the **Setup Guardrail** card under **Connectors** in Akto and copy your token from there.
+
 ## Setup
 
 {% stepper %}

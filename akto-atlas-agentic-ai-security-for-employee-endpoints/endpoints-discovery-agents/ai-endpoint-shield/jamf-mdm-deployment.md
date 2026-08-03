@@ -44,7 +44,7 @@ Before deploying via Jamf, ensure you have the following:
 
 #### 2. AKTO\_API\_BASE\_URL
 
-* Your Akto data ingestion URL (e.g. `https://<account-id>-guardrails.akto.io`)
+* Your Akto data ingestion URL (e.g. `https://<account_id>-guardrails.akto.io`)
 
 #### 3. MANIFEST\_URL
 
@@ -181,7 +181,7 @@ Add **Akto Endpoint Shield - Install** with **Priority: Before**
 | Parameter | Label | Value |
 | --------- | ----- | ----- |
 | $4 | AKTO\_API\_TOKEN | `<your-token>` (use Jamf encrypted parameter) |
-| $5 | AKTO\_API\_BASE\_URL | `https://<account-id>-guardrails.akto.io` |
+| $5 | AKTO\_API\_BASE\_URL | `https://<account_id>-guardrails.akto.io` |
 | $6 | MANIFEST\_URL | Provided by Akto — enables auto-update |
 | $7 | PKG\_URL | (leave empty — manifest provides the URL) |
 
@@ -455,7 +455,7 @@ tail -f /var/log/jamf.log
 | Parameter | Value | Description |
 | --------- | ----- | ----------- |
 | $4 | AKTO\_API\_TOKEN | Token for Akto Endpoint Shield (use Jamf encrypted parameter) |
-| $5 | AKTO\_API\_BASE\_URL | Akto data ingestion URL (e.g. `https://<account-id>-guardrails.akto.io`) |
+| $5 | AKTO\_API\_BASE\_URL | Akto data ingestion URL (e.g. `https://<account_id>-guardrails.akto.io`) |
 | $6 | MANIFEST\_URL | Provided by Akto — enables auto-update |
 | $7 | PKG\_URL | Direct pkg URL — fallback if MANIFEST\_URL not set |
 

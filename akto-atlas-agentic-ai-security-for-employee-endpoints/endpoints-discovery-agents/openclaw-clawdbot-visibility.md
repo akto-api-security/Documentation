@@ -101,7 +101,7 @@ Example configuration:
 }
 ```
 
-* The `baseUrl` parameter must reference the AI Agent Gateway endpoint instead of the direct model provider endpoint.
+* The `baseUrl` parameter must reference the AI Agent Gateway endpoint instead of the direct model provider endpoint. `AKTO_AI_AGENT_PROXY_URL` follows the format `https://<account_id>-guardrails.akto.io`; contact the Akto support team to get the URL for your account.
 * The `X-Original-Provider` header allows the gateway to forward the request to the correct model provider after applying guardrails.
 {% endstep %}
 
@@ -216,6 +216,8 @@ After completing the setup run the script via Live Response:
 run update_openclaw_wsl_clean.ps1 -parameters "AKTO_PROXY_URL=https:your-guardrails-url.akto.io OPENAI_API_KEY=sk-xxxxx ORIGINAL_PROVIDER=<your provider eg: openai> /<model eg: gpt-4o-mini> MODEL_API=openai-completions MODEL_ID=<your model eg: gpt-40-mini> "
 ```
 {% endcode %}
+
+`AKTO_PROXY_URL` follows the format `https://<account_id>-guardrails.akto.io`; contact the Akto support team to get the URL for your account.
 
 Wait for the script to complete execution.
 {% endstep %}
