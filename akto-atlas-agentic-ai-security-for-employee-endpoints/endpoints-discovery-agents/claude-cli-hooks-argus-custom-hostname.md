@@ -78,6 +78,7 @@ sequenceDiagram
 │   ├── akto-validate-mcp-request.py               # MCP tool input validation
 │   ├── akto-validate-mcp-response-wrapper.sh      # MCP tool result wrapper
 │   ├── akto-validate-mcp-response.py              # MCP tool result capture
+│   ├── akto_ingestion_utility.py                   # Shared validation/ingestion logic
 │   └── akto_helpers.py                            # get_device_ip() helper
 ├── akto/
 │   └── logs/
@@ -93,6 +94,7 @@ sequenceDiagram
 * **Wrapper scripts (`.sh`)**: Set environment variables, invoke Python scripts
   * ⚠️ **Contains `{{AKTO_DATA_INGESTION_URL}}`, `{{AKTO_API_TOKEN}}`, `{{AKTO_HOST}}` placeholders** — must be replaced with your real values
 * **Python scripts (`.py`)**: Core validation logic and Akto API communication
+* **`akto_ingestion_utility.py`**: Shared validation/ingestion logic imported by every hook script — lives in a different GitHub directory (`shared/`, not `claude-cli-hooks-argus/`), so it needs its own download step
 * **`akto_helpers.py`**: Provides `get_device_ip()` (LAN IP used in the `ip` payload field)
 * **`settings.json`**: Links Claude CLI hook events to wrapper scripts
 
@@ -121,8 +123,9 @@ mkdir -p ~/.claude/akto/logs
 **Download Hook Scripts**
 
 ```bash
-# Base URL for downloading argus hooks
+# Base URLs for downloading argus hooks
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/claude-cli-hooks-argus"
+SHARED_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
 
 for f in akto-validate-prompt.py akto-validate-prompt-wrapper.sh \
          akto-validate-response.py akto-validate-response-wrapper.sh \
@@ -132,9 +135,17 @@ for f in akto-validate-prompt.py akto-validate-prompt-wrapper.sh \
   curl -o ~/.claude/hooks/"$f" "${HOOKS_BASE}/${f}"
 done
 
+# Download shared ingestion utility (note: SHARED_BASE, not HOOKS_BASE)
+curl -o ~/.claude/hooks/akto_ingestion_utility.py \
+  "${SHARED_BASE}/akto_ingestion_utility.py"
+
 # Make wrappers executable
 chmod +x ~/.claude/hooks/*.sh
 ```
+
+{% hint style="info" %}
+`akto_ingestion_utility.py` must land in the same directory as the hook scripts — they import it as a plain top-level module, resolved from the script's own directory. Skipping this download makes every hook fail with `ModuleNotFoundError: No module named 'akto_ingestion_utility'`.
+{% endhint %}
 {% endstep %}
 
 {% step %}
@@ -353,6 +364,29 @@ export AKTO_TIMEOUT="5"
 
 ## Troubleshooting
 
+### `ModuleNotFoundError: No module named 'akto_ingestion_utility'`
+
+The shared ingestion utility was not downloaded, or landed outside `~/.claude/hooks/`. It lives in the `shared/` directory on GitHub, **not** under `HOOKS_BASE`, so it needs its own `curl`.
+
+```bash
+# Confirm the file is missing
+ls -l ~/.claude/hooks/akto_ingestion_utility.py
+
+# Fetch it into the same directory as the hook scripts
+SHARED_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
+curl -o ~/.claude/hooks/akto_ingestion_utility.py \
+  "${SHARED_BASE}/akto_ingestion_utility.py"
+
+# Verify the import resolves
+python3 -c "import sys; sys.path.insert(0, '$HOME/.claude/hooks'); import akto_ingestion_utility; print('OK')"
+```
+
+If the file is present and the import still fails, check that `PYTHONSAFEPATH` is unset — it suppresses the script-directory entry on `sys.path` that this import relies on.
+
+```bash
+env | grep -i pythonsafepath   # must return nothing
+```
+
 ### Hooks Not Executing
 
 ```bash
@@ -479,6 +513,7 @@ mkdir -p ~/.claude/hooks ~/.claude/akto/logs
 
 # Download argus hooks
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/claude-cli-hooks-argus"
+SHARED_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
 for file in \
   akto-validate-prompt-wrapper.sh akto-validate-prompt.py \
   akto-validate-response-wrapper.sh akto-validate-response.py \
@@ -487,6 +522,7 @@ for file in \
   akto_helpers.py; do
   curl -s "${HOOKS_BASE}/${file}" -o ~/.claude/hooks/"${file}"
 done
+curl -s "${SHARED_BASE}/akto_ingestion_utility.py" -o ~/.claude/hooks/akto_ingestion_utility.py
 
 # Make executable
 chmod +x ~/.claude/hooks/*.sh

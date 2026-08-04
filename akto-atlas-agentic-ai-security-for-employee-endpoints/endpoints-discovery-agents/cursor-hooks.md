@@ -74,6 +74,7 @@ sequenceDiagram
 │       ├── akto-validate-mcp-request.py               # MCP request validation
 │       ├── akto-validate-mcp-response-wrapper.sh      # MCP response wrapper
 │       ├── akto-validate-mcp-response.py              # MCP response validation
+│       ├── akto_ingestion_utility.py                  # Shared validation/ingestion logic
 │       └── akto_machine_id.py                         # Device ID utility
 ├── akto/
 │   ├── chat-logs/
@@ -90,6 +91,7 @@ sequenceDiagram
 * **Wrapper scripts (`.sh`)**: Set environment variables, invoke Python scripts
   * ⚠️ **Contains `AKTO_DATA_INGESTION_URL` placeholder** - Must be replaced with your Akto instance URL
 * **Python scripts (`.py`)**: Core validation logic and Akto API communication
+* **`akto_ingestion_utility.py`**: Shared validation/ingestion logic imported by the hook scripts — lives in a different GitHub directory (`shared/`, not `cursor-hooks/`), so it needs its own download step
 * **`akto_machine_id.py`**: Generates unique device identifiers for Atlas mode
 * **`hooks.json`**: Links hooks to wrapper scripts
 
@@ -118,8 +120,9 @@ mkdir -p ~/.cursor/akto/mcp-logs
 **Download Hook Scripts**
 
 ```bash
-# Base URL for downloading hooks
+# Base URLs for downloading hooks
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/cursor-hooks"
+SHARED_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
 
 # Download chat validation hooks
 curl -o ~/.cursor/hooks/akto/akto-validate-chat-prompt-wrapper.sh \
@@ -145,9 +148,17 @@ curl -o ~/.cursor/hooks/akto/akto-validate-mcp-response.py \
 curl -o ~/.cursor/hooks/akto/akto_machine_id.py \
   "${HOOKS_BASE}/akto_machine_id.py"
 
+# Download shared ingestion utility (note: SHARED_BASE, not HOOKS_BASE)
+curl -o ~/.cursor/hooks/akto/akto_ingestion_utility.py \
+  "${SHARED_BASE}/akto_ingestion_utility.py"
+
 # Make executable
 chmod +x ~/.cursor/hooks/akto/*.sh
 ```
+
+{% hint style="info" %}
+`akto_ingestion_utility.py` must land in the same directory as the hook scripts — they import it as a plain top-level module, resolved from the script's own directory. Skipping this download makes the hooks fail with `ModuleNotFoundError: No module named 'akto_ingestion_utility'`.
+{% endhint %}
 {% endstep %}
 
 {% step %}
@@ -317,6 +328,29 @@ export AKTO_TIMEOUT="5"
 
 ## Troubleshooting
 
+### `ModuleNotFoundError: No module named 'akto_ingestion_utility'`
+
+The shared ingestion utility was not downloaded, or landed outside `~/.cursor/hooks/akto/`. It lives in the `shared/` directory on GitHub, **not** under `HOOKS_BASE`, so it needs its own `curl`.
+
+```bash
+# Confirm the file is missing
+ls -l ~/.cursor/hooks/akto/akto_ingestion_utility.py
+
+# Fetch it into the same directory as the hook scripts
+SHARED_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
+curl -o ~/.cursor/hooks/akto/akto_ingestion_utility.py \
+  "${SHARED_BASE}/akto_ingestion_utility.py"
+
+# Verify the import resolves
+python3 -c "import sys; sys.path.insert(0, '$HOME/.cursor/hooks/akto'); import akto_ingestion_utility; print('OK')"
+```
+
+If the file is present and the import still fails, check that `PYTHONSAFEPATH` is unset — it suppresses the script-directory entry on `sys.path` that this import relies on.
+
+```bash
+env | grep -i pythonsafepath   # must return nothing
+```
+
 ### Hooks Not Executing
 
 ```bash
@@ -445,6 +479,7 @@ mkdir -p ~/.cursor/hooks/akto ~/.cursor/akto/chat-logs ~/.cursor/akto/mcp-logs
 
 # Download hooks
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/cursor-hooks"
+SHARED_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
 curl -s "${HOOKS_BASE}/akto-validate-chat-prompt-wrapper.sh" -o ~/.cursor/hooks/akto/akto-validate-chat-prompt-wrapper.sh
 curl -s "${HOOKS_BASE}/akto-validate-chat-prompt.py" -o ~/.cursor/hooks/akto/akto-validate-chat-prompt.py
 curl -s "${HOOKS_BASE}/akto-validate-chat-response-wrapper.sh" -o ~/.cursor/hooks/akto/akto-validate-chat-response-wrapper.sh
@@ -454,6 +489,7 @@ curl -s "${HOOKS_BASE}/akto-validate-mcp-request.py" -o ~/.cursor/hooks/akto/akt
 curl -s "${HOOKS_BASE}/akto-validate-mcp-response-wrapper.sh" -o ~/.cursor/hooks/akto/akto-validate-mcp-response-wrapper.sh
 curl -s "${HOOKS_BASE}/akto-validate-mcp-response.py" -o ~/.cursor/hooks/akto/akto-validate-mcp-response.py
 curl -s "${HOOKS_BASE}/akto_machine_id.py" -o ~/.cursor/hooks/akto/akto_machine_id.py
+curl -s "${SHARED_BASE}/akto_ingestion_utility.py" -o ~/.cursor/hooks/akto/akto_ingestion_utility.py
 
 # Make executable
 chmod +x ~/.cursor/hooks/akto/*.sh

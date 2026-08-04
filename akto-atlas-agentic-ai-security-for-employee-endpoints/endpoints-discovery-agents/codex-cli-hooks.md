@@ -83,6 +83,7 @@ sequenceDiagram
 │   ├── akto-validate-pre-tool.py               # Pre-tool validation logic
 │   ├── akto-validate-post-tool-wrapper.sh      # Post-tool ingestion wrapper
 │   ├── akto-validate-post-tool.py              # Post-tool ingestion logic
+│   ├── akto_ingestion_utility.py               # Shared validation/ingestion logic
 │   └── akto_machine_id.py                      # Device ID utility
 └── akto/
     └── logs/
@@ -97,6 +98,7 @@ sequenceDiagram
 * **Wrapper scripts (`.sh`)**: Set environment variables, invoke Python scripts
   * ⚠️ **Contains `AKTO_DATA_INGESTION_URL` placeholder** - Must be replaced with your Akto instance URL
 * **Python scripts (`.py`)**: Core validation and ingestion logic, Akto API communication
+* **`akto_ingestion_utility.py`**: Shared validation/ingestion logic imported by every hook script — lives in a different GitHub directory (`shared/`, not `codex-cli-hooks/`), so it needs its own download step
 * **`akto_machine_id.py`**: Generates unique device identifiers for Atlas mode
 * **`hooks.json`**: Links hooks to wrapper scripts
 * **`config.toml`**: Must enable the `codex_hooks` feature flag
@@ -326,8 +328,9 @@ mkdir -p ~/.codex/akto/logs
 **Download Hook Scripts**
 
 ```bash
-# Base URL for downloading hooks
+# Base URLs for downloading hooks
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/codex-cli-hooks"
+SHARED_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
 
 # Download prompt validation hooks
 curl -o ~/.codex/hooks/akto-validate-prompt-wrapper.sh \
@@ -357,9 +360,17 @@ curl -o ~/.codex/hooks/akto-validate-post-tool.py \
 curl -o ~/.codex/hooks/akto_machine_id.py \
   "${HOOKS_BASE}/akto_machine_id.py"
 
+# Download shared ingestion utility (note: SHARED_BASE, not HOOKS_BASE)
+curl -o ~/.codex/hooks/akto_ingestion_utility.py \
+  "${SHARED_BASE}/akto_ingestion_utility.py"
+
 # Make executable
 chmod +x ~/.codex/hooks/*.sh
 ```
+
+{% hint style="info" %}
+`akto_ingestion_utility.py` must land in the same directory as the hook scripts — they import it as a plain top-level module, resolved from the script's own directory. Skipping this download makes every hook fail with `ModuleNotFoundError: No module named 'akto_ingestion_utility'`.
+{% endhint %}
 {% endstep %}
 
 {% step %}
@@ -592,6 +603,33 @@ All hooks receive a common JSON payload on stdin, plus event-specific fields:
 
 <details>
 
+<summary>ModuleNotFoundError: No module named 'akto_ingestion_utility'</summary>
+
+The shared ingestion utility was not downloaded, or landed outside `~/.codex/hooks/`. It lives in the `shared/` directory on GitHub, **not** under `HOOKS_BASE`, so it needs its own `curl`.
+
+```bash
+# Confirm the file is missing
+ls -l ~/.codex/hooks/akto_ingestion_utility.py
+
+# Fetch it into the same directory as the hook scripts
+SHARED_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
+curl -o ~/.codex/hooks/akto_ingestion_utility.py \
+  "${SHARED_BASE}/akto_ingestion_utility.py"
+
+# Verify the import resolves
+python3 -c "import sys; sys.path.insert(0, '$HOME/.codex/hooks'); import akto_ingestion_utility; print('OK')"
+```
+
+If the file is present and the import still fails, check that `PYTHONSAFEPATH` is unset — it suppresses the script-directory entry on `sys.path` that this import relies on.
+
+```bash
+env | grep -i pythonsafepath   # must return nothing
+```
+
+</details>
+
+<details>
+
 <summary>Hooks Not Executing</summary>
 
 ```bash
@@ -790,6 +828,7 @@ mkdir -p ~/.codex/hooks ~/.codex/akto/logs
 
 # Download hooks
 HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/codex-cli-hooks"
+SHARED_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
 curl -s "${HOOKS_BASE}/akto-validate-prompt-wrapper.sh" -o ~/.codex/hooks/akto-validate-prompt-wrapper.sh
 curl -s "${HOOKS_BASE}/akto-validate-prompt.py" -o ~/.codex/hooks/akto-validate-prompt.py
 curl -s "${HOOKS_BASE}/akto-validate-response-wrapper.sh" -o ~/.codex/hooks/akto-validate-response-wrapper.sh
@@ -799,6 +838,7 @@ curl -s "${HOOKS_BASE}/akto-validate-pre-tool.py" -o ~/.codex/hooks/akto-validat
 curl -s "${HOOKS_BASE}/akto-validate-post-tool-wrapper.sh" -o ~/.codex/hooks/akto-validate-post-tool-wrapper.sh
 curl -s "${HOOKS_BASE}/akto-validate-post-tool.py" -o ~/.codex/hooks/akto-validate-post-tool.py
 curl -s "${HOOKS_BASE}/akto_machine_id.py" -o ~/.codex/hooks/akto_machine_id.py
+curl -s "${SHARED_BASE}/akto_ingestion_utility.py" -o ~/.codex/hooks/akto_ingestion_utility.py
 
 # Make executable
 chmod +x ~/.codex/hooks/*.sh
