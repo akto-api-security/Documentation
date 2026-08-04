@@ -183,6 +183,10 @@ Add the following **application permission**:
 {% endstep %}
 {% endstepper %}
 
+{% hint style="warning" %}
+Because `User.Read.All` requires admin consent, a non-admin user completing [Part 2](#part-2-connect-from-the-akto-dashboard) will hit a **"Need admin approval"** screen — a tenant admin must sign in or grant consent instead.
+{% endhint %}
+
 ### Part 2 - Connect from the Akto Dashboard
 
 {% hint style="info" %}
