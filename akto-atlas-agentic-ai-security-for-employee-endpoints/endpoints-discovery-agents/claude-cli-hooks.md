@@ -113,7 +113,7 @@ sequenceDiagram
 
 * Claude CLI installed ([Installation Guide](https://code.claude.com/docs/en/setup))
 * Akto instance URL
-* Python 3.7+
+* Python 3.7+ (standard library only — the hooks need no third-party packages)
 * macOS, Linux, or Windows with bash/zsh
 
 ### Installation Steps
@@ -325,17 +325,6 @@ AKTO_CONNECTOR="claude_code_cli"
 {% endstep %}
 
 {% step %}
-**Install Python Dependencies**
-
-```bash
-pip3 install requests
-
-# Verify installation
-python3 -c "import requests; print('Requests installed successfully')"
-```
-{% endstep %}
-
-{% step %}
 **Verify Installation**
 
 Check logs to confirm hooks are working:
@@ -543,16 +532,6 @@ curl -X POST "${AKTO_DATA_INGESTION_URL}/api/v1/events" \
 grep "AKTO_DATA_INGESTION_URL" ~/.claude/hooks/*-wrapper.sh
 ```
 
-### Python Dependencies Missing
-
-```bash
-# Install required packages
-pip3 install requests
-
-# Verify installation
-python3 -c "import requests; print(requests.__version__)"
-```
-
 ## Uninstallation
 
 To completely remove Akto hooks from Claude CLI:
@@ -724,9 +703,6 @@ cat > ~/.claude/settings.json << 'EOFSETTINGS'
 }
 EOFSETTINGS
 
-# Install dependencies
-pip3 install requests
-
 echo "✅ Installation complete!"
 echo "📍 Akto instance: ${AKTO_URL}"
 echo "🖥️  Device label:  ${DEVICE_ID}"
@@ -768,10 +744,7 @@ chmod +x ~/.claude/hooks/*.sh
 
 # 5. Create settings.json (see step 4 above)
 
-# 6. Install dependencies
-pip3 install requests
-
-# 7. Test
+# 6. Test
 claude "What is 2+2?"
 ```
 
