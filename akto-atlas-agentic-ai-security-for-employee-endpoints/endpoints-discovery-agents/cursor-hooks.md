@@ -165,7 +165,11 @@ chmod +x ~/.cursor/hooks/akto/*.sh
 **Configure Akto Ingestion URL and API Token** ⚠️ **CRITICAL STEP**
 
 {% hint style="warning" %}
-All wrapper scripts contain the placeholders `{{AKTO_DATA_INGESTION_URL}}` and `{{AKTO_API_TOKEN}}` that **must be replaced** — the URL with your actual Akto instance URL, and the token with your Akto API token (obtain it from **Akto Atlas → Connectors → Setup Guardrail** card). If your deployment does not require auth, set the token to an empty string so the placeholder is removed (an unsubstituted `{{AKTO_API_TOKEN}}` would be sent as an invalid `Authorization` header).
+All wrapper scripts contain the placeholders `{{AKTO_DATA_INGESTION_URL}}`, `{{AKTO_API_TOKEN}}` and `{{DEVICE_ID (optional)}}` that **must be replaced** — the URL with your actual Akto instance URL, and the token with your Akto API token (obtain it from **Akto Atlas → Connectors → Setup Guardrail** card). If your deployment does not require auth, set the token to an empty string so the placeholder is removed (an unsubstituted `{{AKTO_API_TOKEN}}` would be sent as an invalid `Authorization` header).
+{% endhint %}
+
+{% hint style="info" %}
+`DEVICE_ID` becomes the first label of the reported hostname (`<DEVICE_ID>.ai-agent.cursor`), and the dashboard displays that label verbatim as the device name. Substitute a real device label rather than deleting the line — with `DEVICE_ID` empty the hooks fall back to the lowercased computer name, which won't match how the same machine is named by the enterprise installer.
 {% endhint %}
 
 **Automated replacement:**
@@ -175,13 +179,31 @@ All wrapper scripts contain the placeholders `{{AKTO_DATA_INGESTION_URL}}` and `
 AKTO_URL="https://your-akto-instance.com"
 AKTO_API_TOKEN="your-akto-api-token"   # leave empty ("") if your deployment doesn't require auth
 
+# Build the device label: <computer-name>-<first 8 chars of machine id>
+# Works on macOS (scutil/ioreg) and Linux (hostname//etc/machine-id).
+# Non-alphanumerics become '-' so the label cannot contain a dot: the dashboard
+# splits the reported host on '.', and a dotted label would be truncated.
+DEVICE_NAME=$(scutil --get ComputerName 2>/dev/null | tr -d '\n')
+if [ -z "$DEVICE_NAME" ]; then DEVICE_NAME=$(hostname 2>/dev/null | tr -d '\n'); fi
+if [ -z "$DEVICE_NAME" ]; then DEVICE_NAME=$(uname -n 2>/dev/null | tr -d '\n'); fi
+DEVICE_NAME=$(printf '%s' "${DEVICE_NAME%.local}" | sed 's/[^a-zA-Z0-9]/-/g')
+
+MACHINE_ID=$(ioreg -rd1 -c IOPlatformExpertDevice 2>/dev/null | awk -F'"' '/IOPlatformUUID/{print $4}')
+if [ -z "$MACHINE_ID" ] && [ -r /etc/machine-id ]; then MACHINE_ID=$(tr -d '\n' < /etc/machine-id); fi
+MACHINE_ID=$(printf '%s' "$MACHINE_ID" | tr -cd 'a-fA-F0-9' | tr '[:upper:]' '[:lower:]')
+
+DEVICE_ID="${DEVICE_NAME:-unknown-device}"
+if [ -n "$MACHINE_ID" ]; then DEVICE_ID="${DEVICE_ID}-$(printf '%s' "$MACHINE_ID" | cut -c1-8)"; fi
+echo "Device label: $DEVICE_ID"
+
 # Update all wrapper scripts
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.cursor/hooks/akto/*-wrapper.sh
 sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN}|g" ~/.cursor/hooks/akto/*-wrapper.sh
-sed -i.bak 's|export DEVICE_ID="{{DEVICE_ID (optional)}}"||g' ~/.cursor/hooks/akto/*-wrapper.sh
+sed -i.bak "s|{{DEVICE_ID (optional)}}|${DEVICE_ID}|g" ~/.cursor/hooks/akto/*-wrapper.sh
 
-# Verify replacement
-grep -E "AKTO_DATA_INGESTION_URL|AKTO_API_TOKEN" ~/.cursor/hooks/akto/*-wrapper.sh
+# Verify replacement — no {{...}} should remain
+grep -E "AKTO_DATA_INGESTION_URL|AKTO_API_TOKEN|DEVICE_ID" ~/.cursor/hooks/akto/*-wrapper.sh
+grep -l "{{" ~/.cursor/hooks/akto/*-wrapper.sh && echo "⚠️  placeholders still present" || echo "✅ all placeholders substituted"
 ```
 
 **Manual replacement (alternative):**
@@ -191,6 +213,7 @@ Edit each wrapper script and replace:
 ```bash
 AKTO_DATA_INGESTION_URL="{{AKTO_DATA_INGESTION_URL}}"
 AKTO_API_TOKEN="{{AKTO_API_TOKEN}}"
+DEVICE_ID="{{DEVICE_ID (optional)}}"
 ```
 
 With:
@@ -198,6 +221,7 @@ With:
 ```bash
 AKTO_DATA_INGESTION_URL="https://your-akto-instance.com"
 AKTO_API_TOKEN="your-akto-api-token"
+DEVICE_ID="My-MacBook-Pro-f0929fe8"
 ```
 
 Files to update:
@@ -374,7 +398,29 @@ grep "{{AKTO_DATA_INGESTION_URL}}" ~/.cursor/hooks/akto/*-wrapper.sh
 # Replace with actual URL
 AKTO_URL="https://your-akto-instance.com"
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.cursor/hooks/akto/*-wrapper.sh
-sed -i.bak 's|export DEVICE_ID="{{DEVICE_ID (optional)}}"||g' ~/.cursor/hooks/akto/*-wrapper.sh
+```
+
+### Device Shows Up With the Wrong Name
+
+The device name in the dashboard is the first label of the reported hostname, which is whatever `DEVICE_ID` the wrapper exports. Check what is actually set:
+
+```bash
+grep DEVICE_ID ~/.cursor/hooks/akto/*-wrapper.sh
+```
+
+An unsubstituted `{{DEVICE_ID (optional)}}` is reported verbatim; an empty or missing value falls back to the lowercased computer name (or the raw machine UUID where that cannot be resolved). Substitute a real label:
+
+```bash
+DEVICE_NAME=$(scutil --get ComputerName 2>/dev/null | tr -d '\n')
+if [ -z "$DEVICE_NAME" ]; then DEVICE_NAME=$(hostname 2>/dev/null | tr -d '\n'); fi
+if [ -z "$DEVICE_NAME" ]; then DEVICE_NAME=$(uname -n 2>/dev/null | tr -d '\n'); fi
+DEVICE_NAME=$(printf '%s' "${DEVICE_NAME%.local}" | sed 's/[^a-zA-Z0-9]/-/g')
+MACHINE_ID=$(ioreg -rd1 -c IOPlatformExpertDevice 2>/dev/null | awk -F'"' '/IOPlatformUUID/{print $4}')
+if [ -z "$MACHINE_ID" ] && [ -r /etc/machine-id ]; then MACHINE_ID=$(tr -d '\n' < /etc/machine-id); fi
+MACHINE_ID=$(printf '%s' "$MACHINE_ID" | tr -cd 'a-fA-F0-9' | tr '[:upper:]' '[:lower:]')
+DEVICE_ID="${DEVICE_NAME:-unknown-device}"
+if [ -n "$MACHINE_ID" ]; then DEVICE_ID="${DEVICE_ID}-$(printf '%s' "$MACHINE_ID" | cut -c1-8)"; fi
+sed -i.bak "s|{{DEVICE_ID (optional)}}|${DEVICE_ID}|g" ~/.cursor/hooks/akto/*-wrapper.sh
 ```
 
 ### Check Logs for Errors
@@ -494,10 +540,21 @@ curl -s "${SHARED_BASE}/akto_ingestion_utility.py" -o ~/.cursor/hooks/akto/akto_
 # Make executable
 chmod +x ~/.cursor/hooks/akto/*.sh
 
-# Configure URL and token, strip optional placeholders
+# Build the device label: <computer-name>-<first 8 chars of machine id>
+DEVICE_NAME=$(scutil --get ComputerName 2>/dev/null | tr -d '\n')
+if [ -z "$DEVICE_NAME" ]; then DEVICE_NAME=$(hostname 2>/dev/null | tr -d '\n'); fi
+if [ -z "$DEVICE_NAME" ]; then DEVICE_NAME=$(uname -n 2>/dev/null | tr -d '\n'); fi
+DEVICE_NAME=$(printf '%s' "${DEVICE_NAME%.local}" | sed 's/[^a-zA-Z0-9]/-/g')
+MACHINE_ID=$(ioreg -rd1 -c IOPlatformExpertDevice 2>/dev/null | awk -F'"' '/IOPlatformUUID/{print $4}')
+if [ -z "$MACHINE_ID" ] && [ -r /etc/machine-id ]; then MACHINE_ID=$(tr -d '\n' < /etc/machine-id); fi
+MACHINE_ID=$(printf '%s' "$MACHINE_ID" | tr -cd 'a-fA-F0-9' | tr '[:upper:]' '[:lower:]')
+DEVICE_ID="${DEVICE_NAME:-unknown-device}"
+if [ -n "$MACHINE_ID" ]; then DEVICE_ID="${DEVICE_ID}-$(printf '%s' "$MACHINE_ID" | cut -c1-8)"; fi
+
+# Configure URL, token and device label
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.cursor/hooks/akto/*-wrapper.sh
 sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN}|g" ~/.cursor/hooks/akto/*-wrapper.sh
-sed -i.bak 's|export DEVICE_ID="{{DEVICE_ID (optional)}}"||g' ~/.cursor/hooks/akto/*-wrapper.sh
+sed -i.bak "s|{{DEVICE_ID (optional)}}|${DEVICE_ID}|g" ~/.cursor/hooks/akto/*-wrapper.sh
 
 # Create hooks.json
 cat > ~/.cursor/hooks.json << 'EOFHOOKS'
@@ -530,12 +587,21 @@ mkdir -p ~/.cursor/hooks/akto ~/.cursor/akto/chat-logs ~/.cursor/akto/mcp-logs
 
 # 2. Download all hook scripts from GitHub (see step 2 above)
 
-# 3. ⚠️ Configure Akto URL and API token (REQUIRED)
+# 3. ⚠️ Configure Akto URL, API token and device label (ALL REQUIRED)
 AKTO_URL="https://your-akto-instance.com"
 AKTO_API_TOKEN="your-akto-api-token"   # leave empty ("") if your deployment doesn't require auth
+DEVICE_NAME=$(scutil --get ComputerName 2>/dev/null | tr -d '\n')
+if [ -z "$DEVICE_NAME" ]; then DEVICE_NAME=$(hostname 2>/dev/null | tr -d '\n'); fi
+if [ -z "$DEVICE_NAME" ]; then DEVICE_NAME=$(uname -n 2>/dev/null | tr -d '\n'); fi
+DEVICE_NAME=$(printf '%s' "${DEVICE_NAME%.local}" | sed 's/[^a-zA-Z0-9]/-/g')
+MACHINE_ID=$(ioreg -rd1 -c IOPlatformExpertDevice 2>/dev/null | awk -F'"' '/IOPlatformUUID/{print $4}')
+if [ -z "$MACHINE_ID" ] && [ -r /etc/machine-id ]; then MACHINE_ID=$(tr -d '\n' < /etc/machine-id); fi
+MACHINE_ID=$(printf '%s' "$MACHINE_ID" | tr -cd 'a-fA-F0-9' | tr '[:upper:]' '[:lower:]')
+DEVICE_ID="${DEVICE_NAME:-unknown-device}"
+if [ -n "$MACHINE_ID" ]; then DEVICE_ID="${DEVICE_ID}-$(printf '%s' "$MACHINE_ID" | cut -c1-8)"; fi
 sed -i.bak "s|{{AKTO_DATA_INGESTION_URL}}|${AKTO_URL}|g" ~/.cursor/hooks/akto/*-wrapper.sh
 sed -i.bak "s|{{AKTO_API_TOKEN}}|${AKTO_API_TOKEN}|g" ~/.cursor/hooks/akto/*-wrapper.sh
-sed -i.bak 's|export DEVICE_ID="{{DEVICE_ID (optional)}}"||g' ~/.cursor/hooks/akto/*-wrapper.sh
+sed -i.bak "s|{{DEVICE_ID (optional)}}|${DEVICE_ID}|g" ~/.cursor/hooks/akto/*-wrapper.sh
 
 # 4. Make executable
 chmod +x ~/.cursor/hooks/akto/*.sh
