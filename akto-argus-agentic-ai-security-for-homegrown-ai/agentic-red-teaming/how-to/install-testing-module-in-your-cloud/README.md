@@ -135,23 +135,62 @@ Install the [docker](https://github.com/akto-api-security/infra/blob/feature/qui
     ```bash
     nano docker-agentic-testing.env
     ```
-2.  Add the following:
+2.  Add the following common configuration, then append the block for your chosen LLM provider below. The scanning module supports **Anthropic**, **Azure OpenAI**, and **Google Vertex AI** as the LLM backing the red teaming engine.
 
     ```dotenv
-    ANTHROPIC_API_KEY=<key>
-    NODE_ENV=production
+    NODE_ENV=dev
     PORT=5500
     AGENTIC_MODE=false
     NODE_TLS_REJECT_UNAUTHORIZED=0
+    AKTO_UTILITY_SERVER=http://akto-api-security-testing:8001
     USE_SESSION_MANAGEMENT=true
-
     ```
+
+{% tabs %}
+{% tab title="Anthropic" %}
+```dotenv
+ANTHROPIC_API_KEY=<key>
+```
 
 {% hint style="warning" %}
 **Anthropic API Key Required**
 
 You **must** replace your actual **Anthropic API Key** in the env file.
 {% endhint %}
+{% endtab %}
+
+{% tab title="Azure OpenAI" %}
+```dotenv
+LLM_PROVIDER=azure
+AZURE_OPENAI_ENDPOINT=<azure-openai-endpoint>
+AZURE_OPENAI_API_KEY=<azure-openai-api-key>
+AZURE_OPENAI_MODEL=<azure-openai-model>
+```
+
+{% hint style="warning" %}
+**Azure OpenAI Credentials Required**
+
+You **must** replace `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`, and `AZURE_OPENAI_MODEL` with your actual Azure OpenAI deployment details.
+{% endhint %}
+{% endtab %}
+
+{% tab title="Google Vertex AI" %}
+```dotenv
+LLM_PROVIDER=vertex
+VERTEX_PROJECT_ID=<gcp-project-id>
+VERTEX_LOCATION=<gcp-region>
+VERTEX_ENDPOINT_ID=<vertex-endpoint-id>
+VERTEX_ENDPOINT_DOMAIN=<vertex-endpoint-domain>
+GOOGLE_CREDENTIALS_JSON=<google-service-account-credentials-json>
+```
+
+{% hint style="warning" %}
+**Vertex AI Credentials Required**
+
+You **must** replace `VERTEX_PROJECT_ID`, `VERTEX_LOCATION`, `VERTEX_ENDPOINT_ID`, `VERTEX_ENDPOINT_DOMAIN`, and `GOOGLE_CREDENTIALS_JSON` with your actual Vertex AI project and service account details.
+{% endhint %}
+{% endtab %}
+{% endtabs %}
 
 You can also reference the original template is [here](https://github.com/akto-api-security/infra/blob/feature/quick-setup/docker-agentic-testing.env).
 {% endstep %}
