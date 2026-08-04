@@ -1,19 +1,20 @@
 # Claude CLI Hooks
 
-Akto Guardrails for Claude CLI provides security validation for AI interactions. It intercepts prompts before sending to Claude and responses after generation, validates against security policies, blocks risky behavior, and reports events to your Akto dashboard.
+Akto Guardrails for Claude CLI provides security validation for AI interactions. It intercepts prompts before sending to Claude, MCP tool calls before they execute, and responses after generation — validating each against security policies, blocking risky behavior, and reporting events to your Akto dashboard.
 
 ## Key Features
 
 * ✅ **Zero Installation** - No standalone apps to install
 * ✅ **Transparent Integration** - Uses Claude CLI's native hook mechanism
-* ✅ **Real-time Protection** - Validates every prompt and response
+* ✅ **Real-time Protection** - Validates every prompt, MCP tool call and response
+* ✅ **MCP Coverage** - Tool calls are reported as JSON-RPC `tools/call`, so MCP servers and tools show up in your inventory
 * ✅ **Centralized Monitoring** - All events reported to Akto dashboard
 * ✅ **Flexible Deployment** - Supports Argus and Atlas modes
 * ✅ **Configurable Behavior** - Blocking or observation modes
 
 ## How It Works
 
-Claude CLI's hook system executes custom scripts at two critical points:
+Claude CLI's hook system executes custom scripts at four critical points — two around the conversation, and two around every tool call the agent makes:
 
 ```mermaid
 sequenceDiagram
@@ -21,6 +22,9 @@ sequenceDiagram
     participant User
     participant PromptHook as UserPromptSubmit Hook
     participant Claude as Claude AI
+    participant PreTool as PreToolUse Hook
+    participant MCP as MCP Server / Tool
+    participant PostTool as PostToolUse Hook
     participant ResponseHook as Stop Hook
     participant Akto as Akto Dashboard
 
@@ -34,16 +38,37 @@ sequenceDiagram
         PromptHook-->>Akto: Report security event
     end
 
+    Claude->>PreTool: Tool call (mcp__server__tool)
+    Note over PreTool: Validate tool input
+    alt Safe Tool Call
+        PreTool->>MCP: Execute tool
+        PreTool-->>Akto: Report event
+    else Malicious
+        PreTool-->>Claude: permissionDecision "deny"
+        PreTool-->>Akto: Report security event
+    end
+
+    MCP->>PostTool: Tool result
+    Note over PostTool: Capture result
+    PostTool-->>Akto: Report event
+    PostTool->>Claude: Result
+
     Claude->>ResponseHook: Claude response
     Note over ResponseHook: Validate response
     ResponseHook-->>Akto: Report event
     ResponseHook->>User: Response
 ```
 
-**2 Hook Points:**
+**4 Hook Points:**
 
-1. `UserPromptSubmit` - Validates prompts before sending to Claude API
-2. `Stop` - Validates responses when Claude finishes generating
+1. `UserPromptSubmit` — Validates prompts before sending to Claude API
+2. `PreToolUse` — Validates MCP tool input before execution. The only hook that can block a tool call: it returns `permissionDecision: "deny"` with a reason
+3. `PostToolUse` — Captures MCP tool results for observability and response guardrails
+4. `Stop` — Validates responses when Claude finishes generating
+
+{% hint style="info" %}
+**How MCP tool calls are recognised.** Claude Code names MCP tools `mcp__<server>__<tool>`. The `PreToolUse` hook parses that shape, and for a match reports the call to Akto as a JSON-RPC `tools/call` on the `/mcp` path — so it lands in your MCP inventory with the server and tool broken out. Tool calls that are **not** MCP (`Bash`, `Read`, `Edit`, …) still pass through the same hook; they are mirrored to `/tool/<tool-name>` instead. Ingestion of non-MCP tool calls is off by default — set `AKTO_INGEST_NON_MCP_TOOLS=true` to enable it.
+{% endhint %}
 
 ## File Structure
 
@@ -54,13 +79,19 @@ sequenceDiagram
 │   ├── akto-validate-prompt.py                # Prompt validation logic
 │   ├── akto-validate-response-wrapper.sh      # Response validation wrapper
 │   ├── akto-validate-response.py              # Response validation logic
+│   ├── akto-validate-mcp-request-wrapper.sh   # MCP tool input wrapper
+│   ├── akto-validate-mcp-request.py           # MCP tool input validation
+│   ├── akto-validate-mcp-response-wrapper.sh  # MCP tool result wrapper
+│   ├── akto-validate-mcp-response.py          # MCP tool result capture
 │   ├── akto_ingestion_utility.py              # Shared validation/ingestion logic
 │   ├── akto_heartbeat.py                      # Device heartbeat publisher
 │   └── akto_machine_id.py                     # Device ID utility
 ├── akto/
 │   └── logs/
 │       ├── validate-prompt.log
-│       └── validate-response.log
+│       ├── validate-response.log
+│       ├── validate-mcp-request.log
+│       └── validate-mcp-response.log
 └── settings.json                              # Hook configuration
 ```
 
@@ -69,6 +100,8 @@ sequenceDiagram
 * **Wrapper scripts (`.sh`)**: Set environment variables, invoke Python scripts
   * ⚠️ **Contains `AKTO_DATA_INGESTION_URL` placeholder** - Must be replaced with your Akto instance URL
 * **Python scripts (`.py`)**: Core validation logic and Akto API communication
+* **`akto-validate-mcp-request.py`**: Validates every tool call before it runs. Reports MCP calls (`mcp__<server>__<tool>`) as JSON-RPC `tools/call` on `/mcp`; can deny the call
+* **`akto-validate-mcp-response.py`**: Captures the tool result as a JSON-RPC result. Observational — it cannot block
 * **`akto_ingestion_utility.py`**, **`akto_machine_id.py`**, **`akto_heartbeat.py`**: shared modules imported by the hook scripts. All three live in the `shared/` GitHub directory, **not** `claude-cli-hooks/`, so they are fetched from `SHARED_BASE` — miss any one and the hooks fail at import with `ModuleNotFoundError`
 * **`akto_heartbeat.py`**: Registers this device with Akto every 30s. Required — without a heartbeat record, mini-runtime cannot resolve the device to a user and **drops every hook event before indexing**, so the endpoint never appears under LLM observability / traces even though ingestion succeeds
 * **`akto_machine_id.py`**: Generates unique device identifiers for Atlas mode
@@ -114,6 +147,16 @@ curl -o ~/.claude/hooks/akto-validate-response-wrapper.sh \
   "${HOOKS_BASE}/akto-validate-response-wrapper.sh"
 curl -o ~/.claude/hooks/akto-validate-response.py \
   "${HOOKS_BASE}/akto-validate-response.py"
+
+# Download MCP tool hooks (PreToolUse / PostToolUse)
+curl -o ~/.claude/hooks/akto-validate-mcp-request-wrapper.sh \
+  "${HOOKS_BASE}/akto-validate-mcp-request-wrapper.sh"
+curl -o ~/.claude/hooks/akto-validate-mcp-request.py \
+  "${HOOKS_BASE}/akto-validate-mcp-request.py"
+curl -o ~/.claude/hooks/akto-validate-mcp-response-wrapper.sh \
+  "${HOOKS_BASE}/akto-validate-mcp-response-wrapper.sh"
+curl -o ~/.claude/hooks/akto-validate-mcp-response.py \
+  "${HOOKS_BASE}/akto-validate-mcp-response.py"
 
 # Download the shared modules (note: SHARED_BASE, not HOOKS_BASE — these live in
 # a different GitHub directory). All three must land next to the hook scripts.
@@ -197,6 +240,8 @@ Files to update:
 
 * `akto-validate-prompt-wrapper.sh`
 * `akto-validate-response-wrapper.sh`
+* `akto-validate-mcp-request-wrapper.sh`
+* `akto-validate-mcp-response-wrapper.sh`
 {% endstep %}
 
 {% step %}
@@ -214,6 +259,28 @@ cat > ~/.claude/settings.json << 'EOF'
           {
             "type": "command",
             "command": "bash ~/.claude/hooks/akto-validate-prompt-wrapper.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/akto-validate-mcp-request-wrapper.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/akto-validate-mcp-response-wrapper.sh",
             "timeout": 10
           }
         ]
@@ -309,6 +376,18 @@ CLAUDE_API_URL="https://api.anthropic.com"             # Claude API endpoint
 DATABASE_ABSTRACTOR_SERVICE_URL="https://cyborg.akto.io"  # Heartbeat target (on-prem: override)
 ```
 
+### MCP Tool Hook Variables
+
+Read by `akto-validate-mcp-request.py` / `akto-validate-mcp-response.py`. All optional — the defaults match what the enterprise installer configures.
+
+```bash
+MCP_INGEST_PATH="/mcp"                  # Path MCP tools/call events are mirrored to
+AKTO_INGEST_NON_MCP_TOOLS="false"       # "true" also ingests built-in tools (Bash, Read, Edit, …)
+NON_MCP_TOOL_PATH_PREFIX="/tool"        # Path prefix for non-MCP tools -> /tool/<tool-name>
+NON_MCP_INGEST_PATH=""                  # Set to collapse all non-MCP tools onto one fixed path
+```
+
+
 {% hint style="warning" %}
 **On-prem deployments must override `DATABASE_ABSTRACTOR_SERVICE_URL`.** The wrappers default to the SaaS cyborg endpoint. If your Akto runs on-prem, point it at your own abstractor before the heartbeat can register the device — and until it registers, LLM observability and traces stay empty.
 
@@ -379,6 +458,25 @@ If the file is present and the import still fails, check that `PYTHONSAFEPATH` i
 ```bash
 env | grep -i pythonsafepath   # must return nothing
 ```
+
+### MCP Tool Calls Not Appearing
+
+`PreToolUse` fires for **every** tool call, but only names matching `mcp__<server>__<tool>` are reported as MCP `tools/call` on `/mcp`. Built-in tools (`Bash`, `Read`, `Edit`, …) take the non-MCP path and are **not** ingested unless you opt in.
+
+```bash
+# Are both MCP hooks registered?
+python3 -c "import json;h=json.load(open('$HOME/.claude/settings.json'))['hooks'];print(sorted(h))"
+
+# Did the hook run, and what did it classify the call as?
+tail -20 ~/.claude/akto/logs/validate-mcp-request.log
+
+# To also ingest built-in (non-MCP) tool calls
+sed -i.bak '/^export CONTEXT_SOURCE=/a\
+export AKTO_INGEST_NON_MCP_TOOLS="true"
+' ~/.claude/hooks/akto-validate-mcp-*-wrapper.sh
+```
+
+If the log shows `Validating built-in / non-MCP tool request`, the call was not an MCP tool — that is expected for Claude's own tools.
 
 ### Endpoint Appears in Inventory but Traces / LLM Observability Are Empty
 
@@ -588,6 +686,28 @@ cat > ~/.claude/settings.json << 'EOFSETTINGS'
           {
             "type": "command",
             "command": "bash ~/.claude/hooks/akto-validate-prompt-wrapper.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/akto-validate-mcp-request-wrapper.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/akto-validate-mcp-response-wrapper.sh",
             "timeout": 10
           }
         ]
