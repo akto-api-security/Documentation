@@ -297,6 +297,40 @@ Conversations should begin appearing in your Akto dashboard within one or two po
 {% endstep %}
 {% endstepper %}
 
+### Enabling Agent Graphs on an Existing Connection
+
+Agent graphs shipped after this connector did, so if you connected before the feature existed, it stays off until you opt in — transcript ingestion keeps running unaffected either way.
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/12. Enable Agent Graphs.png" alt="" width="563"><figcaption></figcaption></figure></div>
+
+{% stepper %}
+{% step %}
+**Open the connector's setup guide**
+
+Go to **Connectors** → find the **Copilot Studio (Multi Environment)** card (already showing **Connected**) → open its setup guide.
+{% endstep %}
+
+{% step %}
+**Check "Enable agent graphs"**
+
+{% hint style="warning" %}
+Checking the box alone isn't enough. Agent graphs need the `Power Platform API` > `ResourceQuery.Resources.Read` delegated permission (see **Required Permissions** above) — a scope your original sign-in never consented to if you connected before this feature existed. Until you reconnect, the recurring job silently skips agent-graph publishing; transcripts keep working normally in the meantime.
+{% endhint %}
+{% endstep %}
+
+{% step %}
+**Select Reconnect**
+
+This re-runs the Microsoft sign-in from Part 2, forcing a fresh consent screen so the new permission is surfaced and granted. Akto stores the resulting refresh token — now carrying the new scope — replacing the old one.
+{% endstep %}
+
+{% step %}
+**Confirm status still shows Connected**
+
+Agent graphs begin populating on the same recurring schedule as transcripts, independent of transcript availability.
+{% endstep %}
+{% endstepper %}
+
 ## Troubleshooting
 
 For common issues and solutions, refer to the [single environment documentation](microsoft-copilot-studio.md#troubleshooting). The troubleshooting guide covers most issues that also apply to the multi-environment setup.
