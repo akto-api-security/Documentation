@@ -69,7 +69,7 @@ sequenceDiagram
 * **Wrapper scripts (`.sh`)**: Set environment variables, invoke Python scripts
   * ⚠️ **Contains `AKTO_DATA_INGESTION_URL` placeholder** - Must be replaced with your Akto instance URL
 * **Python scripts (`.py`)**: Core validation logic and Akto API communication
-* **`akto_ingestion_utility.py`**: Shared validation/ingestion logic imported by every hook script — lives in a different GitHub directory (`shared/`, not `claude-cli-hooks/`), so it needs its own download step
+* **`akto_ingestion_utility.py`**, **`akto_machine_id.py`**, **`akto_heartbeat.py`**: shared modules imported by the hook scripts. All three live in the `shared/` GitHub directory, **not** `claude-cli-hooks/`, so they are fetched from `SHARED_BASE` — miss any one and the hooks fail at import with `ModuleNotFoundError`
 * **`akto_heartbeat.py`**: Registers this device with Akto every 30s. Required — without a heartbeat record, mini-runtime cannot resolve the device to a user and **drops every hook event before indexing**, so the endpoint never appears under LLM observability / traces even though ingestion succeeds
 * **`akto_machine_id.py`**: Generates unique device identifiers for Atlas mode
 * **`settings.json`**: Links hooks to wrapper scripts
@@ -115,17 +115,11 @@ curl -o ~/.claude/hooks/akto-validate-response-wrapper.sh \
 curl -o ~/.claude/hooks/akto-validate-response.py \
   "${HOOKS_BASE}/akto-validate-response.py"
 
-# Download utility
-curl -o ~/.claude/hooks/akto_machine_id.py \
-  "${HOOKS_BASE}/akto_machine_id.py"
-
-# Download the heartbeat publisher
-curl -o ~/.claude/hooks/akto_heartbeat.py \
-  "${HOOKS_BASE}/akto_heartbeat.py"
-
-# Download shared ingestion utility (note: SHARED_BASE, not HOOKS_BASE)
-curl -o ~/.claude/hooks/akto_ingestion_utility.py \
-  "${SHARED_BASE}/akto_ingestion_utility.py"
+# Download the shared modules (note: SHARED_BASE, not HOOKS_BASE — these live in
+# a different GitHub directory). All three must land next to the hook scripts.
+for f in akto_ingestion_utility.py akto_machine_id.py akto_heartbeat.py; do
+  curl -o ~/.claude/hooks/"$f" "${SHARED_BASE}/${f}"
+done
 
 # Make executable
 chmod +x ~/.claude/hooks/*.sh
@@ -550,9 +544,9 @@ curl -s "${HOOKS_BASE}/akto-validate-prompt-wrapper.sh" -o ~/.claude/hooks/akto-
 curl -s "${HOOKS_BASE}/akto-validate-prompt.py" -o ~/.claude/hooks/akto-validate-prompt.py
 curl -s "${HOOKS_BASE}/akto-validate-response-wrapper.sh" -o ~/.claude/hooks/akto-validate-response-wrapper.sh
 curl -s "${HOOKS_BASE}/akto-validate-response.py" -o ~/.claude/hooks/akto-validate-response.py
-curl -s "${HOOKS_BASE}/akto_machine_id.py" -o ~/.claude/hooks/akto_machine_id.py
-curl -s "${HOOKS_BASE}/akto_heartbeat.py" -o ~/.claude/hooks/akto_heartbeat.py
-curl -s "${SHARED_BASE}/akto_ingestion_utility.py" -o ~/.claude/hooks/akto_ingestion_utility.py
+for f in akto_ingestion_utility.py akto_machine_id.py akto_heartbeat.py; do
+  curl -s "${SHARED_BASE}/${f}" -o ~/.claude/hooks/"$f"
+done
 
 # Make executable
 chmod +x ~/.claude/hooks/*.sh
