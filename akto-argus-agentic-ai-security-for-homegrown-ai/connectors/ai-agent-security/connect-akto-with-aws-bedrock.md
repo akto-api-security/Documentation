@@ -490,31 +490,25 @@ aws lambda invoke \
 
 ## Integrate Both Bedrock and AgentCore (Unified Setup)
 
-{% hint style="info" %}
 To integrate **both** AWS Bedrock discovery **and** [AWS Bedrock AgentCore](aws-bedrock-agentcore.md) gateway interception in a single stack, use the unified template below instead of the template referenced in the steps above.
-{% endhint %}
 
 **Unified CloudFormation Template:**
 
 <pre data-overflow="wrap"><code>https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v4.1/client-aws-cf-template.yaml
 </code></pre>
 
-{% hint style="info" %}
-**Note**
-
 This template adds one new parameter on top of the standard Bedrock discovery setup:
 
 * **EnableGatewayInterception** (`true` / `false`)
   * `true` — Attaches the Akto interceptor to all available AgentCore Gateways. All gateway requests are routed through the interceptor (proxy) to Akto, in addition to discovery through agent traffic.
   * `false` — Only discovery through agent traffic is enabled; no gateway interceptor is attached.
-{% endhint %}
 
 Lambda package used by this template: `s3://lambda-code-akto-us-east-1/v4.1/akto-bedrock-processor.zip`
 
 Deploy following the same **Deploy via AWS Console** steps in the [Step-by-Step Setup](#step-by-step-setup) section above, using this template URL and setting `EnableGatewayInterception` alongside the other parameters when filling in stack details.
 
 {% hint style="info" %}
-**Important Notes**
+## **Important Notes**
 
 1. **Bedrock Logging Configuration**: The Lambda function automatically enables Bedrock model invocation logging on first run if not enabled
 2. **Processing Schedule**: Logs are processed every 5 minutes via EventBridge
