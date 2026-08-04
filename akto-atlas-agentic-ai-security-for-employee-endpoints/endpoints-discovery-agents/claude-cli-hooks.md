@@ -177,11 +177,7 @@ chmod +x ~/.claude/hooks/*.sh
 **Configure Akto Ingestion URL, API Token and Device ID** ⚠️ **CRITICAL STEP**
 
 {% hint style="warning" %}
-All wrapper scripts contain the placeholders `{{AKTO_DATA_INGESTION_URL}}`, `{{AKTO_API_TOKEN}}` and `{{DEVICE_ID (optional)}}` that **must be replaced** — the URL with your actual Akto instance URL, and the token with your Akto API token (obtain it from **Akto Atlas → Connectors → Setup Guardrail** card). If your deployment does not require auth, set the token to an empty string so the placeholder is removed (an unsubstituted `{{AKTO_API_TOKEN}}` would be sent as an invalid `Authorization` header).
-{% endhint %}
-
-{% hint style="danger" %}
-`{{DEVICE_ID (optional)}}` is optional in name only — the hooks do **not** treat an unsubstituted placeholder as empty. `DEVICE_ID` becomes the first label of the reported hostname (`<DEVICE_ID>.ai-agent.claudecli`), and the dashboard displays that label verbatim as the device name. Leave the placeholder in and every machine in your org reports the literal string `{{DEVICE_ID (optional)}}`, collapsing them all into a single device.
+All wrapper scripts contain the placeholders `{{AKTO_DATA_INGESTION_URL}}`, `{{AKTO_API_TOKEN}}` and `{{DEVICE_ID (optional)}}` that **must be replaced** — the URL with your actual Akto instance URL, the token with your Akto API token (obtain it from **Akto Atlas → Connectors → Setup Guardrail** card), and `{{DEVICE_ID (optional)}}` with this machine's device label, which the dashboard shows as the device name. If your deployment does not require auth, set the token to an empty string so the placeholder is removed (an unsubstituted `{{AKTO_API_TOKEN}}` would be sent as an invalid `Authorization` header).
 {% endhint %}
 
 **Automated replacement:**
