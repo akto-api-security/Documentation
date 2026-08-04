@@ -55,6 +55,7 @@ sequenceDiagram
 │   ├── akto-validate-response-wrapper.sh      # Response validation wrapper
 │   ├── akto-validate-response.py              # Response validation logic
 │   ├── akto_ingestion_utility.py              # Shared validation/ingestion logic
+│   ├── akto_heartbeat.py                      # Device heartbeat publisher
 │   └── akto_machine_id.py                     # Device ID utility
 ├── akto/
 │   └── logs/
@@ -68,7 +69,8 @@ sequenceDiagram
 * **Wrapper scripts (`.sh`)**: Set environment variables, invoke Python scripts
   * ⚠️ **Contains `AKTO_DATA_INGESTION_URL` placeholder** - Must be replaced with your Akto instance URL
 * **Python scripts (`.py`)**: Core validation logic and Akto API communication
-* **`akto_ingestion_utility.py`**: Shared validation/ingestion logic imported by every hook script — lives in a different GitHub directory (`shared/`, not `claude-cli-hooks/`), so it needs its own download step
+* **`akto_ingestion_utility.py`**, **`akto_machine_id.py`**, **`akto_heartbeat.py`**: shared modules imported by the hook scripts. All three live in the `shared/` GitHub directory, **not** `claude-cli-hooks/`, so they are fetched from `SHARED_BASE` — miss any one and the hooks fail at import with `ModuleNotFoundError`
+* **`akto_heartbeat.py`**: Registers this device with Akto every 30s. Required — without a heartbeat record, mini-runtime cannot resolve the device to a user and **drops every hook event before indexing**, so the endpoint never appears under LLM observability / traces even though ingestion succeeds
 * **`akto_machine_id.py`**: Generates unique device identifiers for Atlas mode
 * **`settings.json`**: Links hooks to wrapper scripts
 
@@ -113,13 +115,11 @@ curl -o ~/.claude/hooks/akto-validate-response-wrapper.sh \
 curl -o ~/.claude/hooks/akto-validate-response.py \
   "${HOOKS_BASE}/akto-validate-response.py"
 
-# Download utility
-curl -o ~/.claude/hooks/akto_machine_id.py \
-  "${HOOKS_BASE}/akto_machine_id.py"
-
-# Download shared ingestion utility (note: SHARED_BASE, not HOOKS_BASE)
-curl -o ~/.claude/hooks/akto_ingestion_utility.py \
-  "${SHARED_BASE}/akto_ingestion_utility.py"
+# Download the shared modules (note: SHARED_BASE, not HOOKS_BASE — these live in
+# a different GitHub directory). All three must land next to the hook scripts.
+for f in akto_ingestion_utility.py akto_machine_id.py akto_heartbeat.py; do
+  curl -o ~/.claude/hooks/"$f" "${SHARED_BASE}/${f}"
+done
 
 # Make executable
 chmod +x ~/.claude/hooks/*.sh
@@ -306,7 +306,18 @@ AKTO_SYNC_MODE="true"                                  # "true" or "false"
 AKTO_TIMEOUT="5"                                       # Timeout in seconds
 AKTO_CONNECTOR="claude_code_cli"                       # Connector identifier
 CLAUDE_API_URL="https://api.anthropic.com"             # Claude API endpoint
+DATABASE_ABSTRACTOR_SERVICE_URL="https://cyborg.akto.io"  # Heartbeat target (on-prem: override)
 ```
+
+{% hint style="warning" %}
+**On-prem deployments must override `DATABASE_ABSTRACTOR_SERVICE_URL`.** The wrappers default to the SaaS cyborg endpoint. If your Akto runs on-prem, point it at your own abstractor before the heartbeat can register the device — and until it registers, LLM observability and traces stay empty.
+
+```bash
+export DATABASE_ABSTRACTOR_SERVICE_URL="https://cyborg.your-akto-instance.com"
+sed -i.bak "s|^export DATABASE_ABSTRACTOR_SERVICE_URL=.*|export DATABASE_ABSTRACTOR_SERVICE_URL=\"${DATABASE_ABSTRACTOR_SERVICE_URL}\"|" \
+  ~/.claude/hooks/*-wrapper.sh
+```
+{% endhint %}
 
 **How `DEVICE_ID` is reported:** the hooks send `<DEVICE_ID>.ai-agent.claudecli` as the request host, and the dashboard uses the first label of that host as the device name. If `DEVICE_ID` is empty the hooks fall back to the lowercased computer name (or, where that cannot be resolved, the raw machine UUID — which is why a device sometimes shows up as a bare hex string).
 
@@ -367,6 +378,27 @@ If the file is present and the import still fails, check that `PYTHONSAFEPATH` i
 
 ```bash
 env | grep -i pythonsafepath   # must return nothing
+```
+
+### Endpoint Appears in Inventory but Traces / LLM Observability Are Empty
+
+Ingestion and trace indexing are separate paths. mini-runtime resolves each hook event's device to a user via the heartbeat record (`moduleInfo.name` → `additionalData.username`); an event whose device has no heartbeat, and which carries no `user_email` header, is discarded before indexing. Claude Code's hook payloads never carry an email, so the heartbeat is the only thing that can satisfy this — the collection still shows up in inventory, which is why the endpoint looks connected.
+
+```bash
+# Was the heartbeat publisher installed?
+ls -l ~/.claude/hooks/akto_heartbeat.py
+
+# Has it sent recently? (unix timestamp of the last successful send)
+cat ~/.claude/akto/logs/last_heartbeat
+
+# Look for the send/skip line
+grep -i heartbeat ~/.claude/akto/logs/*.log | tail -5
+```
+
+If the file is missing, re-run the download step. If it is present but never sends, confirm `DATABASE_ABSTRACTOR_SERVICE_URL` points at a reachable abstractor (see the hint above) and that `AKTO_AGENT_HEARTBEAT` is **not** set — that flag is for machines where the Akto agent already publishes the heartbeat, and it disables publishing from the hook.
+
+```bash
+grep -E "AKTO_AGENT_HEARTBEAT|DATABASE_ABSTRACTOR_SERVICE_URL" ~/.claude/hooks/*-wrapper.sh
 ```
 
 ### Hooks Not Executing
@@ -512,8 +544,9 @@ curl -s "${HOOKS_BASE}/akto-validate-prompt-wrapper.sh" -o ~/.claude/hooks/akto-
 curl -s "${HOOKS_BASE}/akto-validate-prompt.py" -o ~/.claude/hooks/akto-validate-prompt.py
 curl -s "${HOOKS_BASE}/akto-validate-response-wrapper.sh" -o ~/.claude/hooks/akto-validate-response-wrapper.sh
 curl -s "${HOOKS_BASE}/akto-validate-response.py" -o ~/.claude/hooks/akto-validate-response.py
-curl -s "${HOOKS_BASE}/akto_machine_id.py" -o ~/.claude/hooks/akto_machine_id.py
-curl -s "${SHARED_BASE}/akto_ingestion_utility.py" -o ~/.claude/hooks/akto_ingestion_utility.py
+for f in akto_ingestion_utility.py akto_machine_id.py akto_heartbeat.py; do
+  curl -s "${SHARED_BASE}/${f}" -o ~/.claude/hooks/"$f"
+done
 
 # Make executable
 chmod +x ~/.claude/hooks/*.sh
