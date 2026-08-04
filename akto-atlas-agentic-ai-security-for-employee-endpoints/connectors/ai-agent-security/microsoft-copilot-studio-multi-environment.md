@@ -14,6 +14,7 @@ Once connected, Akto Atlas automatically:
 * **Auto-provisions application users** in each environment with the required permissions
 * **Ingests conversation transcripts** from Copilot Studio agents across all environments
 * **Pairs user prompts with bot responses** to reconstruct full conversation flows
+* **Builds an agent graph** for every agent — its connectors, MCP servers, knowledge sources and flows — from the Power Platform inventory API
 * **Sends traffic to Akto** for prompt injection, PII, and policy-violation analysis
 
 ## Prerequisites
@@ -75,13 +76,13 @@ Your self-hosted Akto **Data Ingestion Service** must be deployed and reachable 
 
 ### 5. Required Permissions
 
-Two distinct sets of permissions are involved in this integration. Note the difference: confusing them is the most common setup mistake.
+Three distinct sets of permissions are involved in this integration. Note the differences: confusing them is the most common setup mistake.
 
-#### 5a. Permissions for the person running the setup (one-time, tenant level)
+#### 5a. Permissions for the person running the setup (one-time sign-in, used continuously afterward)
 
 The user performing the setup needs to be a **Global Administrator** or **Power Platform Administrator** at the tenant level, because the setup auto-discovers environments and provisions users across all of them.
 
-These permissions are **only** needed at setup time (they are not used by the connector at runtime).
+Signing in is a one-time action, but its result isn't: Akto stores a refresh token from this sign-in and silently renews it on every recurring job run to call the Power Platform inventory API for agent graphs (see 5c). You aren't prompted again, but this identity stays in continuous use — it's not a one-time-only credential.
 
 #### 5b. Permissions for the application user (used by Akto at runtime)
 
@@ -97,6 +98,10 @@ At runtime, the connector only reads two tables using this application user:
 {% hint style="info" %}
 If you require least-privilege access instead of System Administrator for the auto-provisioned application user, contact Akto support to discuss a custom role setup.
 {% endhint %}
+
+#### 5c. Permissions used for agent graphs (via the signed-in admin's delegated token, not the application user)
+
+Separate from the application user above, Akto's recurring job also calls the Power Platform inventory API — tenant-wide, across every environment — to build each agent's graph of connectors, MCP servers, knowledge sources and flows. This call uses the **delegated token from the Part 1/2 sign-in** (the `Power Platform API` > `ResourceQuery.Resources.Read` permission), not the per-environment application user, since this API only accepts delegated (user) tokens.
 
 ## Steps to Connect
 
@@ -165,9 +170,16 @@ Go to **API Permissions** > **Add a permission**.
 {% endstep %}
 
 {% step %}
-Select the **APIs my organization uses** tab. Search for **PowerApps Service** and add the following **delegated permission**:
+Select the **APIs my organization uses** tab. Add the following **delegated permissions**:
 
-* `User`
+* **PowerApps Service** > `User`
+* **Power Platform API** > `ResourceQuery.Resources.Read`
+{% endstep %}
+
+{% step %}
+Add the following **application permission**:
+
+* **Microsoft Graph** > `User.Read.All` (requires admin consent)
 {% endstep %}
 {% endstepper %}
 
@@ -180,8 +192,8 @@ When you enter your details in the Akto dashboard, you'll be asked to log in to 
 
 * Registers the app you created in Part 1 with the Power Platform admin center
 * Lets Akto automate the creation of application users in each environment, so you don't have to create them manually
-* Creates each application user with default access (**System Administrator**)
-* Is used by Akto to fetch conversation transcripts and agent information via these application users
+* Creates each application user with default access (**System Administrator**), used to fetch conversation transcripts
+* Also stores a refresh token for your own sign-in, renewed silently on every recurring job run to fetch agent graph data (see 5c below)
 {% endhint %}
 
 {% stepper %}
@@ -274,9 +286,10 @@ If you don't see an expected environment, verify that:
 Akto will now:
 * Provision application users in each discovered environment
 * Start polling Copilot Studio transcripts from all environments every 30 minutes
-* Begin importing conversation data to your Akto dashboard
+* Pull the tenant-wide agent inventory on the same schedule to build each agent's graph
+* Begin importing conversation data and agent graphs to your Akto dashboard
 
-Conversations should begin appearing in your Akto dashboard within one or two polling cycles, provided transcripts exist in Dataverse for the polling window.
+Conversations should begin appearing in your Akto dashboard within one or two polling cycles, provided transcripts exist in Dataverse for the polling window. Agent graphs populate on the same cycle, independent of transcript availability.
 {% endstep %}
 {% endstepper %}
 
