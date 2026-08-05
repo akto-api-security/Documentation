@@ -78,6 +78,18 @@ Denied topics block specific concepts in user inputs or model responses.
 You can add up to **30 denied topics** per guardrail policy.
 {% endhint %}
 
+**Map Topics to Compliance Frameworks**
+
+Akto auto-tags each custom denied topic against supported compliance frameworks, including **SOC 2**, **HIPAA**, **GDPR**, and **ISO 27001**. Every topic maps to the controls it enforces, so you can see at a glance which compliance requirements a guardrail policy helps satisfy.
+
+* Review the frameworks suggested under **Compliance frameworks supported by this guardrail**.
+* Select **+ Add** to map the topic to additional frameworks.
+* Select the **x** on a framework tag to remove that mapping.
+
+{% hint style="warning" %}
+Compliance mappings are AI-generated suggestions and may not be fully accurate. Review and validate them before relying on them for compliance.
+{% endhint %}
+
 **Harmful Categories Filter**
 
 * Enable the harmful content filter using the category checkbox.
