@@ -25,6 +25,12 @@ The extension retrieves active configurations from the dashboard settings and ev
 
 For guardrail policy configuration details, see: [threat-policy.md](../../../../agentic-guardrails/concepts/threat-policy.md "mention")
 
+{% hint style="info" %}
+**Supported Browser LLMs**
+
+The **Block personal accounts** guardrail is currently supported on the following browser LLMs: **chatgpt.com**, **gemini.google.com**, **claude.ai**, **copilot.microsoft.com**, and **grok.com**.
+{% endhint %}
+
 ## Real-Time Guardrail Enforcement in the Browser
 
 When a user sends a request to a configured domain, the extension validates the request against guardrail policy conditions before completion.

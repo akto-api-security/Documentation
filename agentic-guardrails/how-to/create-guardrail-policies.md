@@ -315,6 +315,10 @@ Prevent users with personal or consumer email accounts from accessing the AI age
 
 * Enable **personal account blocking** to restrict access to organisation-managed accounts only.
 
+{% hint style="info" %}
+Personal account blocking is enforced through the [browser extension](../../akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/chrome/extension-usage-behaviour.md), and currently supports the following browser LLMs: **chatgpt.com**, **gemini.google.com**, **claude.ai**, **copilot.microsoft.com**, and **grok.com**.
+{% endhint %}
+
 <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (177).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 </details>
