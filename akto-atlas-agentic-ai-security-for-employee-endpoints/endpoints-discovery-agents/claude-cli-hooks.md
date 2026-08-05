@@ -611,8 +611,8 @@ echo "🔧 Installing Akto Guardrails for Claude CLI..."
 mkdir -p ~/.claude/hooks ~/.claude/akto/logs
 
 # Download hooks
-HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/claude-cli-hooks"
-SHARED_BASE="https://raw.githubusercontent.com/akto-api-security/akto/master/apps/mcp-endpoint-shield/shared"
+HOOKS_BASE="https://raw.githubusercontent.com/akto-api-security/akto/feat/claude-hooks/apps/mcp-endpoint-shield/claude-cli-hooks"
+SHARED_BASE="https://raw.githubusercontent.com/akto-api-security/akto/feat/claude-hooks/apps/mcp-endpoint-shield/shared"
 curl -s "${HOOKS_BASE}/akto-validate-prompt-wrapper.sh" -o ~/.claude/hooks/akto-validate-prompt-wrapper.sh
 curl -s "${HOOKS_BASE}/akto-validate-prompt.py" -o ~/.claude/hooks/akto-validate-prompt.py
 curl -s "${HOOKS_BASE}/akto-validate-response-wrapper.sh" -o ~/.claude/hooks/akto-validate-response-wrapper.sh
