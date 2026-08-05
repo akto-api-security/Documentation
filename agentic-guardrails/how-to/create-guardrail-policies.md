@@ -242,23 +242,25 @@ Akto can evaluate input size and detects requests that exceed acceptable token l
 
 <details>
 
-<summary>8. Anomaly Detection (Coming Soon)</summary>
+<summary>8. Anomaly Detection</summary>
 
-**Availability Status**
+Configure anomaly detection rules to identify unusual patterns in agent behaviour, tool usage, and system metrics.
 
-Anomaly detection guardrails are currently under development and not yet configurable.
+Anomaly detection guardrails are tagged with the OWASP Agentic risk categories they help mitigate, for example **ASI07 – Insecure Inter-Agent Communication**, **ASI08 – Cascading Failures**, and **ASI10 – Rogue Agents**.
 
-**Anomaly Categories**
+**Statistical Anomalies**
 
-You will be able to define rules across three categories:
+* Enable **anomaly detection** to detect and alert on abnormal tool call counts and error counts per session.
+* Set the **Tool call limit (per session)** — total tool calls allowed per session before triggering an anomaly.
+* Set the **Error limit (per session)** — total errors (4xx/5xx) per session before triggering an anomaly.
 
-* **Statistical Anomalies**: Detect deviations from normal usage patterns and metrics.
-* **Behavioral Anomalies**: Identify unexpected agent actions or tool usage patterns.
-* **Structural Anomalies**: Detect irregularities in request structure or interaction flows.
+**Structural Anomalies**
 
-**Expected Capability**
+Detects irregularities in request structure or interaction flows, with configuration options rolling out.
 
-Anomaly detection will enable proactive identification of abnormal patterns and potential security risks across agent workflows.
+**Behavioral Anomalies**
+
+Identifies unexpected agent actions or tool usage patterns, with configuration options rolling out.
 
 </details>
 
