@@ -20,7 +20,7 @@ The Config Field Policies page lists existing policies and provides access to po
 
 ## Create a Config Field Policy
 
-A config field policy pins a single field in an agent's configuration file to an expected value. Akto flags — and reverts — any local edit that drifts away from that value.
+A config field policy pins a single field in an agent's configuration file to an expected value. Akto flags and reverts any local edit that drifts away from that value.
 
 ### **Steps**
 
@@ -67,5 +67,5 @@ Click **Save** to apply the policy.
 {% endstepper %}
 
 {% hint style="info" %}
-Use config field policies to guard against drift in model versions, MCP server endpoints, and tool permissions — catching unauthorised configuration changes before they turn into incidents.
+Use config field policies to guard against drift in model versions, MCP server endpoints, and tool permissions, catching unauthorised configuration changes before they turn into incidents.
 {% endhint %}

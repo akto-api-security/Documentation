@@ -251,8 +251,8 @@ Anomaly detection guardrails are tagged with the OWASP Agentic risk categories t
 **Statistical Anomalies**
 
 * Enable **anomaly detection** to detect and alert on abnormal tool call counts and error counts per session.
-* Set the **Tool call limit (per session)** — total tool calls allowed per session before triggering an anomaly.
-* Set the **Error limit (per session)** — total errors (4xx/5xx) per session before triggering an anomaly.
+* Set the **Tool call limit (per session)**: total tool calls allowed per session before triggering an anomaly.
+* Set the **Error limit (per session)**: total errors (4xx/5xx) per session before triggering an anomaly.
 
 **Structural Anomalies**
 
@@ -387,6 +387,12 @@ Specify whether the guardrail should be applied to responses and/or requests:
 * **Apply guardrail to responses**: Evaluates model outputs before delivery.
 
 You can enable either option independently or both together based on enforcement requirements.
+
+{% hint style="info" %}
+**Browser LLM Enforcement**
+
+For Browser LLMs (**chatgpt.com**, **gemini.google.com**, **claude.ai**, **copilot.microsoft.com**, and **grok.com**), Akto enforces guardrails on the request path in real time, stopping risky prompts before they ever reach the model. Response-side enforcement for these domains is coming soon.
+{% endhint %}
 
 <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (212).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
