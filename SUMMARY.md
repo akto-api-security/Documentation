@@ -378,6 +378,7 @@
     * [For MCP Protection Issues](agentic-guardrails/concepts/remediation-steps/for-mcp-protection-issues.md)
 * [How To](agentic-guardrails/how-to/README.md)
   * [Create Guardrail Policies](agentic-guardrails/how-to/create-guardrail-policies.md)
+  * [Create Misconfiguration Policies](agentic-guardrails/how-to/create-misconfiguration-policies.md)
   * [Enable or Disable Guardrails](agentic-guardrails/how-to/enable-or-disable-guardrails.md)
   * [Manage Guardrail Policies](agentic-guardrails/how-to/manage-guardrail-policies.md)
   * [Access A Specific Guardrail Actor](agentic-guardrails/how-to/access-a-specific-guardrail-actor.md)
