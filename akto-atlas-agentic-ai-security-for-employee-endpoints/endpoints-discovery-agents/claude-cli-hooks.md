@@ -617,6 +617,10 @@ curl -s "${HOOKS_BASE}/akto-validate-prompt-wrapper.sh" -o ~/.claude/hooks/akto-
 curl -s "${HOOKS_BASE}/akto-validate-prompt.py" -o ~/.claude/hooks/akto-validate-prompt.py
 curl -s "${HOOKS_BASE}/akto-validate-response-wrapper.sh" -o ~/.claude/hooks/akto-validate-response-wrapper.sh
 curl -s "${HOOKS_BASE}/akto-validate-response.py" -o ~/.claude/hooks/akto-validate-response.py
+curl -s "${HOOKS_BASE}/akto-validate-mcp-request-wrapper.sh" -o ~/.claude/hooks/akto-validate-mcp-request-wrapper.sh
+curl -s "${HOOKS_BASE}/akto-validate-mcp-request.py" -o ~/.claude/hooks/akto-validate-mcp-request.py
+curl -s "${HOOKS_BASE}/akto-validate-mcp-response-wrapper.sh" -o ~/.claude/hooks/akto-validate-mcp-response-wrapper.sh
+curl -s "${HOOKS_BASE}/akto-validate-mcp-response.py" -o ~/.claude/hooks/akto-validate-mcp-response.py
 for f in akto_ingestion_utility.py akto_machine_id.py akto_heartbeat.py; do
   curl -s "${SHARED_BASE}/${f}" -o ~/.claude/hooks/"$f"
 done
