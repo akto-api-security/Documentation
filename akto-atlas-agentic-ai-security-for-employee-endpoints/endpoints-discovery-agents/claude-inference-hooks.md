@@ -47,7 +47,7 @@ Today the only hook event is `prompt`, firing once per governed request before i
 
 ## What Atlas Evaluates
 
-Every transcript Anthropic forwards is scored against the same Guardrail policies Atlas already enforces at the endpoint. See [Agent Guard](../../agentic-guardrails/concepts/agent-guard.md) for the full scanner list. Typical policies driving a deny verdict here:
+Every transcript Anthropic forwards is scored against the same Guardrail policies Atlas already enforces at the endpoint. See [Agent Guard](../../agentic-guardrails/concepts/agent-guard.md) for the full scanner list. Typical uses of the hook:
 
 * **Sensitive data exposure**: PII, secrets, source code, or other regulated data in the prompt
 * **Unsafe prompts and jailbreaks**: prompt injection or jailbreak patterns
