@@ -8,7 +8,7 @@ description: Use Akto Atlas as the AI security server behind Anthropic's Inferen
 
 [Inference Hooks](https://platform.claude.com/docs/en/manage-claude/inference-hooks) is a Claude Enterprise feature that routes every governed prompt through an organization's own **AI security server**, an HTTPS endpoint that returns an allow or deny verdict, before inference runs. A denied prompt never reaches the model.
 
-Akto Atlas can act as that AI security server. Point your organization's Inference Hooks configuration at Akto, and every governed prompt across claude.ai, Cowork, and Claude Code is evaluated against your **Atlas Guardrail policies** in real time, inline, before the model ever sees it — no endpoint agent, browser extension, or IDE hook required.
+Akto Atlas can act as that AI security server. Point your organization's Inference Hooks configuration at Akto, and every governed prompt across claude.ai, Cowork, and Claude Code is evaluated against your **Atlas Guardrail policies** in real time, inline, before the model ever sees it, with no endpoint agent, browser extension, or IDE hook required.
 
 This is the only Claude integration in Atlas that can **block a prompt before it runs**. The [Anthropic Connector](anthropic-connector.md) and [Claude Cowork Connector](claude-cowork-connector.md) give you visibility after or alongside the fact; Inference Hooks gives you enforcement in the critical path.
 
@@ -47,16 +47,16 @@ Today the only hook event is `prompt`, firing once per governed request before i
 
 ## What Atlas Evaluates
 
-Every transcript Anthropic forwards is scored against the same Guardrail policies Atlas already enforces at the endpoint — see [Agent Guard](../../agentic-guardrails/concepts/agent-guard.md) for the full scanner list. Typical policies driving a deny verdict here:
+Every transcript Anthropic forwards is scored against the same Guardrail policies Atlas already enforces at the endpoint. See [Agent Guard](../../agentic-guardrails/concepts/agent-guard.md) for the full scanner list. Typical policies driving a deny verdict here:
 
-* **Sensitive data exposure** — PII, secrets, source code, or other regulated data in the prompt
-* **Unsafe prompts and jailbreaks** — prompt injection or jailbreak patterns
-* **Policy engines** — model allowlists, project-scoped restrictions, or working-hours controls
-* **Compliance archival** — always return `allow` and use the transcript purely to archive activity in real time, as a push-based alternative to polling the Anthropic Compliance API
+* **Sensitive data exposure**: PII, secrets, source code, or other regulated data in the prompt
+* **Unsafe prompts and jailbreaks**: prompt injection or jailbreak patterns
+* **Policy engines**: model allowlists, project-scoped restrictions, or working-hours controls
+* **Compliance archival**: always return `allow` and use the transcript purely to archive activity in real time, as a push-based alternative to polling the Anthropic Compliance API
 
 ## What Atlas Can and Cannot See
 
-Anthropic forwards what the user sees: transcript text, tool calls and their results, and text extracted from attachments. It never forwards raw file or image bytes, system prompts, or Anthropic-internal context — so image-only content (a screenshot of a document, for example) cannot be inspected or blocked on this path.
+Anthropic forwards what the user sees: transcript text, tool calls and their results, and text extracted from attachments. It never forwards raw file or image bytes, system prompts, or Anthropic-internal context, so image-only content (a screenshot of a document, for example) cannot be inspected or blocked on this path.
 
 ## Prerequisites
 
@@ -66,22 +66,22 @@ Anthropic forwards what the user sees: transcript text, tool calls and their res
 
 ## Setting It Up
 
-Setting up Claude Inference Hooks requires provisioning a verdict endpoint on Akto's side and exchanging signing secrets with your Claude Enterprise organization — this is done together with the Akto team rather than as a self-serve step in the dashboard today.
+Setting up Claude Inference Hooks requires provisioning a verdict endpoint on Akto's side and exchanging signing secrets with your Claude Enterprise organization. This is done together with the Akto team rather than as a self-serve step in the dashboard today.
 
 {% hint style="info" %}
-**Contact the Akto team** to set up Claude Inference Hooks for your organization — reach out via in-app Intercom support or [support@akto.io](mailto:support@akto.io). They'll provision your verdict endpoint, walk you through registering it and the signing secret in claude.ai, and help you choose failure handling and rollout (shadow mode or a rollout percentage) so you can validate verdicts on live traffic before enforcing on everyone.
+**Contact the Akto team** to set up Claude Inference Hooks for your organization. Reach out via in-app Intercom support or [support@akto.io](mailto:support@akto.io). They'll provision your verdict endpoint, walk you through registering it and the signing secret in claude.ai, and help you choose failure handling and rollout (shadow mode or a rollout percentage) so you can validate verdicts on live traffic before enforcing on everyone.
 {% endhint %}
 
 At a high level, the setup covers:
 
 1. **Provisioning Akto's verdict endpoint** and signing secret for your organization.
 2. **Registering it in claude.ai**, under Organization Settings → Inference Hooks, as an Admin, Owner, or Primary owner.
-3. **Choosing failure handling** — block the request, or allow it through uninspected, if Atlas is unreachable or times out.
+3. **Choosing failure handling**: block the request, or allow it through uninspected, if Atlas is unreachable or times out.
 4. **Validating in shadow mode or a rollout percentage** before enforcing on all governed traffic.
 
 ## What You'll See in Akto
 
-* **Atlas Guardrails → Guardrail Activity**: every verdict Atlas returned — allow or deny, the policy that fired, and the full transcript context — alongside guardrail events from your other endpoints
+* **Atlas Guardrails → Guardrail Activity**: every verdict Atlas returned (allow or deny, the policy that fired, and the full transcript context), alongside guardrail events from your other endpoints
 * **Agentic AI Discovery → Agentic Assets**: governed Claude usage attributed to the requesting user, correlated with any Anthropic Connector or Cowork Connector data for the same org
 
 ## Get Support for your Akto setup
