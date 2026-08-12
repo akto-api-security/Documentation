@@ -8,14 +8,14 @@ description: Use Akto Atlas as the AI security server behind Anthropic's Inferen
 
 [Inference Hooks](https://platform.claude.com/docs/en/manage-claude/inference-hooks) is a Claude Enterprise feature that routes every governed prompt through an organization's own **AI security server**, an HTTPS endpoint that returns an allow or deny verdict, before inference runs. A denied prompt never reaches the model.
 
-Akto Atlas can act as that AI security server. Point your organization's Inference Hooks configuration at Akto, and every governed prompt across claude.ai, Cowork, and Claude Code is evaluated against your **Atlas Guardrail policies** in real time, inline, before the model ever sees it, with no endpoint agent, browser extension, or IDE hook required.
+Akto Atlas can act as that AI security server. Point your organization's Inference Hooks configuration at Akto, and every governed prompt across claude.ai, Cowork, and Claude Code is evaluated against your **Atlas Guardrail policies** inline, before the model ever sees it, with no endpoint agent, browser extension, or IDE hook required.
 
 This is the only Claude integration in Atlas that can **block a prompt before it runs**. The [Anthropic Connector](anthropic-connector.md) and [Claude Cowork Connector](claude-cowork-connector.md) give you visibility after or alongside the fact; Inference Hooks gives you enforcement in the critical path.
 
 ## How It Works
 
 1. A user submits a prompt on a governed surface (claude.ai, Cowork, or Claude Code).
-2. Anthropic sends an HTTPS `POST` containing the conversation transcript to Akto's verdict endpoint, signed per the [Standard Webhooks](https://www.standardwebhooks.com/) spec so Atlas can verify it came from Anthropic.
+2. Anthropic sends an HTTPS `POST` containing the conversation transcript to Akto's verdict endpoint, signed per the [Standard Webhooks](https://www.standardwebhooks.com/) spec so Atlas can verify it came from Anthropic, and carrying an `Authorization` header with your Akto token so Atlas can identify your account.
 3. Atlas evaluates the transcript against your configured Guardrail policies and returns a verdict within your organization's verdict timeout (5 seconds by default).
 4. On `allow`, inference proceeds normally. On `deny`, Anthropic blocks the request and shows the user a policy message built from Atlas's per-request reason plus your standing contact/exception text. The decision is logged to your Akto dashboard either way.
 
@@ -66,18 +66,17 @@ Anthropic forwards what the user sees: transcript text, tool calls and their res
 
 ## Setting It Up
 
-Setting up Claude Inference Hooks requires provisioning a verdict endpoint on Akto's side and exchanging signing secrets with your Claude Enterprise organization. This is done together with the Akto team rather than as a self-serve step in the dashboard today.
+Akto exposes a dedicated webhook endpoint for Claude Inference Hooks, scoped to your Akto account:
+
+```
+https://<your-account-id>-guardrails.akto.io/api/v1/webhooks/claude/guardrail
+```
+
+Register this URL as your AI security server in claude.ai, under **Organization Settings → Inference Hooks**, and set the request's **`Authorization`** header to your **database abstractor token**, the same API token used by your other Akto connectors. Get it from **Connectors → Setup Guardrail** in your Akto Atlas dashboard.
 
 {% hint style="info" %}
-**Contact the Akto team** to set up Claude Inference Hooks for your organization. Reach out via in-app Intercom support or [support@akto.io](mailto:support@akto.io). They'll provision your verdict endpoint, walk you through registering it and the signing secret in claude.ai, and help you choose failure handling and rollout (shadow mode or a rollout percentage) so you can validate verdicts on live traffic before enforcing on everyone.
+**Contact the Akto team** to set this up, via in-app Intercom support or [support@akto.io](mailto:support@akto.io). They'll confirm your account's webhook URL and token, and walk you through registering them in claude.ai.
 {% endhint %}
-
-At a high level, the setup covers:
-
-1. **Provisioning Akto's verdict endpoint** and signing secret for your organization.
-2. **Registering it in claude.ai**, under Organization Settings → Inference Hooks, as an Admin, Owner, or Primary owner.
-3. **Choosing failure handling**: block the request, or allow it through uninspected, if Atlas is unreachable or times out.
-4. **Validating in shadow mode or a rollout percentage** before enforcing on all governed traffic.
 
 ## What You'll See in Akto
 
