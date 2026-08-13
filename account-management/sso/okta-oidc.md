@@ -139,6 +139,8 @@ Optionally, turn on **Sync Okta groups to device tags** to keep every Okta group
 **Note**
 
 This toggle is optional. When enabled, the sync runs in the background and refreshes every 1 hour.
+
+Once synced, the tags are visible on the [Users and Devices](../../akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/users-and-devices.md) page in Akto Atlas.
 {% endhint %}
 {% endstep %}
 
