@@ -135,6 +135,8 @@ Add the **Management API token** in the same section if group claims are not inc
 {% step %}
 Optionally, turn on **Sync Okta groups to device tags** to keep every Okta group in sync as a "group" tag for every discovered user in **Akto Atlas**.
 
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (215).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 {% hint style="info" %}
 **Note**
 
@@ -147,7 +149,7 @@ Once synced, the tags are visible on the [Users and Devices](../../akto-atlas-ag
 {% step %}
 Save the configuration.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (159).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (216).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 {% endstepper %}
 
