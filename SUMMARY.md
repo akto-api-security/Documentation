@@ -10,6 +10,7 @@
 
 * [Self-Hosted Deployment](ask-akto/self-hosted-deployment.md)
 * [Run with GitHub Copilot](ask-akto/github-copilot-integration.md)
+* [Accessing the Public Akto MCP Server](ask-akto/public-mcp-server.md)
 
 ## Akto Atlas: Agentic AI Security for Employee Endpoints
 
