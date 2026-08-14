@@ -1,8 +1,8 @@
-# Accessing the Public Akto MCP Server
+# Access the Public Akto MCP Server
 
 ## Overview
 
-Akto hosts a public **MCP (Model Context Protocol) server** that lets any MCP-compatible client (Claude, Cursor, etc.) connect directly to your Akto data — without deploying or self-hosting an MCP server yourself.
+Akto hosts a public **MCP (Model Context Protocol) server** that lets any MCP-compatible client (Claude, Cursor, etc.) connect directly to your Akto data, without deploying or self-hosting an MCP server yourself.
 
 {% hint style="warning" %}
 **Akto's MCP server is HTTP-only; `stdio` is not supported.** Configure it as an `http`-type server entry pointing at `https://mcp.akto.io/mcp`, as shown below.
@@ -23,7 +23,7 @@ It also supports only the request/response half of MCP's Streamable HTTP transpo
 
 1. In your Akto dashboard, go to **Settings → Integrations → Automation → Akto API Token**
 2. Click **Generate** to create a new token
-3. Copy the token — you'll use it as the `x-mcp-api-key` value in the next step
+3. Copy the token; you'll use it as the `x-mcp-api-key` value in the next step
 {% endstep %}
 
 {% step %}
@@ -68,7 +68,7 @@ Most MCP clients apply a fixed `headers` block for the life of a server connecti
 
 <summary>Example: configuring multiple context entries</summary>
 
-The wrapper key below (`mcpServers`) may be named `servers` instead, depending on your client — use whichever key your client's own MCP config expects.
+The wrapper key below (`mcpServers`) may be named `servers` instead, depending on your client. Use whichever key your client's own MCP config expects.
 
 ```json
 {
@@ -98,7 +98,7 @@ The wrapper key below (`mcpServers`) may be named `servers` instead, depending o
 ## Troubleshooting
 
 * **Check the server is reachable**: `GET https://mcp.akto.io/health` returns a liveness response and doesn't require any headers.
-* **Connection fails immediately / handshake never completes**: your client may depend on the streaming (`GET`/SSE) half of Streamable HTTP, which this server doesn't implement yet — see the note above.
+* **Connection fails immediately / handshake never completes**: your client may depend on the streaming (`GET`/SSE) half of Streamable HTTP, which this server doesn't implement yet. See the note above.
 * **401 error**: `x-mcp-api-key` is missing or invalid. Double-check the token generated in Step 1.
 * **400 error**: `x-context-source` is set to a value other than `API`, `Agentic`, `Endpoint`, or `DAST`. Fix the value, or omit the header to default to `API`.
 
