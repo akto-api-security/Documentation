@@ -15,7 +15,7 @@ Akto Guardrails for [Amp](https://ampcode.com) provides security validation for 
 {% hint style="warning" %}
 **Amp has no shell-command hook mechanism.** Unlike Claude CLI or Codex CLI, Amp cannot run a script on a lifecycle event. Its only interception point is a **plugin** — a TypeScript module loaded from `.amp/plugins/` and executed by Bun. Akto therefore ships `akto-guardrails-plugin.ts`, a thin bridge that dispatches to the same Python validators every other Akto connector uses. There is no `amp.hooks` setting and no `-wrapper.sh` scripts.
 
-Verified against Amp `0.0.1786450425`.
+Verified against Amp `0.0.1786968161`.
 {% endhint %}
 
 ## How It Works
@@ -70,13 +70,27 @@ sequenceDiagram
 1. `session.start` — Registers the thread session for observability. Cannot block
 2. `agent.start` — Validates prompts before the turn starts. Blocks by calling `thread.cancel()`, which Amp documents as preventing the turn from starting
 3. `tool.call` — Validates tool input before execution. The only event that can stop a tool: it returns `reject-and-continue` with a reason, so the tool never runs and the model can choose another route. It can also return `modify` to run the tool with guardrail-sanitized arguments
-4. `tool.result` — Captures tool results for observability and response guardrails. Cannot block
-5. `agent.end` — Captures the prompt/response pair when the agent finishes. Cannot block
+4. `tool.result` — Validates tool **output** against response guardrails before it reaches the model. Blocks by replacing the result with an error, so sensitive file/shell/MCP output never enters the conversation. The tool has already run, so its side effects stand
+5. `agent.end` — Validates the assistant's reply against response guardrails and records a violation as a 403. **Reports but cannot block** — see the limitation below
 
 {% hint style="info" %}
 **How MCP tool calls are recognised.** Amp names MCP tools `mcp__<server>__<tool>` — the same convention as Claude Code. The `tool.call` validator parses that shape, and for a match reports the call to Akto as a JSON-RPC `tools/call` on the `/mcp` path, so it lands in your MCP inventory with the server and tool broken out. Tool calls that are **not** MCP (`shell_command`, `apply_patch`, `read_web_page`, …) still pass through the same validator; they are mirrored to `/tool/<tool-name>` instead. Ingestion of non-MCP tool calls is off by default — set `AKTO_INGEST_NON_MCP_TOOLS=true` to enable it.
 
 Run `amp tools list` to see the built-in and MCP tools available in your install.
+{% endhint %}
+
+{% hint style="warning" %}
+**The prompt guardrail does not run in execute mode (`amp -x`).** Amp does not emit `agent.start` in execute mode — verified against Amp `0.0.1786968161`, where `validate-prompt.log` is never created for an `amp -x` run. Interactive Amp fires it normally.
+
+The pending prompt *is* readable at `session.start`, but that event is fire-and-forget (it is not in `PluginRequestResultMap`), so Amp does not await it and a `thread.cancel()` from there cannot reliably pre-empt the turn. In execute mode, enforcement therefore happens at the tool layer — `tool.call` and `tool.result`, which Amp *does* await, and which are confirmed to block in `amp -x`.
+
+Headless/CI runs that must screen prompts should validate them before invoking `amp -x`.
+{% endhint %}
+
+{% hint style="warning" %}
+**The assistant's response cannot be blocked — an Amp platform limit.** `agent.end` fires after the turn finishes and its only result is `{ action: 'continue', userMessage }`, which starts a new turn; the reply has already streamed to the user. The plugin API has no event between generation and display, and no redact, suppress, or message-edit capability (thread mutation is append-only). Verified against `amp plugins show-docs` and the [Plugin API reference](https://ampcode.com/manual/plugin-api).
+
+A sensitive response is therefore **detected, flagged as a 403 in Guardrail Activity, and surfaced via an Amp notification** — but not suppressed. To *block* responses, route inference through an AI gateway instead (`amp config model-providers add-router openai-compatible --base-url <akto-gateway>`), which puts Akto in the request path. That is a separate integration from these hooks.
 {% endhint %}
 
 {% hint style="info" %}
@@ -115,7 +129,8 @@ Run `amp tools list` to see the built-in and MCP tools available in your install
   * ⚠️ Reads `~/.config/amp/akto/config` for the Akto URL and token — see the configuration step
 * **Python scripts (`.py`)**: Core validation logic and Akto API communication. The plugin resolves them **relative to its own path**, so they must sit in the same directory
 * **`akto-validate-pre-tool.py`**: Validates every tool call before it runs. Reports MCP calls (`mcp__<server>__<tool>`) as JSON-RPC `tools/call` on `/mcp`; can reject the call or rewrite its arguments
-* **`akto-validate-post-tool.py`**: Captures the tool result as a JSON-RPC result. Observational — it cannot block
+* **`akto-validate-post-tool.py`**: Validates the tool result against response guardrails and can replace it with an error. Tool output is **normalized to text first** (`shell_command` returns `{"output": ...}`, MCP tools may return content blocks); mirroring those verbatim buries the text a level too deep and the guardrail never scans it
+* **`akto-validate-response.py`**: Validates the assistant's reply against response guardrails and records a violation as a 403. Cannot block the reply
 * **`akto_ingestion_utility.py`**: lives in the `shared/` GitHub directory, **not** `amp-cli-hooks/`, so it is fetched from `SHARED_BASE` — miss it and session correlation degrades
 * **`akto_heartbeat.py`**: Registers this device with Akto every 30s. Required — without a heartbeat record, mini-runtime cannot resolve the device to a user and **drops every event before indexing**, so the endpoint never appears under LLM observability / traces even though ingestion succeeds
 * **`akto_machine_id.py`**: Generates unique device identifiers for Atlas mode
@@ -276,13 +291,18 @@ tail -f ~/.config/amp/akto/logs/akto-guardrails.log
 tail -f ~/.config/amp/akto/logs/validate-prompt.log
 ```
 
-Test by running an Amp command:
+Test by running an Amp command that uses a tool:
 
 ```bash
-amp -x "What is 2+2?"
+amp -x "Run this shell command and show the output: echo hello"
 ```
 
-You should see a `PLUGIN_INIT` line followed by `SESSION_START` and `PROMPT_ALLOWED` entries.
+You should see `PLUGIN_INIT`, `SESSION_START`, then `VALIDATION_ALLOWED` lines for
+`akto-validate-pre-tool.py`, `akto-validate-post-tool.py` and `akto-validate-response.py`.
+
+`PROMPT_ALLOWED` will **not** appear here: `agent.start` does not fire in execute mode. To see
+the prompt guardrail, send a prompt in interactive Amp and look for `AGENT_START` followed by
+`PROMPT_ALLOWED` or `PROMPT_BLOCKED`.
 {% endstep %}
 {% endstepper %}
 
@@ -300,9 +320,16 @@ DEVICE_ID=My-MacBook-Pro-f0929fe8           # ⚠️ becomes the device name
 AKTO_SYNC_MODE=true                         # "true" (blocking) or "false" (observe only)
 AKTO_TIMEOUT=5                              # Timeout in seconds
 AKTO_CONNECTOR=amp                          # Connector identifier
+AKTO_CONNECTOR_VALUE=amp                    # Short tag used in the host and hook header
+CONTEXT_SOURCE=ENDPOINT                     # Request classification; must match the
+                                            # contextSource your guardrail policy is scoped to
 AMP_API_URL=https://ampcode.com             # Amp endpoint recorded for non-MCP traffic
 AKTO_PYTHON=python3                         # Interpreter used to run the validators
 DATABASE_ABSTRACTOR_SERVICE_URL=https://cyborg.akto.io   # Heartbeat target (on-prem: override)
+DATABASE_ABSTRACTOR_SERVICE_TOKEN=          # Optional: separate abstractor credential;
+                                            # falls back to AKTO_API_TOKEN, which SaaS accepts
+AKTO_RESPONSE_GUARDRAILS=true               # Validate tool output and assistant replies
+AKTO_INGEST_ON_REQUEST=false                # See "Discovery shows an empty response payload"
 ```
 
 **Mode Options:**
@@ -312,7 +339,7 @@ DATABASE_ABSTRACTOR_SERVICE_URL=https://cyborg.akto.io   # Heartbeat target (on-
 
 **Sync Mode:**
 
-* **true**: Blocks threats
+* **true**: Blocks threats (prompts, tool calls, tool output)
 * **false**: Reports but allows execution. Every event is still ingested — observe mode changes enforcement only, not coverage
 
 ### Tool Event Variables
@@ -447,6 +474,35 @@ This is expected. Amp cannot reject a prompt inline, so a blocked prompt cancels
 grep PROMPT_BLOCKED ~/.config/amp/akto/logs/akto-guardrails.log | tail -5
 ```
 
+### A Prompt Was Not Blocked
+
+First check whether the run was execute mode. `agent.start` does not fire under `amp -x`,
+so there is no prompt guardrail there (see the warning above) — `validate-prompt.log` will
+have no entry for that run at all.
+
+```bash
+grep -E "AGENT_START|PROMPT_BLOCKED|PROMPT_ALLOWED" ~/.config/amp/akto/logs/akto-guardrails.log
+```
+
+No `AGENT_START` line means Amp never delivered the event. In interactive Amp you should see
+`AGENT_START` followed by `PROMPT_ALLOWED` or `PROMPT_BLOCKED`.
+
+### Something Was Reported but Not Blocked
+
+Check the verdict before assuming the connector is at fault — it relays whatever Akto returns.
+
+```bash
+grep -E "Guardrails verdict" ~/.config/amp/akto/logs/validate-*.log | tail
+```
+
+* `DENIED` but the action went through — a connector problem, worth reporting
+* `ALLOWED` — no policy matched. Policies carry **`applyOnRequest`** and **`applyOnResponse`**
+  flags plus a `contextSource` scope, so a request-only policy will never block tool output or
+  a reply, and a policy scoped to a different context source will not match at all
+* `ALLOWED` on a call that took **~5s or more** — the guardrails service can fail open
+  internally under latency, returning "allowed" before any client timeout applies. Compare the
+  `Duration:` line against a fast call with the same payload
+
 ### Guardrails Time Out
 
 Guardrail evaluation typically takes 1–2 seconds per call. If your policies are slower, raise the timeout — the plugin kills a validator that exceeds it and **allows** the action (fail-open).
@@ -466,6 +522,21 @@ cat ~/.config/amp/akto/logs/akto-guardrails.log
 grep -i error ~/.config/amp/akto/logs/*.log
 grep "API CALL FAILED" ~/.config/amp/akto/logs/*.log
 ```
+
+The plugin log uses these event names:
+
+| Event | Meaning |
+|-------|---------|
+| `PLUGIN_INIT` | Plugin loaded. `ingestionConfigured:false` means no `AKTO_DATA_INGESTION_URL` was found |
+| `SESSION_START` | Thread session started |
+| `AGENT_START` | Prompt received. Absent in execute mode (`amp -x`) |
+| `PROMPT_ALLOWED` / `PROMPT_BLOCKED` | Prompt verdict; blocked cancels the turn |
+| `TOOL_BLOCKED` | Tool call rejected before running |
+| `TOOL_INPUT_MODIFIED` | Tool ran with guardrail-sanitized arguments |
+| `TOOL_RESULT_BLOCKED` | Tool output replaced with an error before reaching the model |
+| `RESPONSE_FLAGGED` | Assistant reply violated policy — recorded, not suppressed |
+| `VALIDATION_TIMEOUT` | Validator exceeded `AKTO_TIMEOUT`; the action was **allowed** (fail-open) |
+| `SCRIPT_NOT_FOUND` | A `.py` file is missing from the plugin directory |
 
 ## Uninstallation
 
@@ -562,7 +633,9 @@ chmod 600 ~/.config/amp/akto/config
 echo "✅ Installation complete!"
 echo "📍 Akto instance: ${AKTO_URL}"
 echo "🖥️  Device label:  ${DEVICE_ID}"
-echo "Reload Amp (Ctrl+O -> 'plugins: reload'), then test with: amp -x 'What is 2+2?'"
+echo "Reload Amp (Ctrl+O -> 'plugins: reload'), then test with:"
+echo "  amp -x \"Run this shell command and show the output: echo hello\""
+echo "Note: 'amp -x' does not fire agent.start, so the PROMPT guardrail only runs in interactive Amp." 
 ```
 
 **Deploy to developers:**
@@ -611,8 +684,8 @@ chmod 600 ~/.config/amp/akto/config
 # 4. Reload Amp (Ctrl+O -> "plugins: reload") and confirm
 amp plugins list
 
-# 5. Test
-amp -x "What is 2+2?"
+# 5. Test (tool path; the prompt guardrail needs interactive Amp)
+amp -x "Run this shell command and show the output: echo hello"
 ```
 
 ## Resources
