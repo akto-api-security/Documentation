@@ -2,11 +2,11 @@
 
 <figure><img src="../../../../.gitbook/assets/image (24).png" alt=""><figcaption></figcaption></figure>
 
-1. Go to the container app for which we need to deploy Akto proxy. Go to containers nav, click on `Create new container` , name it `akto-proxy` and click Create.
+1. Go to the container app for which we need to deploy Akto proxy. Go to containers left navigation, click on `Create new container` , name it `akto-proxy` and click Create.
 
 <figure><img src="../../../../.gitbook/assets/azure-container-apps-1.png" alt=""><figcaption></figcaption></figure>
 
-2. We'll now configure it. Add the image as `aktosecurity/akto-ai-agent-shield:latest` , registry as `public.ecr.aws` . Allocate minimum 1 CPU core and 2 GB RAM resources to the container.
+2. We'll now configure it. Add the image as `aktosecurity/akto-ai-agent-shield:latest` , registry as `public.ecr.aws` . Allocate minimum 1 CPU core and 2 GB memory to the container.
 
 <figure><img src="../../../../.gitbook/assets/azure-container-apps-2.png" alt=""><figcaption></figcaption></figure>
 
@@ -25,7 +25,7 @@ GUARDRAIL_FIELD_MAPPING: "POST:/v1/chat/completions:messages.role=user.content,c
 
 <figure><img src="../../../../.gitbook/assets/azure-container-apps-3.png" alt=""><figcaption></figcaption></figure>
 
-4. Go to the health probes tab and configure all the probes for the same port as mentioned in `AKTO_PROXY_PORT`. Post this click on `Save as new revision`.
+4. Go to the health probes tab and configure all the probes for the same port as mentioned in `AKTO_PROXY_PORT`. Post this, click on `Save as new revision`.
 
 <figure><img src="../../../../.gitbook/assets/azure-container-apps-4.png" alt=""><figcaption></figcaption></figure>
 
