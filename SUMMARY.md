@@ -372,6 +372,7 @@
   * [Guardrail Activity](agentic-guardrails/concepts/guardrail-activity.md)
   * [Dynamic Agent Rate Limiting](agentic-guardrails/concepts/api-rate-limit.md)
   * [Guardrail Schema](agentic-guardrails/concepts/guardrail-schema.md)
+  * [Misconfigurations](agentic-guardrails/concepts/misconfigurations.md)
   * [Guardrail Policy](agentic-guardrails/concepts/threat-policy.md)
   * [Guardrail Presets](agentic-guardrails/concepts/guardrail-presets.md)
   * [Successful Exploits](agentic-guardrails/concepts/successful-exploits.md)
