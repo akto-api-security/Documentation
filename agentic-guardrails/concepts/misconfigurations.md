@@ -62,4 +62,4 @@ Approval is skipped, the sandbox is off, and all hooks are disabled.
 ## Where this shows up in Akto
 
 * In the **Misconfigurations** tab of the **ATLAS Guardrails Activity** page, you can see all the misconfigurations Akto has found on your endpoints.
-* Use [Create Misconfiguration Policies](../how-to/create-misconfiguration-policies.md) to pin a config field to an expected value so Akto reverts drift automatically.
+* Use [Create Misconfiguration Policies](../how-to/create-misconfiguration-policies.md) to pin a config field to an expected value so Akto endpoint pins the field automatically.
