@@ -22,6 +22,27 @@ This is a Microsoft **preview** capability. It only applies to generative agents
 Threat detection is configured **per Power Platform environment**. There is no tenant-wide or global toggle - you (or your Power Platform admin) must repeat [Part 3](#part-3-turn-on-threat-detection-in-power-platform-admin-center) for every environment you want Akto to protect, including any new environment you create later.
 {% endhint %}
 
+## What Gets Checked (and What Doesn't)
+
+Microsoft only calls the external threat detection system at specific points in an agent's turn. Everything else in the turn runs without a check. Use this to set expectations before you connect Akto:
+
+| # | Point in lifecycle | Called? | Endpoint | What can be blocked | Effect on final response |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Admin saves config in Power Platform admin center | Yes | `POST /validate` | Nothing runtime - only fails the save if the Entra app is misconfigured | None |
+| 2 | User prompt received / before orchestration | No | - | Nothing | None - no hook exists here |
+| 3 | Planner decides to invoke a tool (action, connector, flow, MCP tool) | **Yes** - the only runtime call | `POST /analyze-tool-execution` | The tool execution (pre-execution) | Indirect: a block halts the turn and shows a canned notice |
+| 4 | Each subsequent tool in a multi-step plan | **Yes** - once per tool | `POST /analyze-tool-execution` | That specific step | Same as row 3 |
+| 5 | After a tool returns, before its output is used | Indirect only | via the next tool's call | Only the next tool call - the output itself can't be retracted | None directly |
+| 6 | LLM composes the final answer | No | - | Nothing | Cannot be blocked |
+| 7 | Final answer rendered to the user | No | - | Nothing | Cannot be blocked |
+| 8 | Turn with no tool invocation at all | No | - | Nothing | Cannot be blocked |
+| 9 | Classic (non-generative) agents | No | - | Nothing - skipped entirely | None |
+| 10 | Provider times out or errors | Attempted, no verdict | `POST /analyze-tool-execution` | Governed by **Set error behavior** (default: allow after 1,000 ms) | Fail-open by default |
+
+{% hint style="warning" %}
+Akto only ever sees and evaluates **tool invocations** (rows 3, 4, and 10). It cannot inspect or block the user's raw prompt, the LLM's final answer, or any turn where the agent never calls a tool - Copilot Studio doesn't call the threat detection endpoint at those points.
+{% endhint %}
+
 ## Prerequisites
 
 Before setting up Copilot Studio threat detection, ensure the following requirements are met. **Most setup issues are caused by missing prerequisites - please review them carefully.**
