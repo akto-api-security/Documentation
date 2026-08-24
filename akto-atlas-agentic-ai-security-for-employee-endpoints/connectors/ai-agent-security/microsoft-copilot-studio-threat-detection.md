@@ -96,7 +96,7 @@ Copilot Studio authenticates to Akto using a **Federated Identity Credential (FI
 
 {% stepper %}
 {% step %}
-Go to [Microsoft Entra](https://entra.microsoft.com) > **App registrations**. Select the app registration from [Prerequisites](#1-an-existing-microsoft-entra-app-registration).
+Go to [Microsoft Entra](https://entra.microsoft.com) > **App registrations**. Select the same app registration you used to set up the [Copilot Studio (Multi Environment)](microsoft-copilot-studio-multi-environment.md#part-1-create-an-app-registration-in-microsoft-entra) connector in Akto Atlas (see [Prerequisites](#1-an-existing-microsoft-entra-app-registration)).
 {% endstep %}
 
 {% step %}
