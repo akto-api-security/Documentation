@@ -60,6 +60,7 @@
   * [Claude Cowork Connector](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/claude-cowork-connector.md)
   * [Copilot Studio](akto-atlas-agentic-ai-security-for-employee-endpoints/connectors/ai-agent-security/microsoft-copilot-studio.md)
   * [Copilot Studio (Multi Environment)](akto-atlas-agentic-ai-security-for-employee-endpoints/connectors/ai-agent-security/microsoft-copilot-studio-multi-environment.md)
+  * [Copilot Studio (Threat Detection)](akto-atlas-agentic-ai-security-for-employee-endpoints/connectors/ai-agent-security/microsoft-copilot-studio-threat-detection.md)
 * [AI Security Posture](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoint-security-posture.md)
 * [Agentic AI Discovery](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/README.md)
   * [Agentic Assets](akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-assets/README.md)
