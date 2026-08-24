@@ -43,11 +43,12 @@ Exactly three fields, all plain text (string / `REG_SZ`):
 |------------|----------------------------------------------------|-----------------------------|
 | `email` | The signed-in user's email address (must contain `@`) | `{{UserPrincipalName}}` |
 | `username` | The user's login or display name | `{{UserName}}` |
-| `deviceId` | A **stable**, unique device identifier (serial / Azure AD device id) | device serial |
+| `deviceId` | The device / endpoint **name** (the machine name, e.g. `windows-desktop`) | `{{DeviceName}}` |
 
 {% hint style="warning" %}
-`deviceId` must return the **same value every time** on a given machine. Do not use a
-random or per-session value, or the device will appear as a new device on each run.
+Set `deviceId` to the **device / endpoint name**, not a serial number. It must be
+**stable** — the same value every time on that machine — otherwise the device appears as a
+new device on each heartbeat.
 {% endhint %}
 
 ## Configure in Intune
@@ -75,9 +76,9 @@ profile used for force-install, or a separate one).
 
 ```json
 {
-  "email":    { "Value": "{{UserPrincipalName}}" },
-  "username": { "Value": "{{UserName}}" },
-  "deviceId": { "Value": "%SerialNumber%" }
+  "email": "{{UserPrincipalName}}",
+  "username": "{{UserName}}",
+  "deviceId": "{{DeviceName}}"
 }
 ```
 
@@ -113,7 +114,7 @@ Expected output:
 ```
 email    : user@company.com
 username : user
-deviceId : DEVICE-SERIAL-123
+deviceId : windows-desktop
 ```
 
 {% hint style="info" %}
@@ -128,7 +129,7 @@ Once set, the values appear against the device and user in your Akto dashboard.
 Every field is optional; the extension falls back automatically:
 
 * **`email` missing** → uses the signed-in Chrome profile email.
-* **`deviceId` missing** → uses the enterprise device id, else an auto-generated id.
+* **`deviceId` missing** → uses the enterprise device id (directory id / serial / hostname), else an auto-generated id.
 * **`username` missing** → derives a name from the email.
 
 Providing all three gives the most accurate and consistent identity in Akto.
