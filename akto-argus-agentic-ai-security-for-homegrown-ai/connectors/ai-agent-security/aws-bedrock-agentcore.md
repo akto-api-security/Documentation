@@ -359,6 +359,26 @@ The interceptor reads the guardrail verdict from Akto and acts on the policy `be
 Configure which tools and patterns to block, warn, or redact in the Akto dashboard under **Settings → Guardrails**. The interceptor enforces whatever policies you define there.
 {% endhint %}
 
+
+## Integrate Both Bedrock and AgentCore (Unified Setup)
+
+To integrate **both** AWS Bedrock discovery **and** [AWS Bedrock AgentCore](aws-bedrock-agentcore.md) gateway interception in a single stack, use the unified template below instead of the template referenced in the steps above.
+
+**Unified CloudFormation Template:**
+
+<pre data-overflow="wrap"><code>https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v4.1/client-aws-cf-template.yaml
+</code></pre>
+
+This template adds one new parameter on top of the standard Bedrock discovery setup:
+
+* **EnableGatewayInterception** (`true` / `false`)
+    * `true` — Attaches the Akto interceptor to all available AgentCore Gateways. All gateway requests are routed through the interceptor (proxy) to Akto, in addition to discovery through agent traffic.
+    * `false` — Only discovery through agent traffic is enabled; no gateway interceptor is attached.
+
+Lambda package used by this template: `s3://lambda-code-akto-us-east-1/v4.1/akto-bedrock-processor.zip`
+
+Deploy following the same **Deploy via AWS Console** steps in the [Step-by-Step Setup](#step-by-step-setup) section above, using this template URL and setting `EnableGatewayInterception` alongside the other parameters when filling in stack details.
+
 ## Troubleshooting
 
 ### Interceptor not firing
