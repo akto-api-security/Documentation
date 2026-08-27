@@ -28,15 +28,11 @@ flowchart LR
 
 ### **1. AWS Account Requirements**
 
-* AWS CLI installed and configured with user who has below permissions
-* IAM permissions for:
-  * Lambda functions
-  * S3 buckets
-  * EventBridge rules
-  * Bedrock service access
-  * IAM role creation
+* AWS account with Bedrock agents configured and model invocation logging enabled.
+* Please provide the AWS region on which deployment will be done to Akto team before deployment (Eg: us-east-1)
 
-### **2. AKTO Instance Requirements**
+
+### **2. AKTO Instance Requirements - To be verified with Akto Team**
 
 * AKTO Data ingestion service instance running and accessible
 * AKTO API key for authentication
@@ -44,7 +40,7 @@ flowchart LR
 ## Step-by-Step Setup
 
 {% tabs %}
-{% tab title="Deploy via AWS Console" %}
+{% tab title="Deploy via AWS Cloud Formation Template" %}
 {% stepper %}
 {% step %}
 **Prepare Your Information**
@@ -63,7 +59,7 @@ Before running the deployment, gather this information:
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/model_invocation.png" alt="" width="563"><figcaption></figcaption></figure></div>
 
-3.  **S3 Bucket Name - MarkersBucketName**: S3 bucket name to store AKTO marker files for processed conversations
+3.  **S3 Bucket Name - MarkersBucketName**: S3 bucket name to store AKTO marker files for maintaining checkpoint of processed logs. This can be the same bucket name or a different bucket name. It stores a manifest file with all discovered agents details and lastprocessed timestamp.
     * Example: `akto-marker-logs`
 4. **AKTO Data Ingestion URL**: Your AKTO endpoint
    * Format: `https://your-akto-instance.com/api/ingestData`
@@ -71,7 +67,7 @@ Before running the deployment, gather this information:
 5. **AKTO API Key**: Authentication key for your AKTO instance
    * Navigate to: **AKTO Argus** → **Connectors** → **Setup Guardrails**
    * Copy the API key from there
-6. **LambdaCodeVersion**: version
+6. **LambdaCodeVersion**: version 
    * Contact AKTO support team to obtain your lambda version
 {% endstep %}
 
@@ -90,7 +86,7 @@ Before running the deployment, gather this information:
 2. Select **Amazon S3 URL**
 3.  Enter the CloudFormation template URL:
 
-    <pre data-overflow="wrap"><code>https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v1.2/client-aws-cf-template.yaml
+    <pre data-overflow="wrap"><code>https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v3.6/client-aws-cf-template.yaml
     </code></pre>
 
     <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (180).png" alt="" width="563"><figcaption></figcaption></figure></div>
@@ -113,7 +109,7 @@ Fill in the form with your information:
   * Example: `bedrock-logs`
 * **MarkersBucketName**: S3 bucket name to store AKTO marker manifest file
 * **DataIngestionEndpoint**: `<URL-obtained-from-akto-team>`
-* **LambdaCodeVersion**: v1.2 `<Version-obtained-from-akto-team>`
+* **LambdaCodeVersion**: v3.6 `<Version-obtained-from-akto-team>`
 * **AktoApiKey**: `<Akto-API-Key>`&#x20;
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (181).png" alt="" width="563"><figcaption></figcaption></figure></div>
@@ -203,315 +199,14 @@ akto-bedrock-discovery-prod - CREATE_IN_PROGRESS
 {% endstep %}
 {% endstepper %}
 {% endtab %}
-
-{% tab title="Deploy via AWS CLI" %}
-{% stepper %}
-{% step %}
-**Install AWS CLI if not installed**
-
-If AWS CLI is already configured then move to Step 2
-
-```bash
-# On Mac:
-brew install awscli
-
-# On Windows: Download from https://aws.amazon.com/cli/
-# On Linux:
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-```
-
-1.  **Install Node.js**
-
-    ```bash
-    # On Mac:
-    brew install node
-
-    # On Windows/Linux: Download from https://nodejs.org/
-    ```
-2.  **Configure AWS Credentials**
-
-    You need to tell AWS who you are:
-
-    ```bash
-    aws configure
-    ```
-
-    It will ask for:
-
-    * **AWS Access Key ID**: Get from AWS Console → IAM → Users → Your User → Security credentials
-    * **AWS Secret Access Key**: Same place as above
-    * **Default region**: Use `us-east-1` (or your preferred region)
-    * **Default output format**: Just press Enter
-3.  **Test AWS Access**
-
-    ```bash
-    aws sts get-caller-identity
-    ```
-4.  Verify your AWS identity
-
-    ```bash
-    aws sts get-caller-identity
-    ```
-
-    Expected Output
-
-    ```json
-    {
-        "UserId": "AIDACKXXXXXXXXXXXXXXXXX",
-        "Account": "123456789***",
-        "Arn": "arn:aws:iam::123456789012:user/your-username"
-    }
-    ```
-
-    ✅ **Should show your account ID** - You're ready!\
-    ❌ **Shows error** - Fix your credentials first
-{% endstep %}
-
-{% step %}
-**Download the Solution**
-
-```bash
-# Clone the repository
-git clone https://github.com/akto-api-security/akto_aws_bedrock_discovery.git
-
-# Navigate to the solution directory
-cd akto_aws_bedrock_discovery
-
-#Navigate to CloudFormation Directory
-cd cloudformation
-
-#Edit Your Environment Parameters
-#Choose your environment and edit the parameters file:
-
-#for development
-nano parameters/dev-parameters.json
-
-#for production
-nano parameters/prod-parameters.json
-
-#Update these values:
-- `S3BucketName`: Your existing S3 bucket
-- `DataIngestionEndpoint`: Your AKTO API endpoint
-- `AktoApiKey`: Your AKTO authentication key
-
-#Make Deployment Script Executable
-chmod +x scripts/deploy.sh
-```
-{% endstep %}
-
-{% step %}
-**Prepare Your Information**
-
-Before running the deployment, gather this information:
-
-1. **S3 Bucket Name**: A unique bucket name for storing Bedrock logs
-   * Example: `my-company-bedrock-logs-2024`
-   * Must be globally unique across all AWS accounts
-2. **AKTO Data Ingestion URL**: Your AKTO endpoint
-   * Format: `https://your-akto-instance.com/api/ingestData`
-   * Replace `your-akto-instance.com` with your actual AKTO domain/IP
-3. **AKTO API Key**: Authentication key for your AKTO instance
-   * Obtain from your AKTO dashboard
-   * Example: `ak_live_xxxxxxxxxxxxxxxxxxxx`
-{% endstep %}
-
-{% step %}
-**Run the Deployment**
-
-Execute the deployment script:
-
-Choose which environment to deploy to:
-
-```bash
-#Development:
-
-./scripts/deploy.sh dev
-```
-
-```bash
-#Production:
-
-./scripts/deploy.sh prod
-```
-
-The script will:
-
-* ✅ Build the Lambda package automatically
-* ✅ Create all AWS resources (roles, Lambda, EventBridge)
-* ✅ Configure everything with one command
-* ✅ Show you the results
-
-```bash
- Deployment completed successfully!
-
-📊 Retrieving stack outputs...
----------
-|OutputKey|OutputValue|
----------
-|LambdaFunctionName|akto-bedrock-log-processor-123456|
-|LambdaFunctionArn|arn:aws:lambda:us-east-1:123456:function:...|
-|EventBridgeRuleName|akto-bedrock-schedule-123456|
-
-```
-{% endstep %}
-
-{% step %}
-**Wait for Deployment**
-
-The script will automatically:
-
-1. **Create IAM Role**: Set up permissions for Lambda
-2. **Deploy Lambda Function**: Upload and configure the processing function
-3. **Set Up EventBridge**: Schedule processing every 5 minutes
-4. **Configure Environment**: Set all required variables
-
-**Expected Output:**
-
-```bash
-✅ Lambda package built successfully
-
-📤 Uploading Lambda package to S3 (5.4 MB, may take 1-2 minutes)...
-upload: ../akto-bedrock-processor.zip to s3://akto-aws-bedrock-logs-02/lambda-code/akto-bedrock-processor.zip
-✅ Lambda package uploaded to S3: s3://akto-aws-bedrock-logs-02/lambda-code/akto-bedrock-processor.zip
-
-🔧 Updating Lambda function code: akto-bedrock-log-processor-cf-041877753357
-✅ Lambda function code updated successfully!
-
-🔧 Updating CloudFormation stack: akto-bedrock-discovery-prod
-⏳ Waiting for stack update to complete...
-✅ Stack updated successfully!
-
-## 📊 Retrieving stack outputs...
-
-|                                                                   DescribeStacks                                                                   |
-+------------------------------+----------------------+----------------------------------------------------------------------------------------------+
-|          Description         |      OutputKey       |                                         OutputValue                                          |
-+------------------------------+----------------------+----------------------------------------------------------------------------------------------+
-|  ARN of the Lambda function  |  LambdaFunctionArn   |  arn:aws:lambda:us-east-1:xxxxxx:function:akto-bedrock-log-processor-cf-xxxxxx   |
-|  Name of the Lambda function |  LambdaFunctionName  |  akto-bedrock-log-processor-cf-xxxxxx                                               |
-|  Name of the EventBridge rule|  EventBridgeRuleName |  akto-bedrock-schedule-cf-xxxxxx                                                       |
-|  CloudFormation stack name   |  StackName           |  akto-bedrock-discovery-prod                                                                 |
-+------------------------------+----------------------+----------------------------------------------------------------------------------------------+
-
-🎉 Deployment completed successfully!
-
-🔍 Next steps:
-
-1. Generate some AWS Bedrock conversations
-2. Monitor Lambda logs:
-aws logs tail /aws/lambda/akto-bedrock-log-processor-xxxxxx --follow --region us-east-1
-3. Test manually:
-aws lambda invoke --function-name akto-bedrock-log-processor-xxxxxx --region us-east-1 response.json
-
-📌 CloudFormation Stack Information:
-Stack Name: akto-bedrock-discovery-prod
-Region: us-east-1
-Environment: prod
-```
-{% endstep %}
-
-{% step %}
-**Verify the Deployment**
-
-Run the verification script:
-
-```bash
-./test-solution.sh
-```
-
-This will check:
-
-* ✅ Lambda function exists and is accessible
-* ✅ S3 bucket is properly configured
-* ✅ CloudWatch logs are working
-* ✅ EventBridge schedule is active
-{% endstep %}
-
-{% step %}
-**Create S3 Bucket (If Needed)**
-
-If you don't have an S3 bucket, create one:
-
-```bash
-# Replace 'my-company-bedrock-logs-2024' with your bucket name
-aws s3 mb s3://my-company-bedrock-logs-2024
-
-# Set bucket policy for Bedrock access (optional - Lambda will handle this)
-aws s3api put-bucket-versioning \
-    --bucket my-company-bedrock-logs-2024 \
-    --versioning-configuration Status=Enabled
-```
-{% endstep %}
-
-{% step %}
-**Test with Bedrock**
-
-Generate a test conversation:
-
-```bash
-# Example Bedrock API call
-aws bedrock-runtime invoke-model \
-    --model-id anthropic.claude-3-haiku-20240307-v1:0 \
-    --body '{"messages":[{"role":"user","content":[{"type":"text","text":"Hello, this is a test message for AKTO monitoring."}]}],"max_tokens":50,"anthropic_version":"bedrock-2023-05-31"}' \
-    --content-type application/json \
-    test-output.json
-```
-{% endstep %}
-
-{% step %}
-**Monitor the System**
-
-**Check Lambda Logs:**
-
-```bash
-aws logs tail /aws/lambda/akto-bedrock-log-processor-cf-YOUR_ACCOUNT_ID --follow
-```
-
-**Check S3 for Bedrock Logs:**
-
-```bash
-aws s3 ls s3://your-bucket-name/bedrock-logs/ --recursive
-```
-
-**Manual Lambda Test:**
-
-```bash
-aws lambda invoke \
-    --function-name akto-bedrock-log-processor-YOUR_ACCOUNT_ID \
-    --payload '{}' \
-    response.json
-```
-{% endstep %}
-{% endstepper %}
-{% endtab %}
 {% endtabs %}
 
-## Integrate Both Bedrock and AgentCore (Unified Setup)
-
-To integrate **both** AWS Bedrock discovery **and** [AWS Bedrock AgentCore](aws-bedrock-agentcore.md) gateway interception in a single stack, use the unified template below instead of the template referenced in the steps above.
-
-**Unified CloudFormation Template:**
-
-<pre data-overflow="wrap"><code>https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v4.1/client-aws-cf-template.yaml
-</code></pre>
-
-This template adds one new parameter on top of the standard Bedrock discovery setup:
-
-* **EnableGatewayInterception** (`true` / `false`)
-  * `true` — Attaches the Akto interceptor to all available AgentCore Gateways. All gateway requests are routed through the interceptor (proxy) to Akto, in addition to discovery through agent traffic.
-  * `false` — Only discovery through agent traffic is enabled; no gateway interceptor is attached.
-
-Lambda package used by this template: `s3://lambda-code-akto-us-east-1/v4.1/akto-bedrock-processor.zip`
-
-Deploy following the same **Deploy via AWS Console** steps in the [Step-by-Step Setup](#step-by-step-setup) section above, using this template URL and setting `EnableGatewayInterception` alongside the other parameters when filling in stack details.
 
 {% hint style="info" %}
 ## **Important Notes**
 
 1. **Bedrock Logging Configuration**: The Lambda function automatically enables Bedrock model invocation logging on first run if not enabled
-2. **Processing Schedule**: Logs are processed every 5 minutes via EventBridge
+2. **Processing Schedule**: Logs are processed every 10 minutes via EventBridge
 3. **Data Format**: Conversations are formatted in AKTO StandardMessage format with security tags
 4. **Security**: All data remains in your AWS account; no external access required
 {% endhint %}
@@ -521,7 +216,7 @@ Deploy following the same **Deploy via AWS Console** steps in the [Step-by-Step 
 Once deployed, the system will:
 
 1. **Auto-Configure Bedrock**: Enable model invocation logging to your S3 bucket
-2. **Process Conversations**: Extract and format conversation data every 5 minutes
+2. **Process Conversations**: Extract and format conversation data every 10 minutes
 3. **Send to AKTO**: Forward processed data to your AKTO instance for analysis
 4. **Monitor Security**: AKTO will analyze conversations for potential threats
 
