@@ -1,4 +1,10 @@
-# Windows Installation
+---
+description: >-
+  Validate and troubleshoot an AI Endpoint Shield installation on Windows —
+  version, tasks, config, logs, hooks, and the common failure modes.
+---
+
+# Windows Troubleshooting
 
 ## Overview
 
@@ -112,7 +118,7 @@ Get-ScheduledTask -TaskName "MCPEndpointShield*" | ForEach-Object {
 | `0x00000005` | Access denied — check with your security team if an EDR/antivirus tool is blocking it |
 | `0x00041301` | Task is currently running (normal, transient) |
 | `0x00041303` | Task has not run yet (normal right after install) |
-| `0xC000013A` | Process was terminated externally — usually antivirus/EDR killing it, see [Whitelist Paths](whitelist-paths.md#configure-for-crowdstrike-falcon) if CrowdStrike is in use |
+| `0xC000013A` | Process was terminated externally — usually antivirus/EDR killing it, see [Allowlist in Security Software](allowlist-in-security-software.md#configure-for-crowdstrike-falcon) if CrowdStrike is in use |
 | `0x80070001` | PowerShell execution policy (a Group Policy restriction) is blocking the script at startup — contact your IT admin |
 
 If a task shows `Ready` but never seems to have run, or you just changed something and want to restart everything immediately:
@@ -143,7 +149,7 @@ Get-Process akto-endpoint-shield -ErrorAction SilentlyContinue | Format-Table Na
 You should normally see 2–3 `akto-endpoint-shield.exe` processes (one per running task above). If nothing appears:
 
 * Start the tasks manually (command in [Scheduled tasks](#scheduled-tasks)) and re-check after a few seconds.
-* If a process appears and then disappears within a few seconds every time, something is killing it immediately after launch — most commonly an antivirus/EDR tool. See [Whitelist Paths](whitelist-paths.md).
+* If a process appears and then disappears within a few seconds every time, something is killing it immediately after launch — most commonly an antivirus/EDR tool. See [Allowlist in Security Software](allowlist-in-security-software.md).
 
 To see the exact error a task would hit (useful when a task starts and immediately exits), run the agent directly in the foreground:
 
@@ -160,6 +166,23 @@ Leave the window open, read the first few lines of output, then press `Ctrl+C` t
 | `AKTO_API_BASE_URL is not set` | Same as above |
 | `bind: Only one usage of each socket address` | Another Akto process is already using that port — stop existing processes first (`Stop-Process -Name akto-endpoint-shield -Force`), then restart the tasks |
 | `failed to install mitmproxy` | No internet access during install — check network and re-run the installer |
+
+## Listening ports
+
+The HTTP service binds a local port that the agent and the IDE hooks talk to. If hooks report connection failures while the tasks look healthy, check what is actually listening:
+
+```powershell
+Get-NetTCPConnection -State Listen |
+    Where-Object { $_.OwningProcess -in (Get-Process akto-endpoint-shield -ErrorAction SilentlyContinue).Id } |
+    Select-Object LocalAddress, LocalPort, OwningProcess
+```
+
+If nothing is returned but processes exist, the service failed to bind — usually a port conflict. Run the agent in the foreground (see [Running processes](#running-processes)) to see the bind error, then:
+
+```powershell
+Stop-Process -Name akto-endpoint-shield -Force
+Get-ScheduledTask -TaskName "MCPEndpointShield*" | Start-ScheduledTask
+```
 
 ## Config values and location
 
@@ -291,18 +314,167 @@ Import-Certificate -FilePath "C:\ProgramData\akto-endpoint-shield\mitmproxy-conf
     -CertStoreLocation Cert:\LocalMachine\Root
 ```
 
+## Startup and execution-policy audit
+
+Use this when the tasks are registered but never actually run — most often because Group Policy or an event-log-visible error is stopping them at boot.
+
+### Group Policy execution policy
+
+A machine- or user-level **GPO-enforced** execution policy (typically `AllSigned`) overrides `-ExecutionPolicy Bypass` for `-File` invocations, which silently blocks a task that launches a PowerShell script at startup:
+
+```powershell
+foreach ($k in @(
+    @{ P='HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell'; L='Machine GPO (enforced)' },
+    @{ P='HKCU:\SOFTWARE\Policies\Microsoft\Windows\PowerShell'; L='User GPO (enforced)' },
+    @{ P='HKLM:\SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell'; L='Machine preference' }
+)) {
+    $v = (Get-ItemProperty -Path $k.P -Name ExecutionPolicy -ErrorAction SilentlyContinue).ExecutionPolicy
+    "{0,-26} {1}" -f $k.L, $(if ($v) { $v } else { '(not set)' })
+}
+```
+
+Anything reported under a **GPO** line is enforced and cannot be bypassed by the task. Current Akto builds register the tasks to run `akto-endpoint-shield.exe` directly for exactly this reason — see [Task action pattern](#task-action-pattern) below. If your device still has a `powershell -File` task, it predates that change and needs an update.
+
+### Task action pattern
+
+```powershell
+Get-ScheduledTask -TaskName "MCPEndpointShield*" | ForEach-Object {
+    $a = $_.Actions | Select-Object -First 1
+    [PSCustomObject]@{ Task = $_.TaskName; RunAs = $_.Principal.UserId; Execute = $a.Execute }
+} | Format-Table -AutoSize
+```
+
+| `Execute` value | Meaning |
+|---|---|
+| `...\akto-endpoint-shield.exe` | Current pattern — unaffected by execution-policy GPOs |
+| `cmd.exe` | Also policy-safe |
+| `powershell.exe` | Older pattern — an `AllSigned` GPO blocks this at boot. Update the agent |
+
+`RunAs` should be `SYSTEM` (or `S-1-5-18`) so the tasks start before any user logs in.
+
+### Event logs
+
+```powershell
+# Task Scheduler — last 20 Akto events (IDs 201, 102, 110, 111, 319, 320 are the interesting failures)
+Get-WinEvent -LogName 'Microsoft-Windows-TaskScheduler/Operational' -ErrorAction SilentlyContinue |
+    Where-Object { $_.Message -match 'MCPEndpointShield' } |
+    Select-Object -First 20 TimeCreated, Id, Message
+
+# PowerShell — policy blocks and script errors in the last 3 days
+Get-WinEvent -LogName 'Microsoft-Windows-PowerShell/Operational' -ErrorAction SilentlyContinue |
+    Where-Object { $_.Id -in @(4100,4103,40961,40962) -and $_.Message -match 'akto|not digitally signed|cannot be loaded' } |
+    Select-Object -First 15 TimeCreated, Id, Message
+
+# Application log — crashes and access-denied
+Get-WinEvent -LogName Application -ErrorAction SilentlyContinue |
+    Where-Object { $_.LevelDisplayName -in @('Error','Warning') -and $_.Message -match 'akto|endpoint.shield' } |
+    Select-Object -First 10 TimeCreated, LevelDisplayName, Message
+```
+
+`not digitally signed` or `cannot be loaded` in the PowerShell log confirms an execution-policy block. Task Scheduler event `101`/`103` with an access-denied result points at an EDR — see [Security software conflicts](#security-software-conflicts).
+
+### Did the tasks start after the last reboot?
+
+```powershell
+$boot = (Get-CimInstance Win32_OperatingSystem).LastBootUpTime
+Get-ScheduledTask -TaskName "MCPEndpointShield*" | ForEach-Object {
+    $i = $_ | Get-ScheduledTaskInfo
+    [PSCustomObject]@{
+        Task           = $_.TaskName
+        LastRun        = $i.LastRunTime
+        StartedAtBoot  = ($i.LastRunTime -gt $boot)
+        MinutesAfterBoot = if ($i.LastRunTime -gt $boot) { [int]($i.LastRunTime - $boot).TotalMinutes } else { $null }
+    }
+} | Format-Table -AutoSize
+"Last boot: $boot"
+```
+
+The three core tasks should each show `StartedAtBoot = True` within roughly 10 minutes of boot. `False` means the task did not auto-start — check the trigger and `RunAs` above, then the event logs.
+
+***
+
+## Security software conflicts
+
+Antivirus and EDR products are the single most common cause of "tasks look fine, nothing is running". Enumerate what is present on the machine:
+
+```powershell
+$pattern = 'crowdstrike|falcon|sentinelone|carbonblack|cbdefense|defender|mdatp|sophos|malwarebytes|trendmicro|cylance|trellix|xagt|netskope|zscaler|umbrella|tanium|forcepoint|eset|kaspersky|mcafee|symantec|rapid7|qualys'
+
+# Running security processes
+Get-Process | Where-Object { $_.Name -imatch $pattern } | Select-Object Name, Id, Description
+
+# Security services
+Get-Service | Where-Object { $_.Name -imatch $pattern -or $_.DisplayName -imatch $pattern } |
+    Select-Object DisplayName, Status
+
+# Products registered with Windows Security Center
+Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntiVirusProduct |
+    Select-Object displayName, pathToSignedProductExe
+```
+
+Then check whether Akto is already excluded in Microsoft Defender:
+
+```powershell
+Get-MpPreference | Select-Object -ExpandProperty ExclusionPath
+Get-MpPreference | Select-Object -ExpandProperty ExclusionProcess
+Get-MpThreatDetection -ErrorAction SilentlyContinue |
+    Where-Object { $_.Resources -match 'akto' } | Select-Object -First 5 InitialDetectionTime, Resources
+```
+
+A hit in `Get-MpThreatDetection` is direct proof Defender quarantined the binary. Two further blockers worth ruling out:
+
+```powershell
+# AppLocker — an enforced policy can block the exe outright
+Get-AppLockerPolicy -Effective -Xml -ErrorAction SilentlyContinue |
+    Select-String -Pattern 'EnforcementMode="Enabled"' -Quiet
+
+# SSL-inspection CA certs in the trusted root store (a corporate proxy re-signing HTTPS
+# can break the agent's connection to Akto)
+Get-ChildItem Cert:\LocalMachine\Root |
+    Where-Object { $_.Subject -match 'netskope|zscaler|bluecoat|forcepoint|paloalto|mitmproxy' } |
+    Select-Object Subject, NotAfter
+```
+
+To fix any of these, add the exclusions in [Allowlist in Security Software](allowlist-in-security-software.md) and share the binary's SHA256 hash with your security administrator.
+
+***
+
+## Device enrollment and identity
+
+Useful when a device is installed and healthy but does not show up on the dashboard, or shows up twice.
+
+```powershell
+# Which MDM is this device enrolled in?
+dsregcmd /status | Select-String "AzureAdJoined|DomainJoined|MDMUrl|TenantName"
+
+# The device label Akto reports (should match the dashboard entry)
+$machineGuid = (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Cryptography' -Name MachineGuid).MachineGuid
+$guidPrefix  = ($machineGuid -replace '-', '').ToLower().Substring(0, 8)
+$hostNorm    = ($env:COMPUTERNAME -replace '[^a-zA-Z0-9]', '-')
+"$hostNorm-$guidPrefix"
+```
+
+A device restored from another machine's disk image inherits that machine's `MachineGuid` and will collide on the dashboard; it also makes the encrypted config undecryptable. Both need a reinstall — see [Config values and location](#config-values-and-location).
+
+***
+
 ## Common issues and fixes
 
 | Symptom | Likely cause | Fix |
 |---|---|---|
 | Device not appearing on the dashboard | Not provisioned, or token mismatch between your user profile and SYSTEM | Run the config check in [Config values and location](#config-values-and-location) for both profile locations; re-run installer if `not-provisioned` |
-| Tasks show `Running`/`Ready` but no processes | Antivirus/EDR terminating the process immediately | Use the foreground-run test in [Running processes](#running-processes); see [Whitelist Paths](whitelist-paths.md#configure-for-crowdstrike-falcon) if CrowdStrike is in use |
+| Tasks show `Running`/`Ready` but no processes | Antivirus/EDR terminating the process immediately | Use the foreground-run test in [Running processes](#running-processes); see [Allowlist in Security Software](allowlist-in-security-software.md#configure-for-crowdstrike-falcon) if CrowdStrike is in use |
 | Everything worked, then stopped after a reboot | Task didn't auto-start, or config mismatch (SYSTEM profile missing token the user profile has) | Run the reboot check in [Scheduled tasks](#scheduled-tasks); copy config from user profile to SYSTEM profile (see below) |
 | A specific IDE's hooks aren't showing up | That tool wasn't detected, its feature flag is off, or hooks need reinstalling | [Verifying IDE hooks](#verifying-ide-hooks) |
 | `check-config` reports `undecryptable` | Device was cloned/restored from another machine's disk image | Reinstall — this can't be repaired in place |
 | Binary blocked by Windows / SmartScreen | File flagged as downloaded ("Mark of the Web") | `Unblock-File` command in [Install location and files](#install-location-and-files) |
 | Port conflict error | Another Akto instance is stuck | `Stop-Process -Name akto-endpoint-shield -Force`, then restart the tasks |
 | No tasks listed at all | Installer did not complete | Re-run the installer as Administrator |
+| Tasks registered but never run at boot | GPO-enforced `AllSigned` execution policy, or an old `powershell -File` task action | [Startup and execution-policy audit](#startup-and-execution-policy-audit) |
+| Hooks report connection failures, tasks healthy | HTTP service failed to bind its port | [Listening ports](#listening-ports) |
+| Binary quarantined or deleted after install | Antivirus/EDR detection | [Security software conflicts](#security-software-conflicts), then [Allowlist in Security Software](allowlist-in-security-software.md) |
+| Agent can reach nothing over HTTPS | Corporate SSL-inspection proxy re-signing traffic | Check the trusted-root certs in [Security software conflicts](#security-software-conflicts) |
+| Device shows up twice, or under the wrong name | Machine cloned from another device's image | [Device enrollment and identity](#device-enrollment-and-identity) |
 
 **Copying config from your user profile to the SYSTEM profile** (fixes the common "works when I run it manually, not after reboot" case):
 
@@ -337,7 +509,15 @@ If nothing above resolves the issue:
 
 If the problem persists after reinstall, run the diagnostic script above and send the report to Akto support along with what you observed.
 
-## Get Support for your Akto setup
+## Related documentation
+
+* [macOS Troubleshooting](macos-troubleshooting.md) — the same checks for Macs
+* [Allowlist in Security Software](allowlist-in-security-software.md) — antivirus and EDR exclusions
+* [Intune Deployment (Windows)](intune-deployment.md) — fleet rollout and auto-update
+* [NinjaOne Deployment (Windows)](ninjaone-windows-deployment.md)
+* [Automox Deployment (Windows)](automox-deployment.md)
+
+## Get support
 
 When contacting Akto support, include the diagnostic report (`akto-diag-*.txt`), the installed version, and what you observed and when it started. **Never** include the raw `AKTO_API_TOKEN` value in a ticket, chat, or screenshot.
 
@@ -346,5 +526,3 @@ There are multiple ways to request support from Akto:
 1. In-app `intercom` support. Message us with your query on intercom in the Akto dashboard and someone will reply.
 2. Join our [discord channel](https://www.akto.io/community) for community support.
 3. Contact [support@akto.io](mailto:support@akto.io) for email support.
-</content>
-</invoke>

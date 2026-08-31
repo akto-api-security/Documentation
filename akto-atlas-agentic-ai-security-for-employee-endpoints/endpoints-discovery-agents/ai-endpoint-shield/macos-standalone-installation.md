@@ -1,8 +1,20 @@
-# MacOS Installation
+---
+description: >-
+  End-user walkthrough of the standalone AI Endpoint Shield installer on macOS,
+  including the security prompts users are asked to approve.
+---
+
+# macOS Standalone Installation
 
 ## Overview
 
-This document is designed for MacOS Installation and end-user reference. It explains the installation flow of **AI Endpoint Shield** on macOS and the permissions users may be prompted to approve.
+This page covers the **standalone installer** on macOS — the `.pkg` a user runs by hand, rather than a fleet-wide MDM rollout. It walks through the installation flow of **AI Endpoint Shield** and the permissions users may be prompted to approve, so you can share it with end users ahead of time.
+
+{% hint style="info" %}
+For fleet deployment, use [Jamf MDM Deployment](jamf-mdm-deployment.md), [Mosyle MDM Deployment](mosyle-deployment.md), or [NinjaOne Deployment (macOS)](ninjaone-macos-deployment.md) instead — those install silently, with no user prompts.
+
+If the install completes but the agent does not appear in Akto, see [macOS Troubleshooting](macos-troubleshooting.md).
+{% endhint %}
 
 ## Steps Guide
 
@@ -107,3 +119,21 @@ These permissions are optional. The application will continue to function even i
 {% endhint %}
 {% endstep %}
 {% endstepper %}
+
+## After installation
+
+Confirm the agent is running:
+
+```bash
+/usr/local/bin/akto-endpoint-shield --version
+/usr/local/bin/akto-endpoint-shield check-config --path ~/.akto-endpoint-shield/config
+launchctl list | grep akto-endpoint-shield
+```
+
+`check-config` should print `provisioned`, and both LaunchAgents should show a PID rather than `-`. If either check fails, see [macOS Troubleshooting](macos-troubleshooting.md).
+
+## Related documentation
+
+* [macOS Troubleshooting](macos-troubleshooting.md)
+* [Allowlist in Security Software](allowlist-in-security-software.md)
+* [Jamf MDM Deployment](jamf-mdm-deployment.md)

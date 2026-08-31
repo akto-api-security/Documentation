@@ -1,272 +1,268 @@
 ---
 description: >-
-  Deploy AI Endpoint Shield across your organization using a single script via
-  Mosyle MDM.
+  Deploy AI Endpoint Shield across your macOS fleet with Mosyle MDM using a
+  single install.sh Custom Command with auto-update.
 ---
 
 # Mosyle MDM Deployment
 
 ## Overview
 
-AI Endpoint Shield can be deployed enterprise-wide via **Mosyle MDM** (Mobile Device Management) for seamless, automated installation across your organization's macOS devices.
+AI Endpoint Shield is deployed to macOS devices from **Mosyle** with a single script, **`install.sh`** — the same script used for [Jamf MDM Deployment](jamf-mdm-deployment.md). It runs as a Mosyle **Custom Command** at user sign-in and:
 
-## Why Use MDM Deployment?
+1. Fetches the version manifest (`latest.json`) from the URL you provide
+2. Compares the installed version against the manifest and exits early if the device is already current
+3. Downloads the signed and notarized `.pkg` and installs it
+4. Writes `config.env` (token and feature flags) into the console user's home directory
+5. Lets the pkg's embedded `postinstall` handle file placement, LaunchAgent setup, and hook installation
 
-MDM deployment provides significant advantages over manual installation:
+**No package upload to Mosyle is required** — the script downloads the pkg itself, so a new Akto release reaches your fleet without touching the Custom Command.
 
-* **Zero-touch deployment** - Automatic installation at user login
-* **Centralized management** - Configure and monitor from a single Mosyle console
-* **Consistent configuration** - Ensure all devices have the same security posture
-* **Automated updates** - Push new versions across the organization
-* **Compliance tracking** - Monitor deployment status and coverage
+Mosyle has no encrypted script-parameter field equivalent to Jamf's `$4`–`$7`, so the values are set in the **`CONFIG` block at the top of the script** instead.
 
-## Key Features of Mosyle Deployment
+***
 
-* **One script** handles everything: downloads the installer, deploys the token, installs to each user's home directory, and starts services automatically
-* **Runs at user sign-in:** installs once per user, retries automatically if it fails
-* **No PKG upload to Mosyle required:** the script downloads the installer directly from a URL provided by Akto.
-* **Minimal configuration:** only 3 values to configure in the script
+## Architecture
+
+| Aspect | Detail |
+| ------ | ------ |
+| Script execution | Root (Mosyle default) — auto-detects the console user |
+| Installation type | Per-user (`~/.akto-endpoint-shield/`) |
+| Services | LaunchAgents (run as the user, not system-wide) |
+| Auto-update | Manifest (`latest.json`) — devices update at next sign-in |
+| Reinstall | `FORCE_REINSTALL=true` |
+| Token storage | `~/.akto-endpoint-shield/config/` (permissions 600) |
+
+***
 
 ## Prerequisites
 
-Before deploying AI Endpoint Shield via Mosyle, ensure you have the following:
+### 1. Akto credentials
 
-### 1. Akto Credentials
+* **`AKTO_API_TOKEN`** — from the Akto platform
+* **`AKTO_API_BASE_URL`** — your guardrails URL, e.g. `https://<account_id>-guardrails.akto.io`
 
-* **AKTO\_API\_TOKEN:** obtain from your Akto platform dashboard
-* **AKTO\_API\_BASE\_URL:** your Akto instance URL (e.g. `https://<account_id>-guardrails.akto.io`)
+### 2. MANIFEST\_URL
 
-### 2. Installer URL
+Provided by Akto during onboarding. This is what enables auto-update: devices check it on each run to decide whether a newer version is available.
 
-* **PKG download URL:** request this from Akto (support@akto.io); Akto will provide a direct download URL for the installer
-* ⚠️ **Important**: Keep this URL confidential as it's tied to your organization
+### 3. Mosyle admin access
 
-### 3. Mosyle Admin Access
+Permissions to create and manage Custom Commands, device group assignments, and execution results.
 
-Permissions to create/edit and manage:
+### 4. Device enrolment
 
-* Custom Commands
-* Device Group assignments
-* Execution results and logs
+Target Macs must be enrolled and visible in your Mosyle dashboard, with internet access to the manifest and pkg hosts, to `https://<account_id>-guardrails.akto.io`, and to `https://ultron.akto.io`.
 
-### 4. Device Enrolment
+***
 
-* Target Macs must be enrolled and appear in your Mosyle dashboard
-* Devices must have internet connectivity to download the installer
-* Users must be able to log in to devices for installation to trigger
+## install.sh configuration
 
-## Deployment Process
+`install.sh` reads its values from environment variables, falling back to the `CONFIG` block at the top of the script. Fill in these four before uploading:
+
+| Variable | Required | Description |
+| -------- | -------- | ----------- |
+| `MANIFEST_URL` | Recommended | HTTPS URL to `latest.json` — this is what enables auto-update |
+| `AKTO_API_TOKEN` | Yes | Your Akto API token |
+| `AKTO_API_BASE_URL` | Yes | `https://<account_id>-guardrails.akto.io` |
+| `PKG_URL` | Fallback | Direct HTTPS URL to the `.pkg`, used only if `MANIFEST_URL` is not set |
+| `FORCE_REINSTALL` | No | `true` forces a reinstall even when the version already matches |
+
+```bash
+MANIFEST_URL="https://<manifest-url>/latest.json"   # provided by Akto — enables auto-update
+AKTO_API_TOKEN=""                                    # your Akto API token
+AKTO_API_BASE_URL=""                                 # https://<account_id>-guardrails.akto.io
+PKG_URL=""                                           # leave empty when MANIFEST_URL is set
+```
+
+All other values — hook flags, MCP wrap flags, TCC guard — can be left at their defaults; they are managed from the **Akto dashboard** after install.
+
+{% hint style="warning" %}
+**Security note.** The configured copy of `install.sh` contains a live token. Keep it in Mosyle or a secrets manager — do not commit it to version control.
+{% endhint %}
+
+***
+
+## Deployment
 
 {% stepper %}
 {% step %}
-**Prepare the Installation Script**
+### Request the artifacts from Akto
 
-**1. Obtain credentials from Akto**
+Contact [support@akto.io](mailto:support@akto.io) for:
 
-Contact Akto support team to request following information:
+* `install.sh` and `uninstall.sh`
+* Your `MANIFEST_URL`
+* Confirmation of your `AKTO_API_TOKEN` and `AKTO_API_BASE_URL`
 
-* Installation Script: `install.sh` file.
-* Direct download URL for the installer (`PKG_URL`)
-* Confirmation of your `AKTO_API_TOKEN`
-* Your `AKTO_API_BASE_URL`
-
-**2. Configure the installation script**
-
-Open `install.sh` and fill in the CONFIG section at the top:
-
-```bash
-PKG_URL=""              # installer URL provided by Akto
-AKTO_API_TOKEN=""       # your Akto API token
-AKTO_API_BASE_URL=""    # your Akto base URL (e.g. https://<account_id>-guardrails.akto.io)
-```
-
-All other values (hook flags, wrap flags) can be left at their defaults or adjusted as needed.
-
-{% hint style="warning" %}
-**Security Note**
-
-Do not commit `install.sh` with a real token to version control. Keep the filled-in copy local or in a secrets manager.
-{% endhint %}
+Fill in the `CONFIG` block as described above.
 {% endstep %}
 
 {% step %}
-**Upload to Mosyle**
+### Create the Custom Command profile
 
-**1. Create Custom Command profile**
-
-1. Log into your **Mosyle Business** console
+1. Log in to your **Mosyle Business** console
 2. Navigate to **Management** → **Custom Commands**
 3. Click **Add new profile**
-4. Name it: `Akto Endpoint Shield - Install`
-5. Choose **Category**: Security (or create custom category)
+4. Name it `Akto Endpoint Shield - Install`
+5. Set **Category:** Security
+{% endstep %}
 
-**2. Upload the script**
+{% step %}
+### Upload the script
 
-1. Click the **Code** tab
+1. Open the **Code** tab
 2. Select code format: **Shell Script (bash)**
-3. Paste the **entire contents** of your configured `install.sh` file
-4. Review the pasted content for accuracy (verify CONFIG section is filled)
+3. Paste the **entire contents** of your configured `install.sh`
+4. Verify the `CONFIG` section is filled in
 5. Click **Save**
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+{% endstep %}
 
-**3. Configure execution settings**
+{% step %}
+### Configure execution settings
 
-Click the **Execution Settings** tab and configure:
+Open the **Execution Settings** tab and configure:
 
-<table><thead><tr><th width="234.02734375">Option</th><th>Configuration</th></tr></thead><tbody><tr><td><strong>Execute command</strong></td><td>Select: <strong>Immediately when saving the profile, upon assignment, or based on schedule or events</strong></td></tr><tr><td><strong>Execution trigger</strong></td><td>Tick Every user sign-in✅</td></tr><tr><td><strong>Schedule</strong></td><td>Only once (Event Required)✅</td></tr></tbody></table>
+<table><thead><tr><th width="234.02734375">Option</th><th>Configuration</th></tr></thead><tbody><tr><td><strong>Execute command</strong></td><td>Select: <strong>Immediately when saving the profile, upon assignment, or based on schedule or events</strong></td></tr><tr><td><strong>Execution trigger</strong></td><td>Tick <strong>Every user sign-in</strong> ✅</td></tr><tr><td><strong>Schedule</strong></td><td><strong>Always (Event Required)</strong> ✅</td></tr></tbody></table>
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 {% hint style="info" %}
-**Why this configuration?**
+**Why run on every sign-in?**
 
-This combination runs the script on each user sign-in until it succeeds, then stops. If the download fails or no user is logged in, it retries automatically at the next sign-in.
+This is what enables auto-update. `install.sh` checks the manifest against the installed version and exits early when the device is already current, so re-running costs a single HTTPS request. When Akto publishes a new release, devices upgrade on the next sign-in with no change to the Custom Command.
 
-The "**only once**" setting prevents repeated executions for the same user on the same device.
+If you deliberately want a one-time install with no updates, use **Only once (Event Required)** instead — the command then stops running after its first success, and updates require re-saving the profile.
 {% endhint %}
 
-Leave all other options unchecked. Click **Save** to create the profile.
+Leave all other options unchecked and click **Save**.
 {% endstep %}
 
 {% step %}
-**Deploy to Devices**
+### Assign to devices
 
-**1. Add Profile Assignment Based on Your Preferences**
+Click **+ Add Assignment**, choose the target users or devices, and confirm. Save the Custom Command.
 
-*   Click **+ Add Assignment**, choose users or devices, then select and confirm your assignment.
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
-    <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure></div>
-* Save the Custom Commands.
+The script runs the next time each assigned user signs in.
+{% endstep %}
 
-The script will run the next time each assigned user signs in.
+{% step %}
+### Monitor deployment
 
-**2. Monitor deployment**
+Go to **Management** → **Custom Commands**, select the profile, and click **View Results**:
 
-Go to **Management** → **Custom Commands**, select your profile, and click **View Results** to see execution status:
-
-* **Success**: Installation completed
-* **Pending**: Awaiting user sign-in
-* **Failed**: See troubleshooting section
+* **Success** — installation completed
+* **Pending** — awaiting user sign-in
+* **Failed** — see [Troubleshooting](#troubleshooting)
 
 <figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
-
-{% step %}
-**Verify Installation**
-
-**Verify on target device**
-
-On a target Mac after the user has signed in, open Terminal and run:
-
-```bash
-# Check 1: Binary installed
-ls -la ~/.akto-mcp-endpoint-shield/bin/mcp-endpoint-shield
-
-# Check 2: Token configured
-cat ~/.akto-mcp-endpoint-shield/config/config.env
-
-# Check 3: Services running
-launchctl list | grep mcp-endpoint-shield
-
-# Check 4: View installation log
-tail -30 /var/log/akto-mcp-endpoint-shield-install.log
-```
-
-<details>
-
-<summary><strong>Verification checklist</strong></summary>
-
-* [ ] Binary exists at `~/.akto-mcp-endpoint-shield/bin/mcp-endpoint-shield`
-* [ ] Config file exists at `~/.akto-mcp-endpoint-shield/config/config.env`
-* [ ] Config file has correct permissions (`chmod 600`)
-* [ ] Token is present in config file
-* [ ] Both LaunchAgents are loaded (`launchctl list`)
-* [ ] Installation log shows no errors
-* [ ] Mosyle shows "Success" status for this device
-
-</details>
-{% endstep %}
 {% endstepper %}
 
-## Updating Akto Endpoint Shield
+***
 
-1. Request the updated installer URL from Akto (support@akto.io)
-2. Update `PKG_URL` in the script with the new URL
-3. Edit the script in Mosyle and save — Mosyle will re-run it on next sign-in
+## Background item approval (macOS 13+)
 
-{% hint style="danger" %}
-**Force Upgrade:**
+macOS 13 and later require every LaunchAgent label to be approved as a **background item** before `launchd` will start it. Without approval, a fully signed and notarized install can sit loaded but never running, with no logs.
 
-The script skips reinstallation if the binary is already present. To force an upgrade, run the uninstall script first (see below), then the install script will run again on next sign-in.
-{% endhint %}
+Deploy a **`com.apple.servicemanagement`** configuration profile from Mosyle that pre-approves Akto's Team Identifier, so users are never prompted. Without that profile, each user must approve the agent manually under **System Settings → General → Login Items & Extensions → Allow in the Background**.
 
-### Uninstall Script
+Contact Akto for the Team Identifier and a sample profile payload.
 
-To remove Akto Endpoint Shield from devices:
+***
+
+## Verification
+
+On a target Mac after the user has signed in:
+
+```bash
+# Version and provisioning state
+/usr/local/bin/akto-endpoint-shield --version
+/usr/local/bin/akto-endpoint-shield check-config --path ~/.akto-endpoint-shield/config
+
+# Services — both must show a PID, not "-"
+launchctl list | grep akto-endpoint-shield
+
+# Config permissions (should be 600)
+ls -la ~/.akto-endpoint-shield/config/
+
+# Install log
+tail -50 ~/.akto-endpoint-shield/logs/install.log
+```
+
+`check-config` should print `provisioned`.
+
+### Checklist
+
+* [ ] Mosyle shows **Success** for the device
+* [ ] Binary installed and executable at `/usr/local/bin/akto-endpoint-shield`
+* [ ] `check-config` prints `provisioned`, config permissions are 600
+* [ ] Both LaunchAgents show a PID
+* [ ] Endpoint visible in Akto with recent activity
+
+***
+
+## Updating AI Endpoint Shield
+
+With **Every user sign-in** + **Always (Event Required)**, updates are automatic: Akto updates `latest.json`, and devices upgrade on the next sign-in. No change to the Custom Command is needed.
+
+**To force an immediate reinstall on all devices:** edit the script in Mosyle, set `FORCE_REINSTALL="true"`, save, and let it run — then set it back to `false`.
+
+## Uninstall
 
 1. In Mosyle → **Custom Commands** → **Add new profile**
-2. Paste the contents of `uninstall.sh`
-3. Name it: `Akto Endpoint Shield - Uninstall`
-4. Execution Settings:
-   * Event: ✅ **Every user sign-in** (or trigger manually)
-   * Schedule: ✅ **Only once (Event Required)**
+2. Paste the contents of `uninstall.sh` (it takes no configuration)
+3. Name it `Akto Endpoint Shield - Uninstall`
+4. Execution Settings: trigger **Every user sign-in**, schedule **Only once (Event Required)**
 5. Assign to the target devices
+
+Remember to unassign the install profile first, or it will reinstall at the next sign-in.
+
+***
 
 ## Troubleshooting
 
-### Issue: Script shows "Failed" in Mosyle View Results
+| Symptom | Likely cause | What to do |
+| ------- | ------------ | ---------- |
+| Mosyle shows **Failed** | See the install log | `tail -50 ~/.akto-endpoint-shield/logs/install.log` and `/var/log/akto-endpoint-shield-install.log` |
+| `Neither PKG_URL, PKG_PATH, nor MANIFEST_URL is set` | `CONFIG` block left empty | Set `MANIFEST_URL` in the script body |
+| `AKTO_API_TOKEN` empty in the log | `CONFIG` block missing the token | Fill in `AKTO_API_TOKEN` and re-save the profile |
+| `No console user logged in` | Command ran with nobody signed in | Expected — it retries at the next sign-in |
+| `Already at latest version — nothing to do` | Manifest version matches the installed version | Expected. Set `FORCE_REINSTALL="true"` to override |
+| Services show `-` instead of a PID | Token missing or invalid | Run `check-config`; check the install log |
+| Services loaded but never start, no logs | macOS 13+ background item not approved | See [Background item approval](#background-item-approval-macos-13) |
+| Manifest URL unreachable | Firewall or proxy | `curl -I "$MANIFEST_URL"` from the device |
 
-**Symptoms**: Custom Command status shows "Failed" or "Error"
+For device-level diagnosis, see [macOS Troubleshooting](macos-troubleshooting.md). For EDR and antivirus exclusions, see [Allowlist in Security Software](allowlist-in-security-software.md).
 
-**Diagnostic command:**
+***
 
-```bash
-tail -50 /var/log/akto-mcp-endpoint-shield-install.log
-```
+## File locations
 
-**Common causes and solutions:**
+| Path | Purpose |
+| ---- | ------- |
+| `/usr/local/bin/akto-endpoint-shield` | Main binary |
+| `/Library/Application Support/Akto/` | Read-only asset bundle installed by the pkg |
+| `~/Library/LaunchAgents/io.akto.akto-endpoint-shield.plist` | HTTP proxy service |
+| `~/Library/LaunchAgents/io.akto.akto-endpoint-shield-agent.plist` | Agent service |
+| `~/.akto-endpoint-shield/config/` | Token + feature flags (permissions 600) |
+| `~/.akto-endpoint-shield/logs/install.log` | Install log |
+| `/var/log/akto-endpoint-shield-install.log` | Root-context install log |
 
-<table><thead><tr><th width="229.3984375">Issue</th><th>Check</th><th>Solution</th></tr></thead><tbody><tr><td><code>PKG_URL</code> is empty or unreachable</td><td>Look for URL errors in install log</td><td>Verify the URL provided by Akto is correctly pasted in CONFIG; test: <code>curl -I $PKG_URL</code></td></tr><tr><td><code>AKTO_API_TOKEN</code> is empty</td><td>Search install log for "TOKEN"</td><td>Check the CONFIG section of the script has the token value</td></tr><tr><td><code>AKTO_API_BASE_URL</code> is empty</td><td>Search install log for "BASE_URL"</td><td>Check the CONFIG section of the script has the base URL value</td></tr><tr><td>No user logged in</td><td>Check timestamp when script ran</td><td>Will retry automatically on next sign-in; no action needed</td></tr></tbody></table>
+***
 
-### Issue: Services Not Running After Installation
+## Related documentation
 
-**Symptoms**: `launchctl list` shows no Akto Endpoint Shield services
+* [Jamf MDM Deployment](jamf-mdm-deployment.md)
+* [NinjaOne Deployment (macOS)](ninjaone-macos-deployment.md)
+* [macOS Troubleshooting](macos-troubleshooting.md)
 
-**Solution - Manually load services:**
+## Get support
 
-```bash
-# Load both services
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/io.akto.mcp-endpoint-shield.plist
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/io.akto.mcp-endpoint-shield-agent.plist
-
-# Verify they're running
-launchctl list | grep mcp-endpoint-shield
-```
-
-### Issue: Token Needs Updating After Installation
-
-**Symptoms**: Services running but not authenticated; logs show "AKTO\_API\_TOKEN not configured"
-
-**Solution:**
-
-Edit the script in Mosyle with the new token. Then on the device:
-
-```bash
-# Manually redeploy config
-cat > ~/.akto-mcp-endpoint-shield/config/config.env <<EOF
-AKTO_API_TOKEN=new-token-here
-EOF
-chmod 600 ~/.akto-mcp-endpoint-shield/config/config.env
-
-# Restart services
-launchctl bootout gui/$(id -u)/io.akto.mcp-endpoint-shield
-launchctl bootout gui/$(id -u)/io.akto.mcp-endpoint-shield-agent
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/io.akto.mcp-endpoint-shield.plist
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/io.akto.mcp-endpoint-shield-agent.plist
-```
-
-## Support
-
-* **For Akto platform issues**: [support@akto.io](mailto:support@akto.io)
-* **For Mosyle issues**: your IT administrator
+1. In-app Intercom in the Akto dashboard
+2. [Discord community](https://www.akto.io/community)
+3. [support@akto.io](mailto:support@akto.io)
