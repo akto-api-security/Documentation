@@ -1,8 +1,18 @@
-# Whitelist Paths — AI Endpoint Shield
+---
+description: >-
+  Allowlist AI Endpoint Shield in the antivirus, EDR, and endpoint management
+  tools deployed across your organization so they do not block or quarantine it.
+---
 
-If an endpoint management tool is deployed in your organization, add the Akto AI Endpoint Shield binary paths as exclusions to prevent the tool from blocking or quarantining the process.
+# Allowlist in Security Software
 
-> Only the binary paths need to be excluded. Unlike broader EDR whitelisting, exclusions scoped to the executable paths are sufficient for normal operation.
+AI Endpoint Shield runs a background binary as SYSTEM (Windows) or as the signed-in user (macOS), and installs hooks into local AI tooling. Antivirus, EDR, and endpoint management products routinely flag that behaviour and can quarantine the binary, kill the process at startup, or block the installer outright.
+
+Add the paths below as exclusions in whichever tools your organization runs — Microsoft Defender, SentinelOne, CrowdStrike Falcon, Carbon Black, Netskope, and similar. Forward this page to your IT or security administrator.
+
+> Only the binary paths need to be excluded. Unlike broader EDR allowlisting, exclusions scoped to the executable paths are sufficient for normal operation.
+
+**Symptoms that point here:** the binary disappears after install, scheduled tasks show `LastResult 0xC000013A` or `0x00000005`, processes start and die within seconds, or the install log ends abruptly.
 
 ---
 
@@ -15,13 +25,34 @@ These paths apply to all endpoint management tools (Microsoft Defender, Sentinel
 | Path | Description |
 |------|-------------|
 | `/usr/local/bin/akto-endpoint-shield` | Main binary (MDM/Jamf install) |
-| `~/.akto-endpoint-shield/bin/akto-endpoint-shield` | User-level binary |
+| `/usr/local/lib/akto-endpoint-shield/` | Bundled runtime (includes `venv/bin/mitmdump` when the optional system proxy is enabled) |
+| `~/.akto-endpoint-shield/bin/` | Per-user wrapper and hook installer scripts |
 
 **Windows**
 
 | Path | Description |
 |------|-------------|
 | `C:\Program Files\Akto Endpoint Shield\akto-endpoint-shield.exe` | Main binary |
+| `C:\ProgramData\akto-endpoint-shield\` | Logs, and the mitmproxy virtualenv when the optional system proxy is enabled |
+
+### Getting the binary hash
+
+Some vendors want a SHA256 hash rather than (or in addition to) a path. Run this on an affected machine and share the output with your security administrator.
+
+**macOS**
+
+```bash
+shasum -a 256 /usr/local/bin/akto-endpoint-shield
+```
+
+**Windows**
+
+```powershell
+Get-FileHash "C:\Program Files\Akto Endpoint Shield\akto-endpoint-shield.exe" -Algorithm SHA256 |
+    Select-Object Hash, Path
+```
+
+The hash changes with every Akto release, so path- and signature-based exclusions are preferable where the vendor supports them.
 
 ---
 
@@ -182,26 +213,7 @@ These steps apply to **Windows** machines managed by CrowdStrike Falcon. Forward
 
 ### Windows
 
-#### Get the binary hash
-
-Before your CrowdStrike admin adds the exclusions, run the following on the affected machine and share the output hash with them.
-
-{% stepper %}
-{% step %}
-Open **PowerShell** and run:
-
-```powershell
-Get-FileHash "C:\Program Files\Akto Endpoint Shield\akto-endpoint-shield.exe" -Algorithm SHA256 |
-    Select-Object Hash, Path
-```
-{% endstep %}
-
-{% step %}
-Send the printed hash value to your CrowdStrike administrator along with the steps below.
-{% endstep %}
-{% endstepper %}
-
----
+Falcon needs both a path and a hash exclusion. Get the SHA256 hash first — see [Getting the binary hash](#getting-the-binary-hash) — and send it to your CrowdStrike administrator along with the steps below.
 
 #### Falcon console exclusions
 
@@ -253,10 +265,12 @@ If Akto activity is generating excessive alerts in the Falcon dashboard, go to *
 
 ---
 
-## Get Support for your Akto setup
+## Still blocked?
 
-There are multiple ways to request support from Akto. We are available on the following:
+If the exclusions are in place and the binary is still being killed, run the diagnostic in [Windows Troubleshooting](windows-troubleshooting.md#full-automated-diagnostic) or [macOS Troubleshooting](macos-troubleshooting.md#full-automated-diagnostic) — both enumerate the security products present on the machine and the block events they recorded, which is what your vendor's support will ask for.
 
-1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
-2. Join our [discord channel](https://www.akto.io/community) for community support.
-3. Contact [support@akto.io](mailto:support@akto.io) for email support.
+## Get support
+
+1. In-app Intercom in the Akto dashboard
+2. [Discord community](https://www.akto.io/community)
+3. [support@akto.io](mailto:support@akto.io)

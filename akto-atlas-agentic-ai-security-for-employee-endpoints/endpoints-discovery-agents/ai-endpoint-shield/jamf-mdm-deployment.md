@@ -1,132 +1,123 @@
+---
+description: >-
+  Deploy AI Endpoint Shield across your macOS fleet with Jamf Pro using a single
+  install.sh script with auto-update.
+---
+
 # Jamf MDM Deployment
 
-### Overview
+## Overview
 
-AI Endpoint Shield can be deployed enterprise-wide via **Jamf Pro** for seamless, automated installation across your organization's macOS devices.
+AI Endpoint Shield is deployed to macOS devices from **Jamf Pro** with a single script, **`install.sh`**. The script:
 
-#### Why Use MDM Deployment?
+1. Fetches the version manifest (`latest.json`) from the URL you provide
+2. Compares the installed version against the manifest and exits early if the device is already current
+3. Downloads the signed and notarized `.pkg` and installs it
+4. Writes `config.env` (token and feature flags) into the console user's home directory
+5. Lets the pkg's embedded `postinstall` handle file placement, LaunchAgent setup, and hook installation
 
-MDM deployment provides significant advantages over manual installation:
-
-* **Zero-touch deployment** - Automatic installation at user login
-* **Centralized management** - Configure and monitor from a single console
-* **Consistent configuration** - Ensure all devices have the same security posture
-* **Automated updates** - Devices automatically pull the latest version on each login
-* **Compliance tracking** - Monitor deployment status and coverage
-
-#### Supported Platforms
-
-* ✅ **Jamf Pro** - Enterprise MDM solution
+**No package upload to Jamf is required** — the script downloads the pkg itself, so a new Akto release reaches your fleet without touching the Jamf policy.
 
 ***
 
-### Architecture
+## Architecture
 
 | Aspect | Detail |
 | ------ | ------ |
-| Script execution | Root (Jamf default) — auto-detects console user |
+| Script execution | Root (Jamf default) — auto-detects the console user |
 | Installation type | Per-user (`~/.akto-endpoint-shield/`) |
-| Services | LaunchAgents (run as user, not system-wide) |
+| Services | LaunchAgents (run as the user, not system-wide) |
 | Auto-update | Manifest (`latest.json`) — devices update at next login |
-| Reinstall | `FORCE_REINSTALL=true` Jamf parameter |
-| Token storage | `~/.akto-endpoint-shield/config/config.env` (permissions 600) |
+| Reinstall | `FORCE_REINSTALL=true` |
+| Token storage | `~/.akto-endpoint-shield/config/` (permissions 600) |
 
 ***
 
-### Prerequisites
+## Prerequisites
 
-Before deploying via Jamf, ensure you have the following:
+### 1. AKTO\_API\_TOKEN
 
-#### 1. AKTO\_API\_TOKEN
+From the Akto platform. Deployed via a Jamf **encrypted** script parameter.
 
-* Obtain from the Akto platform
-* Will be deployed securely via Jamf encrypted parameters
+### 2. AKTO\_API\_BASE\_URL
 
-#### 2. AKTO\_API\_BASE\_URL
+Your Akto guardrails URL, e.g. `https://<account_id>-guardrails.akto.io`.
 
-* Your Akto data ingestion URL (e.g. `https://<account_id>-guardrails.akto.io`)
+### 3. MANIFEST\_URL
 
-#### 3. MANIFEST\_URL
+Provided by Akto during onboarding. Devices check this URL on each run to decide whether a newer version is available — this is what enables auto-update.
 
-* Provided by Akto during onboarding
-* Enables auto-update: devices check this URL on each login to determine if a newer version is available
+### 4. Jamf Pro access
 
-#### 4. Jamf Pro Access
+Permissions to create and edit Scripts, Policies, and (optionally) Smart Groups and Extension Attributes.
 
-Permissions to create/edit:
+### 5. Network access
 
-* Scripts
-* Policies
-* Smart Groups (optional)
-* Extension Attributes (optional)
+Devices need HTTPS access to the manifest and pkg hosts, to `https://<account_id>-guardrails.akto.io`, and to `https://ultron.akto.io`.
 
 ***
 
-### Deployment Script
+## Scripts
 
-This deployment uses a **single script** (`install.sh`). The script:
+| Script | Purpose | Parameters |
+| ------ | ------- | ---------- |
+| `install.sh` | Install or update AI Endpoint Shield | `$4`–`$7`, below |
+| `uninstall.sh` | Remove the agent, LaunchAgents, config, and MCP server wrapping | None |
 
-1. Fetches the latest version manifest (`latest.json`) from the URL you provide
-2. Compares installed version vs manifest — skips if already up to date
-3. Downloads the signed/notarized `.pkg` and installs it
-4. Writes `config.env` (token, feature flags) to the user's home directory
-5. The pkg's embedded `postinstall` handles file placement, LaunchAgent setup, and hook installation
+Both run as **root** and auto-detect the logged-in user.
 
-**No manual package upload to Jamf is required.**
+### install.sh Jamf parameters
 
-#### install.sh
+| Parameter | Name | Value |
+| --------- | ---- | ----- |
+| `$4` | `AKTO_API_TOKEN` | Your token — use a **Jamf encrypted parameter** |
+| `$5` | `AKTO_API_BASE_URL` | `https://<account_id>-guardrails.akto.io` |
+| `$6` | `MANIFEST_URL` | Provided by Akto — enables auto-update |
+| `$7` | `PKG_URL` | Direct pkg URL — fallback if `MANIFEST_URL` is not set |
 
-* **Purpose**: Install or update Akto Endpoint Shield
-* **Run as**: Root (auto-detects logged-in user)
-* **Parameter 4**: `AKTO_API_TOKEN` (encrypted)
-* **Parameter 5**: `AKTO_API_BASE_URL`
-* **Parameter 6**: `MANIFEST_URL` (provided by Akto — enables auto-update)
-* **Parameter 7**: `PKG_URL` (direct pkg URL — fallback if MANIFEST\_URL not set)
-
-#### uninstall.sh
-
-* **Purpose**: Removes Akto Endpoint Shield from user's system
-* **Run as**: Root (auto-detects logged-in user)
-* **Cleanup**: Includes removal of MCP server configurations
+Jamf reserves `$1`–`$3` (mount point, computer name, username); `install.sh` ignores them and detects the console user itself.
 
 ***
 
-### Phase 1: Upload Scripts to Jamf Pro
+## Phase 1 — Upload scripts to Jamf Pro
 
-Navigate to **Settings** → **Computer Management** → **Scripts** → **+ New**
+Navigate to **Settings** → **Computer Management** → **Scripts** → **+ New**.
 
-**Script 1: install.sh**
+{% stepper %}
+{% step %}
+### Script 1: install.sh
 
-* **Display Name**: Akto Endpoint Shield - Install
-* **Category**: Security
-* **Execution**: Root (default — do not change)
-* **Parameter Labels**:
+* **Display Name:** `Akto Endpoint Shield - Install`
+* **Category:** Security
+* **Execution:** Root (default — do not change)
+* **Parameter Labels:**
   * Parameter 4: `AKTO_API_TOKEN`
   * Parameter 5: `AKTO_API_BASE_URL`
-  * Parameter 6: `MANIFEST_URL` (provided by Akto — enables auto-update)
-  * Parameter 7: `PKG_URL` (direct pkg URL — fallback if MANIFEST\_URL not used)
+  * Parameter 6: `MANIFEST_URL`
+  * Parameter 7: `PKG_URL`
 
 Paste the contents of `install.sh` (provided by Akto) as the script body.
+{% endstep %}
 
-**Script 2: uninstall.sh**
+{% step %}
+### Script 2: uninstall.sh
 
-* **Display Name**: Akto Endpoint Shield - Uninstall
-* **Category**: Security
+* **Display Name:** `Akto Endpoint Shield - Uninstall`
+* **Category:** Security
 * No parameters needed
 
-Paste the contents of `uninstall.sh` (provided by Akto) as the script body.
+Paste the contents of `uninstall.sh` as the script body.
+{% endstep %}
 
-#### Extension Attribute (Optional but Recommended)
+{% step %}
+### Extension Attribute (optional but recommended)
 
-Navigate to **Settings** → **Computer Management** → **Extension Attributes** → **+ New**
+Navigate to **Settings** → **Computer Management** → **Extension Attributes** → **+ New**.
 
-* **Display Name**: Akto Endpoint Shield Version
-* **Description**: Reports installed version of Akto Endpoint Shield
-* **Data Type**: String
-* **Inventory Display**: General
-* **Input Type**: Script
-
-**Script**:
+* **Display Name:** `Akto Endpoint Shield Version`
+* **Data Type:** String
+* **Inventory Display:** General
+* **Input Type:** Script
 
 ```bash
 #!/bin/bash
@@ -141,307 +132,171 @@ else
 fi
 ```
 
-#### Smart Group (Optional)
-
-Navigate to **Computers** → **Smart Computer Groups** → **+ New**
-
-* **Name**: Akto Endpoint Shield Not Installed
-* **Criteria**:
-  * Extension Attribute "Akto Endpoint Shield Version" is "Not Installed"
-  * Operating System Version greater than or equal to 10.13.x
+This lets you build a Smart Group (**Computers** → **Smart Computer Groups** → **+ New**) on `Akto Endpoint Shield Version is "Not Installed"` to track coverage.
+{% endstep %}
+{% endstepper %}
 
 ***
 
-### Phase 2: Create Jamf Policy
+## Phase 2 — Create the install policy
 
-Navigate to **Computers** → **Policies** → **+ New**
+Navigate to **Computers** → **Policies** → **+ New**.
 
-#### General Settings
+{% stepper %}
+{% step %}
+### General
 
-* **Display Name**: Install Akto Endpoint Shield
-* **Enabled**: Yes
-* **Triggers**:
-  * ✅ **Login** (user login trigger)
-  * ✅ Recurring Check-in (optional, for catch-up)
-* **Execution Frequency**: **Once per user per computer**
+* **Display Name:** `Install Akto Endpoint Shield`
+* **Enabled:** Yes
+* **Triggers:** **Login** (add Recurring Check-in as a catch-up if you like)
+* **Execution Frequency:** **Ongoing**
+* **Category:** Security
 
-  > For auto-updates: change frequency to **Ongoing** — the script skips reinstall if already at the latest version (based on the manifest), so running on every login is safe.
-* **Category**: Security
+**Ongoing** is what enables auto-update. The script skips the reinstall when the installed version already matches the manifest, so running on every login is cheap and safe. Use **Once per user per computer** only if you deliberately want a one-time install with no updates.
+{% endstep %}
 
-#### No Package Required
+{% step %}
+### Packages
 
-The script downloads and installs the pkg automatically. Do **not** add a package to this policy.
+Leave empty. The script downloads and installs the pkg itself — do **not** add a package to this policy.
+{% endstep %}
 
-#### Scripts
+{% step %}
+### Scripts
 
-Add **Akto Endpoint Shield - Install** with **Priority: Before**
-
-**Parameter Values:**
+Add **Akto Endpoint Shield - Install** with **Priority: Before**, and fill in the parameters:
 
 | Parameter | Label | Value |
 | --------- | ----- | ----- |
-| $4 | AKTO\_API\_TOKEN | `<your-token>` (use Jamf encrypted parameter) |
-| $5 | AKTO\_API\_BASE\_URL | `https://<account_id>-guardrails.akto.io` |
-| $6 | MANIFEST\_URL | Provided by Akto — enables auto-update |
-| $7 | PKG\_URL | (leave empty — manifest provides the URL) |
+| `$4` | `AKTO_API_TOKEN` | `<your-token>` (encrypted parameter) |
+| `$5` | `AKTO_API_BASE_URL` | `https://<account_id>-guardrails.akto.io` |
+| `$6` | `MANIFEST_URL` | Provided by Akto |
+| `$7` | `PKG_URL` | Leave empty — the manifest provides the URL |
 
-> Configuration (which MCP clients to protect, hook settings) is managed via the Akto dashboard after install — no Jamf policy changes needed.
+Which MCP clients to protect and which hooks to install are managed from the **Akto dashboard** after install — no Jamf policy change needed.
+{% endstep %}
 
-#### Scope
+{% step %}
+### Scope
 
-Choose one of the following scoping options:
+Target **All Computers** for a full rollout, or a Smart Group / department for a pilot.
+{% endstep %}
 
-**Option A: Target Specific Group**
+{% step %}
+### User Interaction and Maintenance
 
-* **Targets**: Smart Group "Akto Endpoint Shield Not Installed"
-
-**Option B: All Computers (install + auto-update)**
-
-* **Targets**: All Computers
-* **Frequency**: Ongoing
-
-**Option C: Specific Departments/Locations**
-
-* **Targets**:
-  * Department: Engineering, Security, etc.
-  * Location: Office A, Remote Workers, etc.
-
-#### User Interaction (Optional)
-
-* **Start Message**: Leave empty for silent installation
-* **Complete Message**: "Akto Endpoint Shield has been installed to protect your MCP servers."
-* Or leave both empty for completely silent deployment
-
-#### Maintenance
-
-* **Update Inventory**: Yes (recommended)
+Leave the start and complete messages empty for a silent install. Enable **Update Inventory** so the Extension Attribute stays current.
+{% endstep %}
+{% endstepper %}
 
 ***
 
-### Phase 3: Create Uninstall Policy (Optional)
+## Phase 3 — Uninstall policy (optional)
 
-Navigate to **Computers** → **Policies** → **+ New**
+Navigate to **Computers** → **Policies** → **+ New**.
 
-#### General Settings
-
-* **Display Name**: Uninstall Akto Endpoint Shield
-* **Enabled**: Yes
-* **Triggers**:
-  * ✅ **Self Service** (user-initiated only for safety)
-* **Execution Frequency**: Ongoing
-* **Category**: Security
-
-#### Scripts
-
-* Select: **Akto Endpoint Shield - Uninstall**
-* Priority: Before
-
-#### Scope
-
-* **Targets**: All Computers (available to all, but Self Service only)
-
-#### Self Service
-
-* **Make the policy available in Self Service**: Yes
-* **Display Name**: Uninstall Akto Endpoint Shield
-* **Description**: "Remove Akto Endpoint Shield from your computer. This will restore your MCP server configurations to their original state."
-* **Icon**: Upload Akto icon if available
-* **Category**: Security
+* **Display Name:** `Uninstall Akto Endpoint Shield`
+* **Trigger:** **Self Service** only
+* **Execution Frequency:** Ongoing
+* **Scripts:** `Akto Endpoint Shield - Uninstall`, Priority: Before
+* **Scope:** All Computers
+* **Self Service:** Make available, with a description such as "Remove Akto Endpoint Shield from your computer. This restores your MCP server configurations to their original state."
 
 ***
 
-### Updating Akto Endpoint Shield
+## Background item approval (macOS 13+)
 
-Updates are handled automatically. When Akto releases a new version, the `MANIFEST_URL` you configured in your Jamf policy will point to the updated package. Devices check this URL on each login and update if a newer version is available — no changes to your Jamf policy are needed.
+macOS 13 and later require every LaunchAgent label to be approved as a **background item** before `launchd` will start it. Without approval, a fully signed and notarized install can sit loaded but never running, with no logs.
 
-**To force an immediate reinstall**: Set Jamf parameter `$7 PKG_URL` to the pkg URL provided by Akto (bypasses the manifest version check) and run the policy manually.
+Deploy a **`com.apple.servicemanagement`** configuration profile from Jamf that pre-approves Akto's Team Identifier, so users are never prompted. Without that profile, each user must approve the agent manually under **System Settings → General → Login Items & Extensions → Allow in the Background**.
+
+Contact Akto for the Team Identifier and a sample profile payload.
 
 ***
 
-### Testing
+## Updating AI Endpoint Shield
 
-#### Test Plan
+Updates are automatic. When Akto releases a new version, the `MANIFEST_URL` in your policy points at the updated package, and devices upgrade on their next login — no Jamf policy change is needed.
 
-1. **Create Test Group**
-   * Create a Smart Group: "Akto Shield Test Group"
-   * Add 2-3 test computers to the group
-2. **Scope Policy to Test Group**
-   * Edit your installation policy
-   * Change scope to target only "Akto Shield Test Group"
-3. **Test on First Machine**
-   * Log in as test user
-   * Policy should trigger automatically at login
-   * Verify installation:
+**To force an immediate reinstall:** set `$7 PKG_URL` to the pkg URL provided by Akto (this bypasses the manifest version check) and run the policy manually.
 
-     ```bash
-     /usr/local/bin/akto-endpoint-shield --version
-     launchctl list | grep akto-endpoint-shield
-     cat ~/.akto-endpoint-shield/config/config.env
-     tail -50 ~/.akto-endpoint-shield/logs/install.log
-     ```
-4. **Verify Functionality**
-   * Services running: `launchctl list | grep akto-endpoint-shield`
-   * Config: `ls -la ~/.akto-endpoint-shield/config/config.env` (check permissions are 600)
-   * Live logs: `tail -f ~/.akto-endpoint-shield/logs/*.log`
-5. **Test on Multiple Architectures**
-   * Test on Intel Mac
-   * Test on Apple Silicon Mac
-   * Verify universal binary works on both
-6. **Test Uninstallation**
-   * Run uninstall from Self Service
-   * Verify complete removal
-   * Check MCP configs are unwrapped
+***
 
-#### Verification Checklist
+## Verification
 
-* [ ] Scripts upload successfully to Jamf
-* [ ] Policy triggers at login
-* [ ] Token deployed with correct permissions (600)
+On a pilot Mac, signed in as the target user:
+
+```bash
+# Version and provisioning state
+/usr/local/bin/akto-endpoint-shield --version
+/usr/local/bin/akto-endpoint-shield check-config --path ~/.akto-endpoint-shield/config
+
+# Services — both must show a PID, not "-"
+launchctl list | grep akto-endpoint-shield
+
+# Config permissions (should be 600)
+ls -la ~/.akto-endpoint-shield/config/
+
+# Install log
+tail -50 ~/.akto-endpoint-shield/logs/install.log
+```
+
+`check-config` should print `provisioned`.
+
+### Checklist
+
+* [ ] Policy triggers at login and reports success in Jamf
 * [ ] Binary installed and executable at `/usr/local/bin/akto-endpoint-shield`
-* [ ] Services start automatically
-* [ ] Agent discovers MCP configurations
-* [ ] HTTP proxy responds (check logs)
-* [ ] Works on Intel Macs
-* [ ] Works on Apple Silicon Macs
-* [ ] Extension Attribute reports version correctly
-* [ ] Uninstall removes all components
-* [ ] Uninstall restores MCP configs
+* [ ] `check-config` prints `provisioned`, config permissions are 600
+* [ ] Both LaunchAgents show a PID
+* [ ] Verified on both Intel and Apple Silicon
+* [ ] Extension Attribute reports the version correctly
+* [ ] Endpoint visible in Akto with recent activity
+* [ ] Uninstall removes all components and unwraps MCP configs
 
 ***
 
-### Rollout Strategy
+## Troubleshooting
 
-#### Phase 1: Pilot (Week 1)
+| Symptom | Likely cause | What to do |
+| ------- | ------------ | ---------- |
+| `No console user logged in` | Script ran before login | Ensure the trigger is **Login** |
+| `Neither PKG_URL, PKG_PATH, nor MANIFEST_URL is set` | All three sources empty | Set `$6 MANIFEST_URL` in the policy parameters |
+| `Already at latest version — nothing to do` | Manifest version matches the installed version | Expected. Set `FORCE_REINSTALL=true` to override |
+| Services show `-` instead of a PID | Token missing or invalid | Run `check-config`; check `~/.akto-endpoint-shield/logs/install.log` |
+| Services loaded but never start, no logs | macOS 13+ background item not approved | See [Background item approval](#background-item-approval-macos-13) |
+| LaunchAgent won't load | Gatekeeper quarantined the plist | `xattr -dr com.apple.quarantine ~/Library/LaunchAgents/io.akto.akto-endpoint-shield*` |
+| Files landed in `/var/root` | Policy ran with no console user, or the pkg was installed manually with `sudo installer` | Re-run at Login; remove `/var/root/.akto-endpoint-shield` |
+| Device not in scope | User not in the scoped group | Verify the scope, or target All Computers |
 
-* Deploy to 5-10 test users
-* Monitor for issues
-* Gather feedback
-* Verify no conflicts with existing tools
-
-#### Phase 2: Department Rollout (Week 2-3)
-
-* Deploy to engineering/security teams first
-* Monitor service health
-* Address any issues
-* Expand to other departments incrementally
-
-#### Phase 3: Organization-Wide (Week 4+)
-
-* Scope policy to all computers with **Ongoing** frequency
-* Monitor deployment metrics
-* Provide user support/documentation
-* Track compliance via Extension Attribute
+For device-level diagnosis, see [macOS Troubleshooting](macos-troubleshooting.md). For EDR and antivirus exclusions, see [Allowlist in Security Software](allowlist-in-security-software.md).
 
 ***
 
-### Troubleshooting
-
-| Error | Cause | Fix |
-| ----- | ----- | --- |
-| `No console user logged in` | Script ran before login | Ensure trigger is **Login** |
-| `Neither PKG_URL, PKG_PATH, nor MANIFEST_URL is set` | All three sources empty | Set `$6 MANIFEST_URL` in Jamf policy parameters |
-| Services show `-` (not running) | Token missing or invalid | Check `~/.akto-endpoint-shield/logs/install.log` |
-| `Already at latest version — nothing to do` | Manifest version matches installed | Expected — set `FORCE_REINSTALL=true` to override |
-| LaunchAgent won't load (quarantine) | Gatekeeper blocked plist | `xattr -dr com.apple.quarantine ~/Library/LaunchAgents/io.akto.akto-endpoint-shield*` |
-| User not in scope | User not in scoped group | Verify user is in scoped group or change scope to All Computers |
-| Policy frequency wrong | Policy set to "Once per computer" | Change frequency to "Once per user per computer" |
-
-***
-
-### Security Considerations
-
-#### Token Storage
-
-* **Location**: `~/.akto-endpoint-shield/config/config.env`
-* **Permissions**: 600 (readable only by owner)
-* **Encryption**: Token passed via Jamf encrypted parameter (parameter 4)
-* **Access Control**: Limit Jamf policy editing to security team
-
-#### Best Practices
-
-**1. Rotate Tokens Regularly**
-
-* Update token in Jamf policy
-* Install script updates `config.env` on next run
-* Consider 90-day rotation schedule
-
-**2. Monitor Deployments**
-
-* Use Extension Attribute to track deployment status
-* Create Smart Group for failed installations
-* Review Jamf logs regularly
-
-**3. Least Privilege**
-
-* Binaries run as user, not system
-* No system-level daemons
-* All user data confined to `~/.akto-endpoint-shield/`
-
-**4. Audit Trail**
-
-* Jamf logs all script executions
-* Akto Endpoint Shield logs all activity in `~/.akto-endpoint-shield/logs/`
-* Token deployment is timestamped
-
-***
-
-### File Locations
+## File locations
 
 | Path | Purpose |
 | ---- | ------- |
 | `/usr/local/bin/akto-endpoint-shield` | Main binary |
-| `~/.akto-endpoint-shield/bin/akto_endpoint_shield.sh` | Wrapper script |
+| `/Library/Application Support/Akto/` | Read-only asset bundle installed by the pkg |
+| `~/.akto-endpoint-shield/bin/akto_endpoint_shield.sh` | Per-user wrapper script |
 | `~/Library/LaunchAgents/io.akto.akto-endpoint-shield.plist` | HTTP proxy service |
 | `~/Library/LaunchAgents/io.akto.akto-endpoint-shield-agent.plist` | Agent service |
-| `~/.akto-endpoint-shield/config/config.env` | Token + feature flags (permissions 600) |
-| `~/.akto-endpoint-shield/logs/install.log` | Install log (readable without sudo) |
+| `~/.akto-endpoint-shield/config/` | Token + feature flags (permissions 600) |
+| `~/.akto-endpoint-shield/logs/install.log` | Install log |
 | `~/.akto-endpoint-shield/logs/agent.log` | Agent runtime log |
 | `~/.akto-endpoint-shield/logs/proxy-server.log` | HTTP proxy runtime log |
+| `/var/log/akto-endpoint-shield-install.log` | Root-context install log |
 
 ***
 
-### Useful Commands
-
-#### Check Installation Status
+## Useful Jamf commands
 
 ```bash
-# Check version
-/usr/local/bin/akto-endpoint-shield --version
-
-# One-shot status check
-echo "=== Version ===" && /usr/local/bin/akto-endpoint-shield --version && \
-echo "=== Services ===" && launchctl list | grep akto-endpoint-shield && \
-echo "=== Config ===" && ls -la ~/.akto-endpoint-shield/config/config.env && \
-echo "=== Claude hooks ===" && jq '.hooks | keys' ~/.claude/settings.json 2>/dev/null || echo "not configured"
-```
-
-#### Check Services
-
-```bash
-# Check services (both must have a PID, not -)
-launchctl list | grep akto-endpoint-shield
-
-# View install log
-tail -50 ~/.akto-endpoint-shield/logs/install.log
-
-# View live logs
-tail -f ~/.akto-endpoint-shield/logs/*.log
-```
-
-#### Check Configuration
-
-```bash
-# Check token and feature flags
-cat ~/.akto-endpoint-shield/config/config.env
-```
-
-#### Jamf Commands
-
-```bash
-# Manually trigger Jamf policy
+# Manually trigger a policy
 sudo jamf policy -id <policy_id>
 
-# Force policy check-in
+# Force a check-in
 sudo jamf policy
 
 # View Jamf logs
@@ -450,89 +305,25 @@ tail -f /var/log/jamf.log
 
 ***
 
-### Jamf Policy Parameters Reference
+## Security notes
 
-| Parameter | Value | Description |
-| --------- | ----- | ----------- |
-| $4 | AKTO\_API\_TOKEN | Token for Akto Endpoint Shield (use Jamf encrypted parameter) |
-| $5 | AKTO\_API\_BASE\_URL | Akto data ingestion URL (e.g. `https://<account_id>-guardrails.akto.io`) |
-| $6 | MANIFEST\_URL | Provided by Akto — enables auto-update |
-| $7 | PKG\_URL | Direct pkg URL — fallback if MANIFEST\_URL not set |
-
-### Support
-
-* **Jamf Issues**: IT Helpdesk
-* **Akto Endpoint Shield Issues**: Security Team
-* **Token Issues**: Security Team
-* **Akto Platform**: support@akto.io
-
-### Related Documentation
-
-* [AI Endpoint Shield Overview](./) - General installation and manual setup
-* [Cursor Hooks](../cursor-hooks.md) - Alternative: Zero-installation hooks for Cursor IDE
-* [Claude CLI Hooks](../claude-cli-hooks.md) - Alternative: Zero-installation hooks for Claude CLI
-* [Gemini CLI Hooks](../gemini-cli-hooks.md) - Alternative: Zero-installation hooks for Gemini CLI
-* [MCP Security](../../../readme/mcp-security.md) - Security concepts and best practices
+* The token is passed via a Jamf **encrypted parameter** and written to `~/.akto-endpoint-shield/config/` with permissions 600.
+* Binaries run as the user — there are no system-level daemons, and all user data stays under `~/.akto-endpoint-shield/`.
+* Limit Jamf policy editing to your security team, and rotate the token on your usual schedule; the install script updates the on-disk config on its next run.
 
 ***
 
-## Deprecated: Legacy Deployment (deploy\_token.sh + .pkg)
+## Related documentation
 
-{% hint style="warning" %}
-This approach is deprecated. It only supports one-time installation and requires manual package uploads to Jamf for every update. Use the [new approach](#deployment-script) above for auto-update support.
-{% endhint %}
+* [Mosyle MDM Deployment](mosyle-deployment.md)
+* [NinjaOne Deployment (macOS)](ninjaone-macos-deployment.md)
+* [macOS Standalone Installation](macos-standalone-installation.md)
+* [macOS Troubleshooting](macos-troubleshooting.md)
+* [Allowlist in Security Software](allowlist-in-security-software.md)
 
-The legacy approach used three separate scripts and required uploading a `.pkg` file to Jamf for each release.
+## Get support
 
-### Legacy Architecture
-
-* **Installation Type**: User-level (installs to `~/.local/bin/`)
-* **Services**: LaunchAgents (runs as user, not system-wide)
-* **Token Management**: External configuration file (`~/.config/mcp-endpoint-shield/config.env`)
-* **Binary**: Universal (Intel + Apple Silicon support)
-* **Deployment**: Automated at login via Jamf policy
-* **Security**: True user-level operation - no root privileges required
-
-### Legacy Scripts
-
-#### deploy\_token.sh
-
-* **Purpose**: Deploys AKTO\_API\_TOKEN to user's config directory
-* **Run as**: Logged-in user (NOT root)
-* **Jamf Parameter 4**: AKTO\_API\_TOKEN (encrypted)
-* **Jamf Parameter 5**: AKTO\_API\_BASE\_URL
-
-#### install\_from\_staging.sh
-
-* **Purpose**: Installs AI Endpoint Shield in user context
-* **Run as**: Logged-in user (NOT root)
-* **Auto-detects**: Package from Jamf cache
-
-#### uninstall.sh
-
-* **Purpose**: Removes AI Endpoint Shield from user's system
-
-### Legacy Upload Steps
-
-1. Upload `mcp-endpoint-shield-Jamf-Installer.pkg` via **Settings** → **Computer Management** → **Packages**
-2. Upload `deploy_token.sh` as "AI Endpoint Shield - Deploy Token" with parameters:
-   * Parameter 4: `AKTO_API_TOKEN`
-   * Parameter 5: `AKTO_API_BASE_URL`
-3. Upload `install_from_staging.sh` as "AI Endpoint Shield - Install User Package"
-4. Create policy with:
-   * **Script 1**: Deploy Token (Priority: Before) — with token parameters
-   * **Script 2**: Install User Package (Priority: After)
-   * **Package**: AI Endpoint Shield pkg
-   * **Frequency**: Once per user per computer
-
-### Legacy File Locations
-
-| Path | Purpose |
-| ---- | ------- |
-| `~/.local/bin/mcp-endpoint-shield` | Main binary |
-| `~/.local/bin/mcp_endpoint_shield.sh` | Wrapper script |
-| `~/Library/LaunchAgents/io.akto.mcp-endpoint-shield.plist` | HTTP service |
-| `~/Library/LaunchAgents/io.akto.mcp-endpoint-shield-agent.plist` | Agent service |
-| `~/.config/mcp-endpoint-shield/config.env` | Token configuration |
-| `~/.local/share/mcp-endpoint-shield/logs/` | Application logs |
-| `~/.mcp-endpoint-shield/mcp_audit_info.db` | Audit database |
+1. In-app Intercom in the Akto dashboard
+2. [Discord community](https://www.akto.io/community)
+3. [support@akto.io](mailto:support@akto.io)
+4. [Contact Akto](https://www.akto.io/contact-us)

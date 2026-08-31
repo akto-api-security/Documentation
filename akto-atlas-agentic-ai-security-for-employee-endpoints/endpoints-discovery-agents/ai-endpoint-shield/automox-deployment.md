@@ -1,327 +1,203 @@
 ---
 description: >-
-  Deploy Akto Endpoint Shield on Windows endpoints using an Automox Worklet
-  policy with a customer-specific Inno Setup installer.
+  Deploy AI Endpoint Shield to Windows endpoints from Automox using a recurring
+  Required Software Policy that runs the install.ps1 script.
 ---
 
-# Automox Deployment
+# Automox Deployment (Windows)
 
-Deploy **Akto Endpoint Shield** to Windows laptops via an Automox **Worklet** policy. The policy checks each device and silently installs or repairs the shield when needed — no user action required.
+## Overview
+
+Deploy **AI Endpoint Shield** to Windows laptops from Automox using a **Required Software Policy** that runs Akto's **`install.ps1`** on a recurring schedule.
+
+`install.ps1` is the same script used for [Intune Deployment](intune-deployment.md) and takes the same parameters. It downloads the versioned ZIP from Akto-hosted storage, installs or upgrades the agent, writes configuration for both the SYSTEM profile and every interactive user, installs the IDE guardrail hooks, and registers the scheduled tasks.
+
+Because the script compares the installed version against a manifest and **exits without downloading anything when the device is already current**, one recurring policy handles both the initial install and every subsequent update. No worklet, evaluation code, or remediation code is needed.
+
+Akto ships the installer in two forms:
+
+| Form | Credentials | What you pass at deploy time |
+| ---- | ----------- | ---------------------------- |
+| **Client-specific installer** | `AKTO_API_TOKEN` and `AKTO_API_BASE_URL` are **already embedded** | Manifest URL only — nothing sensitive lives in Automox |
+| **Universal installer** | One build shared across all clients | Manifest URL **plus** token and base URL in the install command |
 
 {% hint style="info" %}
-Akto ships an **Inno Setup `.exe`** (not MSI). Use a Worklet with a file payload. Start from **Automate → Worklet Catalog → EXE Software Installation (System Wide-All Users)** or create a custom Windows Worklet.
+**Automox runs as SYSTEM**, which is what this deployment needs. `install.ps1` provisions the SYSTEM profile config that the scheduled tasks read, and separately writes a copy into each interactive user profile — so no manual config propagation step is required.
 {% endhint %}
-
-### Important: Automox runs as SYSTEM
-
-The installer writes `config.env` to the **SYSTEM** profile. The agent reads it from the **logged-in user's** profile. The remediation script copies config to every user profile and restarts agent tasks — this is required for the agent to authenticate.
 
 ## Prerequisites
 
-* Automox account with Worklet policy permissions
-* Windows 10/11 (64-bit) devices enrolled in Automox
-* Customer-specific installer from Akto (token embedded at build time)
-* Network access to `https://*.akto.io` and `https://ultron.akto.io`
+* Automox account with policy permissions
+* Windows 10/11 (64-bit) devices enrolled in Automox, in a device group
+* `install.ps1` from Akto, plus your `MANIFEST_URL`
+* With the universal installer: your `AKTO_API_TOKEN` and `AKTO_API_BASE_URL`
+* Devices need HTTPS access to the manifest and ZIP hosts, to `https://<account_id>-guardrails.akto.io`, and to `https://ultron.akto.io`
 
-Email **support@akto.io** with your Akto account ID, API token, and target version to request the installer.
+Contact **support@akto.io** with your Akto account ID to request the installer package and your manifest URL.
+
+## install.ps1 parameters
+
+Positional arguments, in order:
+
+| Position | Name | Required | Description |
+| -------- | ---- | -------- | ----------- |
+| `$1` | `MANIFEST_URL` | Yes\* | HTTPS URL to `latest.json` |
+| `$2` | `INSTALLER_URL` | No | Direct ZIP URL, used if the manifest fetch fails |
+| `$3` | `AKTO_API_TOKEN` | Cond. | Required with the **universal** installer; already embedded in a client-specific installer |
+| `$4` | `AKTO_API_BASE_URL` | Cond. | Required with the **universal** installer; already embedded in a client-specific installer |
+
+\* Required unless only `INSTALLER_URL` is used.
 
 ## Deployment Steps
 
 {% stepper %}
 {% step %}
-#### Get the installer
+### Create the policy
 
-Akto provides `akto-endpoint-shield-setup-<version>.exe` (or a customer-named build). Note the **exact file name** — you will use it in the remediation script.
+Go to **Automate → Policies → Create Policy**, and under **Required Software Policy** choose **Windows**.
 {% endstep %}
 
 {% step %}
-#### Create the Worklet policy
+### Info
 
-1. **Automate → Worklet Catalog → EXE Software Installation (System Wide-All Users)** → **Create Policy**  
-   Or: **Automate → Policies → Create Policy → Worklet → Windows**
+* **Policy Name:** `Akto Endpoint Shield - Install & Update`
+* **Operating System:** Windows
+* **Notes:** optional
 
-2. **Info tab:** Set policy name, OS = Windows, target device group(s). Pilot a small group first.
+Under **Groups**, click **+ Associate Groups** and select your target device group. Start with a pilot group before widening the scope.
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/automox-policy-info.png" alt="Automox policy info" width="563"><figcaption><p>Policy Info — name, OS, and device groups</p></figcaption></figure></div>
-
-3. **Payload:** Upload your `.exe` installer.
-
-4. **Schedule:** Run once for pilot, then recurring for production. Enable _run on next check-in_ for offline devices. Do **not** restart devices after worklet completion.
+Leave **Device Targeting** off unless you need to filter further within those groups.
 {% endstep %}
 
 {% step %}
-#### Evaluation code
+### Scope
 
-Paste into **Evaluation Code** only. Exit `0` = compliant, exit `1` = run remediation.
+* **Package Name:** `Akto Endpoint Shield`
+* **Package Version:** the version Akto published in your manifest, e.g. `1.1.134`
+* **Installation File:** click **Upload File** and upload `install.ps1`
 
-{% hint style="danger" %}
-Paste **only** the PowerShell lines — not markdown fences. Evaluation and remediation are separate fields and separate processes.
-{% endhint %}
+Then, in the installation script box below Scope, enter the command that runs the uploaded script.
+
+**Client-specific installer** — manifest URL only:
 
 ```powershell
-# Akto Endpoint Shield - Evaluation
-# Exit 0 = compliant, Exit 1 = needs remediation
-
-$pf64 = ${env:ProgramW6432}
-if (-not $pf64) { $pf64 = "C:\Program Files" }
-
-$binCandidates = @(
-  (Join-Path $pf64 "Akto Endpoint Shield\akto-endpoint-shield.exe")
-  (Join-Path $pf64 "MCP Endpoint Shield\akto-endpoint-shield.exe")
-)
-$binPath = $binCandidates | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
-
-$arp = Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*" -ErrorAction SilentlyContinue |
-  Where-Object { $_.DisplayName -like "*Endpoint*Shield*" -or $_.DisplayName -like "*Akto*Endpoint*" }
-
-$agentTask = Get-ScheduledTask -TaskName "MCPEndpointShieldAgent" -ErrorAction SilentlyContinue
-
-$userHasToken = $false
-$agentHealthy = $true
-Get-CimInstance Win32_UserProfile -ErrorAction SilentlyContinue | ForEach-Object {
-  if ($_.Special -or -not $_.LocalPath) { return }
-  if ($_.SID -notmatch '^S-1-5-21-') { return }
-  $userCfg = Join-Path $_.LocalPath ".akto-endpoint-shield\config\config.env"
-  if ((Test-Path -LiteralPath $userCfg) -and (Select-String -LiteralPath $userCfg -Pattern '^AKTO_API_TOKEN=' -Quiet)) {
-    $userHasToken = $true
-    $agentLog = Join-Path $_.LocalPath "AppData\Local\akto-endpoint-shield\logs\agent.log"
-    if (-not (Test-Path -LiteralPath $agentLog)) {
-      $agentHealthy = $false
-      return
-    }
-    $startupLine = Select-String -LiteralPath $agentLog -Pattern "startup env" -ErrorAction SilentlyContinue |
-      Select-Object -Last 1
-    if (-not $startupLine) {
-      $agentHealthy = $false
-      return
-    }
-    if ($startupLine.Line -match 'AKTO_API_TOKEN.*\(not set\)') {
-      $agentHealthy = $false
-      return
-    }
-    $cfgTime = (Get-Item -LiteralPath $userCfg).LastWriteTime
-    $logTime = (Get-Item -LiteralPath $agentLog).LastWriteTime
-    if ($cfgTime -gt $logTime) {
-      $agentHealthy = $false
-    }
-  }
-}
-
-if ($binPath -and $arp -and $agentTask -and $userHasToken -and $agentHealthy) {
-  Write-Output "Compliant: $binPath"
-  exit 0
-}
-
-Write-Output "Non-compliant. binary=$([bool]$binPath) task=$([bool]$agentTask) userToken=$userHasToken agentHealthy=$agentHealthy"
-exit 1
+$dir = Split-Path -Parent $MyInvocation.MyCommand.Path
+& "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass `
+    -File (Join-Path $dir 'install.ps1') `
+    "https://<manifest-url>/latest.json"
+exit $LASTEXITCODE
 ```
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/automox-evaluation-code.png" alt="Automox evaluation code" width="563"><figcaption><p>Payload and Evaluation Code</p></figcaption></figure></div>
-{% endstep %}
-
-{% step %}
-#### Remediation code
-
-Paste into **Remediation Code** only. Set `$fileName` to match your uploaded installer exactly.
+**Universal installer** — append the token and base URL, with an empty `""` for the unused installer URL so the arguments don't shift:
 
 ```powershell
-# Akto Endpoint Shield - Remediation (install + config propagation)
-
-$fileName  = "akto-endpoint-shield-setup-1.1.5.exe"
-$arguments = "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /LOG=C:\Windows\Temp\akto-endpoint-shield-install.log"
-
-$pf64 = ${env:ProgramW6432}
-if (-not $pf64) { $pf64 = "C:\Program Files" }
-
-$bin1 = Join-Path $pf64 "Akto Endpoint Shield\akto-endpoint-shield.exe"
-$bin2 = Join-Path $pf64 "MCP Endpoint Shield\akto-endpoint-shield.exe"
-
-$systemCfgCandidates = @(
-  (Join-Path ${env:WINDIR} "Sysnative\config\systemprofile\.akto-endpoint-shield\config\config.env")
-  (Join-Path $env:SystemRoot "System32\config\systemprofile\.akto-endpoint-shield\config\config.env")
-)
-$systemCfg = $null
-foreach ($candidate in $systemCfgCandidates) {
-  if (Test-Path -LiteralPath $candidate) { $systemCfg = $candidate; break }
-}
-if (-not $systemCfg) { $systemCfg = $systemCfgCandidates[0] }
-
-$binPath = $null
-if (Test-Path -LiteralPath $bin1) { $binPath = $bin1 }
-elseif (Test-Path -LiteralPath $bin2) { $binPath = $bin2 }
-
-if (-not $binPath) {
-  $sPath = Split-Path $script:MyInvocation.MyCommand.Path -Parent
-  $fPath = Join-Path $sPath $fileName
-  if (-not (Test-Path -LiteralPath $fPath)) {
-    Write-Error "Installer not found: $fPath"
-    exit 1
-  }
-  Write-Output "Running: $fPath $arguments"
-  $p = Start-Process -FilePath $fPath -ArgumentList $arguments -Wait -PassThru
-  if ($null -eq $p -or $p.ExitCode -ne 0) {
-    Write-Error "Installer failed. ExitCode=$($p.ExitCode)"
-    exit 1
-  }
-  $deadline = (Get-Date).AddMinutes(5)
-  do {
-    if (Test-Path -LiteralPath $bin1) { $binPath = $bin1; break }
-    if (Test-Path -LiteralPath $bin2) { $binPath = $bin2; break }
-    Start-Sleep -Seconds 15
-  } while ((Get-Date) -lt $deadline)
-  if (-not $binPath) {
-    Write-Error "Binary missing after install. Checked: $bin1 ; $bin2"
-    if (Test-Path "C:\Windows\Temp\akto-endpoint-shield-install.log") {
-      Get-Content "C:\Windows\Temp\akto-endpoint-shield-install.log" -Tail 30
-    }
-    exit 1
-  }
-  Write-Output "Installed: $binPath"
-  foreach ($candidate in $systemCfgCandidates) {
-    if (Test-Path -LiteralPath $candidate) { $systemCfg = $candidate; break }
-  }
-}
-else {
-  Write-Output "Binary present: $binPath - running config sync"
-  if (-not (Test-Path -LiteralPath $systemCfg)) {
-    $sPath = Split-Path $script:MyInvocation.MyCommand.Path -Parent
-    $fPath = Join-Path $sPath $fileName
-    if (Test-Path -LiteralPath $fPath) {
-      Write-Output "SYSTEM config missing - re-running installer"
-      $p = Start-Process -FilePath $fPath -ArgumentList $arguments -Wait -PassThru
-      if ($null -eq $p -or $p.ExitCode -ne 0) {
-        Write-Error "Installer failed. ExitCode=$($p.ExitCode)"
-        exit 1
-      }
-      Start-Sleep -Seconds 30
-      foreach ($candidate in $systemCfgCandidates) {
-        if (Test-Path -LiteralPath $candidate) { $systemCfg = $candidate; break }
-      }
-    }
-  }
-}
-
-if (-not (Test-Path -LiteralPath $systemCfg)) {
-  Write-Error "SYSTEM config missing. Checked: $($systemCfgCandidates -join ' ; ')"
-  exit 1
-}
-
-Write-Output "Using SYSTEM config: $systemCfg"
-
-$configContent = Get-Content -LiteralPath $systemCfg -Raw
-$configContent = $configContent.TrimEnd()
-
-Get-CimInstance Win32_UserProfile -ErrorAction SilentlyContinue | ForEach-Object {
-  if ($_.Special -or -not $_.LocalPath) { return }
-  if ($_.SID -notmatch '^S-1-5-21-') { return }
-  if (-not (Test-Path -LiteralPath $_.LocalPath)) { return }
-
-  $userCfg = Join-Path $_.LocalPath ".akto-endpoint-shield\config\config.env"
-  $cfgDir = Split-Path -Parent $userCfg
-  if (-not (Test-Path -LiteralPath $cfgDir)) {
-    New-Item -ItemType Directory -Path $cfgDir -Force | Out-Null
-  }
-
-  $out = $configContent
-  if (Test-Path -LiteralPath $userCfg) {
-    $agentId = Get-Content -LiteralPath $userCfg -ErrorAction SilentlyContinue |
-      Where-Object { $_ -match '^AGENT_ID=' } | Select-Object -First 1
-    if ($agentId -and ($out -notlike "*AGENT_ID=*")) {
-      $out = $out + [Environment]::NewLine + $agentId
-    }
-  }
-
-  Set-Content -LiteralPath $userCfg -Value $out -Encoding UTF8
-  Write-Output "Synced config: $userCfg"
-}
-
-$taskNames = @("MCPEndpointShieldAgent", "MCPEndpointShieldHTTP", "MCPEndpointShieldDetector")
-foreach ($taskName in $taskNames) {
-  $task = Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue
-  if (-not $task) {
-    Write-Output "Task not found (skipped): $taskName"
-    continue
-  }
-  try {
-    Stop-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue
-    Start-Sleep -Seconds 3
-    Start-ScheduledTask -TaskName $taskName -ErrorAction Stop
-    Write-Output "Restarted: $taskName"
-  }
-  catch {
-    & schtasks.exe /End /TN $taskName 2>$null | Out-Null
-    Start-Sleep -Seconds 3
-    & schtasks.exe /Run /TN $taskName 2>$null | Out-Null
-    Write-Output "Restarted via schtasks: $taskName"
-  }
-}
-
-Write-Output "Success: $binPath (config propagated; tasks restarted)"
-exit 0
+$dir = Split-Path -Parent $MyInvocation.MyCommand.Path
+& "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass `
+    -File (Join-Path $dir 'install.ps1') `
+    "https://<manifest-url>/latest.json" "" "<TOKEN>" "https://<account_id>-guardrails.akto.io"
+exit $LASTEXITCODE
 ```
 
 {% hint style="warning" %}
-Update `$fileName` to your uploaded installer (e.g. `Akto-Endpoint-Shield-Comscore-1.1.5.exe`). Do not use `-Verb RunAs` — the worklet already runs as SYSTEM.
+Call `powershell.exe` by its full `System32` path. Automox's agent can run 32-bit, and `install.ps1` must execute in **64-bit** PowerShell to write to `C:\Program Files\` and the real SYSTEM profile rather than their WOW64 redirects.
+
+Do **not** add `-Verb RunAs` — the policy already runs as SYSTEM.
 {% endhint %}
 {% endstep %}
 
 {% step %}
-#### Save and run
+### Schedule
 
-**Save Policy**, then **Run Policy** on a pilot device.
+Select **Custom**, then set a **daily** cadence:
 
-In **Activity Log**, confirm:
+* **Months:** tick **Select All**
+* **Occurrence:** tick `1ST`, `2ND`, `3RD`, `4TH`, `5TH`
+* **Days:** tick `MON` through `SUN`
+* **Scheduled Start Time:** a quiet hour, e.g. `12:00 AM`, **Local Time Of Device**
+* Tick **If a device misses the configured policy run time, this policy will run the next time the device checks in** so laptops that were offline still get picked up
 
-* `Installed:` or `Binary present:`
-* `Synced config:`
-* `Restarted: MCPEndpointShieldAgent`
-* Final line: `Compliant: ...` on the next evaluation run
+Click **Create Policy**.
+
+{% hint style="info" %}
+A daily run is what keeps devices updated. `install.ps1` fetches `latest.json`, compares it to the installed version, and exits early when the device is already current — so on most days the policy costs a single HTTPS request per device. When Akto publishes a new release, devices upgrade on the next run with no policy change.
+
+`install.ps1` deliberately does not register an Add/Remove Programs entry, so Automox's package-version check will not report the device as already compliant. The install command runs on every scheduled pass, and the script's own version check does the deduplication.
+{% endhint %}
+{% endstep %}
+
+{% step %}
+### Run on a pilot device and check the log
+
+Use **Run Policy** to trigger it immediately on a pilot device, then open the **Activity Log** for that device and confirm the run reported success.
 {% endstep %}
 {% endstepper %}
 
-## Verify (optional)
+## Verify
 
-On a device, confirm tasks are running and the agent has a token:
+On a pilot device, in an **Administrator** PowerShell session:
 
 ```powershell
-Get-ScheduledTask -TaskName "MCPEndpointShield*" | Format-Table TaskName, State
-Select-String -Path "$env:USERPROFILE\.akto-endpoint-shield\config\config.env" -Pattern "^AKTO_API_TOKEN="
-Select-String -Path "$env:LOCALAPPDATA\akto-endpoint-shield\logs\agent.log" -Pattern "startup env" | Select-Object -Last 1
+& "C:\Program Files\Akto Endpoint Shield\akto-endpoint-shield.exe" --version
+& "C:\Program Files\Akto Endpoint Shield\akto-endpoint-shield.exe" check-config --path "$env:SystemRoot\System32\config\systemprofile\.akto-endpoint-shield\config"
+Get-ScheduledTask -TaskName "MCPEndpointShield*" | Format-Table TaskName, State -AutoSize
+Get-Process akto-endpoint-shield -ErrorAction SilentlyContinue
+Get-Content "$env:ProgramData\akto-endpoint-shield\logs\install.log" -Tail 40
 ```
 
-The startup log line should show the token is set (not `(not set)`).
+Expected:
+
+* A version string matching the manifest
+* `check-config` prints `provisioned`
+* `MCPEndpointShieldHTTP`, `MCPEndpointShieldAgent`, and `MCPEndpointShieldDetector` exist and are `Running` or `Ready`
+* The device appears under **Akto → Endpoint Shield** with recent activity
 
 ## Hooks and system proxy
 
-Hook installers and system proxy are **off by default**. Enable them in the **Akto dashboard** or via flags in `config.env`.
+IDE guardrail hooks are installed by default. The system-wide proxy is **off** by default. Both are controlled from the **Akto dashboard** after install — no policy change needed.
 
-## Troubleshooting
+## Force a redeploy
 
-| Issue | Fix |
-| ----- | --- |
-| `Unexpected token '}'` or `Get-AktoBinaryPath` not recognized | Paste only the flat scripts above — no markdown fences, no `function` blocks, separate Evaluation and Remediation fields |
-| `SYSTEM config missing` | Use the remediation script above (uses `Sysnative` path for 32-bit Automox) |
-| `COMMAND TIMED OUT` | Increase worklet timeout; check `C:\Windows\Temp\akto-endpoint-shield-install.log` |
-| `401 Unauthorized` in agent logs | Re-run policy. Evaluation reports `userToken=False` or `agentHealthy=False`; remediation syncs config and restarts tasks |
-| Token present but API returns 401 | JWT expired — request a new installer from Akto |
-| New user after deploy | Recurring schedule picks them up on next run (`userToken=False`) |
+Set `FORCE_REINSTALL=true` as an environment variable on the policy's script, or add a line before the install command:
+
+```powershell
+$env:FORCE_REINSTALL = "true"
+```
 
 ## Uninstall
 
+Create a second Required Software Policy that uploads and runs Akto's `uninstall_windows.ps1`. It takes no parameters:
+
 ```powershell
-$pf64 = ${env:ProgramW6432}
-foreach ($dir in @("Akto Endpoint Shield", "MCP Endpoint Shield")) {
-  $unins = Join-Path $pf64 "$dir\unins000.exe"
-  if (Test-Path -LiteralPath $unins) { & $unins /VERYSILENT /SUPPRESSMSGBOXES /NORESTART; break }
-}
+$dir = Split-Path -Parent $MyInvocation.MyCommand.Path
+& "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass `
+    -File (Join-Path $dir 'uninstall_windows.ps1')
+exit $LASTEXITCODE
 ```
+
+Schedule it on demand rather than recurring.
+
+## Troubleshooting
+
+| Symptom | Likely cause | What to do |
+| ------- | ------------ | ---------- |
+| Script fails immediately | Ran under 32-bit PowerShell | Call `powershell.exe` by its full `System32` path, as shown above |
+| Wrong config / token (universal installer) | Arguments shifted | Pass an explicit `""` for argument 2; or use a client-specific installer, which needs no credentials passed |
+| `COMMAND TIMED OUT` | First install downloads the full ZIP over a slow link | Increase the policy timeout; check `%ProgramData%\akto-endpoint-shield\logs\install.log` |
+| `401 Unauthorized` in agent logs | Token is stale or was never written | Run `check-config`; if it prints `not-provisioned`, re-run the policy. If the token is present but the API still returns 401, the JWT has expired — request a new installer from Akto |
+| Download errors | Firewall or proxy blocking the manifest / ZIP host | Allow HTTPS to the manifest and ZIP URLs |
+| Install succeeds but no processes | Tasks failed, or an EDR is terminating the binary | Check `%ProgramData%\akto-endpoint-shield\logs\*-wrapper.log`; see [Allowlist in Security Software](allowlist-in-security-software.md) |
+| A user who signed in after deploy has no config | The user profile did not exist at install time | The next daily run provisions them; no action needed |
+
+For device-level diagnosis, see [Windows Troubleshooting](windows-troubleshooting.md).
 
 ## Related documentation
 
-* [MDM Deployment](mdm-deployment.md)
-* [README](README.md)
+* [Intune Deployment (Windows)](intune-deployment.md)
+* [NinjaOne Deployment (Windows)](ninjaone-windows-deployment.md)
+* [AI Endpoint Shield overview](README.md)
 
 ## Get Support
 
-* **support@akto.io**
-* In-app Intercom on the Akto dashboard
+1. In-app Intercom in the Akto dashboard
+2. [Discord community](https://www.akto.io/community)
+3. [support@akto.io](mailto:support@akto.io)
