@@ -44,11 +44,11 @@ Deploy the Akto processor across your AWS Organization with one StackSet. It dis
 
 ### Artifacts
 
-| Artifact | Purpose | Link |
-|---|---|---|
-| Lambda deployment package | The Akto processor Lambda that reads Amazon Quick activity and forwards it to Akto | [akto-bedrock-processor.zip](https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v5.1/akto-bedrock-processor.zip) |
-| StackSet deployment CFT | Deploys the processor as a StackSet from the management account to all target accounts in the org | [client-aws-cf-template.yaml](https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v5.1/client-aws-cf-template.yaml) |
-| Marker bucket CFT | Creates the central checkpoint bucket in the management account with cross-account write policies. Can also be created manually. | [akto-markers-bucket.yaml](https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v5.1/akto-markers-bucket.yaml) |
+| Artifact | Purpose | Link                                                                                                                            |
+|---|---|---------------------------------------------------------------------------------------------------------------------------------|
+| Lambda deployment package | The Akto processor Lambda that reads Amazon Quick activity and forwards it to Akto | [akto-quick-processor.zip](https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v5.1/akto-bedrock-quick-processor.zip) |
+| StackSet deployment CFT | Deploys the processor as a StackSet from the management account to all target accounts in the org | [client-aws-cf-template.yaml](https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v5.1/client-aws-cf-template.yaml)   |
+| Marker bucket CFT | Creates the central checkpoint bucket in the management account with cross-account write policies. Can also be created manually. | [akto-markers-bucket.yaml](https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v5.1/akto-markers-bucket.yaml)         |
 
 ### Before You Start
 
@@ -73,7 +73,8 @@ Amazon Quick chat agents only exist in the regions where AWS has enabled agentic
 Quick is not available in other regions, including `ap-south-1`, `ap-southeast-1` and `us-east-2`. A StackSet deploys one stack per account per region, so adding regions you don't need multiplies the stacks you have to manage.
 {% endhint %}
 
-### Part One · Central Checkpoint Bucket
+### Part One · Central Checkpoint Bucket 
+(If client already has bucket in management account with required policies as mentioned in 'Marker bucket CFT' in the above 'Artifacts' section then no need of creating bucket through Stack)
 
 This runs once, as an ordinary stack, in the management account. It creates the bucket every processor writes its progress to.
 
@@ -210,145 +211,6 @@ Discovered agents and MCP connectors appear in Akto within a few minutes of the 
 {% endstep %}
 {% endstepper %}
 
-### If Something Looks Wrong
-
-| Symptom | Cause / Fix |
-|---|---|
-| `NoSuchKey: The specified key does not exist` | The code version is wrong. Check `LambdaCodeVersion` exactly matches the version Akto gave you, then update the StackSet with the corrected value. |
-| `Log group '/aws/lambda/akto-quick-processor-…' does not exist` | Not an error. A function's log group is only created the first time it runs, so this simply means the schedule has not fired yet. Wait 10 minutes and look again. |
-| Deployed successfully, but no agents appear | Usually the region. Quick agents only exist in the regions listed above, and only in the region where each account's Quick subscription lives. Confirm the region matches, and that the account genuinely has Quick agents created. |
-| Access denied writing to the markers bucket | The Organization ID is wrong. Re-check the `OrgId` you entered in Part One against AWS Organizations, and update that stack. |
-| One account failed and the whole rollout rolled back | Failure tolerance was left at `0`. Retry the operation with tolerance set to 10% so the remaining accounts can complete. |
-
-### Updating Later
-
-When Akto publishes a new version you do not repeat any of the above. Open the StackSet, choose **Edit StackSet details**, change `LambdaCodeVersion`, and deploy with the same failure tolerance and concurrency settings. Every account updates from that one action.
-
-{% hint style="info" %}
-**Deployment support:** contact your Akto representative with the StackSet operation ID and the affected account IDs.
-{% endhint %}
-
-## Steps to Connect (Single Account)
-
-For a single AWS account, reach out to the Akto support team via in-app Intercom or the contact links below. The team will provide the **CloudFormation Template (CFT)** and guide you through setup. For multiple accounts in an AWS Organization, use the [org-wide auto deployment](#org-wide-auto-deployment) above instead.
-
-### IAM Permissions
-
-The IAM policy below covers the permissions needed for the connector: enabling Quick's vended log delivery, managing the delivery source/destination, reading the delivered log objects from S3, writing execution logs, reading the Akto API key from Secrets Manager, and letting EventBridge invoke the forwarding function.
-
-Replace the placeholders (`REGION`, `ACCOUNT_ID`, `CONVERSATION_BUCKET`, `LAMBDA_FUNCTION_NAME`, `AKTO_SECRET_ARN`) with your actual values.
-
-```yaml
-Version: "2012-10-17"
-
-Statement:
-  # -------------------------------------------------------------------------
-  # 1. Enable Amazon Quick conversation logging
-  # -------------------------------------------------------------------------
-  - Sid: EnableQuickConversationLogging
-    Effect: Allow
-    Action:
-      - quicksight:AllowVendedLogDeliveryForResource
-    Resource:
-      - arn:aws:quicksight:REGION:ACCOUNT_ID:account/ACCOUNT_ID
-
-  - Sid: ManageQuickLogDelivery
-    Effect: Allow
-    Action:
-      - logs:PutDeliverySource
-      - logs:GetDeliverySource
-      - logs:DeleteDeliverySource
-
-      - logs:PutDeliveryDestination
-      - logs:GetDeliveryDestination
-      - logs:DeleteDeliveryDestination
-      - logs:GetDeliveryDestinationPolicy
-      - logs:PutDeliveryDestinationPolicy
-      - logs:DeleteDeliveryDestinationPolicy
-
-      - logs:CreateDelivery
-      - logs:GetDelivery
-      - logs:DeleteDelivery
-      - logs:UpdateDeliveryConfiguration
-
-      - logs:DescribeDeliverySources
-      - logs:DescribeDeliveryDestinations
-      - logs:DescribeDeliveries
-      - logs:DescribeConfigurationTemplates
-
-      - logs:TagResource
-      - logs:UntagResource
-      - logs:ListTagsForResource
-    Resource: "*"
-
-  # -------------------------------------------------------------------------
-  # 2. Allow Lambda to discover and read Quick conversation files
-  # -------------------------------------------------------------------------
-  - Sid: ListQuickConversationObjects
-    Effect: Allow
-    Action:
-      - s3:ListBucket
-    Resource:
-      - arn:aws:s3:::CONVERSATION_BUCKET
-    Condition:
-      StringLike:
-        s3:prefix:
-          - AWSLogs/ACCOUNT_ID
-          - AWSLogs/ACCOUNT_ID/*
-
-  - Sid: ReadQuickConversationObjects
-    Effect: Allow
-    Action:
-      - s3:GetObject
-    Resource:
-      - arn:aws:s3:::CONVERSATION_BUCKET/AWSLogs/ACCOUNT_ID/*
-
-  # -------------------------------------------------------------------------
-  # 3. Allow Lambda to write its operational logs
-  # -------------------------------------------------------------------------
-  - Sid: CreateLambdaLogGroup
-    Effect: Allow
-    Action:
-      - logs:CreateLogGroup
-    Resource:
-      - arn:aws:logs:REGION:ACCOUNT_ID:*
-
-  - Sid: WriteLambdaLogs
-    Effect: Allow
-    Action:
-      - logs:CreateLogStream
-      - logs:PutLogEvents
-    Resource:
-      - arn:aws:logs:REGION:ACCOUNT_ID:log-group:/aws/lambda/LAMBDA_FUNCTION_NAME:*
-
-  # -------------------------------------------------------------------------
-  # 4. Allow Lambda to read the Akto API credential
-  # -------------------------------------------------------------------------
-  - Sid: ReadAktoApiCredential
-    Effect: Allow
-    Action:
-      - secretsmanager:GetSecretValue
-    Resource:
-      - AKTO_SECRET_ARN
-
-  # -------------------------------------------------------------------------
-  # 5. Allow EventBridge Scheduler to invoke Lambda
-  # -------------------------------------------------------------------------
-  - Sid: InvokeQuickConversationLambda
-    Effect: Allow
-    Action:
-      - lambda:InvokeFunction
-    Resource:
-      - arn:aws:lambda:REGION:ACCOUNT_ID:function:LAMBDA_FUNCTION_NAME
-```
-
-A quick breakdown of what each group is for:
-
-1. **Enable Amazon Quick conversation logging**: lets you turn on vended log delivery for your Quick account, and manage the delivery source/destination through the CloudWatch Logs delivery APIs.
-2. **Allow Lambda to discover and read Quick conversation files**: lets the Lambda list and read the delivered chat log objects in the destination S3 bucket, scoped to the `AWSLogs/ACCOUNT_ID/*` prefix.
-3. **Allow Lambda to write its operational logs**: standard Lambda execution logging permissions.
-4. **Allow Lambda to read the Akto API credential**: lets the Lambda pull the Akto API key out of Secrets Manager rather than hardcoding it.
-5. **Allow EventBridge Scheduler to invoke Lambda**: lets the EventBridge schedule invoke the Lambda.
 
 ## Get Support for your Akto setup
 
