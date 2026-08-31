@@ -40,7 +40,7 @@ For **macOS**, see [Jamf MDM Deployment](jamf-mdm-deployment.md) or [Mosyle MDM 
 | Auto-update | `latest.json` manifest URL, provided by Akto |
 | Install location | `C:\Program Files\Akto Endpoint Shield\` |
 | Services | Scheduled tasks `MCPEndpointShieldHTTP`, `MCPEndpointShieldAgent`, `MCPEndpointShieldDetector`, `MCPEndpointShieldSystemProxy` |
-| Config | Per-user and SYSTEM `config.env` under `.akto-endpoint-shield\config\` |
+| Config | Per-user and SYSTEM `config.env.enc` under `.akto-endpoint-shield\config\` — encrypted at rest via Windows DPAPI |
 
 This path uses **ZIP + `install.ps1`** — there is no MSI.
 
@@ -162,17 +162,27 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File uninstall_windows.ps1
 {% step %}
 #### Add a detection rule
 
-Use a custom detection script. This is what makes the install genuinely one-time, so it isn't re-run on every check-in:
+A detection rule is **required** — the Win32 app wizard won't let you publish without one — and it is what gives you real one-time-until-uninstalled semantics.
+
+Config is written **encrypted** (`config.env.enc`, via Windows DPAPI), so the detection script asks the installed binary itself rather than trying to read the file:
 
 ```powershell
-$cfg = "$env:SystemRoot\System32\config\systemprofile\.akto-endpoint-shield\config\config.env"
-if ((Test-Path $cfg) -and (Select-String -Path $cfg -Pattern '^AKTO_API_TOKEN=\S+' -Quiet)) {
-    Write-Host "Installed"; exit 0
+$binary = "$env:ProgramW6432\Akto Endpoint Shield\akto-endpoint-shield.exe"
+$cfgDir = "$env:SystemRoot\System32\config\systemprofile\.akto-endpoint-shield\config"
+if (Test-Path $binary) {
+    & $binary check-config --path $cfgDir | Out-Null
+    if ($LASTEXITCODE -eq 0) { Write-Host "Installed"; exit 0 }
 }
 exit 1
 ```
 
-If detection ever reports "not installed" — for example after a bad uninstall — Intune automatically retries the install command within about 24 hours.
+A simpler file-exists rule on `akto-endpoint-shield.exe` also works, but it won't catch a device where the binary landed and provisioning failed.
+
+{% hint style="warning" %}
+Do **not** write a detection rule that greps `config.env` for the token. That file is encrypted at rest, so the match never succeeds and Intune reinstalls the app roughly every 24 hours, forever.
+{% endhint %}
+
+If detection ever reports "not installed" — for example after a bad uninstall — Intune automatically retries the install command within about 24 hours. That is a useful self-heal layer, not a bug.
 {% endstep %}
 
 {% step %}
@@ -230,15 +240,23 @@ With a **client-specific installer** you pass only the manifest URL, so there ar
 
 ## Schedule and scope
 
-| Phase | Scope | Frequency |
-| ----- | ----- | --------- |
+The **Win32 app** is not scheduled — it installs once per device and is re-tried only if the detection rule stops matching. It is the **Remediations** script package that carries a schedule:
+
+| Phase | Scope | Remediations schedule |
+| ----- | ----- | --------------------- |
 | Pilot | 5–10 devices | Daily, 1 week |
 | Rollout | Engineering / security | Daily |
 | Production | All Windows endpoints | Daily |
 
-The script **skips downloading** the ZIP when the installed version already matches the manifest, so daily runs are cheap and pick up new Akto releases automatically.
+Detection is read-only until it finds a problem, and the repair step re-uses the same install-from-ZIP flow, skipping the download when the installed version already matches the manifest. Daily runs are therefore cheap and pick up new Akto releases automatically.
 
-**Force a full redeploy:** set `FORCE_REINSTALL=true` as an environment variable on the script assignment.
+{% hint style="danger" %}
+**Do not also schedule `install.ps1` as a recurring Platform script.** On Intune, auto-update is the Remediations pair's job. Running `install.ps1` on a schedule *as well as* the Remediations pair and the Win32 app's own ~24-hour detection retry gives you three mechanisms racing over the same install directory and scheduled tasks.
+
+Other Windows tools have no Remediations equivalent, so they do run `install.ps1` on a daily schedule instead — see [NinjaOne](ninjaone-windows-deployment.md) and [Automox](automox-deployment.md).
+{% endhint %}
+
+**Force a full redeploy:** set `FORCE_REINSTALL=true` as an environment variable on the Remediations script assignment.
 
 ***
 
@@ -247,7 +265,7 @@ The script **skips downloading** the ZIP when the installed version already matc
 1. Fetches `latest.json` from `MANIFEST_URL`.
 2. Compares the manifest `version` with `akto-endpoint-shield.exe --version`.
 3. If an update is needed, downloads the ZIP, stops the tasks, and deploys to `C:\Program Files\Akto Endpoint Shield\`.
-4. Writes `config.env` for interactive users and for SYSTEM — from the credentials embedded in the installer, or from the token and base URL you passed.
+4. Writes the encrypted `config.env.enc` for interactive users and for SYSTEM — from the credentials embedded in the installer, or from the token and base URL you passed.
 5. Installs the IDE guardrail hooks, then registers and starts the scheduled tasks.
 
 MCP client and hook settings are controlled from the **Akto dashboard** after install.
@@ -293,7 +311,7 @@ Get-Content "$env:ProgramData\akto-endpoint-shield\logs\install.log" -Tail 40 -E
 | ------- | ------------ | ---------- |
 | Script fails immediately | Not running as SYSTEM, or 32-bit PowerShell | Use 64-bit PowerShell as SYSTEM |
 | Wrong config / token (universal installer) | Arguments shifted | Fix the parameter string; test locally with an explicit `""` for argument 2. Or switch to a client-specific installer, which needs no credentials passed |
-| Win32 app keeps reinstalling every ~24h | Detection rule never matches (e.g. path typo) | Verify the detection script against a working device |
+| Win32 app keeps reinstalling every ~24h | Detection rule never matches — most often a rule that greps the encrypted `config.env` for the token, or a path typo | Use the `check-config` detection rule in [Step 1](#step-1-one-time-install-win32-app); verify it against a working device |
 | Device never gets the latest version | Remediation not assigned, or scheduled too infrequently | Confirm the assignment and schedule; policy delivery can take up to 8 hours to reach a device after first assignment |
 | No upgrade | Manifest version does not match the published ZIP | Contact Akto to align the manifest and the ZIP |
 | No processes running | Tasks failed, or the binary exited | Check `%ProgramData%\akto-endpoint-shield\logs\*-wrapper.log` |
