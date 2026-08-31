@@ -260,7 +260,11 @@ While there may not be a specific file size limitation for uploading Postman col
 
 If this checkbox is ticked, Akto will attempt to replay APIs to generate responses when they are missing in the Postman collection. However, if the APIs are inaccessible or return non-2xx response codes, they may fail to be imported to Akto.
 
-**6. Is there a difference in using the Akto integration with the Postman Desktop App (installed locally) compared to the Postman SaaS App?**
+**6. What happens if I tick the "Allow Akto to forcefully create collections for API requests with non-2xx or empty responses" checkbox?**
+
+Normally, Akto only imports an API if its saved (or replayed) response has a 2xx or 302 status code — anything else (404, 500, missing response, etc.) is skipped. Ticking this checkbox overrides that behavior: for any API whose saved response is non-2xx or missing, Akto still creates the endpoint in your collection, but treats the response as a `200 OK` with an empty body. The original error response body/headers are not preserved. This checkbox is off by default.
+
+**7. Is there a difference in using the Akto integration with the Postman Desktop App (installed locally) compared to the Postman SaaS App?**
 
 Yes, there is a difference in how the two versions of Postman integrate with Akto:
 
@@ -279,6 +283,8 @@ Saved Responses: Akto primarily looks for saved responses within your Postman co
 Handling Missing Responses: If Akto does not find saved responses for certain APIs, it attempts to send requests to those APIs one-by-one (substituting variables if any). However, it's important to note that only APIs returning a 2xx status code (indicating a successful response) during this process get processed and included in the Akto collection.
 
 In summary, Akto relies on saved responses and successful API responses (2xx status codes) to populate the Akto collection. Ensuring that all APIs have saved responses in Postman is recommended for complete integration with Akto.
+
+If you'd rather not go back and fix the saved responses, you can instead tick the **"Allow Akto to forcefully create collections for API requests with non-2xx or empty responses"** checkbox before importing. This creates an inventory entry for those APIs anyway (as a synthetic `200 OK` with an empty body), so the endpoint count matches your original Postman collection — though the response data for those specific endpoints won't reflect what your API actually returned.
 
 **2. I enabled the "Allow replay" checkbox, but I still don't see any APIs in Akto. What could be the issue?**
 
