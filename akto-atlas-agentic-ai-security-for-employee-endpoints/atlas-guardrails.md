@@ -14,42 +14,25 @@ AI usage on employee endpoints is hard to control with traditional perimeter too
 
 Atlas embeds enforcement into the same agents that already discover AI activity on the endpoint. You define policies centrally in Akto, and they are evaluated locally on each device, so risky prompts and tool calls are stopped at the source.
 
+Most enforcement happens through the two places employees interact with AI the most:
+
+* [**AI Endpoint Shield**](endpoints-discovery-agents/ai-endpoint-shield/) - covers local MCP traffic and IDE-based tools.
+* [**Browser Extension**](endpoints-discovery-agents/browser-extensions/) - covers web-based AI tools such as ChatGPT, Claude, and Gemini.
+
 ## What Atlas Guardrails Cover
 
-* **Sensitive data exposure** - block prompts containing PII, secrets, source code, or other regulated data before they reach external AI tools.
+* **Sensitive data exposure** - block or redact prompts containing PII, secrets, source code, or other regulated data before they reach external AI tools.
 * **Unsafe prompts and jailbreaks** - detect prompt injection, jailbreak patterns, and policy-violating instructions on the endpoint.
-* **Risky MCP tool calls -** restrict destructive shell commands, file system access, and unvetted MCP tools from executing on the device.
+* **Risky MCP tool calls** - restrict destructive shell commands, file system access, and unvetted MCP tools from executing on the device.
 * **Shadow AI usage** - enforce guardrails on AI tools and MCP servers that fall outside your approved list.
 * **Personal account usage** - detect sign-ins to AI tools using personal email domains and restrict access to organization-approved accounts only.
+* **Enterprise license compliance** - block prompts and responses that would breach your LLM provider's acceptable-use policy (CSAM, weapons, terrorism, hate speech, and more), protecting your organization's enterprise license.
 
 Atlas ships with 20+ built-in guardrail policies covering input and output threats. See [**Agent Guard**](../agentic-guardrails/concepts/agent-guard.md) for the full list of scanners and what each one detects.
 
 ## How It Works
 
-Guardrails run inside the same Atlas components that you deploy for discovery — browser extensions, IDE hooks, and the AI Endpoint Shield. Each component intercepts AI traffic on the device, applies input guardrails to the request and output guardrails to the response, and either forwards, redacts, or blocks based on your policies. Every decision is reported back to the Akto dashboard for monitoring and audit.
-
-```mermaid
----
-config:
-  theme: redux-color
----
-sequenceDiagram
-    participant User
-    participant Hooks as Hooks<br/>(Akto Guardrails)
-    participant Agent as AI Agent<br/>(LLM / MCP Server / Tools)
-    participant Akto as Akto Dashboard
-    autonumber
-
-    User ->> Hooks: Prompt / Tool call
-    alt:
-    Note over Hooks: Request guardrails
-    Hooks ->> Agent: Forward valid request
-    Agent ->> Hooks: Agent / Tool response
-    Note over Hooks: Response guardrails
-    end
-    Hooks ->> User: Final Response<br/>(valid / blocked / redacted)
-    Hooks ->> Akto: Log Data<br/>(Event / Threat)
-```
+Guardrails run inside the same Atlas components that you deploy for discovery: browser extensions, IDE hooks, and the AI Endpoint Shield. Each component intercepts AI traffic on the device, applies input guardrails to the request and output guardrails to the response, and either forwards, redacts, or blocks based on your policies. Every decision is reported back to the Akto dashboard for monitoring and audit.
 
 ## Where Guardrails Plug In
 
@@ -65,4 +48,4 @@ sequenceDiagram
 
 ## Learn More
 
-For a deep dive into guardrail scanners, policies, threat dashboards, and remediation workflows, see the [**Agentic Guardrails**](https://app.gitbook.com/s/tog5ODwYfqPOf4eQhsOC/agentic-guardrails) section.
+For a deep dive into guardrail scanners, policies, threat dashboards, and remediation workflows, see the [**Agentic Guardrails**](../agentic-guardrails/overview/README.md) section.
