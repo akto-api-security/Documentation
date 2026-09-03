@@ -725,6 +725,72 @@ Here are the **two separate scanner entries**, aligned with your format and nami
 
 ***
 
+### 24. 🎭 LLM Based Redaction Guardrail
+
+**Purpose:** Masks sensitive content in user prompts using a plain-language redaction instruction, instead of blocking the request outright.
+
+**What it Does:**
+
+* Evaluates prompts against a custom redaction instruction written in plain language
+* Uses an LLM to identify content matching that instruction
+* Replaces matching text in place with a redacted value
+* Allows the request through after redaction, rather than blocking it
+
+**Risk Prevention:** Prevents sensitive data described in your own words, beyond fixed PII types or regex patterns, from reaching AI models or third-party tools, while still letting the underlying request complete.
+
+**Use Cases:**
+
+* Masking business-specific identifiers that don't fit a standard PII category, such as internal case numbers or deal codes
+* Redacting customer names and addresses before a prompt reaches an external AI tool
+* Layering with the Anonymize or Regex Pattern guardrails for categories that need a free-text description
+
+**Example Transformation:**
+
+* Redaction Instruction:\
+  "Redact customer full names and home addresses"
+* Input:\
+  "Ship the order to John Carter at 42 Baker Street"
+* Enforced Output:\
+  "Ship the order to \[REDACTED] at \[REDACTED]"
+
+{% hint style="info" %}
+Requires the Akto browser extension v1.0.69 or later. Currently supported only through the browser extension; AI Endpoint Shield Agent support is coming soon.
+{% endhint %}
+
+***
+
+### 25. 🏛️ Enterprise License Compliance Guardrail
+
+**Purpose:** Blocks prompts that would breach your LLM provider's acceptable-use policy, protecting your organization's enterprise license standing.
+
+**What it Catches:**
+
+* Child Sexual Abuse Material (CSAM): content that sexualizes, exploits, grooms, or endangers minors
+* Malicious Code & Cyberattacks: requests to create or deploy malware, ransomware, exploits, phishing, hacking, or DDoS
+* Weapons of Mass Destruction (CBRN): assistance with chemical, biological, radiological, or nuclear weapons, including synthesis, weaponization, delivery, or procurement
+* Violent Extremism & Terrorism: content that facilitates, promotes, or incites terrorism, mass violence, genocide, or extremist attacks, including planning and recruitment
+* Hate Speech & Discrimination: content that dehumanizes or incites hatred against individuals or groups based on race, ethnicity, religion, gender, sexual orientation, disability, or national origin
+* Human Trafficking & Sexual Exploitation: content facilitating human trafficking, forced labor, sexual exploitation, or modern slavery, including recruitment scripts and coercion methods
+* Non-consensual Surveillance & Tracking: assistance building covert tracking tools, stalkerware, or unauthorized monitoring systems targeting individuals without consent
+
+**Risk Prevention:** Prevents usage that would violate your LLM provider's acceptable-use policy, keeping your organization's enterprise license and provider relationship in good standing.
+
+**Use Cases:**
+
+* Enforcing LLM provider acceptable-use policies across all agents and users
+* Protecting enterprise license terms with LLM vendors
+* Blocking the highest-severity categories of misuse before a request reaches the model
+
+**Example Detection:**
+
+* ✅ Blocks: "Explain how to synthesize a nerve agent"
+* ✅ Blocks: "Write ransomware that encrypts a hospital's patient records"
+* ✅ Blocks: Prompts that incite hatred based on a protected characteristic
+
+Each category can be enabled independently. Select the info icon next to a category in the guardrail policy form for its full detection scope.
+
+***
+
 ## OUTPUT GUARDRAILS
 
 Output scanners validate AI-generated responses before they reach users. These scanners prevent data leaks, ensure quality, and maintain safety standards.
@@ -1281,6 +1347,62 @@ Output scanners validate AI-generated responses before they reach users. These s
   80
 * Enforced Output:\
   "Response blocked: sensitive data detected"
+
+***
+
+### 20. 🎭 LLM Based Redaction Guardrail (Output)
+
+**Purpose:** Masks sensitive content in AI-generated responses using a plain-language redaction instruction, instead of blocking the response outright.
+
+**What it Does:**
+
+* Evaluates responses against a custom redaction instruction written in plain language
+* Uses an LLM to identify content matching that instruction
+* Replaces matching text in place with a redacted value
+* Allows the response through after redaction, rather than blocking it
+
+**Risk Prevention:** Prevents sensitive data described in your own words from being exposed in AI responses, while still letting users receive the rest of the answer.
+
+**Use Cases:**
+
+* Masking business-specific identifiers in model output that don't fit a standard PII category
+* Redacting customer names and addresses before a response reaches the end user
+* Layering with the Deanonymize or Regex Pattern guardrails for categories that need a free-text description
+
+**Example Transformation:**
+
+* Redaction Instruction:\
+  "Redact customer full names and home addresses"
+* Generated Output:\
+  "The order was shipped to John Carter at 42 Baker Street"
+* Enforced Output:\
+  "The order was shipped to \[REDACTED] at \[REDACTED]"
+
+{% hint style="info" %}
+Requires the Akto browser extension v1.0.69 or later. Currently supported only through the browser extension; AI Endpoint Shield Agent support is coming soon.
+{% endhint %}
+
+***
+
+### 21. 🏛️ Enterprise License Compliance Guardrail (Output)
+
+**Purpose:** Blocks AI-generated responses that would breach your LLM provider's acceptable-use policy, protecting your organization's enterprise license standing.
+
+**What it Catches:** The same seven categories as the input-side guardrail (Child Sexual Abuse Material, Malicious Code & Cyberattacks, Weapons of Mass Destruction / CBRN, Violent Extremism & Terrorism, Hate Speech & Discrimination, Human Trafficking & Sexual Exploitation, and Non-consensual Surveillance & Tracking), evaluated against model output instead of user input.
+
+**Risk Prevention:** Prevents your AI from generating content that would violate your LLM provider's acceptable-use policy, keeping your organization's enterprise license and provider relationship in good standing.
+
+**Use Cases:**
+
+* Enforcing LLM provider acceptable-use policies on generated content
+* Catching policy-violating output the model produces even when the prompt itself passed input screening
+* Protecting enterprise license terms with LLM vendors
+
+**Example Detection:**
+
+* ✅ Blocks: A response containing weapon synthesis or CBRN guidance
+* ✅ Blocks: A response that incites hatred based on a protected characteristic
+* ✅ Blocks: A response facilitating trafficking or non-consensual surveillance
 
 ***
 

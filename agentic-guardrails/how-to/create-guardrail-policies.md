@@ -210,6 +210,18 @@ This rule uses an LLM to classify content against a custom prompt.
 * Configure a **confidence score threshold**.
 * Content is blocked when the model confidence exceeds the configured threshold.
 
+**LLM based redaction**
+
+This rule uses an LLM to mask sensitive content described in plain language, instead of blocking the request or response outright.
+
+* Enable **LLM based redaction**.
+* Define the **redaction instruction** describing what to mask, for example "Redact customer full names and home addresses." Be specific: only content matching the instruction is masked, and anything not described is left untouched. To redact a second, unrelated category, create another policy.
+* Matching text is replaced in place and the request is allowed through, instead of being blocked.
+
+{% hint style="info" %}
+LLM based redaction requires the Akto browser extension v1.0.69 or later, and is currently supported only through the browser extension. AI Endpoint Shield Agent support is coming soon.
+{% endhint %}
+
 **External model based evaluation**
 
 External evaluation allows integration with third-party or internal scoring systems.
@@ -266,7 +278,27 @@ Identifies unexpected agent actions or tool usage patterns, with configuration o
 
 <details>
 
-<summary>9.Tool Guardrails</summary>
+<summary>9. Enterprise License Compliance Guardrails</summary>
+
+Block prompts and responses that would breach your LLM provider's acceptable-use policy, keeping your usage compliant so your enterprise license isn't put at risk.
+
+Enable the categories you want enforced:
+
+* **Child Sexual Abuse Material (CSAM)**: Blocks content that sexualizes, exploits, grooms, or endangers minors.
+* **Malicious Code & Cyberattacks**: Blocks requests to create or deploy malware, ransomware, exploits, phishing, hacking, DDoS, or other cyberattacks.
+* **Weapons of Mass Destruction (CBRN)**: Blocks assistance with chemical, biological, radiological, or nuclear weapons, including synthesis, weaponization, delivery, or procurement.
+* **Violent Extremism & Terrorism**: Blocks content that facilitates, promotes, or incites terrorism, mass violence, genocide, or extremist attacks, including planning and recruitment.
+* **Hate Speech & Discrimination**: Blocks content that dehumanizes or incites hatred against individuals or groups based on race, ethnicity, religion, gender, sexual orientation, disability, or national origin.
+* **Human Trafficking & Sexual Exploitation**: Blocks content facilitating human trafficking, forced labor, sexual exploitation, or modern slavery, including recruitment scripts and coercion methods.
+* **Non-consensual Surveillance & Tracking**: Blocks assistance building covert tracking tools, stalkerware, or unauthorized monitoring systems targeting individuals without consent.
+
+Select the **info** icon next to a category for its full detection scope.
+
+</details>
+
+<details>
+
+<summary>10. Tool Guardrails</summary>
 
 **Tool Misuse**
 
@@ -292,7 +324,7 @@ Detect cases where tool behavior does not align with declared metada
 
 <details>
 
-<summary>10. Access Restrictions</summary>
+<summary>11. Access Restrictions</summary>
 
 Configure controls to restrict which hosts, paths, and account types can interact with your agents.
 
@@ -325,7 +357,7 @@ Personal account blocking is enforced through the [browser extension](../../akto
 
 <details>
 
-<summary>11. Exceptions</summary>
+<summary>12. Exceptions</summary>
 
 Configure phrases that this policy's own detectors should treat as safe and skip, without affecting how other guardrail policies evaluate the same traffic.
 
@@ -346,30 +378,48 @@ Ignore phrases only affect this policy's own detectors — other guardrail polic
 
 <details>
 
-<summary>12. Scope</summary>
+<summary>13. Scope</summary>
 
-Configure which servers the guardrail should be applied to and specify whether it applies to requests, responses, or both.
+Configure which servers the guardrail should be applied to and specify whether it applies to requests, responses, or both. The coverage controls differ by product.
 
-**Agentic Assets**
+**Akto Atlas: Agentic Assets**
 
 Choose which assets the guardrail is deployed across:
 
-* **Apply to all** (Recommended): Applies the guardrail to all assets. Counts of affected **Agents**, **MCP Servers**, and **LLMs** are displayed as links, select a link to view the full list.
-* **Select Agentic Assets**: Choose specific **Agents**, **MCP Servers**, and **LLMs** to target.
+* **Apply to all** (Recommended): Applies the guardrail to all assets. The panel shows the current counts, for example `46 Agents`, `95 MCP Servers`, and `22 LLMs`, as links you can select to view the full list.
+* **Select Agentic Assets**: Target specific assets using a condition builder.
+  * Under **Where my**, choose an asset type such as **Agents**, **MCP Servers**, or **LLMs**.
+  * Use the **are** field to search and select the matching values.
+  * Select **Add condition** to layer additional conditions, or **Clear all** to reset the configuration.
 
 {% hint style="info" %}
 See how many MCP servers and agent servers a policy touches before you deploy it. **Apply to All** now shows the full scope up front.
 {% endhint %}
 
-**Teams & Roles**
+**Akto Atlas: Device Tags & Users**
 
 Choose which users the guardrail applies to:
 
-* **Apply to all** (Recommended): Applies the guardrail to all users in your organisation.
-* **Select Teams & Roles**: Choose specific **Teams** and **Roles**.
-  * Select the **Teams** dropdown and choose one or more teams.
-  * Select the **Roles** dropdown and choose one or more roles.
-  * Select **Clear all** to reset the selected teams and roles.
+* **Apply to all** (Recommended): Applies the guardrail to all users in your organisation, for example `101 Users`.
+* **Select Device Tags & Users**: Target specific users using the same condition builder.
+  * Under **Where my**, choose an attribute such as **Groups**.
+  * Use the **are** field to search and select the matching values.
+  * Select **Add condition** to layer additional conditions, or **Clear all** to reset the configuration.
+  * The number of matching users updates as you build the condition, for example `Applies to 1 user with the current selection.`
+
+**Akto Argus: Coverage**
+
+Akto Argus shows a single **Coverage** section instead of separate Agentic Assets and Device Tags & Users sections:
+
+* **Apply to all** (Recommended): Applies the guardrail to all discovered assets. The panel shows the current counts, for example `60 Agents & 31 MCP Servers`, as links you can select to view the full list.
+* **Advance Configuration**: Build a condition to target specific assets.
+  * Under **Where my**, choose an asset type such as **AI Agents** or **MCP Servers**.
+  * Use the **are** field to search and select the matching values.
+  * Select **Add condition** to layer additional conditions, or **Clear all** to reset the configuration.
+
+{% hint style="info" %}
+Some agentic assets may show as disabled in **Advance Configuration**. **Block** rule behaviour requires the target server to run in inline (sync) mode.
+{% endhint %}
 
 **Rule Behaviour**
 
@@ -428,6 +478,23 @@ The playground allows your team to validate guardrail behaviour before updating 
 <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 Playground probing helps your security team verify that guardrail conditions correctly detect violations and return the expected blocked response message before the policy is finalized.
+
+## Preview Change Impact Before Saving
+
+When you edit an existing guardrail policy, the right-hand panel shows **Change impact analysis** instead of the plain **Impact analysis** view shown while creating a new policy. It replays recent activity through both the currently saved policy and your unsaved changes, so you can see how an edit would affect detections before you save it.
+
+* Switch between the **Violations** and **Traffic** tabs before running:
+  * **Violations** replays the policy's last few recorded violations.
+  * **Traffic** replays the latest agent traces.
+* Select **Run** to open the **Change impact analysis** window and replay that activity against both versions of the policy.
+* The **Saved policy** and **Your changes** counts show the total detections under each version, with a badge (e.g. `-1`) highlighting the net change.
+* The results table lists each replayed **Prompt** alongside two columns, **Saved** and **Draft**, each marked **Detected** or **Missed** so you can see exactly which prompts change outcome under your edits.
+* Use **Page Size** and the pagination controls to page through results, or select **Export CSV** to download the full comparison.
+* Select **Close** to return to the policy editor.
+
+{% hint style="info" %}
+Change impact analysis is only available when editing an existing guardrail policy. While creating a new policy, this panel appears as **Impact analysis** and previews how the new policy would perform against recent agent traffic once you select **Run**.
+{% endhint %}
 
 ## What’s Next
 
