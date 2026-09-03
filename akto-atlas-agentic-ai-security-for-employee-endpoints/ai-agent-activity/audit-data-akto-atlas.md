@@ -28,7 +28,7 @@ Each row represents an MCP server and the agent that accesses it.
 **Default Approval Behaviour**
 
 * Without an [MCP registry integration](../../integrations/mcp-registry-integration.md) set up, every newly discovered MCP server defaults to **Approved**.
-* Once you set up an [MCP registry integration](../../integrations/mcp-registry-integration.md), every newly discovered MCP server instead defaults to **Blocked**. From there, you either conditionally allow it for a specific agent (Cursor, Claude, and so on), or [add it to your MCP registry](#action-dropdown), which gets it approved by default.
+* Once you set up an [MCP registry integration](../../integrations/mcp-registry-integration.md), every newly discovered MCP server instead defaults to **Blocked**. From there, you either conditionally allow it for a specific agent (Cursor, Claude, and so on), or [add it to your MCP registry](audit-data-akto-atlas.md#action-dropdown), which gets it approved by default.
 {% endhint %}
 
 You can also act on a server directly from this table: hover a row to open its quick actions (**Allow this server**, **Block this server**, **Add to MCP registry**), without opening the full server details.
@@ -101,7 +101,7 @@ You choose which endpoints the component can access.
 {% tab title="Justification" %}
 You add a mandatory justification so your team understands why you approved the component with conditions.
 
-<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endtab %}
 {% endtabs %}
 

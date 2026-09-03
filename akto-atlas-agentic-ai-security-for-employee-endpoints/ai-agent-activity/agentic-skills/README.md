@@ -48,7 +48,7 @@ Akto detects risks across three risk categories:
 * **Malicious Instructions & Prompt Injection** — injected or adversarial directives designed to override agent behavior
 * **Embedded Code & Script Risks** — unsafe execution logic, reverse shells, and dependency vulnerabilities
 
-Analysis runs at discovery time and on every subsequent change detected. For detailed threat context and examples of each risk category, see [OWASP Agentic Skills Top 10](./owasp-agentic-skills-top-10.md).
+Analysis runs at discovery time and on every subsequent change detected. For detailed threat context and examples of each risk category, see [OWASP Agentic Skills Top 10](owasp-agentic-skills-top-10.md).
 
 {% hint style="info" %}
 **Runtime Enforcement**
@@ -126,7 +126,7 @@ Open the list of agents associated with the selected device and select the agent
 {% step %}
 Choose the skills that you want to block.
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -202,11 +202,11 @@ Akto gives you controls to govern which skills can be introduced and activated a
 
 Akto measures detection effectiveness across four key risk categories for skills:
 
-| Risk Category | What Is Measured |
-|---|---|
-| **Prompt Injection** | Detection rate for injected instructions within skill files |
-| **Malicious Scripts** | Detection rate for dangerous execution logic embedded in or linked from skills |
-| **Credential Leakage** | Detection rate for hardcoded secrets and sensitive identifiers in skill content |
+| Risk Category            | What Is Measured                                                                                         |
+| ------------------------ | -------------------------------------------------------------------------------------------------------- |
+| **Prompt Injection**     | Detection rate for injected instructions within skill files                                              |
+| **Malicious Scripts**    | Detection rate for dangerous execution logic embedded in or linked from skills                           |
+| **Credential Leakage**   | Detection rate for hardcoded secrets and sensitive identifiers in skill content                          |
 | **Supply Chain Attacks** | Detection rate for compromised or malicious skills introduced via third-party registries or repositories |
 
 {% hint style="info" %}

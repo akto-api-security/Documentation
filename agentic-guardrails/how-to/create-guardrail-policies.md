@@ -43,7 +43,7 @@ This section defines identifying metadata and user-facing enforcement messages.
 This section is required to create a guardrail policy.
 {% endhint %}
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 </details>
 
@@ -102,7 +102,7 @@ Enable Intent verification to validate whether agent-generated requests align wi
 
 * Set **Confidence Threshold (0–1)**. Higher values require more confidence to block content.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (2).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (2) (4).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 </details>
 
@@ -320,7 +320,7 @@ Detect cases where tool behavior does not align with declared metada
 
 * Enable mismatch detection to identify inconsistencies between tool name and description.
 
-<figure><img src="../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (3).png" alt="" width="563"><figcaption></figcaption></figure>
 
 </details>
 
@@ -481,7 +481,7 @@ The playground allows your team to validate guardrail behaviour before updating 
 * The playground evaluates the prompt using the selected guardrail configuration and displays the enforcement result.
 * You can also use the **Quick Test Prompts** provided in the playground to test common scenarios such as sensitive data exposure, prompt injection attempts, or abusive language.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 Playground probing helps your security team verify that guardrail conditions correctly detect violations and return the expected blocked response message before the policy is finalized.
 

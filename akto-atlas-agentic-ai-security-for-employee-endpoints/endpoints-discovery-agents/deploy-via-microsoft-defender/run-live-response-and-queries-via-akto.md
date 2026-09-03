@@ -8,7 +8,7 @@ To access this feature, navigate to:
 
 **Akto Atlas → Connectors → Microsoft Defender → Run Queries**
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 This integration allows you to:
 
@@ -49,12 +49,7 @@ Akto authenticates to Microsoft Defender via the OAuth 2.0 client credentials fl
 
 <summary><strong>Permissions Required (minimal set)</strong></summary>
 
-<table><thead><tr><th width="220">Permission</th><th width="120">Type</th><th>Why Akto needs it</th></tr></thead><tbody>
-<tr><td><code>AdvancedQuery.Read.All</code></td><td>Application</td><td><strong>Critical</strong> — Run KQL Advanced Hunting queries (<code>POST /api/advancedqueries/run</code>) used to discover installed AI software and AI CLI process activity.</td></tr>
-<tr><td><code>Machine.ReadWrite.All</code></td><td>Application</td><td>List onboarded devices (<code>GET /api/machines</code>), read Live Response action status (<code>GET /api/machineactions/{id}</code>), and obtain the result download link (<code>GetLiveResponseResultDownloadLink</code>). Microsoft requires <code>Machine.ReadWrite.All</code> (not just <code>Machine.Read.All</code>) for the download-link endpoint.</td></tr>
-<tr><td><code>Machine.LiveResponse</code></td><td>Application</td><td><strong>Critical</strong> — Initiate Live Response sessions on devices (<code>POST /api/machines/{id}/runliveresponse</code>) to deploy Akto guardrails or run discovery scripts.</td></tr>
-<tr><td><code>Library.Manage</code></td><td>Application</td><td>Upload Akto scripts to the Live Response file library (<code>POST /api/libraryfiles</code>) before they can be executed on devices.</td></tr>
-</tbody></table>
+<table><thead><tr><th width="220">Permission</th><th width="120">Type</th><th>Why Akto needs it</th></tr></thead><tbody><tr><td><code>AdvancedQuery.Read.All</code></td><td>Application</td><td><strong>Critical</strong> — Run KQL Advanced Hunting queries (<code>POST /api/advancedqueries/run</code>) used to discover installed AI software and AI CLI process activity.</td></tr><tr><td><code>Machine.ReadWrite.All</code></td><td>Application</td><td>List onboarded devices (<code>GET /api/machines</code>), read Live Response action status (<code>GET /api/machineactions/{id}</code>), and obtain the result download link (<code>GetLiveResponseResultDownloadLink</code>). Microsoft requires <code>Machine.ReadWrite.All</code> (not just <code>Machine.Read.All</code>) for the download-link endpoint.</td></tr><tr><td><code>Machine.LiveResponse</code></td><td>Application</td><td><strong>Critical</strong> — Initiate Live Response sessions on devices (<code>POST /api/machines/{id}/runliveresponse</code>) to deploy Akto guardrails or run discovery scripts.</td></tr><tr><td><code>Library.Manage</code></td><td>Application</td><td>Upload Akto scripts to the Live Response file library (<code>POST /api/libraryfiles</code>) before they can be executed on devices.</td></tr></tbody></table>
 
 </details>
 
@@ -67,7 +62,7 @@ API permissions alone are not enough for Live Response. Also confirm:
 1. **Microsoft Defender for Endpoint Plan 2** license — Live Response is a Plan 2-only capability.
 2. **Live Response feature enabled** in `Settings → Endpoints → Advanced features → Live Response`. Enable `Live Response for servers` and `Live Response unsigned script execution` if your discovery scripts are unsigned or your targets include servers/Linux/macOS.
 3. **Device group automated remediation level** must be at least **Standard** for every group Akto should reach. Groups configured as **No remediation** will reject Live Response API calls.
-4. **Defender RBAC** — If your tenant uses Defender role-based access (instead of the default *Use basic permissions*), the app's service principal must be assigned a custom role with **View data** + **Active remediation actions**, scoped to the relevant device groups.
+4. **Defender RBAC** — If your tenant uses Defender role-based access (instead of the default _Use basic permissions_), the app's service principal must be assigned a custom role with **View data** + **Active remediation actions**, scoped to the relevant device groups.
 
 </details>
 
@@ -75,11 +70,11 @@ API permissions alone are not enough for Live Response. Also confirm:
 
 <summary><strong>Common 403 errors and what they mean</strong></summary>
 
-| Error | Cause |
-| --- | --- |
-| `Missing application roles. API required roles: Machine.Read.All, Machine.ReadWrite.All` | `Machine.ReadWrite.All` is missing or admin consent wasn't granted. |
-| `Missing application roles. API required roles: AdvancedQuery.Read.All` | `AdvancedQuery.Read.All` is missing or admin consent wasn't granted. |
-| `Forbidden — needs minimum remediation level` | Device group automated remediation is **No remediation** — raise to **Standard** or higher. |
+| Error                                                                                    | Cause                                                                                       |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `Missing application roles. API required roles: Machine.Read.All, Machine.ReadWrite.All` | `Machine.ReadWrite.All` is missing or admin consent wasn't granted.                         |
+| `Missing application roles. API required roles: AdvancedQuery.Read.All`                  | `AdvancedQuery.Read.All` is missing or admin consent wasn't granted.                        |
+| `Forbidden — needs minimum remediation level`                                            | Device group automated remediation is **No remediation** — raise to **Standard** or higher. |
 
 </details>
 

@@ -8,7 +8,7 @@
 
 An **agentic asset** represents a logical agentic system: an AI Agent, SaaS Agent, MCP Server, LLM, Skill, or Plugin. Each asset groups all the endpoints and execution contexts you've observed for that system.
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ### Agentic Assets Summary
 
@@ -25,26 +25,26 @@ Use the tabs above the table to filter by asset type. Each tab shows you a live 
 
 <summary>What each tab covers</summary>
 
-| Tab | What it covers |
-| --- | --- |
-| All | Every agentic asset you've discovered, across all types |
-| AI Agents | CLIs, IDEs, and desktop apps your employees use to run AI, such as Claude CLI, Cursor, and VS Code |
-| SaaS Agents | Agents hosted and run through a SaaS platform, such as Copilot Studio or Amazon Q |
-| MCP Servers | MCP servers you've observed in agent traffic, whether local or remote |
-| LLMs | LLMs your employees access directly, for example through a browser or API call |
-| Skills | Callable skill files your employees' agents expose, discovered across IDEs, repos, CI/CD, and MCP servers |
-| Plugins (Beta) | Plugin extensions installed into your employees' agentic tools |
+| Tab            | What it covers                                                                                            |
+| -------------- | --------------------------------------------------------------------------------------------------------- |
+| All            | Every agentic asset you've discovered, across all types                                                   |
+| AI Agents      | CLIs, IDEs, and desktop apps your employees use to run AI, such as Claude CLI, Cursor, and VS Code        |
+| SaaS Agents    | Agents hosted and run through a SaaS platform, such as Copilot Studio or Amazon Q                         |
+| MCP Servers    | MCP servers you've observed in agent traffic, whether local or remote                                     |
+| LLMs           | LLMs your employees access directly, for example through a browser or API call                            |
+| Skills         | Callable skill files your employees' agents expose, discovered across IDEs, repos, CI/CD, and MCP servers |
+| Plugins (Beta) | Plugin extensions installed into your employees' agentic tools                                            |
 
 </details>
 
-| Column | Description |
-| --- | --- |
-| Agentic asset | Identifier derived from hostname, provider, or agent name |
-| Type | Category of agentic system (AI Agent, SaaS Agent, MCP Server, LLM, Skill, Plugin) |
-| Endpoints | Number of endpoints associated with the asset |
-| Risk score | Aggregated risk score across all associated components |
-| Sensitive data | Indicates whether sensitive data was detected on this asset |
-| Last traffic seen | Time of most recent observed interaction |
+| Column            | Description                                                                       |
+| ----------------- | --------------------------------------------------------------------------------- |
+| Agentic asset     | Identifier derived from hostname, provider, or agent name                         |
+| Type              | Category of agentic system (AI Agent, SaaS Agent, MCP Server, LLM, Skill, Plugin) |
+| Endpoints         | Number of endpoints associated with the asset                                     |
+| Risk score        | Aggregated risk score across all associated components                            |
+| Sensitive data    | Indicates whether sensitive data was detected on this asset                       |
+| Last traffic seen | Time of most recent observed interaction                                          |
 
 {% hint style="success" %}
 **Search and Filtering**
@@ -67,21 +67,21 @@ You'll see badges next to an asset's name that flag it at a glance:
 Select an agentic asset to open its **Agentic Asset Details** view.\
 The header shows you the asset's type and name (for example, **AI Agent - Cursor**), a short description of what the tool does, and an **Explore mode** button. From here you get endpoint-level visibility into the selected agentic asset.
 
-<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ### Endpoint List
 
 The endpoint list shows you every endpoint through which you observed the agentic asset. Search across all endpoints, and filter by **Endpoint tags**, **Endpoint ID**, or **Username**.
 
-| Column | Description |
-| --- | --- |
-| Endpoint ID | Unique identifier generated by Akto |
-| Username | Execution identity associated with the endpoint |
-| Risk score | Risk score calculated for the endpoint |
-| Sensitive data | Icons indicating the types of sensitive data detected (for example, email addresses or credentials) |
-| Last traffic seen | Timestamp of most recent activity |
-| Discovered | Timestamp of initial discovery |
-| Endpoint tags | Tags applied to the endpoint, such as **Local MCP Server** or **Contains personal account** |
+| Column            | Description                                                                                         |
+| ----------------- | --------------------------------------------------------------------------------------------------- |
+| Endpoint ID       | Unique identifier generated by Akto                                                                 |
+| Username          | Execution identity associated with the endpoint                                                     |
+| Risk score        | Risk score calculated for the endpoint                                                              |
+| Sensitive data    | Icons indicating the types of sensitive data detected (for example, email addresses or credentials) |
+| Last traffic seen | Timestamp of most recent activity                                                                   |
+| Discovered        | Timestamp of initial discovery                                                                      |
+| Endpoint tags     | Tags applied to the endpoint, such as **Local MCP Server** or **Contains personal account**         |
 
 ### Endpoint Expansion
 

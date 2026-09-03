@@ -46,7 +46,7 @@ The Overview tab summarises the session and visualises the flow of the request.
 
 Below the summary, a flow diagram shows how the request moved through your environment: **User → Application → LLM**. Each node identifies the specific user, application, and model involved (the LLM node shows **Unknown** if the model could not be identified). Use the **+**/**-** controls or the fullscreen icon to zoom and pan the diagram.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (210).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 The **Session Details** section lists:
 
@@ -62,7 +62,7 @@ The Traces tab lists every individual trace recorded within the session, shown w
 
 Use **Search traces** to filter by keyword, and the **Columns** and **Filters** panels to customize the view.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (210).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (210) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endtab %}
 {% endtabs %}
 

@@ -4,7 +4,7 @@ description: >-
   single install.sh Custom Command with auto-update.
 ---
 
-# Mosyle MDM Deployment
+# Mosyle MDM Deployment (macOS)
 
 ## Overview
 
@@ -24,14 +24,14 @@ Mosyle has no encrypted script-parameter field equivalent to Jamf's `$4`–`$7`,
 
 ## Architecture
 
-| Aspect | Detail |
-| ------ | ------ |
-| Script execution | Root (Mosyle default) — auto-detects the console user |
-| Installation type | Per-user (`~/.akto-endpoint-shield/`) |
-| Services | LaunchAgents (run as the user, not system-wide) |
-| Auto-update | Manifest (`latest.json`) — devices update at next sign-in |
-| Reinstall | `FORCE_REINSTALL=true` |
-| Token storage | `~/.akto-endpoint-shield/config/` (permissions 600) |
+| Aspect            | Detail                                                    |
+| ----------------- | --------------------------------------------------------- |
+| Script execution  | Root (Mosyle default) — auto-detects the console user     |
+| Installation type | Per-user (`~/.akto-endpoint-shield/`)                     |
+| Services          | LaunchAgents (run as the user, not system-wide)           |
+| Auto-update       | Manifest (`latest.json`) — devices update at next sign-in |
+| Reinstall         | `FORCE_REINSTALL=true`                                    |
+| Token storage     | `~/.akto-endpoint-shield/config/` (permissions 600)       |
 
 ***
 
@@ -60,13 +60,13 @@ Target Macs must be enrolled and visible in your Mosyle dashboard, with internet
 
 `install.sh` reads its values from environment variables, falling back to the `CONFIG` block at the top of the script. Fill in these four before uploading:
 
-| Variable | Required | Description |
-| -------- | -------- | ----------- |
-| `MANIFEST_URL` | Recommended | HTTPS URL to `latest.json` — this is what enables auto-update |
-| `AKTO_API_TOKEN` | Yes | Your Akto API token |
-| `AKTO_API_BASE_URL` | Yes | `https://<account_id>-guardrails.akto.io` |
-| `PKG_URL` | Fallback | Direct HTTPS URL to the `.pkg`, used only if `MANIFEST_URL` is not set |
-| `FORCE_REINSTALL` | No | `true` forces a reinstall even when the version already matches |
+| Variable            | Required    | Description                                                            |
+| ------------------- | ----------- | ---------------------------------------------------------------------- |
+| `MANIFEST_URL`      | Recommended | HTTPS URL to `latest.json` — this is what enables auto-update          |
+| `AKTO_API_TOKEN`    | Yes         | Your Akto API token                                                    |
+| `AKTO_API_BASE_URL` | Yes         | `https://<account_id>-guardrails.akto.io`                              |
+| `PKG_URL`           | Fallback    | Direct HTTPS URL to the `.pkg`, used only if `MANIFEST_URL` is not set |
+| `FORCE_REINSTALL`   | No          | `true` forces a reinstall even when the version already matches        |
 
 ```bash
 MANIFEST_URL="https://<manifest-url>/latest.json"   # provided by Akto — enables auto-update
@@ -127,7 +127,7 @@ Open the **Execution Settings** tab and configure:
 
 <table><thead><tr><th width="234.02734375">Option</th><th>Configuration</th></tr></thead><tbody><tr><td><strong>Execute command</strong></td><td>Select: <strong>Immediately when saving the profile, upon assignment, or based on schedule or events</strong></td></tr><tr><td><strong>Execution trigger</strong></td><td>Tick <strong>Every user sign-in</strong> ✅</td></tr><tr><td><strong>Schedule</strong></td><td><strong>Always (Event Required)</strong> ✅</td></tr></tbody></table>
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 {% hint style="info" %}
 **Why run on every sign-in?**
@@ -145,7 +145,7 @@ Leave all other options unchecked and click **Save**.
 
 Click **+ Add Assignment**, choose the target users or devices, and confirm. Save the Custom Command.
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 The script runs the next time each assigned user signs in.
 {% endstep %}
@@ -157,7 +157,7 @@ Go to **Management** → **Custom Commands**, select the profile, and click **Vi
 
 * **Success** — installation completed
 * **Pending** — awaiting user sign-in
-* **Failed** — see [Troubleshooting](#troubleshooting)
+* **Failed** — see [Troubleshooting](mosyle-deployment.md#troubleshooting)
 
 <figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
@@ -226,16 +226,16 @@ Remember to unassign the install profile first, or it will reinstall at the next
 
 ## Troubleshooting
 
-| Symptom | Likely cause | What to do |
-| ------- | ------------ | ---------- |
-| Mosyle shows **Failed** | See the install log | `tail -50 ~/.akto-endpoint-shield/logs/install.log` and `/var/log/akto-endpoint-shield-install.log` |
-| `Neither PKG_URL, PKG_PATH, nor MANIFEST_URL is set` | `CONFIG` block left empty | Set `MANIFEST_URL` in the script body |
-| `AKTO_API_TOKEN` empty in the log | `CONFIG` block missing the token | Fill in `AKTO_API_TOKEN` and re-save the profile |
-| `No console user logged in` | Command ran with nobody signed in | Expected — it retries at the next sign-in |
-| `Already at latest version — nothing to do` | Manifest version matches the installed version | Expected. Set `FORCE_REINSTALL="true"` to override |
-| Services show `-` instead of a PID | Token missing or invalid | Run `check-config`; check the install log |
-| Services loaded but never start, no logs | macOS 13+ background item not approved | See [Background item approval](#background-item-approval-macos-13) |
-| Manifest URL unreachable | Firewall or proxy | `curl -I "$MANIFEST_URL"` from the device |
+| Symptom                                              | Likely cause                                   | What to do                                                                                          |
+| ---------------------------------------------------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Mosyle shows **Failed**                              | See the install log                            | `tail -50 ~/.akto-endpoint-shield/logs/install.log` and `/var/log/akto-endpoint-shield-install.log` |
+| `Neither PKG_URL, PKG_PATH, nor MANIFEST_URL is set` | `CONFIG` block left empty                      | Set `MANIFEST_URL` in the script body                                                               |
+| `AKTO_API_TOKEN` empty in the log                    | `CONFIG` block missing the token               | Fill in `AKTO_API_TOKEN` and re-save the profile                                                    |
+| `No console user logged in`                          | Command ran with nobody signed in              | Expected — it retries at the next sign-in                                                           |
+| `Already at latest version — nothing to do`          | Manifest version matches the installed version | Expected. Set `FORCE_REINSTALL="true"` to override                                                  |
+| Services show `-` instead of a PID                   | Token missing or invalid                       | Run `check-config`; check the install log                                                           |
+| Services loaded but never start, no logs             | macOS 13+ background item not approved         | See [Background item approval](mosyle-deployment.md#background-item-approval-macos-13)              |
+| Manifest URL unreachable                             | Firewall or proxy                              | `curl -I "$MANIFEST_URL"` from the device                                                           |
 
 For device-level diagnosis, see [macOS Troubleshooting](macos-troubleshooting.md). For EDR and antivirus exclusions, see [Allowlist in Security Software](allowlist-in-security-software.md).
 
@@ -243,15 +243,15 @@ For device-level diagnosis, see [macOS Troubleshooting](macos-troubleshooting.md
 
 ## File locations
 
-| Path | Purpose |
-| ---- | ------- |
-| `/usr/local/bin/akto-endpoint-shield` | Main binary |
-| `/Library/Application Support/Akto/` | Read-only asset bundle installed by the pkg |
-| `~/Library/LaunchAgents/io.akto.akto-endpoint-shield.plist` | HTTP proxy service |
-| `~/Library/LaunchAgents/io.akto.akto-endpoint-shield-agent.plist` | Agent service |
-| `~/.akto-endpoint-shield/config/` | Token + feature flags (permissions 600) |
-| `~/.akto-endpoint-shield/logs/install.log` | Install log |
-| `/var/log/akto-endpoint-shield-install.log` | Root-context install log |
+| Path                                                              | Purpose                                     |
+| ----------------------------------------------------------------- | ------------------------------------------- |
+| `/usr/local/bin/akto-endpoint-shield`                             | Main binary                                 |
+| `/Library/Application Support/Akto/`                              | Read-only asset bundle installed by the pkg |
+| `~/Library/LaunchAgents/io.akto.akto-endpoint-shield.plist`       | HTTP proxy service                          |
+| `~/Library/LaunchAgents/io.akto.akto-endpoint-shield-agent.plist` | Agent service                               |
+| `~/.akto-endpoint-shield/config/`                                 | Token + feature flags (permissions 600)     |
+| `~/.akto-endpoint-shield/logs/install.log`                        | Install log                                 |
+| `/var/log/akto-endpoint-shield-install.log`                       | Root-context install log                    |
 
 ***
 
