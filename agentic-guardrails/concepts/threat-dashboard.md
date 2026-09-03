@@ -2,9 +2,7 @@
 
 ## Overview
 
-The Guardrails dashboard provides a centralised view of security threats detected across **AI agents, prompts, and tool invocations**. The Guardrails dashboard focuses on **runtime agentic security risks**, including prompt injection, unauthorised tool access, sensitive data leakage, and malicious agent behaviour.
-
-
+The Guardrails dashboard, titled **Guardrail Violations Detected** in the app, provides a centralised view of security threats detected across **AI agents, prompts, and tool invocations**. It focuses on **runtime agentic security risks**, including prompt injection, unauthorised tool access, sensitive data leakage, and malicious agent behaviour.
 
 ## Guardrail States and Lifecycle
 
@@ -37,20 +35,32 @@ The Guardrails dashboard allows filtering agentic threats by compliance framewor
 
 Supported frameworks include:
 
+* OWASP Agentic Skills Top 10
+* OWASP Agentic Top 10
+* OWASP LLM
+* OWASP
+* EU AI Act
+* NIST AI Risk Management Framework
+* NIST 800-53
+* NIST 800-171
 * CIS Controls
-* CMMC
 * CSA CCM
-* FedRAMP
+* Cybersecurity Maturity Model Certification (CMMC)
 * FISMA
+* FedRAMP
 * GDPR
 * HIPAA
 * ISO 27001
-* NIST 800-53
-* NIST 800-171
+* PCI DSS
 * SOC 2
-* OWASP
+* MITRE ATLAS
 
 This filter helps you focus on agent behaviours that directly impact regulatory and internal security requirements.
+
+## Time Range and Exporting
+
+* **Export Threat Report** (top right corner): generates a report of the threats currently shown on the dashboard, scoped to your applied time range. The report's content varies depending on which compliance framework you have selected.
+* **Time range selector** (next to it, e.g. **Last 7 days**): scopes the whole page, the guardrail table, and the compliance framework view, to that window.
 
 ## Navigating to Guardrail Activity Details
 
