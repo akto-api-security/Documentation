@@ -20,13 +20,17 @@ If the install completes but the agent does not appear in Akto, see [macOS Troub
 
 {% stepper %}
 {% step %}
-**Gatekeeper Security Warning on First Launch**
+**Run the Installer**
 
-When the user double-clicks the **AI Endpoint Shield Installer**, macOS may display a warning stating that the application could not be verified and was blocked to protect the system.
+Double-click the **AI Endpoint Shield** **.app** file to launch it. This opens the installer wizard.
+
+<details>
+
+<summary>If macOS shows a Gatekeeper warning</summary>
+
+macOS may display a warning stating that the application could not be verified and was blocked to protect the system. This is expected behaviour for applications distributed outside the Mac App Store.
 
 <figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
-
-This is expected behaviour for applications distributed outside the Mac App Store.
 
 **User Action (Required):**
 
@@ -34,22 +38,18 @@ This is expected behaviour for applications distributed outside the Mac App Stor
 2. Navigate to **Privacy & Security**
 3. Scroll to the **Security** section
 4. Click **Open Anyway** for **mcp-endpoint-shield**
-{% endstep %}
 
-{% step %}
-**Allowing the Application in Privacy & Security**
-
-This screen confirms that the user has explicitly approved the installer. Once approved, macOS will allow the installer to run normally.
+This confirms that the user has explicitly approved the installer. Once approved, macOS allows the installer to run normally — no administrator privileges are required.
 
 <figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
-No administrator privileges are required at this stage.
+</details>
 {% endstep %}
 
 {% step %}
 **Installer Wizard – Introduction Screen**
 
-After approval, the installer wizard launches.
+The installer wizard launches.
 
 <figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
@@ -74,22 +74,6 @@ This screen confirms:
 * Disk space required
 * Installation scope (current user only)
 * Target disk (e.g., Macintosh HD)
-{% endstep %}
-
-{% step %}
-**Background Item Registration**
-
-After installation, macOS displays a notification indicating that **mcp\_endpoint\_shield.sh** has been added as a background item.
-
-<figure><img src="../../../.gitbook/assets/image (4) (1) (1) (1).png" alt="" width="512"><figcaption></figcaption></figure>
-
-This means:
-
-* AI Endpoint Shield runs automatically in the background
-* It starts on user login
-* It can be managed via **Login Items & Extensions**
-
-This is required for continuous endpoint monitoring.
 {% endstep %}
 
 {% step %}
