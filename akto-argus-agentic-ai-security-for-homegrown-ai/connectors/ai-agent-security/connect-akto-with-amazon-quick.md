@@ -36,7 +36,7 @@ flowchart LR
 | **Chat activity** | User queries, agent responses, conversation sessions |
 | **Action connector events** | External service actions triggered from Quick (Jira, Slack, ServiceNow, etc.) |
 | **Admin operations** | Connector creation/deletion, permission and policy changes |
-| **User & access management** | User additions, role changes, group membership updates |
+
 
 ## Org-wide Auto Deployment
 
@@ -46,9 +46,9 @@ Deploy the Akto processor across your AWS Organization with one StackSet. It dis
 
 | Artifact | Purpose | Link                                                                                                                            |
 |---|---|---------------------------------------------------------------------------------------------------------------------------------|
-| Lambda deployment package | The Akto processor Lambda that reads Amazon Quick activity and forwards it to Akto | [akto-quick-processor.zip](https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v5.1/akto-bedrock-quick-processor.zip) |
-| StackSet deployment CFT | Deploys the processor as a StackSet from the management account to all target accounts in the org | [client-aws-cf-template.yaml](https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v5.1/client-aws-cf-template.yaml)   |
-| Marker bucket CFT | Creates the central checkpoint bucket in the management account with cross-account write policies. Can also be created manually. | [akto-markers-bucket.yaml](https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v5.1/akto-markers-bucket.yaml)         |
+| Lambda deployment package | The Akto processor Lambda that reads Amazon Quick activity and forwards it to Akto | [akto-quick-processor.zip](https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/aws-quick/v1.2/akto-quick-processor.zip) |
+| StackSet deployment CFT | Deploys the processor as a StackSet from the management account to all target accounts in the org | [client-aws-cf-template.yaml](https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/aws-quick/v1.2/client-aws-cf-template.yaml)   |
+| Marker bucket CFT | Creates the central checkpoint bucket in the management account with cross-account write policies. Can also be created manually. | [akto-markers-bucket.yaml](https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/aws-quick/v1.2/akto-markers-bucket.yaml)         |
 
 ### Before You Start
 
@@ -163,24 +163,72 @@ On the review page, tick "I acknowledge that AWS CloudFormation might create IAM
 
 #### Parameters
 
-| Parameter | Required | Example / Default | Description |
-|---|---|---|---|
-| `MarkersBucketName` | Yes | the Outputs value from Part One | The central bucket in the management account. Every processor writes its progress and its list of discovered agents here, filed under `<account-id>/<region>/` — which is what gives you one org-wide view. Each account can only read and write its own folder, so no account can see or overwrite another's data. |
-| `DataIngestionEndpoint` | Yes | `https://your-instance.akto.io/api/ingestData` | Where discovered agents and chat conversations are sent. Provided by Akto. |
-| `AktoApiKey` | Yes | provided by Akto | Authenticates to that endpoint. The field is masked, so the value never appears in the console or in stack history. |
-| `QuickLoggingMode` | Yes | `discover` or `create` | The one decision that changes what the processor does — see below. |
-| `QuickBucketBaseName` | `create` mode only | `akto-quick-logs` | The base name for buckets the processor creates. The account ID and region are added automatically, so this becomes `akto-quick-logs-123456789012-us-east-1`. Leave blank when using `discover`. |
-| `LambdaCodeVersion` | Yes | `v2.0` | Which published build to deploy. The default of `v1.0` is a placeholder and will not work — always enter the version Akto gave you. A version that doesn't exist is the most common cause of a failed rollout. |
+| Parameter | Required | Example / Default                             | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+|---|---|-----------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `MarkersBucketName` | Yes | the Outputs value from Part One               | The central bucket in the management account. Every processor writes its progress and its list of discovered agents here, filed under `<account-id>/<region>/` — which is what gives you one org-wide view. Each account can only read and write its own folder, so no account can see or overwrite another's data.                                                                                                                                        |
+| `DataIngestionEndpoint` | Yes | `https://your-instance.akto.io/api/ingestData` | Where discovered agents and chat conversations are sent. Provided by Akto.                                                                                                                                                                                                                                                                                                                                                                                 |
+| `AktoApiKey` | Yes | provided by Akto                              | Authenticates to that endpoint. The field is masked, so the value never appears in the console or in stack history.                                                                                                                                                                                                                                                                                                                                        |
+| `QuickLoggingMode` | Yes | `already-enabled` or `create-new-bucket` or `use-existing-bucket`  | The one decision that changes what the processor does — see below.                                                                                                                                                                                                                                                                                                                                                                                         |
+| `QuickBucketBaseName` | `create-new-bucket` or `use-existing-bucket` mode only | `akto-quick-logs`                             | 'already-enabled' — leave blank. The bucket is read from your existing delivery. 'create-new-bucket' — a base name. The account ID and region are appended, so akto-quick-logs becomes akto-quick-logs-123456789012-us-east-1. The region is included because S3 bucket names are global and one account may run Quick in two regions. 'use-existing-bucket' — the exact bucket name, used as given, and it must be in the same region as this deployment. |
+| `LambdaCodeVersion` | Yes | `v1.2`                                        | Which published build to deploy. The default of `v1.0` is a placeholder and will not work — always enter the version Akto gave you. A version that doesn't exist is the most common cause of a failed rollout.                                                                                                                                                                                                                                             |
 
 `QuickLoggingMode` answers one question: is Quick chat logging already switched on in these accounts?
 
-* **`discover`** — Yes, logging is already on. The processor finds your existing chat log delivery and reads from wherever it already writes. Nothing is created, and the processor is granted read-only permissions.
-* **`create`** — No, logging is not set up. The processor creates a bucket and switches Quick chat logging on, capturing the full set of fields including response latency.
+* **`already-enabled`** — Yes, logging is already on. The processor finds your existing chat log delivery and reads from wherever it already writes. Nothing is created, and the processor is granted read-only permissions.
+* **`create-new-bucket`** — No, logging is not set up. The processor creates a bucket and switches Quick chat logging on, capturing the full set of fields including response latency.The processor creates a bucket per account and enables logging into it. The account ID and region are appended, so akto-quick-logs becomes akto-quick-logs-123456789012-us-east-1. The region is included because S3 bucket names are global and one account may run Quick in two regions
+* **`use-existing-bucket`** — Logging is not set up, and you already have a bucket for it — typically one central bucket shared by every account. The processor enables logging into that bucket but does not create it and does not change its policy. You grant access on the bucket once.
 
-You never enter a bucket name for your logs in either mode — the processor works it out per account, so accounts using different bucket names all work from this one setting.
+#### Bucket Policy for `use-existing-bucket`
 
 {% hint style="info" %}
-`create` is safe to use across a mixed set of accounts: any account that already has logging is detected and left untouched, and an account with no Quick presence in that region has nothing created for it.
+Skip this section entirely unless you chose `use-existing-bucket`.
+{% endhint %}
+
+Your bucket needs a policy that does two things: lets AWS write Quick's logs into it, and lets each account read its own logs back. The processor never edits this policy — that bucket is yours, and granting every account in the fleet the right to rewrite it would be a poor trade.
+
+| Requirement | Why |
+|---|---|
+| Bucket is in the same region as the deployment | AWS requires a log delivery destination to be in the delivery's own region. Accounts in two regions therefore need one bucket each. |
+| Policy allows `delivery.logs.amazonaws.com` | Without it the delivery is created successfully and simply never receives anything — no error anywhere. |
+| Policy allows each account to read | Otherwise logs arrive but the processor cannot fetch them. |
+
+Both statements below use your Organization ID, so they cover every account at once — there is no list of account IDs to maintain as accounts come and go. Replace `YOUR-BUCKET` and `o-abcd1234ef`.
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowQuickLogDelivery",
+      "Effect": "Allow",
+      "Principal": { "Service": "delivery.logs.amazonaws.com" },
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::YOUR-BUCKET/AWSLogs/*",
+      "Condition": {
+        "StringEquals": { "aws:SourceOrgID": "o-abcd1234ef" }
+      }
+    },
+    {
+      "Sid": "AllowEachAccountToReadItsOwnLogs",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": ["s3:GetObject", "s3:ListBucket"],
+      "Resource": [
+        "arn:aws:s3:::YOUR-BUCKET",
+        "arn:aws:s3:::YOUR-BUCKET/AWSLogs/${aws:PrincipalAccount}/*"
+      ],
+      "Condition": {
+        "StringEquals": { "aws:PrincipalOrgID": "o-abcd1234ef" }
+      }
+    }
+  ]
+}
+```
+
+Leave `${aws:PrincipalAccount}` exactly as written — S3 substitutes the calling account at request time. That is what confines each account to `AWSLogs/<its-own-account-id>/`, so a shared bucket does not mean shared visibility: no account can read another's conversations.
+
+{% hint style="info" %}
+`create-new-bucket` is safe to use across a mixed set of accounts: any account that already has logging is detected and left untouched, and an account with no Quick presence in that region has nothing created for it.
 {% endhint %}
 
 ### Confirm It Is Working
