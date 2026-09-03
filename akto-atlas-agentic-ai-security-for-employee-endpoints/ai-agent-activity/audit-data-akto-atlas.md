@@ -2,25 +2,50 @@
 
 ## Overview
 
-The **Audit Data** page in **Akto Atlas** shows you all MCP servers your employee's agents interact with and lets you **control how those servers and their capabilities are used**.
+The **Audit Data** page in **Akto Atlas** shows you every MCP server and skill your employees' agents use, and lets you **control how they're allowed to operate**.
 
 From here, you can:
 
-* See which MCP servers are being accessed
-* Inspect the tools, resources, and prompts exposed by each server
-* Approve, block, or conditionally allow access
+* See which MCP servers and skills are being accessed.
+* Inspect the tools, resources, and prompts exposed by each MCP server.
+* Approve, block, or conditionally allow any of them, individually or in bulk.
 
 ## Explore Audit Data
 
-The main page gives you a server-level view of activity in Akto Atlas. Each row represents an MCP server  and the agent that access it.
+Use the tabs at the top of the page to switch between **MCP Servers** and **Skills**. Each tab shows a live count, and you can filter the time range with the **All time** dropdown at the top right.
+
+### MCP Servers
+
+Each row represents an MCP server and the agent that accesses it.
 
 <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (84).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 #### You will see:
 
-<table><thead><tr><th width="147.92578125">Column</th><th>What it tells you</th></tr></thead><tbody><tr><td><strong>MCP Server</strong></td><td>The MCP server (domain or endpoint) being accessed</td></tr><tr><td><strong>AI Agent</strong></td><td>The agent accessing the server (e.g. VSCode, Claude, Cursor)</td></tr><tr><td><strong>Last Detected</strong></td><td>When the server was first observed in Atlas</td></tr><tr><td><strong>Updated</strong></td><td>Most recent activity for this server</td></tr><tr><td><strong>Access Type</strong></td><td>Type of access (e.g. public, private, third-party)</td></tr><tr><td><strong>Remarks</strong></td><td>Current decision: <strong>Approved</strong>, <strong>Rejected</strong>, or <strong>Conditionally Allowed</strong></td></tr><tr><td><strong>Marked By</strong></td><td>Who last updated the decision</td></tr></tbody></table>
+<table><thead><tr><th width="147.92578125">Column</th><th>What it tells you</th></tr></thead><tbody><tr><td><strong>MCP Server</strong></td><td>The MCP server (domain or endpoint) being accessed</td></tr><tr><td><strong>AI Agent</strong></td><td>The agent accessing the server (e.g. VSCode, Claude, Cursor)</td></tr><tr><td><strong>Last Detected</strong></td><td>When the server was first observed in Atlas</td></tr><tr><td><strong>Updated</strong></td><td>Most recent activity for this server</td></tr><tr><td><strong>Access Type</strong></td><td>Type of access (e.g. public, private, third-party)</td></tr><tr><td><strong>Remarks</strong></td><td>Current decision: <strong>Approved</strong>, <strong>Rejected</strong>, or <strong>Conditionally Allowed</strong>. A clock icon next to the remark means an <strong>Audit Pending</strong> re-review is due.</td></tr><tr><td><strong>Marked By</strong></td><td>Who last updated the decision</td></tr></tbody></table>
 
-## View Server Details
+{% hint style="info" %}
+**Default Approval Behaviour**
+
+* Without an [MCP registry integration](../../integrations/mcp-registry-integration.md) set up, every newly discovered MCP server defaults to **Approved**.
+* Once you set up an [MCP registry integration](../../integrations/mcp-registry-integration.md), every newly discovered MCP server instead defaults to **Blocked**. From there, you either conditionally allow it for a specific agent (Cursor, Claude, and so on), or [add it to your MCP registry](#action-dropdown), which gets it approved by default.
+{% endhint %}
+
+You can also act on a server directly from this table: hover a row to open its quick actions (**Allow this server**, **Block this server**, **Add to MCP registry**), without opening the full server details.
+
+### Skills
+
+Each row represents a skill discovered on your employees' agentic tools.
+
+<table><thead><tr><th width="147.92578125">Column</th><th>What it tells you</th></tr></thead><tbody><tr><td><strong>Skill</strong></td><td>The name of the skill</td></tr><tr><td><strong>Source</strong></td><td>The agent the skill was discovered on (e.g. codex, claude), or <strong>not-attached</strong> if it isn't tied to a specific agent</td></tr><tr><td><strong>Last Detected</strong></td><td>When the skill was first observed in Atlas</td></tr><tr><td><strong>Remarks</strong></td><td>Current decision: <strong>Allowed</strong>, <strong>Blocked</strong>, or <strong>Conditionally Allowed</strong></td></tr><tr><td><strong>Marked By</strong></td><td>Who last updated the decision</td></tr></tbody></table>
+
+{% hint style="success" %}
+**Bulk Blocking**
+
+Select one or more skills using the checkboxes, then click **Block \<N> selected skills** from the action bar at the bottom of the table to block them all in one action.
+{% endhint %}
+
+## View MCP Server Details
 
 Click on any MCP server to view its details, including all tools, resources, and prompts it exposes.
 
@@ -95,7 +120,5 @@ From the **Action** dropdown at the top of the server details view, you can make
     <div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (100).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 {% hint style="info" %}
-To use **Add to MCP registry**, you must first set up an MCP registry integration.&#x20;
-
-* Go to **Settings → Integrations → MCP Registry** to configure one.
+To use **Add to MCP registry**, you must first set up an [MCP registry integration](../../integrations/mcp-registry-integration.md) from **Settings → Integrations → MCP Registry**.
 {% endhint %}
