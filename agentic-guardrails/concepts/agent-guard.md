@@ -690,6 +690,10 @@ Here are the **two separate scanner entries**, aligned with your format and nami
 * Enforced Output:\
   "Access blocked: personal accounts are not allowed"
 
+{% hint style="info" %}
+Requires the Akto browser extension v1.0.69 or later. Currently supported only through the browser extension; AI Endpoint Shield Agent support is coming soon.
+{% endhint %}
+
 ***
 
 ### 23. Block Host/Path Guardrail
@@ -752,10 +756,6 @@ Here are the **two separate scanner entries**, aligned with your format and nami
   "Ship the order to John Carter at 42 Baker Street"
 * Enforced Output:\
   "Ship the order to \[REDACTED] at \[REDACTED]"
-
-{% hint style="info" %}
-Requires the Akto browser extension v1.0.69 or later. Currently supported only through the browser extension; AI Endpoint Shield Agent support is coming soon.
-{% endhint %}
 
 ***
 
@@ -1377,10 +1377,6 @@ Output scanners validate AI-generated responses before they reach users. These s
   "The order was shipped to John Carter at 42 Baker Street"
 * Enforced Output:\
   "The order was shipped to \[REDACTED] at \[REDACTED]"
-
-{% hint style="info" %}
-Requires the Akto browser extension v1.0.69 or later. Currently supported only through the browser extension; AI Endpoint Shield Agent support is coming soon.
-{% endhint %}
 
 ***
 
