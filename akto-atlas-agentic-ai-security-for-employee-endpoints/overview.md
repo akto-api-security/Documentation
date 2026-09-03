@@ -21,6 +21,8 @@ Traditional endpoint tools were not built for AI. With Atlas, you get:
 * Visibility into the real risk: prompts, responses, and tool calls, not just files and processes.
 * Flexibility on deployment: a hook, an MDM-managed shield, or your existing EDR, whichever fits.
 
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (217).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 ## Core Capabilities
 
 ### Discover AI Usage Across Every Employee and Device
