@@ -2,22 +2,31 @@
 
 ## Overview
 
-Akto System Proxy is a network-level endpoint discovery method that monitors outbound traffic from AI applications running on employee devices — including **Claude Desktop**, **GitHub Copilot**, **ChatGPT desktop app**, and any other AI-related software. It captures API calls made by these apps and surfaces them in the Akto dashboard for visibility, analysis, and guardrails enforcement.
+Akto System Proxy is a network-level endpoint discovery method that monitors outbound traffic from AI applications running on employee devices, including **Claude Desktop**, **GitHub Copilot**, **ChatGPT desktop app** (classic and current), and any other AI-related software. It captures API calls and file uploads made by these apps and surfaces them in the Akto dashboard for visibility, analysis, and guardrails enforcement.
 
-The proxy is installed automatically alongside [AI Endpoint Shield](ai-endpoint-shield/README.md) — no separate installation step is required.
+The proxy is installed automatically alongside [AI Endpoint Shield](ai-endpoint-shield/README.md), no separate installation step is required.
 
 ## Guardrails for Desktop AI Apps
 
-Akto System Proxy intercepts and enforces guardrails on **standalone desktop AI applications** — apps that don't expose hooks or extensions:
+Akto System Proxy intercepts and enforces guardrails on **standalone desktop AI applications**, apps that don't expose hooks or extensions:
 
 | App | What gets intercepted |
 |-----|-----------------------|
 | **Claude Desktop** | All API calls to Anthropic endpoints |
 | **GitHub Copilot** | Requests to GitHub Copilot AI services |
 | **ChatGPT Desktop** | API traffic to OpenAI endpoints |
+| **ChatGPT (classic app)** | API traffic from the standard ChatGPT desktop app |
 | **Any other AI app** | Any app whose traffic matches your configured AI domains |
 
 Because the proxy operates at the network level, it works transparently across all these apps without any per-app configuration or code changes.
+
+### File Upload Guardrails
+
+The proxy also inspects file uploads made through these desktop apps, not just prompt and API traffic, applying the same guardrail policies to attached files before they reach the AI service.
+
+### Claude Desktop Connectors and Plugins
+
+The proxy also discovers the **Connectors** and **Plugins** configured inside Claude Desktop. These surface in your dashboard as Plugin assets under [Agentic Assets](../ai-agent-activity/agentic-assets/).
 
 ## How It Works
 
@@ -45,12 +54,12 @@ sequenceDiagram
             Proxy-->>Akto: Report security event
         end
     else Chatty Domain
-        Proxy->>AI: Bypass — forward directly
+        Proxy->>AI: Bypass, forward directly
         AI-->>App: Response (not captured)
     end
 ```
 
-This gives your security team full visibility into which AI services are being accessed, what data is being sent, and the ability to enforce policies — without requiring any changes to the AI applications themselves.
+This gives your security team full visibility into which AI services are being accessed, what data is being sent, and the ability to enforce policies, without requiring any changes to the AI applications themselves.
 
 ## Prerequisites
 
@@ -112,8 +121,8 @@ The **Domains** section lets you classify domains so the proxy knows what to int
 
 | Domain Type | Description | Proxy behaviour |
 |-------------|-------------|-----------------|
-| **Chatty Domains** | High-traffic domains that are not AI-related (e.g., telemetry, CDN, package registries) | **Bypassed** — traffic is not captured, reducing noise |
-| **AI Domains** | AI service domains whose traffic should be monitored (e.g., `openai.com`, `api.anthropic.com`) | **Intercepted and guardrailed** — traffic is captured and enforced against your security policies |
+| **Chatty Domains** | High-traffic domains that are not AI-related (e.g., telemetry, CDN, package registries) | **Bypassed**, traffic is not captured, reducing noise |
+| **AI Domains** | AI service domains whose traffic should be monitored (e.g., `openai.com`, `api.anthropic.com`) | **Intercepted and guardrailed**, traffic is captured and enforced against your security policies |
 
 To add a domain, type it in the respective input field (e.g., `openai.com`) and click **Add**.
 
