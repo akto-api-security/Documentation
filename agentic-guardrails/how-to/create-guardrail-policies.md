@@ -225,7 +225,9 @@ External evaluation allows integration with third-party or internal scoring syst
 * Provide the **external evaluation endpoint URL**.
 * Configure a **confidence threshold** that determines enforcement actions based on the external response.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (168).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (223).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
+
 
 </details>
 
@@ -262,6 +264,8 @@ Anomaly detection guardrails are tagged with the OWASP Agentic risk categories t
 * Set the **Tool call limit (per session)**: total tool calls allowed per session before triggering an anomaly.
 * Set the **Error limit (per session)**: total errors (4xx/5xx) per session before triggering an anomaly.
 
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (219).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 **Structural Anomalies**
 
 Detects irregularities in request structure or interaction flows, with configuration options rolling out.
@@ -287,6 +291,8 @@ Enable the categories you want enforced:
 * **Hate Speech & Discrimination**: Blocks content that dehumanizes or incites hatred against individuals or groups based on race, ethnicity, religion, gender, sexual orientation, disability, or national origin.
 * **Human Trafficking & Sexual Exploitation**: Blocks content facilitating human trafficking, forced labor, sexual exploitation, or modern slavery, including recruitment scripts and coercion methods.
 * **Non-consensual Surveillance & Tracking**: Blocks assistance building covert tracking tools, stalkerware, or unauthorized monitoring systems targeting individuals without consent.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (218).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 Select the **info** icon next to a category for its full detection scope.
 
@@ -364,6 +370,8 @@ Configure phrases that this policy's own detectors should treat as safe and skip
 * Enable **Case sensitive** to match the phrase's casing exactly.
 * Select **Add phrase** to include it in the ignored list.
 
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (220).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 The **Ignored phrases** list displays a count of configured entries and lets you remove any phrase at any time.
 
 {% hint style="info" %}
@@ -403,6 +411,8 @@ Choose which users the guardrail applies to:
   * Select **Add condition** to layer additional conditions, or **Clear all** to reset the configuration.
   * The number of matching users updates as you build the condition, for example `Applies to 1 user with the current selection.`
 
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (221).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
 **Akto Argus: Coverage**
 
 Akto Argus shows a single **Coverage** section instead of separate Agentic Assets and Device Tags & Users sections:
@@ -412,6 +422,8 @@ Akto Argus shows a single **Coverage** section instead of separate Agentic Asset
   * Under **Where my**, choose an asset type such as **AI Agents** or **MCP Servers**.
   * Use the **are** field to search and select the matching values.
   * Select **Add condition** to layer additional conditions, or **Clear all** to reset the configuration.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (222).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 {% hint style="info" %}
 Some agentic assets may show as disabled in **Advance Configuration**. **Block** rule behaviour requires the target server to run in inline (sync) mode.
@@ -439,8 +451,6 @@ You can enable either option independently or both together based on enforcement
 
 For Browser LLMs (**chatgpt.com**, **gemini.google.com**, **claude.ai**, **copilot.microsoft.com**, and **grok.com**), Akto enforces guardrails on the request path in real time, stopping risky prompts before they ever reach the model. Response-side enforcement for these domains is coming soon.
 {% endhint %}
-
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (212).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 </details>
 
