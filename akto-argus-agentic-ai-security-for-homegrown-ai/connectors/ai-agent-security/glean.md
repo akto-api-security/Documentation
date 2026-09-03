@@ -66,18 +66,155 @@ Under **Trigger Condition**, add a custom prompt that tells the agent when to in
 <summary>Custom Prompt</summary>
 
 ```
-### SYSTEM PRE-FLIGHT REAL-TIME GUARDRAIL ###
-1. BEFORE doing anything else, you MUST execute the 'evaluatePlatformGuardrail' tool immediately for every single incoming message.
-2. YOU MUST MAP REAL-TIME VARIABLES EXACTLY USING THESE RULES:
-   - For 'contextSource': Always pass the hardcoded string "ENDPOINT".
-   - For 'ip': Look up the current client session connection string network address. If it is unavailable or returns "unknown", you MUST override it and pass "49.37.170.1" as a strict fallback string parameter.
-   - For 'time': Convert the current system active clock epoch into a clean numerical string.
-   - For 'requestHeaders': Extract the active tracking agent identifier name and map it as: "{\"host\":\"YOUR_AGENT_NAME.ai-agent.glean\"}".
-   - For 'requestPayload': Fetch the literal text string the user just typed, escape inner punctuation, and pass it formatted as: "{\"body\":\"USER_PROMPT_HERE\"}".
-3. CRITICAL INTERCEPTION RULE:
-   - Read the returned JSON payload from the tool call carefully.
-   - If the parameter "Allowed" evaluates to false, or "behaviour" is equal to "block": STOP processing instantly. Do not call downstream chat loops, search pipelines, or any other tools. 
-   - Terminate the run immediately and output the RAW value from the "Reason" key exactly as it was received from the API response payload. Do not paraphrase, summarize, or alter this text. Even if it says "blocked by PII Policy Of Akto", display exactly that text block to the user as your entire response.
+### SYSTEM PRE-FLIGHT REAL-TIME GUARDRAIL
+
+#### 1. MANDATORY AKTO GUARDRAIL CHECK
+
+For EVERY incoming user message, you MUST call the `evaluatePlatformGuardrail` tool BEFORE doing anything else.
+
+This rule is ABSOLUTE and has NO exceptions.
+
+Whenever the user sends ANY message, you MUST call `evaluatePlatformGuardrail` first, including:
+
+* Questions
+* Follow-up questions
+* Greetings
+* Casual messages
+* Requests to search
+* Requests to use another tool
+* Requests to perform an action
+* Messages containing code
+* Messages containing files or data
+* Very short messages
+* Messages that appear harmless or unrelated to guardrails
+
+NEVER respond directly to the user before calling `evaluatePlatformGuardrail`.
+
+NEVER skip the Akto guardrail check because the message appears safe, simple, or unrelated.
+
+The `evaluatePlatformGuardrail` call MUST happen before:
+
+* Answering the user
+* Searching the web
+* Calling any other tool
+* Performing any downstream processing
+* Continuing the Glean agent workflow
+
+#### 2. REQUEST CONSTRUCTION
+
+Construct the `evaluatePlatformGuardrail` request exactly as follows.
+
+##### DYNAMIC FIELDS
+
+* `requestPayload`:
+  Take the exact literal text of the current user message.
+
+  Format:
+  `{"body":"USER_PROMPT_HERE"}`
+
+  The value must be a JSON-encoded string.
+
+* `requestHeaders`:
+  Use the current Glean runtime request headers.
+
+  The `host` value MUST be dynamically taken from the current Glean runtime request.
+
+  Format:
+  `{"host":"<agent-name>.ai-agent.glean.com"}`
+
+  Examples:
+
+  * `{"host":"akto-agent.ai-agent.glean.com"}`
+  * `{"host":"hello-twilio.ai-agent.glean.com"}`
+
+  NEVER use a fixed hostname.
+  NEVER use an example hostname as the runtime hostname.
+
+* `time`:
+  Use the current system epoch timestamp in milliseconds, represented as a string.
+
+* `ip`:
+  Use the current client IP when available.
+
+  If unavailable or `"unknown"`, use:
+  `49.37.170.1`
+
+##### FIXED FIELDS
+
+* `path` = `"/backend-api/f/conversation"`
+* `method` = `"POST"`
+* `responseHeaders` = `"{}"`
+* `responsePayload` = `"{}"`
+* `destIp` = `"127.0.0.1"`
+* `statusCode` = `"200"`
+* `type` = `"HTTP/1.1"`
+* `status` = `"200"`
+* `akto_account_id` = `"1726615470"`
+* `akto_vxlan_id` = `"0"`
+* `is_pending` = `"false"`
+* `source` = `"MIRRORING"`
+* `contextSource` = `"ENDPOINT"`
+* `tag` = `"{\"gen-ai\":\"Gen AI\",\"source\":\"AGENTIC\",\"mode\":\"inline\"}"`
+* `metadata` = `"{\"gen-ai\":\"Gen AI\",\"source\":\"AGENTIC\",\"mode\":\"inline\"}"`
+
+#### 3. REQUIRED EMPTY FIELDS
+
+`responseHeaders` MUST always be the literal string:
+
+`"{}"`
+
+NEVER send `null`.
+
+`responsePayload` MUST always be the literal string:
+
+`"{}"`
+
+NEVER send `null`.
+
+`metadata` MUST always be included.
+
+It MUST be exactly:
+
+`"{\"gen-ai\":\"Gen AI\",\"source\":\"AGENTIC\",\"mode\":\"inline\"}"`
+
+NEVER omit `metadata`.
+
+#### 4. AKTO RESPONSE HANDLING
+
+AFTER `evaluatePlatformGuardrail` returns:
+
+If:
+
+`Allowed == false`
+
+OR
+
+`behaviour == "block"`
+
+then immediately STOP.
+
+Do not call any other tool.
+Do not perform downstream processing.
+Do not search.
+Do not continue the Glean agent workflow.
+
+Return ONLY the exact value of the `Reason` field.
+
+Do not modify, paraphrase, summarize, or explain the `Reason`.
+
+#### 5. ALLOWED REQUESTS
+
+ONLY if:
+
+`Allowed == true`
+
+AND
+
+`behaviour != "block"`
+
+may normal Glean processing continue.
+
+After this condition is satisfied, the agent may answer the user's message or call additional tools as required.
 ```
 
 </details>
@@ -106,94 +243,246 @@ Your Akto Guardrails service URL is provisioned by Akto. If you do not have it, 
 
 ```json
 openapi: 3.0.3
+
 info:
   title: Centralized Platform Guardrail Middleware
-  description: System-level interceptor that forces policy evaluation for all workspace agents.
+  description: >
+    System-level interceptor that evaluates every incoming Glean agent
+    message against Akto enterprise guardrail policies before downstream
+    processing.
   version: 1.0.0
+
 servers:
   - url: <enter-your-guardrail-service-url>
 paths:
-  /api/validate/request:
+  /api/http-proxy:
     post:
-      summary: Evaluate active session attributes against global enterprise policies
+      summary: Evaluate incoming agent message against enterprise guardrails
       operationId: evaluatePlatformGuardrail
-      description: Main pipeline interceptor. Evaluates incoming agent sessions. A falsy Allowed bit immediately cuts the runtime thread.
+
+      description: >
+        Pre-flight guardrail interceptor for every incoming Glean agent
+        message. The request must be evaluated by Akto before downstream
+        processing.
+
+      parameters:
+
+        - name: guardrails
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: true
+
+        - name: ingest_data
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: true
+
+        - name: response_guardrails
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
+
               required:
-                - requestHeaders
                 - path
+                - requestHeaders
+                - responseHeaders
                 - method
                 - requestPayload
+                - responsePayload
                 - ip
+                - destIp
                 - time
+                - statusCode
+                - type
+                - status
+                - akto_account_id
+                - akto_vxlan_id
+                - is_pending
+                - source
+                - tag
+                - metadata
                 - contextSource
+
               properties:
-                requestHeaders:
-                  type: string
-                  description: "Dynamic string matching format: {\\\"host\\\":\\\"<agent_name>.ai-agent.glean\\\"}"
-                  example: "{\"host\":\"karan-s-macbook-pro.ai-agent.glean\"}"
+
                 path:
                   type: string
-                  default: "/backend-api/f/conversation"
-                  description: "The application context routing path string."
+                  enum:
+                    - "/backend-api/f/conversation"
+                  description: Fixed Glean conversation API path.
+
+                requestHeaders:
+                  type: string
+                  description: >
+                    Runtime Glean request headers. The host must contain the
+                    actual agent name followed by .ai-agent.glean.com.
+                    Format: {"host":"<agent-name>.ai-agent.glean.com"}.
+                    The hostname is dynamic and must be taken from the current
+                    Glean agent request. Never use a fixed hostname.
+
+                responseHeaders:
+                  type: string
+                  enum:
+                    - "{}"
+                  description: >
+                    Always send an empty JSON object as a string.
+                  example: "{}"
+
                 method:
                   type: string
-                  default: "POST"
-                  description: "The incoming transactional standard HTTP method verb."
+                  enum:
+                    - "POST"
+                  description: Fixed HTTP method.
+
                 requestPayload:
                   type: string
-                  description: "Capture user prompt and format: {\\\"body\\\": \\\"USER_PROMPT_HERE\\\"}"
-                  example: "{\"body\":\"email check abc@akto.io\"}"
+                  description: >
+                    Exact current user message encoded as a JSON string in
+                    the format {"body":"USER_PROMPT_HERE"}.
+                  example: "{\"body\":\"hello here is email hello_akto@akto.io\"}"
+
+                responsePayload:
+                  type: string
+                  enum:
+                    - "{}"
+                  description: >
+                    Always send an empty JSON object as a string because
+                    this is a pre-flight request.
+                  example: "{}"
+
                 ip:
                   type: string
                   default: "49.37.170.1"
-                  description: "Fallback client IP address map if unresolved by cloud orchestrator."
+                  description: >
+                    Current client IP address. If unavailable or unknown,
+                    use 49.37.170.1.
+
+                destIp:
+                  type: string
+                  enum:
+                    - "127.0.0.1"
+                  description: Fixed destination IP.
+
                 time:
                   type: string
-                  description: "Live numerical timestamp in string format."
-                  example: "1782325800000"
+                  description: >
+                    Current system epoch timestamp in milliseconds as a string.
+                  example: "1788416701704"
+
                 statusCode:
                   type: string
-                  default: "200"
-                  description: "Interface transport validation state tracker."
+                  enum:
+                    - "200"
+                  description: Fixed HTTP status code.
+
+                type:
+                  type: string
+                  enum:
+                    - "HTTP/1.1"
+                  description: Fixed HTTP protocol type.
+
                 status:
                   type: string
-                  default: "200"
-                  description: "System routing workflow execution flag token."
+                  enum:
+                    - "200"
+                  description: Fixed request status.
+
+                akto_account_id:
+                  type: string
+                  enum:
+                    - "1000000"
+                  description: Fixed Akto account ID.
+
+                akto_vxlan_id:
+                  type: string
+                  enum:
+                    - "0"
+                  description: Fixed Akto VXLAN ID.
+
+                is_pending:
+                  type: string
+                  enum:
+                    - "false"
+                  description: Fixed pending state.
+
+                source:
+                  type: string
+                  enum:
+                    - "MIRRORING"
+                  description: Fixed Akto request source.
+
+                tag:
+                  type: string
+                  enum:
+                    - "{\"gen-ai\":\"Gen AI\",\"source\":\"ENDPOINT\",\"ai-agent\":\"Glean\"}"
+                  description: >
+                    Fixed Glean agentic integration tag.
+
+                metadata:
+                  type: string
+                  enum:
+                    - "{\"gen-ai\":\"Gen AI\",\"source\":\"ENDPOINT\",\"ai-agent\":\"Glean\"}"
+                  description: >
+                    Fixed Glean agentic integration metadata.
+
                 contextSource:
                   type: string
-                  default: "ENDPOINT"
-                  description: "Context structural classification tag locked at schema layer."
                   enum:
                     - "ENDPOINT"
+                  description: Fixed context source classification.
+
       responses:
-        '200':
-          description: "Akto Guardrails Engine Evaluation Response Object"
+
+        "200":
+          description: Akto Guardrails Engine Evaluation Response
+
           content:
             application/json:
               schema:
                 type: object
+
                 required:
                   - Allowed
                   - Reason
                   - behaviour
+
                 properties:
+
                   Allowed:
                     type: boolean
-                    description: "Status indicator flag. True passes, False breaks loop."
+                    description: >
+                      Whether the request is allowed to continue.
+                      True allows processing; false blocks processing.
+
                   Modified:
                     type: boolean
+                    description: >
+                      Indicates whether Akto modified the request.
+
                   ModifiedPayload:
                     type: string
+                    description: >
+                      Modified request payload returned by Akto.
+
                   Reason:
                     type: string
-                    description: "The dynamic security policy rule failure message string from backend."
-                    example: "blocked by PII Policy Of Akto"
+                    description: >
+                      Exact reason returned by Akto.
+                    example: "Blocked By Akto"
+
                   Metadata:
                     type: object
                     properties:
@@ -201,9 +490,11 @@ paths:
                         type: string
                       rule_violated:
                         type: string
+
                   behaviour:
                     type: string
-                    description: "The enforcement string action value (e.g., 'block')."
+                    description: >
+                      Enforcement action returned by Akto.
                     example: "block"
 ```
 
