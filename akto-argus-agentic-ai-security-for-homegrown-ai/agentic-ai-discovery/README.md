@@ -1,46 +1,27 @@
 # Agentic AI Discovery
 
-Discover and inventory all your AI agents, MCP servers, and tool integrations across your infrastructure. Akto automatically maps your agentic landscape, helping you identify shadow agents, track agent behaviors, and maintain visibility over your autonomous systems.
+Agentic AI Discovery is your inventory of every AI agent and MCP server running across your cloud infrastructure. Once a [connector](../connectors/) is running, Akto continuously maps your agentic landscape: agents, MCP servers, the tools and data they touch, and how they connect to each other, so you always know what's actually deployed.
 
-## Quick Start
+## What You Can Do
 
-### Step 1: Sign Up or Log In
+* Browse every discovered AI agent and MCP server as an organized [Collection](concepts/collections/), and drill into individual [Agent Components and MCP Endpoints](concepts/endpoints/).
+* See each component's [risk score](concepts/risk-score.md), [sensitive data](concepts/sensitive-data.md) exposure, [auth type](concepts/auth-types.md), and [access type](concepts/access-type.md) at a glance.
+* Catch what shouldn't still be running: [Shadow Agents](concepts/shadow-agents.md) nobody documented, [Zombie Agents](concepts/zombie-agents.md) nobody decommissioned, and [Third-Party Agents](concepts/third-party-agents.md) you depend on but don't control.
+* Visualize how components connect with the [AI Agent Context Graph](concepts/api-dependency-graph.md) and [Agent Architecture & Trace Analysis](concepts/agent-architecture-and-trace-analysis.md).
+* Organize your inventory with [Component Groups](concepts/component-group/), [Tags](concepts/tags.md), and [Environment Type](concepts/environment-type.md).
+* Get notified the moment something changes, through [Recent Changes](concepts/recent-changes.md) and webhook [Alerts](concepts/alerts.md).
+* Build collections directly from live traffic using [Explore Mode](concepts/explore-mode.md) and narrow any view with [Advanced Filters](concepts/advanced-filter-option.md).
 
-1. Go to [app.akto.io](https://app.akto.io)
-2. Sign up for a new account or log in to your existing account
+## Getting Started
 
-### Step 2: Choose Your Discovery Method
-
-Navigate to **Quick Start** in your Akto dashboard and select your preferred discovery method:
-
-[**Homegrown Discovery Agents**](../connectors/) Deploy discovery agents to continuously monitor your infrastructure. Includes API Gateways, eBPF, Kubernetes, manual import, and MCP Recon.
-
-### Step 3: Configure Your Discovery Agent
-
-Follow the setup guide for your chosen method. Each connector provides step-by-step instructions for deployment.
-
-### Step 4: View Your Inventory
-
-Once your discovery agent is running:
-
-1. Go to **Agentic Discovery** in your dashboard
-2. See all discovered agents, MCP servers, and tools
-3. Click on any component to view detailed information
-
-## What Gets Discovered
-
-Akto automatically identifies:
-
-* AI agents and their endpoints
-* MCP servers (tools, resources, prompts)
-* Tool integrations and permissions
-* Data flows and agent interactions
-* Authentication patterns
+1. Connect a [homegrown discovery agent](../connectors/) for your infrastructure, API gateways, eBPF, Kubernetes, manual import, or MCP Recon.
+2. Open **Agentic Discovery** in your dashboard to see every discovered agent, MCP server, and tool.
+3. Select any component to inspect its endpoints, risk score, and meta properties.
 
 ## Next Steps
 
-* Run [Red Teaming](../agentic-red-teaming/get-started/) on discovered components
-* Enable [Guardrails](../../agentic-guardrails/overview/) for real-time protection
-* Review discovered agents for shadow or zombie components
+* Run [Red Teaming](../agentic-red-teaming/get-started/) on discovered components.
+* Enable [Guardrails](../../agentic-guardrails/overview/) for real-time protection.
+* Review Shadow, Zombie, and Third-Party agents for anything that shouldn't be reachable.
 
 Need help? Contact support@akto.io or use in-app Intercom.
