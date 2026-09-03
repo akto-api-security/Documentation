@@ -1,8 +1,8 @@
-# Agent Architecture & Trace Analysis
+# Context Graph & Trace Analysis
 
 ## Overview
 
-Agent Flow & Trace Analysis helps you visualise how components inside your agentic collection interact and execute during runtime.
+Context Graph & Trace Analysis helps you visualise how components inside your agentic collection interact and execute during runtime.
 
 Using architecture graphs and execution traces, you can understand:
 
@@ -13,9 +13,9 @@ Using architecture graphs and execution traces, you can understand:
 
 This gives you end-to-end visibility into your agentic workflows.
 
-## Agent Architecture Flow
+## Context Graph
 
-The Agent Flow graph provides a visual representation of your collection architecture and execution relationships between components.
+The Context Graph provides a visual representation of your collection architecture and execution relationships between components.
 
 It helps you understand how your agentic system is structured and how requests move across connected components.
 
@@ -32,7 +32,7 @@ Each node represents a component, while edges represent execution or communicati
 {% hint style="info" %}
 ## Why It Matters
 
-Using the Agent Architecture graph, you can:
+Using the Context Graph, you can:
 
 * Understand your orchestration architecture
 * Identify dependencies between agents and tools
