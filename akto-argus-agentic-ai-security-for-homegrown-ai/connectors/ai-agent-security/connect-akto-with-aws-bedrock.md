@@ -51,10 +51,10 @@ Before running the deployment, gather this information:
    * Make sure that you have enabled 'Model invocation logging' and the S3 bucket configured for invocation logs need to be provided.
    * Go to Amazon Bedrock - Settings - Check 'Model invocation logging' and the S3 logging destination selected. If not enabled, there would be no discovery possible.
    * Example: `my-company-bedrock-logs-2026`
-   **Enable AgentCore CloudWatch tracing**: Skip this step entirely if you don’t have AgentCore Harnesses/Runtimes yet, or don’t need their conversation data — the AgentCore pipeline just no-ops (finds 0 log groups) without it. 
+2. **Enable AgentCore CloudWatch tracing**: Skip this step entirely if you don’t have AgentCore Harnesses/Runtimes yet, or don’t need their conversation data — the AgentCore pipeline just no-ops (finds 0 log groups) without it. 
    * This is a one-time, account-level setting, not per-resource: your Harnesses/Runtimes already run inside AgentCore’s managed runtime, so once this is on they get OpenTelemetry instrumentation automatically — no per-agent config needed.
    * Go to CloudWatch → Settings (under Setup) → Account tab → X-Ray traces tab → Transaction Search section → View settings → Edit → Enable Transaction Search → Save.
-2. **LogsPrefix**: (Optional) S3 prefix path for Bedrock logs. Default: AWSLogs/
+3. **LogsPrefix**: (Optional) S3 prefix path for Bedrock logs. Default: AWSLogs/
     * Check 'Model invocation logging' and check the S3 location prefix configured for the bucket
     * Example: S3 location : `s3://akto-aws-bedrock-logs-02/bedrock-logs/`
     * In the above eg : LogsBucketName would be akto-aws-bedrock-logs-02 and LogsPrefix would be bedrock-logs/
@@ -62,17 +62,17 @@ Before running the deployment, gather this information:
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/model_invocation.png" alt="" width="563"><figcaption></figcaption></figure></div>
 
-3.  **S3 Bucket Name - MarkersBucketName**: S3 bucket name to store AKTO marker files for maintaining checkpoint of processed logs. This can be the same bucket name or a different bucket name. It stores a manifest file with all discovered agents details and lastprocessed timestamp.
+4. **S3 Bucket Name - MarkersBucketName**: S3 bucket name to store AKTO marker files for maintaining checkpoint of processed logs. This can be the same bucket name or a different bucket name. It stores a manifest file with all discovered agents details and lastprocessed timestamp.
     * Example: `akto-marker-logs`
-4. **AKTO Data Ingestion URL**: Your AKTO endpoint
+5. **AKTO Data Ingestion URL**: Your AKTO endpoint
    * Format: `https://your-akto-instance.com/api/ingestData`
    * Contact AKTO support team to obtain your Data Ingestion URL
-5. **AKTO API Key**: Authentication key for your AKTO instance
+6. **AKTO API Key**: Authentication key for your AKTO instance
    * Navigate to: **AKTO Argus** → **Connectors** → **Setup Guardrails**
    * Copy the API key from there
-6. **LambdaCodeVersion**: version 
+7. **LambdaCodeVersion**: version 
    * Contact AKTO support team to obtain your lambda version
-7. **RuntimeLogGroupPrefix**: This can be left blank if you dont have Agentcore/runtimes yet. (Optional) CloudWatch log group prefix for per-runtime AgentCore observability logs. Default matches AWS''s own naming convention so if no changes done to default then can be left blank.
+8. **RuntimeLogGroupPrefix**: This can be left blank if you dont have Agentcore/runtimes yet. (Optional) CloudWatch log group prefix for per-runtime AgentCore observability logs. Default matches AWS''s own naming convention so if no changes done to default then can be left blank.
 {% endstep %}
 
 {% step %}
@@ -209,9 +209,9 @@ akto-bedrock-discovery-prod - CREATE_IN_PROGRESS
 {% hint style="info" %}
 ## **Important Notes**
 
-1 **Processing Schedule**: Logs are processed every 10 minutes via EventBridge
-2 **Data Format**: Conversations are formatted in AKTO StandardMessage format with security tags
-3 **Security**: All data remains in your AWS account; no external access required
+1. **Processing Schedule**: Logs are processed every 10 minutes via EventBridge
+2. **Data Format**: Conversations are formatted in AKTO StandardMessage format with security tags
+3. **Security**: All data remains in your AWS account; no external access required
 {% endhint %}
 
 
