@@ -51,6 +51,9 @@ Before running the deployment, gather this information:
    * Make sure that you have enabled 'Model invocation logging' and the S3 bucket configured for invocation logs need to be provided.
    * Go to Amazon Bedrock - Settings - Check 'Model invocation logging' and the S3 logging destination selected. If not enabled, there would be no discovery possible.
    * Example: `my-company-bedrock-logs-2026`
+   **Enable AgentCore CloudWatch tracing**: Skip this step entirely if you don’t have AgentCore Harnesses/Runtimes yet, or don’t need their conversation data — the AgentCore pipeline just no-ops (finds 0 log groups) without it. 
+   * This is a one-time, account-level setting, not per-resource: your Harnesses/Runtimes already run inside AgentCore’s managed runtime, so once this is on they get OpenTelemetry instrumentation automatically — no per-agent config needed.
+   * Go to CloudWatch → Settings (under Setup) → Account tab → X-Ray traces tab → Transaction Search section → View settings → Edit → Enable Transaction Search → Save.
 2. **LogsPrefix**: (Optional) S3 prefix path for Bedrock logs. Default: AWSLogs/
     * Check 'Model invocation logging' and check the S3 location prefix configured for the bucket
     * Example: S3 location : `s3://akto-aws-bedrock-logs-02/bedrock-logs/`
@@ -69,6 +72,7 @@ Before running the deployment, gather this information:
    * Copy the API key from there
 6. **LambdaCodeVersion**: version 
    * Contact AKTO support team to obtain your lambda version
+7. **RuntimeLogGroupPrefix**: This can be left blank if you dont have Agentcore/runtimes yet. (Optional) CloudWatch log group prefix for per-runtime AgentCore observability logs. Default matches AWS''s own naming convention so if no changes done to default then can be left blank.
 {% endstep %}
 
 {% step %}
@@ -205,11 +209,30 @@ akto-bedrock-discovery-prod - CREATE_IN_PROGRESS
 {% hint style="info" %}
 ## **Important Notes**
 
-1. **Bedrock Logging Configuration**: The Lambda function automatically enables Bedrock model invocation logging on first run if not enabled
-2. **Processing Schedule**: Logs are processed every 10 minutes via EventBridge
-3. **Data Format**: Conversations are formatted in AKTO StandardMessage format with security tags
-4. **Security**: All data remains in your AWS account; no external access required
+1 **Processing Schedule**: Logs are processed every 10 minutes via EventBridge
+2 **Data Format**: Conversations are formatted in AKTO StandardMessage format with security tags
+3 **Security**: All data remains in your AWS account; no external access required
 {% endhint %}
+
+
+## Integrate Both Bedrock and AgentCore Gateway Interceptor (Unified Setup)
+
+To integrate **both** AWS Bedrock discovery **and** [AWS Bedrock AgentCore](aws-bedrock-agentcore.md) gateway interception in a single stack, use the unified template below instead of the template referenced in the steps above.
+
+**Unified CloudFormation Template:**
+
+<pre data-overflow="wrap"><code>https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v4.2/client-aws-cf-template.yaml
+</code></pre>
+
+This template adds one new parameter on top of the standard Bedrock discovery setup:
+
+* **EnableGatewayInterception** (`true` / `false`)
+    * `true` — Attaches the Akto interceptor to all available AgentCore Gateways. All gateway requests are routed through the interceptor (proxy) to Akto, in addition to discovery through agent traffic.
+    * `false` — Only discovery through agent traffic is enabled; no gateway interceptor is attached.
+
+Lambda-version to be specified in cloud formation template - v4.2
+
+Deploy following the same **Deploy via AWS Console** steps in the [Step-by-Step Setup](#step-by-step-setup) section above, using this template URL and setting `EnableGatewayInterception` alongside the other parameters when filling in stack details.
 
 ## What Happens Next
 
