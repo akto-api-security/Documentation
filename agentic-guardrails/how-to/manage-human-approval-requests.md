@@ -30,6 +30,8 @@ Open an existing policy, or select **Create Guardrail** to configure a new one.
 
 {% step %}
 Go to the **Scope** section and locate **Rule Behaviour**.
+
+<figure><img src="../../.gitbook/assets/image (239).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
@@ -57,18 +59,18 @@ Select the **Needs Approval** tab. This lists every blocked attempt that is wait
 {% step %}
 Review the event's columns for context:
 
-| Column          | Description                                                  |
-| --------------- | ------------------------------------------------------------- |
-| Severity        | Risk level assigned to the detection                          |
-| Actor           | The user, host, or endpoint that triggered the policy          |
-| Username        | The signed-in user associated with the attempt, if available   |
-| Policy Triggered| The guardrail policy that blocked the attempt                  |
-| Detection Type  | The layer the violation was detected at (e.g. Session)         |
-| Rule Violated   | The specific rule within the policy that matched (e.g. BlockedHost) |
-| Behaviour       | Shows **Human Approval** for events in this tab                |
-| Compliance      | Compliance frameworks associated with the violated rule        |
-| Collection      | Associated data collection                                      |
-| Detected        | Timestamp when the attempt occurred                             |
+| Column           | Description                                                         |
+| ---------------- | ------------------------------------------------------------------- |
+| Severity         | Risk level assigned to the detection                                |
+| Actor            | The user, host, or endpoint that triggered the policy               |
+| Username         | The signed-in user associated with the attempt, if available        |
+| Policy Triggered | The guardrail policy that blocked the attempt                       |
+| Detection Type   | The layer the violation was detected at (e.g. Session)              |
+| Rule Violated    | The specific rule within the policy that matched (e.g. BlockedHost) |
+| Behaviour        | Shows **Human Approval** for events in this tab                     |
+| Compliance       | Compliance frameworks associated with the violated rule             |
+| Collection       | Associated data collection                                          |
+| Detected         | Timestamp when the attempt occurred                                 |
 {% endstep %}
 
 {% step %}
@@ -84,6 +86,8 @@ Under **Approve for**, choose:
 
 * **Always** – Permanently stop enforcing this policy against this actor.
 * **Number of days** – Enter a duration. Enforcement resumes automatically once it elapses.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (240).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
