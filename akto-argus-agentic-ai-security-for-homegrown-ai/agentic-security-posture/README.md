@@ -1,6 +1,10 @@
 # Agentic Security Posture
 
-Agentic Security Posture gives you an executive view of your AI agent risk: how much of your agentic surface you have visibility into, how urgent your open risk is, and where it's concentrated. It rolls up findings from every AI agent, MCP endpoint, and LLM component Akto has discovered, so you can track posture over time and decide where to direct security investment without digging into individual findings. When you need that level of detail, the [**Analysis**](analysis.md) tab turns this same data into a prioritized, team-assigned action list.
+Agentic Security Posture gives you an executive view of your AI agent risk: how much of your agentic surface you have visibility into, how urgent your open risk is, and where it's concentrated. It rolls up findings from every AI agent, MCP endpoint, and LLM component Akto has discovered, so you can track posture over time and decide where to direct security investment without digging into individual findings.&#x20;
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (243).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
+When you need that level of detail, the [**Analysis**](analysis.md) tab turns this same data into a prioritized, team-assigned action list.
 
 ## At a Glance
 
@@ -14,15 +18,15 @@ Four headline numbers summarize the state of your agentic AI surface, each showi
 
 A row of cards for your most recently run scans, each showing the scan name, when it ran, issues found by severity, and how many agentic components it tested. This is the fastest way to see whether your scanning is keeping pace with how fast your agentic surface is growing. If it's falling behind, **Increase scan coverage** takes you to where your team can close the gap.
 
-### New Domains
-
-Domains and hosts you've discovered recently, each with its current test coverage percentage and number of associated issues. New, untested domains are attack surface your team hasn't validated yet, worth raising with them. **Increase test coverage** takes you to where they can get it done.
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (244).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ## How Urgent Is Your Risk?
 
 ### Issues by Severity
 
 A donut chart of your open issues by severity (**Critical**, **High**, **Medium**, **Low**), the fastest read on how much of your current risk needs your team's immediate attention. **Fix critical issues** takes you to that queue so you can direct them to the highest-severity issues first.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (245).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ### Threats by Severity
 
@@ -37,6 +41,8 @@ A bar chart of vulnerability types (e.g. MCP - Indirect Prompt Injection, Model 
 ### Top Threat Categories
 
 A bar chart of threats grouped by the guardrail or policy category that flagged them (e.g. PII Policy, Ban Topics Guardrail, Prompt Injection, Malicious Skill Detected). **View all categories** takes you to the full breakdown.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (246).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ## Where Is Your Risk Concentrated?
 
@@ -55,3 +61,5 @@ A donut chart of your components by the authentication mechanism detected: **Ses
 ### Agentic Component Type
 
 A bar chart of your components by request protocol: **REST**, **GraphQL**, **gRPC**, and **SOAP**, useful context for prioritizing which protocols your security tooling and processes need to cover. **Check out** takes you to the components behind it.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (247).png" alt="" width="563"><figcaption></figcaption></figure></div>
