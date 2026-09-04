@@ -8,7 +8,7 @@ description: >-
 
 ## Overview
 
-Akto exposes its guardrail engine as a standalone HTTP API. Any application or agent can send request/response traffic to this endpoint directly — no SDK, proxy sidecar, or framework hook required. Akto evaluates the payload against your configured guardrail policies, ingests the interaction into the Akto dashboard, and returns a verdict.
+Akto exposes its guardrail engine as a standalone HTTP API. Any application or agent can send request/response traffic to this endpoint directly, no SDK, proxy sidecar, or framework hook required. Akto evaluates the payload against your configured guardrail policies, ingests the interaction into the Akto dashboard, and returns a verdict.
 
 Use this connector when:
 
@@ -27,15 +27,15 @@ Use this connector when:
 
 Before you start, you need:
 
-* An **Akto API token** — follow the [Getting API Token](../../akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md#getting-api-token) steps in the Hybrid SaaS guide
-* Your **Guardrails Service URL** — contact the Akto support team to get the URL for your account. It follows the format `https://<account_id>-guardrails.akto.io`
+* An **Akto API token**: follow the [Getting API Token](../../akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md#getting-api-token) steps in the Hybrid SaaS guide
+* Your **Guardrails Service URL**: contact the Akto support team to get the URL for your account. It follows the format `https://<account_id>-guardrails.akto.io`
 
 ## API Reference
 
 ### Endpoint
 
 ```
-GET https://<GUARDRAILS_SERVICE_URL>/api/http-proxy
+POST https://<GUARDRAILS_SERVICE_URL>/api/http-proxy
 ```
 
 ### Query Parameters
@@ -75,6 +75,12 @@ The body represents one HTTP interaction (a request/response pair from your AI a
 ```
 
 #### Field Reference
+
+{% hint style="warning" %}
+## **All fields are mandatory.** 
+
+Every field listed below must be included in the request body, even the ones with a fixed or default value (e.g. `type`, `akto_vxlan_id`, `is_pending`).
+{% endhint %}
 
 <table><thead><tr><th width="200.21875">Field</th><th width="198.09765625">Type</th><th>Description</th></tr></thead><tbody><tr><td><code>path</code></td><td>string</td><td>The API path of the upstream call (e.g. <code>/v1/messages</code>, <code>/v1/chat/completions</code>)</td></tr><tr><td><code>requestHeaders</code></td><td>stringified JSON</td><td>Headers sent with the request. The <code>host</code> value becomes the <strong>collection name</strong> in Akto</td></tr><tr><td><code>responseHeaders</code></td><td>stringified JSON</td><td>Headers received with the response. Pass <code>"{}"</code> if not available</td></tr><tr><td><code>method</code></td><td>string</td><td>HTTP method of the upstream call (e.g. <code>POST</code>, <code>GET</code>)</td></tr><tr><td><code>requestPayload</code></td><td>stringified JSON</td><td>Body of the request sent to the LLM or agent. Use <code>{"body": "&#x3C;content>"}</code> format</td></tr><tr><td><code>responsePayload</code></td><td>stringified JSON</td><td>Body of the response received from the LLM or agent. Use <code>{"body": "&#x3C;content>"}</code> format</td></tr><tr><td><code>ip</code></td><td>string</td><td>IP address of the caller. Use <code>"127.0.0.1"</code> if not applicable</td></tr><tr><td><code>time</code></td><td>string</td><td>Unix timestamp in <strong>milliseconds</strong> of when the interaction occurred</td></tr><tr><td><code>statusCode</code></td><td>string</td><td>HTTP status code of the upstream response (e.g. <code>"200"</code>, <code>"500"</code>)</td></tr><tr><td><code>type</code></td><td>string or null</td><td>Set to <code>null</code> unless instructed otherwise</td></tr><tr><td><code>status</code></td><td>string</td><td>Same as <code>statusCode</code></td></tr><tr><td><code>akto_account_id</code></td><td>string</td><td>Your Akto account ID. Use <code>"1000000"</code> unless the Akto support team specifies otherwise</td></tr><tr><td><code>akto_vxlan_id</code></td><td>string</td><td>Set to <code>"0"</code> unless instructed otherwise</td></tr><tr><td><code>is_pending</code></td><td>string</td><td>Set to <code>"false"</code></td></tr><tr><td><code>source</code></td><td>string</td><td>Traffic source label. Use <code>"MIRRORING"</code> for agentic traffic</td></tr><tr><td><code>tag</code></td><td>stringified JSON</td><td>Labels attached to the interaction. The <code>source</code> key inside the tag must match the product: <code>"AGENTIC"</code> for Akto Argus</td></tr><tr><td><code>contextSource</code></td><td>string</td><td>Identifies the product context: <code>"AGENTIC"</code> for Akto Argus (homegrown AI</td></tr></tbody></table>
 
@@ -138,7 +144,7 @@ https://<account_id>-guardrails.akto.io
 {% step %}
 **Get your Akto API Token**
 
-Follow the [Getting API Token](../../akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md#getting-api-token) steps in the Hybrid SaaS guide to get your token. Copy it — you will use it as the `Authorization` header value.
+Follow the [Getting API Token](../../akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/hybrid-saas.md#getting-api-token) steps in the Hybrid SaaS guide to get your token. Copy it, you will use it as the `Authorization` header value.
 {% endstep %}
 
 {% step %}
@@ -147,7 +153,7 @@ Follow the [Getting API Token](../../akto-argus-agentic-ai-security-for-homegrow
 Use the sample `curl` below, replacing the placeholder values:
 
 ```bash
-curl --location --request GET \
+curl --location --request POST \
   'https://<GUARDRAILS_SERVICE_URL>/api/http-proxy?guardrails=true&ingest_data=true&response_guardrails=true' \
   --header 'authorization: <YOUR_AKTO_API_TOKEN>' \
   --header 'Content-Type: application/json' \
