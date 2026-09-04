@@ -19,7 +19,7 @@ The Context Graph provides a visual representation of your collection architectu
 
 It helps you understand how your agentic system is structured and how requests move across connected components.
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (99).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (233).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ### What You Can See
 
@@ -39,8 +39,6 @@ Using the Context Graph, you can:
 * Inspect model and MCP integrations
 * Analyse request execution paths
 * Validate workflow connectivity before running scans
-
-
 {% endhint %}
 
 ### Component Relationships
@@ -96,8 +94,6 @@ Using traces, you can:
 * Verify LLM interactions
 * Investigate orchestration failures
 * Analyze runtime execution end-to-end
-
-
 {% endhint %}
 
 ## Common Use Cases

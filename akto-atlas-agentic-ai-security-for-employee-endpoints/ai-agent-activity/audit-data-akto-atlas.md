@@ -18,7 +18,7 @@ Use the tabs at the top of the page to switch between **MCP Servers** and **Skil
 
 Each row represents an MCP server and the agent that accesses it.
 
-<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (84).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (229).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 #### You will see:
 
@@ -36,6 +36,8 @@ You can also act on a server directly from this table: hover a row to open its q
 ### Skills
 
 Each row represents a skill discovered on your employees' agentic tools.
+
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (230).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 <table><thead><tr><th width="147.92578125">Column</th><th>What it tells you</th></tr></thead><tbody><tr><td><strong>Skill</strong></td><td>The name of the skill</td></tr><tr><td><strong>Source</strong></td><td>The agent the skill was discovered on (e.g. codex, claude), or <strong>not-attached</strong> if it isn't tied to a specific agent</td></tr><tr><td><strong>Last Detected</strong></td><td>When the skill was first observed in Atlas</td></tr><tr><td><strong>Remarks</strong></td><td>Current decision: <strong>Allowed</strong>, <strong>Blocked</strong>, or <strong>Conditionally Allowed</strong></td></tr><tr><td><strong>Marked By</strong></td><td>Who last updated the decision</td></tr></tbody></table>
 
