@@ -2,7 +2,7 @@
 
 ## Overview
 
-AI Agent Gateway is a security layer that protects AI agent applications by intercepting, analyzing, and securing communications between end users and AI agents. It provides real-time guardrail detection, guardrails enforcement, and response filtering for AI agent deployments running in customer environments.
+AI Agent Gateway is a security layer that protects AI agent applications by intercepting, analyzing, and securing the calls your AI agent makes out to MCP servers and LLMs. It provides real-time guardrail detection, guardrails enforcement, and response filtering for AI agent deployments running in customer environments.
 
 ## Key Features
 
@@ -15,34 +15,39 @@ AI Agent Gateway is a security layer that protects AI agent applications by inte
 
 ## Architecture
 
-The AI Agent Gateway can be deployed as a Docker container or as a Kubernetes sidecar alongside your AI agent, providing a secure gateway for all AI agent traffic.
+The AI Agent Gateway can be deployed as a Docker container or as a Kubernetes sidecar alongside your AI agent. It sits between your agent and the MCP servers or LLMs it calls out to, not between the end user and your agent.
 
 ```mermaid
 sequenceDiagram
     participant U as End User
-    participant P as AI Agent Gateway (Docker Container)   
-    participant A as AI Agent Container
+    participant A as AI Agent
+    participant P as AI Agent Gateway (Docker Container)
+    participant T as MCP Server / LLM
 
-    U ->> P: 1.Send request
+    U ->> A: 1. Send request
 
-    Note over P: 2. Request Guardrails & Guardrail<br>detection<br>(Prompt injection<br>SQL or command injection<br>PII input validation)
+    A ->> P: 2. Outbound call to MCP server / LLM
 
-    P ->> A: 3. Forward if valid
-    A -->> P: 4. Return response
+    Note over P: 3. Request Guardrails & Guardrail<br>detection<br>(Prompt injection<br>SQL or command injection<br>PII input validation)
 
-    Note over P: 5. Response guardrails<br>(PII detection and redaction<br>Sensitive data filtering<br>Content policy validation)
+    P ->> T: 4. Forward if valid
+    T -->> P: 5. Return response
 
-    P -->> U: 6. Return response<br> (Original/Blocked/Redacted)
+    Note over P: 6. Response guardrails<br>(PII detection and redaction<br>Sensitive data filtering<br>Content policy validation)
+
+    P -->> A: 7. Return response<br>(Original/Blocked/Redacted)
+    A -->> U: 8. Send final response
 ```
 
 ### **Traffic Flow:**
 
-1. End user sends request to AI Agent Gateway endpoint
-2. Gateway performs guardrail detection and applies request guardrails
-3. Valid requests are forwarded to AI agent container
-4. AI agent processes request and returns response to gateway
-5. Gateway receives response and applies response guardrails and redaction rules
-6. End user receives final response (original, blocked, or redacted)
+1. End user sends a request directly to your AI agent
+2. When the agent calls out to an MCP server or LLM, that call is routed through the AI Agent Gateway instead of going straight to the target
+3. Gateway performs guardrail detection and applies request guardrails
+4. Valid requests are forwarded to the MCP server or LLM
+5. The MCP server or LLM processes the request and returns a response to the gateway
+6. Gateway receives the response and applies response guardrails and redaction rules
+7. Your AI agent receives the final response (original, blocked, or redacted) and continues processing the end user's request
 
 ## Deployment
 
@@ -126,7 +131,7 @@ Configure the AI Agent Gateway with the following environment variables:
 
 | Variable | Description | Required | Default |
 | -------- | ----------- | -------- | ------- |
-| `AKTO_API_TOKEN` | Authentication token — obtain from **Akto Argus → Connectors → Setup Guardrail** card | Yes | - |
+| `AKTO_API_TOKEN` | Authentication token, obtain from the **Akto Argus → Connectors → Setup Guardrail** card | Yes | - |
 | `AKTO_API_BASE_URL` | URL for Akto data ingestion service. Follows the format `https://<account_id>-guardrails.akto.io`; contact the Akto support team to get the URL for your account | Yes | - |
 | `APP_URL` | Base URL where your AI agent is running. For docker-compose use service name (e.g., `http://your-agent:3001`), for local scanning use localhost | Yes | - |
 | `PROJECT_NAME` | Unique identifier for this AI agent deployment | Yes | - |
