@@ -14,26 +14,30 @@ With a single view, you can assess how AI agents, MCP servers, and LLMs are bein
 * A clear view of **top threats and guardrail effectiveness**
 * Alignment with **key compliance frameworks**
 
+{% hint style="info" %}
+Every widget on this dashboard can be rearranged by its drag handle or removed with its **×**, and you can restore the default layout at any time with **Reset Layout** at the top of the page.
+{% endhint %}
+
 ## Key Capabilities
 
-### 1. Executive Summary of AI Risk
+### 1. Endpoint Summary
 
 You get a quick snapshot of your overall security posture:
 
 * **Total Agentic Assets** → How widely AI is deployed across your endpoints
 * **Successful Exploits** → Where attacks are succeeding
 * **Sensitive Data Events** → Potential data exposure risks
-* **Guardrail Score** → How effectively your protections are working
+* **AI Average Guardrail Score** → How effectively your protections are working
 
 This allows you to **instantly gauge whether your AI security posture is improving or deteriorating**.
 
 ### 2. Visibility into AI Usage Across Endpoints
 
-You can see how AI is actually being used in your organization:
+You can see how AI is actually being used in your organization, broken out into three widgets:
 
-* Which **AI agents and tools** (e.g., IDEs, CLIs) are most active
-* Which **LLMs are accessed via browsers**, including potential shadow usage
-* Which **MCP servers** are most commonly connected
+* **Common AI Agents** → Which AI agents and tools (e.g., Claude CLI, Cursor, VS Code) are most active
+* **Common LLMs in browsers** → Which LLMs are accessed via browsers (e.g., chatgpt.com, claude.ai, gemini.google.com), including potential shadow usage
+* **Common MCP Servers** → Which MCP servers are most commonly connected (e.g., node_repl, computer-use, filesystem)
 
 This helps you answer critical questions like:
 
@@ -55,37 +59,11 @@ The trend view helps you:
 * Understand **emerging risk patterns**
 * Track how threats evolve over time
 
-### 4. Guardrail Effectiveness
+### 4. Compliance Risk Overview
 
-You can evaluate how well your AI protections are performing:
+The **Compliance at Risks** widget shows how your AI usage aligns with major frameworks, such as FedRAMP, MITRE ATLAS, CIS Controls, and CMMC, each showing the **percentage of controls at risk**. It reads "No compliance risk data available" until Akto has enough signal to evaluate your posture against these frameworks.
 
-* See your **overall guardrail score**
-* Identify the **most triggered security policies**
-* Understand which risks are most common (e.g., prompt injection, malicious code)
-
-This helps you decide:
-
-* Where controls are working
-* Where additional enforcement or tuning is needed
-
-### 5. Data Protection Trends
-
-You can track how effectively your organization is protecting sensitive data:
-
-* Monitor trends in **data exposure attempts**
-* Identify **recurring risks or weak points**
-* Evaluate whether your **data protection posture is improving over ti**
-
-### 6. Compliance Risk Overview
-
-You can see how your AI usage aligns with major frameworks:
-
-* FedRAMP
-* MITRE ATLAS
-* CIS Controls
-* CMMC
-
-Each framework shows the **percentage of controls at risk**, helping you:
+This helps you:
 
 * Quickly understand compliance exposure
 * Prioritise remediation aligned with regulatory requirements
