@@ -2,85 +2,65 @@
 
 ## Overview
 
-The MCP Registry integration allows you to configure external registry endpoints that Akto uses to discover and validate Model Context Protocol (MCP) servers. This integration defines the authoritative sources Akto queries for MCP server metadata during agentic discovery.
+Configure MCP (Model Context Protocol) Registries to discover and validate MCP servers. Akto reads a CSV file you host at a URL you provide and ingests the MCP server names listed in it, so you can keep your MCP server inventory in sync with your own source of truth.
 
-The integration supports official, third-party, and custom registries that implement the MCP Registry API specification.
+## How to Add a URL
 
-## Integrating the MCP Registry
-
-You can configure MCP registries from **Settings → Integrations → MCP Registry**.\
-.
-
-For integration follow the following steps:
+You can configure the MCP registry from **Settings → Integrations → MCP Registry**.
 
 {% stepper %}
 {% step %}
-**Open MCP Registry settings**
+**Open the form**
 
-Navigate to **Settings → Integrations → MCP Registry** to view existing configured registries.
-
-<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (10).png" alt="" width="563"><figcaption></figcaption></figure></div>
-
-{% hint style="info" %}
-This page maintains the complete list of registry endpoints used by Akto.
-{% endhint %}
+Click **Add URL** to open the form.
 {% endstep %}
 
 {% step %}
-**Add a new registry**
+**Enter the URL**
 
-Select **Add Registry** to register a new MCP registry endpoint.
+Enter the URL pointing to your CSV file (e.g. `https://example.com/path/to/mcp_servers.csv`). The file at this URL will be read to extract MCP endpoints.
+
+Use **Download sample CSV** on this page to get a template.
 {% endstep %}
 
 {% step %}
-**Provide registry details**
+**Add authentication (if required)**
 
-Enter the following information:
-
-* **Registry Name**: A descriptive identifier for the registry within Akto.
-*   **Registry URL**: The full MCP Registry API endpoint, typically ending with `/v0/servers`.
-
-    <figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
-
-The registry URL must follow the MCP Registry API specification and must be reachable from the Akto instance.
+If the file requires authentication, click **Add Header** and add a header, for example key `Authorization` and value `Bearer <your_token>`.
 {% endstep %}
 
 {% step %}
-**Save the configuration**
+**Submit**
 
-Save the registry configuration to include the registry in MCP server discovery.
+Click **Add Registry**. MCP server entries will be ingested automatically from the CSV.
 {% endstep %}
 {% endstepper %}
 
-You can configure multiple registries simultaneously. All configured registries participate equally in discovery and validation.
-
-## Testing a Connected Registry
-
-Each configured registry includes a **Test Connection** option.
-
-The connection test validates:
-
-* Network accessibility from the Akto instance.
-* API responsiveness of the registry endpoint.
-* Basic compatibility with the MCP Registry API format.
-
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
-
-Only registries that respond successfully are used for MCP server discovery and validation. This testing step helps confirm registry readiness before relying on registry data in agentic workflows.
+## Important Notes
 
 {% hint style="warning" %}
-**Important Notes**
-
-* All registries will be used for MCP server discovery and validation
-* Custom registries must follow the MCP Registry API specification
-* Ensure your custom registries are accessible from your Akto instance
+**Only one registry URL is supported.**
 {% endhint %}
 
-## Configuration Impact
+### CSV Format
 
-Configured MCP registries define:
+Your CSV must have a header row with a `mcp_server_name` column. Each row is one MCP server name.
 
-* The scope of MCP server discovery.
-* The sources used for MCP server validation.
+```
+mcp_server_name
+api.githubcopilot.com
+mcp.notion.com
+filesystem-local
+my-postgres
+```
 
-This integration helps you manage MCP server provenance while keeping discovery behavior controlled and transparent.
+* For **remote** MCP servers, use the domain name (e.g. `api.example.com`).
+* For **local** MCP servers, use the name your team has given it (e.g. `filesystem-local`, `my-postgres`).
+
+Use **Download sample CSV** on this page for a ready-to-edit template.
+
+{% hint style="info" %}
+### Syncing
+
+Updated your CSV? Wait 5 minutes for changes to propagate, then click **Sync now** to pull in the latest entries.
+{% endhint %}
