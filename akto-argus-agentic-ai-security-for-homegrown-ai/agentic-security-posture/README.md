@@ -1,41 +1,57 @@
 # Agentic Security Posture
 
-Akto's Agentic Security Posture provides a comprehensive view of critical security information across your AI agents, MCP endpoints, and LLM components. Track identified vulnerabilities, data exposure risks through agent interactions, and scan coverage across autonomous systems, enabling proactive management of agentic security risks.
+Agentic Security Posture gives you an executive view of your AI agent risk: how much of your agentic surface you have visibility into, how urgent your open risk is, and where it's concentrated. It rolls up findings from every AI agent, MCP endpoint, and LLM component Akto has discovered, so you can track posture over time and decide where to direct security investment without digging into individual findings. When you need that level of detail, the [**Analysis**](analysis.md) tab turns this same data into a prioritized, team-assigned action list.
 
-The page has two tabs: **Home**, the executive summary below, and [**Analysis**](analysis.md), a prioritized action item list with a badge showing how many are open. From the top of either tab, you can filter by time range (for example, **Last 1 year**).
+## At a Glance
 
-### Key Capabilities
+Four headline numbers summarize the state of your agentic AI surface, each showing how much it has changed over the time range you've selected:
 
-#### 1. Agent Component Risk Scoring
+<table><thead><tr><th width="200">Metric</th><th>What it tells you</th></tr></thead><tbody><tr><td><strong>Total Agentic Components</strong></td><td>How large your agentic AI surface is: every agent, MCP endpoint, and LLM component you've discovered</td></tr><tr><td><strong>Issues</strong></td><td>How much open security risk currently exists across that surface</td></tr><tr><td><strong>Agentic Risk Score</strong></td><td>A single aggregate risk score for your agentic surface, so you can track whether your overall exposure is trending up or down</td></tr><tr><td><strong>Test Coverage</strong></td><td>How much of what you've discovered you've actually tested. A low number means you have visibility into components you haven't validated yet</td></tr></tbody></table>
 
-* Every agent component and MCP endpoint is **scored based on its risk level**, prioritizing remediation efforts
-* Helps security teams focus on autonomous systems that pose the greatest business and compliance risk
-* Factors in prompt injection vulnerability, tool permission scope, and data sensitivity
+## Is Your Coverage Keeping Up?
 
-#### 2. Compliance Alignment for Agentic Systems
+### Recent Scans
 
-* Maps agent components and MCP endpoints against **regulatory frameworks** including GDPR, HIPAA, and PCI DSS
-* Highlights compliance gaps specific to autonomous systems and LLM data processing
-* Enables **automated compliance checks** for continuous validation of agentic security posture
+A row of cards for your most recently run scans, each showing the scan name, when it ran, issues found by severity, and how many agentic components it tested. This is the fastest way to see whether your scanning is keeping pace with how fast your agentic surface is growing. If it's falling behind, **Increase scan coverage** takes you to where your team can close the gap.
 
-#### 3. Agentic Misconfiguration Detection
+### New Domains
 
-* Detects common misconfigurations in AI agents and MCP implementations:
-  * Missing authentication on agent endpoints
-  * Overly permissive tool access
-  * Weak authorization boundaries between agent components
-  * Insecure prompt handling
-  * CORS issues in MCP servers
-* Flags misconfigured agents before attackers exploit them
+Domains and hosts you've discovered recently, each with its current test coverage percentage and number of associated issues. New, untested domains are attack surface your team hasn't validated yet, worth raising with them. **Increase test coverage** takes you to where they can get it done.
 
-#### 4. Sensitive Data Detection in Agent Flows
+## How Urgent Is Your Risk?
 
-* Identifies agent components that **expose or transmit sensitive data** like PII, PHI, or financial information
-* Monitors data leakage through agent interactions, tool calls, and LLM responses
-* Ensures sensitive data is **properly secured and masked** in agent workflows
+### Issues by Severity
 
-#### 5. Unauthenticated & Publicly Exposed Agent Components
+A donut chart of your open issues by severity (**Critical**, **High**, **Medium**, **Low**), the fastest read on how much of your current risk needs your team's immediate attention. **Fix critical issues** takes you to that queue so you can direct them to the highest-severity issues first.
 
-* Flags agent endpoints and MCP servers accessible **without authentication controls**
-* Identifies tools and components **publicly exposed to the internet**, reducing attack surface
-* Monitors unauthorized access to agent capabilities and tool integrations
+### Threats by Severity
+
+A donut chart of detected threats by severity (**Critical**, **High**, **Medium**, **Low**). Where "Issues" reflects misconfigurations and vulnerabilities, "Threats" reflects active guardrail and policy violations Akto has observed in your agent traffic. **View all threats** takes you to the full list.
+
+## What Kind of Risk Are You Exposed To?
+
+### Vulnerabilities Findings
+
+A bar chart of vulnerability types (e.g. MCP - Indirect Prompt Injection, Model Context Protocol (MCP) Security - Input Validation) ranked by number of issues found, showing which classes of vulnerability are most common across your agentic surface.
+
+### Top Threat Categories
+
+A bar chart of threats grouped by the guardrail or policy category that flagged them (e.g. PII Policy, Ban Topics Guardrail, Prompt Injection, Malicious Skill Detected). **View all categories** takes you to the full breakdown.
+
+## Where Is Your Risk Concentrated?
+
+### Agentic Components by Risk Score
+
+A bar chart bucketing your agentic components into risk score bands (0 to 5) by how many fall into each band, showing you whether your risk is spread thin or concentrated in a small number of high-risk components worth naming to your team directly. **Check out** takes you to them.
+
+### Agentic Components by Access Type
+
+A donut chart of your components by access type: **Partner**, **Internal**, **External**, **Third Party**, and **Need more data** for components Akto hasn't classified yet. Your externally and third-party accessible components carry more business risk than internal-only ones, keep an eye on that split. **Check out** takes you to the components behind it.
+
+### Agentic Components by Authentication
+
+A donut chart of your components by the authentication mechanism detected: **Session token**, **Unauthenticated**, **Bearer**, **Basic**, **JWT**, **Authorization header**, and **Need more data**. A high **Unauthenticated** count is a governance gap worth flagging on its own. **Check out** takes you to the components behind it.
+
+### Agentic Component Type
+
+A bar chart of your components by request protocol: **REST**, **GraphQL**, **gRPC**, and **SOAP**, useful context for prioritizing which protocols your security tooling and processes need to cover. **Check out** takes you to the components behind it.
