@@ -24,9 +24,9 @@ From the guardrail policies list, select the policy to edit.
 {% endstep %}
 
 {% step %}
-Review the **nine configuration settings** displayed in the guardrail policy form.
+Review the **configuration settings** displayed in the guardrail policy form.
 
-<figure><img src="../../.gitbook/assets/image (41).png" alt="" width="563"><figcaption></figcaption></figure>
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/image (242).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
