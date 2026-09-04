@@ -2,27 +2,45 @@
 
 ## Overview
 
-Akto lets you seamlessly import AI models like **Gemini, OpenAI, Claude, DeepSeek, Llama, Grok**, or even your **custom model** into **AI Model Security**. With just your model’s endpoint URL and optional authentication, you can start monitoring and scanning instantly.
+Akto lets you seamlessly import AI models like **Gemini, OpenAI, Claude, DeepSeek, Llama, Grok, Hugging Face**, or even your **custom model** into **AI Model Security**. With just your model's endpoint URL and optional authentication, you can start monitoring and scanning instantly.
 
 <figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2Fgit-blob-1213d79a9e68ade9dce330c6df0f2170f0503f67%2Fimage.png?alt=media" alt="" width="563"><figcaption></figcaption></figure>
 
 ## Supported Models
 
-* **Gemini** – Import Google Gemini seamlessly
-* **OpenAI** – Import OpenAI models seamlessly
-* **Claude** – Import Anthropic Claude seamlessly
-* **DeepSeek** – Import DeepSeek seamlessly
-* **Llama** – Import Meta Llama seamlessly
-* **Grok** – Import xAI Grok seamlessly
-* **Bring Your Own Model** – Import custom AI models seamlessly
+<table><thead><tr><th width="215.03515625">AI Model/Connector</th><th>Description</th></tr></thead><tbody><tr><td>Gemini</td><td>Import Google Gemini models seamlessly into AKTO.</td></tr><tr><td>OpenAI</td><td>Import OpenAI models seamlessly into AKTO.</td></tr><tr><td>Claude</td><td>Import Anthropic Claude models seamlessly into AKTO.</td></tr><tr><td>DeepSeek</td><td>Import DeepSeek models seamlessly into AKTO.</td></tr><tr><td>Llama</td><td>Import Meta Llama models seamlessly into AKTO.</td></tr><tr><td>Grok</td><td>Import xAI Grok models seamlessly into AKTO.</td></tr><tr><td>Bring Your Own Model</td><td>Import your custom AI models seamlessly into AKTO.</td></tr><tr><td>Hugging Face</td><td>Import your Hugging Face models seamlessly into AKTO.</td></tr></tbody></table>
 
-## What You Need
+## Bring Your Own Model: What You Need
 
-* **AI Endpoint URL** (e.g., `https://api.example.com/ai-agent`)
-* **(Optional) Authentication details** if your AI model requires them
-* **(Optional) Custom request body** for models that need non-standard inputs
+The steps below are for importing a custom, in-house, or self-hosted model that doesn't have a dedicated connector above. If your provider is listed above, follow its **Connect** flow instead, it will have setup steps specific to that provider rather than this generic flow.
 
-## Steps to Import
+{% stepper %}
+{% step %}
+**AI Endpoint URL** (e.g., `https://api.example.com/ai-agent`)
+{% endstep %}
+
+{% step %}
+**(Optional) AI Agent Name** – if left blank, the hostname from the URL is used
+{% endstep %}
+
+{% step %}
+**(Optional) Custom Request Body** – for models requiring specific input JSON
+{% endstep %}
+
+{% step %}
+**(Optional) Test Role for Authentication** – for models with role-based access
+{% endstep %}
+
+{% step %}
+**(Optional) Custom Headers** – for models requiring additional headers such as API keys or auth tokens
+{% endstep %}
+
+{% step %}
+**(Optional) Custom Response** – skip the live call and provide the response yourself, useful when the endpoint isn't reachable from the dashboard
+{% endstep %}
+{% endstepper %}
+
+## Bring Your Own Model: Steps to Import
 
 {% stepper %}
 {% step %}
@@ -30,27 +48,28 @@ Akto lets you seamlessly import AI models like **Gemini, OpenAI, Claude, DeepSee
 {% endstep %}
 
 {% step %}
-**Select your AI model provider** (Gemini, OpenAI, Claude, DeepSeek, Llama, Grok, or _Bring Your Own Model_) under AI Model Security section.
+**Select Bring Your Own Model** and click **Connect**
 {% endstep %}
 
 {% step %}
-Click **Connect.**
-
-<figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2Fgit-blob-ff2886b0e1105dfd405317fd71f755b76b597d3e%2Fimage.png?alt=media" alt="" width="563"><figcaption></figcaption></figure>
-{% endstep %}
-
-{% step %}
-**Fill in model details**:
+**Fill in model details** in the Set up guide panel:
 
 * **AI Endpoint URL**: e.g., `https://api.example.com/ai-agent`
-* _(Optional)_ Enable **custom request body** if the model requires non-default payloads
-*   _(Optional)_ Use **test role for authentication** if your AI model enforces role-based access
+* _(Optional)_ **AI Agent name**: if not provided, the hostname from the URL will be used
+*   _(Optional)_ Check **Use custom request body** and enter JSON payload:
 
-    <figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
+    ```json
+    { "key": "value" }
+    ```
+* _(Optional)_ Enable **Use test role for authentication** and select a role (e.g., `ATTACKER_TOKEN_ALL`)
+* _(Optional)_ Click **+ Add header** under **Custom Headers** to pass additional headers with each request
+* _(Optional)_ Enable **Use custom response (skip live call)** and provide the response yourself instead of Akto calling the URL, useful when the endpoint isn't reachable from the dashboard
 {% endstep %}
 
 {% step %}
-**Click Import.**
+Click **Import**
+
+You can also click **Go to docs** on the same panel for detailed setup instructions.
 {% endstep %}
 {% endstepper %}
 
