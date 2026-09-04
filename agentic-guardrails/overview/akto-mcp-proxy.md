@@ -10,7 +10,6 @@ Akto MCP Gateway is a security and governance layer that sits between MCP (Model
 * **Security Guardrails**: Enforce organizational security policies and compliance requirements
 * **Request Monitoring**: Complete visibility into all MCP communications
 * **Transparent Proxying**: Zero-configuration changes required on MCP servers
-* **Performance Optimization**: Intelligent caching and request optimization
 
 ## Architecture
 
@@ -63,12 +62,12 @@ flowchart LR
 
 ### Basic Setup
 
-To use Akto MCP Gateway, simply prepend your original MCP server URL with the Akto gateway endpoint. All existing authentication and credentials for your original MCP server remain unchanged.
+The gateway URL is not a shared public endpoint, it's deployed uniquely for each client. Contact Akto Support to get your client-specific gateway URL, then prepend your original MCP server URL with it. All existing authentication and credentials for your original MCP server remain unchanged.
 
 **Gateway URL Format:**
 
 ```
-https://mcp-proxy.akto.io/proxy/{protocol}/{host}/{path}
+https://{your-client-gateway}.akto.io/proxy/{protocol}/{host}/{path}
 ```
 
 Where the original MCP server URL is transformed by:
@@ -99,7 +98,7 @@ Where the original MCP server URL is transformed by:
     {
       "mcpServers": {
         "kite-trading": {
-          "url": "https://mcp-proxy.akto.io/proxy/https/mcp.kite.trade/sse",
+          "url": "https://{your-client-gateway}.akto.io/proxy/https/mcp.kite.trade/sse",
           "apiKey": "your-kite-api-key"
         }
       }
@@ -128,7 +127,7 @@ Where the original MCP server URL is transformed by:
     {
       "mcpServers": {
         "data-server": {
-          "url": "https://mcp-proxy.akto.io/proxy/wss/api.example.com/mcp",
+          "url": "https://{your-client-gateway}.akto.io/proxy/wss/api.example.com/mcp",
           "auth": {
             "token": "bearer-token-123"
           }
@@ -140,61 +139,24 @@ Where the original MCP server URL is transformed by:
 {% hint style="info" %}
 **Important Notes**
 
+* Your gateway URL is deployed specifically for your organization, it is not shared across clients.
 * All original authentication credentials (API keys, tokens, etc.) remain the same
 * The gateway transparently forwards authentication headers to the original server
 * No changes required on the MCP server side
 * The gateway URL supports both HTTP/HTTPS and WebSocket protocols
 {% endhint %}
 
-### Advanced Configuration
-
-#### Custom Guardrails
-
-Define custom security policies and guardrails:
-
-```yaml
-guardrails:
-  - name: "PII Protection"
-    type: "content_filter"
-    rules:
-      - pattern: "ssn|social security"
-        action: "block"
-      - pattern: "credit card|cc number"
-        action: "redact"
-  
-  - name: "Rate Limiting"
-    type: "rate_limit"
-    rules:
-      - requests_per_minute: 100
-        per_client: true
-```
-
-#### Guardrails Profiles
-
-Configure guardrail detection sensitivity and rules:
-
-```yaml
-threat_detection:
-  sensitivity: "high"
-  enabled_checks:
-    - sql_injection
-    - command_injection
-    - path_traversal
-    - data_exfiltration
-  custom_rules:
-    - name: "Block Sensitive File Access"
-      pattern: "/etc/passwd|/etc/shadow"
-      action: "block"
-```
-
 ## Security Features
 
 ### 1. Guardrails
 
-* **SQL Injection Prevention**: Detects and blocks SQL injection attempts
-* **Command Injection Protection**: Prevents malicious command execution
-* **Path Traversal Defense**: Blocks unauthorized file system access
-* **Data Exfiltration Prevention**: Monitors and controls data egress
+Every request and response that passes through the gateway is evaluated against Akto's guardrail scanners, the same ones used across every Akto connector:
+
+* **Input guardrails**, applied to the request before it reaches your MCP server: prompt injection, secrets and credential leakage, banned code and topics, tool-call restrictions, context poisoning, and more.
+* **Output guardrails**, applied to the server's response before it reaches the client: sensitive data exposure, malicious URLs, bias, tool-call abuse, and more.
+
+Akto ships 40+ built-in guardrail scanners across input and output, plus custom policies for your own rules. 
+See [Agent Guard](../concepts/agent-guard.md) for the full list of scanners and what each one detects.
 
 ### 2. Access Control
 
@@ -220,21 +182,6 @@ threat_detection:
 * Performance metrics (latency, throughput)
 * Error rates and patterns
 
-### Alerts & Notifications
-
-Configure alerts for security events:
-
-```yaml
-alerts:
-  - type: "threat_detected"
-    severity: "high"
-    channels: ["email", "slack"]
-  
-  - type: "rate_limit_exceeded"
-    threshold: 1000
-    channels: ["webhook"]
-```
-
 ## API Reference
 
 ### Gateway Endpoints
@@ -242,7 +189,7 @@ alerts:
 #### Health Check
 
 ```http
-GET https://proxy.akto.io/health
+GET https://{your-client-gateway}.akto.io/health
 Authorization: Bearer {api_key}
 ```
 
@@ -267,9 +214,8 @@ Authorization: Bearer {api_key}
 
 1. **Regular Policy Updates**: Keep security policies and guardrails up-to-date
 2. **Monitor Alert Fatigue**: Fine-tune detection rules to reduce false positives
-3. **Performance Optimization**: Use caching for frequently accessed resources
-4. **Backup Configuration**: Maintain fallback options for critical MCP servers
-5. **Regular Audits**: Review logs and analytics for security insights
+3. **Backup Configuration**: Maintain fallback options for critical MCP servers
+4. **Regular Audits**: Review logs and analytics for security insights
 
 ## Troubleshooting Common Issues
 
@@ -284,12 +230,6 @@ Authorization: Bearer {api_key}
 * Review security detection logs for specific violations
 * Check guardrail configurations
 * Verify request content against security policies
-
-### Performance Degradation
-
-* Monitor gateway latency metrics
-* Optimize guardrail rules for efficiency
-* Consider geographic gateway distribution
 
 ## Get Support for your Akto setup
 
