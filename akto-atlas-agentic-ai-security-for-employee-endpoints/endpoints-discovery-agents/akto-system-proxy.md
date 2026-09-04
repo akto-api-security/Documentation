@@ -2,7 +2,7 @@
 
 ## Overview
 
-Akto System Proxy is a network-level endpoint discovery method that monitors outbound traffic from AI applications running on employee devices, including **Claude Desktop**, **GitHub Copilot**, **ChatGPT desktop app** (classic and current), and any other AI-related software. It captures API calls and file uploads made by these apps and surfaces them in the Akto dashboard for visibility, analysis, and guardrails enforcement.
+Akto System Proxy is a network-level endpoint discovery method that monitors outbound traffic from AI applications running on employee devices, including **Claude Desktop**, **GitHub Copilot**, **ChatGPT desktop app** (classic and current), and any other AI-related software. It captures API calls and file uploads made by these apps and surfaces them in the Akto dashboard for visibility, analysis, and guardrail enforcement.
 
 The proxy is installed automatically alongside [AI Endpoint Shield](ai-endpoint-shield/README.md), no separate installation step is required.
 

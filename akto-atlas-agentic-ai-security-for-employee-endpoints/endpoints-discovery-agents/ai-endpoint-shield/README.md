@@ -24,13 +24,12 @@ AI Endpoint Shield supports macOS, Windows, and Linux. Roll it out fleet-wide th
 | Windows | [Microsoft Intune](intune-deployment.md), [NinjaOne](ninjaone-windows-deployment.md), or [Automox](automox-deployment.md) | Available |
 | Linux | Available | Available |
 
-Every method runs the same underlying installation script per platform, so behavior is consistent no matter which MDM you deploy it from. These guides walk you through the install steps only, they don't include the installer file itself.
+Every method runs the same underlying installation script per platform, so behavior is consistent no matter which MDM you deploy it from. These guides walk you through the install steps only; they don't include the installer file itself.
 
 {% hint style="info" %}
 **Getting the installer**
 
-AI Endpoint Shield ships as a client-specific installer, with your Akto API token and base URL already embedded, so nothing sensitive lives in your MDM configuration. 
-For the installer or installation package, for any platform, **contact Akto Support** first and we'll get you the file configured for your deployment method.
+AI Endpoint Shield ships as a client-specific installer, with your Akto API token and base URL already embedded, so nothing sensitive lives in your MDM configuration. For the installer or installation package on any platform, **contact Akto Support** first and we'll get you the file configured for your deployment method.
 {% endhint %}
 
 ## After Deployment

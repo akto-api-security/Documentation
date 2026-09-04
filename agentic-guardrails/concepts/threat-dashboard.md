@@ -66,7 +66,7 @@ This filter helps you focus on agent behaviours that directly impact regulatory 
 
 From the Guardrails dashboard, you can navigate to detailed guardrail activity views for request- and prompt-level investigation.
 
-Select a guardrail from the Guardrails dashboard opens the **Guardrail Activity Detailed View**, which provides execution-level visibility into how the guardrail was detected.
+Selecting a guardrail from the Guardrails dashboard opens the **Guardrail Activity Detailed View**, which provides execution-level visibility into how the guardrail was detected.
 
 From the detailed view, you can analyse:
 

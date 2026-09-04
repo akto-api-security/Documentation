@@ -62,7 +62,7 @@ flowchart LR
 
 ### Basic Setup
 
-The gateway URL is not a shared public endpoint, it's deployed uniquely for each client. Contact Akto Support to get your client-specific gateway URL, then prepend your original MCP server URL with it. All existing authentication and credentials for your original MCP server remain unchanged.
+The gateway URL is not a shared public endpoint; it's deployed uniquely for each client. Contact Akto Support to get your client-specific gateway URL, then prepend your original MCP server URL with it. All existing authentication and credentials for your original MCP server remain unchanged.
 
 **Gateway URL Format:**
 
@@ -139,7 +139,7 @@ Where the original MCP server URL is transformed by:
 {% hint style="info" %}
 **Important Notes**
 
-* Your gateway URL is deployed specifically for your organization, it is not shared across clients.
+* Your gateway URL is deployed specifically for your organization; it is not shared across clients.
 * All original authentication credentials (API keys, tokens, etc.) remain the same
 * The gateway transparently forwards authentication headers to the original server
 * No changes required on the MCP server side
@@ -155,8 +155,7 @@ Every request and response that passes through the gateway is evaluated against 
 * **Input guardrails**, applied to the request before it reaches your MCP server: prompt injection, secrets and credential leakage, banned code and topics, tool-call restrictions, context poisoning, and more.
 * **Output guardrails**, applied to the server's response before it reaches the client: sensitive data exposure, malicious URLs, bias, tool-call abuse, and more.
 
-Akto ships 40+ built-in guardrail scanners across input and output, plus custom policies for your own rules. 
-See [Agent Guard](../concepts/agent-guard.md) for the full list of scanners and what each one detects.
+Akto ships 40+ built-in guardrail scanners across input and output, plus custom policies for your own rules. See [Agent Guard](../concepts/agent-guard.md) for the full list of scanners and what each one detects.
 
 ### 2. Access Control
 
