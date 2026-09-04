@@ -1,23 +1,51 @@
-# Endpoints Discovery Methods
+# AI Discovery Connectors
 
-Get started immediately with endpoint-based discovery agents that require no infrastructure setup, perfect for development environments, quick starts, and user-level discovery of AI agents and MCP servers.
+Connect Atlas to every surface where your employees run AI: CLIs, IDEs, browsers, SaaS AI suites, and the EDR/MDM tooling you already deploy through. Every connector feeds the same [Agentic AI Discovery](../ai-agent-activity/) inventory, so it doesn't matter which mix you pick, you get one view of everything discovered.
 
-* [Browser Extensions](browser-extensions/) - Discover agents directly from Chrome, Firefox, or Safari as you browse web applications
-* [AI Endpoint Shield](ai-endpoint-shield/) - Specialised endpoint protection and discovery for Model Context Protocol interactions
-* [Cursor Hooks](cursor-hooks.md) - Zero-installation security hooks for Cursor IDE (monitors chat + MCP tools)
-* [Claude CLI Hooks](claude-cli-hooks.md) - Zero-installation security hooks for Claude CLI (monitors prompts + responses)
-* [Kiro CLI Hooks](kiro-cli-hooks.md) - Zero-installation security hooks for Kiro CLI (monitors prompts + tool calls)
-* [Codex CLI Hooks](codex-cli-hooks.md) - Zero-installation security hooks for OpenAI Codex CLI (monitors prompts, responses + tool calls)
-* [Gemini CLI Hooks](gemini-cli-hooks.md) - Zero-installation security hooks for Gemini CLI (monitors prompts + responses)
-* [Snowflake Cortex Code CLI Hooks](snowflake-cortex-cli-hooks.md) - Security hooks for Snowflake Cortex Code CLI (prompts + tool use via native Cortex hooks)
-* [Neovim Hooks](neovim-hooks.md) - Lua plugin for Neovim AI plugins security (avante, copilot, codecompanion, windsurf + more)
-* [OpenCode Hooks](opencode-hooks.md) - Zero-installation security hooks for OpenCode (monitors chat + MCP tools)
-* [Hermes Hooks](hermes-hooks.md) - Zero-installation security hooks for Hermes (monitors chat + MCP tools)
-* [Amp Hooks](amp-hooks.md) - Zero-installation security hooks for Amp (monitors tool executions + MCP tools)
-* [Deploy via SentinelOne](deploy-via-sentinelone.md) - Connect SentinelOne to discover AI agents and deploy guardrails on managed endpoints
-* [Deploy via CrowdStrike](deploy-via-crowdstrike.md) - Connect CrowdStrike Falcon to discover AI agents and deploy guardrails on managed endpoints
-* [Agentic Shield](agentic-shield.md) - Application-level shield for real-time discovery and protection of AI agent interactions
-* [Anthropic Connector](anthropic-connector.md) - Pull compliance activity data from Claude.ai, Claude Console, and Claude API directly into Akto via the Anthropic Compliance API
-* [Claude Inference Hooks](claude-inference-hooks.md) - Use Akto Atlas as the AI security server behind Anthropic's Inference Hooks to allow or deny Claude prompts inline, before inference runs
-* [OpenAI Connector](openai-connector.md) - Pull audit log and org activity data from ChatGPT and OpenAI directly into Akto via the OpenAI Admin API
+## Endpoint-Wide Discovery and Protection
 
+* [AI Endpoint Shield](ai-endpoint-shield/) - the background agent you deploy fleet-wide: discovers local MCP servers, installs your CLI and IDE hooks, and bundles the System Proxy.
+* [Browser Extensions](browser-extensions/) - discovery and inline guardrails for AI usage inside Chrome, Firefox, and Safari.
+* [Akto System Proxy](akto-system-proxy.md) - installed automatically with AI Endpoint Shield, covers standalone desktop AI apps that don't expose hooks (Claude Desktop, GitHub Copilot, ChatGPT desktop).
+
+## Agentic CLI Hooks
+
+Zero-install hooks for CLI-based coding agents:
+
+* [Claude CLI Hooks](claude-cli-hooks.md)
+* [Codex CLI Hooks](codex-cli-hooks.md)
+* [Gemini CLI Hooks](gemini-cli-hooks.md)
+* [Kiro CLI Hooks](kiro-cli-hooks.md)
+* [Copilot Hooks](copilot-cli-hooks.md) - covers GitHub Copilot in VS Code and the CLI
+* [Snowflake Cortex Code CLI Hooks](snowflake-cortex-cli-hooks.md)
+* [Hermes Hooks](hermes-hooks.md)
+* [Amp Hooks](amp-hooks.md)
+* [OpenCode Hooks](opencode-hooks.md)
+
+## Agentic IDEs and Desktop Apps
+
+* [Cursor Hooks](cursor-hooks.md)
+* [Neovim Hooks](neovim-hooks.md)
+* [Claude Cowork Connector](claude-cowork-connector.md)
+
+## SaaS and Compliance Connectors
+
+* [Anthropic Connector](anthropic-connector.md) - pulls compliance activity from Claude.ai, Claude Console, and the Claude API via Anthropic's Compliance API.
+* [Claude Inference Hooks](claude-inference-hooks.md) - use Atlas as the security server behind Anthropic's Inference Hooks, to allow or deny Claude prompts inline before inference runs.
+* [OpenAI Connector](openai-connector.md) - pulls audit log and org activity data from ChatGPT and OpenAI via the OpenAI Admin API.
+* [GitHub Copilot Enterprise](github-copilot-enterprise.md) - agent discovery, centralized guardrails, and enterprise-wide policy enforcement for Copilot.
+* [Copilot Studio](../connectors/ai-agent-security/microsoft-copilot-studio.md), [Copilot Studio (Multi Environment)](../connectors/ai-agent-security/microsoft-copilot-studio-multi-environment.md), and [Copilot Studio (Threat Detection)](../connectors/ai-agent-security/microsoft-copilot-studio-threat-detection.md).
+
+## Locally Hosted Models
+
+Atlas discovers models served by local model runners on employee devices, including Ollama, vLLM, SGLang, and Docker Model Runner. 
+
+## Endpoint Management (EDR) Integrations
+
+Detect AI coding tools already running on managed endpoints through the EDR you deploy:
+
+* [Deploy via SentinelOne](deploy-via-sentinelone.md)
+* [Deploy via CrowdStrike](deploy-via-crowdstrike.md)
+* [Deploy via Microsoft Defender Endpoint](deploy-via-microsoft-defender/)
+
+For MDM-based rollout (Intune, NinjaOne, Automox, Jamf, Mosyle), see the deployment options on the [AI Endpoint Shield](ai-endpoint-shield/) page.
