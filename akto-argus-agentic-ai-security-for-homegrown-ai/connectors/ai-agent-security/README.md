@@ -4,7 +4,7 @@
 
 Akto lets you seamlessly import **AI agents** such as **AWS Bedrock, Azure AI Foundry, Databricks, Google Vertex AI, IBM Watsonx**, or even your **custom agent** into **AI Agent Security**. With just the agent endpoint URL and optional configuration, you can start monitoring and scanning agent activity instantly.
 
-<figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2Fgit-blob-26c83f936b6d7958a5830edb6b158a31fbdd2e2a%2Fimage.png?alt=media" alt="" width="563"><figcaption></figcaption></figure>
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (232).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ## Supported AI Agents
 
@@ -25,7 +25,7 @@ Akto Argus also supports **Bring Your Own Agent**, enabling organizations to sec
 * Enforce security policies via Akto Argus APIs or SDKs
 {% endhint %}
 
-## Bring Your Own Agent: What You Need
+## Bring Your Own AI Agent: What You Need
 
 The steps below are for importing a custom, in-house, or self-hosted agent that doesn't have a dedicated connector in the table above. If your platform is listed above, follow its linked guide instead, it will have setup steps specific to that platform rather than this generic flow.
 
@@ -55,8 +55,6 @@ The steps below are for importing a custom, in-house, or self-hosted agent that 
 {% endstep %}
 {% endstepper %}
 
-<figure><img src="https://2916937215-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FRc4KTKGprZI2sPWKoaLe%2Fuploads%2Fgit-blob-2d67298aa334f86b23e720ea82b13f8fa50abba8%2Fimage.png?alt=media" alt="" width="563"><figcaption></figcaption></figure>
-
 ## Bring Your Own Agent: Steps to Import
 
 {% stepper %}
@@ -65,7 +63,9 @@ The steps below are for importing a custom, in-house, or self-hosted agent that 
 {% endstep %}
 
 {% step %}
-**Select Bring Your Own Agent** (or Custom Agent) and click **Connect**
+**Select Bring Your Own AI Agent** (or Custom Agent) and click **Connect**
+
+<figure><img src="../../../.gitbook/assets/image (236).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
@@ -98,7 +98,6 @@ Akto will now automatically:
 **Akto Access Scope**
 
 * Auth/test roles (if any) are used **only during import** and are **not stored**
-* Akto uses **read-only access** to interact with your AI agent
 {% endhint %}
 
 ## Get Support for your Akto setup
