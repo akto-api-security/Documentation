@@ -24,6 +24,10 @@ Example:
 mjcadlphjmoinphffggcpineljpageie;https://akto-chrome-ext.s3.ap-south-1.amazonaws.com/akto-chrome-ext/update.xml
 ```
 
+## Managed Configuration (User & Device Identity)
+
+Before force-installing the extension, you can also set up a separate managed policy that tells it who the user and device are, so the activity it reports to Akto is attributed correctly. See [Custom Device Name and Email](../../device-identity.md#browser-extension-chrome).
+
 ## Deployment Steps
 
 {% stepper %}
@@ -91,6 +95,7 @@ Write-Host "[Akto] Chrome extension force-install policy set: $extensionValue"
 
 ## Related Documentation
 
+* [Custom Device Name and Email](../../device-identity.md)
 * [Intune Deployment (Windows)](intune-deployment.md)
 * [Extension Usage Behaviour](extension-usage-behaviour.md)
 * [NinjaOne Deployment (Windows Endpoint Shield)](../../ai-endpoint-shield/ninjaone-windows-deployment.md)

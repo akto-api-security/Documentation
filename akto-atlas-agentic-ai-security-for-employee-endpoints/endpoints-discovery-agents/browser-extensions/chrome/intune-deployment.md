@@ -28,7 +28,9 @@ Use the values exactly as shared by Akto Support. Do not modify the extension ID
 
 Before force-installing the extension, set up a separate managed policy that tells it who the user and device are, so the activity it reports to Akto is attributed correctly. See [Custom Device Name and Email](../../device-identity.md).
 
-## Create Intune Configuration Profile
+<details>
+
+<summary><strong>Create Intune Configuration Profile (force-install steps)</strong></summary>
 
 {% stepper %}
 {% step %}
@@ -105,6 +107,8 @@ mjcadlphjmoinphffggcpineljpageie;https://akto-chrome-ext.s3.ap-south-1.amazonaws
 <div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/intune-chrome-step-5-review-and-create.png" alt="Review and create screen in Intune profile wizard" width="563"><figcaption>Review settings and create the deployment profile.</figcaption></figure></div>
 {% endstep %}
 {% endstepper %}
+
+</details>
 
 ## Validate Deployment
 

@@ -57,9 +57,9 @@ Once the file is in place, Endpoint Shield picks it up automatically on its next
 **One file per device.** `email` and `deviceName` are specific to each machine, and there's no Akto-provided mechanism yet to auto-populate them from Jamf/Mosyle/NinjaOne device variables (computer name, directory-bound user, and so on). You, or your imaging/staging workflow, are responsible for generating a distinct `identity.json` per device before rollout.
 {% endhint %}
 
-## Browser Extension (Chrome, Windows via Intune)
+## Browser Extension (Chrome)
 
-A managed policy tells the Chrome extension who the user and device are, separate from the force-install policy that puts the extension on the machine. Set this up before force-installing the extension.
+A managed policy tells the Chrome extension who the user and device are, separate from whatever force-install policy puts the extension on the machine. This is product-level: the extension reads the same keys regardless of which tool (Intune, NinjaOne, or another MDM) delivers the policy to the device.
 
 {% hint style="info" %}
 The keys the extension accepts are fixed by its schema. This policy only sets their values; there's no file to edit.
@@ -67,19 +67,27 @@ The keys the extension accepts are fixed by its schema. This policy only sets th
 
 ### Managed keys
 
-| Key | Set to (Intune token) | Purpose | Fallback if unset |
-| --- | --- | --- | --- |
-| `email` | `{{UserPrincipalName}}` | Primary user identity | Chrome profile email |
-| `username` | `{{UserName}}` | Display name | Derived from email |
-| `deviceName` | `{{DeviceName}}` | Device identity | Enterprise device ID → generated UUID |
+| Key | Purpose | Fallback if unset |
+| --- | --- | --- |
+| `email` | Primary user identity | Chrome profile email |
+| `username` | Display name | Derived from email |
+| `deviceName` | Device identity | Enterprise device ID → generated UUID |
 
 All three keys are optional, each with its own fallback, so the policy can be deployed with any subset of them.
 
 {% hint style="warning" %}
-Use `deviceName` with `{{DeviceName}}`. Do not use the older `deviceId` / `{{SerialNumber}}` pairing (`deviceName` replaces it).
+Use `deviceName`. Do not use the older `deviceId` key; `deviceName` replaces it.
 {% endhint %}
 
-### Configure the policy
+The keys land in the extension's managed-policy schema at:
+
+```
+HKLM\SOFTWARE\Policies\Google\Chrome\3rdparty\extensions\mjcadlphjmoinphffggcpineljpageie\policy
+```
+
+How you get values into that policy depends on your deployment tool. Below is the Microsoft Intune method.
+
+### Configure the policy (Intune)
 
 {% stepper %}
 {% step %}
