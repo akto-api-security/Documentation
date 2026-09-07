@@ -51,6 +51,8 @@ An agent component could score 5 points if it:
 
 ## Risk scores on Akto dashboard
 
-Go to **Agentic Discovery > Collections**. Here you can view the risk score of agent collections and MCP collections. To view the risk score of specific components within a collection, select the relevant collection.
+Go to **Agentic AI Discovery > Collections**. Here you can view the risk score of agent collections and MCP collections. To view the risk score of specific components within a collection, select the relevant collection.
+
+The risk score for an affected component also shows up in [Guardrail Activity](../../../agentic-guardrails/concepts/guardrail-activity.md), alongside the detections raised against it, so you can weigh a detection's severity against how risky the underlying component already is.
 
 Risk scores help you prioritize which agent components and MCP endpoints need immediate security attention based on their exposure, sensitivity, and current vulnerabilities.
