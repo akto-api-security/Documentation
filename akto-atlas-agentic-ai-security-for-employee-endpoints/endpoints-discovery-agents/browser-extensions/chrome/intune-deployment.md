@@ -26,10 +26,10 @@ Use the values exactly as shared by Akto Support. Do not modify the extension ID
 
 ## Managed Configuration (User & Device Identity)
 
-Set this up before force-installing the extension. It's a separate policy that tells the extension who the user and device are, so activity it reports to Akto is attributed correctly.
+Set this up before force-installing the extension. It's a separate policy that tells the extension who the user and device are, so the activity it reports to Akto is attributed correctly.
 
 {% hint style="info" %}
-The keys the extension accepts are fixed by its schema. This policy only sets their values — you aren't editing any file.
+The keys the extension accepts are fixed by its schema. This policy only sets their values; you aren't editing any file.
 {% endhint %}
 
 ### Managed keys
@@ -43,7 +43,7 @@ The keys the extension accepts are fixed by its schema. This policy only sets th
 All three keys are optional, each with its own fallback, so the policy can be deployed with any subset of them.
 
 {% hint style="warning" %}
-Use `deviceName` with `{{DeviceName}}`. Do not use the older `deviceId` / `{{SerialNumber}}` pairing — `deviceName` replaces it.
+Use `deviceName` with `{{DeviceName}}`. Do not use the older `deviceId` / `{{SerialNumber}}` pairing (`deviceName` replaces it).
 {% endhint %}
 
 ### Configure the policy
