@@ -57,7 +57,7 @@ Devices need HTTPS access to the manifest and pkg hosts, to `https://<account_id
 
 ***
 
-## Optional: Set a custom device name and email
+## Set a custom device name and email
 
 Before the install policy runs, you can stage an `identity.json` file on the device so it shows up in Akto with a specific device name and email instead of whatever hostname and username Jamf reports. See [Custom Device Name and Email](../device-identity.md).
 

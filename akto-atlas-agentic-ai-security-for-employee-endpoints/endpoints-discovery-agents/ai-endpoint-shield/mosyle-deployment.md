@@ -56,7 +56,7 @@ Target Macs must be enrolled and visible in your Mosyle dashboard, with internet
 
 ***
 
-## Optional: Set a custom device name and email
+## Set a custom device name and email
 
 Before the Custom Command runs, you can stage an `identity.json` file on the device so it shows up in Akto with a specific device name and email instead of whatever hostname and username Mosyle reports. See [Custom Device Name and Email](../device-identity.md).
 

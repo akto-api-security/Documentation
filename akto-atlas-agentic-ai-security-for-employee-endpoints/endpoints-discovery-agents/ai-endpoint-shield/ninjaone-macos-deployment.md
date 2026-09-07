@@ -29,7 +29,7 @@ Because step 2 makes the script a no-op on an up-to-date device, the same policy
 * A pilot device group for a staged rollout
 * Devices need HTTPS access to the manifest and pkg hosts, to `https://<account_id>-guardrails.akto.io`, and to `https://ultron.akto.io`
 
-## Optional: Set a custom device name and email
+## Set a custom device name and email
 
 Before the automation script runs, you can stage an `identity.json` file on the device so it shows up in Akto with a specific device name and email instead of whatever hostname and username NinjaOne reports. See [Custom Device Name and Email](../device-identity.md).
 
