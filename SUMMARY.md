@@ -34,6 +34,7 @@
     * [Allowlist in Security Software](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/allowlist-in-security-software.md)
     * [Windows Troubleshooting](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/windows-troubleshooting.md)
     * [macOS Troubleshooting](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/macos-troubleshooting.md)
+  * [Custom Device Name and Email](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/device-identity.md)
   * [Akto System Proxy](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/akto-system-proxy.md)
   * [OpenClaw (Clawdbot) Visibility](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/openclaw-clawdbot-visibility.md)
   * [Cursor Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/cursor-hooks.md)
