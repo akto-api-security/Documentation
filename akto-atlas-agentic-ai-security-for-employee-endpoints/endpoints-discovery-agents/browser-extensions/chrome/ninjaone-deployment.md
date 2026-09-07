@@ -21,7 +21,7 @@ Use this exact value:
 Example:
 
 ```
-mjcadlphyjmonhffggcpinejpageieeh;https://akto-chrome-ext.s3.ap-south-1.amazonaws.com/akto-chrome-ext/update.xml
+mjcadlphjmoinphffggcpineljpageie;https://akto-chrome-ext.s3.ap-south-1.amazonaws.com/akto-chrome-ext/update.xml
 ```
 
 ## Deployment Steps

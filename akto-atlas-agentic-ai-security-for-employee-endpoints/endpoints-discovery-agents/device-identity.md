@@ -102,7 +102,7 @@ Use `deviceName` with `{{DeviceName}}`. Do not use the older `deviceId` / `{{Ser
 3. Set the **OMA-URI** to the extension's managed-policy registry path:
 
 ```
-HKLM\SOFTWARE\Policies\Google\Chrome\3rdparty\extensions\mjcadlphyjmonhffggcpinejpageieeh\policy
+HKLM\SOFTWARE\Policies\Google\Chrome\3rdparty\extensions\mjcadlphjmoinphffggcpineljpageie\policy
 ```
 
 4. Set **Data type** to **String (XML)**, and paste the policy JSON as the value:
@@ -135,7 +135,7 @@ On an enrolled machine, either:
 * Run in PowerShell:
 
 ```powershell
-Get-ItemProperty 'HKLM:\SOFTWARE\Policies\Google\Chrome\3rdparty\extensions\mjcadlphyjmonhffggcpinejpageieeh\policy'
+Get-ItemProperty 'HKLM:\SOFTWARE\Policies\Google\Chrome\3rdparty\extensions\mjcadlphjmoinphffggcpineljpageie\policy'
 ```
 
 ## Related documentation

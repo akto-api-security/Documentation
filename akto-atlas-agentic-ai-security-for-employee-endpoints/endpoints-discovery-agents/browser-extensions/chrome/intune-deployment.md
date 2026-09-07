@@ -83,7 +83,7 @@ Before force-installing the extension, set up a separate managed policy that tel
 Example:
 
 ```
-mjcadlphyjmonhffggcpinejpageieeh;https://akto-chrome-ext.s3.ap-south-1.amazonaws.com/akto-chrome-ext/update.xml
+mjcadlphjmoinphffggcpineljpageie;https://akto-chrome-ext.s3.ap-south-1.amazonaws.com/akto-chrome-ext/update.xml
 ```
 
 4. Click **Next**.
