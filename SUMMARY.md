@@ -30,6 +30,7 @@
     * [Jamf MDM Deployment (macOS)](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/jamf-mdm-deployment.md)
     * [Mosyle MDM Deployment (macOS)](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/mosyle-deployment.md)
     * [NinjaOne Deployment (macOS)](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/ninjaone-macos-deployment.md)
+    * [Custom Device Name and Email (macOS)](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/device-identity.md)
     * [macOS Standalone Installation](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/macos-standalone-installation.md)
     * [Allowlist in Security Software](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/allowlist-in-security-software.md)
     * [Windows Troubleshooting](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/windows-troubleshooting.md)

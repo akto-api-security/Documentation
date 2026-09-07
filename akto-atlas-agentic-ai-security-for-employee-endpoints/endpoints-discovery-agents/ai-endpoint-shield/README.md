@@ -35,6 +35,7 @@ AI Endpoint Shield ships as a client-specific installer, with your Akto API toke
 ## After Deployment
 
 * [Allowlist AI Endpoint Shield](allowlist-in-security-software.md) in your antivirus, EDR, and endpoint management tools so it isn't quarantined or blocked.
+* On macOS, optionally [set a custom device name and email](device-identity.md) for each Mac, instead of the auto-detected hostname and username.
 * If a device installs but doesn't show up in Akto, use the [macOS](macos-troubleshooting.md) or [Windows](windows-troubleshooting.md) troubleshooting guide to validate the install.
 * Review every protected device and its MCP servers on the [Endpoint Shield](../../ai-agent-activity/view-endpoint-shield-details.md) page.
 

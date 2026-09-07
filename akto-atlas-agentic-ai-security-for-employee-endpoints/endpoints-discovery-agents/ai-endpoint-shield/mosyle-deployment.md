@@ -56,6 +56,12 @@ Target Macs must be enrolled and visible in your Mosyle dashboard, with internet
 
 ***
 
+## Optional: Set a custom device name and email
+
+Before the Custom Command runs, you can stage an `identity.json` file on the device so it shows up in Akto with a specific device name and email instead of whatever hostname and username Mosyle reports. See [Custom Device Name and Email](device-identity.md).
+
+***
+
 ## install.sh configuration
 
 `install.sh` reads its values from environment variables, falling back to the `CONFIG` block at the top of the script. Fill in these four before uploading:
@@ -246,7 +252,7 @@ For device-level diagnosis, see [macOS Troubleshooting](macos-troubleshooting.md
 | Path                                                              | Purpose                                     |
 | ----------------------------------------------------------------- | ------------------------------------------- |
 | `/usr/local/bin/akto-endpoint-shield`                             | Main binary                                 |
-| `/Library/Application Support/Akto/`                              | Read-only asset bundle installed by the pkg |
+| `/Library/Application Support/Akto/`                              | Asset bundle installed by the pkg — also where you stage `identity.json` (see [Custom Device Name and Email](device-identity.md)) |
 | `~/Library/LaunchAgents/io.akto.akto-endpoint-shield.plist`       | HTTP proxy service                          |
 | `~/Library/LaunchAgents/io.akto.akto-endpoint-shield-agent.plist` | Agent service                               |
 | `~/.akto-endpoint-shield/config/`                                 | Token + feature flags (permissions 600)     |
@@ -257,6 +263,7 @@ For device-level diagnosis, see [macOS Troubleshooting](macos-troubleshooting.md
 
 ## Related documentation
 
+* [Custom Device Name and Email](device-identity.md)
 * [Jamf MDM Deployment](jamf-mdm-deployment.md)
 * [NinjaOne Deployment (macOS)](ninjaone-macos-deployment.md)
 * [macOS Troubleshooting](macos-troubleshooting.md)
