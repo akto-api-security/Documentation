@@ -1,23 +1,21 @@
 ---
 description: >-
-  Override the auto-detected hostname and username shown for a Mac in Akto by
-  staging an identity.json file before installing AI Endpoint Shield.
+  Override the auto-detected hostname and username shown for a Mac in Akto by staging an identity.json file before installing AI Endpoint Shield.
 ---
 
-# Custom Device Name and Email (macOS)
+# Custom Device Name and Email
 
 ## Overview
 
-By default, the [Endpoint Shield](../../ai-agent-activity/view-endpoint-shield-details.md) Agent List shows whatever hostname and OS username each Mac reports. On an imaged fleet those are often generic, unhelpful computer names, or a local login name that doesn't map back to the employee's corporate email.
+By default, the [Endpoint Shield](../../ai-agent-activity/view-endpoint-shield-details.md) Agent List shows whatever hostname and OS username each Mac reports. On an imaged fleet, that's often a generic computer name or a local login that doesn't map back to the employee's corporate email.
 
-Staging an `identity.json` file on the device before you run the install script lets you assign a specific device name and email that Akto shows instead.
+Staging an **`identity.json`** file on the device before install lets you assign a specific device name and email that Akto shows instead.
 
-## How it maps
+{% hint style="info" %}
+**macOS only, for now.** This capability currently applies to AI Endpoint Shield on macOS. Windows and Linux support isn't available yet.
+{% endhint %}
 
-| `identity.json` field | Shows up as |
-| --- | --- |
-| `deviceName` | Hostname, in the Agent List and Endpoint Details |
-| `email` | Username |
+
 
 ## File format
 
@@ -28,7 +26,9 @@ Staging an `identity.json` file on the device before you run the install script 
 }
 ```
 
-## Where to place it
+
+
+## Where and when to place it
 
 Endpoint Shield reads `identity.json` from:
 
@@ -36,17 +36,26 @@ Endpoint Shield reads `identity.json` from:
 /Library/Application Support/Akto/identity.json
 ```
 
+Stage it **before** running `install.sh` (via Jamf, Mosyle, or NinjaOne) — not after:
+
 ```bash
 sudo mkdir -p "/Library/Application Support/Akto"
 sudo cp identity.json "/Library/Application Support/Akto/identity.json"
 ```
 
-## When to stage it
+Once the file is in place, Endpoint Shield picks it up automatically on its next check-in — no service restart, reinstall, or reboot needed.
 
-Place `identity.json` **before** running `install.sh` (via Jamf, Mosyle, or NinjaOne) on the device, not after. Once it's in place, Endpoint Shield picks it up automatically on its next check-in — no service restart, reinstall, or reboot needed.
+
+
+## What shows up in Endpoint Shield
+
+| `identity.json` field | Shows up as |
+| --- | --- |
+| `deviceName` | Hostname, in the Agent List and Endpoint Details |
+| `email` | Username |
 
 {% hint style="warning" %}
-**One file per device, today.** `email` and `deviceName` are specific to each machine, and there's currently no Akto-provided mechanism to auto-populate them from Jamf/Mosyle/NinjaOne device variables (computer name, directory-bound user, and so on). You, or your imaging/staging workflow, are responsible for generating a distinct `identity.json` per device before rollout. This page covers the file format and placement only.
+**One file per device.** `email` and `deviceName` are specific to each machine, and there's no Akto-provided mechanism yet to auto-populate them from Jamf/Mosyle/NinjaOne device variables (computer name, directory-bound user, and so on). You, or your imaging/staging workflow, are responsible for generating a distinct `identity.json` per device before rollout.
 {% endhint %}
 
 ## Related documentation
