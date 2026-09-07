@@ -125,7 +125,7 @@ redirects:
   akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/whitelist-paths: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/allowlist-in-security-software.md
   akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/mosyle-deployment: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/mosyle-deployment.md
   akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/mcp-endpoint-shield/macos-installation: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/macos-standalone-installation.md
-  akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/device-identity: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/device-identity.md
+  akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/ai-endpoint-shield/device-identity: akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/device-identity.md
 
 # Akto Atlas — Agentic Skills
   akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/skill-inspection-and-enforcement: akto-atlas-agentic-ai-security-for-employee-endpoints/ai-agent-activity/agentic-skills/README.md

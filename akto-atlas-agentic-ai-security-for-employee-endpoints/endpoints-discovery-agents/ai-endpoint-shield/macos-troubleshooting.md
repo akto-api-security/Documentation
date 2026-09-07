@@ -59,7 +59,7 @@ This prints immediately, before anything else the agent does, so it works even i
 |---|---|
 | `/usr/local/bin/akto-endpoint-shield` | Main binary |
 | `/usr/local/lib/akto-endpoint-shield/` | Bundled runtime (includes the mitmproxy virtualenv when the optional system proxy is enabled) |
-| `/Library/Application Support/Akto/` | Asset bundle installed by the pkg (hooks, scripts, config seed) — also where `identity.json` is staged (see [Custom Device Name and Email](device-identity.md)) |
+| `/Library/Application Support/Akto/` | Asset bundle installed by the pkg (hooks, scripts, config seed; also where `identity.json` is staged, see [Custom Device Name and Email](../device-identity.md)) |
 | `~/.akto-endpoint-shield/` | Per-user tree — `bin/`, `hooks/`, `config/`, `logs/` |
 
 Presence and trust check:
@@ -308,7 +308,7 @@ NAME=$(scutil --get ComputerName | tr 'A-Z' 'a-z' | sed 's/[^a-z0-9]/-/g')
 echo "${NAME}-${UUID:0:8}"
 ```
 
-This should match the device label shown for this machine in the Akto dashboard, unless you've overridden it with an `identity.json` file — see [Custom Device Name and Email](device-identity.md). A Mac restored from another machine's image inherits that machine's UUID, which both collides on the dashboard and makes the encrypted config undecryptable — it needs a reinstall.
+This should match the device label shown for this machine in the Akto dashboard, unless you've overridden it with an `identity.json` file (see [Custom Device Name and Email](../device-identity.md)). A Mac restored from another machine's image inherits that machine's UUID, which both collides on the dashboard and makes the encrypted config undecryptable — it needs a reinstall.
 
 ## Logs
 
@@ -473,7 +473,7 @@ If the problem persists after reinstall, run the diagnostic above and send the r
 
 * [Windows Troubleshooting](windows-troubleshooting.md) — the same checks for Windows
 * [Allowlist in Security Software](allowlist-in-security-software.md) — antivirus and EDR exclusions
-* [Custom Device Name and Email](device-identity.md) — override the auto-detected hostname and username
+* [Custom Device Name and Email](../device-identity.md): override the auto-detected hostname and username
 * [macOS Standalone Installation](macos-standalone-installation.md) — the end-user install walkthrough
 * [Jamf MDM Deployment](jamf-mdm-deployment.md) / [Mosyle MDM Deployment](mosyle-deployment.md) / [NinjaOne Deployment (macOS)](ninjaone-macos-deployment.md)
 

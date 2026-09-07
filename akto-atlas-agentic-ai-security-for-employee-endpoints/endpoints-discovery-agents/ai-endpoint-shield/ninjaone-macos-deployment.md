@@ -31,7 +31,7 @@ Because step 2 makes the script a no-op on an up-to-date device, the same policy
 
 ## Optional: Set a custom device name and email
 
-Before the automation script runs, you can stage an `identity.json` file on the device so it shows up in Akto with a specific device name and email instead of whatever hostname and username NinjaOne reports. See [Custom Device Name and Email](device-identity.md).
+Before the automation script runs, you can stage an `identity.json` file on the device so it shows up in Akto with a specific device name and email instead of whatever hostname and username NinjaOne reports. See [Custom Device Name and Email](../device-identity.md).
 
 ## install.sh configuration
 
@@ -127,7 +127,7 @@ For device-level diagnosis, see [macOS Troubleshooting](macos-troubleshooting.md
 
 ## Related Documentation
 
-* [Custom Device Name and Email](device-identity.md)
+* [Custom Device Name and Email](../device-identity.md)
 * [Jamf MDM Deployment](jamf-mdm-deployment.md)
 * [Mosyle MDM Deployment](mosyle-deployment.md)
 * [NinjaOne Deployment (Windows)](ninjaone-windows-deployment.md)
