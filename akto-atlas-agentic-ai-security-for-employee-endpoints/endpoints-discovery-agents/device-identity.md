@@ -87,7 +87,9 @@ HKLM\SOFTWARE\Policies\Google\Chrome\3rdparty\extensions\mjcadlphjmoinphffggcpin
 
 How you get values into that policy depends on your deployment tool. Below is the Microsoft Intune method.
 
-### Configure the policy (Intune)
+<details>
+
+<summary><strong>Configure the policy (Intune), and verify</strong></summary>
 
 {% stepper %}
 {% step %}
@@ -135,9 +137,7 @@ HKLM\SOFTWARE\Policies\Google\Chrome\3rdparty\extensions\mjcadlphjmoinphffggcpin
 {% endstep %}
 {% endstepper %}
 
-### Verify
-
-On an enrolled machine, either:
+**Verify**, on an enrolled machine, either:
 
 * Open `chrome://policy`, click **Reload policies**, and confirm `email`, `username`, and `deviceName` show under the Akto extension's policy, **or**
 * Run in PowerShell:
@@ -145,6 +145,8 @@ On an enrolled machine, either:
 ```powershell
 Get-ItemProperty 'HKLM:\SOFTWARE\Policies\Google\Chrome\3rdparty\extensions\mjcadlphjmoinphffggcpineljpageie\policy'
 ```
+
+</details>
 
 ## Related documentation
 
