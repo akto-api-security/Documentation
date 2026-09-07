@@ -7,7 +7,7 @@ description: >-
 
 ## Overview
 
-By default, the [Endpoint Shield](../../ai-agent-activity/view-endpoint-shield-details.md) Agent List shows whatever hostname and OS username each Mac reports. On an imaged fleet, that's often a generic computer name or a local login that doesn't map back to the employee's corporate email.
+By default, the [Endpoint Shield](../ai-agent-activity/view-endpoint-shield-details.md) Agent List shows whatever hostname and OS username each Mac reports. On an imaged fleet, that's often a generic computer name or a local login that doesn't map back to the employee's corporate email.
 
 Staging an **`identity.json`** file on the device before install lets you assign a specific device name and email that Akto shows instead.
 
@@ -60,10 +60,10 @@ Once the file is in place, Endpoint Shield picks it up automatically on its next
 
 ## Related documentation
 
-* [Jamf MDM Deployment](jamf-mdm-deployment.md)
-* [Mosyle MDM Deployment](mosyle-deployment.md)
-* [NinjaOne Deployment (macOS)](ninjaone-macos-deployment.md)
-* [Endpoint Shield](../../ai-agent-activity/view-endpoint-shield-details.md)
+* [Jamf MDM Deployment](ai-endpoint-shield/jamf-mdm-deployment.md)
+* [Mosyle MDM Deployment](ai-endpoint-shield/mosyle-deployment.md)
+* [NinjaOne Deployment (macOS)](ai-endpoint-shield/ninjaone-macos-deployment.md)
+* [Endpoint Shield](../ai-agent-activity/view-endpoint-shield-details.md)
 
 ## Get support
 

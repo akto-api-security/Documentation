@@ -59,7 +59,7 @@ Devices need HTTPS access to the manifest and pkg hosts, to `https://<account_id
 
 ## Optional: Set a custom device name and email
 
-Before the install policy runs, you can stage an `identity.json` file on the device so it shows up in Akto with a specific device name and email instead of whatever hostname and username Jamf reports. See [Custom Device Name and Email](device-identity.md).
+Before the install policy runs, you can stage an `identity.json` file on the device so it shows up in Akto with a specific device name and email instead of whatever hostname and username Jamf reports. See [Custom Device Name and Email](../device-identity.md).
 
 ***
 
@@ -284,7 +284,7 @@ For device-level diagnosis, see [macOS Troubleshooting](macos-troubleshooting.md
 | Path | Purpose |
 | ---- | ------- |
 | `/usr/local/bin/akto-endpoint-shield` | Main binary |
-| `/Library/Application Support/Akto/` | Asset bundle installed by the pkg — also where you stage `identity.json` (see [Custom Device Name and Email](device-identity.md)) |
+| `/Library/Application Support/Akto/` | Asset bundle installed by the pkg — also where you stage `identity.json` (see [Custom Device Name and Email](../device-identity.md)) |
 | `~/.akto-endpoint-shield/bin/akto_endpoint_shield.sh` | Per-user wrapper script |
 | `~/Library/LaunchAgents/io.akto.akto-endpoint-shield.plist` | HTTP proxy service |
 | `~/Library/LaunchAgents/io.akto.akto-endpoint-shield-agent.plist` | Agent service |
@@ -321,7 +321,7 @@ tail -f /var/log/jamf.log
 
 ## Related documentation
 
-* [Custom Device Name and Email](device-identity.md)
+* [Custom Device Name and Email](../device-identity.md)
 * [Mosyle MDM Deployment](mosyle-deployment.md)
 * [NinjaOne Deployment (macOS)](ninjaone-macos-deployment.md)
 * [macOS Standalone Installation](macos-standalone-installation.md)
