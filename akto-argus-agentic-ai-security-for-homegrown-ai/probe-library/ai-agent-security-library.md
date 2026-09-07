@@ -19,62 +19,62 @@ Each entry below is an **executable probe template**. Templates are grouped by:
 
 #### Base64
 
-* `SECURITY_INDIRECT_PROMPT_INJECTION_BASE64_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_JAILBREAK_BASE64_SEQUENTIAL_JAILBREAKING`
+* Security Indirect Prompt Injection Base64 Sequential Jailbreaking
+* Security Jailbreak Base64 Sequential Jailbreaking
 
 #### Context Poisoning
 
-* `BUSINESS_ALIGNMENT_COMPETITOR_CHECK_CONTEXT_POISONING_SEQUENTIAL_JAILBREAKING`
+* Business Alignment Competitor Check Context Poisoning Sequential Jailbreaking
 
 #### Goal Redirection
 
-* `SECURITY_JAILBREAK_GOAL_REDIRECTION_CRESCENDO_JAILBREAKING`
+* Security Jailbreak Goal Redirection Crescendo Jailbreaking
 
 #### Input Bypass
 
-* `SECURITY_PROMPT_INJECTION_INPUT_BYPASS_TREE_JAILBREAKING`
+* Security Prompt Injection Input Bypass Tree Jailbreaking
 
 #### Leetspeak
 
-* `SECURITY_INDIRECT_PROMPT_INJECTION_LEETSPEAK_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_JAILBREAK_LEETSPEAK_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_PROMPT_INJECTION_LEETSPEAK_SEQUENTIAL_JAILBREAKING`
+* Security Indirect Prompt Injection Leetspeak Sequential Jailbreaking
+* Security Jailbreak Leetspeak Sequential Jailbreaking
+* Security Prompt Injection Leetspeak Sequential Jailbreaking
 
 #### Math Problem
 
-* `SECURITY_SYSTEM_PROMPT_OVERRIDE_MATH_PROBLEM_CRESCENDO_JAILBREAKING`
+* Security System Prompt Override Math Problem Crescendo Jailbreaking
 
 #### Multilingual
 
-* `SECURITY_INDIRECT_PROMPT_INJECTION_MULTILINGUAL_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_JAILBREAK_MULTILINGUAL_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_PROMPT_INJECTION_MULTILINGUAL_SEQUENTIAL_JAILBREAKING`
+* Security Indirect Prompt Injection Multilingual Sequential Jailbreaking
+* Security Jailbreak Multilingual Sequential Jailbreaking
+* Security Prompt Injection Multilingual Sequential Jailbreaking
 
 #### Permission Escalation
 
-* `SECURITY_PROMPT_INJECTION_PERMISSION_ESCALATION_SEQUENTIAL_JAILBREAKING`
+* Security Prompt Injection Permission Escalation Sequential Jailbreaking
 
 #### Prompt Injection
 
-* `SECURITY_INDIRECT_PROMPT_INJECTION_PROMPT_INJECTION_CRESCENDO_JAILBREAKING`
+* Security Indirect Prompt Injection Prompt Injection Crescendo Jailbreaking
 
 #### ROT13
 
-* `SECURITY_INDIRECT_PROMPT_INJECTION_ROT13_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_JAILBREAK_ROT13_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_PROMPT_INJECTION_ROT13_SEQUENTIAL_JAILBREAKING`
+* Security Indirect Prompt Injection ROT13 Sequential Jailbreaking
+* Security Jailbreak ROT13 Sequential Jailbreaking
+* Security Prompt Injection ROT13 Sequential Jailbreaking
 
 #### Roleplay
 
-* `BUSINESS_ALIGNMENT_INTENTIONAL_MISUSE_ROLEPLAY_TREE_JAILBREAKING`
+* Business Alignment Intentional Misuse Roleplay Tree Jailbreaking
 
 #### Semantic Manipulation
 
-* `SECURITY_AGENT_BEHAVIOR_HIJACK_AND_GOAL_MANIPULATION_SEMANTIC_MANIPULATION_TREE_JAILBREAKING`
+* Security Agent Behavior Hijack and Goal Manipulation Semantic Manipulation Tree Jailbreaking
 
 #### System Override
 
-* `SECURITY_MANIPULATION_SYSTEM_OVERRIDE_SEQUENTIAL_JAILBREAKING`
+* Security Manipulation System Override Sequential Jailbreaking
 
 ***
 
@@ -82,56 +82,56 @@ Each entry below is an **executable probe template**. Templates are grouped by:
 
 #### Context Poisoning
 
-* `SECURITY_INSECURE_PLUGIN_USE_CONTEXT_POISONING_TREE_JAILBREAKING`
-* `SECURITY_TOOL_DISCOVERY_CONTEXT_POISONING_TREE_JAILBREAKING`
-* `SECURITY_TOOL_MISUSE_AND_EXPLOITATION_CONTEXT_POISONING_LINEAR_JAILBREAKING`
+* Security Insecure Plugin Use Context Poisoning Tree Jailbreaking
+* Security Tool Discovery Context Poisoning Tree Jailbreaking
+* Security Tool Misuse and Exploitation Context Poisoning Linear Jailbreaking
 
 #### Goal Redirection
 
-* `SECURITY_INSECURE_PLUGIN_USE_GOAL_REDIRECTION_LINEAR_JAILBREAKING`
-* `SECURITY_TOOL_DISCOVERY_GOAL_REDIRECTION_TREE_JAILBREAKING`
+* Security Insecure Plugin Use Goal Redirection Linear Jailbreaking
+* Security Tool Discovery Goal Redirection Tree Jailbreaking
 
 #### Input Bypass
 
-* `SECURITY_MANIPULATION_INPUT_BYPASS`
+* Security Manipulation Input Bypass
 
 #### Leetspeak
 
-* `SECURITY_TOOL_DISCOVERY_LEETSPEAK_LINEAR_JAILBREAKING`
+* Security Tool Discovery Leetspeak Linear Jailbreaking
 
 #### Math Problem
 
-* `SECURITY_TOOL_MISUSE_AND_EXPLOITATION_MATH_PROBLEM_TREE_JAILBREAKING`
+* Security Tool Misuse and Exploitation Math Problem Tree Jailbreaking
 
 #### Multilingual
 
-* `SECURITY_TOOL_DISCOVERY_MULTILINGUAL_LINEAR_JAILBREAKING`
-* `SECURITY_TOOL_MISUSE_AND_EXPLOITATION_MULTILINGUAL_TREE_JAILBREAKING`
+* Security Tool Discovery Multilingual Linear Jailbreaking
+* Security Tool Misuse and Exploitation Multilingual Tree Jailbreaking
 
 #### Permission Escalation
 
-* `SECURITY_INSECURE_PLUGIN_USE_PERMISSION_ESCALATION_TREE_JAILBREAKING`
+* Security Insecure Plugin Use Permission Escalation Tree Jailbreaking
 
 #### Prompt Injection
 
-* `SECURITY_TOOL_DISCOVERY_PROMPT_INJECTION_LINEAR_JAILBREAKING`
+* Security Tool Discovery Prompt Injection Linear Jailbreaking
 
 #### Roleplay
 
-* `SECURITY_INSECURE_PLUGIN_USE_ROLEPLAY_LINEAR_JAILBREAKING`
-* `SECURITY_INSECURE_PLUGIN_USE_ROLEPLAY_TREE_JAILBREAKING`
-* `SECURITY_TOOL_DISCOVERY_ROLEPLAY_LINEAR_JAILBREAKING`
-* `SECURITY_TOOL_DISCOVERY_ROLEPLAY_TREE_JAILBREAKING`
-* `SECURITY_TOOL_MISUSE_AND_EXPLOITATION_ROLEPLAY_LINEAR_JAILBREAKING`
-* `SECURITY_TOOL_MISUSE_AND_EXPLOITATION_ROLEPLAY_TREE_JAILBREAKING`
+* Security Insecure Plugin Use Roleplay Linear Jailbreaking
+* Security Insecure Plugin Use Roleplay Tree Jailbreaking
+* Security Tool Discovery Roleplay Linear Jailbreaking
+* Security Tool Discovery Roleplay Tree Jailbreaking
+* Security Tool Misuse and Exploitation Roleplay Linear Jailbreaking
+* Security Tool Misuse and Exploitation Roleplay Tree Jailbreaking
 
 #### Semantic Manipulation
 
-* `SECURITY_TOOL_MISUSE_AND_EXPLOITATION_SEMANTIC_MANIPULATION_TREE_JAILBREAKING`
+* Security Tool Misuse and Exploitation Semantic Manipulation Tree Jailbreaking
 
 #### System Override
 
-* `SECURITY_TOOL_MISUSE_AND_EXPLOITATION_SYSTEM_OVERRIDE`
+* Security Tool Misuse and Exploitation System Override
 
 ***
 
@@ -139,59 +139,59 @@ Each entry below is an **executable probe template**. Templates are grouped by:
 
 #### Base64
 
-* `SECURITY_IDENTITY_SPOOFING_BASE64_CRESCENDO_JAILBREAKING`
-* `SECURITY_SENSITIVE_INFORMATION_DISCLOSURE_BASE64_CRESCENDO_JAILBREAKING`
+* Security Identity Spoofing Base64 Crescendo Jailbreaking
+* Security Sensitive Information Disclosure Base64 Crescendo Jailbreaking
 
 #### Context Poisoning
 
-* `SAFETY_PII_CONTEXT_POISONING_CRESCENDO_JAILBREAKING`
+* Safety PII Context Poisoning Crescendo Jailbreaking
 
 #### Goal Redirection
 
-* `SECURITY_CROSS_SESSION_LEAKS_GOAL_REDIRECTION_CRESCENDO_JAILBREAKING`
-* `SECURITY_IDENTITY_SPOOFING_GOAL_REDIRECTION_CRESCENDO_JAILBREAKING`
+* Security Cross Session Leaks Goal Redirection Crescendo Jailbreaking
+* Security Identity Spoofing Goal Redirection Crescendo Jailbreaking
 
 #### Input Bypass
 
-* `SECURITY_CROSS_SESSION_LEAKS_INPUT_BYPASS_SEQUENTIAL_JAILBREAKING`
+* Security Cross Session Leaks Input Bypass Sequential Jailbreaking
 
 #### Leetspeak
 
-* `SAFETY_PII_LEETSPEAK_CRESCENDO_JAILBREAKING`
-* `SAFETY_PRIVACY_VIOLATION_LEETSPEAK_CRESCENDO_JAILBREAKING`
+* Safety PII Leetspeak Crescendo Jailbreaking
+* Safety Privacy Violation Leetspeak Crescendo Jailbreaking
 
 #### Math Problem
 
-* `SAFETY_PII_MATH_PROBLEM_CRESCENDO_JAILBREAKING`
-* `SECURITY_SENSITIVE_INFORMATION_DISCLOSURE_MATH_PROBLEM_CRESCENDO_JAILBREAKING`
+* Safety PII Math Problem Crescendo Jailbreaking
+* Security Sensitive Information Disclosure Math Problem Crescendo Jailbreaking
 
 #### Multilingual
 
-* `SAFETY_PRIVACY_VIOLATION_MULTILINGUAL_CRESCENDO_JAILBREAKING`
-* `SECURITY_IDENTITY_SPOOFING_MULTILINGUAL_CRESCENDO_JAILBREAKING`
-* `SECURITY_SENSITIVE_INFORMATION_DISCLOSURE_MULTILINGUAL_CRESCENDO_JAILBREAKING`
+* Safety Privacy Violation Multilingual Crescendo Jailbreaking
+* Security Identity Spoofing Multilingual Crescendo Jailbreaking
+* Security Sensitive Information Disclosure Multilingual Crescendo Jailbreaking
 
 #### Permission Escalation
 
-* `SAFETY_PII_PERMISSION_ESCALATION_CRESCENDO_JAILBREAKING`
+* Safety PII Permission Escalation Crescendo Jailbreaking
 
 #### ROT13
 
-* `SAFETY_PRIVACY_VIOLATION_ROT13_CRESCENDO_JAILBREAKING`
-* `SECURITY_IDENTITY_SPOOFING_ROT13_CRESCENDO_JAILBREAKING`
-* `SECURITY_SENSITIVE_INFORMATION_DISCLOSURE_ROT13_CRESCENDO_JAILBREAKING`
+* Safety Privacy Violation ROT13 Crescendo Jailbreaking
+* Security Identity Spoofing ROT13 Crescendo Jailbreaking
+* Security Sensitive Information Disclosure ROT13 Crescendo Jailbreaking
 
 #### Roleplay
 
-* `SECURITY_IDENTITY_SPOOFING_ROLEPLAY_BAD_LIKERT_JUDGE`
+* Security Identity Spoofing Roleplay Bad Likert Judge
 
 #### Semantic Manipulation
 
-* `SECURITY_SENSITIVE_INFORMATION_DISCLOSURE_SEMANTIC_MANIPULATION_BAD_LIKERT_JUDGE`
+* Security Sensitive Information Disclosure Semantic Manipulation Bad Likert Judge
 
 #### System Override
 
-* `SAFETY_PRIVACY_VIOLATION_SYSTEM_OVERRIDE_SEQUENTIAL_JAILBREAKING`
+* Safety Privacy Violation System Override Sequential Jailbreaking
 
 ***
 
@@ -199,53 +199,53 @@ Each entry below is an **executable probe template**. Templates are grouped by:
 
 #### Base64
 
-* `SECURITY_MALICIOUS_RESOURCE_FETCHING_BASE64_SEQUENTIAL_JAILBREAKING`
+* Security Malicious Resource Fetching Base64 Sequential Jailbreaking
 
 #### Context Poisoning
 
-* `SECURITY_MALICIOUS_RESOURCE_FETCHING_CONTEXT_POISONING_CRESCENDO_JAILBREAKING`
+* Security Malicious Resource Fetching Context Poisoning Crescendo Jailbreaking
 
 #### Goal Redirection
 
-* `SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES_GOAL_REDIRECTION_SEQUENTIAL_JAILBREAKING`
+* Security Agentic Supply Chain Vulnerabilities Goal Redirection Sequential Jailbreaking
 
 #### Input Bypass
 
-* `SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES_INPUT_BYPASS_SEQUENTIAL_JAILBREAKING`
+* Security Agentic Supply Chain Vulnerabilities Input Bypass Sequential Jailbreaking
 
 #### Leetspeak
 
-* `SECURITY_TRAINING_DATA_POISONING_LEETSPEAK_TREE_JAILBREAKING`
+* Security Training Data Poisoning Leetspeak Tree Jailbreaking
 
 #### Multilingual
 
-* `SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES_MULTILINGUAL_CRESCENDO_JAILBREAKING`
+* Security Agentic Supply Chain Vulnerabilities Multilingual Crescendo Jailbreaking
 
 #### Permission Escalation
 
-* `SECURITY_MALICIOUS_RESOURCE_FETCHING_PERMISSION_ESCALATION_TREE_JAILBREAKING`
-* `SECURITY_TRAINING_DATA_POISONING_PERMISSION_ESCALATION_TREE_JAILBREAKING`
+* Security Malicious Resource Fetching Permission Escalation Tree Jailbreaking
+* Security Training Data Poisoning Permission Escalation Tree Jailbreaking
 
 #### Prompt Injection
 
-* `SECURITY_TRAINING_DATA_POISONING_PROMPT_INJECTION_TREE_JAILBREAKING`
+* Security Training Data Poisoning Prompt Injection Tree Jailbreaking
 
 #### Roleplay
 
-* `SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES_ROLEPLAY_CRESCENDO_JAILBREAKING`
-* `SECURITY_TRAINING_DATA_POISONING_ROLEPLAY_CRESCENDO_JAILBREAKING`
+* Security Agentic Supply Chain Vulnerabilities Roleplay Crescendo Jailbreaking
+* Security Training Data Poisoning Roleplay Crescendo Jailbreaking
 
 #### System Override
 
-* `SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES_SYSTEM_OVERRIDE_CRESCENDO_JAILBREAKING`
-* `SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES_SYSTEM_OVERRIDE_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES_SYSTEM_OVERRIDE_TREE_JAILBREAKING`
-* `SECURITY_MALICIOUS_RESOURCE_FETCHING_SYSTEM_OVERRIDE_CRESCENDO_JAILBREAKING`
-* `SECURITY_MALICIOUS_RESOURCE_FETCHING_SYSTEM_OVERRIDE_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_MALICIOUS_RESOURCE_FETCHING_SYSTEM_OVERRIDE_TREE_JAILBREAKING`
-* `SECURITY_TRAINING_DATA_POISONING_SYSTEM_OVERRIDE_CRESCENDO_JAILBREAKING`
-* `SECURITY_TRAINING_DATA_POISONING_SYSTEM_OVERRIDE_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_TRAINING_DATA_POISONING_SYSTEM_OVERRIDE_TREE_JAILBREAKING`
+* Security Agentic Supply Chain Vulnerabilities System Override Crescendo Jailbreaking
+* Security Agentic Supply Chain Vulnerabilities System Override Sequential Jailbreaking
+* Security Agentic Supply Chain Vulnerabilities System Override Tree Jailbreaking
+* Security Malicious Resource Fetching System Override Crescendo Jailbreaking
+* Security Malicious Resource Fetching System Override Sequential Jailbreaking
+* Security Malicious Resource Fetching System Override Tree Jailbreaking
+* Security Training Data Poisoning System Override Crescendo Jailbreaking
+* Security Training Data Poisoning System Override Sequential Jailbreaking
+* Security Training Data Poisoning System Override Tree Jailbreaking
 
 ***
 
@@ -253,53 +253,53 @@ Each entry below is an **executable probe template**. Templates are grouped by:
 
 #### Base64
 
-* `SECURITY_XSS_BASE64`
+* Security XSS Base64
 
 #### Context Poisoning
 
-* `SECURITY_CODE_EXECUTION_CONTEXT_POISONING_TREE_JAILBREAKING`
+* Security Code Execution Context Poisoning Tree Jailbreaking
 
 #### Input Bypass
 
-* `SECURITY_UNEXPECTED_CODE_EXECUTION_RCE_INPUT_BYPASS_TREE_JAILBREAKING`
+* Security Unexpected Code Execution RCE Input Bypass Tree Jailbreaking
 
 #### Math Problem
 
-* `SECURITY_WEB_INJECTION_MATH_PROBLEM_TREE_JAILBREAKING`
+* Security Web Injection Math Problem Tree Jailbreaking
 
 #### Permission Escalation
 
-* `SECURITY_CODE_EXECUTION_PERMISSION_ESCALATION_LINEAR_JAILBREAKING`
+* Security Code Execution Permission Escalation Linear Jailbreaking
 
 #### Prompt Injection
 
-* `SECURITY_CODE_EXECUTION_PROMPT_INJECTION`
+* Security Code Execution Prompt Injection
 
 #### ROT13
 
-* `SECURITY_CODE_EXECUTION_ROT13_LINEAR_JAILBREAKING`
-* `SECURITY_CODE_EXECUTION_ROT13_TREE_JAILBREAKING`
-* `SECURITY_WEB_INJECTION_ROT13_LINEAR_JAILBREAKING`
-* `SECURITY_WEB_INJECTION_ROT13_TREE_JAILBREAKING`
-* `SECURITY_XSS_ROT13_LINEAR_JAILBREAKING`
-* `SECURITY_XSS_ROT13_TREE_JAILBREAKING`
+* Security Code Execution ROT13 Linear Jailbreaking
+* Security Code Execution ROT13 Tree Jailbreaking
+* Security Web Injection ROT13 Linear Jailbreaking
+* Security Web Injection ROT13 Tree Jailbreaking
+* Security XSS ROT13 Linear Jailbreaking
+* Security XSS ROT13 Tree Jailbreaking
 
 #### Roleplay
 
-* `SECURITY_CODE_EXECUTION_ROLEPLAY_LINEAR_JAILBREAKING`
-* `SECURITY_CODE_EXECUTION_ROLEPLAY_TREE_JAILBREAKING`
-* `SECURITY_WEB_INJECTION_ROLEPLAY_LINEAR_JAILBREAKING`
-* `SECURITY_WEB_INJECTION_ROLEPLAY_TREE_JAILBREAKING`
-* `SECURITY_XSS_ROLEPLAY_LINEAR_JAILBREAKING`
-* `SECURITY_XSS_ROLEPLAY_TREE_JAILBREAKING`
+* Security Code Execution Roleplay Linear Jailbreaking
+* Security Code Execution Roleplay Tree Jailbreaking
+* Security Web Injection Roleplay Linear Jailbreaking
+* Security Web Injection Roleplay Tree Jailbreaking
+* Security XSS Roleplay Linear Jailbreaking
+* Security XSS Roleplay Tree Jailbreaking
 
 #### Semantic Manipulation
 
-* `SECURITY_XSS_SEMANTIC_MANIPULATION_TREE_JAILBREAKING`
+* Security XSS Semantic Manipulation Tree Jailbreaking
 
 #### System Override
 
-* `SECURITY_WEB_INJECTION_SYSTEM_OVERRIDE_LINEAR_JAILBREAKING`
+* Security Web Injection System Override Linear Jailbreaking
 
 ***
 
@@ -307,38 +307,38 @@ Each entry below is an **executable probe template**. Templates are grouped by:
 
 #### Base64
 
-* `SECURITY_CONTEXT_LEAKAGE_BASE64_SEQUENTIAL_JAILBREAKING`
+* Security Context Leakage Base64 Sequential Jailbreaking
 
 #### Context Poisoning
 
-* `SECURITY_CONTEXT_LEAKAGE_CONTEXT_POISONING_CRESCENDO_JAILBREAKING`
-* `SECURITY_CONTEXT_LEAKAGE_CONTEXT_POISONING_TREE_JAILBREAKING`
-* `SECURITY_CONTEXT_POISONING_CONTEXT_POISONING_CRESCENDO_JAILBREAKING`
-* `SECURITY_CONTEXT_POISONING_CONTEXT_POISONING_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_CONTEXT_POISONING_CONTEXT_POISONING_TREE_JAILBREAKING`
-* `SECURITY_RAG_POISONING_CONTEXT_POISONING_CRESCENDO_JAILBREAKING`
-* `SECURITY_RAG_POISONING_CONTEXT_POISONING_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_RAG_POISONING_CONTEXT_POISONING_TREE_JAILBREAKING`
+* Security Context Leakage Context Poisoning Crescendo Jailbreaking
+* Security Context Leakage Context Poisoning Tree Jailbreaking
+* Security Context Poisoning Context Poisoning Crescendo Jailbreaking
+* Security Context Poisoning Context Poisoning Sequential Jailbreaking
+* Security Context Poisoning Context Poisoning Tree Jailbreaking
+* Security RAG Poisoning Context Poisoning Crescendo Jailbreaking
+* Security RAG Poisoning Context Poisoning Sequential Jailbreaking
+* Security RAG Poisoning Context Poisoning Tree Jailbreaking
 
 #### Input Bypass
 
-* `SECURITY_RAG_POISONING_INPUT_BYPASS_CRESCENDO_JAILBREAKING`
+* Security RAG Poisoning Input Bypass Crescendo Jailbreaking
 
 #### Multilingual
 
-* `SECURITY_CONTEXT_POISONING_MULTILINGUAL_TREE_JAILBREAKING`
+* Security Context Poisoning Multilingual Tree Jailbreaking
 
 #### Prompt Injection
 
-* `SECURITY_CONTEXT_LEAKAGE_PROMPT_INJECTION_CRESCENDO_JAILBREAKING`
-* `SECURITY_CONTEXT_LEAKAGE_PROMPT_INJECTION_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_CONTEXT_LEAKAGE_PROMPT_INJECTION_TREE_JAILBREAKING`
-* `SECURITY_CONTEXT_POISONING_PROMPT_INJECTION_CRESCENDO_JAILBREAKING`
-* `SECURITY_CONTEXT_POISONING_PROMPT_INJECTION_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_CONTEXT_POISONING_PROMPT_INJECTION_TREE_JAILBREAKING`
-* `SECURITY_RAG_POISONING_PROMPT_INJECTION_CRESCENDO_JAILBREAKING`
-* `SECURITY_RAG_POISONING_PROMPT_INJECTION_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_RAG_POISONING_PROMPT_INJECTION_TREE_JAILBREAKING`
+* Security Context Leakage Prompt Injection Crescendo Jailbreaking
+* Security Context Leakage Prompt Injection Sequential Jailbreaking
+* Security Context Leakage Prompt Injection Tree Jailbreaking
+* Security Context Poisoning Prompt Injection Crescendo Jailbreaking
+* Security Context Poisoning Prompt Injection Sequential Jailbreaking
+* Security Context Poisoning Prompt Injection Tree Jailbreaking
+* Security RAG Poisoning Prompt Injection Crescendo Jailbreaking
+* Security RAG Poisoning Prompt Injection Sequential Jailbreaking
+* Security RAG Poisoning Prompt Injection Tree Jailbreaking
 
 ***
 
@@ -346,47 +346,47 @@ Each entry below is an **executable probe template**. Templates are grouped by:
 
 #### Base64
 
-* `SECURITY_DATA_EXFILTRATION_BASE64_TREE_JAILBREAKING`
-* `SECURITY_INSECURE_INTER_AGENT_COMMUNICATION_BASE64_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_INSECURE_INTER_AGENT_COMMUNICATION_BASE64_TREE_JAILBREAKING`
+* Security Data Exfiltration Base64 Tree Jailbreaking
+* Security Insecure Inter Agent Communication Base64 Sequential Jailbreaking
+* Security Insecure Inter Agent Communication Base64 Tree Jailbreaking
 
 #### Input Bypass
 
-* `SECURITY_DATA_EXFILTRATION_INPUT_BYPASS_CRESCENDO_JAILBREAKING`
+* Security Data Exfiltration Input Bypass Crescendo Jailbreaking
 
 #### Leetspeak
 
-* `SECURITY_INSECURE_INTER_AGENT_COMMUNICATION_LEETSPEAK_SEQUENTIAL_JAILBREAKING`
+* Security Insecure Inter Agent Communication Leetspeak Sequential Jailbreaking
 
 #### Permission Escalation
 
-* `SECURITY_INSECURE_INTER_AGENT_COMMUNICATION_PERMISSION_ESCALATION_SEQUENTIAL_JAILBREAKING`
+* Security Insecure Inter Agent Communication Permission Escalation Sequential Jailbreaking
 
 #### Prompt Injection
 
-* `SECURITY_CROSS_SESSION_LEAKS_PROMPT_INJECTION`
-* `SECURITY_CROSS_SESSION_LEAKS_PROMPT_INJECTION_BAD_LIKERT_JUDGE`
-* `SECURITY_CROSS_SESSION_LEAKS_PROMPT_INJECTION_CRESCENDO_JAILBREAKING`
-* `SECURITY_CROSS_SESSION_LEAKS_PROMPT_INJECTION_LINEAR_JAILBREAKING`
-* `SECURITY_CROSS_SESSION_LEAKS_PROMPT_INJECTION_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_CROSS_SESSION_LEAKS_PROMPT_INJECTION_TREE_JAILBREAKING`
+* Security Cross Session Leaks Prompt Injection
+* Security Cross Session Leaks Prompt Injection Bad Likert Judge
+* Security Cross Session Leaks Prompt Injection Crescendo Jailbreaking
+* Security Cross Session Leaks Prompt Injection Linear Jailbreaking
+* Security Cross Session Leaks Prompt Injection Sequential Jailbreaking
+* Security Cross Session Leaks Prompt Injection Tree Jailbreaking
 
 #### ROT13
 
-* `SECURITY_DATA_EXFILTRATION_ROT13_TREE_JAILBREAKING`
+* Security Data Exfiltration ROT13 Tree Jailbreaking
 
 #### Semantic Manipulation
 
-* `SECURITY_DATA_EXFILTRATION_SEMANTIC_MANIPULATION_TREE_JAILBREAKING`
+* Security Data Exfiltration Semantic Manipulation Tree Jailbreaking
 
 #### System Override
 
-* `SECURITY_DATA_EXFILTRATION_SYSTEM_OVERRIDE_CRESCENDO_JAILBREAKING`
-* `SECURITY_DATA_EXFILTRATION_SYSTEM_OVERRIDE_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_DATA_EXFILTRATION_SYSTEM_OVERRIDE_TREE_JAILBREAKING`
-* `SECURITY_INSECURE_INTER_AGENT_COMMUNICATION_SYSTEM_OVERRIDE_CRESCENDO_JAILBREAKING`
-* `SECURITY_INSECURE_INTER_AGENT_COMMUNICATION_SYSTEM_OVERRIDE_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_INSECURE_INTER_AGENT_COMMUNICATION_SYSTEM_OVERRIDE_TREE_JAILBREAKING`
+* Security Data Exfiltration System Override Crescendo Jailbreaking
+* Security Data Exfiltration System Override Sequential Jailbreaking
+* Security Data Exfiltration System Override Tree Jailbreaking
+* Security Insecure Inter Agent Communication System Override Crescendo Jailbreaking
+* Security Insecure Inter Agent Communication System Override Sequential Jailbreaking
+* Security Insecure Inter Agent Communication System Override Tree Jailbreaking
 
 ***
 
@@ -394,59 +394,59 @@ Each entry below is an **executable probe template**. Templates are grouped by:
 
 #### Base64
 
-* `HALLUCINATION_AND_TRUSTWORTHINESS_HALLUCINATION_PROPAGATION_BASE64_TREE_JAILBREAKING`
-* `SECURITY_MODEL_DENIAL_OF_SERVICE_BASE64_TREE_JAILBREAKING`
+* Hallucination and Trustworthiness Hallucination Propagation Base64 Tree Jailbreaking
+* Security Model Denial of Service Base64 Tree Jailbreaking
 
 #### Context Poisoning
 
-* `HALLUCINATION_AND_TRUSTWORTHINESS_HALLUCINATION_PROPAGATION_CONTEXT_POISONING_SEQUENTIAL_JAILBREAKING`
+* Hallucination and Trustworthiness Hallucination Propagation Context Poisoning Sequential Jailbreaking
 
 #### Goal Redirection
 
-* `HALLUCINATION_AND_TRUSTWORTHINESS_HALLUCINATION_PROPAGATION_GOAL_REDIRECTION_TREE_JAILBREAKING`
-* `SECURITY_MODEL_DENIAL_OF_SERVICE_GOAL_REDIRECTION_TREE_JAILBREAKING`
+* Hallucination and Trustworthiness Hallucination Propagation Goal Redirection Tree Jailbreaking
+* Security Model Denial of Service Goal Redirection Tree Jailbreaking
 
 #### Input Bypass
 
-* `HALLUCINATION_AND_TRUSTWORTHINESS_HALLUCINATION_PROPAGATION_INPUT_BYPASS_TREE_JAILBREAKING`
-* `SECURITY_MODEL_DENIAL_OF_SERVICE_INPUT_BYPASS_TREE_JAILBREAKING`
+* Hallucination and Trustworthiness Hallucination Propagation Input Bypass Tree Jailbreaking
+* Security Model Denial of Service Input Bypass Tree Jailbreaking
 
 #### Leetspeak
 
-* `HALLUCINATION_AND_TRUSTWORTHINESS_HALLUCINATION_PROPAGATION_LEETSPEAK_TREE_JAILBREAKING`
-* `SECURITY_MODEL_DENIAL_OF_SERVICE_LEETSPEAK_TREE_JAILBREAKING`
+* Hallucination and Trustworthiness Hallucination Propagation Leetspeak Tree Jailbreaking
+* Security Model Denial of Service Leetspeak Tree Jailbreaking
 
 #### Math Problem
 
-* `HALLUCINATION_AND_TRUSTWORTHINESS_HALLUCINATION_PROPAGATION_MATH_PROBLEM_TREE_JAILBREAKING`
-* `SECURITY_MODEL_DENIAL_OF_SERVICE_MATH_PROBLEM_TREE_JAILBREAKING`
+* Hallucination and Trustworthiness Hallucination Propagation Math Problem Tree Jailbreaking
+* Security Model Denial of Service Math Problem Tree Jailbreaking
 
 #### Multilingual
 
-* `SECURITY_MODEL_DENIAL_OF_SERVICE_MULTILINGUAL_CRESCENDO_JAILBREAKING`
+* Security Model Denial of Service Multilingual Crescendo Jailbreaking
 
 #### Prompt Injection
 
-* `HALLUCINATION_AND_TRUSTWORTHINESS_HALLUCINATION_PROPAGATION_PROMPT_INJECTION_TREE_JAILBREAKING`
-* `SECURITY_MODEL_DENIAL_OF_SERVICE_PROMPT_INJECTION_TREE_JAILBREAKING`
+* Hallucination and Trustworthiness Hallucination Propagation Prompt Injection Tree Jailbreaking
+* Security Model Denial of Service Prompt Injection Tree Jailbreaking
 
 #### ROT13
 
-* `HALLUCINATION_AND_TRUSTWORTHINESS_HALLUCINATION_PROPAGATION_ROT13_TREE_JAILBREAKING`
-* `SECURITY_MODEL_DENIAL_OF_SERVICE_ROT13_TREE_JAILBREAKING`
+* Hallucination and Trustworthiness Hallucination Propagation ROT13 Tree Jailbreaking
+* Security Model Denial of Service ROT13 Tree Jailbreaking
 
 #### Roleplay
 
-* `SECURITY_MODEL_DENIAL_OF_SERVICE_ROLEPLAY_TREE_JAILBREAKING`
+* Security Model Denial of Service Roleplay Tree Jailbreaking
 
 #### Semantic Manipulation
 
-* `HALLUCINATION_AND_TRUSTWORTHINESS_HALLUCINATION_PROPAGATION_SEMANTIC_MANIPULATION_TREE_JAILBREAKING`
+* Hallucination and Trustworthiness Hallucination Propagation Semantic Manipulation Tree Jailbreaking
 
 #### System Override
 
-* `HALLUCINATION_AND_TRUSTWORTHINESS_HALLUCINATION_PROPAGATION_SYSTEM_OVERRIDE_TREE_JAILBREAKING`
-* `SECURITY_MODEL_DENIAL_OF_SERVICE_SYSTEM_OVERRIDE_TREE_JAILBREAKING`
+* Hallucination and Trustworthiness Hallucination Propagation System Override Tree Jailbreaking
+* Security Model Denial of Service System Override Tree Jailbreaking
 
 ***
 
@@ -454,44 +454,44 @@ Each entry below is an **executable probe template**. Templates are grouped by:
 
 #### Base64
 
-* `BUSINESS_ALIGNMENT_HUMAN_AGENT_TRUST_EXPLOITATION_BASE64_CRESCENDO_JAILBREAKING`
-* `BUSINESS_ALIGNMENT_OVERWHELMING_HUMAN_IN_THE_LOOP_BASE64_CRESCENDO_JAILBREAKING`
-* `SECURITY_OVERRELIANCE_BASE64_BAD_LIKERT_JUDGE`
-* `SECURITY_OVERRELIANCE_BASE64_SEQUENTIAL_JAILBREAKING`
+* Business Alignment Human Agent Trust Exploitation Base64 Crescendo Jailbreaking
+* Business Alignment Overwhelming Human in the Loop Base64 Crescendo Jailbreaking
+* Security Overreliance Base64 Bad Likert Judge
+* Security Overreliance Base64 Sequential Jailbreaking
 
 #### Goal Redirection
 
-* `SECURITY_OVERRELIANCE_GOAL_REDIRECTION_SEQUENTIAL_JAILBREAKING`
+* Security Overreliance Goal Redirection Sequential Jailbreaking
 
 #### Input Bypass
 
-* `BUSINESS_ALIGNMENT_HUMAN_AGENT_TRUST_EXPLOITATION_INPUT_BYPASS_SEQUENTIAL_JAILBREAKING`
-* `BUSINESS_ALIGNMENT_OVERWHELMING_HUMAN_IN_THE_LOOP_INPUT_BYPASS_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_OVERRELIANCE_INPUT_BYPASS_BAD_LIKERT_JUDGE`
+* Business Alignment Human Agent Trust Exploitation Input Bypass Sequential Jailbreaking
+* Business Alignment Overwhelming Human in the Loop Input Bypass Sequential Jailbreaking
+* Security Overreliance Input Bypass Bad Likert Judge
 
 #### Prompt Injection
 
-* `BUSINESS_ALIGNMENT_OVERWHELMING_HUMAN_IN_THE_LOOP_PROMPT_INJECTION_SEQUENTIAL_JAILBREAKING`
+* Business Alignment Overwhelming Human in the Loop Prompt Injection Sequential Jailbreaking
 
 #### Roleplay
 
-* `BUSINESS_ALIGNMENT_HUMAN_AGENT_TRUST_EXPLOITATION_ROLEPLAY_BAD_LIKERT_JUDGE`
+* Business Alignment Human Agent Trust Exploitation Roleplay Bad Likert Judge
 
 #### Semantic Manipulation
 
-* `BUSINESS_ALIGNMENT_HUMAN_AGENT_TRUST_EXPLOITATION_SEMANTIC_MANIPULATION_BAD_LIKERT_JUDGE`
-* `BUSINESS_ALIGNMENT_HUMAN_AGENT_TRUST_EXPLOITATION_SEMANTIC_MANIPULATION_CRESCENDO_JAILBREAKING`
-* `BUSINESS_ALIGNMENT_HUMAN_AGENT_TRUST_EXPLOITATION_SEMANTIC_MANIPULATION_SEQUENTIAL_JAILBREAKING`
-* `BUSINESS_ALIGNMENT_OVERWHELMING_HUMAN_IN_THE_LOOP_SEMANTIC_MANIPULATION_BAD_LIKERT_JUDGE`
-* `BUSINESS_ALIGNMENT_OVERWHELMING_HUMAN_IN_THE_LOOP_SEMANTIC_MANIPULATION_CRESCENDO_JAILBREAKING`
-* `BUSINESS_ALIGNMENT_OVERWHELMING_HUMAN_IN_THE_LOOP_SEMANTIC_MANIPULATION_SEQUENTIAL_JAILBREAKING`
-* `SECURITY_OVERRELIANCE_SEMANTIC_MANIPULATION_BAD_LIKERT_JUDGE`
-* `SECURITY_OVERRELIANCE_SEMANTIC_MANIPULATION_CRESCENDO_JAILBREAKING`
-* `SECURITY_OVERRELIANCE_SEMANTIC_MANIPULATION_SEQUENTIAL_JAILBREAKING`
+* Business Alignment Human Agent Trust Exploitation Semantic Manipulation Bad Likert Judge
+* Business Alignment Human Agent Trust Exploitation Semantic Manipulation Crescendo Jailbreaking
+* Business Alignment Human Agent Trust Exploitation Semantic Manipulation Sequential Jailbreaking
+* Business Alignment Overwhelming Human in the Loop Semantic Manipulation Bad Likert Judge
+* Business Alignment Overwhelming Human in the Loop Semantic Manipulation Crescendo Jailbreaking
+* Business Alignment Overwhelming Human in the Loop Semantic Manipulation Sequential Jailbreaking
+* Security Overreliance Semantic Manipulation Bad Likert Judge
+* Security Overreliance Semantic Manipulation Crescendo Jailbreaking
+* Security Overreliance Semantic Manipulation Sequential Jailbreaking
 
 #### System Override
 
-* `BUSINESS_ALIGNMENT_OVERWHELMING_HUMAN_IN_THE_LOOP_SYSTEM_OVERRIDE_CRESCENDO_JAILBREAKING`
+* Business Alignment Overwhelming Human in the Loop System Override Crescendo Jailbreaking
 
 ***
 
@@ -499,56 +499,56 @@ Each entry below is an **executable probe template**. Templates are grouped by:
 
 #### Base64
 
-* `BUSINESS_ALIGNMENT_OFF_TOPIC_BASE64_CRESCENDO_JAILBREAKING`
-* `SECURITY_EXCESSIVE_AGENCY_BASE64_CRESCENDO_JAILBREAKING`
+* Business Alignment Off Topic Base64 Crescendo Jailbreaking
+* Security Excessive Agency Base64 Crescendo Jailbreaking
 
 #### Context Poisoning
 
-* `SECURITY_EXCESSIVE_AGENCY_CONTEXT_POISONING_CRESCENDO_JAILBREAKING`
+* Security Excessive Agency Context Poisoning Crescendo Jailbreaking
 
 #### Goal Redirection
 
-* `BUSINESS_ALIGNMENT_LEGALLY_BINDING_GOAL_REDIRECTION_CRESCENDO_JAILBREAKING`
+* Business Alignment Legally Binding Goal Redirection Crescendo Jailbreaking
 
 #### Input Bypass
 
-* `BUSINESS_ALIGNMENT_OFF_TOPIC_INPUT_BYPASS_CRESCENDO_JAILBREAKING`
-* `BUSINESS_ALIGNMENT_ROGUE_AGENTS_INPUT_BYPASS_CRESCENDO_JAILBREAKING`
-* `SECURITY_EXCESSIVE_AGENCY_INPUT_BYPASS_CRESCENDO_JAILBREAKING`
+* Business Alignment Off Topic Input Bypass Crescendo Jailbreaking
+* Business Alignment Rogue Agents Input Bypass Crescendo Jailbreaking
+* Security Excessive Agency Input Bypass Crescendo Jailbreaking
 
 #### Leetspeak
 
-* `BUSINESS_ALIGNMENT_LEGALLY_BINDING_LEETSPEAK_CRESCENDO_JAILBREAKING`
-* `BUSINESS_ALIGNMENT_ROGUE_AGENTS_LEETSPEAK_CRESCENDO_JAILBREAKING`
+* Business Alignment Legally Binding Leetspeak Crescendo Jailbreaking
+* Business Alignment Rogue Agents Leetspeak Crescendo Jailbreaking
 
 #### Multilingual
 
-* `BUSINESS_ALIGNMENT_LEGALLY_BINDING_MULTILINGUAL_CRESCENDO_JAILBREAKING`
-* `BUSINESS_ALIGNMENT_ROGUE_AGENTS_MULTILINGUAL_CRESCENDO_JAILBREAKING`
+* Business Alignment Legally Binding Multilingual Crescendo Jailbreaking
+* Business Alignment Rogue Agents Multilingual Crescendo Jailbreaking
 
 #### Permission Escalation
 
-* `BUSINESS_ALIGNMENT_LEGALLY_BINDING_PERMISSION_ESCALATION_CRESCENDO_JAILBREAKING`
-* `BUSINESS_ALIGNMENT_OFF_TOPIC_PERMISSION_ESCALATION_CRESCENDO_JAILBREAKING`
+* Business Alignment Legally Binding Permission Escalation Crescendo Jailbreaking
+* Business Alignment Off Topic Permission Escalation Crescendo Jailbreaking
 
 #### Prompt Injection
 
-* `BUSINESS_ALIGNMENT_MISALIGNED_AND_DECEPTIVE_BEHAVIORS_PROMPT_INJECTION_SEQUENTIAL_JAILBREAKING`
+* Business Alignment Misaligned and Deceptive Behaviors Prompt Injection Sequential Jailbreaking
 
 #### ROT13
 
-* `BUSINESS_ALIGNMENT_LEGALLY_BINDING_ROT13_CRESCENDO_JAILBREAKING`
-* `BUSINESS_ALIGNMENT_MISALIGNED_AND_DECEPTIVE_BEHAVIORS_ROT13_CRESCENDO_JAILBREAKING`
-* `BUSINESS_ALIGNMENT_ROGUE_AGENTS_ROT13_CRESCENDO_JAILBREAKING`
+* Business Alignment Legally Binding ROT13 Crescendo Jailbreaking
+* Business Alignment Misaligned and Deceptive Behaviors ROT13 Crescendo Jailbreaking
+* Business Alignment Rogue Agents ROT13 Crescendo Jailbreaking
 
 #### Roleplay
 
-* `BUSINESS_ALIGNMENT_OFF_TOPIC_ROLEPLAY_TREE_JAILBREAKING`
+* Business Alignment Off Topic Roleplay Tree Jailbreaking
 
 #### Semantic Manipulation
 
-* `SECURITY_EXCESSIVE_AGENCY_SEMANTIC_MANIPULATION_TREE_JAILBREAKING`
+* Security Excessive Agency Semantic Manipulation Tree Jailbreaking
 
 #### System Override
 
-* `BUSINESS_ALIGNMENT_ROGUE_AGENTS_SYSTEM_OVERRIDE_SEQUENTIAL_JAILBREAKING`
+* Business Alignment Rogue Agents System Override Sequential Jailbreaking

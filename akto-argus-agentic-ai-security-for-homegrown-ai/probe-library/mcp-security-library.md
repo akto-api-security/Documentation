@@ -17,20 +17,20 @@ Probes in this category validate whether authentication tokens, session identifi
 
 #### Sample Probes in Akto Probe Library
 
-* `MCP_TOKEN_PASSTHROUGH_API_KEY`
-* `MCP_TOKEN_PASSTHROUGH_DOWNSTREAM`
-* `MCP_TOKEN_PASSTHROUGH_OPAQUE_TOKEN`
-* `AUTHENTICATION_TOKEN_REFLECTION_IN_RESPONSE_MCP`
-* `AUTHENTICATION_TOKEN_REFLECTION_IN_HEADERS_MCP`
-* `REPLACE_AUTH_TOKEN_MCP`
-* `MCP_REMOVE_TOKENS`
-* `AUTHENTICATION_WITH_WRONG_AUTH_SCHEME_MCP`
-* `MCP_PREDICTABLE_SESSION_IDS`
-* `MCP_SESSION_STATE_PERSISTENCE`
-* `MCP_SESSION_NOT_BOUND_TO_USER`
-* `MCP_SESSION_MUST_USE_PER_REQUEST_AUTH`
-* `MCP_SESSION_HIJACKING_PROMPT_INJECTION`
-* `MCP_SESSION_HIJACKING_FILTERED_ATTACK`
+* MCP Token Passthrough API Key
+* MCP Token Passthrough Downstream
+* MCP Token Passthrough Opaque Token
+* Authentication Token Reflection in Response MCP
+* Authentication Token Reflection in Headers MCP
+* Replace Auth Token MCP
+* MCP Remove Tokens
+* Authentication With Wrong Auth Scheme MCP
+* MCP Predictable Session IDs
+* MCP Session State Persistence
+* MCP Session Not Bound to User
+* MCP Session Must Use per Request Auth
+* MCP Session Hijacking Prompt Injection
+* MCP Session Hijacking Filtered Attack
 
 ***
 
@@ -40,21 +40,21 @@ Validates whether MCP function calls and tools allow unauthorized privilege expa
 
 #### Sample Probes in Akto Probe Library
 
-* `MCP_FUNCTION_CALL_PRIVILEGE_ESCALATION`
-* `MCP_UNAUTHORIZED_TOOL_ACCESS`
-* `MCP_FUNCTION_CALL_DIRECT_METHOD_MANIPULATION`
-* `MCP_FUNCTION_CALL_EXCESSIVE_INVOCATION`
-* `MCP_EXCESSIVE_RESOURCE_READS_RATE_LIMIT`
-* `IMPROPER_PAGE_SIZE_HANDLING_MCP`
-* `MCP_PARAM_OVERLOAD`
-* `BYPASS_INPUT_LENGTH_VALIDATION_MCP`
-* `BYPASS_INPUT_VALIDATION_WITH_NULL_VALUES_MCP`
-* `INPUT_VALIDATION_BY_PASSING_UNSUPPORTED_MCP_METHOD`
-* `INPUT_VALIDATION_BY_PASSING_UNSUPPORTED_JSONRPC_VERISON`
-* `INPUT_VALIDATION_BY_REPLACING_PARAM_WITH_ARRAY_MCP`
-* `INPUT_VALIDATION_FOR_BOOLEAN_MCP`
-* `MCP_INVALID_REQUEST_REMOVED_PARAM`
-* `MCP_INVALID_PARAMS`
+* MCP Function Call Privilege Escalation
+* MCP Unauthorized Tool Access
+* MCP Function Call Direct Method Manipulation
+* MCP Function Call Excessive Invocation
+* MCP Excessive Resource Reads Rate Limit
+* Improper Page Size Handling MCP
+* MCP Param Overload
+* Bypass Input Length Validation MCP
+* Bypass Input Validation With Null Values MCP
+* Input Validation by Passing Unsupported MCP Method
+* Input Validation by Passing Unsupported JSONRPC Version
+* Input Validation by Replacing Param With Array MCP
+* Input Validation for Boolean MCP
+* MCP Invalid Request Removed Param
+* MCP Invalid Params
 
 ***
 
@@ -64,13 +64,13 @@ Probes whether tool outputs, metadata, or execution paths can be manipulated to 
 
 #### Sample Probes in Akto Probe Library
 
-* `TOOL_POISONING_OUTPUT_INJECTION_MCP`
-* `MCP_FUNCTION_CALL_OUTPUT_MANIPULATION`
-* `MCP_FUNCTION_CALL_RESPONSE_MANIPULATION`
-* `MCP_TPA_TOOL_METADATA_INJECTION`
-* `MCP_TPA_OBFUSCATED_OUTPUT_PAYLOADS`
-* `MCP_TPA_OVERRIDE_SAFETY_CHECKS`
-* `MCP_ELICITATION_ABUSE_GENERAL`
+* Tool Poisoning Output Injection MCP
+* MCP Function Call Output Manipulation
+* MCP Function Call Response Manipulation
+* MCP TPA Tool Metadata Injection
+* MCP TPA Obfuscated Output Payloads
+* MCP TPA Override Safety Checks
+* MCP Elicitation Abuse General
 
 ***
 
@@ -80,12 +80,12 @@ Validates whether MCP implementations securely handle external resources, depend
 
 #### Covered Probe Templates
 
-* `MCP_RESOURCE_BINARY_URI_DESERIALIZATION_ATTACK`
-* `HallucinatedSdkPackageSuggestion`
-* `MCP_PATH_TRAVERSAL_RESOURCE_URI`
-* `MCP_PATH_TRAVERSAL_PARAMETER_INJECTION`
-* `MCP_INVALID_ORIGIN_HEADER_REBINDING`
-* `MCP_INVALID_MIME_TYPE_INJECTION`
+* MCP Resource Binary URI Deserialization Attack
+* Hallucinated SDK Package Suggestion
+* MCP Path Traversal Resource URI
+* MCP Path Traversal Parameter Injection
+* MCP Invalid Origin Header Rebinding
+* MCP Invalid MIME Type Injection
 
 ***
 
@@ -95,26 +95,26 @@ Probes whether MCP tools or resources can be abused to execute arbitrary command
 
 #### Sample Probes in Akto Probe Library
 
-* `MCP_REMOTE_COMMAND_INJECTION_RCE`
-* `MCP_COMMAND_INJECTION_PARAMETER_INJECTION`
-* `COMMAND_INJECTION_BY_PASSING_EXTRA_VALUES_MCP`
-* `MCP_TOOLS_CALL_CODE_INJECTION`
-* `MCP_TOOLS_CALL_CODE_INJECTION_SANDBOX_ESCAPE`
-* `MCP_TOOLS_CALL_SHELL_LIKE_COMMAND`
-* `MCP_RESOURCES_READ_CODE_INJECTION`
-* `MCP_INDIRECT_PROMPT_INJECTION_COMMAND_INJECTION_AGENT_TEST`
-* `MCP_COMMAND_INJECTION_WITH_OPERATORS`
-* `MCP_COMMAND_INJECTION_WITH_REDIRECTION_AND_VAR_MANIPULATION`
-* `MCP_COMMAND_INJECTION_WITH_REDIRECTION_AND_VAR_MANIPULATION_CHAINED`
-* `MCP_COMMAND_INJECTION_VARIABLE_ASSIGN`
-* `MCP_COMMAND_INJECTION_VARIABLE_ASSIGN_CHAINED`
-* `MCP_COMMAND_INJECTION_USER_AGENT_HEADER_CHAINED`
-* `MCP_COMMAND_INJECTION_URL_PATH`
-* `MCP_COMMAND_INJECTION_URL_PATH_CHAINED`
-* `MCP_COMMAND_INJECTION_TIME_DELAY`
-* `MCP_COMMAND_INJECTION_TIME_DELAY_CHAINED`
-* `MCP_COMMAND_INJECTION_CURL_HTTP_REQUEST`
-* `MCP_COMMAND_INJECTION_CURL_HTTP_REQUEST_CHAINED_COMMANDS`
+* MCP Remote Command Injection RCE
+* MCP Command Injection Parameter Injection
+* Command Injection by Passing Extra Values MCP
+* MCP Tools Call Code Injection
+* MCP Tools Call Code Injection Sandbox Escape
+* MCP Tools Call Shell Like Command
+* MCP Resources Read Code Injection
+* MCP Indirect Prompt Injection Command Injection Agent Test
+* MCP Command Injection With Operators
+* MCP Command Injection With Redirection and Var Manipulation
+* MCP Command Injection With Redirection and Var Manipulation Chained
+* MCP Command Injection Variable Assign
+* MCP Command Injection Variable Assign Chained
+* MCP Command Injection User Agent Header Chained
+* MCP Command Injection URL Path
+* MCP Command Injection URL Path Chained
+* MCP Command Injection Time Delay
+* MCP Command Injection Time Delay Chained
+* MCP Command Injection Curl Http Request
+* MCP Command Injection Curl Http Request Chained Commands
 
 ***
 
@@ -124,27 +124,27 @@ Validates whether prompts, tool parameters, resources, or metadata can be abused
 
 #### Sample Probes in Akto Probe Library
 
-* `MCP_DIRECT_PROMPT_INJECTION`
-* `MCP_INDIRECT_PROMPT_INJECTION`
-* `MCP_RESOURCE_PROMPT_INJECTION`
-* `MCP_INDIRECT_PROMPT_INJECTION_TOOL_BYPASS`
-* `MCP_INDIRECT_PROMPT_INJECTION_TOOL_BYPASS_AGENT_TEST`
-* `MCP_INDIRECT_PROMPT_INJECTION_RESPONSE_BODY`
-* `MCP_FUNCTION_CALL_PARAMETER_INJECTION`
-* `MCP_FUNCTION_CALL_NESTED_PARAMETER_INJECTION`
-* `MCP_PING_PARAMETER_INJECTION`
-* `MCP_XSS_INJECTION_PARAMETER_INJECTION`
-* `MCP_SQL_INJECTION_PARAMETER_INJECTION`
-* `MCP_LDAP_INJECTION_PARAMETER_INJECTION`
-* `MCP_PATH_TRAVERSAL_PARAMETER_INJECTION`
-* `PromptInjectionMarkdownAbuseInjection`
-* `MCP_FUNCTION_CALL_PARAMS_NAME_MANIPULATION`
-* `MCP_FUNCTION_CALL_METADATA_INJECTION`
-* `MCP_ANSI_CURSOR_MANIPULATION_DECEPTION`
-* `MCP_ANSI_HYPERLINK_MANIPULATION_DECEPTION`
-* `MCP_ANSI_INVISIBLE_TEXT_DECEPTION`
-* `MCP_ANSI_SCREEN_CLEARING_DECEPTION`
-* `MCP_CONSENT_FATIGUE_EXPLOITATION`
+* MCP Direct Prompt Injection
+* MCP Indirect Prompt Injection
+* MCP Resource Prompt Injection
+* MCP Indirect Prompt Injection Tool Bypass
+* MCP Indirect Prompt Injection Tool Bypass Agent Test
+* MCP Indirect Prompt Injection Response Body
+* MCP Function Call Parameter Injection
+* MCP Function Call Nested Parameter Injection
+* MCP Ping Parameter Injection
+* MCP XSS Injection Parameter Injection
+* MCP SQL Injection Parameter Injection
+* MCP LDAP Injection Parameter Injection
+* MCP Path Traversal Parameter Injection
+* Prompt Injection Markdown Abuse Injection
+* MCP Function Call Params Name Manipulation
+* MCP Function Call Metadata Injection
+* MCP ANSI Cursor Manipulation Deception
+* MCP ANSI Hyperlink Manipulation Deception
+* MCP ANSI Invisible Text Deception
+* MCP ANSI Screen Clearing Deception
+* MCP Consent Fatigue Exploitation
 
 ***
 
@@ -154,18 +154,18 @@ Scans whether authentication and authorization are consistently enforced across 
 
 #### Sample Probes in Akto Probe Library
 
-* `MCP_SESSION_HIJACKING_PROMPT_INJECTION`
-* `MCP_SESSION_HIJACKING_FILTERED_ATTACK`
-* `MCP_SESSION_NOT_BOUND_TO_USER`
-* `MCP_SESSION_MUST_USE_PER_REQUEST_AUTH`
-* `MCP_SESSION_STATE_PERSISTENCE`
-* `AUTHENTICATION_WITH_WRONG_AUTH_SCHEME_MCP`
-* `MCP_REMOVE_TOKENS`
-* `REPLACE_AUTH_TOKEN_MCP`
-* `MCP_PREDICTABLE_SESSION_IDS`
-* `MCP_UNAUTHORIZED_TOOL_ACCESS`
-* `MCP_FUNCTION_CALL_PRIVILEGE_ESCALATION`
-* `MCP_INVALID_REQUEST_REMOVED_PARAM`
+* MCP Session Hijacking Prompt Injection
+* MCP Session Hijacking Filtered Attack
+* MCP Session Not Bound to User
+* MCP Session Must Use per Request Auth
+* MCP Session State Persistence
+* Authentication With Wrong Auth Scheme MCP
+* MCP Remove Tokens
+* Replace Auth Token MCP
+* MCP Predictable Session IDs
+* MCP Unauthorized Tool Access
+* MCP Function Call Privilege Escalation
+* MCP Invalid Request Removed Param
 
 ***
 
@@ -175,26 +175,26 @@ Validates whether MCP implementations provide sufficient logging, error handling
 
 #### Sample Probes in Akto Probe Library
 
-* `MCP_MISSING_LOG_FOR_SECURITY_ERRORS`
-* `MCP_REFLECTIVE_INVALID_TOOL_CALLS`
-* `MCP_METHOD_NOT_FOUND`
-* `MCP_TIMEOUT_NOT_HANDLED_PROPERLY`
-* `MCP_INTERNAL_ERROR_EXPOSURE`
-* `MCP_UNHANDLED_ERROR_DISCLOSURE_MALFORMED_JSONRPC`
-* `MCP_PING_MISSING_RESPONSE`
-* `MCP_PING_INVALID_JSONRPC`
-* `MCP_PING_SLOW_RESPONSE`
-* `MCP_PING_TIMING_INFORMATION_LEAK`
-* `MCP_PING_NO_RATE_LIMITING`
-* `MCP_PING_FLOODING_DOS`
-* `MCP_PING_AMPLIFICATION_ATTACK`
-* `DOS_TEST_URL_MCP`
-* `DATE_FIELD_DOS_MCP`
-* `JSON_BODY_PARAM_BOMBING_DOS_MCP`
-* `DOS_TEST_LARGE_NUMBERS_MCP`
-* `DOS_FILE_URL_CSV_MCP`
-* `DOS_HEADER_KEY_MCP`
-* `DOS_HEADER_VALUE_MCP`
+* MCP Missing Log for Security Errors
+* MCP Reflective Invalid Tool Calls
+* MCP Method Not Found
+* MCP Timeout Not Handled Properly
+* MCP Internal Error Exposure
+* MCP Unhandled Error Disclosure Malformed JSONRPC
+* MCP Ping Missing Response
+* MCP Ping Invalid JSONRPC
+* MCP Ping Slow Response
+* MCP Ping Timing Information Leak
+* MCP Ping No Rate Limiting
+* MCP Ping Flooding DOS
+* MCP Ping Amplification Attack
+* DOS Test URL MCP
+* Date Field DOS MCP
+* JSON Body Param Bombing DOS MCP
+* DOS Test Large Numbers MCP
+* DOS File URL CSV MCP
+* DOS Header Key MCP
+* DOS Header Value MCP
 
 ***
 
@@ -204,21 +204,21 @@ Probes whether internal MCP infrastructure, models, tools, or configuration deta
 
 #### Sample Probes in Akto Probe Library
 
-* `MCP_TOOLS_LIST_EXTRACTION_VIA_PARAMETERS`
-* `MCP_INTERNAL_SYSTEM_DETAILS_EXTRACTION`
-* `MCP_MODEL_NAME_EXTRACTION_VIA_PARAMETERS`
-* `MCP_CONFIGURATION_INFORMATION_EXTRACTION`
-* `MCP_ENVIRONMENT_VARIABLES_EXTRACTION`
-* `MCP_DEBUG_INFORMATION_EXTRACTION`
-* `MCP_MODEL_ARCHITECTURE_PROBE`
-* `MCP_MODEL_BACKEND_FINGERPRINTING`
-* `MCP_MODEL_CAPABILITY_INFERENCE`
-* `MCP_MODEL_PARAM_INFERENCE`
-* `MCP_MODEL_ASSET_EXFILTRATION_BY_PROMPT`
-* `MCP_SCAN_DEV_INFRA_BY_PROMPT`
-* `MCP_BROWSER_DRIVER_VERSION_DISCLOSURE_LT`
-* `MCP_WEBDRIVER_SESSIONID_EXPOSURE_LT`
-* `FILE_SYSTEM_PATH_DISCLOSURE`
+* MCP Tools List Extraction via Parameters
+* MCP Internal System Details Extraction
+* MCP Model Name Extraction via Parameters
+* MCP Configuration Information Extraction
+* MCP Environment Variables Extraction
+* MCP Debug Information Extraction
+* MCP Model Architecture Probe
+* MCP Model Backend Fingerprinting
+* MCP Model Capability Inference
+* MCP Model Param Inference
+* MCP Model Asset Exfiltration by Prompt
+* MCP Scan Dev Infra by Prompt
+* MCP Browser Driver Version Disclosure (LT)
+* MCP WebDriver Session ID Exposure (LT)
+* File System Path Disclosure
 
 ***
 
@@ -228,19 +228,19 @@ Validates whether MCP systems correctly isolate context, memory, and data across
 
 #### Sample Probes in Akto Probe Library
 
-* `MCP_CONTEXT_BLEED`
-* `MCP_SHARED_MEMORY_CONTEXT_LEAKAGE`
-* `MCP_GLOBAL_MEMORY_BUFFER_LEAKAGE`
-* `MCP_CROSS_SESSION_CONTEXT_BLEEDING`
-* `MCP_VECTOR_STORE_CONTEXT_BLEEDING`
-* `MCP_CONVERSATION_HISTORY_THEFT`
-* `MCP_CONVERSATION_HISTORY_EXTRACTION_VIA_PARAMETERS`
-* `MCP_TOOL_CALL_HISTORY_EXTRACTION_VIA_PARAMETERS`
-* `MCP_CHAIN_OF_THOUGHT_EXTRACTION_VIA_PARAMETERS`
-* `MCP_SYSTEM_PROMPT_EXTRACTION`
-* `MCP_SYSTEM_PROMPT_EXTRACTION_VIA_PARAMETERS`
-* `MCP_RESPONSE_DATA_LEAK_CHECK`
-* `MEMORY_LEAK_OR_OBJECT_DUMP_MCP`
-* `MCP_DATA_RETENTION_AND_SOURCE_DISCLOSURE`
-* `MCP_DATA_EXFILTRATION_REFLECTION_ATTACK`
-* `MCP_SHELL_CONFIGURATION_OVERRIDE_ATTACK`
+* MCP Context Bleed
+* MCP Shared Memory Context Leakage
+* MCP Global Memory Buffer Leakage
+* MCP Cross Session Context Bleeding
+* MCP Vector Store Context Bleeding
+* MCP Conversation History Theft
+* MCP Conversation History Extraction via Parameters
+* MCP Tool Call History Extraction via Parameters
+* MCP Chain of Thought Extraction via Parameters
+* MCP System Prompt Extraction
+* MCP System Prompt Extraction via Parameters
+* MCP Response Data Leak Check
+* Memory Leak or Object Dump MCP
+* MCP Data Retention and Source Disclosure
+* MCP Data Exfiltration Reflection Attack
+* MCP Shell Configuration Override Attack
