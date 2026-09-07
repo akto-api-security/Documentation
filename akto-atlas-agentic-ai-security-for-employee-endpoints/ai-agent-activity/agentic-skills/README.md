@@ -27,16 +27,16 @@ Regular updates keep your inventory aligned with agent configuration changes.
 
 Akto discovers skill files across every surface where AI agents are configured and run. Discovery covers:
 
-* **Local developer workstations** — skill files used by IDE-based agents such as Cursor, VS Code, and Claude Code
-* **Source code repositories** — skill files committed to GitHub, GitLab, and Bitbucket, including nested directories such as `.claude/skills/`
-* **CI/CD pipelines** — skill files present in pipeline configurations and build environments
-* **MCP servers and AI agent runtimes** — skills loaded and exposed by locally running or networked MCP servers
-* **Local developer skill directories** — skills loaded from developer-managed local paths outside of version control
-* **Third-party registries and marketplaces** — skills pulled in from external sources or community registries
+* **Local developer workstations**: skill files used by IDE-based agents such as Cursor, VS Code, and Claude Code
+* **Source code repositories**: skill files committed to GitHub, GitLab, and Bitbucket, including nested directories such as `.claude/skills/`
+* **CI/CD pipelines**: skill files present in pipeline configurations and build environments
+* **MCP servers and AI agent runtimes**: skills loaded and exposed by locally running or networked MCP servers
+* **Local developer skill directories**: skills loaded from developer-managed local paths outside of version control
+* **Third-party registries and marketplaces**: skills pulled in from external sources or community registries
 
 ## Skill Inventory
 
-Akto generates and maintains a continuous inventory of all skills currently in use across your environment. The inventory captures skill source, hosting location, associated agents, and last observed activity — giving you a complete, up-to-date picture of your skill footprint.
+Akto generates and maintains a continuous inventory of all skills currently in use across your environment. The inventory captures skill source, hosting location, associated agents, and last observed activity, giving you a complete, up-to-date picture of your skill footprint.
 
 ## Malicious Skill Detection
 
@@ -44,9 +44,9 @@ When a skill is discovered, Akto analyzes its content for security risks. Each s
 
 Akto detects risks across three risk categories:
 
-* **Sensitive Data Exposure** — hardcoded credentials and sensitive identifiers in skill content
-* **Malicious Instructions & Prompt Injection** — injected or adversarial directives designed to override agent behavior
-* **Embedded Code & Script Risks** — unsafe execution logic, reverse shells, and dependency vulnerabilities
+* **Sensitive Data Exposure**: hardcoded credentials and sensitive identifiers in skill content
+* **Malicious Instructions & Prompt Injection**: injected or adversarial directives designed to override agent behavior
+* **Embedded Code & Script Risks**: unsafe execution logic, reverse shells, and dependency vulnerabilities
 
 Analysis runs at discovery time and on every subsequent change detected. For detailed threat context and examples of each risk category, see [OWASP Agentic Skills Top 10](owasp-agentic-skills-top-10.md).
 
@@ -56,7 +56,7 @@ Analysis runs at discovery time and on every subsequent change detected. For det
 At runtime, if an injected instruction surfaces during execution, the **PromptInjection Guardrail** in Agent Guard enforces blocking. See [Agent Guard → PromptInjection Guardrail](../../../agentic-guardrails/concepts/agent-guard.md) for detection logic and configuration.
 {% endhint %}
 
-***
+
 
 ## Auditing Skills
 
@@ -144,7 +144,7 @@ Akto blocks execution of the selected skills only for the chosen agent on the se
 Other agents on the same device retain access unless explicitly restricted.\
 Agents on other devices continue to operate without any impact.
 
-***
+
 
 ## Akto Guardrails
 
@@ -152,10 +152,10 @@ Akto monitors agent behavior at runtime to detect dangerous actions triggered by
 
 ### What Akto Monitors
 
-* **Agent tool usage** — file access, shell commands, and network calls initiated by skill execution
-* **Skill-triggered system actions** — system-level operations spawned directly by a skill
-* **Data movement** — files, environment variables, or sensitive content leaving the endpoint
-* **Outbound network activity** — destinations contacted during or after skill execution
+* **Agent tool usage**: file access, shell commands, and network calls initiated by skill execution
+* **Skill-triggered system actions**: system-level operations spawned directly by a skill
+* **Data movement**: files, environment variables, or sensitive content leaving the endpoint
+* **Outbound network activity**: destinations contacted during or after skill execution
 
 ### What Akto Detects
 
@@ -174,10 +174,10 @@ Akto enforces controls in real time without requiring manual intervention:
 
 **Integrations**
 
-* **EDR / XDR platforms** — Akto correlates skill-triggered events with endpoint telemetry for unified threat visibility
-* **Runtime agent gateways and proxies** — Akto integrates with agent middleware to enforce controls at the execution layer
+* **EDR / XDR platforms**: Akto correlates skill-triggered events with endpoint telemetry for unified threat visibility
+* **Runtime agent gateways and proxies**: Akto integrates with agent middleware to enforce controls at the execution layer
 
-***
+
 
 ## Governance & Compliance
 
@@ -196,7 +196,7 @@ Akto gives you controls to govern which skills can be introduced and activated a
 * Generate compliance reports covering skill inventory and usage history
 * Align skill governance with security and regulatory requirements
 
-***
+
 
 ## Detection Coverage
 
@@ -213,7 +213,7 @@ Akto measures detection effectiveness across four key risk categories for skills
 Detection rates are measured against a benchmark set of known-malicious skill samples covering each risk category. Methodology details are available on request.
 {% endhint %}
 
-***
+
 
 ## Continue with Guardrails
 
