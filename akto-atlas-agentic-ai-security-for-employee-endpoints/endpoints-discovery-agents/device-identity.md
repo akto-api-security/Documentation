@@ -15,7 +15,7 @@ Both AI Endpoint Shield and the Chrome browser extension let you override this w
 ## AI Endpoint Shield (macOS)
 
 {% hint style="info" %}
-**macOS only, for now.** This capability currently applies to AI Endpoint Shield on macOS. Windows and Linux support isn't available yet.
+**MacOS only.** This capability currently applies to AI Endpoint Shield on macOS.
 {% endhint %}
 
 Staging an **`identity.json`** file on the device before install lets you assign a specific device name and email that the [Endpoint Shield](../ai-agent-activity/view-endpoint-shield-details.md) Agent List shows instead of the auto-detected hostname and username.
