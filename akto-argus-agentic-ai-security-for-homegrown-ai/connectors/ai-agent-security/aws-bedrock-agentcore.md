@@ -126,7 +126,7 @@ Attach this **versioned** layer to the interceptor Lambda in the same Region. La
 
 **Current public `us-east-1` layer:**
 
-<pre data-overflow="wrap"><code>arn:aws:lambda:us-east-1:041877753357:layer:akto-agentcore:3
+<pre data-overflow="wrap"><code>arn:aws:lambda:us-east-1:041877753357:layer:akto-agentcore:22
 </code></pre>
 
 Compatible runtimes: Python 3.10–3.13. Architectures: `x86_64` and `arm64`. Other accounts can attach this version (`lambda:GetLayerVersion` is granted to `*`).
@@ -165,7 +165,7 @@ Fill in the required values:
 ```bash
 AKTO_DATA_INGESTION_URL=https://your-akto-instance.com
 AKTO_API_TOKEN=your-akto-api-token
-AKTO_LAYER_ARN=arn:aws:lambda:us-east-1:041877753357:layer:akto-agentcore:3
+AKTO_LAYER_ARN=arn:aws:lambda:us-east-1:041877753357:layer:akto-agentcore:22
 AWS_REGION=us-east-1
 GATEWAY_IDS=your-gateway-id          # one or many, comma/space separated
 ```
@@ -180,7 +180,7 @@ GATEWAY_IDS=your-gateway-id          # one or many, comma/space separated
 ./deploy.sh
 ```
 
-The script creates the Lambda execution role if needed, deploys a **thin** handler that imports `akto_agentcore.lambda_handler` from the layer, then for each gateway in `GATEWAY_IDS` grants invoke permission and attaches the interceptor (REQUEST + RESPONSE, with request headers enabled). It is idempotent: safe to re-run.
+The script creates the Lambda execution role (with the required IAM policies), deploys a **thin** handler that imports `akto_agentcore.lambda_handler` from the layer, then for each gateway in `GATEWAY_IDS` grants invoke permission and attaches the interceptor (REQUEST + RESPONSE, with request headers enabled). It is idempotent: safe to re-run.
 
 {% hint style="warning" %}
 This script **replaces** the gateway interceptor configuration. Do not use it if the gateway already has a custom interceptor — use [Setup: existing interceptor](#setup-existing-interceptor) instead.
@@ -212,7 +212,7 @@ Click **Create function**.
 
 On the function page: **Code** → **Layers** → **Add a layer** → **Specify an ARN**. Paste the versioned ARN for your Region, for example:
 
-<pre data-overflow="wrap"><code>arn:aws:lambda:us-east-1:041877753357:layer:akto-agentcore:3
+<pre data-overflow="wrap"><code>arn:aws:lambda:us-east-1:041877753357:layer:akto-agentcore:22
 </code></pre>
 
 Click **Add**.
@@ -243,6 +243,54 @@ Go to **Configuration → Environment variables → Edit** and add:
 Optional: `AKTO_FAIL_OPEN=false`, `AKTO_TIMEOUT_SECONDS=30`, `AKTO_APPROVAL_WAIT_SECONDS=840`, `AKTO_APPROVAL_POLL_SECONDS=2`.
 
 Under **Configuration → General configuration**, set **Timeout** to **15 minutes** (900 seconds) if you use human-approval policies. Click **Save**.
+{% endstep %}
+
+{% step %}
+**Add IAM policy on the Lambda execution role**
+
+Open **Configuration → Permissions** → click the **Execution role** → **Add permissions → Create inline policy** → **JSON**. Name it `akto-interceptor-discovery` and paste:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "bedrock-agentcore:GetGateway",
+        "bedrock-agentcore:ListAgentRuntimes",
+        "bedrock-agentcore:GetAgentRuntime",
+        "bedrock-agentcore:ListHarnesses",
+        "bedrock-agentcore:GetHarness"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iam:GetRole",
+        "iam:ListAttachedRolePolicies",
+        "iam:ListRolePolicies",
+        "iam:GetRolePolicy"
+      ],
+      "Resource": "arn:aws:iam::*:role/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iam:GetPolicy",
+        "iam:GetPolicyVersion"
+      ],
+      "Resource": [
+        "arn:aws:iam::*:policy/*",
+        "arn:aws:iam::aws:policy/*"
+      ]
+    }
+  ]
+}
+```
+
+Guardrails still work without this policy; it only adds agent and IAM context to Akto. `deploy.sh` adds it automatically.
 {% endstep %}
 
 {% step %}
@@ -302,7 +350,7 @@ Use this when the gateway **already** invokes your Lambda on REQUEST and/or RESP
 
 Lambda console → your interceptor function → **Code** → **Layers** → **Add a layer** → **Specify an ARN**. Paste the versioned ARN for the function's Region:
 
-<pre data-overflow="wrap"><code>arn:aws:lambda:us-east-1:041877753357:layer:akto-agentcore:3
+<pre data-overflow="wrap"><code>arn:aws:lambda:us-east-1:041877753357:layer:akto-agentcore:22
 </code></pre>
 {% endstep %}
 
@@ -337,6 +385,8 @@ Keep **Runtime settings → Handler** pointing at the same entry point you alrea
 | `AKTO_API_TOKEN`          | Token from **Akto Argus → Connectors → Setup Guardrail**              |
 
 Optional: `AKTO_FAIL_OPEN`, `AKTO_TIMEOUT_SECONDS`, `AKTO_APPROVAL_WAIT_SECONDS`, `AKTO_APPROVAL_POLL_SECONDS` (see [Environment Variables](#environment-variables)).
+
+If you did not use `deploy.sh`, add the `akto-interceptor-discovery` inline policy (same JSON as in the console setup above) to this function's execution role.
 {% endstep %}
 
 {% step %}
