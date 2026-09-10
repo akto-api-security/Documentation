@@ -71,7 +71,7 @@ Before running the deployment, gather this information:
    * Navigate to: **AKTO Argus** → **Connectors** → **Setup Guardrails**
    * Copy the API key from there
 7. **LambdaCodeVersion**: version 
-   * Contact AKTO support team to obtain your lambda version
+   * v4.5
 8. **RuntimeLogGroupPrefix**: This can be left blank if you dont have Agentcore/runtimes yet. (Optional) CloudWatch log group prefix for per-runtime AgentCore observability logs. Default matches AWS''s own naming convention so if no changes done to default then can be left blank.
 {% endstep %}
 
@@ -90,7 +90,7 @@ Before running the deployment, gather this information:
 2. Select **Amazon S3 URL**
 3.  Enter the CloudFormation template URL:
 
-    <pre data-overflow="wrap"><code>https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v3.6/client-aws-cf-template.yaml
+    <pre data-overflow="wrap"><code>https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/unified_bedrock/v4.5/client-aws-cf-template.yaml
     </code></pre>
 
     <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (180).png" alt="" width="563"><figcaption></figcaption></figure></div>
