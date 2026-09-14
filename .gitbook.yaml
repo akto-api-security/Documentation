@@ -1,6 +1,16 @@
 root: ./
 
 redirects:
+  getting-started/quick-start-with-akto-self-hosted: "/readme-1"
+  getting-started/quick-start-with-akto-self-hosted/aws-deploy: "/readme-1"
+  getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-multi-vpc-deploy: "/readme-1"
+  getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-cross-region-vpc-deploy: "/readme-1"
+  getting-started/quick-start-with-akto-self-hosted/aws-deploy/aws-ssl: "/readme-1"
+  getting-started/quick-start-with-akto-self-hosted/helm-deploy: "/readme-1"
+  getting-started/quick-start-with-akto-self-hosted/azure-deploy: "/readme-1"
+  getting-started/quick-start-with-akto-self-hosted/openshift-deploy: "/readme-1"
+  getting-started/quick-start-with-akto-self-hosted/heroku: "/readme-1"
+  getting-started/quick-start-with-akto-self-hosted/gcp-deploy: "/readme-1"
   traffic-connector/manual/imperva: "/traffic-connector/third-party-software/imperva"
   help: "/getting-started/quick-start-with-akto-cloud"
   api-inventory: "/api-inventory-1/concepts/api-endpoints"
