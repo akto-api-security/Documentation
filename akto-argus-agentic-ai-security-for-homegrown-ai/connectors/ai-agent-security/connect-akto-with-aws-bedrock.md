@@ -221,7 +221,7 @@ To integrate **both** AWS Bedrock discovery **and** [AWS Bedrock AgentCore](aws-
 
 **Unified CloudFormation Template:**
 
-<pre data-overflow="wrap"><code>https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/v4.2/client-aws-cf-template.yaml
+<pre data-overflow="wrap"><code>https://lambda-code-akto-us-east-1.s3.us-east-1.amazonaws.com/unified_bedrock/v4.5/client-aws-cf-template.yaml
 </code></pre>
 
 This template adds one new parameter on top of the standard Bedrock discovery setup:
