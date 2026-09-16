@@ -101,7 +101,7 @@ If you wrap an existing interceptor, **your handler runs first**. Akto then scan
 ### AWS
 
 * An existing AgentCore **Gateway**: note its **Gateway ID** and **Region**. MCP Gateways guard tool traffic; a separate protocol-less Gateway with an HTTP Runtime target is required to guard agent prompts and final responses.
-* AWS credentials with permissions for `lambda:*` (including attaching a layer), `iam:CreateRole` / `PutRolePolicy` / `PassRole` (CLI only), and `bedrock-agentcore-control:GetGateway` / `UpdateGateway`
+* AWS credentials with permissions for `lambda:*` (including attaching a layer), `iam:CreateRole` / `PutRolePolicy` / `PassRole` (CLI only), and `bedrock-agentcore-control:GetGateway` / `UpdateGateway`, `ListGatewayTargets`,`GetGatewayTarget`
 * For the CLI method: `aws` CLI v2, `jq`, and `zip` installed locally
 
 ### Akto
