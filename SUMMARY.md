@@ -163,6 +163,7 @@
       * [Connect Akto with AWS AppSync using Lambda Data Source](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/aws-appsync-graphql-with-lamda.md)
       * [Connect Akto with AWS API Gateway with CloudWatch OAM](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/aws-api-gateway-with-cloudwatch-oam.md)
       * [Connect Akto with AWS API Gateway with service account (Temporary Credentials)](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/aws-api-gateway-with-temp-creds.md)
+      * [Connect Akto with AWS API Gateway (Akto-Hosted Connector)](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/aws-api-gateway-with-cloudformation.md)
       * [Connect Akto with AWS Fargate](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/aws-fargate.md)
       * [Connect Akto with AWS EKS](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/aws-eks.md)
       * [Connect Akto with AWS ECS](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/others/aws-services/aws-ecs.md)
