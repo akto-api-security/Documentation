@@ -61,6 +61,7 @@
   * [Connect Akto with AWS AppSync using Lambda Data Source](traffic-connector/aws-services/aws-appsync-graphql-with-lamda.md)
   * [Connect Akto with AWS API Gateway with CloudWatch OAM](traffic-connector/aws-services/aws-api-gateway-with-cloudwatch-oam.md)
   * [Connect Akto with AWS API Gateway with service account (Temporary Credentials)](traffic-connector/aws-services/aws-api-gateway-with-temp-creds.md)
+  * [Connect Akto with AWS API Gateway (Akto-Hosted Connector)](traffic-connector/aws-services/aws-api-gateway-with-cloudformation.md)
   * [Connect Akto with AWS Fargate](traffic-connector/aws-services/aws-fargate.md)
   * [Connect Akto with AWS EKS](traffic-connector/aws-services/aws-eks.md)
   * [Connect Akto with AWS ECS](traffic-connector/aws-services/aws-ecs.md)
