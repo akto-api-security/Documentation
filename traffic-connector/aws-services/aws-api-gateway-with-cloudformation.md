@@ -39,7 +39,7 @@ It grants no write access, and no access to anything outside API Gateway and its
 4.  Enter a stack name (e.g. `akto-api-gateway-connector`) and fill in the parameters:
 
     * `AktoAWSAccountId` — the AWS Account ID given to you by Akto.
-    * `RestApiIds` — comma-separated REST API IDs, or leave blank to cover every REST API in this region.
+    * `RestApiIds` _(optional)_ — comma-separated REST API IDs to enable logging on. Leave blank to enable logging for all APIs.
     * `RoleName`, `Version` — leave as default.
 5. Click **Next**, check the box acknowledging IAM resource creation, and click **Submit**.
 6. Once the stack reaches **CREATE\_COMPLETE**, open the **Outputs** tab and copy the `RoleArn` value.
@@ -98,9 +98,10 @@ Your AWS account is connected once Akto confirms the setup.
 ## Note:
 
 1. Logging is enabled for REST APIs only. Akto discovers HTTP and WebSocket API specs, but does not monitor their traffic.
-2. Leaving `RestApiIds` blank covers every REST API in that account **for that region only**. Run the stack again in each additional region.
-3. To pick up APIs or stages created later, update the stack with a new `Version` value (e.g. `1.0.1`) — CloudFormation re-runs the setup only when a parameter changes.
-4. Deleting the stack does not disable logging or remove the CloudWatch role it created.
+2. Each stack applies to a single AWS region. Run it again in every other region where your APIs run.
+3. If `RestApiIds` is left empty, the stack applies to all REST APIs in that region. Set it to scope the setup to specific APIs.
+4. To pick up APIs or stages created later, update the stack with a new `Version` value (e.g. `1.0.1`) — CloudFormation re-runs the setup only when a parameter changes.
+5. Deleting the stack does not disable logging or remove the CloudWatch role it created.
 
 ***
 
