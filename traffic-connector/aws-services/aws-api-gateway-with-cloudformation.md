@@ -62,7 +62,6 @@ It grants no write access, and no access to anything outside API Gateway and its
       --capabilities CAPABILITY_NAMED_IAM
     ```
 
-    * Add `ParameterKey=RestApiIds,ParameterValue="<api-id-1>,<api-id-2>"` to limit logging to specific REST APIs.
 3.  Copy the `RoleArn` from the outputs:
 
     ```sh
