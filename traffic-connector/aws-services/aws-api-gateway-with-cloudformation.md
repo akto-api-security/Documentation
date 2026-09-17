@@ -13,7 +13,7 @@ The stack enables API Gateway execution logging and creates a read-only IAM role
 * The AWS Account ID Akto connects from — ask your Akto representative.
 * The template file: [akto-cross-account-role.yml](https://github.com/akto-api-security/infra/blob/feature/quick-setup/api-gateway-customer-onboarding/akto-cross-account-role.yml)
 
-> API Gateway is a regional service. Run this stack once per region and once per AWS account you want covered.
+> Run the stack in the AWS region where your APIs are deployed.
 
 ***
 
@@ -76,7 +76,7 @@ It grants no write access, and no access to anything outside API Gateway and its
 
 1. In the Akto dashboard, go to **Quick Start**.
 2. Select the **AWS API Gateway** connector.
-3. Paste the `RoleArn` into the **AWS Role ARNs** field. For multiple AWS accounts, add all their role ARNs separated by commas.
+3. Paste the `RoleArn` into the **AWS Role ARNs** field.
 4. Click **Save**.
 
 ***
@@ -85,9 +85,9 @@ It grants no write access, and no access to anything outside API Gateway and its
 
 Akto sets up the infrastructure that discovers and monitors your APIs. Send your Akto representative the following details:
 
-1. **Role ARN(s)** — the `RoleArn` copied in **Step 1**, one per AWS account you ran the stack in.\
+1. **Role ARN** — the `RoleArn` copied in **Step 1**.\
    Example: `arn:aws:iam::123456789012:role/akto/AktoApiGatewayLoggingRole`
-2. **AWS region(s)** — the regions your APIs run in.\
+2. **AWS region** — the region your APIs run in.\
    Example: `us-east-2`
 
 Your AWS account is connected once Akto confirms the setup.
@@ -97,10 +97,9 @@ Your AWS account is connected once Akto confirms the setup.
 ## Note:
 
 1. Logging is enabled for REST APIs only. Akto discovers HTTP and WebSocket API specs, but does not monitor their traffic.
-2. Each stack applies to a single AWS region. Run it again in every other region where your APIs run.
-3. If `RestApiIds` is left empty, the stack applies to all REST APIs in that region. Set it to scope the setup to specific APIs.
-4. To pick up APIs or stages created later, update the stack with a new `Version` value (e.g. `1.0.1`) — CloudFormation re-runs the setup only when a parameter changes.
-5. Deleting the stack does not disable logging or remove the CloudWatch role it created.
+2. If `RestApiIds` is left empty, the stack applies to all REST APIs. Set it to scope the setup to specific APIs.
+3. To pick up APIs or stages created later, update the stack with a new `Version` value (e.g. `1.0.1`) — CloudFormation re-runs the setup only when a parameter changes.
+4. Deleting the stack does not disable logging or remove the CloudWatch role it created.
 
 ***
 
