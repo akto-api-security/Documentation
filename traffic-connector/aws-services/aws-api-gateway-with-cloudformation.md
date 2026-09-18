@@ -120,6 +120,17 @@ Use whichever you prefer — both produce the same role.
 
 > `logs:DescribeLogGroups` cannot be restricted to a name prefix — AWS evaluates list operations against an empty resource, so a prefix pattern never matches. It only exposes log group **names**. Reading log **contents** stays restricted to `API-Gateway-Execution-Logs*`.
 
+### 1.3 Share the setup details with Akto
+
+Akto sets up the infrastructure that discovers and monitors your APIs. Send your Akto representative the following details:
+
+1. **Role ARN** — the `RoleArn` copied in step 1.2.\
+   Example: `arn:aws:iam::123456789012:role/akto/AktoApiGatewayLoggingRole-us-east-2`
+2. **AWS region** — the region your APIs run in.\
+   Example: `us-east-2`
+
+Your AWS account is connected once Akto confirms the setup.
+
 ***
 
 ## Option 2: Automated setup with CloudFormation
@@ -169,16 +180,7 @@ A single stack enables execution logging on your stages, configures the account-
 
 ***
 
-## Step 2: Add the role ARN in Akto
-
-1. In the Akto dashboard, go to **Quick Start**.
-2. Select the **AWS API Gateway** connector.
-3. Paste the `RoleArn` into the **AWS Role ARNs** field.
-4. Click **Save**.
-
-***
-
-## Step 3: Share the setup details with Akto
+## Share the setup details with Akto
 
 Akto sets up the infrastructure that discovers and monitors your APIs. Send your Akto representative the following details:
 
