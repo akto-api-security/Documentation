@@ -40,7 +40,7 @@ It grants no write access, and no access to anything outside API Gateway and its
 
     * `AktoAWSAccountId` — the AWS Account ID given to you by Akto.
     * `RestApiIds` _(optional)_ — comma-separated REST API IDs to enable logging on. Leave blank to enable logging for all APIs.
-    * `RoleName`, `Version` — leave as default.
+    * `CreateCrossAccountRole`, `Version` — leave as default.
 5. Click **Next**, check the box acknowledging IAM resource creation, and click **Submit**.
 6. Once the stack reaches **CREATE\_COMPLETE**, open the **Outputs** tab and copy the `RoleArn` value.
 
