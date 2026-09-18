@@ -93,7 +93,8 @@ Use whichever you prefer — both produce the same role.
           "Effect": "Allow",
           "Action": [
             "logs:DescribeLogStreams",
-            "logs:GetLogEvents"
+            "logs:GetLogEvents",
+            "logs:FilterLogEvents"
           ],
           "Resource": [
             "arn:aws:logs:<REGION>:<YOUR_ACCOUNT_ID>:log-group:API-Gateway-Execution-Logs*",
@@ -147,7 +148,7 @@ A single stack enables execution logging on your stages, configures the account-
     * `AktoAWSAccountId` — the AWS Account ID given to you by Akto.
     * `ExternalId` — the External ID issued to you by Akto.
     * `RestApiIds` _(optional)_ — comma-separated REST API IDs to enable logging on. Leave blank to enable logging for all APIs.
-    * `CreateCrossAccountRole`, `Version` — leave as default.
+    * `Version` — leave as default.
 5. Click **Next**, check the box acknowledging IAM resource creation, and click **Submit**.
 6. Once the stack reaches **CREATE\_COMPLETE**, open the **Outputs** tab and copy the `RoleArn` value.
 
