@@ -71,4 +71,24 @@ In case you face an issue with the spaces in the command...
 docker run -e AKTO_DASHBOARD_URL='https://app.akto.io' -e AKTO_API_KEY='<AKTO_API_KEY>' -e AKTO_TEST_ID='<AKTO_TEST_ID>' -e GITHUB_SERVER_URL="<GIT_SERVER_URL>" -e GITHUB_REPOSITORY="<GIT_REPOSITORY>" -e GITHUB_REF_NAME="<GIT_BRANCH>" -e GITHUB_REF="<PULL_REQUEST_ID>" -e GITHUB_SHA="<PULL_REQUEST_SHA>" -e WAIT_TIME_FOR_RESULT=0 -e CICD_PLATFORM="<CICD_PLATFORM>" aktosecurity/akto-testing-scan:latest
 ```
 
+To run a test suite on an API collection instead of a test you created in the dashboard, replace `AKTO_TEST_ID` with `API_GROUP_NAME` and `TEST_SUITE_NAME`:
+
+```bash
+docker run \
+-e AKTO_DASHBOARD_URL='https://app.akto.io' \
+-e AKTO_API_KEY='<AKTO_API_KEY>' \
+-e API_GROUP_NAME='<API_COLLECTION_NAME>' \
+-e TEST_SUITE_NAME='<TEST_SUITE_NAME>' \
+-e GITHUB_SERVER_URL="<GIT_SERVER_URL>" \
+-e GITHUB_REPOSITORY="<GIT_REPOSITORY>" \
+-e GITHUB_REF_NAME="<GIT_BRANCH>" \
+-e GITHUB_REF="<PULL_REQUEST_ID>" \
+-e GITHUB_SHA="<PULL_REQUEST_SHA>" \
+-e WAIT_TIME_FOR_RESULT=0 \
+-e CICD_PLATFORM="<CICD_PLATFORM>" \
+aktosecurity/akto-testing-scan:latest
+```
+
+&#x20;   Both must match the names in the dashboard exactly, and the test suite must already exist under `Testing > Test suites`. Collections created from an OpenAPI file are named `OpenAPI <title from the spec>`.
+
 * If you have hosted Akto in your VPC, please ensure the CI/CD machine can reach Akto's dashboard. You might have to change Security rules on Akto-Load-Balancer accordingly.
