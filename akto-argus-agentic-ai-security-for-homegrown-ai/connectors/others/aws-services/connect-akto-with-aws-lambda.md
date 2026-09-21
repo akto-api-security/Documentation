@@ -1,166 +1,120 @@
-# Connect Akto with AWS Lambda
+# Connect AWS Lambda to Akto Guardrails and Discovery
 
-AWS Lambda is Amazon’s serverless compute service that lets you run code without provisioning or managing servers. Integrating AWS Lambda with Akto via the Golang Runtime API Proxy Extension enables automatic discovery of all API traffic processed by your Lambda functions.
+AWS Lambda functions that make outgoing calls to services such as Amazon Bedrock can be connected to Akto for **traffic interception, guardrails, and agentic discovery**.
 
-<figure><img src="../../../../.gitbook/assets/aws-lambda-runtime-extension.png" alt=""><figcaption><p>Image source: <a href="https://aws.amazon.com/blogs/compute/enhancing-runtime-security-and-governance-with-the-aws-lambda-runtime-api-proxy-extension/">Amazon Web Services Documentation</a></p></figcaption></figure>
+The Lambda function routes its outgoing HTTP/HTTPS traffic through the Akto proxy and trusts the Akto MITM CA certificate using a Lambda Layer.
 
-To connect Akto with AWS Lambda functions, please follow these steps:
+## Configuration
 
-***
+### 1. Configure the Akto proxy
 
-## Step 1: Deploy the Akto Data-Ingestion Service
+Set the following environment variables in the Lambda function:
 
-Before configuring the AWS Lambda Traffic Connector Extension, you must deploy the Akto Data-Ingestion Service. Ensure that the service is running and accessible via a publicly available URL.
-
-### 1.1 Download the Required Files
-
-SSH into the instance where you want to deploy the data-ingestion service and run these commands:
-
-```bash
-wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-compose-data-ingestion-runtime.yml
-wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/data-ingestion-docker.env
-wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/docker-mini-runtime.env
-wget https://raw.githubusercontent.com/akto-api-security/infra/refs/heads/feature/quick-setup/watchtower.env
+```text
+HTTPS_PROXY=http://<AKTO_PROXY_HOST>:<PORT>
+HTTP_PROXY=http://<AKTO_PROXY_HOST>:<PORT>
 ```
 
-### 1.2 Retrieve the `DATABASE_ABSTRACTOR_SERVICE_TOKEN`
+These variables route the Lambda's outgoing HTTP/HTTPS requests through the Akto proxy.
 
-* Log in to the [Akto Dashboard](https://app.akto.io/).
-* Go to **Connectors** in the left nav.
-* Open the **Setup Guardrail** card and copy your token.
+### 2. Add the Akto CA certificate using a Lambda Layer
 
-### 1.3 Update the `docker-mini-runtime.env` File
+The Akto/MITM CA certificate can be provided through a **Lambda Layer**, so the certificate does not need to be included directly in the Lambda function's deployment package.
 
-Open the `docker-mini-runtime.env` file and replace `token` with the `DATABASE_ABSTRACTOR_SERVICE_TOKEN` you retrieved earlier.
+Create a Lambda Layer containing:
 
-```plaintext
-DATABASE_ABSTRACTOR_SERVICE_TOKEN=token
+```text
+mitm-ca-layer.zip
+└── certs/
+    └── mitmproxy-ca-cert.pem
 ```
 
-### 1.4 Deploy the Data-Ingestion Service
+Lambda mounts the contents of the layer under `/opt`. The certificate will therefore be available at:
 
-Run the following command to start the data-ingestion service:
-
-```bash
-docker-compose -f docker-compose-data-ingestion-runtime.yml up -d
+```text
+/opt/certs/mitmproxy-ca-cert.pem
 ```
 
-### 1.5 Note the IP Address of the Data-Ingestion Service
+Attach this Layer to the Lambda function.
 
-Ensure the instance is accessible from the network where your AWS Lambda functions will send traffic. Note the public IP address or public DNS name.
+### 3. Configure the certificate environment variables
 
-***
+Set the following environment variables:
 
-## Step 2: Setup AWS Lambda Runtime API Proxy Extension
-
-Now that the Akto Data-Ingestion Service is deployed, follow these steps to setup and connect your AWS Lambda functions with Akto.
-
-### 2.1 Clone the Extension Repository
-
-Clone the repository containing the Golang Lambda Runtime API Proxy Extension to your local machine or CI/CD environment:
-
-```bash
-git clone https://github.com/akto-api-security/golang-lambda-runtime-api-proxy-extension.git
-cd golang-lambda-runtime-api-proxy-extension
+```text
+AWS_CA_BUNDLE=/opt/certs/mitmproxy-ca-cert.pem
+SSL_CERT_FILE=/opt/certs/mitmproxy-ca-cert.pem
 ```
 
-***
+`AWS_CA_BUNDLE` allows AWS SDK clients such as boto3 to trust the Akto proxy certificate.
 
-### 2.2 Modify the `Makefile`
+`SSL_CERT_FILE` configures Python SSL-based clients to use the same CA certificate.
 
-Update the following variables inside the provided `Makefile`:
+## Required Environment Variables
 
-```makefile
-BASENAME := $(shell basename $(CURDIR))
-ARTIFACTS_DIR ?= out
-targetArch := amd64
-extensionName := golang-lambda-runtime-api-proxy-extension
-FUNCTION_NAME := <your-lambda-function-name>  # Change this to your actual Lambda function name
-LAYER_NAME := $(extensionName)-layer
+The Lambda function requires these four environment variables:
+
+```text
+HTTPS_PROXY=http://<AKTO_PROXY_HOST>:<PORT>
+HTTP_PROXY=http://<AKTO_PROXY_HOST>:<PORT>
+AWS_CA_BUNDLE=/opt/certs/mitmproxy-ca-cert.pem
+SSL_CERT_FILE=/opt/certs/mitmproxy-ca-cert.pem
 ```
 
-* `FUNCTION_NAME`: Provide your target AWS Lambda function name.
-* Optionally, update `AKTO_MIRRORING_URL` later during function configuration to point to your deployed Akto Data-Ingestion Service.
+The first two configure the proxy, while the last two configure trust for the MITM CA certificate provided through the Lambda Layer.
 
-***
+## Traffic Flow
 
-### 2.3 Build and Deploy the Extension
+Once configured, the traffic flow is:
 
-Run the following command to build and package the extension:
-
-```bash
-make all
+```text
+┌─────────────────────┐
+│     AWS Lambda      │
+│                     │
+│  Application / SDK  │
+└──────────┬──────────┘
+           │
+           │ HTTP_PROXY
+           │ HTTPS_PROXY
+           ▼
+┌─────────────────────┐
+│     Akto Proxy      │
+│                     │
+│ HTTPS interception  │
+│ Guardrails          │
+│ Discovery            │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ AWS Bedrock / APIs  │
+└─────────────────────┘
 ```
 
-This will:
+Akto can inspect the intercepted traffic and apply configured **guardrails**, including allowing, blocking, or alerting on requests.
 
-* Build the extension binary for Linux (`amd64`) architecture.
-* Package the binary and wrapper script into a zip file inside the `out/` directory.
+The intercepted traffic can also be used for **agentic discovery**, allowing Akto to discover services, APIs, and agent interactions originating from the Lambda function.
 
-***
+## Verification
 
-### 2.4 Publish the Extension as a Lambda Layer
+After configuring the Lambda:
 
-After building, publish the extension as a Lambda Layer by running:
+1. Attach the CA certificate Lambda Layer.
+2. Verify that the certificate exists at:
 
-```bash
-make publishLayerVersion
+   ```text
+   /opt/certs/mitmproxy-ca-cert.pem
+   ```
+3. Verify all four environment variables are configured.
+4. Invoke the Lambda and make a Bedrock or other outbound API call.
+5. Verify that the request reaches the Akto proxy.
+6. Verify that Akto evaluates the request against the configured guardrails.
+7. Verify that the traffic appears in Akto Agentic Discovery.
+
+If HTTPS requests fail with certificate errors, verify that the Lambda Layer is attached and that both certificate environment variables point to:
+
+```text
+/opt/certs/mitmproxy-ca-cert.pem
 ```
 
-This command will output the **Layer Version ARN** needed in the next step.
-
-***
-
-### 2.5 Attach the Extension Layer to Your Lambda Function
-
-Finally, run:
-
-```bash
-make updateFunctionConfiguration
-```
-
-This will:
-
-* Attach the newly published layer to your Lambda function.
-* Set necessary environment variables:
-  * `AWS_LAMBDA_EXEC_WRAPPER=/opt/wrapper-script.sh`
-  * `AKTO_MIRRORING_URL=https://<your-ingestion-service-address>/api/ingestData` (Replace with your Akto Data-Ingestion Service address)
-
-**Example**:
-
-```bash
-make updateFunctionConfiguration FUNCTION_NAME=my-production-lambda AKTO_MIRRORING_URL=https://1.2.3.4/api/ingestData
-```
-
-> **Note:** Before running this command, make sure **jq** is installed on your system. You can install it using your package manager, e.g., `sudo apt install jq` on Debian-based systems, `brew install jq` on macOS, or `winget install jqlang.jq` on Windows.
-
-### 2.6 Agentic Inventory with Source Location
-
-Once your Lambda extension is connected, Akto automatically tags Agentic Collection with the source, like `service=lambda`. This helps you easily track and filter Agentic Collection based on their origin. You can view this under **Agentic AI Discovery > Agentic Collections**.
-
-<figure><img src="../../../../.gitbook/assets/image (115) (1).png" alt=""><figcaption></figcaption></figure>
-
-***
-
-## Step 3: Verify the Setup
-
-1. Invoke your Lambda function manually or through an event.
-2. Confirm that API traffic data (requests and responses) are captured on the Akto dashboard under the respective Agentic Collection.
-3. Check logs of your Lambda function for any initialization messages from the extension.
-
-If you face any issues, ensure:
-
-* The Akto Data-Ingestion Service is reachable publicly.
-* The correct ingestion URL is set in `AKTO_MIRRORING_URL`.
-* Proper IAM permissions are granted if needed for the Lambda function.
-
-***
-
-### Get Support for your Akto setup
-
-There are multiple ways to request support from Akto. We are 24X7 available on the following:
-
-1. In-app `intercom` support. Message us with your query on intercom in Akto dashboard and someone will reply.
-2. Join our [discord channel](https://www.akto.io/community) for community support.
-3. Contact `help@akto.io` for email support.
-4. Contact us [here](https://www.akto.io/contact-us).
+> **Note:** The proxy endpoint must support HTTPS `CONNECT` tunneling. A webhook endpoint such as Webhook.site cannot be used directly as `HTTP_PROXY` or `HTTPS_PROXY`.
