@@ -82,7 +82,7 @@ Once configured, the traffic flow is:
 │                     │
 │ HTTPS interception  │
 │ Guardrails          │
-│ Discovery            │
+│ Discovery           │
 └──────────┬──────────┘
            │
            ▼
