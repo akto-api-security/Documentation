@@ -1,4 +1,4 @@
-# Connect AWS Lambda to Akto Guardrails and Discovery
+# Integrate AWS Lambda using Egress Proxy
 
 AWS Lambda functions that make outgoing calls to services such as Amazon Bedrock can be connected to Akto for **traffic interception, guardrails, and agentic discovery**.
 
@@ -67,28 +67,10 @@ The first two configure the proxy, while the last two configure trust for the MI
 
 Once configured, the traffic flow is:
 
-```text
-┌─────────────────────┐
-│     AWS Lambda      │
-│                     │
-│  Application / SDK  │
-└──────────┬──────────┘
-           │
-           │ HTTP_PROXY
-           │ HTTPS_PROXY
-           ▼
-┌─────────────────────┐
-│     Akto Proxy      │
-│                     │
-│ HTTPS interception  │
-│ Guardrails          │
-│ Discovery           │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ AWS Bedrock / APIs  │
-└─────────────────────┘
+```mermaid
+flowchart TD
+    A["AWS Lambda<br/>Application / SDK"] -->|"HTTP_PROXY<br/>HTTPS_PROXY"| B["Akto Proxy<br/>HTTPS interception · Guardrails · Discovery"]
+    B --> C["AWS Bedrock / APIs"]
 ```
 
 Akto can inspect the intercepted traffic and apply configured **guardrails**, including allowing, blocking, or alerting on requests.
