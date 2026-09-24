@@ -84,35 +84,50 @@ The Akto proxy is typically placed behind a Network Load Balancer (NLB), and `HT
 There are two ways to expose the proxy:
 
 ```mermaid
+%%{init: {"flowchart": {"curve": "basis", "nodeSpacing": 50, "rankSpacing": 70}, "themeVariables": {"fontSize": "15px", "edgeLabelBackground": "#ffffff"}}}%%
 flowchart TB
-    subgraph EXT["Outside the VPC"]
+    subgraph EXT["External Workloads"]
         direction LR
-        L2["Lambda"]
-        R2["AgentCore Runtime"]
-        C2["Container"]
+        C2("Container") ~~~ L2("Lambda") ~~~ R2("AgentCore Runtime")
     end
 
     subgraph VPC["VPC"]
-        direction TB
-        subgraph INT["Recommended: same VPC"]
-            direction TB
-            L1["Lambda"]
-            R1["AgentCore Runtime"]
-            C1["Container"]
-            INLB["Internal NLB"]
-            P1["Akto Proxy"]
-            L1 & R1 & C1 -->|"HTTPS_PROXY=Internal_NLB"| INLB
-            INLB --> P1
+        subgraph APPS["Workloads in the same VPC"]
+            direction LR
+            C1("Container") ~~~ L1("Lambda") ~~~ R1("AgentCore Runtime")
         end
-        PNLB["Public NLB"]
-        P2["Akto Proxy"]
-        PNLB --> P2
+        INLB("Internal NLB<br/>✅ Recommended")
+        P1("Akto Proxy")
+        PNLB("Public NLB")
+        P2("Akto Proxy")
     end
 
-    L2 & R2 & C2 -->|"HTTPS_PROXY=Public_NLB"| PNLB
+    B("Amazon Bedrock")
 
-    P1 --> B["Amazon Bedrock"]
+    EXT ~~~ APPS
+    APPS -->|"<span style='color:#15803d'>HTTPS_PROXY=Internal_NLB</span>"| INLB
+    EXT -->|"<span style='color:#b91c1c'>HTTPS_PROXY=Public_NLB</span>"| PNLB
+    INLB --> P1
+    PNLB --> P2
+    P1 --> B
     P2 --> B
+
+    classDef workload fill:#ffffff,stroke:#d97706,stroke-width:1.5px,color:#1f2937,font-weight:bold
+    classDef rec fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d,font-weight:bold
+    classDef pub fill:#fee2e2,stroke:#dc2626,stroke-width:1.5px,color:#7f1d1d,font-weight:bold
+    classDef dest fill:#ffedd5,stroke:#ea580c,stroke-width:2px,color:#7c2d12,font-weight:bold
+    class C1,L1,R1,C2,L2,R2 workload
+    class INLB,P1 rec
+    class PNLB,P2 pub
+    class B dest
+
+    style EXT fill:#f8fafc,stroke:#94a3b8,stroke-width:1.5px,stroke-dasharray:6 4,color:#334155
+    style VPC fill:#f1f5f9,stroke:#64748b,stroke-width:2px,color:#1e293b
+    style APPS fill:#f0fdf4,stroke:#16a34a,stroke-width:1.5px,stroke-dasharray:6 4,color:#166534
+
+    linkStyle 0,1,2,3,4 stroke:transparent,stroke-width:0px
+    linkStyle 5,7,9 stroke:#16a34a,stroke-width:2.5px
+    linkStyle 6,8,10 stroke:#dc2626,stroke-width:2px,stroke-dasharray:6 4
 ```
 
 | Option | Proxy endpoint | When to use |
