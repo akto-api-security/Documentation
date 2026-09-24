@@ -83,7 +83,7 @@ The Akto proxy is typically placed behind a Network Load Balancer (NLB), and `HT
 
 There are two ways to expose the proxy:
 
-<figure><img src="../../../../.gitbook/assets/akto-proxy-lambda-deployment.svg" alt="Akto proxy deployment: workloads in the same VPC use an internal NLB (recommended); external workloads use an internet-facing public NLB"><figcaption><p>Akto proxy deployment options</p></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/akto-proxy-lambda-deployment.png" alt="Akto proxy deployment: workloads in the same VPC use an internal NLB (recommended); external workloads use an internet-facing public NLB"><figcaption><p>Akto proxy deployment options</p></figcaption></figure>
 
 | Option | Proxy endpoint | When to use |
 | --- | --- | --- |
