@@ -24,6 +24,22 @@ In case you face an issue with the spaces in the command...
 docker run -e AKTO_DASHBOARD_URL='https://app.akto.io' -e AKTO_API_KEY='<AKTO_API_KEY>' -e AKTO_TEST_ID='<AKTO_TEST_ID>' -e GITHUB_SERVER_URL="<GIT_SERVER_URL>" -e GITHUB_REPOSITORY="<GIT_REPOSITORY>" -e GITHUB_REF_NAME="<GIT_BRANCH>" -e GITHUB_REF="<PULL_REQUEST_ID>" -e GITHUB_SHA="<PULL_REQUEST_SHA>" -e WAIT_TIME_FOR_RESULT=0 -e CICD_PLATFORM="<CICD_PLATFORM>" aktosecurity/akto-testing-scan:latest
 ```
 
+To start a new collection/suite test and auto-create Jira tickets, use `API_GROUP_NAME` and `TEST_SUITE_NAME` with `AKTO_AUTO_TICKETING_DETAILS`:
+
+```bash
+docker run \
+-e AKTO_DASHBOARD_URL='https://app.akto.io' \
+-e AKTO_API_KEY='<AKTO_API_KEY>' \
+-e API_GROUP_NAME='<API_COLLECTION_NAME>' \
+-e TEST_SUITE_NAME='<TEST_SUITE_NAME>' \
+-e WAIT_TIME_FOR_RESULT=0 \
+-e CICD_PLATFORM="<CICD_PLATFORM>" \
+-e AKTO_AUTO_TICKETING_DETAILS='{"shouldCreateTickets":true,"projectId":"PROJ","issueType":"Bug","severities":["CRITICAL","HIGH"]}' \
+aktosecurity/akto-testing-scan:latest
+```
+
+`AKTO_AUTO_TICKETING_DETAILS` is sent to `/api/startTest` as `autoTicketingDetails`. Required fields: `shouldCreateTickets`, `projectId`, `issueType`, `severities` (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, `INFO`). Jira must already be connected in Akto. This payload is not sent when you reuse `AKTO_TEST_ID`. See [Auto-Create Jira Tickets](../../api-security-testing/how-to/auto-create-jira-tickets.md).
+
 ## Get Support for your Akto setup
 
 There are multiple ways to request support from Akto. We are 24X7 available on the following:

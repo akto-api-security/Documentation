@@ -86,8 +86,11 @@ docker run \
 -e GITHUB_SHA="<PULL_REQUEST_SHA>" \
 -e WAIT_TIME_FOR_RESULT=0 \
 -e CICD_PLATFORM="<CICD_PLATFORM>" \
+-e AKTO_AUTO_TICKETING_DETAILS='{"shouldCreateTickets":true,"projectId":"PROJ","issueType":"Bug","severities":["CRITICAL","HIGH"]}' \
 aktosecurity/akto-testing-scan:latest
 ```
+
+`AKTO_AUTO_TICKETING_DETAILS` is optional. It auto-creates **Jira** tickets after the test finishes. The JSON must match `/api/startTest` (`shouldCreateTickets`, `projectId`, `issueType`, `severities`). Jira must already be connected in Akto. This is only sent for a new collection/suite run, not when reusing `AKTO_TEST_ID`. See [Auto-Create Jira Tickets](../../../api-security-testing/how-to/auto-create-jira-tickets.md).
 
 &#x20;   Both must match the names in the dashboard exactly, and the test suite must already exist under `Testing > Test suites`. Collections created from an OpenAPI file are named `OpenAPI <title from the spec>`.
 

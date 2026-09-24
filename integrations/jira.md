@@ -113,6 +113,18 @@ The selected field must be a **select / dropdown field** in Jira for severity ma
 This feature assumes that **no separate custom workflows** are created in your Jira app. If there are any, the syncing process **might be affected** and could lead to unexpected behavior. Please review your Jira workflows to ensure compatibility.
 {% endhint %}
 
+## Auto-create tickets from tests and CI/CD
+
+After Jira is connected, you can auto-create tickets when a test run finishes. In the dashboard, enable **Auto-create tickets** on the test configuration. In CI/CD, pass `AKTO_AUTO_TICKETING_DETAILS` to `aktosecurity/akto-testing-scan`.
+
+The JSON must match `/api/startTest`:
+
+```json
+{"shouldCreateTickets": true, "projectId": "PROJ", "issueType": "Bug", "severities": ["CRITICAL", "HIGH"]}
+```
+
+Details: [Auto-Create Jira Tickets](../api-security-testing/how-to/auto-create-jira-tickets.md).
+
 {% hint style="info" %}
 **Important Notes**
 
