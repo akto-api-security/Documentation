@@ -28,7 +28,6 @@ Learn about how to send API traffic data from Azure App Services Web App to Akto
 ```bash
 AKTO_INFRA_MIRRORING_MODE=gcp
 AKTO_KAFKA_BROKER_MAL=<Akto_Runtime_Load_Balancer_DNS> // modify this value with Akto Runtime Load Balancer DNS
-AKTO_MONGO_CONN=mongodb://0.0.0.0:27017
 AKTO_TRAFFIC_BATCH_SIZE=100
 AKTO_TRAFFIC_BATCH_TIME_SECS=10
 ```

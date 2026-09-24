@@ -77,10 +77,6 @@ You can use Akto traffic collectors to collect and send traffic to Akto. Your AP
                 {
                     "name": "AKTO_KAFKA_BROKER_MAL",
                     "value": "<AKTO_NLB>:9092"
-                },
-                {
-                    "name": "AKTO_MONGO_CONN",
-                    "value": "mongodb://0.0.0.0:27017"
                 }
             ]
         }

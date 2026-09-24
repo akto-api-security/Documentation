@@ -126,8 +126,6 @@ kubectl create secret generic kafka-certs \
                 value: "gcp"
               - name: AKTO_KAFKA_BROKER_MAL
                 value: "<AKTO_NLB_IP>:9093"
-              - name: AKTO_MONGO_CONN
-                value: "mongodb://0.0.0.0:27017"
             # additional configuration
               - name: USE_TLS
                 value: "true"
