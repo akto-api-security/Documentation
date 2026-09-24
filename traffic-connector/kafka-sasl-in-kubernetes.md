@@ -48,8 +48,6 @@ Steps:
                 value: "gcp"
               - name: AKTO_KAFKA_BROKER_MAL
                 value: "<AKTO_NLB_IP>:9092"
-              - name: AKTO_MONGO_CONN
-                value: "mongodb://0.0.0.0:27017"
             # SASL authentication configuration
               - name: IS_AUTH_IMPLEMENTED
                 value: "true"

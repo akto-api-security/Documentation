@@ -32,10 +32,6 @@ When the ECS cluster is running on AWS FARGATE infrastructure, we will add a con
                 "value": "10"
             },
             {
-                "name": "AKTO_MONGO_CONN",
-                "value": "mongodb://0.0.0.0:27017/admini"
-            },
-            {
                 "name": "AKTO_TRAFFIC_BATCH_SIZE",
                 "value": "10"
             },
@@ -87,10 +83,6 @@ When the ECS cluster is a EC2 instances cluster, we will create a task definitio
                     {
                         "name": "AKTO_TRAFFIC_BATCH_TIME_SECS",
                         "value": "10"
-                    },
-                    {
-                        "name": "AKTO_MONGO_CONN",
-                        "value": "mongodb://0.0.0.0:27017/admini"
                     },
                     {
                         "name": "AKTO_TRAFFIC_BATCH_SIZE",

@@ -54,8 +54,6 @@ spec:
             value: "gcp"
           - name: AKTO_KAFKA_BROKER_MAL
             value: "<AKTO_NLB_IP>:9092"
-          - name: AKTO_MONGO_CONN
-            value: "mongodb://0.0.0.0:27017"
 ```
 
 2. Replace `{NAMESPACE}` with your app namespace and `{APP_NAME}` with the name of your app. If you have installed on _AWS_ -

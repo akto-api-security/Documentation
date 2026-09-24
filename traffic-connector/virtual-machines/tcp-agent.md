@@ -20,7 +20,6 @@ export AKTO_TRAFFIC_BATCH_TIME_SECS=10
 export AKTO_TRAFFIC_BATCH_SIZE=100
 export AKTO_INFRA_MIRRORING_MODE=gcp
 export AKTO_KAFKA_BROKER_MAL=<AKTO_NLB>:9092
-export AKTO_MONGO_CONN=mongodb://0.0.0.0:27017
 ```
 
 3. Launch docker in your server instance.
