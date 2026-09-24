@@ -96,7 +96,7 @@ flowchart TB
             direction LR
             C1("Container") ~~~ L1("Lambda") ~~~ R1("AgentCore Runtime")
         end
-        INLB("Internal NLB<br/>✅ Recommended")
+        INLB("Internal NLB<br/>(Recommended)")
         P1("Akto Proxy")
         PNLB("Public NLB")
         P2("Akto Proxy")
