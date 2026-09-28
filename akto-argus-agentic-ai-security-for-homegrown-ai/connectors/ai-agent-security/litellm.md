@@ -79,7 +79,7 @@ The new guardrails apply to requests immediately; no restart is needed.
 {% hint style="warning" %}
 ## **Only `Pre Call` blocks**
 
-LiteLLM does not block on `Post Call` guardrails. The Akto ingest (`Post Call`) guardrail sends the request and response to Akto in the background and returns the response unchanged, so a `Post Call` violation is recorded and reported in Akto, never blocked. Only `Pre Call` (`akto-validate`) can block a request.
+To block a request, use `Pre Call` (`akto-validate`); blocking on `Post Call` is on Akto's roadmap and in progress. Akto's ingest (`Post Call`) guardrail currently focuses on giving you full visibility: it sends the request and response to Akto in the background and returns the response unchanged, so every `Post Call` violation is recorded and reported in the Akto dashboard for review.
 {% endhint %}
 
 ### Choosing Policies and Context Source
