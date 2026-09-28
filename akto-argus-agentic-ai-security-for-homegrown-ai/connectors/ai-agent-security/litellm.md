@@ -58,7 +58,6 @@ Click **Next**.
 | `akto_api_key` | Your Akto API token. Can be left empty if `AKTO_API_KEY` is set in the LiteLLM environment. |
 | `akto_vxlan_id` | The policy directive, for example `policy:ENDPOINT:block employee pii`. See [Choosing Policies and Context Source](#choosing-policies-and-context-source). |
 | `unreachable_fallback` | `fail_open` to allow requests when Akto cannot be reached, or `fail_closed` to block them. |
-| `guardrail_timeout` | `30` |
 | `akto_account_id` | Leave empty. |
 
 Click **Create Guardrail**.
