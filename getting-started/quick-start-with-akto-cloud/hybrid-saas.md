@@ -18,7 +18,7 @@ description: Learn how to send API traffic data to Akto SaaS from your cloud set
 
 ### Installing Traffic connector
 
-You can use either a CloudFormation template, Terraform template or a Helm chart to install Traffic aggregator in your env.
+You can use either a CloudFormation template, Terraform template, a Helm chart, or an ECS task definition to install Traffic aggregator in your env.
 
 #### Terraform
 
@@ -85,6 +85,11 @@ kubectl get svc -n <namespace>
 1. You can use the above copied `IP:PORT` value as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `10.0.23.145:9092` , `akto-mini-runtime-mini-runtime.dev.svc.cluster.local:9092`)
 
 <figure><img src="../../.gitbook/assets/mini-runtime-ip-2.png" alt=""><figcaption></figcaption></figure>
+
+#### ECS
+
+1. To install mini-runtime and Kafka on Amazon ECS, follow [Deploy mini-runtime and Kafka on ECS](hybrid-saas-ecs.md).
+2. Use the load balancer DNS name from that guide as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. The value includes the port, for example `akto-kafka-a1b2c3.elb.ap-south-1.amazonaws.com:9092`.
 
 ### Linux VM
 
