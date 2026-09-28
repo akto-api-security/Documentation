@@ -12,8 +12,8 @@ LiteLLM is a unified interface for calling 100+ LLM APIs in a consistent format.
 
 There are two ways to connect Akto with LiteLLM:
 
-* **[Native Guardrail](#option-1-native-guardrail):** LiteLLM's built-in Akto guardrail, set up in the LiteLLM Admin UI. Nothing to deploy, and each guardrail chooses which Akto policies to enforce and whether traffic goes to Argus or Atlas.
-* **[Custom Hook](#option-2-custom-hook):** Akto's `custom_hooks.py` callback, loaded from `config.yaml`. Use this if you need per-agent collections, session tracking, or an async (log-only) mode.
+* [**Native Guardrail**](litellm.md#option-1-native-guardrail)**:** LiteLLM's built-in Akto guardrail, set up in the LiteLLM Admin UI. Nothing to deploy, and each guardrail chooses which Akto policies to enforce and whether traffic goes to Argus or Atlas.
+* [**Custom Hook**](litellm.md#option-2-custom-hook)**:** Akto's `custom_hooks.py` callback, loaded from `config.yaml`. Use this if you need per-agent collections, session tracking, or an async (log-only) mode.
 
 ## Option 1: Native Guardrail
 
@@ -39,12 +39,12 @@ Log in to the LiteLLM Admin UI (`http://<your-litellm-host>/ui`), open **Guardra
 {% step %}
 **Basic Info**
 
-| Field | Value |
-| --- | --- |
-| **Guardrail Provider** | `Akto` |
-| **Guardrail Name** | `akto-validate` |
-| **Mode** | `Pre Call` |
-| **Always On** | Enabled, to apply the guardrail to all requests. Leave it off to attach the guardrail only to specific keys or teams (see [Different Policies for Different Users or Teams](#different-policies-for-different-users-or-teams)). |
+| Field                  | Value                                                                                                                                                                                                                                     |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Guardrail Provider** | `Akto`                                                                                                                                                                                                                                    |
+| **Guardrail Name**     | `akto-validate`                                                                                                                                                                                                                           |
+| **Mode**               | `Pre Call`                                                                                                                                                                                                                                |
+| **Always On**          | Enabled, to apply the guardrail to all requests. Leave it off to attach the guardrail only to specific keys or teams (see [Different Policies for Different Users or Teams](litellm.md#different-policies-for-different-users-or-teams)). |
 
 Click **Next**.
 {% endstep %}
@@ -52,13 +52,13 @@ Click **Next**.
 {% step %}
 **Provider Configuration**
 
-| Field | Value |
-| --- | --- |
-| `akto_base_url` | Your Akto guardrails URL. Can be left empty if `AKTO_GUARDRAIL_API_BASE` is set in the LiteLLM environment. |
-| `akto_api_key` | Your Akto API token. Can be left empty if `AKTO_API_KEY` is set in the LiteLLM environment. |
-| `akto_vxlan_id` | The policy directive, for example `policy:ENDPOINT:block employee pii`. See [Choosing Policies and Context Source](#choosing-policies-and-context-source). |
-| `unreachable_fallback` | `fail_open` to allow requests when Akto cannot be reached, or `fail_closed` to block them. |
-| `akto_account_id` | Leave empty. |
+| Field                  | Value                                                                                                                                                                |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `akto_base_url`        | Your Akto guardrails URL. Can be left empty if `AKTO_GUARDRAIL_API_BASE` is set in the LiteLLM environment.                                                          |
+| `akto_api_key`         | Your Akto API token. Can be left empty if `AKTO_API_KEY` is set in the LiteLLM environment.                                                                          |
+| `akto_vxlan_id`        | The policy directive, for example `policy:ENDPOINT:block employee pii`. See [Choosing Policies and Context Source](litellm.md#choosing-policies-and-context-source). |
+| `unreachable_fallback` | `fail_open` to allow requests when Akto cannot be reached, or `fail_closed` to block them.                                                                           |
+| `akto_account_id`      | Leave empty.                                                                                                                                                         |
 
 Click **Create Guardrail**.
 {% endstep %}
@@ -76,8 +76,8 @@ The new guardrails apply to requests immediately; no restart is needed.
 {% endstep %}
 {% endstepper %}
 
-{% hint style="info" %}
-**Only `Pre Call` blocks**
+{% hint style="warning" %}
+## **Only `Pre Call` blocks**
 
 LiteLLM does not block on `Post Call` guardrails. The Akto ingest (`Post Call`) guardrail sends the request and response to Akto in the background and returns the response unchanged, so a `Post Call` violation is recorded and reported in Akto, never blocked. Only `Pre Call` (`akto-validate`) can block a request.
 {% endhint %}
@@ -86,26 +86,22 @@ LiteLLM does not block on `Post Call` guardrails. The Akto ingest (`Post Call`) 
 
 Set the `akto_vxlan_id` field of the guardrail to a policy directive:
 
-```text
+```
 policy:<contextSource>:<policy name>[,<policy name>...]
 ```
 
-| Part | Values | Meaning |
-| --- | --- | --- |
-| `policy:` | fixed prefix | Marks the value as a directive. Values without it are treated as a normal VXLAN ID. |
-| `<contextSource>` | `ENDPOINT`, `AGENTIC`, or empty | `ENDPOINT` sends the traffic to **Atlas**; `AGENTIC` keeps it in **Argus**. Empty or any other value keeps the default (Argus). |
-| `<policy name>` | one or more names, comma-separated | The Akto guardrail policies to enforce. Optional. |
+<table><thead><tr><th width="162.1484375">Part</th><th width="243.31640625">Values</th><th>Meaning</th></tr></thead><tbody><tr><td><code>policy:</code></td><td>fixed prefix</td><td>Marks the value as a directive. Values without it are treated as a normal VXLAN ID.</td></tr><tr><td><code>&#x3C;contextSource></code></td><td><code>ENDPOINT</code>, <code>AGENTIC</code>, or empty</td><td><code>ENDPOINT</code> sends the traffic to <strong>Atlas</strong>; <code>AGENTIC</code> keeps it in <strong>Argus</strong>. Empty or any other value keeps the default (Argus).</td></tr><tr><td><code>&#x3C;policy name></code></td><td>one or more names, comma-separated</td><td>The Akto guardrail policies to enforce. Optional.</td></tr></tbody></table>
 
 <details>
 
 <summary><strong>Examples</strong></summary>
 
-| `akto_vxlan_id` | Result |
-| --- | --- |
-| `policy:ENDPOINT:block employee pii` | Atlas traffic; only the *block employee pii* policy is enforced |
-| `policy:AGENTIC:Secrets,Prompt Injection` | Argus traffic; only these two policies are enforced |
-| `policy:ENDPOINT:` | Atlas traffic; all Atlas policies in scope are enforced |
-| `policy::Secrets` | Argus traffic (default); only *Secrets* is enforced |
+| `akto_vxlan_id`                           | Result                                                          |
+| ----------------------------------------- | --------------------------------------------------------------- |
+| `policy:ENDPOINT:block employee pii`      | Atlas traffic; only the _block employee pii_ policy is enforced |
+| `policy:AGENTIC:Secrets,Prompt Injection` | Argus traffic; only these two policies are enforced             |
+| `policy:ENDPOINT:`                        | Atlas traffic; all Atlas policies in scope are enforced         |
+| `policy::Secrets`                         | Argus traffic (default); only _Secrets_ is enforced             |
 
 </details>
 
@@ -116,7 +112,7 @@ Rules for policy names:
 * Akto resets the field to `0` after reading it, so the directive never becomes a collection ID.
 
 {% hint style="info" %}
-**Set the same directive on both guardrails**
+## **Set the same directive on both guardrails**
 
 The `akto-validate` and `akto-ingest` guardrails send their own `akto_vxlan_id`. Use the same value on both, otherwise ingested traffic will not be placed in the same context source as the verdicts.
 {% endhint %}
@@ -129,17 +125,14 @@ The `akto-validate` and `akto-ingest` guardrails send their own `akto_vxlan_id`.
 * Each policy keeps its own behaviour and severity in threat reports and the dashboard.
 
 {% hint style="warning" %}
-**A typo or an inactive name turns guardrails off for that traffic**
+## **A typo or an inactive name turns guardrails off for that traffic**
 
 If none of the names in `akto_vxlan_id` match an active policy, Akto applies **no** guardrails to the request and allows it (and logs `no active policy matches the requested names, applying no guardrails`). A misspelled, renamed or deactivated policy name therefore leaves that traffic unchecked, so verify each name matches an active policy exactly. Names that match are still enforced when other names in the list don't.
 {% endhint %}
 
 ### Argus or Atlas
 
-| Context source | Where the traffic appears | Collection |
-| --- | --- | --- |
-| `ENDPOINT` | Atlas | One per user and agent: `{user}.ai-agent.{agent}-litellm` (for example `jane.ai-agent.opencode-litellm`). The user comes from the email the client sends (see [Identifying Users](#identifying-users)); otherwise the client's device ID or the proxy host. The agent comes from the client's `User-Agent`. |
-| `AGENTIC` (default) | Argus | Named after the host header LiteLLM forwards (the proxy host), shared by all users. |
+<table><thead><tr><th width="147.12890625">Context source</th><th width="174.1171875">Where the traffic appears</th><th>Collection</th></tr></thead><tbody><tr><td><code>ENDPOINT</code></td><td>Atlas</td><td>One per user and agent: <code>{user}.ai-agent.{agent}-litellm</code> (for example <code>jane.ai-agent.opencode-litellm</code>). The user comes from the email the client sends (see <a href="litellm.md#identifying-users">Identifying Users</a>); otherwise the client's device ID or the proxy host. The agent comes from the client's <code>User-Agent</code>.</td></tr><tr><td><code>AGENTIC</code> (default)</td><td>Argus</td><td>Named after the host header LiteLLM forwards (the proxy host), shared by all users.</td></tr></tbody></table>
 
 ### Identifying Users
 
@@ -195,7 +188,7 @@ Send the real user's email, not a shared or test address. Every request carrying
 
 ### Different Policies for Different Users or Teams
 
-The directive is set per guardrail, not per client. To scope a policy to specific teams, users, models, keys or access groups: create a dedicated pair of guardrails with `default_on: false` (so it doesn't run for every request), group the pair under a named entry in `policies`, then attach that policy to a target under `policy_attachments` in `config.yaml`, or by selecting the pair under **Guardrails** when creating or editing a virtual key or team in the Admin UI. See [Examples](#examples) below for a worked config per target.
+The directive is set per guardrail, not per client. To scope a policy to specific teams, users, models, keys or access groups: create a dedicated pair of guardrails with `default_on: false` (so it doesn't run for every request), group the pair under a named entry in `policies`, then attach that policy to a target under `policy_attachments` in `config.yaml`, or by selecting the pair under **Guardrails** when creating or editing a virtual key or team in the Admin UI. See [Examples](litellm.md#examples) below for a worked config per target.
 
 {% hint style="info" %}
 Attaching a policy by `keys` or `teams`, in `config.yaml` or the Admin UI, is a LiteLLM Enterprise feature. Attaching by `tags` worked without an Enterprise licence when tested; attaching by `models` needs no special licence either way.
@@ -229,7 +222,7 @@ This is the part that differs per example. Add the matching `policies` and `poli
 {% step %}
 **Point OpenCode at LiteLLM**
 
-Configure OpenCode's LiteLLM provider with the virtual key as `apiKey` (see [Identifying Users](#identifying-users) for the config), or use any client you'd like to test with.
+Configure OpenCode's LiteLLM provider with the virtual key as `apiKey` (see [Identifying Users](litellm.md#identifying-users) for the config), or use any client you'd like to test with.
 {% endstep %}
 
 {% step %}
@@ -241,7 +234,7 @@ From OpenCode, send an ordinary prompt first, then one designed to trigger the p
 {% step %}
 **Check the Dashboard**
 
-Go to **Collections** and confirm the OpenCode/LiteLLM collection formed with both requests (see [AI Usage](#ai-usage)), then check [Guardrail Activity](../../../agentic-guardrails/concepts/guardrail-activity.md) for the malicious prompt's detection.
+Go to **Collections** and confirm the OpenCode/LiteLLM collection formed with both requests (see [AI Usage](litellm.md#ai-usage)), then check [Guardrail Activity](../../../agentic-guardrails/concepts/guardrail-activity.md) for the malicious prompt's detection.
 {% endstep %}
 {% endstepper %}
 
@@ -287,7 +280,7 @@ policy_attachments:
 
 <summary><strong>Example: Scope by Virtual Key</strong></summary>
 
-Only the named key's traffic gets the policy; every other key gets none. The key's `user_id` (for example `jane@example.com`) is also how Akto attributes the traffic to that user, see [Identifying Users](#identifying-users).
+Only the named key's traffic gets the policy; every other key gets none. The key's `user_id` (for example `jane@example.com`) is also how Akto attributes the traffic to that user, see [Identifying Users](litellm.md#identifying-users).
 
 ```yaml
 guardrails:
@@ -487,16 +480,10 @@ TIMEOUT=5                   # default 5
 
 The connector reads these variables (`custom_hooks.py`):
 
-| Variable | Required | Default | Description |
-| --- | --- | --- | --- |
-| `DATA_INGESTION_SERVICE_URL` | Yes | | Akto Data Ingestion Service endpoint the hook sends traffic and validation requests to. |
-| `AKTO_API_TOKEN` | Yes | empty | Token sent in the `Authorization` header to the Data Ingestion Service. See [Getting API Token](../others/hybrid-saas.md#getting-api-token). |
-| `LITELLM_URL` | Yes | `http://localhost:4000` | This proxy's URL; its host is used as the default collection name when no agent identity is present. |
-| `SYNC_MODE` | No | `true` | `true` blocks violations before the LLM call; `false` validates asynchronously (log only). |
-| `TIMEOUT` | No | `5` | Timeout in seconds for HTTP calls to the Data Ingestion Service. |
+<table><thead><tr><th width="155.671875">Variable</th><th width="79.64453125">Required</th><th width="162.125">Default</th><th>Description</th></tr></thead><tbody><tr><td><code>DATA_INGESTION_SERVICE_URL</code></td><td>Yes</td><td></td><td>Akto Data Ingestion Service endpoint the hook sends traffic and validation requests to.</td></tr><tr><td><code>AKTO_API_TOKEN</code></td><td>Yes</td><td>empty</td><td>Token sent in the <code>Authorization</code> header to the Data Ingestion Service. See <a href="../others/hybrid-saas.md#getting-api-token">Getting API Token</a>.</td></tr><tr><td><code>LITELLM_URL</code></td><td>Yes</td><td><code>http://localhost:4000</code></td><td>This proxy's URL; its host is used as the default collection name when no agent identity is present.</td></tr><tr><td><code>SYNC_MODE</code></td><td>No</td><td><code>true</code></td><td><code>true</code> blocks violations before the LLM call; <code>false</code> validates asynchronously (log only).</td></tr><tr><td><code>TIMEOUT</code></td><td>No</td><td><code>5</code></td><td>Timeout in seconds for HTTP calls to the Data Ingestion Service.</td></tr></tbody></table>
 
 {% hint style="warning" %}
-**Note**
+## **Note**
 
 `SYNC_MODE` determines behavior:
 
@@ -635,52 +622,7 @@ Users can specify an `agent_name` in the request metadata. This approach is supp
 
 <summary><strong>Example: setting <code>agent_name</code></strong></summary>
 
-{% tabs %}
-{% tab title="OpenAI SDK" %}
-```python
-from openai import OpenAI
-
-client = OpenAI(base_url="http://localhost:4000", api_key="sk-...")
-
-response = client.chat.completions.create(
-    model="gpt-4",
-    messages=[{"role": "user", "content": "Hello!"}],
-    extra_body={
-        "metadata": {"agent_name": "chatbot-agent"}
-    }
-)
-```
-{% endtab %}
-
-{% tab title="LiteLLM SDK" %}
-```python
-import litellm
-
-response = litellm.completion(
-    model="litellm_proxy/gpt-4",
-    messages=[{"role": "user", "content": "Hello!"}],
-    extra_body={
-        "metadata": {"agent_name": "chatbot-agent"}
-    },
-    api_base="http://localhost:4000",
-    api_key="sk-...",
-)
-```
-{% endtab %}
-
-{% tab title="curl" %}
-```bash
-curl -X POST http://localhost:4000/chat/completions \
-  -H "Authorization: Bearer sk-..." \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "gpt-4",
-    "messages": [{"role": "user", "content": "Hello!"}],
-    "metadata": {"agent_name": "chatbot-agent"}
-  }'
-```
-{% endtab %}
-{% endtabs %}
+from openai import OpenAIclient = OpenAI(base\_url="http://localhost:4000", api\_key="sk-...")response = client.chat.completions.create(    model="gpt-4",    messages=\[{"role": "user", "content": "Hello!"}],    extra\_body={        "metadata": {"agent\_name": "chatbot-agent"}    })import litellmresponse = litellm.completion(    model="litellm\_proxy/gpt-4",    messages=\[{"role": "user", "content": "Hello!"}],    extra\_body={        "metadata": {"agent\_name": "chatbot-agent"}    },    api\_base="http://localhost:4000",    api\_key="sk-...",)curl -X POST http://localhost:4000/chat/completions \  -H "Authorization: Bearer sk-..." \  -H "Content-Type: application/json" \  -d '{    "model": "gpt-4",    "messages": \[{"role": "user", "content": "Hello!"}],    "metadata": {"agent\_name": "chatbot-agent"}  }'
 
 </details>
 
@@ -710,34 +652,7 @@ To enable this, send an `x-session-id` header on the request to the LiteLLM prox
 
 <summary><strong>Example: setting <code>x-session-id</code></strong></summary>
 
-{% tabs %}
-{% tab title="OpenAI SDK" %}
-```python
-from openai import OpenAI
-
-client = OpenAI(base_url="http://localhost:4000", api_key="sk-...")
-
-response = client.chat.completions.create(
-    model="gpt-4",
-    messages=[{"role": "user", "content": "Hello!"}],
-    extra_headers={"x-session-id": "session-abc-123"}
-)
-```
-{% endtab %}
-
-{% tab title="curl" %}
-```bash
-curl -X POST http://localhost:4000/chat/completions \
-  -H "Authorization: Bearer sk-..." \
-  -H "Content-Type: application/json" \
-  -H "x-session-id: session-abc-123" \
-  -d '{
-    "model": "gpt-4",
-    "messages": [{"role": "user", "content": "Hello!"}]
-  }'
-```
-{% endtab %}
-{% endtabs %}
+from openai import OpenAIclient = OpenAI(base\_url="http://localhost:4000", api\_key="sk-...")response = client.chat.completions.create(    model="gpt-4",    messages=\[{"role": "user", "content": "Hello!"}],    extra\_headers={"x-session-id": "session-abc-123"})curl -X POST http://localhost:4000/chat/completions \  -H "Authorization: Bearer sk-..." \  -H "Content-Type: application/json" \  -H "x-session-id: session-abc-123" \  -d '{    "model": "gpt-4",    "messages": \[{"role": "user", "content": "Hello!"}]  }'
 
 </details>
 
@@ -778,10 +693,10 @@ Session tracking is optional. Requests without an `x-session-id` header are proc
 
 Once traffic is flowing through either option, LiteLLM requests show up in the Akto dashboard like any other collection: log in, open **Collections**, and select the collection the traffic landed in to see the request/response list with a guardrail verdict (policy triggered, severity) on each entry.
 
-Which collection a given request lands in, and how it's segmented by user, agent, key or team, is controlled by the rules in [Argus or Atlas](#argus-or-atlas) and [Per-Agent Collections](#per-agent-collections) above.
+Which collection a given request lands in, and how it's segmented by user, agent, key or team, is controlled by the rules in [Argus or Atlas](litellm.md#argus-or-atlas) and [Per-Agent Collections](litellm.md#per-agent-collections) above.
 
-{% hint style="info" %}
-**No dedicated model, token or spend breakdown**
+{% hint style="warning" %}
+## **No dedicated model, token or spend breakdown**
 
 Akto does not currently show a separate usage-analytics view for LiteLLM traffic, such as a per-model chart, token counts, or spend/cost totals. Model names, `key_alias`, `team_alias` and LiteLLM's own spend metadata are used only for collection naming and user attribution (as described above), not surfaced as usage analytics. To see which model a request used, open the request in the collection.
 {% endhint %}
