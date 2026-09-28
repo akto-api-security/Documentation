@@ -62,12 +62,6 @@ Click **Next**.
 | `akto_account_id` | Leave empty. |
 
 Click **Create Guardrail**.
-
-{% hint style="warning" %}
-**Set `guardrail_timeout`**
-
-The default timeout is 5 seconds, which is too short for coding agents that send large prompts (for example, OpenCode's system prompt alone is about 18KB). A timeout is returned to the client as HTTP 408 **even with `unreachable_fallback` set to `fail_open`**, because LiteLLM only fails open on connection errors. Set `guardrail_timeout` to `30`.
-{% endhint %}
 {% endstep %}
 
 {% step %}
