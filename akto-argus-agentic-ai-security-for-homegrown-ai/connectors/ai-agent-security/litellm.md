@@ -76,6 +76,12 @@ The new guardrails apply to requests immediately; no restart is needed.
 {% endstep %}
 {% endstepper %}
 
+{% hint style="info" %}
+**Only `Pre Call` blocks**
+
+LiteLLM does not block on `Post Call` guardrails. The Akto ingest (`Post Call`) guardrail sends the request and response to Akto in the background and returns the response unchanged, so a `Post Call` violation is recorded and reported in Akto, never blocked. Only `Pre Call` (`akto-validate`) can block a request.
+{% endhint %}
+
 ### Choosing Policies and Context Source
 
 Set the `akto_vxlan_id` field of the guardrail to a policy directive:
@@ -235,7 +241,7 @@ From OpenCode, send an ordinary prompt first, then one designed to trigger the p
 {% step %}
 **Check the Dashboard**
 
-Go to **Collections** and confirm the OpenCode/LiteLLM collection formed with both requests (see [AI Usage](#ai-usage)), then check **Guardrail Activity** for the malicious prompt's detection.
+Go to **Collections** and confirm the OpenCode/LiteLLM collection formed with both requests (see [AI Usage](#ai-usage)), then check [Guardrail Activity](../../../agentic-guardrails/concepts/guardrail-activity.md) for the malicious prompt's detection.
 {% endstep %}
 {% endstepper %}
 
@@ -611,7 +617,7 @@ curl -X POST http://localhost:4000/chat/completions \
 
 By default, all LiteLLM traffic is grouped into a single collection named after the proxy host. The connector supports creating separate collections per agent, allowing each agent's API traffic to be tracked independently in the Akto dashboard.
 
-#### How Collections are Created
+#### How Collections Are Created
 
 The connector extracts the agent identity from request metadata and uses it as the collection name. The following sources are checked in order of priority:
 
