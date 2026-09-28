@@ -119,13 +119,13 @@ The `akto-validate` and `akto-ingest` guardrails send their own `akto_vxlan_id`.
 
 * **A named policy is always enforced while it is active.** It applies regardless of the policy's own context source and scope (server/agent, device/user, account type, approved servers), and regardless of `GUARDRAILS_SKIP_PATHS`.
 * **Only the named policies are enforced.** Other policies do not run for that traffic.
-* **Inactive policies are never enforced.** Deactivating a policy in the Akto dashboard turns it off for LiteLLM traffic too, within about a minute.
+* **Inactive policies are never enforced.** Deactivating a policy in the Akto dashboard turns it off for LiteLLM traffic too, within about a minute. If it was the only name in the directive, that traffic then gets no guardrails.
 * Each policy keeps its own behaviour and severity in threat reports and the dashboard.
 
 {% hint style="warning" %}
-**A typo or an inactive name widens enforcement, it doesn't narrow it**
+**A typo or an inactive name turns guardrails off for that traffic**
 
-If none of the names in `akto_vxlan_id` match an active policy, Akto does not skip enforcement, it falls back to enforcing **all** policies in scope for the request (and logs `no active policy matches the requested names`). A misspelled or deactivated policy name silently pulls in every other policy instead of just dropping out, so verify the name matches an active policy exactly if you're relying on it to scope enforcement down to a subset.
+If none of the names in `akto_vxlan_id` match an active policy, Akto applies **no** guardrails to the request and allows it (and logs `no active policy matches the requested names, applying no guardrails`). A misspelled, renamed or deactivated policy name therefore leaves that traffic unchecked, so verify each name matches an active policy exactly. Names that match are still enforced when other names in the list don't.
 {% endhint %}
 
 ### Argus or Atlas
