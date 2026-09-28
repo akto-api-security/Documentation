@@ -22,7 +22,7 @@ LiteLLM ships an Akto guardrail that calls Akto directly from the LiteLLM proxy.
 ### Prerequisites
 
 * A LiteLLM proxy with the Admin UI enabled and a database configured (`DATABASE_URL`); guardrails created in the UI are stored in the database
-* An Akto guardrails endpoint (URL and API token). The token is available in **Akto Argus → Connectors → Setup Guardrail**
+* An Akto guardrails endpoint (URL and API token). See [Getting API Token](../others/hybrid-saas.md#getting-api-token) for where to get the token
 * The Akto guardrail policies to enforce, created in the Akto dashboard
 
 ### Steps to Connect
@@ -257,7 +257,7 @@ The connector reads these variables (`custom_hooks.py`):
 | Variable | Required | Default | Description |
 | --- | --- | --- | --- |
 | `DATA_INGESTION_SERVICE_URL` | Yes | — | Akto Data Ingestion Service endpoint the hook sends traffic and validation requests to. |
-| `AKTO_API_TOKEN` | Yes | empty | Token sent in the `Authorization` header to the Data Ingestion Service. Obtain from **Akto Argus → Connectors → Setup Guardrail**. |
+| `AKTO_API_TOKEN` | Yes | empty | Token sent in the `Authorization` header to the Data Ingestion Service. See [Getting API Token](../others/hybrid-saas.md#getting-api-token). |
 | `LITELLM_URL` | Yes | `http://localhost:4000` | This proxy's URL; its host is used as the default collection name when no agent identity is present. |
 | `SYNC_MODE` | No | `true` | `true` blocks violations before the LLM call; `false` validates asynchronously (log only). |
 | `TIMEOUT` | No | `5` | Timeout in seconds for HTTP calls to the Data Ingestion Service. |
@@ -306,7 +306,7 @@ litellm --config config.yaml
 ```
 
 {% hint style="info" %}
-The Akto API Token can be obtained from **Akto Argus → Connectors → Setup Guardrail**.\
+See [Getting API Token](../others/hybrid-saas.md#getting-api-token) for where to get the Akto API Token.\
 ![](<../../../.gitbook/assets/image (178).png>)
 {% endhint %}
 {% endtab %}
