@@ -12,10 +12,10 @@ LiteLLM is a unified interface for calling 100+ LLM APIs in a consistent format.
 
 There are two ways to connect Akto with LiteLLM:
 
-* **[Native Guardrail](#option-1-native-guardrail-recommended) (recommended):** LiteLLM's built-in Akto guardrail, set up in the LiteLLM Admin UI. Nothing to deploy, and each guardrail chooses which Akto policies to enforce and whether traffic goes to Argus or Atlas. Use this unless you need the Custom Hook's per-agent collections, session-based guardrails or async mode.
+* **[Native Guardrail](#option-1-native-guardrail):** LiteLLM's built-in Akto guardrail, set up in the LiteLLM Admin UI. Nothing to deploy, and each guardrail chooses which Akto policies to enforce and whether traffic goes to Argus or Atlas.
 * **[Custom Hook](#option-2-custom-hook):** Akto's `custom_hooks.py` callback, loaded from `config.yaml`. Use this if you need per-agent collections, session tracking, or an async (log-only) mode.
 
-## Option 1: Native Guardrail (Recommended)
+## Option 1: Native Guardrail
 
 LiteLLM ships an Akto guardrail that calls Akto directly from the LiteLLM proxy. It is set up in the LiteLLM Admin UI, with no hook file to deploy. Each guardrail tells Akto **which policies to enforce** and **whether the traffic belongs to Argus or Atlas**, through its `akto_vxlan_id` field, so the LiteLLM administrator chooses the policies for each set of keys, teams or clients without any change on the client side.
 
@@ -27,7 +27,7 @@ LiteLLM ships an Akto guardrail that calls Akto directly from the LiteLLM proxy.
 
 ### Steps to Connect
 
-The recommended way is to create the guardrails in the LiteLLM Admin UI. Create **two** guardrails: one that checks each request before the model call, and one that sends the request and response to Akto after the call.
+Create the guardrails in the LiteLLM Admin UI. Create **two** guardrails: one that checks each request before the model call, and one that sends the request and response to Akto after the call.
 
 {% stepper %}
 {% step %}
@@ -139,8 +139,60 @@ If none of the names in `akto_vxlan_id` match an active policy, Akto does not sk
 
 | Context source | Where the traffic appears | Collection |
 | --- | --- | --- |
-| `ENDPOINT` | Atlas | One per user and agent: `{user}.ai-agent.{agent}-litellm` (for example `jane.ai-agent.opencode-litellm`). The user comes from the `X-OpenWebUI-User-Email` or `x-akto-installer-user_email` header, the `user_email` tag or `x-litellm-spend-logs-metadata`; otherwise the client's device ID or the proxy host. The agent comes from the client's `User-Agent`. |
+| `ENDPOINT` | Atlas | One per user and agent: `{user}.ai-agent.{agent}-litellm` (for example `jane.ai-agent.opencode-litellm`). The user comes from the email the client sends (see [Identifying Users](#identifying-users)); otherwise the client's device ID or the proxy host. The agent comes from the client's `User-Agent`. |
 | `AGENTIC` (default) | Argus | Named after the host header LiteLLM forwards (the proxy host), shared by all users. |
+
+### Identifying Users
+
+Akto attributes LiteLLM traffic to a user by the user's **email**, which the client must send with every request. Without it, Akto cannot tell users apart:
+
+* In Atlas, each user gets their own collection, named from the email (for example `jane@example.com` → `jane.ai-agent.opencode-litellm`). Without an email, the collection is named after the client's device ID or the proxy host, so different users can end up in the same collection.
+* Policies targeted at specific users, and policies that skip enterprise accounts, match on this email. A request without an email is treated as an unknown user.
+
+Send the email in the `x-akto-installer-user_email` request header. Akto reads the email from the first of these it finds:
+
+1. `X-OpenWebUI-User-Email` header (sent by Open WebUI when `ENABLE_FORWARD_USER_INFO_HEADERS=true`)
+2. `x-akto-installer-user_email` header
+3. `user_email` in the request metadata
+4. `user_email` in the `x-litellm-spend-logs-metadata` header
+
+**Example: OpenCode**
+
+Add the header to the LiteLLM provider in `opencode.json`, reading the email from an environment variable so each user sends their own:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "litellm": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "LiteLLM (Akto guardrails)",
+      "options": {
+        "baseURL": "http://<your-litellm-host>/v1",
+        "apiKey": "{env:LITELLM_API_KEY}",
+        "headers": {
+          "x-akto-installer-user_email": "{env:AKTO_USER_EMAIL}"
+        }
+      },
+      "models": {
+        "claude-sonnet-5": { "name": "Claude Sonnet 5 via LiteLLM" }
+      }
+    }
+  },
+  "model": "litellm/claude-sonnet-5"
+}
+```
+
+Then set the user's email before starting OpenCode:
+
+```bash
+export AKTO_USER_EMAIL="$(git config user.email)"
+opencode
+```
+
+{% hint style="warning" %}
+Send the real user's email, not a shared or test address. Every request carrying the same email is attributed to the same user.
+{% endhint %}
 
 ### Different Policies for Different Users or Teams
 
