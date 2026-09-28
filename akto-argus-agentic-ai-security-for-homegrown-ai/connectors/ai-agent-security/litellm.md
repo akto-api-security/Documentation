@@ -13,19 +13,7 @@ LiteLLM is a unified interface for calling 100+ LLM APIs in a consistent format.
 There are two ways to connect Akto with LiteLLM:
 
 * **[Native Guardrail](#option-1-native-guardrail):** LiteLLM's built-in Akto guardrail, set up in the LiteLLM Admin UI. Nothing to deploy, and each guardrail chooses which Akto policies to enforce and whether traffic goes to Argus or Atlas.
-* **[Custom Hook](#option-2-custom-hook):** Akto's `custom_hooks.py` callback, loaded from `config.yaml`. Adds per-agent collections, session tracking and an async (log-only) mode.
-
-### Which One to Use
-
-| | Native Guardrail | Custom Hook |
-| --- | --- | --- |
-| **Setup** | LiteLLM Admin UI | Download `custom_hooks.py`, set environment variables, edit `config.yaml` |
-| **Files to deploy** | None | `custom_hooks.py` |
-| **Choose Akto policies per guardrail** | Yes, with the `akto_vxlan_id` policy directive | No; all policies in scope apply |
-| **Argus or Atlas** | Chosen per guardrail | Argus |
-| **Collections** | Per user and agent (Atlas), or the proxy host (Argus) | Per agent (`agent_name`, `key_alias`, `team_alias`), else the proxy host |
-| **Async (log-only) mode** | No | Yes (`SYNC_MODE=false`) |
-| **Different policies per key or team** | Yes, by attaching guardrails to keys or teams (LiteLLM premium feature) | No |
+* **[Custom Hook](#option-2-custom-hook):** Akto's `custom_hooks.py` callback, loaded from `config.yaml`. Use this if you need per-agent collections, session tracking, or an async (log-only) mode.
 
 ## Option 1: Native Guardrail
 
@@ -99,7 +87,7 @@ The new guardrails apply to requests immediately; no restart is needed.
 
 Set the `akto_vxlan_id` field of the guardrail to a policy directive:
 
-```
+```text
 policy:<contextSource>:<policy name>[,<policy name>...]
 ```
 
@@ -109,7 +97,9 @@ policy:<contextSource>:<policy name>[,<policy name>...]
 | `<contextSource>` | `ENDPOINT`, `AGENTIC`, or empty | `ENDPOINT` sends the traffic to **Atlas**; `AGENTIC` keeps it in **Argus**. Empty or any other value keeps the default (Argus). |
 | `<policy name>` | one or more names, comma-separated | The Akto guardrail policies to enforce. Optional. |
 
-Examples:
+<details>
+
+<summary><strong>Examples</strong></summary>
 
 | `akto_vxlan_id` | Result |
 | --- | --- |
@@ -117,6 +107,8 @@ Examples:
 | `policy:AGENTIC:Secrets,Prompt Injection` | Argus traffic; only these two policies are enforced |
 | `policy:ENDPOINT:` | Atlas traffic; all Atlas policies in scope are enforced |
 | `policy::Secrets` | Argus traffic (default); only *Secrets* is enforced |
+
+</details>
 
 Rules for policy names:
 
@@ -135,8 +127,13 @@ The `akto-validate` and `akto-ingest` guardrails send their own `akto_vxlan_id`.
 * **A named policy is always enforced while it is active.** It applies regardless of the policy's own context source and scope (server/agent, device/user, account type, approved servers), and regardless of `GUARDRAILS_SKIP_PATHS`.
 * **Only the named policies are enforced.** Other policies do not run for that traffic.
 * **Inactive policies are never enforced.** Deactivating a policy in the Akto dashboard turns it off for LiteLLM traffic too, within about a minute.
-* **An unknown or inactive name does not switch protection off.** If no active policy matches any of the names, Akto enforces all policies in scope for the request and logs a warning (`no active policy matches the requested names`).
 * Each policy keeps its own behaviour and severity in threat reports and the dashboard.
+
+{% hint style="warning" %}
+**A typo or an inactive name widens enforcement, it doesn't narrow it**
+
+If none of the names in `akto_vxlan_id` match an active policy, Akto does not skip enforcement, it falls back to enforcing **all** policies in scope for the request (and logs `no active policy matches the requested names`). A misspelled or deactivated policy name silently pulls in every other policy instead of just dropping out, so verify the name matches an active policy exactly if you're relying on it to scope enforcement down to a subset.
+{% endhint %}
 
 ### Argus or Atlas
 
@@ -309,7 +306,7 @@ litellm --config config.yaml
 ```
 
 {% hint style="info" %}
-The Akto API Token can be obtained from **Akto Argus -> Connectors -> Setup Guardrail**.\
+The Akto API Token can be obtained from **Akto Argus → Connectors → Setup Guardrail**.\
 ![](<../../../.gitbook/assets/image (178).png>)
 {% endhint %}
 {% endtab %}
@@ -391,15 +388,19 @@ By default, all LiteLLM traffic is grouped into a single collection named after 
 
 The connector extracts the agent identity from request metadata and uses it as the collection name. The following sources are checked in order of priority:
 
-1. **`metadata.agent_name`** — explicitly provided by the user in the request body
-2. **`key_alias`** — the human-readable name assigned to the LiteLLM virtual key
-3. **`team_alias`** — the human-readable name assigned to the team the key belongs to
+1. **`metadata.agent_name`**: explicitly provided by the user in the request body
+2. **`key_alias`**: the human-readable name assigned to the LiteLLM virtual key
+3. **`team_alias`**: the human-readable name assigned to the team the key belongs to
 
 If none of the above are available, all traffic is grouped into a single collection named after the LiteLLM proxy host.
 
 #### Using Metadata
 
 Users can specify an `agent_name` in the request metadata. This approach is supported across all SDKs:
+
+<details>
+
+<summary><strong>Example: setting <code>agent_name</code></strong></summary>
 
 {% tabs %}
 {% tab title="OpenAI SDK" %}
@@ -448,6 +449,8 @@ curl -X POST http://localhost:4000/chat/completions \
 {% endtab %}
 {% endtabs %}
 
+</details>
+
 The above creates a collection named **chatbot-agent** in the Akto dashboard.
 
 #### Using key\_alias
@@ -469,6 +472,10 @@ The resolution order is: `metadata.agent_name` (highest) → `key_alias` → `te
 The connector supports session tracking, which lets the Akto guardrails service correlate multiple requests belonging to the same conversation or user session. This enables session-aware policies such as malicious-session detection and session-summary injection.
 
 To enable this, send an `x-session-id` header on the request to the LiteLLM proxy. When present, the connector captures it and forwards it to the Akto guardrails service, which groups requests sharing the same session ID.
+
+<details>
+
+<summary><strong>Example: setting <code>x-session-id</code></strong></summary>
 
 {% tabs %}
 {% tab title="OpenAI SDK" %}
@@ -498,6 +505,8 @@ curl -X POST http://localhost:4000/chat/completions \
 ```
 {% endtab %}
 {% endtabs %}
+
+</details>
 
 {% hint style="info" %}
 **Note**
