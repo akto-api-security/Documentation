@@ -15,6 +15,7 @@
 * [Deployment Types](getting-started/deployment-types.md)
 * [Akto Cloud](getting-started/quick-start-with-akto-cloud/README.md)
   * [Connect Akto with Hybrid SaaS](getting-started/quick-start-with-akto-cloud/hybrid-saas.md)
+  * [Deploy mini-runtime and Kafka on ECS](getting-started/quick-start-with-akto-cloud/hybrid-saas-ecs.md)
   * [Migrate From Self Hosted Setup To SaaS](getting-started/quick-start-with-akto-cloud/move-self-hosted-to-saas.md)
   * [Setting up proxy](getting-started/quick-start-with-akto-cloud/proxy-setup.md)
   * [Akto Direct connect](getting-started/quick-start-with-akto-cloud/akto-direct-connect.md)
