@@ -16,6 +16,10 @@ The Akto LiteLLM connector provides the following capabilities:
 * Blocks malicious requests (sync mode) or logs violations (async mode)
 * Creates per-agent collections based on agent identity
 
+{% hint style="info" %}
+To choose which Akto policies each LiteLLM guardrail enforces using LiteLLM's built-in Akto guardrail instead of this hook, see [LiteLLM (Native Guardrail)](litellm-native-guardrail.md).
+{% endhint %}
+
 ## Prerequisites
 
 Before integrating Akto with LiteLLM, ensure the following are in place:

@@ -102,6 +102,7 @@
     * [LangChain](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/langchain.md)
     * [LangGraph](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/langgraph.md)
     * [LiteLLM](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/litellm.md)
+    * [LiteLLM (Native Guardrail)](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/litellm-native-guardrail.md)
     * [Microsoft 365 Copilot](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/connect-akto-with-m365-copilot.md)
     * [Microsoft Copilot Studio](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/microsoft-copilot-studio/README.md)
       * [Connect to Akto (Async Mode)](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/microsoft-copilot-studio/connect-akto-async.md)
