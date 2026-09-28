@@ -119,7 +119,7 @@ The `akto-validate` and `akto-ingest` guardrails send their own `akto_vxlan_id`.
 * **Only the named policies are enforced.** Other policies do not run for that traffic.
 * **Inactive policies are never enforced.** Deactivating a policy in the Akto dashboard turns it off for LiteLLM traffic too, within about a minute.
 * **An unknown or inactive name does not switch protection off.** If no active policy matches any of the names, Akto enforces all policies in scope for the request and logs a warning (`no active policy matches the requested names`).
-* Each policy keeps its own behaviour and severity in threat reports and the dashboard. See [Known Limitations](#known-limitations) for how LiteLLM acts on non-block behaviours.
+* Each policy keeps its own behaviour and severity in threat reports and the dashboard.
 
 ## Argus or Atlas
 
@@ -135,22 +135,6 @@ The directive is set per guardrail, not per client. To give different clients di
 {% hint style="info" %}
 Selecting guardrails on a key or team is a LiteLLM premium feature. Without it, use **Always On** guardrails, which apply the same policies to all traffic through the proxy.
 {% endhint %}
-
-## Known Limitations
-
-LiteLLM's built-in Akto guardrail only reads Akto's `Allowed` and `Reason` fields, so policy behaviours other than *block* are not applied as configured:
-
-| Policy behaviour | Akto intends | Through the built-in guardrail |
-| --- | --- | --- |
-| block / warn | Block | Blocked |
-| alert | Record only, allow | **Blocked** (HTTP 403) |
-| mask (PII) | Allow with PII masked | **Sent unmasked** (`ModifiedPayload` is not applied) |
-| human approval | Hold for approval | **Blocked** |
-
-Other ways a request can pass without a check:
-
-* `unreachable_fallback: fail_open` lets requests through when Akto cannot be reached. Use `fail_closed` to block instead.
-* When Akto's scanners are overloaded, some checks are skipped and the request is allowed.
 
 ## Get Support for your Akto setup
 
