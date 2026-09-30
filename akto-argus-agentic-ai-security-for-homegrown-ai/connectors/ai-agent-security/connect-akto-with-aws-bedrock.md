@@ -113,7 +113,7 @@ Fill in the form with your information:
   * Example: `bedrock-logs`
 * **MarkersBucketName**: S3 bucket name to store AKTO marker manifest file
 * **DataIngestionEndpoint**: `<URL-obtained-from-akto-team>`
-* **LambdaCodeVersion**: v3.6 `<Version-obtained-from-akto-team>`
+* **LambdaCodeVersion**: v4.5 `<Version-obtained-from-akto-team>`
 * **AktoApiKey**: `<Akto-API-Key>`&#x20;
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (181).png" alt="" width="563"><figcaption></figcaption></figure></div>
