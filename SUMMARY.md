@@ -395,6 +395,7 @@
   * [Understand Agentic Components](agentic-guardrails/how-to/understand-agentic-components.md)
   * [Export Visualisation and Report](agentic-guardrails/how-to/export-visualisation-and-report.md)
   * [Export Activity to Custom Webhook](agentic-guardrails/how-to/export-activity-to-custom-webhook.md)
+  * [Deploy Guardrail Models with vLLM](agentic-guardrails/how-to/deploy-guardrail-models-with-vllm.md)
 
 ## Integrations
 
