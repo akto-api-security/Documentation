@@ -20,9 +20,209 @@ The guide covers these models:
 
 * A Linux host with at least one NVIDIA H100 80GB GPU, for example AWS `p5`, GCP `a3-highgpu`, or Azure `ND H100 v5`.
 * At least 200 GB of free disk space for model weights and the vLLM compile cache.
-* The NVIDIA driver, [Docker](https://docs.docker.com/engine/install/), and the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) installed.
+* The NVIDIA driver, [Docker](https://docs.docker.com/engine/install/), and the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) installed. On Ubuntu, the [install script](#quick-start-with-the-install-script) installs Docker and the toolkit for you.
 * A [Hugging Face access token](https://huggingface.co/settings/tokens) with read access.
 * The Gemma models are gated. Sign in to Hugging Face with the account that owns the token, then accept the license on the [Gemma 4 E2B](https://huggingface.co/google/gemma-4-E2B-it) and [Gemma 4 26B A4B](https://huggingface.co/google/gemma-4-26B-A4B-it) model pages. Qwen3Guard is not gated.
+
+## Quick Start with the Install Script
+
+The script below runs the whole setup on a fresh **Ubuntu 22.04 or 24.04** GPU host. It does the following:
+
+1. Installs Docker Engine from Docker's official apt repository, unless Docker is already installed.
+2. Installs and configures the NVIDIA Container Toolkit, unless it is already installed.
+3. Checks that Docker can access the GPU.
+4. Starts the vLLM container for the model you choose, and replaces an existing container of the same name.
+5. Waits until the server is healthy, then prints the base URL and served model name.
+
+{% hint style="info" %}
+The script does not install the NVIDIA driver, because a driver install requires a reboot. Most GPU cloud images include the driver. If `nvidia-smi` fails, install the driver (for example, `sudo ubuntu-drivers install --gpgpu`), reboot, and run the script again.
+{% endhint %}
+
+Save the script as `deploy-vllm.sh`:
+
+{% code title="deploy-vllm.sh" lineNumbers="true" %}
+```bash
+#!/usr/bin/env bash
+# Installs Docker and the NVIDIA Container Toolkit on Ubuntu, then starts a
+# vLLM server for an Akto guardrail model.
+#
+# Usage:
+#   export HF_TOKEN='<your-hugging-face-token>'
+#   export VLLM_API_KEY='<generated-api-key>'   # optional, generated if unset
+#   sudo --preserve-env=HF_TOKEN,VLLM_API_KEY MODEL=qwen3guard bash deploy-vllm.sh
+#
+# MODEL: qwen3guard | gemma4-e2b | gemma4-26b-a4b
+set -euo pipefail
+
+MODEL="${MODEL:-qwen3guard}"
+GPU_DEVICE="${GPU_DEVICE:-0}"
+HOST_PORT="${HOST_PORT:-80}"
+MAX_MODEL_LEN="${MAX_MODEL_LEN:-8192}"
+MAX_NUM_SEQS="${MAX_NUM_SEQS:-16}"
+GPU_MEMORY_UTILIZATION="${GPU_MEMORY_UTILIZATION:-0.90}"
+STARTUP_TIMEOUT_SEC="${STARTUP_TIMEOUT_SEC:-1800}"
+
+log() { echo "[deploy-vllm] $*"; }
+fail() { echo "[deploy-vllm] ERROR: $*" >&2; exit 1; }
+
+case "$MODEL" in
+  qwen3guard)
+    HF_MODEL="Qwen/Qwen3Guard-Gen-8B"
+    SERVED_NAME="qwen3guard-gen-8b"
+    CONTAINER_NAME="qwen3guard-8b"
+    DEFAULT_IMAGE="vllm/vllm-openai:latest"
+    MM_ARGS=()
+    ;;
+  gemma4-e2b)
+    HF_MODEL="google/gemma-4-E2B-it"
+    SERVED_NAME="gemma-4-e2b-it"
+    CONTAINER_NAME="gemma4-e2b"
+    DEFAULT_IMAGE="vllm/vllm-openai:gemma4-0505-cu129"
+    MM_ARGS=(--limit-mm-per-prompt '{"image":0,"audio":0}')
+    ;;
+  gemma4-26b-a4b)
+    HF_MODEL="google/gemma-4-26B-A4B-it"
+    SERVED_NAME="gemma-4-26b-a4b-it"
+    CONTAINER_NAME="gemma4-26b-a4b"
+    DEFAULT_IMAGE="vllm/vllm-openai:gemma4-0505-cu129"
+    MM_ARGS=(--limit-mm-per-prompt '{"image":0}')
+    ;;
+  *)
+    fail "Unknown MODEL '$MODEL'. Use qwen3guard, gemma4-e2b, or gemma4-26b-a4b."
+    ;;
+esac
+VLLM_IMAGE="${VLLM_IMAGE:-$DEFAULT_IMAGE}"
+
+[[ $EUID -eq 0 ]] || fail "Run this script with sudo."
+[[ -n "${HF_TOKEN:-}" ]] || fail "HF_TOKEN is not set. Export it and run with: sudo --preserve-env=HF_TOKEN,VLLM_API_KEY ..."
+command -v nvidia-smi >/dev/null && nvidia-smi >/dev/null \
+  || fail "NVIDIA driver not found. Install it (for example: sudo ubuntu-drivers install --gpgpu), reboot, and run this script again."
+
+if [[ -z "${VLLM_API_KEY:-}" ]]; then
+  VLLM_API_KEY="$(openssl rand -hex 32)"
+  GENERATED_KEY=1
+fi
+export HF_TOKEN VLLM_API_KEY
+
+export DEBIAN_FRONTEND=noninteractive
+
+if ! command -v docker >/dev/null; then
+  log "Installing Docker..."
+  apt-get update
+  apt-get install -y ca-certificates curl gnupg
+  install -m 0755 -d /etc/apt/keyrings
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  chmod a+r /etc/apt/keyrings/docker.asc
+  # shellcheck disable=SC1091
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" \
+    > /etc/apt/sources.list.d/docker.list
+  apt-get update
+  apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  systemctl enable --now docker
+else
+  log "Docker already installed, skipping."
+fi
+
+if ! command -v nvidia-ctk >/dev/null; then
+  log "Installing NVIDIA Container Toolkit..."
+  curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey \
+    | gpg --dearmor --yes -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
+  curl -fsSL https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list \
+    | sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' \
+    > /etc/apt/sources.list.d/nvidia-container-toolkit.list
+  apt-get update
+  apt-get install -y nvidia-container-toolkit
+else
+  log "NVIDIA Container Toolkit already installed, skipping."
+fi
+nvidia-ctk runtime configure --runtime=docker
+systemctl restart docker
+
+log "Checking GPU access from Docker..."
+docker run --rm --gpus "\"device=$GPU_DEVICE\"" ubuntu:22.04 nvidia-smi -L \
+  || fail "Docker cannot access GPU $GPU_DEVICE."
+
+if docker container inspect "$CONTAINER_NAME" >/dev/null 2>&1; then
+  log "Removing existing container $CONTAINER_NAME..."
+  docker rm -f "$CONTAINER_NAME" >/dev/null
+fi
+
+log "Starting $HF_MODEL as container $CONTAINER_NAME on port $HOST_PORT..."
+docker run -d \
+  --name "$CONTAINER_NAME" \
+  --restart unless-stopped \
+  --gpus "\"device=$GPU_DEVICE\"" \
+  --shm-size 16g \
+  -p "$HOST_PORT:8000" \
+  -e HF_TOKEN \
+  -e VLLM_API_KEY \
+  -v huggingface-cache:/root/.cache/huggingface \
+  -v vllm-cache:/root/.cache/vllm \
+  "$VLLM_IMAGE" \
+  --model "$HF_MODEL" \
+  --served-model-name "$SERVED_NAME" \
+  --dtype bfloat16 \
+  --tensor-parallel-size 1 \
+  --max-model-len "$MAX_MODEL_LEN" \
+  --max-num-seqs "$MAX_NUM_SEQS" \
+  --gpu-memory-utilization "$GPU_MEMORY_UTILIZATION" \
+  "${MM_ARGS[@]}" \
+  --host 0.0.0.0 \
+  --port 8000 >/dev/null
+
+log "Waiting for the server to become healthy (first start downloads the weights)..."
+deadline=$((SECONDS + STARTUP_TIMEOUT_SEC))
+until curl -fs -o /dev/null "http://localhost:$HOST_PORT/health"; do
+  if [[ "$(docker inspect -f '{{.State.Running}}' "$CONTAINER_NAME")" != "true" ]]; then
+    docker logs --tail 50 "$CONTAINER_NAME" >&2
+    fail "Container $CONTAINER_NAME stopped. See the logs above."
+  fi
+  if (( SECONDS > deadline )); then
+    docker logs --tail 50 "$CONTAINER_NAME" >&2
+    fail "Server not healthy after $STARTUP_TIMEOUT_SEC seconds."
+  fi
+  sleep 10
+done
+
+log "Server is ready."
+log "  Base URL:          http://<this-host>:$HOST_PORT/v1"
+log "  Served model name: $SERVED_NAME"
+if [[ -n "${GENERATED_KEY:-}" ]]; then
+  log "  API key (generated, store it securely): $VLLM_API_KEY"
+fi
+```
+{% endcode %}
+
+Run it with the model you want to deploy:
+
+```bash
+export HF_TOKEN='<your-hugging-face-token>'
+export VLLM_API_KEY='<generated-api-key>'
+
+sudo --preserve-env=HF_TOKEN,VLLM_API_KEY MODEL=qwen3guard bash deploy-vllm.sh
+```
+
+Set `MODEL` to `qwen3guard`, `gemma4-e2b`, or `gemma4-26b-a4b`. If `VLLM_API_KEY` is not set, the script generates a key and prints it once at the end. Store that key securely.
+
+You can override these optional variables the same way as `MODEL`:
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `GPU_DEVICE` | `0` | Index of the GPU to run the model on |
+| `HOST_PORT` | `80` | Host port that exposes the API |
+| `MAX_MODEL_LEN` | `8192` | Value for `--max-model-len` |
+| `MAX_NUM_SEQS` | `16` | Value for `--max-num-seqs` |
+| `GPU_MEMORY_UTILIZATION` | `0.90` | Value for `--gpu-memory-utilization` |
+| `VLLM_IMAGE` | Per model, as in the commands below | vLLM Docker image |
+| `STARTUP_TIMEOUT_SEC` | `1800` | How long to wait for the server to become healthy |
+
+For example, to run Gemma 4 E2B on the second GPU and port 8002:
+
+```bash
+sudo --preserve-env=HF_TOKEN,VLLM_API_KEY MODEL=gemma4-e2b GPU_DEVICE=1 HOST_PORT=8002 bash deploy-vllm.sh
+```
+
+After the script finishes, continue with [Verify the API](#verify-the-api). To set up the host by hand instead, follow the steps below.
 
 ## Steps to Deploy
 
