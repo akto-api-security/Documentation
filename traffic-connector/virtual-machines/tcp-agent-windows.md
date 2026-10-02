@@ -10,24 +10,24 @@ You can use Akto traffic collector on Windows servers to collect and send traffi
 
 ## Adding Akto traffic collector service
 
-1. Copy `akto-traffic-mirroring-windows-amd64.zip` to the server.
-
-2. Open PowerShell as Administrator and extract it:
+1. Open PowerShell as Administrator, then download and extract the collector. You can also download [akto-traffic-mirroring-windows-amd64.zip](https://github.com/akto-api-security/mirroring-api-logging/releases/latest/download/akto-traffic-mirroring-windows-amd64.zip) in a browser and copy it to the server.
 
 ```powershell
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+Invoke-WebRequest "https://github.com/akto-api-security/mirroring-api-logging/releases/latest/download/akto-traffic-mirroring-windows-amd64.zip" -OutFile akto-traffic-mirroring-windows-amd64.zip -UseBasicParsing
 Expand-Archive akto-traffic-mirroring-windows-amd64.zip -DestinationPath C:\akto-setup -Force
 cd C:\akto-setup\akto-traffic-mirroring-windows-amd64
 Get-ChildItem | Unblock-File
 Set-ExecutionPolicy -Scope Process Bypass -Force
 ```
 
-3. Install the collector. Replace `<AKTO_NLB>` with the mini-runtime/runtime service URL saved earlier.
+2. Install the collector. Replace `<AKTO_NLB>` with the mini-runtime/runtime service URL saved earlier.
 
 ```powershell
 .\install.ps1 -KafkaUrl "<AKTO_NLB>:9092"
 ```
 
-4. Check the logs at `C:\ProgramData\Akto\logs\mirroring.log` for `connection establishing with kafka successfully`.
+3. Check the logs at `C:\ProgramData\Akto\logs\mirroring.log` for `connection establishing with kafka successfully`.
 
 To uninstall, run `.\uninstall.ps1` from the same folder.
 
