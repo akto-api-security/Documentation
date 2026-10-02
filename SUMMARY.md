@@ -85,6 +85,7 @@
   * [Connect Akto on TLS service](traffic-connector/virtual-machines/docker-ssl.md)
   * [Connect Akto on TLS service (bare Linux)](traffic-connector/virtual-machines/vm-ssl-no-docker.md)
   * [Connect Akto with TCP Agent](traffic-connector/virtual-machines/tcp-agent.md)
+  * [Connect Akto with TCP Agent on Windows](traffic-connector/virtual-machines/tcp-agent-windows.md)
   * [Connect Akto with MITM Proxy](traffic-connector/virtual-machines/connect-akto-with-mitm-proxy.md)
 * [Manual](traffic-connector/manual/README.md)
   * [Connect Akto with Burp suite](traffic-connector/manual/burp-suite.md)
