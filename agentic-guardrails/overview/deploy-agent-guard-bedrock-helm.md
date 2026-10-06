@@ -8,7 +8,7 @@ description: Deploy Akto Agent Guard in your EKS cluster with Helm, using Amazon
 
 This guide shows how to deploy Agent Guard in your Amazon EKS cluster with the `akto-regional-setup` Helm chart and run its models on **Amazon Bedrock**.
 
-Agent Guard uses no API keys to reach Bedrock. Its credentials come from an IAM role bound to the `agent-guard` Kubernetes service account. This guide uses EKS Pod Identity. If you use IRSA, see [Use IRSA instead](#use-irsa-instead).
+Agent Guard uses no API keys to reach Bedrock. Its credentials come from an IAM role bound to the `agent-guard` Kubernetes service account. This guide uses EKS Pod Identity.
 
 The values file in this guide turns off these components: threat client, anonymizer, embedder, guardrails Redis, guardrails service Kafka, and guardrails threat buffer.
 
@@ -43,7 +43,7 @@ aws eks create-addon --cluster-name <cluster> --addon-name eks-pod-identity-agen
 {% step %}
 ### Create the IAM role
 
-Use this trust policy. The principal must be `pods.eks.amazonaws.com`. The trust policy of an IRSA role does not work here.
+Use this trust policy. The principal must be `pods.eks.amazonaws.com`.
 
 ```json
 {
@@ -82,37 +82,6 @@ Save this as `agent-guard-bedrock.yaml`:
 
 {% code title="agent-guard-bedrock.yaml" %}
 ```yaml
-global:
-  keyVault:
-    enabled: false
-
-lambdaEgressProxy:
-  enabled: true
-  mitmproxy:
-    caKey: mitmproxyCaPem
-  service:
-    internal: true
-
-dataIngestion:
-  service:
-    type: ClusterIP
-
-threatClient:
-  enabled: false
-anonymizer:
-  enabled: false
-embedder:
-  enabled: false
-guardrailsRedis:
-  enabled: false
-guardrailsService:
-  kafka:
-    enabled: false
-guardrailsThreatBuffer:
-  enabled: false
-networkPolicy:
-  enabled: false
-
   serviceAccount:
     create: true
     name: agent-guard
@@ -166,25 +135,6 @@ kubectl get pod -n akto-regional $POD -o jsonpath='{.spec.serviceAccountName}{"\
 ```
 {% endstep %}
 {% endstepper %}
-
-## Use IRSA instead
-
-Use the same chart, `bedrockRegion` and `defaultModelConfigJson`. Three things differ:
-
-1. Skip the add-on step and the association step.
-2. Use a trust policy with the cluster's OIDC provider and `sts:AssumeRoleWithWebIdentity`, not `pods.eks.amazonaws.com`.
-3. Annotate the service account:
-
-   ```yaml
-   agentGuard:
-     serviceAccount:
-       create: true
-       name: agent-guard
-       annotations:
-         eks.amazonaws.com/role-arn: arn:aws:iam::<acct>:role/<role>
-   ```
-
-To verify, check `AWS_ROLE_ARN` instead of `AWS_CONTAINER_CREDENTIALS_FULL_URI`. IRSA reads a mounted token file, so it needs no network policy allowance for `169.254.170.23`.
 
 ## Troubleshooting
 
