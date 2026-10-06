@@ -252,18 +252,6 @@ helm install akto-stateful-mini-testing akto/akto-stateful-mini-testing -n <your
 
 This creates pods `akto-external-testing-0`, `-1` and `-2`, each with its own volume.
 
-## Upgrade
-
-```bash
-helm repo update akto
-helm upgrade akto-stateful-mini-testing akto/akto-stateful-mini-testing -n <your-namespace> \
-  --reset-then-reuse-values
-```
-
-`--reset-then-reuse-values` keeps the settings you installed with and picks up the defaults of the new chart version. You can add more `--set` flags to the same command to change settings. If your Helm version does not support this flag (it needs Helm 3.14 or later), run the same command you used to install instead.
-
-Your volumes and the data in them are kept during an upgrade.
-
 ## Uninstall
 
 1. Remove the testing module.
@@ -283,10 +271,6 @@ Deleting the volumes removes the saved state of each testing pod. A pod installe
 {% endhint %}
 
 If you created Kafka with the example in Step 1, remove it with `kubectl delete -f kafka-sasl.yaml`.
-
-## Switching from the standard testing module chart
-
-This chart is separate from the `akto-mini-testing` chart. A Deployment cannot be converted to a StatefulSet in place, so uninstall the `akto-mini-testing` release first, then install this one. Do not run both together. The standard chart ran Kafka inside the testing pod. This chart connects to a separate Kafka instead, as described in Step 1.
 
 ## Troubleshooting
 
