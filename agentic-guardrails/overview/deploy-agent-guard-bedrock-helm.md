@@ -2,7 +2,7 @@
 description: Deploy Akto Agent Guard in your EKS cluster with Helm, using Amazon Bedrock models and IAM role credentials
 ---
 
-# Deploy Agent Guard on AWS Bedrock
+# Use Bedrock Models in Agent Guard
 
 ## Overview
 
@@ -16,12 +16,11 @@ The values file in this guide turns off these components: threat client, anonymi
 
 The example configuration uses two Bedrock models, one for each model role:
 
-| Model role | Model | Timeout |
-| --- | --- | --- |
-| `FAST_THREAT_FILTER` | `google.gemma-4-e2b` | 5000 ms |
-| `FINAL_ARBITER` | `google.gemma-4-26b-a4b` | 30000 ms |
+| Model role | Model |
+| --- | --- |
+| `FAST_THREAT_FILTER` | `google.gemma-4-e2b` |
+| `FINAL_ARBITER` | `google.gemma-4-26b-a4b` |
 
-`FAST_THREAT_FILTER` uses a `safeDecisionThreshold` of 0.9.
 
 ## Prerequisites
 

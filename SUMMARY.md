@@ -367,7 +367,7 @@
   * [MCP Gateway](agentic-guardrails/overview/akto-mcp-proxy.md)
   * [AI Agent Gateway](agentic-guardrails/overview/akto-agent-proxy.md)
   * [Guardrails as API](agentic-guardrails/overview/guardrails-api.md)
-  * [Deploy Agent Guard on AWS Bedrock](agentic-guardrails/overview/deploy-agent-guard-bedrock-helm.md)
+  * [Use Bedrock Models in Agent Guard](agentic-guardrails/overview/deploy-agent-guard-bedrock-helm.md)
 * [Concepts](agentic-guardrails/concepts/README.md)
   * [Agent Guard](agentic-guardrails/concepts/agent-guard.md)
   * [Session-Based Guardrails](agentic-guardrails/concepts/session-guardrails.md)
