@@ -224,6 +224,7 @@
   * [Auto-Create Jira Tickets](api-security-testing/how-to/auto-create-jira-tickets.md)
   * [Edit Test Settings](api-security-testing/how-to/edit-test-settings.md)
   * [Install testing module in your Cloud](api-security-testing/how-to/install-testing-module-in-your-cloud/README.md)
+    * [Install testing module as a StatefulSet](api-security-testing/how-to/install-testing-module-in-your-cloud/install-testing-module-as-a-statefulset.md)
     * [Ephemeral Storage for Hybrid Runtime](api-security-testing/how-to/install-testing-module-in-your-cloud/ephemeral-storage-for-hybrid-runtime.md)
     * [gRPC Testing in Hybrid Testing Module](api-security-testing/how-to/install-testing-module-in-your-cloud/grpc-testing-in-hybrid-testing-module.md)
   * [Set Up Smart Automated Testing](api-security-testing/how-to/set-up-smart-automated-testing.md)
