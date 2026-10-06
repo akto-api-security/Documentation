@@ -37,52 +37,126 @@ helm repo update
 {% step %}
 **Install the Chart**
 
-Replace `<key>` with your **Anthropic API Key** and `<token>` with the **Database Abstractor Token** copied from [#copy-the-jwt-token](./#copy-the-jwt-token "mention"), then pick one of the following installation options.
+Replace `<token>` with the **Database Abstractor Token** copied from [#copy-the-jwt-token](./#copy-the-jwt-token "mention"), and the provider placeholders with your own credentials. The scanning module supports **Anthropic**, **Azure OpenAI**, **Google Vertex AI**, and **AWS Bedrock** as the LLM backing the red teaming engine.
 
-1.  Directly using the key and token
-
-    {% code overflow="wrap" %}
-    ```bash
-    helm install akto-mini-testing akto/akto-mini-testing \
-      --set testing.agentTesting.enabled=true \
-      --set testing.agentTesting.env.anthropicApiKey="<key>" \
-      --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<token>"
-    ```
-    {% endcode %}
-2.  Storing the key and token in Kubernetes Secrets
-
-    {% code overflow="wrap" %}
-    ```bash
-    helm install akto-mini-testing akto/akto-mini-testing \
-      --set testing.agentTesting.enabled=true \
-      --set testing.agentTesting.env.useSecretsForAnthropicApiKey=true \
-      --set testing.agentTesting.env.anthropicApiKeySecrets.anthropicSecretKey="<key>" \
-      --set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true \
-      --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.token="<token>"
-    ```
-    {% endcode %}
-3.  Bringing your own existing Secrets
-
-    {% code overflow="wrap" %}
-    ```bash
-    helm install akto-mini-testing akto/akto-mini-testing \
-      --set testing.agentTesting.enabled=true \
-      --set testing.agentTesting.env.useSecretsForAnthropicApiKey=true \
-      --set testing.agentTesting.env.anthropicApiKeySecrets.existingSecret=<my-anthropic-secret> \
-      --set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true \
-      --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.existingSecret=<my-db-token-secret>
-    ```
-    {% endcode %}
-
-    Each existing secret must be of type `Opaque` and store its value under a key named `token`.
+{% tabs %}
+{% tab title="Anthropic" %}
+{% code overflow="wrap" %}
+```bash
+helm install akto-mini-testing akto/akto-mini-testing \
+  --set testing.agentTesting.enabled=true \
+  --set testing.agentTesting.env.llm.provider=anthropic \
+  --set testing.agentTesting.env.llm.anthropic.apiKey="<anthropic-api-key>" \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<token>"
+```
+{% endcode %}
 
 {% hint style="warning" %}
 **Anthropic API Key Required**
 
-You **must** provide your actual **Anthropic API Key** and the **Database Abstractor Service Token (JWT)**, either directly or via a Kubernetes Secret.
+You **must** replace `<anthropic-api-key>` with your actual Anthropic API key.
 {% endhint %}
+{% endtab %}
+
+{% tab title="Azure OpenAI" %}
+{% code overflow="wrap" %}
+```bash
+helm install akto-mini-testing akto/akto-mini-testing \
+  --set testing.agentTesting.enabled=true \
+  --set testing.agentTesting.env.llm.provider=azure \
+  --set testing.agentTesting.env.llm.azure.endpoint="<azure-openai-endpoint>" \
+  --set testing.agentTesting.env.llm.azure.model="<azure-openai-model>" \
+  --set testing.agentTesting.env.llm.azure.apiKey="<azure-openai-api-key>" \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<token>"
+```
+{% endcode %}
+
+{% hint style="warning" %}
+**Azure OpenAI Credentials Required**
+
+The endpoint must include its `/openai/v1` suffix, for example `https://your-resource.services.ai.azure.com/openai/v1`.
+{% endhint %}
+{% endtab %}
+
+{% tab title="Google Vertex AI" %}
+{% code overflow="wrap" %}
+```bash
+helm install akto-mini-testing akto/akto-mini-testing \
+  --set testing.agentTesting.enabled=true \
+  --set testing.agentTesting.env.llm.provider=vertex \
+  --set testing.agentTesting.env.llm.vertex.projectId="<gcp-project-id>" \
+  --set testing.agentTesting.env.llm.vertex.location="<gcp-region>" \
+  --set testing.agentTesting.env.llm.vertex.endpointId="<vertex-endpoint-id>" \
+  --set testing.agentTesting.env.llm.vertex.endpointDomain="<vertex-endpoint-domain>" \
+  --set-file testing.agentTesting.env.llm.vertex.credentialsJson=./gcp-key.json \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<token>"
+```
+{% endcode %}
+
+{% hint style="warning" %}
+**Vertex AI Credentials Required**
+
+Use `--set-file` for the service account JSON — passing it with `--set` breaks on the commas and braces inside the file.
+{% endhint %}
+{% endtab %}
+
+{% tab title="AWS Bedrock" %}
+{% code overflow="wrap" %}
+```bash
+helm install akto-mini-testing akto/akto-mini-testing \
+  --set testing.agentTesting.enabled=true \
+  --set testing.agentTesting.env.llm.provider=bedrock \
+  --set testing.agentTesting.env.llm.bedrock.awsRegion="<aws-region>" \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<token>"
+```
+{% endcode %}
+
+{% hint style="warning" %}
+**Bedrock Credentials**
+
+`awsRegion` is required. Bedrock takes no API key — on EKS the pod gets credentials from an IAM role via IRSA or Pod Identity. Where no role is available, pass a bearer token instead with `--set testing.agentTesting.env.llm.bedrock.bearerToken="<token>"`.
+
+The models the engine resolves to must be enabled for that region in the Bedrock console; they are off by default on a new AWS account.
+{% endhint %}
+{% endtab %}
+{% endtabs %}
+{% endstep %}
+
+{% step %}
+**Keep credentials in Kubernetes Secrets (recommended)**
+
+Passing a credential inline puts it in your shell history, and the chart writes it into a Secret it manages. To use a Secret you create yourself, set `existingSecret` and `existingSecretKey` instead of the inline value.
+
+```bash
+kubectl create secret generic akto-llm-creds \
+  --from-literal=azureOpenAiApiKey="<azure-openai-api-key>"
+
+kubectl create secret generic akto-db-token --from-literal=token="<token>"
+```
+
+{% code overflow="wrap" %}
+```bash
+helm install akto-mini-testing akto/akto-mini-testing \
+  --set testing.agentTesting.enabled=true \
+  --set testing.agentTesting.env.llm.provider=azure \
+  --set testing.agentTesting.env.llm.azure.endpoint="<azure-openai-endpoint>" \
+  --set testing.agentTesting.env.llm.azure.model="<azure-openai-model>" \
+  --set testing.agentTesting.env.llm.azure.existingSecret=akto-llm-creds \
+  --set testing.agentTesting.env.llm.azure.existingSecretKey=azureOpenAiApiKey \
+  --set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.existingSecret=akto-db-token
+```
+{% endcode %}
+
+The same `existingSecret` / `existingSecretKey` pair works for every provider — `llm.anthropic`, `llm.vertex` (key holds the service account JSON), and `llm.bedrock` (key holds the bearer token). The database abstractor token secret must be of type `Opaque` with its value under a key named `token`.
 {% endstep %}
 {% endstepper %}
+
+{% hint style="info" %}
+**Upgrading from an earlier chart**
+
+`testing.agentTesting.env.anthropicApiKey`, `useSecretsForAnthropicApiKey`, and `anthropicApiKeySecrets` still work and need no changes. They are deprecated in favour of `llm.anthropic.*`, which routes the key through a Secret rather than writing it into the Deployment spec.
+{% endhint %}
 
 ## Setup Linux VM
 
