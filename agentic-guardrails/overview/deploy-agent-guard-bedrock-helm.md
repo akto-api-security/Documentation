@@ -14,15 +14,14 @@ The values file in this guide turns off these components: threat client, anonymi
 
 ## Models
 
-The example configuration uses three Bedrock models, one for each model role:
+The example configuration uses two Bedrock models, one for each model role:
 
 | Model role | Model | Timeout |
 | --- | --- | --- |
-| `FAST_THREAT_FILTER` | `us.amazon.nova-micro-v1:0` | 5000 ms |
-| `FAST_FALLBACK_SAFE_FILTER` | `us.amazon.nova-lite-v1:0` | 10000 ms |
-| `FINAL_ARBITER` | `us.amazon.nova-2-lite-v1:0` | 30000 ms |
+| `FAST_THREAT_FILTER` | `google.gemma-4-e2b` | 5000 ms |
+| `FINAL_ARBITER` | `google.gemma-4-26b-a4b` | 30000 ms |
 
-`FAST_THREAT_FILTER` and `FAST_FALLBACK_SAFE_FILTER` use a `safeDecisionThreshold` of 0.9.
+`FAST_THREAT_FILTER` uses a `safeDecisionThreshold` of 0.9.
 
 ## Prerequisites
 
@@ -114,9 +113,6 @@ guardrailsThreatBuffer:
 networkPolicy:
   enabled: false
 
-agentGuard:
-  image:
-    tag: 1.2.1
   serviceAccount:
     create: true
     name: agent-guard
@@ -124,14 +120,11 @@ agentGuard:
     bedrockRegion: us-east-1
     defaultModelConfigJson: |
       {"modelConfigs":[
-        {"provider":"bedrock","model":"us.amazon.nova-micro-v1:0","modelRole":"FAST_THREAT_FILTER","safeDecisionThreshold":0.9,"timeoutMs":5000},
-        {"provider":"bedrock","model":"us.amazon.nova-lite-v1:0","modelRole":"FAST_FALLBACK_SAFE_FILTER","safeDecisionThreshold":0.9,"timeoutMs":10000},
-        {"provider":"bedrock","model":"us.amazon.nova-2-lite-v1:0","modelRole":"FINAL_ARBITER","timeoutMs":30000}],
-       "parallelExecution":false,"storeAllResults":false}
+        {"provider":"bedrock","model":"google.gemma-4-e2b","modelRole":"FAST_THREAT_FILTER","safeDecisionThreshold":0.9,"timeoutMs":5000},
+        {"provider":"bedrock","model":"google.gemma-4-26b-a4b","modelRole":"FINAL_ARBITER","timeoutMs":30000}],
+       "parallelExecution":true,"storeAllResults":false}
 ```
 {% endcode %}
-
-This guide deploys the Agent Guard image `aktosecurity/akto-agent-guard-worker:1.2.1`.
 
 {% hint style="warning" %}
 Set `defaultModelConfigJson`. If it is blank, Agent Guard falls back to a built-in Vertex config, and scans fail without any message about Bedrock.
