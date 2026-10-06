@@ -16,6 +16,8 @@ A regular Kubernetes Deployment gives pods random names, and a replacement pod s
 * **Scaling up**: each extra pod gets its own new volume.
 * **Scaling down or uninstalling**: volumes are not deleted automatically, so nothing is lost by accident. See [Uninstall](install-testing-module-as-a-statefulset.md#uninstall) to remove them.
 
+<figure><img src="../../../.gitbook/assets/statefulset-pvc.svg" alt="Each testing pod in the StatefulSet has its own volume. A restarted pod keeps its name and re-attaches to the same volume."><figcaption></figcaption></figure>
+
 ## Prerequisites
 
 1. A Kubernetes cluster where you have permission to deploy.
