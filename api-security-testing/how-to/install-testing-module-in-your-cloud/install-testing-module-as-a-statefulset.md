@@ -211,6 +211,25 @@ You should see:
 * a pod named `akto-external-testing-0` in the `Running` state, and
 * a PVC named `testing-info-akto-external-testing-0` in the `Bound` state.
 
+## Database Abstractor Token
+
+By default, the token is passed directly with `--set ...databaseAbstractorToken=<token>`, as in the install command above. You can store it in a Kubernetes secret instead. Pick one option and add its flags to the `helm install` command.
+
+| Option | Flags |
+| --- | --- |
+| **Use a secret you created (recommended)**. The secret needs the key `token`. | `--set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.existingSecret=<secret-name>` |
+| **Let the chart create the secret** | `--set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.token=<token>` |
+| **Pass the token directly** | `--set testing.aktoApiSecurityTesting.env.databaseAbstractorToken=<token>` |
+
+To create your own secret:
+
+```bash
+kubectl create secret generic akto-database-abstractor-token -n <your-namespace> \
+  --from-literal=token="<your-database-abstractor-token>"
+```
+
+Passing the token directly makes it visible in the pod's configuration, so a secret is the better choice for production.
+
 ## Kafka credentials
 
 The testing module reads the Kafka username and password in one of three ways. Pick one and add its flags to the `helm install` command.
@@ -279,7 +298,7 @@ If you created Kafka with the example in Step 1, remove it with `kubectl delete 
 | Pod stays `Pending` | Run `kubectl describe pvc -n <your-namespace>`. The cluster likely has no default storage class. Set one with `testing.persistence.storageClass`. |
 | Pod cannot connect to Kafka | Check `kafkaBrokerUrl` and that the pod can reach the broker. Look for connection errors in the logs: `kubectl logs <pod-name> -c akto-api-security-testing -n <your-namespace>`. |
 | Kafka authentication fails | Check that the username, password and mechanism match what the broker expects. A message like `SaslAuthenticationException` in the logs means the credentials or mechanism are wrong. |
-| Pod fails with `CreateContainerConfigError` | The secret named in `existingSecret` does not exist in the namespace, or it is missing the `username` or `password` key. |
+| Pod fails with `CreateContainerConfigError` | The secret named in `existingSecret` does not exist in the namespace, or it is missing a key. The Kafka secret needs `username` and `password`. The token secret needs `token`. |
 | Run stays at 0% after a restart | Kafka lost its data. Use a Kafka that stores its data on a persistent volume. |
 | Pod cannot reach Akto | Make sure the cluster can reach `https://cyborg.akto.io`. If you use a proxy, set `tokens.env.proxyUri`. |
 
