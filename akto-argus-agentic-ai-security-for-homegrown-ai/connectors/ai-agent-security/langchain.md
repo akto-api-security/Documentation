@@ -15,7 +15,7 @@ The Akto LangChain integration automatically:
 
 * Validates AI requests and responses against security policies
 * Detects PII, prompt injection, and policy violations
-* Blocks malicious requests (sync mode) or logs violations (async mode)
+* Enforces whatever behaviour a violated policy is configured with — block, alert, or warn (see [Guardrails Behaviour Reference](#guardrails-behaviour-reference)) — in sync mode, or just logs violations in async mode
 * Ingests traffic into Akto for monitoring and analysis
 
 ## Prerequisites
@@ -35,25 +35,28 @@ This approach uses Akto's `AktoGuardrailsMiddleware` — a class-based `AgentMid
 
 ### How It Works
 
-The middleware hooks into two points of the LangChain agent lifecycle:
+The middleware hooks into two points of the LangChain agent lifecycle, and validates guardrails at **both**:
 
-* **`before_model`** — Validates the prompt against Akto guardrails _before_ the LLM is called. In sync mode, a policy violation blocks the request immediately.
-* **`after_model`** — Ingests the completed interaction (prompt + response) into Akto for audit and dashboard visibility.
+* **`before_model`** — Validates the prompt against Akto guardrails _before_ the LLM is called.
+* **`after_model`** — Validates the LLM's response against Akto guardrails, then ingests the completed interaction into Akto for audit and dashboard visibility.
 
-Both synchronous and asynchronous agent execution modes are supported.
+What happens on a violation depends on that policy's configured `behaviour` — see [Guardrails Behaviour Reference](#guardrails-behaviour-reference). Both synchronous and asynchronous agent execution modes are supported.
 
 ### Request Flow (AKTO\_SYNC\_MODE=true)
 
 ```
 1. Agent invokes model call
-2. before_model hook intercepts the request
-3. Prompt sent to Akto Data Ingestion Service for validation
-   ├─ If BLOCKED: ValueError raised, LLM never called
-   └─ If ALLOWED: Continue to step 4
-4. Request forwarded to LLM provider
-5. LLM response received
-6. after_model hook intercepts the response
-7. Full interaction sent to Akto for audit and dashboard display
+2. before_model hook sends the prompt to Akto for validation
+   ├─ behaviour=block:            ValueError raised, LLM never called
+   ├─ behaviour=warn:             agent pauses, waits for a human decision
+   │    ├─ approved: continue to step 3
+   │    └─ declined: ValueError raised, LLM never called
+   ├─ behaviour=alert:            logged server-side, continue to step 3
+   └─ allowed:                    continue to step 3
+3. Request forwarded to LLM provider
+4. LLM response received
+5. after_model hook sends the response to Akto for validation (same behaviour branching as step 2)
+6. Full interaction sent to Akto for audit and dashboard display
 ```
 
 ### Request Flow (AKTO\_SYNC\_MODE=false)
@@ -100,15 +103,18 @@ AKTO_DATA_INGESTION_URL=https://<account_id>-guardrails.akto.io
 # Required: Unique identifier for this LangChain application in Akto
 PROJECT_NAME=my-langchain-agent
 
+# Optional: sent as the Authorization header on every call to Akto, if set
+AKTO_API_TOKEN=
+
 # Optional: Operation mode (default: "true")
-AKTO_SYNC_MODE=true        # true = block violations, false = async log-only
+AKTO_SYNC_MODE=true        # true = enforce block/warn violations, false = async log-only
 
 # Optional: HTTP timeout in seconds (default: "5")
 AKTO_TIMEOUT=5
 
 # Optional: Logging
 LOG_LEVEL=INFO             # Logging level (default: "INFO")
-LOG_PAYLOADS=false         # Log full payloads — privacy-sensitive (default: "false")
+LOG_PAYLOADS=true          # Log full payloads — privacy-sensitive (default: "true")
 ```
 
 {% hint style="warning" %}
@@ -138,6 +144,10 @@ agent = create_agent(
 ```
 
 The middleware automatically handles both sync and async execution paths — no additional configuration is needed.
+
+{% hint style="info" %}
+This is enough for policies whose `behaviour` is `block` or `alert`. If any policy uses `warn`, you also need a checkpointer — see [Handling Warn Verdicts](#handling-warn-verdicts) below.
+{% endhint %}
 {% endstep %}
 
 {% step %}
@@ -159,20 +169,33 @@ Then verify in the Akto dashboard:
 
 ### Configuration Reference
 
-| Variable                  | Required | Default             | Description                                            |
-| ------------------------- | -------- | ------------------- | ------------------------------------------------------ |
-| `AKTO_DATA_INGESTION_URL` | Yes      |                     | Akto service base URL                                  |
-| `PROJECT_NAME`            | Yes      |                     | Unique identifier for this LangChain application in Akto |
-| `AKTO_SYNC_MODE`          | No       | `true`              | `true` to block on violation, `false` for log-only     |
-| `AKTO_TIMEOUT`            | No       | `5`                 | HTTP timeout in seconds                                |
-| `LOG_LEVEL`               | No       | `INFO`              | Logging level                                          |
-| `LOG_PAYLOADS`            | No       | `false`             | Log full request/response payloads (privacy-sensitive) |
-| `LANGCHAIN_API_HOST`      | No       | `api.langchain.com` | Host header used in the proxy payload                  |
-| `LANGCHAIN_API_PATH`      | No       | `/langchain/chat`   | Path used in the proxy payload                         |
+| Variable                  | Required | Default             | Description                                                     |
+| ------------------------- | -------- | ------------------- | ---------------------------------------------------------------- |
+| `AKTO_DATA_INGESTION_URL` | Yes      |                     | Akto service base URL                                            |
+| `PROJECT_NAME`            | Yes      |                     | Unique identifier for this LangChain application in Akto         |
+| `AKTO_API_TOKEN`          | No       |                     | Sent as the `Authorization` header on every call to Akto, if set |
+| `AKTO_SYNC_MODE`          | No       | `true`              | `true` to enforce block/warn violations, `false` for log-only    |
+| `AKTO_TIMEOUT`            | No       | `5`                 | HTTP timeout in seconds                                          |
+| `AKTO_INSTANCE_IP`        | No       | auto-detected       | Source IP recorded in proxy payloads                             |
+| `LOG_LEVEL`               | No       | `INFO`              | Logging level                                                    |
+| `LOG_PAYLOADS`            | No       | `true`              | Log full request/response payloads (privacy-sensitive)           |
+| `LANGCHAIN_API_HOST`      | No       | `api.langchain.com` | Host header used in the proxy payload                            |
+| `LANGCHAIN_API_PATH`      | No       | `/langchain/chat`   | Path used in the proxy payload                                   |
+| `LANGCHAIN_MODEL`         | No       | `unknown`           | Fallback model name recorded in proxy payloads, if it can't be read off the agent's runtime |
+
+### Guardrails Behaviour Reference
+
+Every Akto guardrail policy has a `behaviour`, configured on the policy itself in the Akto dashboard. It determines what the middleware does when that policy is violated:
+
+| `behaviour`         | What the middleware does                                                | What your code needs to do        |
+| ------------------- | ------------------------------------------------------------------------ | ---------------------------------- |
+| `block`             | Raises `ValueError` immediately, before or after the model call.         | `try`/`except ValueError`          |
+| `alert`             | Proceeds — the violation is only logged server-side, nothing client-visible. | Nothing                        |
+| `warn` | Pauses the agent and waits for a human to decide, via LangGraph's `interrupt()`. | See [Handling Warn Verdicts](#handling-warn-verdicts) |
 
 ### Handling Blocked Requests
 
-When `AKTO_SYNC_MODE=true` and a request is blocked by guardrails, the middleware raises a `ValueError`:
+When `AKTO_SYNC_MODE=true` and a request (or a declined `warn`) is blocked by guardrails, the middleware raises a `ValueError`:
 
 ```
 ValueError: Blocked by Akto Guardrails: <reason>
@@ -186,6 +209,100 @@ try:
 except ValueError as e:
     if "Blocked by Akto Guardrails" in str(e):
         print(f"Request blocked: {e}")
+```
+
+### Handling Warn Verdicts
+
+A `warn` verdict means: don't just block, ask a human first. That needs two extra pieces of setup that `block`/`alert` don't:
+
+1. **A checkpointer**, passed as `create_agent(..., checkpointer=...)`. LangGraph's `interrupt()` needs somewhere to persist the paused state. `InMemorySaver()` is fine for a single process; use a durable one (Postgres, Redis, etc.) if the pause needs to survive a restart, or be answered by a different process than the one that started it.
+2. **A stable `thread_id`** for the conversation, passed in `config={"configurable": {"thread_id": ...}}` on every `invoke()` and every resume call for that conversation. It's the key the checkpointer uses to find the paused state — reuse the same value you already use elsewhere to mean "this conversation," you don't need a new ID just for this. A mismatch between the call that paused and the call that resumes just means there's nothing to resume; it doesn't error.
+
+Beyond that, **you decide how a human actually gets asked** — that's your application's concern, not something the middleware can predict. Two helper functions cover the two common shapes.
+
+#### The interrupt payload schema
+
+Whichever helper you use, the pause is described by this payload:
+
+| Field       | Type | Values                                               |
+| ----------- | ---- | ----------------------------------------------------- |
+| `phase`     | `str` | `"request"` (checked before the LLM call) or `"response"` (checked after) |
+| `behaviour` | `str` | `"warn"`                                              |
+| `reason`    | `str` | The policy's violation reason                         |
+| `message`   | `str` | A human-readable description of what to do next       |
+
+#### `resolve_interrupts()` — for a CLI, or anywhere blocking is fine
+
+```python
+def resolve_interrupts(agent, result: dict, config: dict, ask_human=None) -> dict
+```
+
+Blocks the calling thread until the pause is resolved — a good fit when the human answering is right there synchronously (a terminal, a script). Given a result already obtained from `agent.invoke()`, it checks for a pending pause, calls `ask_human(payload) -> bool` (defaults to a terminal `y`/`N` prompt if you don't pass one), and resumes with `Command(resume=...)` — looping, since a single turn can pause twice (once for the request, once for the response). Raises `ValueError` if the human declines, same as a hard `block`.
+
+```python
+from akto_middleware import AktoGuardrailsMiddleware, resolve_interrupts
+from langchain.agents import create_agent
+from langgraph.checkpoint.memory import InMemorySaver
+
+agent = create_agent(
+    model="gpt-4.1",
+    tools=[...],
+    middleware=[AktoGuardrailsMiddleware()],
+    checkpointer=InMemorySaver(),
+)
+
+def ask_human(payload: dict) -> bool:
+    return input(f"{payload['reason']} -- proceed anyway? [y/N]: ").strip().lower() == "y"
+
+config = {"configurable": {"thread_id": "conversation-1"}}
+try:
+    result = agent.invoke({"messages": [{"role": "user", "content": user_input}]}, config=config)
+    result = resolve_interrupts(agent, result, config, ask_human=ask_human)  # ask_human is optional
+except ValueError as e:
+    print(f"Blocked by Akto Guardrails: {e}")
+```
+
+#### `interrupt_payload()` — for a web app, or anything that can't block on a human answering
+
+```python
+def interrupt_payload(result: dict) -> dict | None
+```
+
+An HTTP request can't sit there waiting for someone to click a button — they might take a minute, or an hour, in a completely separate request. `interrupt_payload(result)` just checks whether `result` has a pending pause and returns its payload (or `None`) — no blocking. Use it to split the flow across two endpoints instead of one loop: one that sends the message and returns `needs_review` immediately instead of blocking, and a second that's called whenever the human actually answers, resuming with `Command(resume=decision)`.
+
+```python
+from akto_middleware import AktoGuardrailsMiddleware, interrupt_payload
+from langchain.agents import create_agent
+from langgraph.checkpoint.memory import InMemorySaver
+from langgraph.types import Command
+
+agent = create_agent(
+    model="gpt-4.1",
+    tools=[...],
+    middleware=[AktoGuardrailsMiddleware()],
+    checkpointer=InMemorySaver(),
+)
+
+def handle_result(result: dict) -> dict:
+    payload = interrupt_payload(result)
+    if payload is not None:
+        return {"status": "needs_review", **payload}
+    return {"status": "ok", "reply": result["messages"][-1].content}
+
+# First request: send the message
+config = {"configurable": {"thread_id": thread_id}}
+try:
+    result = agent.invoke({"messages": [{"role": "user", "content": user_input}]}, config=config)
+except ValueError as e:
+    return {"status": "blocked", "reason": str(e)}
+return handle_result(result)
+
+# A later, separate request, once the human answers:
+try:
+    result = agent.invoke(Command(resume=decision), config=config)
+except ValueError as e:
+    return {"status": "blocked", "reason": str(e)}
+return handle_result(result)
 ```
 
 ***
