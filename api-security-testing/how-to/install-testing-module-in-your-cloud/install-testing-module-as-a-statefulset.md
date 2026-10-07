@@ -25,7 +25,7 @@ A regular Kubernetes Deployment gives pods random names, and a replacement pod s
 2. [Helm](https://helm.sh/docs/intro/install/) installed.
 3. A default storage class in your cluster that can create volumes. Most managed clusters (EKS, GKE, AKS) already have one. You can check with `kubectl get storageclass`.
 4. A Kafka broker with SASL enabled that the testing pod can reach. You need its address, the SASL mechanism (`PLAIN`, `SCRAM-SHA-256` or `SCRAM-SHA-512`), and a SASL username and password. If you do not have a Kafka broker yet, see [Set up Kafka](install-testing-module-as-a-statefulset.md#set-up-kafka-if-you-do-not-have-one) and do that first.
-5. The Database Abstractor service is reachable from the cluster.
+5. The Database Abstractor service is reachable from the cluster. You will pass its URL during install.
 6. Your Database Abstractor Token:
    1. Log in to the Akto dashboard at [app.akto.io](https://app.akto.io).
    2. Go to **Quick Start** > **Hybrid Saas** and click **Connect**.
@@ -58,6 +58,7 @@ kubectl create secret generic kafka-sasl-credentials -n <your-namespace> \
 ```bash
 helm install akto-stateful-mini-testing akto/akto-stateful-mini-testing -n <your-namespace> \
   --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<your-database-abstractor-token>" \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorUrl="<database-abstractor-service-url>" \
   --set testing.aktoApiSecurityTesting.env.kafkaBrokerUrl="<kafka-host>:9092" \
   --set testing.kafka1.env.saslMechanism="SCRAM-SHA-512" \
   --set testing.kafka1.env.useSecretsForSaslCredentials=true \
@@ -109,6 +110,7 @@ Add these flags to the `helm install` command as needed.
 
 | Goal | Flag |
 | --- | --- |
+| Set the Database Abstractor service URL | `--set testing.aktoApiSecurityTesting.env.databaseAbstractorUrl="<database-abstractor-service-url>"` |
 | Run more than one testing pod | `--set testing.replicas=<count>` |
 | Run multiple tests in parallel | `--set testing.aktoApiSecurityTesting.env.concurrentTesting=true` |
 | Use a specific storage class | `--set testing.persistence.storageClass=<storage-class>` |
@@ -120,6 +122,7 @@ For example, to run 3 pods that run tests in parallel:
 ```bash
 helm install akto-stateful-mini-testing akto/akto-stateful-mini-testing -n <your-namespace> \
   --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<your-database-abstractor-token>" \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorUrl="<database-abstractor-service-url>" \
   --set testing.aktoApiSecurityTesting.env.kafkaBrokerUrl="<kafka-host>:9092" \
   --set testing.kafka1.env.useSecretsForSaslCredentials=true \
   --set testing.kafka1.env.saslCredentialsSecrets.existingSecret="kafka-sasl-credentials" \
