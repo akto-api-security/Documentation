@@ -82,7 +82,7 @@ By default, the token is passed directly with `--set ...databaseAbstractorToken=
 
 | Option | Flags |
 | --- | --- |
-| **Use a secret you created (recommended)**. The secret needs the key `token`. | `--set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.existingSecret=<secret-name>` |
+| **Use a secret you created**. The secret needs the key `token`. | `--set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.existingSecret=<secret-name>` |
 | **Pass the token directly** | `--set testing.aktoApiSecurityTesting.env.databaseAbstractorToken=<token>` |
 
 To create your own secret:
@@ -92,18 +92,14 @@ kubectl create secret generic akto-database-abstractor-token -n <your-namespace>
   --from-literal=token="<your-database-abstractor-token>"
 ```
 
-Passing the token directly makes it visible in the pod's configuration, so a secret is the better choice for production.
-
 ## Kafka credentials
 
 The testing module reads the Kafka username and password from a secret or from values you pass directly. Pick one and add its flags to the `helm install` command.
 
 | Option | Flags |
 | --- | --- |
-| **Use a secret you created (recommended)**. The secret needs the keys `username` and `password`. | `--set testing.kafka1.env.useSecretsForSaslCredentials=true --set testing.kafka1.env.saslCredentialsSecrets.existingSecret=<secret-name>` |
+| **Use a secret you created**. The secret needs the keys `username` and `password`. | `--set testing.kafka1.env.useSecretsForSaslCredentials=true --set testing.kafka1.env.saslCredentialsSecrets.existingSecret=<secret-name>` |
 | **Pass the values directly** | `--set testing.kafka1.env.saslUsername=<username> --set testing.kafka1.env.saslPassword=<password>` |
-
-Passing the password directly makes it visible in the pod's configuration, so a secret is the better choice for production.
 
 The default SASL mechanism is `SCRAM-SHA-512`. To use another one, set `testing.kafka1.env.saslMechanism` to `PLAIN` or `SCRAM-SHA-256`. If your Kafka does not use SASL, set `testing.kafka1.useSasl=false`.
 
