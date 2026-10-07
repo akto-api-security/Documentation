@@ -120,6 +120,41 @@ The models the engine resolves to must be enabled for that region in the Bedrock
 {% endhint %}
 {% endtab %}
 {% endtabs %}
+
+**Choosing models (optional)**
+
+The engine uses three model roles. Every provider ships with working defaults, so none of this is required.
+
+| Role | Used for |
+|---|---|
+| `analysisModelId` | validation, remediation, prompt optimisation |
+| `fastModelId` | request rewriting and field extraction; also the agent fallback |
+| `agentModelId` | the red-teaming agent loop itself |
+
+Set them per provider, for example on Bedrock:
+
+{% code overflow="wrap" %}
+```bash
+  --set testing.agentTesting.env.llm.bedrock.analysisModelId="<model-id>" \
+  --set testing.agentTesting.env.llm.bedrock.fastModelId="<model-id>" \
+  --set testing.agentTesting.env.llm.bedrock.agentModelId="<model-id>"
+```
+{% endcode %}
+
+The same three exist for the other providers:
+
+| Provider | Values |
+|---|---|
+| Anthropic | `llm.anthropic.analysisModelId`, `llm.anthropic.fastModelId`, `llm.anthropic.agentModelId` |
+| Google Vertex AI | `llm.vertex.analysisModelId`, `llm.vertex.fastModelId`, `llm.vertex.agentModelId` |
+| AWS Bedrock | `llm.bedrock.analysisModelId`, `llm.bedrock.fastModelId`, `llm.bedrock.agentModelId` |
+| Azure OpenAI | `llm.azure.model` only — one deployment serves all three roles |
+
+{% hint style="warning" %}
+On Bedrock and Vertex AI the default models are Claude models that must be enabled for your region first — on Bedrock they are off by default on a new AWS account. If they are not available, set `analysisModelId` and `fastModelId` to models you do have; leaving them unset gives you a working agent with broken validation and remediation.
+
+Keep `agentModelId` on a Claude model on those two providers. The agent loop runs through the Claude Agent SDK, unlike the other roles, which use the provider's generic API.
+{% endhint %}
 {% endstep %}
 
 {% step %}
@@ -127,11 +162,36 @@ The models the engine resolves to must be enabled for that region in the Bedrock
 
 Passing a credential inline puts it in your shell history, and the chart writes it into a Secret it manages. To use a Secret you create yourself, set `existingSecret` and `existingSecretKey` instead of the inline value.
 
+The database abstractor token is the same in every case:
+
+```bash
+kubectl create secret generic akto-db-token --from-literal=token="<token>"
+```
+
+{% tabs %}
+{% tab title="Anthropic" %}
+```bash
+kubectl create secret generic akto-llm-creds \
+  --from-literal=anthropicApiKey="<anthropic-api-key>"
+```
+
+{% code overflow="wrap" %}
+```bash
+helm install akto-mini-testing akto/akto-mini-testing \
+  --set testing.agentTesting.enabled=true \
+  --set testing.agentTesting.env.llm.provider=anthropic \
+  --set testing.agentTesting.env.llm.anthropic.existingSecret=akto-llm-creds \
+  --set testing.agentTesting.env.llm.anthropic.existingSecretKey=anthropicApiKey \
+  --set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.existingSecret=akto-db-token
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="Azure OpenAI" %}
 ```bash
 kubectl create secret generic akto-llm-creds \
   --from-literal=azureOpenAiApiKey="<azure-openai-api-key>"
-
-kubectl create secret generic akto-db-token --from-literal=token="<token>"
 ```
 
 {% code overflow="wrap" %}
@@ -148,7 +208,71 @@ helm install akto-mini-testing akto/akto-mini-testing \
 ```
 {% endcode %}
 
-The same `existingSecret` / `existingSecretKey` pair works for every provider — `llm.anthropic`, `llm.vertex` (key holds the service account JSON), and `llm.bedrock` (key holds the bearer token). The database abstractor token secret must be of type `Opaque` with its value under a key named `token`.
+Only the API key is a secret — the endpoint and model stay plain values.
+{% endtab %}
+
+{% tab title="Google Vertex AI" %}
+```bash
+kubectl create secret generic akto-llm-creds \
+  --from-file=googleCredentialsJson=./gcp-key.json
+```
+
+{% code overflow="wrap" %}
+```bash
+helm install akto-mini-testing akto/akto-mini-testing \
+  --set testing.agentTesting.enabled=true \
+  --set testing.agentTesting.env.llm.provider=vertex \
+  --set testing.agentTesting.env.llm.vertex.projectId="<gcp-project-id>" \
+  --set testing.agentTesting.env.llm.vertex.location="<gcp-region>" \
+  --set testing.agentTesting.env.llm.vertex.endpointId="<vertex-endpoint-id>" \
+  --set testing.agentTesting.env.llm.vertex.endpointDomain="<vertex-endpoint-domain>" \
+  --set testing.agentTesting.env.llm.vertex.existingSecret=akto-llm-creds \
+  --set testing.agentTesting.env.llm.vertex.existingSecretKey=googleCredentialsJson \
+  --set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.existingSecret=akto-db-token
+```
+{% endcode %}
+
+The secret holds the whole service account JSON, which avoids `--set-file` on every install.
+{% endtab %}
+
+{% tab title="AWS Bedrock" %}
+{% hint style="info" %}
+On EKS, prefer an IAM role over a secret — IRSA or Pod Identity gives the pod short-lived credentials and there is nothing to store or rotate. In that case set only `awsRegion` and skip this step entirely.
+{% endhint %}
+
+Where no IAM role is available:
+
+```bash
+kubectl create secret generic akto-llm-creds \
+  --from-literal=awsBearerTokenBedrock="<bedrock-bearer-token>"
+```
+
+{% code overflow="wrap" %}
+```bash
+helm install akto-mini-testing akto/akto-mini-testing \
+  --set testing.agentTesting.enabled=true \
+  --set testing.agentTesting.env.llm.provider=bedrock \
+  --set testing.agentTesting.env.llm.bedrock.awsRegion="<aws-region>" \
+  --set testing.agentTesting.env.llm.bedrock.existingSecret=akto-llm-creds \
+  --set testing.agentTesting.env.llm.bedrock.existingSecretKey=awsBearerTokenBedrock \
+  --set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.existingSecret=akto-db-token
+```
+{% endcode %}
+
+Region and model ids are not secrets. Override the defaults if needed, with plain values:
+
+{% code overflow="wrap" %}
+```bash
+  --set testing.agentTesting.env.llm.bedrock.inferenceProfilePrefix="<us|eu|apac|global>" \
+  --set testing.agentTesting.env.llm.bedrock.agentModelId="<bedrock-agent-model-id>"
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
+
+The database abstractor token secret must be of type `Opaque` with its value under a key named `token`.
 {% endstep %}
 {% endstepper %}
 
@@ -209,7 +333,7 @@ Install the [docker](https://github.com/akto-api-security/infra/blob/feature/qui
     ```bash
     nano docker-agentic-testing.env
     ```
-2.  Add the following common configuration, then append the block for your chosen LLM provider below. The scanning module supports **Anthropic**, **Azure OpenAI**, and **Google Vertex AI** as the LLM backing the red teaming engine.
+2.  Add the following common configuration, then append the block for your chosen LLM provider below. The scanning module supports **Anthropic**, **Azure OpenAI**, **Google Vertex AI**, and **AWS Bedrock** as the LLM backing the red teaming engine.
 
     ```dotenv
     NODE_ENV=dev
@@ -223,7 +347,8 @@ Install the [docker](https://github.com/akto-api-security/infra/blob/feature/qui
 {% tabs %}
 {% tab title="Anthropic" %}
 ```dotenv
-ANTHROPIC_API_KEY=<key>
+LLM_PROVIDER=anthropic
+ANTHROPIC_API_KEY=<anthropic-api-key>
 ```
 
 {% hint style="warning" %}
@@ -264,7 +389,43 @@ GOOGLE_CREDENTIALS_JSON=<google-service-account-credentials-json>
 You **must** replace `VERTEX_PROJECT_ID`, `VERTEX_LOCATION`, `VERTEX_ENDPOINT_ID`, `VERTEX_ENDPOINT_DOMAIN`, and `GOOGLE_CREDENTIALS_JSON` with your actual Vertex AI project and service account details.
 {% endhint %}
 {% endtab %}
+
+{% tab title="AWS Bedrock" %}
+```dotenv
+LLM_PROVIDER=bedrock
+AWS_REGION=<aws-region>
+```
+
+{% hint style="warning" %}
+**Bedrock Credentials**
+
+`AWS_REGION` is required. Bedrock takes no API key — attach an IAM role to the VM (instance profile) and the container picks up its credentials. On IMDSv2 the instance metadata hop limit must be at least `2`, or the container cannot reach it. Where no role is available, add a bearer token instead:
+
+```dotenv
+AWS_BEARER_TOKEN_BEDROCK=<bedrock-bearer-token>
+```
+
+The models the engine resolves to must be enabled for that region in the Bedrock console; they are off by default on a new AWS account.
+{% endhint %}
+{% endtab %}
 {% endtabs %}
+
+**Choosing models (optional)**
+
+The engine uses three model roles — the same ones described in the Helm setup above. Every provider ships with working defaults, so none of this is required. To override, add the variables for your provider to the env file:
+
+| Provider | Analysis model | Fast model | Agent model |
+|---|---|---|---|
+| Anthropic | `ANTHROPIC_SONNET_MODEL` | `ANTHROPIC_HAIKU_MODEL` | `ANTHROPIC_AGENT_MODEL_ID` |
+| Google Vertex AI | `VERTEX_CLAUDE_SONNET_MODEL_ID` | `VERTEX_CLAUDE_HAIKU_MODEL_ID` | `VERTEX_CLAUDE_AGENT_MODEL_ID` |
+| AWS Bedrock | `BEDROCK_SONNET_MODEL_ID` | `BEDROCK_HAIKU_MODEL_ID` | `BEDROCK_AGENT_MODEL_ID` |
+| Azure OpenAI | `AZURE_OPENAI_MODEL` serves all three roles | | |
+
+On Bedrock you can also set `BEDROCK_INFERENCE_PROFILE_PREFIX` (`us`, `eu`, `apac` or `global`) to pick the cross-region inference profile.
+
+{% hint style="warning" %}
+The same caveat as Helm applies: on Bedrock and Vertex AI, keep the agent model on a Claude model, and if the default Claude models are not enabled for your region, set the analysis and fast models to ones you do have.
+{% endhint %}
 
 You can also reference the original template is [here](https://github.com/akto-api-security/infra/blob/feature/quick-setup/docker-agentic-testing.env).
 {% endstep %}
