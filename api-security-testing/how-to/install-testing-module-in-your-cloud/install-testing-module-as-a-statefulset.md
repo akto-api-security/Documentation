@@ -25,7 +25,7 @@ A regular Kubernetes Deployment gives pods random names, and a replacement pod s
 2. [Helm](https://helm.sh/docs/intro/install/) installed.
 3. A default storage class in your cluster that can create volumes. Most managed clusters (EKS, GKE, AKS) already have one. You can check with `kubectl get storageclass`.
 4. A Kafka broker with SASL enabled that the testing pod can reach. You need its address, the SASL mechanism (`PLAIN`, `SCRAM-SHA-256` or `SCRAM-SHA-512`), and a SASL username and password. If you do not have a Kafka broker yet, see [Set up Kafka](install-testing-module-as-a-statefulset.md#set-up-kafka-if-you-do-not-have-one) and do that first.
-5. Network access from the cluster to `https://cyborg.akto.io`.
+5. The Database Abstractor service is reachable from the cluster.
 6. Your Database Abstractor Token:
    1. Log in to the Akto dashboard at [app.akto.io](https://app.akto.io).
    2. Go to **Quick Start** > **Hybrid Saas** and click **Connect**.
@@ -301,7 +301,7 @@ The broker address is now `kafka-sasl.<your-namespace>.svc.cluster.local:9092`. 
 | Kafka authentication fails | Check that the username, password and mechanism match what the broker expects. A message like `SaslAuthenticationException` in the logs means the credentials or mechanism are wrong. |
 | Pod fails with `CreateContainerConfigError` | The secret named in `existingSecret` does not exist in the namespace, or it is missing a key. The Kafka secret needs `username` and `password`. The token secret needs `token`. |
 | Run stays at 0% after a restart | Kafka lost its data. Use a Kafka that stores its data on a persistent volume. |
-| Pod cannot reach Akto | Make sure the cluster can reach `https://cyborg.akto.io`. If you use a proxy, set `tokens.env.proxyUri`. |
+| Pod cannot reach the Database Abstractor service | Make sure the Database Abstractor service is reachable from the cluster. If you use a proxy, set `tokens.env.proxyUri`. |
 
 ## Need help?
 
