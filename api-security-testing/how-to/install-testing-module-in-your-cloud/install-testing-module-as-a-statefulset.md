@@ -24,16 +24,138 @@ A regular Kubernetes Deployment gives pods random names, and a replacement pod s
 1. A Kubernetes cluster where you have permission to deploy.
 2. [Helm](https://helm.sh/docs/intro/install/) installed.
 3. A default storage class in your cluster that can create volumes. Most managed clusters (EKS, GKE, AKS) already have one. You can check with `kubectl get storageclass`.
-4. A Kafka broker with SASL enabled that the testing pod can reach. See [Step 1](install-testing-module-as-a-statefulset.md#step-1-set-up-kafka).
+4. A Kafka broker with SASL enabled that the testing pod can reach. You need its address, the SASL mechanism (`PLAIN`, `SCRAM-SHA-256` or `SCRAM-SHA-512`), and a SASL username and password. If you do not have a Kafka broker yet, see [Set up Kafka](install-testing-module-as-a-statefulset.md#set-up-kafka-if-you-do-not-have-one) and do that first.
 5. Network access from the cluster to `https://cyborg.akto.io`.
 6. Your Database Abstractor Token:
    1. Log in to the Akto dashboard at [app.akto.io](https://app.akto.io).
    2. Go to **Quick Start** > **Hybrid Saas** and click **Connect**.
    3. Copy the JWT token. It is also called the `Database Abstractor Token`.
 
-## Step 1: Set up Kafka
+## Step 1: Install the testing module
 
-The testing module needs a Kafka broker that it can reach from inside the cluster. You need:
+1. Add the Akto Helm repository.
+
+```bash
+helm repo add akto https://akto-api-security.github.io/helm-charts/
+```
+
+If you have already added it, update it instead:
+
+```bash
+helm repo update akto
+```
+
+2. Create a secret with your Kafka username and password.
+
+```bash
+kubectl create secret generic kafka-sasl-credentials -n <your-namespace> \
+  --from-literal=username=<kafka-username> \
+  --from-literal=password="<kafka-password>"
+```
+
+3. Install the chart. Use your Kafka broker address and the secret from the previous step.
+
+```bash
+helm install akto-stateful-mini-testing akto/akto-stateful-mini-testing -n <your-namespace> \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<your-database-abstractor-token>" \
+  --set testing.aktoApiSecurityTesting.env.kafkaBrokerUrl="<kafka-host>:9092" \
+  --set testing.kafka1.env.saslMechanism="SCRAM-SHA-512" \
+  --set testing.kafka1.env.useSecretsForSaslCredentials=true \
+  --set testing.kafka1.env.saslCredentialsSecrets.existingSecret="kafka-sasl-credentials"
+```
+
+4. Check that it is running.
+
+```bash
+kubectl get pods -n <your-namespace>
+kubectl get pvc -n <your-namespace>
+```
+
+You should see:
+
+* a pod named `akto-external-testing-0` in the `Running` state, and
+* a PVC named `testing-info-akto-external-testing-0` in the `Bound` state.
+
+## Database Abstractor Token
+
+By default, the token is passed directly with `--set ...databaseAbstractorToken=<token>`, as in the install command above. You can store it in a Kubernetes secret instead. Pick one option and add its flags to the `helm install` command.
+
+| Option | Flags |
+| --- | --- |
+| **Use a secret you created (recommended)**. The secret needs the key `token`. | `--set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.existingSecret=<secret-name>` |
+| **Pass the token directly** | `--set testing.aktoApiSecurityTesting.env.databaseAbstractorToken=<token>` |
+
+To create your own secret:
+
+```bash
+kubectl create secret generic akto-database-abstractor-token -n <your-namespace> \
+  --from-literal=token="<your-database-abstractor-token>"
+```
+
+Passing the token directly makes it visible in the pod's configuration, so a secret is the better choice for production.
+
+## Kafka credentials
+
+The testing module reads the Kafka username and password from a secret or from values you pass directly. Pick one and add its flags to the `helm install` command.
+
+| Option | Flags |
+| --- | --- |
+| **Use a secret you created (recommended)**. The secret needs the keys `username` and `password`. | `--set testing.kafka1.env.useSecretsForSaslCredentials=true --set testing.kafka1.env.saslCredentialsSecrets.existingSecret=<secret-name>` |
+| **Pass the values directly** | `--set testing.kafka1.env.saslUsername=<username> --set testing.kafka1.env.saslPassword=<password>` |
+
+Passing the password directly makes it visible in the pod's configuration, so a secret is the better choice for production.
+
+The default SASL mechanism is `SCRAM-SHA-512`. To use another one, set `testing.kafka1.env.saslMechanism` to `PLAIN` or `SCRAM-SHA-256`. If your Kafka does not use SASL, set `testing.kafka1.useSasl=false`.
+
+## Options
+
+Add these flags to the `helm install` command as needed.
+
+| Goal | Flag |
+| --- | --- |
+| Run more than one testing pod | `--set testing.replicas=<count>` |
+| Run multiple tests in parallel | `--set testing.aktoApiSecurityTesting.env.concurrentTesting=true` |
+| Use a specific storage class | `--set testing.persistence.storageClass=<storage-class>` |
+| Change the volume size (default `100Mi`) | `--set testing.persistence.size=<size>` |
+| Use a proxy | `--set tokens.env.proxyUri="<proxy-uri>" --set tokens.env.noProxy="<no-proxy-urls>"` |
+
+For example, to run 3 pods that run tests in parallel:
+
+```bash
+helm install akto-stateful-mini-testing akto/akto-stateful-mini-testing -n <your-namespace> \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<your-database-abstractor-token>" \
+  --set testing.aktoApiSecurityTesting.env.kafkaBrokerUrl="<kafka-host>:9092" \
+  --set testing.kafka1.env.useSecretsForSaslCredentials=true \
+  --set testing.kafka1.env.saslCredentialsSecrets.existingSecret="kafka-sasl-credentials" \
+  --set testing.replicas=3 \
+  --set testing.aktoApiSecurityTesting.env.concurrentTesting=true
+```
+
+This creates pods `akto-external-testing-0`, `-1` and `-2`, each with its own volume.
+
+## Uninstall
+
+1. Remove the testing module.
+
+```bash
+helm uninstall akto-stateful-mini-testing -n <your-namespace>
+```
+
+2. The volumes are kept after uninstall. If you no longer need the data, delete them too.
+
+```bash
+kubectl delete pvc -n <your-namespace> -l app=<release-name>-akto-stateful-mini-testing
+```
+
+{% hint style="warning" %}
+Deleting the volumes removes the saved state of each testing pod. A pod installed again afterwards starts fresh.
+{% endhint %}
+
+If you created Kafka with the example in [Set up Kafka](install-testing-module-as-a-statefulset.md#set-up-kafka-if-you-do-not-have-one), remove it with `kubectl delete -f kafka-sasl.yaml`.
+
+## Set up Kafka (if you do not have one)
+
+If your organization already runs a Kafka broker with SASL, skip this section and use it in [Step 1](install-testing-module-as-a-statefulset.md#step-1-install-the-testing-module). Otherwise, set one up before you install the testing module. The testing module needs a Kafka broker that it can reach from inside the cluster, and you need:
 
 * the broker address, for example `kafka-sasl.<your-namespace>.svc.cluster.local:9092`
 * the SASL mechanism: `PLAIN`, `SCRAM-SHA-256` or `SCRAM-SHA-512`
@@ -45,7 +167,7 @@ Kafka keeps the queue of test messages. Use a Kafka that stores its data on a pe
 
 If you do not have a Kafka broker yet, you can use the example below. It starts a single broker with SCRAM-SHA-512 authentication. It does not use a persistent volume, so use it for trying things out, or add a volume for `/var/lib/kafka/data` for long-term use.
 
-1. Create a secret with the Kafka username and password. The testing module will use the same secret.
+1. Create a secret with the Kafka username and password. The testing module will use the same secret, so skip this if you already created `kafka-sasl-credentials`.
 
 ```bash
 kubectl create secret generic kafka-sasl-credentials -n <your-namespace> \
@@ -172,124 +294,7 @@ spec:
 kubectl get pods -n <your-namespace> -l app=kafka-sasl
 ```
 
-The broker address is now `kafka-sasl.<your-namespace>.svc.cluster.local:9092`.
-
-## Step 2: Install the testing module
-
-1. Add the Akto Helm repository.
-
-```bash
-helm repo add akto https://akto-api-security.github.io/helm-charts/
-```
-
-If you have already added it, update it instead:
-
-```bash
-helm repo update akto
-```
-
-2. Install the chart. Use the broker address from Step 1 and the secret that holds the Kafka username and password.
-
-```bash
-helm install akto-stateful-mini-testing akto/akto-stateful-mini-testing -n <your-namespace> \
-  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<your-database-abstractor-token>" \
-  --set testing.aktoApiSecurityTesting.env.kafkaBrokerUrl="<kafka-host>:9092" \
-  --set testing.kafka1.env.saslMechanism="SCRAM-SHA-512" \
-  --set testing.kafka1.env.useSecretsForSaslCredentials=true \
-  --set testing.kafka1.env.saslCredentialsSecrets.existingSecret="kafka-sasl-credentials"
-```
-
-3. Check that it is running.
-
-```bash
-kubectl get pods -n <your-namespace>
-kubectl get pvc -n <your-namespace>
-```
-
-You should see:
-
-* a pod named `akto-external-testing-0` in the `Running` state, and
-* a PVC named `testing-info-akto-external-testing-0` in the `Bound` state.
-
-## Database Abstractor Token
-
-By default, the token is passed directly with `--set ...databaseAbstractorToken=<token>`, as in the install command above. You can store it in a Kubernetes secret instead. Pick one option and add its flags to the `helm install` command.
-
-| Option | Flags |
-| --- | --- |
-| **Use a secret you created (recommended)**. The secret needs the key `token`. | `--set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.existingSecret=<secret-name>` |
-| **Let the chart create the secret** | `--set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.token=<token>` |
-| **Pass the token directly** | `--set testing.aktoApiSecurityTesting.env.databaseAbstractorToken=<token>` |
-
-To create your own secret:
-
-```bash
-kubectl create secret generic akto-database-abstractor-token -n <your-namespace> \
-  --from-literal=token="<your-database-abstractor-token>"
-```
-
-Passing the token directly makes it visible in the pod's configuration, so a secret is the better choice for production.
-
-## Kafka credentials
-
-The testing module reads the Kafka username and password in one of three ways. Pick one and add its flags to the `helm install` command.
-
-| Option | Flags |
-| --- | --- |
-| **Use a secret you created (recommended)**. The secret needs the keys `username` and `password`. | `--set testing.kafka1.env.useSecretsForSaslCredentials=true --set testing.kafka1.env.saslCredentialsSecrets.existingSecret=<secret-name>` |
-| **Let the chart create the secret** | `--set testing.kafka1.env.useSecretsForSaslCredentials=true --set testing.kafka1.env.saslCredentialsSecrets.username=<username> --set testing.kafka1.env.saslCredentialsSecrets.password=<password>` |
-| **Pass the values directly** | `--set testing.kafka1.env.saslUsername=<username> --set testing.kafka1.env.saslPassword=<password>` |
-
-Passing the password directly makes it visible in the pod's configuration, so a secret is the better choice for production.
-
-The default SASL mechanism is `SCRAM-SHA-512`. To use another one, set `testing.kafka1.env.saslMechanism` to `PLAIN` or `SCRAM-SHA-256`. If your Kafka does not use SASL, set `testing.kafka1.useSasl=false`.
-
-## Options
-
-Add these flags to the `helm install` command as needed.
-
-| Goal | Flag |
-| --- | --- |
-| Run more than one testing pod | `--set testing.replicas=<count>` |
-| Run multiple tests in parallel | `--set testing.aktoApiSecurityTesting.env.concurrentTesting=true` |
-| Use a specific storage class | `--set testing.persistence.storageClass=<storage-class>` |
-| Change the volume size (default `100Mi`) | `--set testing.persistence.size=<size>` |
-| Change the pod name prefix (default `akto-external-testing`) | `--set testing.aktoApiSecurityTesting.env.miniTestingName=<name>` |
-| Use a proxy | `--set tokens.env.proxyUri="<proxy-uri>" --set tokens.env.noProxy="<no-proxy-urls>"` |
-
-For example, to run 3 pods that run tests in parallel:
-
-```bash
-helm install akto-stateful-mini-testing akto/akto-stateful-mini-testing -n <your-namespace> \
-  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<your-database-abstractor-token>" \
-  --set testing.aktoApiSecurityTesting.env.kafkaBrokerUrl="<kafka-host>:9092" \
-  --set testing.kafka1.env.useSecretsForSaslCredentials=true \
-  --set testing.kafka1.env.saslCredentialsSecrets.existingSecret="kafka-sasl-credentials" \
-  --set testing.replicas=3 \
-  --set testing.aktoApiSecurityTesting.env.concurrentTesting=true
-```
-
-This creates pods `akto-external-testing-0`, `-1` and `-2`, each with its own volume.
-
-## Uninstall
-
-1. Remove the testing module.
-
-```bash
-helm uninstall akto-stateful-mini-testing -n <your-namespace>
-```
-
-2. The volumes are kept after uninstall. If you no longer need the data, delete them too.
-
-```bash
-kubectl delete pvc -n <your-namespace> -l app=<release-name>-akto-stateful-mini-testing
-```
-
-{% hint style="warning" %}
-Deleting the volumes removes the saved state of each testing pod. A pod installed again afterwards starts fresh.
-{% endhint %}
-
-If you created Kafka with the example in Step 1, remove it with `kubectl delete -f kafka-sasl.yaml`.
+The broker address is now `kafka-sasl.<your-namespace>.svc.cluster.local:9092`. Use it as `kafkaBrokerUrl` in [Step 1](install-testing-module-as-a-statefulset.md#step-1-install-the-testing-module).
 
 ## Troubleshooting
 
