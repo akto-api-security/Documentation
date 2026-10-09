@@ -110,7 +110,7 @@ listener.name.saslhost.sasl.enabled.mechanisms=PLAIN
 listener.name.saslhost.plain.sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required user_akto="akto-secret";
 ```
 
-`<KAFKA_HOST>` must be a hostname or IP address that the NGINX machine can reach (not `localhost`), because Kafka tells clients to reconnect to the advertised address. Restart Kafka after changing listeners. See the [Kafka security documentation](https://kafka.apache.org/documentation/#security) for other mechanisms.
+`<KAFKA_HOST>` must be a hostname or IP address that the NGINX machine can reach (not `localhost`), because Kafka tells clients to reconnect to the advertised address. Restart Kafka after changing listeners.
 
 **NGINX side**
 
@@ -162,7 +162,6 @@ Notes:
 
 * `kafka_log_rdkafka_property_env <property> <VARIABLE>` sets a librdkafka property from an environment variable. If the variable is missing or empty, NGINX refuses to start and the error names the variable. If you prefer, `kafka_log_rdkafka_property <property> <value>` puts the value directly in `nginx.conf`.
 * Restart NGINX (not reload) after you change the credentials.
-* `SASL_PLAINTEXT` sends the password unencrypted. If the network between NGINX and Kafka is not trusted, use `SASL_SSL` and set the `ssl.*` properties.
 * With wrong credentials, requests are still served but nothing reaches Kafka, and `/var/log/nginx/error.log` shows `SASL authentication error`.
 * If NGINX is not started by systemd (for example in a container), skip step 2 and pass the two variables to the NGINX process with your platform's own mechanism. Keep the `env` lines from step 3.
 
