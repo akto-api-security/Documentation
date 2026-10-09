@@ -12,12 +12,26 @@ LiteLLM is a unified interface for calling 100+ LLM APIs in a consistent format.
 
 There are two ways to connect Akto with LiteLLM:
 
-* [**Native Guardrail**](litellm.md#option-1-native-guardrail)**:** LiteLLM's built-in Akto guardrail, set up in the LiteLLM Admin UI. Nothing to deploy, and each guardrail chooses which Akto policies to enforce and whether traffic goes to Argus or Atlas.
+* [**Native Guardrail**](litellm.md#option-1-native-guardrail)**:** LiteLLM's built-in Akto guardrail, set up in the LiteLLM Admin UI. Nothing to deploy, and each guardrail chooses which Akto policies to enforce and whether traffic goes to Argus or Atlas. From LiteLLM `v1.106.0` (stable, upcoming) and the `v1.106.0-dev.2` pre-release, it also checks responses, streams and MCP tool calls (see [LiteLLM Version](litellm.md#litellm-version)).
 * [**Custom Hook**](litellm.md#option-2-custom-hook)**:** Akto's `custom_hooks.py` callback, loaded from `config.yaml`. Use this if you need per-agent collections, session tracking, or an async (log-only) mode.
 
 ## Option 1: Native Guardrail
 
-LiteLLM ships an Akto guardrail that calls Akto directly from the LiteLLM proxy. It is set up in the LiteLLM Admin UI, with no hook file to deploy. Each guardrail tells Akto **which policies to enforce** and **whether the traffic belongs to Argus or Atlas**, through its `akto_vxlan_id` field, so the LiteLLM administrator chooses the policies for each set of keys, teams or clients without any change on the client side.
+LiteLLM ships an Akto guardrail that calls Akto directly from the LiteLLM proxy. It is set up in the LiteLLM Admin UI, with no hook file to deploy. Each guardrail tells Akto **which policies to enforce** and **whether the traffic belongs to Argus or Atlas**, so the LiteLLM administrator chooses the policies for each set of keys, teams or clients without any change on the client side.
+
+### LiteLLM Version
+
+Akto's updated guardrail is available in the LiteLLM `v1.106.0-dev.2` pre-release and later, and in stable releases from `v1.106.0` (upcoming). Stable `v1.104.x` and `v1.105.x` releases don't include it and use the `akto_vxlan_id` directive. On this page, "`v1.106.0` and later" covers both. Check the version of your proxy, then follow the matching setup:
+
+```bash
+curl -s http://<your-litellm-host>/health/readiness | jq -r .litellm_version
+```
+
+<table><thead><tr><th width="190">LiteLLM version</th><th width="200">Setup</th><th>What the guardrail does</th></tr></thead><tbody><tr><td><code>v1.106.0-dev.2</code> pre-release and later, and stable <code>v1.106.0</code> (upcoming) and later</td><td><a href="litellm.md#steps-to-connect-on-newer-versions">Steps to Connect on Newer Versions</a></td><td>Picks the context source with <code>context_source</code> and the policies with <code>akto_metadata</code>. Blocks or masks requests, responses (including streams), MCP tool calls and MCP tool results.</td></tr><tr><td>Stable <code>v1.104.x</code>, <code>v1.105.x</code> and earlier, including the <code>v1.105.0</code> release candidates</td><td><a href="litellm.md#steps-to-connect-on-older-versions">Steps to Connect on Older Versions</a></td><td>Picks the context source and the policies with the <code>akto_vxlan_id</code> directive. Blocks requests only; responses are recorded but never blocked, and MCP tool calls are not checked.</td></tr></tbody></table>
+
+{% hint style="info" %}
+The `akto_vxlan_id` directive keeps working on `v1.106.0` and later, so existing guardrails don't break on upgrade. Move them to `context_source` and `akto_metadata` when convenient.
+{% endhint %}
 
 ### Prerequisites
 
@@ -25,9 +39,116 @@ LiteLLM ships an Akto guardrail that calls Akto directly from the LiteLLM proxy.
 * An Akto guardrails endpoint (URL and API token). See [Getting API Token](../others/hybrid-saas.md#getting-api-token) for where to get the token
 * The Akto guardrail policies to enforce, created in the Akto dashboard
 
-### Steps to Connect
+### Steps to Connect on Newer Versions
 
-Create the guardrails in the LiteLLM Admin UI. Create **two** guardrails: one that checks each request before the model call, and one that sends the request and response to Akto after the call.
+Use these steps on LiteLLM `v1.106.0` and later. Create the guardrails in the LiteLLM Admin UI: one that checks each request before the model call, one that checks the response after the call, and, if MCP servers are behind LiteLLM, one that checks MCP tool calls and their results.
+
+{% stepper %}
+{% step %}
+**Open Guardrails**
+
+Log in to the LiteLLM Admin UI (`http://<your-litellm-host>/ui`), open **Guardrails** and click **Create Guardrail**.
+{% endstep %}
+
+{% step %}
+**Basic Info**
+
+| Field                  | Value                                                                                                                                                                                                                                     |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Guardrail Provider** | `Akto`                                                                                                                                                                                                                                    |
+| **Guardrail Name**     | `akto-validate`                                                                                                                                                                                                                           |
+| **Mode**               | `pre_call`                                                                                                                                                                                                                                |
+| **Always On**          | Enabled, to apply the guardrail to all requests. Leave it off to attach the guardrail only to specific keys or teams (see [Different Policies for Different Users or Teams](litellm.md#different-policies-for-different-users-or-teams)). |
+
+Click **Next**.
+{% endstep %}
+
+{% step %}
+**Provider Configuration**
+
+| Field                     | Value                                                                                                                                                                             |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `akto_base_url`           | Your Akto guardrails URL. Can be left empty if `AKTO_GUARDRAIL_API_BASE` is set in the LiteLLM environment.                                                                       |
+| `akto_api_key`            | Your Akto API token. Can be left empty if `AKTO_API_KEY` is set in the LiteLLM environment.                                                                                       |
+| `context_source`          | `ENDPOINT` to send the traffic to Atlas, or `AGENTIC` (default) to keep it in Argus. See [Choosing Policies and Context Source](litellm.md#choosing-policies-and-context-source). |
+| `akto_metadata`           | The policies to enforce, for example `{"policy_name": "block employee pii"}`. Leave empty to enforce all policies in scope.                                                       |
+| `unreachable_fallback`    | `fail_open` to allow requests when Akto cannot be reached, or `fail_closed` (default) to block them.                                                                              |
+| `guardrail_timeout`       | Seconds to wait for Akto. Default `5`.                                                                                                                                            |
+| `streaming_sampling_rate` | Check a streamed response every this many chunks. Default `5`; `1` checks every chunk. See [Streamed Responses](litellm.md#streamed-responses).                                   |
+| `akto_vxlan_id`           | Leave empty.                                                                                                                                                                      |
+| `akto_account_id`         | Leave empty.                                                                                                                                                                      |
+
+Click **Create Guardrail**.
+{% endstep %}
+
+{% step %}
+**Create the Response and MCP Guardrails**
+
+Click **Create Guardrail** again and repeat the steps for each row, with the **same** Provider Configuration as `akto-validate`:
+
+| Guardrail Name | Mode                               | What it checks                                                                                                   |
+| -------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `akto-ingest`  | `post_call`                        | The model's response, before it reaches the client. Streamed responses are checked while they stream.            |
+| `akto-mcp`     | `pre_mcp_call` and `post_mcp_call` | MCP tool call arguments before the tool runs, and the tool's result. Only needed for MCP servers behind LiteLLM. |
+
+The new guardrails apply to requests immediately; no restart is needed.
+{% endstep %}
+{% endstepper %}
+
+<details>
+
+<summary><strong>Same setup in <code>config.yaml</code></strong></summary>
+
+```yaml
+guardrails:
+  - guardrail_name: akto-validate
+    litellm_params:
+      guardrail: akto
+      mode: pre_call
+      default_on: true
+      context_source: ENDPOINT
+      akto_metadata: {policy_name: "block employee pii"}
+      unreachable_fallback: fail_open
+      guardrail_timeout: 5
+  - guardrail_name: akto-ingest
+    litellm_params:
+      guardrail: akto
+      mode: post_call
+      default_on: true
+      context_source: ENDPOINT
+      akto_metadata: {policy_name: "block employee pii"}
+      unreachable_fallback: fail_open
+      guardrail_timeout: 5
+      streaming_sampling_rate: 5
+  - guardrail_name: akto-mcp
+    litellm_params:
+      guardrail: akto
+      mode: [pre_mcp_call, post_mcp_call]
+      default_on: true
+      context_source: ENDPOINT
+      akto_metadata: {policy_name: "block employee pii"}
+      unreachable_fallback: fail_open
+      guardrail_timeout: 5
+```
+
+</details>
+
+{% hint style="warning" %}
+## **Responses wait for Akto**
+
+`post_call` blocks or masks the response, so every response waits for Akto's verdict (up to `guardrail_timeout`).
+{% endhint %}
+
+### Streamed Responses
+
+On LiteLLM `v1.106.0` and later, the `post_call` guardrail checks a streamed response while it streams. Every `streaming_sampling_rate` chunks (default `5`), the stream pauses until Akto checks the text so far, and the full response is checked again when the stream ends. If Akto blocks it, the stream stops with an error.
+
+* Chunks sent before a violation is found have already reached the client. Set `streaming_sampling_rate: 1` to check every chunk.
+* A streamed response can't be masked after it is sent, so a masking verdict on a stream blocks it instead.
+
+### Steps to Connect on Older Versions
+
+Use these steps on LiteLLM versions earlier than `v1.106.0`. Create the guardrails in the LiteLLM Admin UI. Create **two** guardrails: one that checks each request before the model call, and one that sends the request and response to Akto after the call.
 
 {% stepper %}
 {% step %}
@@ -77,12 +198,39 @@ The new guardrails apply to requests immediately; no restart is needed.
 {% endstepper %}
 
 {% hint style="warning" %}
-## **Only `Pre Call` blocks**
+## **Only `Pre Call` blocks on older versions**
 
-To block a request, use `Pre Call` (`akto-validate`); blocking on `Post Call` is on Akto's roadmap and in progress. Akto's ingest (`Post Call`) guardrail currently focuses on giving you full visibility: it sends the request and response to Akto in the background and returns the response unchanged, so every `Post Call` violation is recorded and reported in the Akto dashboard for review.
+To block a request, use `Pre Call` (`akto-validate`). On these versions, Akto's ingest (`Post Call`) guardrail focuses on giving you full visibility: it sends the request and response to Akto in the background and returns the response unchanged, so every `Post Call` violation is recorded and reported in the Akto dashboard for review. To block responses and check MCP tool calls, upgrade to LiteLLM `v1.106.0` or later and follow [Steps to Connect on Newer Versions](litellm.md#steps-to-connect-on-newer-versions).
 {% endhint %}
 
 ### Choosing Policies and Context Source
+
+How a guardrail picks its policies and context source depends on the [LiteLLM version](litellm.md#litellm-version):
+
+* **`v1.106.0` and later:** set the `context_source` and `akto_metadata` fields.
+* **Earlier than `v1.106.0`:** set the `akto_vxlan_id` field to a policy directive. The directive keeps working on later versions too.
+
+#### Using `context_source` and `akto_metadata`
+
+<table><thead><tr><th width="162.1484375">Field</th><th width="243.31640625">Values</th><th>Meaning</th></tr></thead><tbody><tr><td><code>context_source</code></td><td><code>ENDPOINT</code> or <code>AGENTIC</code></td><td><code>ENDPOINT</code> sends the traffic to <strong>Atlas</strong>; <code>AGENTIC</code> (default) keeps it in <strong>Argus</strong>.</td></tr><tr><td><code>akto_metadata</code></td><td>JSON object with <code>policy_name</code></td><td>The Akto guardrail policies to enforce, comma-separated in one string. Optional; empty enforces all policies in scope.</td></tr></tbody></table>
+
+<details>
+
+<summary><strong>Examples</strong></summary>
+
+| `context_source` | `akto_metadata`                               | Result                                                          |
+| ---------------- | --------------------------------------------- | --------------------------------------------------------------- |
+| `ENDPOINT`       | `{"policy_name": "block employee pii"}`       | Atlas traffic; only the _block employee pii_ policy is enforced |
+| `AGENTIC`        | `{"policy_name": "Secrets,Prompt Injection"}` | Argus traffic; only these two policies are enforced             |
+| `ENDPOINT`       | empty                                         | Atlas traffic; all Atlas policies in scope are enforced         |
+
+</details>
+
+{% hint style="info" %}
+Leave `akto_vxlan_id` empty when using these fields. If a guardrail also has a directive, `akto_metadata`'s `policy_name` replaces the directive's policies, and the directive's context source replaces `context_source`.
+{% endhint %}
+
+#### Using `akto_vxlan_id`
 
 Set the `akto_vxlan_id` field of the guardrail to a policy directive:
 
@@ -105,16 +253,16 @@ policy:<contextSource>:<policy name>[,<policy name>...]
 
 </details>
 
-Rules for policy names:
+Rules for policy names (in both `akto_metadata` and `akto_vxlan_id`):
 
 * Matched **case-insensitively**, with leading and trailing spaces ignored. Spaces inside a name must match exactly.
 * Separate multiple names with commas. A name may contain `:` (only the first two `:` split the directive), but not `,`.
-* Akto resets the field to `0` after reading it, so the directive never becomes a collection ID.
+* Akto resets `akto_vxlan_id` to `0` after reading a directive, so the directive never becomes a collection ID.
 
 {% hint style="info" %}
-## **Set the same directive on both guardrails**
+## **Use the same values on every Akto guardrail**
 
-The `akto-validate` and `akto-ingest` guardrails send their own `akto_vxlan_id`. Use the same value on both, otherwise ingested traffic will not be placed in the same context source as the verdicts.
+Each Akto guardrail (`akto-validate`, `akto-ingest`, `akto-mcp`) sends its own `context_source` and `akto_metadata`, or `akto_vxlan_id`. Use the same values on all of them, otherwise ingested traffic will not be placed in the same context source as the verdicts.
 {% endhint %}
 
 ### How Named Policies Are Enforced
@@ -127,7 +275,7 @@ The `akto-validate` and `akto-ingest` guardrails send their own `akto_vxlan_id`.
 {% hint style="warning" %}
 ## **A typo or an inactive name turns guardrails off for that traffic**
 
-If none of the names in `akto_vxlan_id` match an active policy, Akto applies **no** guardrails to the request and allows it (and logs `no active policy matches the requested names, applying no guardrails`). A misspelled, renamed or deactivated policy name therefore leaves that traffic unchecked, so verify each name matches an active policy exactly. Names that match are still enforced when other names in the list don't.
+If none of the names in `akto_metadata` or `akto_vxlan_id` match an active policy, Akto applies **no** guardrails to the request and allows it (and logs `no active policy matches the requested names, applying no guardrails`). A misspelled, renamed or deactivated policy name therefore leaves that traffic unchecked, so verify each name matches an active policy exactly. Names that match are still enforced when other names in the list don't.
 {% endhint %}
 
 ### Argus or Atlas
@@ -188,7 +336,7 @@ Send the real user's email, not a shared or test address. Every request carrying
 
 ### Different Policies for Different Users or Teams
 
-The directive is set per guardrail, not per client. To scope a policy to specific teams, users, models, keys or access groups: create a dedicated pair of guardrails with `default_on: false` (so it doesn't run for every request), group the pair under a named entry in `policies`, then attach that policy to a target under `policy_attachments` in `config.yaml`, or by selecting the pair under **Guardrails** when creating or editing a virtual key or team in the Admin UI. See [Examples](litellm.md#examples) below for a worked config per target.
+The policies and context source are set per guardrail, not per client. To scope a policy to specific teams, users, models, keys or access groups: create a dedicated pair of guardrails with `default_on: false` (so it doesn't run for every request), group the pair under a named entry in `policies`, then attach that policy to a target under `policy_attachments` in `config.yaml`, or by selecting the pair under **Guardrails** when creating or editing a virtual key or team in the Admin UI. See [Examples](litellm.md#examples) below for a worked config per target.
 
 {% hint style="info" %}
 Attaching a policy by `keys` or `teams`, in `config.yaml` or the Admin UI, is a LiteLLM Enterprise feature. Attaching by `tags` worked without an Enterprise licence when tested; attaching by `models` needs no special licence either way.
@@ -197,6 +345,10 @@ Attaching a policy by `keys` or `teams`, in `config.yaml` or the Admin UI, is a 
 ### Examples
 
 Worked `config.yaml` snippets scoping an Akto guardrail pair to one target, using LiteLLM's `guardrails` + `policies` + `policy_attachments` blocks. Each pair has `default_on: false`, so only requests matching the attachment run it; every other request is unaffected.
+
+{% hint style="info" %}
+The examples use the `akto_vxlan_id` directive, which works on every LiteLLM version. On `v1.106.0` and later, you can replace `akto_vxlan_id: "policy:ENDPOINT:test-guardrail"` with `context_source: ENDPOINT` and `akto_metadata: {policy_name: "test-guardrail"}`, and the `akto-*-ingest` guardrail also blocks responses.
+{% endhint %}
 
 To try any of these, the flow is the same end to end, only step 3 (the LiteLLM policy) changes between examples:
 
