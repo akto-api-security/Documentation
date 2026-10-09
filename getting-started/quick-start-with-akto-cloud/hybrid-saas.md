@@ -43,6 +43,25 @@ ii) This private subnet should also have network connectivity (typically via NAT
 4. The next step is to install a traffic connector.
    1. You can use the above copied `AktoNLBIP` as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `akto-N-.....amazonaws.com:9092`)
 
+#### CloudFormation template (v2)
+
+Recommended for new installations. Compared to the template above, v2:
+
+* Uses current AWS Lambda runtimes (Node.js 24, Python 3.13) and AWS SDK v3, replacing the deprecated Node.js 16 and Python 3.9.
+* Stores `DatabaseAbstractorToken` in AWS Secrets Manager. It is hidden in the CloudFormation console and not written into the EC2 launch template.
+* Uses least-privilege IAM permissions, scoped to the resources the stack creates.
+
+1. To install using CloudFormation, run the Cloudformation template [here](https://raw.githubusercontent.com/akto-api-security/infra/feature/quick-setup/templates/mini-runtime-v2.yml).
+
+i) Please make sure you install it in a private subnet from your application VPC.
+
+ii) This private subnet should also have network connectivity (typically via NAT).
+
+2. You can use `https://cyborg.akto.io` as `DatabaseAbstractorUrl` . For `DatabaseAbstractorToken` you can copy it from the helm install command in the above screenshot.
+3. Once complete, go to the **Output** section of CloudFormation Stack and copy `AktoNLBIP`.
+4. The next step is to install a traffic connector.
+   1. You can use the above copied `AktoNLBIP` as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `akto-N-.....amazonaws.com:9092`)
+
 #### Helm chart
 
 1\. If you have K8s clusters, you can use helm chart to install Traffic aggregator.
