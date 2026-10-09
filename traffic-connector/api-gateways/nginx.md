@@ -23,7 +23,7 @@ The Akto nginx module uses the dynamic module functionality supported by nginx. 
 <summary>Ubuntu / Debian based</summary>
 
 1. Record all API calls using `nginx-module-njs`. (njs is a standard NGINX module built and shipped in every release of NGINX). You can install it by running <mark style="color:purple;">`apt install nginx-module-njs`</mark>. This package comes from the [nginx.org repository](https://nginx.org/en/linux_packages.html) and works with nginx.org's NGINX. If `nginx -v` shows `(Ubuntu)` or `(Debian)`, your NGINX came from your distribution, so install NGINX from nginx.org first ([Ubuntu](https://nginx.org/en/linux_packages.html#Ubuntu) / [Debian](https://nginx.org/en/linux_packages.html#Debian)).
-2. The data is sent to Akto installed in your VPC using [nginx-kafka-log-module](https://github.com/kaltura/nginx-kafka-log-module). Use Akto's fork of it (it adds SASL authentication support). Its build script installs the build dependencies and `librdkafka`, builds the module for the NGINX version installed on your machine using NGINX dynamic modules (see [how dynamic modules are compiled](https://www.f5.com/company/blog/nginx/compiling-dynamic-modules-nginx-plus.html)), and copies it to `/usr/lib/nginx/modules/`:
+2. The data is sent to Akto installed in your VPC using [nginx-kafka-log-module](https://github.com/akto-api-security/nginx-kafka-log-module). You can install it by using nginx dynamic modules functionality as described [here](https://www.f5.com/company/blog/nginx/compiling-dynamic-modules-nginx-plus.html), or by running the build script below. It installs the dependencies, builds the module for your installed NGINX version and copies it to `/usr/lib/nginx/modules/`:
 
 ```bash
 git clone https://github.com/akto-api-security/nginx-kafka-log-module.git
@@ -31,7 +31,7 @@ cd nginx-kafka-log-module
 scripts/build-linux.sh --install-deps --install
 ```
 
-The script works on Debian 11, 12, 13 and Ubuntu 20.04, 22.04, 24.04. Run it again after upgrading NGINX.
+The script supports Debian 11, 12, 13 and Ubuntu 20.04, 22.04, 24.04. Run it again after upgrading NGINX.
 
 3. Download the [js file](https://raw.githubusercontent.com/akto-api-security/nginx-middleware/master/api_log.js) and save as `/etc/nginx/njs/api_log.js`
 4. In your NGINX conf file - `/etc/nginx/nginx.conf` , add the following:
