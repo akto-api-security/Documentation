@@ -22,8 +22,8 @@ The Akto nginx module uses the dynamic module functionality supported by nginx. 
 
 <summary>Ubuntu / Debian based</summary>
 
-1. Install NGINX from the official nginx.org packages: [Ubuntu](https://nginx.org/en/linux_packages.html#Ubuntu) / [Debian](https://nginx.org/en/linux_packages.html#Debian). Do not use the `nginx` package from your distribution's own repositories (`nginx -v` shows `(Ubuntu)` or `(Debian)` for it), because it has no njs package. Then record all API calls using `nginx-module-njs`. (njs is a standard NGINX module built and shipped in every release of NGINX). Install it by running <mark style="color:purple;">`apt install nginx-module-njs`</mark>
-2. The data is sent to Akto installed in your VPC using [nginx-kafka-log-module](https://github.com/kaltura/nginx-kafka-log-module). Akto's fork of it adds SASL authentication support. Build it for the NGINX version installed on your machine, and copy it into NGINX's modules folder, with Akto's build script:
+1. Record all API calls using `nginx-module-njs`. (njs is a standard NGINX module built and shipped in every release of NGINX). You can install it by running <mark style="color:purple;">`apt install nginx-module-njs`</mark>. This package comes from the [nginx.org repository](https://nginx.org/en/linux_packages.html) and works with nginx.org's NGINX. If `nginx -v` shows `(Ubuntu)` or `(Debian)`, your NGINX came from your distribution, so install NGINX from nginx.org first ([Ubuntu](https://nginx.org/en/linux_packages.html#Ubuntu) / [Debian](https://nginx.org/en/linux_packages.html#Debian)).
+2. The data is sent to Akto installed in your VPC using [nginx-kafka-log-module](https://github.com/kaltura/nginx-kafka-log-module). Use Akto's fork of it (it adds SASL authentication support). Its build script installs the build dependencies and `librdkafka`, builds the module for the NGINX version installed on your machine using NGINX dynamic modules (see [how dynamic modules are compiled](https://www.f5.com/company/blog/nginx/compiling-dynamic-modules-nginx-plus.html)), and copies it to `/usr/lib/nginx/modules/`:
 
 ```bash
 git clone https://github.com/akto-api-security/nginx-kafka-log-module.git
@@ -31,9 +31,7 @@ cd nginx-kafka-log-module
 scripts/build-linux.sh --install-deps --install
 ```
 
-{% hint style="info" %}
-The script installs the build tools and `librdkafka` (the Kafka client library) from Confluent's official apt repository, compiles the module against your installed NGINX version using NGINX dynamic modules (see [how dynamic modules are compiled](https://www.f5.com/company/blog/nginx/compiling-dynamic-modules-nginx-plus.html)), and copies `ngx_http_kafka_log_module.so` into `/usr/lib/nginx/modules/`. It supports Debian 11, 12, 13 and Ubuntu 20.04, 22.04, 24.04. The module only works with the NGINX version, CPU architecture and OS it was built on, so run the script again after upgrading NGINX.
-{% endhint %}
+The script works on Debian 11, 12, 13 and Ubuntu 20.04, 22.04, 24.04. Run it again after upgrading NGINX.
 
 3. Download the [js file](https://raw.githubusercontent.com/akto-api-security/nginx-middleware/master/api_log.js) and save as `/etc/nginx/njs/api_log.js`
 4. In your NGINX conf file - `/etc/nginx/nginx.conf` , add the following:
@@ -54,10 +52,6 @@ kafka_log_enable on;
 kafka_log_kafka_brokers <AKTO_NLB_IP>:9092;
 kafka_log_kafka_buffer_max_messages 100000;
 ```
-
-{% hint style="warning" %}
-`kafka_log_enable on;` is required with this module. Without it, nothing is sent to Kafka.
-{% endhint %}
 
 5\. In `/etc/nginx/conf.d/default.conf`, add 2 lines in `server > location` section
 
