@@ -10,6 +10,10 @@ Set up and configure Akto Traffic Processor. The steps are mentioned [here](http
 
 ## Step 2: Add NGINX module
 
+{% hint style="info" %}
+This methods is recommended when you have end to end TLS and SSL termination happens at NGINX.
+{% endhint %}
+
 The Akto nginx module uses the dynamic module functionality supported by nginx. This requires nginx to be build from source for which the exact steps can be slightly varied depending on the linux flavour, the core process though, remains the same.
 
 <mark style="background-color:purple;">Note: For</mark> <mark style="background-color:purple;"></mark><mark style="background-color:purple;">`AKTO_NLB_IP`</mark> <mark style="background-color:purple;"></mark><mark style="background-color:purple;">in below configurations, use the value of the</mark> <mark style="background-color:purple;"></mark><mark style="background-color:purple;">`mini-runtime`</mark> <mark style="background-color:purple;"></mark><mark style="background-color:purple;">service we deployed in step 1.</mark>
@@ -18,8 +22,15 @@ The Akto nginx module uses the dynamic module functionality supported by nginx. 
 
 <summary>Ubuntu / Debian based</summary>
 
-1. Record all API calls using `nginx-module-njs`. (njs is a standard NGINX module built and shipped in every release of NGINX). You can install it by running <mark style="color:purple;">`apt install nginx-module-njs`</mark>
-2. The data is sent to Akto installed in your VPC using [nginx-kafka-log-module](https://github.com/akto-api-security/nginx-kafka-log-module). You can install it by using nginx dynamic modules functionality as described [here](https://www.f5.com/company/blog/nginx/compiling-dynamic-modules-nginx-plus.html), or by running the build script below. It installs the dependencies, builds the module for your installed NGINX version and copies it to `/usr/lib/nginx/modules/`:
+1. Install the [njs module](https://nginx.org/en/docs/njs/install.html) (njs is a standard NGINX module built and shipped in every release of NGINX):
+
+```bash
+apt install nginx-module-njs
+```
+
+2. Install [nginx-kafka-log-module](https://github.com/akto-api-security/nginx-kafka-log-module).
+
+**Recommended** (Linux x86\_64):
 
 ```bash
 git clone https://github.com/akto-api-security/nginx-kafka-log-module.git
@@ -27,17 +38,24 @@ cd nginx-kafka-log-module
 scripts/build-linux.sh --install-deps --install
 ```
 
-The script supports Linux x86_64. Run it again after upgrading NGINX.
+The script builds the module for your installed NGINX version. Run it again after upgrading NGINX.
 
-3. Download the [js file](https://raw.githubusercontent.com/akto-api-security/nginx-middleware/master/api_log.js) and save as `/etc/nginx/njs/api_log.js`
-4. In your NGINX conf file - `/etc/nginx/nginx.conf` , add the following:
+**Other OS:** build the module as described [here](https://www.f5.com/company/blog/nginx/compiling-dynamic-modules-nginx-plus.html).
+
+3. Save the njs file:
+
+```bash
+wget -P /etc/nginx/njs https://raw.githubusercontent.com/akto-api-security/nginx-middleware/master/api_log.js
+```
+
+4. In `/etc/nginx/nginx.conf`, add at the top:
 
 ```lua
 load_module /usr/lib/nginx/modules/ngx_http_js_module.so;
 load_module /usr/lib/nginx/modules/ngx_http_kafka_log_module.so;
 ```
 
-add the following lines in `http` section of `/etc/nginx/nginx.conf`:
+and in the `http` section:
 
 ```lua
 subrequest_output_buffer_size 8k;
@@ -61,7 +79,7 @@ server {
 }
 ```
 
-6\. Check the configuration, restart NGINX, and make sure worker processes are running:
+6\. Restart NGINX and check that a worker is running:
 
 ```bash
 nginx -t
@@ -69,7 +87,7 @@ systemctl restart nginx
 ps -eo pid,command | grep "[n]ginx: worker"
 ```
 
-At least one `nginx: worker` line must be listed. This will start logging all the request-response logs to akto.
+At least one `nginx: worker` line must be listed. NGINX now logs all request-response data to Akto.
 
 </details>
 
