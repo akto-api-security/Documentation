@@ -39,12 +39,12 @@ flowchart LR
 
 ## What You'll Achieve
 
-✅ **Automatic Discovery**: AI Gateways, Model APIs, Agent APIs, MCP servers and their tools, backend model providers, consumers and plugins\
+✅ **Automatic Discovery**: AI Gateways, Model APIs, Agent APIs, MCP servers and their tools, backend model providers, consumers and plugins, and agents built in AgentRun\
 ✅ **Traffic Monitoring**: LLM calls, agent calls and MCP tool calls through your AI Gateway, plus direct Model Studio calls\
 ✅ **Real-time Blocking** (optional): requests and responses that violate your AKTO guardrail policies are blocked at the AI Gateway\
 ✅ **Near Real-time Processing**: Runs immediately after deployment, then every 10 minutes\
 ✅ **Security Analysis**: Traffic is sent to AKTO for guardrail detection\
-✅ **Automatic Updates**: The connector, and the plugin if used, keep themselves on AKTO's latest released version\
+✅ **Automatic Updates**: The connector keeps itself on AKTO's latest released version, and keeps your gateways on the AKTO plugin you published\
 ✅ **Client-Side Deployment**: Runs in your Alibaba Cloud account
 
 ## Choose a Traffic Mode
@@ -58,7 +58,7 @@ You choose the mode with the **Traffic mode** stack parameter, and you can chang
 | **`both`** | Installed: checks and **blocks** only | From SLS logs, every 10 minutes | You want real-time blocking, with traffic recorded from logs |
 
 {% hint style="info" %}
-The plugin mode (`inline` and `both`) is available from connector version **v2.6**. Use the template URL for v2.6 or later.
+The plugin mode (`inline` and `both`) is available. The current version is **v2.16**. Use its template URL and plugin file (links below).
 {% endhint %}
 
 ## Prerequisites
@@ -77,7 +77,8 @@ In the `logs` and `both` modes, the connector reads traffic from the logs Alibab
 * **AI Gateway**: the instance must have been created with **Use Simple Log Service (SLS)** enabled.
   * For each **Model API**: open the API → **Policies and Plug-ins** → enable **AI Request Log**, and turn on the switches to record request and response content.
   * For each **MCP service**: enable **MCP Observation** in the service settings.
-* **Model Studio** (direct model and agent calls that do not go through the AI Gateway): go to **Model Studio → Operations Management → Monitoring**, enable **audit log delivery** first, then open the **Inference Log** tab → **Start configuration** and choose an SLS project and logstore.
+* **Model Studio** (direct model and agent calls that do not go through the AI Gateway): in the Model Studio console go to **Operations** → **Model Logs** → **Log Delivery Configuration**, enable the **Audit Log** first, then the **Inference Log** (complete the authorization steps and click **Create and Enable Inference Log**). Only calls made after this are logged.
+  * The prompt and response are logged only for models that support it. In **Model Logs** → **Inference Log**, calls to other models show *Not supported by the current model*; those reach AKTO without their content.
 
 {% hint style="info" %}
 You do not need to tell AKTO where these logs are. The connector finds the AI Gateway and Model Studio logstores automatically. You can still specify them explicitly (see the optional parameters below).
@@ -88,6 +89,7 @@ You do not need to tell AKTO where these logs are. The connector finds the AI Ga
 * **AI Gateway** instances in the region you deploy to. The plugin is installed on every AI Gateway in that region that is in the **Running** state.
 * **Outbound internet access from the AI Gateway to your AKTO instance on port 443.** The plugin calls AKTO from the gateway itself. If your gateway reaches backends on the internet (for example public model providers or MCP servers), this is already in place. Otherwise, the gateway's VPC needs a **NAT Gateway** with an **SNAT** entry.
 * Your **AKTO guardrail policies** set up in the AKTO dashboard. The plugin blocks only what those policies block.
+* The **AKTO guardrails plugin published once** in your account's AI Gateway console (see the step **Publish the AKTO Plugin** below). Alibaba Cloud only accepts custom plugin files uploaded through its console, so this is the one manual step. The connector does everything else.
 
 ### **4. AKTO Instance Requirements - To be verified with Akto Team**
 
@@ -112,10 +114,12 @@ Before running the deployment, gather this information:
    * Navigate to: **AKTO Argus** → **Connectors** → **Setup Guardrails**
    * Copy the API key from there
 3. **Traffic mode** (required, default `logs`): `logs`, `inline` or `both`. See [Choose a Traffic Mode](#choose-a-traffic-mode).
-4. **Template URL**: provided by the AKTO team for your region and version. For example:
+4. **Template URL**: for the current version (**v2.16**) in Singapore (`ap-southeast-1`):
 
-   <pre data-overflow="wrap"><code>https://akto-alibaba-collector-code-ap-southeast-1.oss-ap-southeast-1.aliyuncs.com/unified_alibaba/v2.6/akto-alibaba-collector.yaml
+   <pre data-overflow="wrap"><code>https://akto-alibaba-collector-code-ap-southeast-1.oss-ap-southeast-1.aliyuncs.com/unified_alibaba/v2.16/akto-alibaba-collector.yaml
    </code></pre>
+
+   For another region, ask the AKTO team for the URL. You do not need to come back for newer versions: the connector updates itself to AKTO's latest release.
 
 The following are **optional**. Leave them blank to use automatic detection:
 
@@ -125,6 +129,48 @@ The following are **optional**. Leave them blank to use automatic detection:
 6. **Model Studio inference-log location**: the SLS `project/logstore` you chose under **Model Studio → Monitoring → Inference Log**.
 7. **Model Studio workspace IDs**: comma-separated workspace IDs, shown in the Model Studio console. Provide them if you want agents with **no recent traffic** to be discovered too. If blank, workspaces are learned from the inference logs.
 8. **State bucket**: an existing OSS bucket in the same region where the connector stores its checkpoint file (`akto/markers/alibaba/state.json`, with log read positions and the list of discovered assets). If blank, the stack creates a private, encrypted bucket for it.
+{% endstep %}
+
+{% step %}
+**Publish the AKTO Plugin** (`inline` and `both` modes only, once per account and region)
+
+Alibaba Cloud accepts custom plugin files only when they are uploaded through its console, so you download AKTO's plugin file and upload it once. You can do this before or after creating the stack.
+
+1. **Download the plugin file** `akto-guardrails.wasm` (about 5.8 MB) for the current version (**v2.16**). Open the link in a browser, or run the `curl` command below:
+
+   <pre data-overflow="wrap"><code>https://akto-alibaba-collector-code-ap-southeast-1.oss-ap-southeast-1.aliyuncs.com/unified_alibaba/v2.16/akto-guardrails.wasm
+   </code></pre>
+
+   ```bash
+   curl -o akto-guardrails.wasm https://akto-alibaba-collector-code-ap-southeast-1.oss-ap-southeast-1.aliyuncs.com/unified_alibaba/v2.16/akto-guardrails.wasm
+   ```
+
+   Use the same version as the template URL. For another region, ask the AKTO team for the link.
+2. In the Alibaba Cloud console, select the **region** you deploy in. Then open **AI Gateway** → **Plug-in** (in the left menu, not inside an instance) → **Publish Plug-in**.
+3. Fill in the form:
+
+   | Field | Value |
+   |---|---|
+   | Select Language | **Go** |
+   | Plug-in ID | **`akto-guardrails`** |
+   | Plug-in Name | `akto-guardrails` |
+   | Version | `1.0.0` |
+   | Version Description | `AKTO guardrails` |
+   | WASM File | the downloaded `akto-guardrails.wasm` |
+   | Execution Stage | **Authorization** |
+   | Execution Priority | **200** |
+   | Adapt to Gateway Version | leave the default |
+
+4. Click **Upload**, and wait until the plugin shows a green check mark.
+
+Do not install it on a gateway or add rules. The connector installs it on every AI Gateway in the region, configures it and keeps it configured. If you publish it after creating the stack, it is attached within 10 minutes. To attach it right away, open **Function Compute** → **`akto-alibaba-plugin-attacher`** → **Test Function**.
+
+{% hint style="info" %}
+**Plug-in ID**: the connector uses any plugin whose ID starts with `akto-guardrail`, such as `akto-guardrails` or `akto-guardrails-2`. Alibaba Cloud IDs can be at most 20 characters, of lowercase letters, digits, `-` and `.`. Do not use IDs that start with `akto-gr-` or `akto-guardrails-v` followed by a digit, because those are reserved for the connector.
+
+**New plugin versions**: the connector updates itself, but it cannot update a plugin you published. When AKTO releases a new plugin version, AKTO tells you its download link. Publish it as above with a **new** Plug-in ID, for example `akto-guardrails-2`. On its next run, the connector moves every gateway to the most recently published AKTO plugin and uninstalls the older one. You can then delete the older plugin under **AI Gateway** → **Plug-in**.
+{% endhint %}
+
 {% endstep %}
 
 {% step %}
@@ -197,7 +243,7 @@ akto-alibaba-collector - CREATE_IN_PROGRESS
 └─ akto-alibaba-collector - CREATE_COMPLETE ✓
 ```
 
-⏳ **Typical time: 3-5 minutes** (the plugin is published and installed during creation in `inline` and `both` modes)
+⏳ **Typical time: 3-5 minutes** (in `inline` and `both` modes, the plugin is installed on your gateways during creation)
 {% endstep %}
 
 {% step %}
@@ -235,8 +281,8 @@ akto-alibaba-collector - CREATE_IN_PROGRESS
 **In `inline` and `both` modes**, also open **`akto-alibaba-plugin-attacher`** → **Logs**. Each AI Gateway should have a line similar to:
 
 ```
-🧩 Plugin akto-guardrails-v2-6 (pls-…)
-🛡️  <your-gateway-name> (gw-…): service created, TLS enabled, installed akto-guardrails-v2-6, attached
+🧩 Plugin akto-guardrails (pls-…) — publishStatus=Success
+🛡️  <your-gateway-name> (gw-…): service created, TLS enabled, installed akto-guardrails, attached
 📊 mode inline: 1 gateway(s), 1 handled, 0 error(s)
 ```
 {% endstep %}
@@ -246,8 +292,8 @@ akto-alibaba-collector - CREATE_IN_PROGRESS
 
 In the **AI Gateway** console, open your instance:
 
-1. **Plug-in**: **Akto Guardrails** appears under the custom plug-ins, installed and enabled at the instance level.
-2. **Service**: a service named **`akto-guardrails`** (DNS domain) points to your AKTO instance on port 443, with **TLS** enabled under **Configure Policy** → **Port-level Configuration**. The plugin uses it to reach AKTO.
+1. **Plug-in**: **akto-guardrails** is installed, with an **Instance-level** rule that is **Enabled** (under its **Rule Configurations**).
+2. **Service**: a service named **`akto-guardrails`** (DNS domain) points to your AKTO instance on port 443, with **TLS Mode** set to **TLS** (open the service → **Edit**). The plugin uses it to reach AKTO.
 
 Do not edit or delete these by hand. The connector manages them, and restores them on its next run if they are changed.
 {% endstep %}
@@ -260,6 +306,10 @@ Do not edit or delete these by hand. The connector manages them, and restores th
 3. Traffic through the gateway appears with the API type (LLM, AGENT or MCP), the MCP server and tool, the model, token usage and the caller.
    * From logs: within about 10 minutes of the call.
    * From the plugin (`inline` mode): within a minute of the call, tagged `capture: gateway-plugin`.
+4. Calls made directly to Model Studio appear under the Model Studio host for your region (for example `dashscope-intl.aliyuncs.com`), within about 10 minutes:
+   * direct model calls as one agent per workspace and model, named `<workspace-id>_<model>` (for example `ws-abc123_qwen3.8-max`), with the caller as a tag
+   * agent applications under the agent's name
+5. Agents built in **AgentRun** appear under the AgentRun host for your region (for example `agentrun.ap-southeast-1.aliyuncs.com`), each named after the agent. Their conversations come from the Model Studio inference log: a model call is attributed to the agent whose system prompt it starts with (the prompt's `{variables}` may hold any value). Calls from agents that share an identical prompt cannot be told apart and stay under `<workspace-id>_<model>`.
 
 ✅ **Everything working!**
 {% endstep %}
@@ -316,7 +366,7 @@ The plugin runs inside the AI Gateway, on every route, and acts only on AI traff
 * **Modified content**: if an AKTO policy rewrites content (for example to mask sensitive data), the gateway forwards the rewritten version. For MCP tool calls only the tool arguments can be rewritten, never the tool being called.
 * **Streamed answers** (`text/event-stream`): delivered to the caller as they arrive, then checked as a whole when the stream ends. They are recorded and reported in AKTO, but not blocked mid-stream.
 * **Latency**: each checked request and response waits for AKTO's answer, for at most 5 seconds. Requests that are not checked are not delayed.
-* **Automatic management**: the plugin attacher runs every 10 minutes. It installs the plugin on AI Gateways created later, moves every gateway to each new plugin version AKTO releases, and restores the plugin's settings if they are changed by hand.
+* **Automatic management**: the plugin attacher runs every 10 minutes. It installs the plugin on AI Gateways created later, moves every gateway to the most recently published AKTO plugin, and restores the plugin's settings if they are changed by hand.
 
 ## Changing the Traffic Mode
 
@@ -333,10 +383,10 @@ The change is applied during the stack update:
 ## **Important Notes**
 
 1. **Processing Schedule**: The connector runs once immediately after deployment, then every 10 minutes. The first run reads up to the last 3 days of logs, and later runs read only new entries.
-2. **Automatic Updates**: Every 15 minutes the updater checks AKTO's latest released version and updates the collector and the plugin attacher if needed. The attacher then moves your gateways to the matching plugin version. No action is needed from you.
+2. **Automatic Updates**: Every 15 minutes the updater checks AKTO's latest released version and updates the collector and the plugin attacher if needed. No action is needed from you. The plugin itself is updated only when you publish a new plugin version (see **Publish the AKTO Plugin**).
 3. **Permissions**:
-   * The **collector** can only **read** AI Gateway configuration, SLS logs and Model Studio agents. It can write only its own checkpoint folder (`akto/markers/alibaba/`) and its own run logs.
-   * The **plugin attacher** is the only part of the connector that can change your AI Gateways. It can publish, install, attach and remove plugins, and create and remove gateway services with their TLS settings. It only ever creates, changes or removes the AKTO plugin (`akto-guardrails-*`) and the AKTO service (`akto-guardrails`), never your own plugins, services or routes. In `logs` mode it makes no changes.
+   * The **collector** can only **read** AI Gateway configuration, SLS logs, Model Studio agents and AgentRun agents (`ListAgentRuntimes`, `GetAgentRuntime`), and the RAM policies attached to those agents' execution roles (`ListPoliciesForRole`), shown on the agent in AKTO's agent graph. It can write only its own checkpoint folder (`akto/markers/alibaba/`) and its own run logs. Of an AgentRun agent's settings, only the names of its environment variables are sent to AKTO; their values are used in your account to recognise the agent's calls and are never sent.
+   * The **plugin attacher** is the only part of the connector that can change your AI Gateways. It can install, attach and remove plugins, and create and remove gateway services with their TLS settings. It only ever changes the AKTO plugin you published (`akto-guardrails`) and the AKTO service (`akto-guardrails`), never your own plugins, services or routes. In `logs` mode it makes no changes.
    * The **updater** can only replace the code of the collector and plugin attacher functions.
 4. **API key on the gateway**: in `inline` and `both` modes, the AKTO API key is stored in the plugin's configuration on each AI Gateway, so users who can read gateway plugin settings in your account can see it.
 5. **Data Format**: Traffic is sent in AKTO's standard message format, with tags identifying the gateway, API, MCP server, tool, model and caller.
@@ -357,7 +407,7 @@ Once deployed, the connector will:
 
 Delete the stack in **ROS → Stacks → your stack → Delete**. This removes:
 
-* the AKTO guardrails plugin and the `akto-guardrails` service from every AI Gateway (removed first, before the functions are deleted)
+* the AKTO guardrails plugin's rules and installation, and the `akto-guardrails` service, from every AI Gateway (removed first, before the functions are deleted). The plugin you published stays under **AI Gateway** → **Plug-in**, installed nowhere, so a new installation can use it again. Delete it there if you no longer need it
 * the functions, timers, RAM roles and the SLS project created by the stack
 * the checkpoint bucket, if the stack created it. A bucket you provided is not deleted; only the `akto/markers/alibaba/` folder in it belongs to the connector
 
@@ -371,8 +421,8 @@ Delete the stack in **ROS → Stacks → your stack → Delete**. This removes:
 | The run log shows `❌ Batch … failed` or `Send failed` lines | Check the **AKTO domain** and **API key** parameters, and that your AKTO instance is reachable from the internet |
 | Agents built in Model Studio are not discovered | Provide the **Model Studio workspace IDs** parameter, or wait until those agents have traffic in the inference logs |
 | `inline` or `both` mode: the plugin attacher log shows `❌` for a gateway | The line contains Alibaba Cloud's error. The attacher retries every 10 minutes. If the error persists, contact AKTO support with that line |
-| `inline` or `both` mode: the plugin attacher log shows `could not publish akto-guardrails-…` | Alibaba Cloud did not accept the automatic publication of the plugin. The attacher retries every run. Meanwhile, you can publish it by hand once: download `akto-guardrails.wasm` from the link provided by the AKTO team, then in **AI Gateway** → **Plug-in** → **Publish Plug-in** upload it with the name **`akto-guardrails-manual`**, language **Go**, execution stage **Authorization** and priority **200**. The attacher installs and manages that plugin until its own publication succeeds |
-| `inline` or `both` mode: requests are never blocked, and plugin traffic (`capture: gateway-plugin`) does not appear in AKTO | The gateway cannot reach AKTO. Check that the gateway has outbound internet access (NAT Gateway with SNAT), and that the **`akto-guardrails`** service shows **TLS** under **Configure Policy** → **Port-level Configuration** |
+| `inline` or `both` mode: the plugin attacher log shows `The AKTO plugin is not published in this account yet` | Publish the plugin once (step **Publish the AKTO Plugin**). It is attached to your gateways at the next run, within 10 minutes. Until then, traffic is still read from logs |
+| `inline` or `both` mode: requests are never blocked, and plugin traffic (`capture: gateway-plugin`) does not appear in AKTO | The gateway cannot reach AKTO. Check that the gateway has outbound internet access (NAT Gateway with SNAT), and that the **`akto-guardrails`** service has **TLS Mode** set to **TLS** (the connector sets it, and restores it at its next run if it is changed) |
 | `inline` or `both` mode: a request you expected to be blocked is allowed | Check that an AKTO guardrail policy blocks that content and is not set to warn or alert only. Streamed answers are checked after delivery and are not blocked |
 
 ## Support
