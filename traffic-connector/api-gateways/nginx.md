@@ -22,7 +22,7 @@ The Akto nginx module uses the dynamic module functionality supported by nginx. 
 
 <summary>Ubuntu / Debian based</summary>
 
-1. Record all API calls using `nginx-module-njs`. (njs is a standard NGINX module built and shipped in every release of NGINX). You can install it by running <mark style="color:purple;">`apt install nginx-module-njs`</mark>. This package comes from the [nginx.org repository](https://nginx.org/en/linux_packages.html) and works with nginx.org's NGINX. If `nginx -v` shows `(Ubuntu)` or `(Debian)`, your NGINX came from your distribution, so install NGINX from nginx.org first ([Ubuntu](https://nginx.org/en/linux_packages.html#Ubuntu) / [Debian](https://nginx.org/en/linux_packages.html#Debian)).
+1. Record all API calls using `nginx-module-njs`. (njs is a standard NGINX module built and shipped in every release of NGINX). You can install it by running <mark style="color:purple;">`apt install nginx-module-njs`</mark>
 2. The data is sent to Akto installed in your VPC using [nginx-kafka-log-module](https://github.com/akto-api-security/nginx-kafka-log-module). You can install it by using nginx dynamic modules functionality as described [here](https://www.f5.com/company/blog/nginx/compiling-dynamic-modules-nginx-plus.html), or by running the build script below. It installs the dependencies, builds the module for your installed NGINX version and copies it to `/usr/lib/nginx/modules/`:
 
 ```bash
