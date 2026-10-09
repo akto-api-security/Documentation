@@ -22,8 +22,19 @@ The Akto nginx module uses the dynamic module functionality supported by nginx. 
 
 <summary>Ubuntu / Debian based</summary>
 
-1. Record all API calls using `nginx-module-njs`. (njs is a standard NGINX module built and shipped in every release of NGINX). You can install it by running <mark style="color:purple;">`apt install nginx-module-njs`</mark>
-2. The data is sent to Akto installed in your VPC using [nginx-kafka-log-module](https://github.com/kaltura/nginx-kafka-log-module). You can install it by using nginx dynamic modules functionality as described [here](https://www.nginx.com/blog/compiling-dynamic-modules-nginx-plus/)
+1. Install NGINX from the official nginx.org packages: [Ubuntu](https://nginx.org/en/linux_packages.html#Ubuntu) / [Debian](https://nginx.org/en/linux_packages.html#Debian). Do not use the `nginx` package from your distribution's own repositories (`nginx -v` shows `(Ubuntu)` or `(Debian)` for it), because it has no njs package. Then record all API calls using `nginx-module-njs`. (njs is a standard NGINX module built and shipped in every release of NGINX). Install it by running <mark style="color:purple;">`apt install nginx-module-njs`</mark>
+2. The data is sent to Akto installed in your VPC using [nginx-kafka-log-module](https://github.com/kaltura/nginx-kafka-log-module). Akto's fork of it adds SASL authentication support. Build it for the NGINX version installed on your machine, and copy it into NGINX's modules folder, with Akto's build script:
+
+```bash
+git clone https://github.com/akto-api-security/nginx-kafka-log-module.git
+cd nginx-kafka-log-module
+scripts/build-linux.sh --install-deps --install
+```
+
+{% hint style="info" %}
+The script installs the build tools and `librdkafka` (the Kafka client library) from Confluent's official apt repository, compiles the module against your installed NGINX version using NGINX dynamic modules (see [how dynamic modules are compiled](https://www.f5.com/company/blog/nginx/compiling-dynamic-modules-nginx-plus.html)), and copies `ngx_http_kafka_log_module.so` into `/usr/lib/nginx/modules/`. It supports Debian 11, 12, 13 and Ubuntu 20.04, 22.04, 24.04. The module only works with the NGINX version, CPU architecture and OS it was built on, so run the script again after upgrading NGINX.
+{% endhint %}
+
 3. Download the [js file](https://raw.githubusercontent.com/akto-api-security/nginx-middleware/master/api_log.js) and save as `/etc/nginx/njs/api_log.js`
 4. In your NGINX conf file - `/etc/nginx/nginx.conf` , add the following:
 
@@ -39,9 +50,14 @@ subrequest_output_buffer_size 8k;
 js_path "/etc/nginx/njs/";
 js_var $responseBo "{}";
 js_import main2 from api_log.js;
+kafka_log_enable on;
 kafka_log_kafka_brokers <AKTO_NLB_IP>:9092;
 kafka_log_kafka_buffer_max_messages 100000;
 ```
+
+{% hint style="warning" %}
+`kafka_log_enable on;` is required with this module. Without it, nothing is sent to Kafka.
+{% endhint %}
 
 5\. In `/etc/nginx/conf.d/default.conf`, add 2 lines in `server > location` section
 
@@ -55,7 +71,106 @@ server {
 }
 ```
 
-6\. Restart NGINX by `nginx -s reload`. This will start logging all the request-response logs to akto.
+6\. Check the configuration, restart NGINX, and make sure worker processes are running:
+
+```bash
+nginx -t
+systemctl restart nginx
+ps -eo pid,command | grep "[n]ginx: worker"
+```
+
+At least one `nginx: worker` line must be listed. This will start logging all the request-response logs to akto.
+
+</details>
+
+<details>
+
+<summary>Optional: Kafka with SASL authentication (Ubuntu / Debian based)</summary>
+
+Use this if the Kafka broker that NGINX sends to requires a username and password. It needs the module built from Akto's fork in step 2 above. The example uses SASL/PLAIN. Any [librdkafka setting](https://github.com/confluentinc/librdkafka/blob/master/CONFIGURATION.md) can be passed with `kafka_log_rdkafka_property` (see also [Using SASL with librdkafka](https://github.com/confluentinc/librdkafka/wiki/Using-SASL-with-librdkafka)).
+
+**Kafka side: add a SASL listener**
+
+Add a listener that uses SASL/PLAIN for NGINX to connect to, and keep your other listeners as they are. The example below uses a listener named `SASLHOST` on port `29094` with the user `akto` and the password `akto-secret`.
+
+For the Kafka image used in Akto's docker-compose setup (replace `...` with your existing values; the listener name in the variable names must not contain underscores):
+
+```yaml
+    ports:
+      - "29094:29094"
+    environment:
+      KAFKA_LISTENERS: "...,SASLHOST://0.0.0.0:29094"
+      KAFKA_ADVERTISED_LISTENERS: "...,SASLHOST://<KAFKA_HOST>:29094"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "...,SASLHOST:SASL_PLAINTEXT"
+      KAFKA_LISTENER_NAME_SASLHOST_SASL_ENABLED_MECHANISMS: PLAIN
+      KAFKA_LISTENER_NAME_SASLHOST_PLAIN_SASL_JAAS_CONFIG: 'org.apache.kafka.common.security.plain.PlainLoginModule required user_akto="akto-secret";'
+```
+
+The same listener in a standard Kafka `server.properties` (the listener name is lowercase in the last two keys):
+
+```properties
+listeners=PLAINTEXT://0.0.0.0:9092,SASLHOST://0.0.0.0:29094
+advertised.listeners=PLAINTEXT://<KAFKA_HOST>:9092,SASLHOST://<KAFKA_HOST>:29094
+listener.security.protocol.map=PLAINTEXT:PLAINTEXT,SASLHOST:SASL_PLAINTEXT
+listener.name.saslhost.sasl.enabled.mechanisms=PLAIN
+listener.name.saslhost.plain.sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required user_akto="akto-secret";
+```
+
+`<KAFKA_HOST>` must be a hostname or IP address that the NGINX machine can reach (not `localhost`), because Kafka tells clients to reconnect to the advertised address. Restart Kafka after changing listeners. See the [Kafka security documentation](https://kafka.apache.org/documentation/#security) for other mechanisms.
+
+**NGINX side**
+
+1. Create `/etc/nginx/kafka.env` with your editor (so the password does not end up in your shell history) containing the credentials, then restrict it:
+
+```
+KAFKA_SASL_USERNAME=akto
+KAFKA_SASL_PASSWORD=akto-secret
+```
+
+```bash
+chmod 600 /etc/nginx/kafka.env
+```
+
+2. Tell systemd to load this file for NGINX:
+
+```bash
+mkdir -p /etc/systemd/system/nginx.service.d
+printf '[Service]\nEnvironmentFile=/etc/nginx/kafka.env\n' > /etc/systemd/system/nginx.service.d/kafka-env.conf
+systemctl daemon-reload
+```
+
+3. Add these two lines to the top of `/etc/nginx/nginx.conf`, next to the `load_module` lines:
+
+```lua
+env KAFKA_SASL_USERNAME;
+env KAFKA_SASL_PASSWORD;
+```
+
+4. In the `http` section of `/etc/nginx/nginx.conf`, replace the `kafka_log_kafka_brokers` line with the SASL listener and add the four properties below. The username and password are read from the environment variables, so they are not written in `nginx.conf`:
+
+```lua
+kafka_log_kafka_brokers <KAFKA_HOST>:29094;
+kafka_log_rdkafka_property security.protocol SASL_PLAINTEXT;
+kafka_log_rdkafka_property sasl.mechanism PLAIN;
+kafka_log_rdkafka_property_env sasl.username KAFKA_SASL_USERNAME;
+kafka_log_rdkafka_property_env sasl.password KAFKA_SASL_PASSWORD;
+```
+
+5. Check the configuration, restart NGINX, and make sure worker processes are running:
+
+```bash
+export $(cat /etc/nginx/kafka.env) && nginx -t
+systemctl restart nginx
+ps -eo pid,command | grep "[n]ginx: worker"
+```
+
+Notes:
+
+* `kafka_log_rdkafka_property_env <property> <VARIABLE>` sets a librdkafka property from an environment variable. If the variable is missing or empty, NGINX refuses to start and the error names the variable. If you prefer, `kafka_log_rdkafka_property <property> <value>` puts the value directly in `nginx.conf`.
+* Restart NGINX (not reload) after you change the credentials.
+* `SASL_PLAINTEXT` sends the password unencrypted. If the network between NGINX and Kafka is not trusted, use `SASL_SSL` and set the `ssl.*` properties.
+* With wrong credentials, requests are still served but nothing reaches Kafka, and `/var/log/nginx/error.log` shows `SASL authentication error`.
+* If NGINX is not started by systemd (for example in a container), skip step 2 and pass the two variables to the NGINX process with your platform's own mechanism. Keep the `env` lines from step 3.
 
 </details>
 
@@ -100,7 +215,7 @@ tar -zxvf nginx-1.26.0.tar.gz
 
 4. Install nginx-module-njs using `yum install nginx-module-njs` ( In case of any problem, please refer to the [official nginx docs to install nginx-module-njs](https://nginx.org/en/docs/njs/install.html) )
 5. We will send data to Akto traffic processor using [nginx-kafka-log-module](https://github.com/kaltura/nginx-kafka-log-module). To clone it run: `git clone https://github.com/kaltura/nginx-kafka-log-module.git`
-6. We can install nginx-kafka-log-module using the steps below. For the official nginx docs to install nginx dynamic modules refer [this](https://www.nginx.com/blog/compiling-dynamic-modules-nginx-plus/).
+6. We can install nginx-kafka-log-module using the steps below. For the official nginx docs to install nginx dynamic modules refer [this](https://www.f5.com/company/blog/nginx/compiling-dynamic-modules-nginx-plus.html).
 
 ```bash
 # Enable EPEL repository if not already enabled
@@ -196,7 +311,7 @@ tar -zxvf nginx-1.26.0.tar.gz
 
 4. Install nginx-module-njs using `yum install nginx-module-njs` ( In case of any problem, please refer to the [official nginx docs to install nginx-module-njs](https://nginx.org/en/docs/njs/install.html) )
 5. We will send data to Akto traffic processor using [nginx-kafka-log-module](https://github.com/kaltura/nginx-kafka-log-module). To clone it run: `git clone https://github.com/kaltura/nginx-kafka-log-module.git`
-6.  We can install nginx-kafka-log-module using the steps below. For the official nginx docs to install nginx dynamic modules refer [this](https://www.nginx.com/blog/compiling-dynamic-modules-nginx-plus/).
+6.  We can install nginx-kafka-log-module using the steps below. For the official nginx docs to install nginx dynamic modules refer [this](https://www.f5.com/company/blog/nginx/compiling-dynamic-modules-nginx-plus.html).
 
     i. To set up the yum repository for Amazon Linux 2023 for confluent, create the file named `/etc/yum.repos.d/confluent.repo` with the following content.
 
