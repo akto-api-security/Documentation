@@ -27,7 +27,7 @@ cd nginx-kafka-log-module
 scripts/build-linux.sh --install-deps --install
 ```
 
-The script supports Debian 11, 12, 13 and Ubuntu 20.04, 22.04, 24.04. Run it again after upgrading NGINX.
+The script supports Debian 11, 12 and Ubuntu 20.04, 22.04, 24.04. Run it again after upgrading NGINX.
 
 3. Download the [js file](https://raw.githubusercontent.com/akto-api-security/nginx-middleware/master/api_log.js) and save as `/etc/nginx/njs/api_log.js`
 4. In your NGINX conf file - `/etc/nginx/nginx.conf` , add the following:
