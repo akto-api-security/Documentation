@@ -30,7 +30,11 @@ apt install nginx-module-njs
 
 2. Install [nginx-kafka-log-module](https://github.com/akto-api-security/nginx-kafka-log-module).
 
-**Recommended** (Linux x86\_64):
+**Installation methods**
+
+The script builds the module for your installed NGINX version.
+
+OS: Ubuntu, Platform: x86\_64
 
 ```bash
 git clone https://github.com/akto-api-security/nginx-kafka-log-module.git
@@ -38,9 +42,9 @@ cd nginx-kafka-log-module
 scripts/build-linux.sh --install-deps --install
 ```
 
-The script builds the module for your installed NGINX version. Run it again after upgrading NGINX.
+**Other Linux and platforms**
 
-**Other OS:** build the module as described [here](https://www.f5.com/company/blog/nginx/compiling-dynamic-modules-nginx-plus.html).
+Build the module as described [here](https://www.f5.com/company/blog/nginx/compiling-dynamic-modules-nginx-plus.html).
 
 3. Save the njs file:
 
