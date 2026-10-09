@@ -81,44 +81,13 @@ At least one `nginx: worker` line must be listed. This will start logging all th
 
 <summary>Optional: Kafka with SASL authentication (Ubuntu / Debian based)</summary>
 
-Use this if the Kafka broker that NGINX sends to requires a username and password. It needs the module built from Akto's fork in step 2 above. The example uses SASL/PLAIN. Any [librdkafka setting](https://github.com/confluentinc/librdkafka/blob/master/CONFIGURATION.md) can be passed with `kafka_log_rdkafka_property` (see also [Using SASL with librdkafka](https://github.com/confluentinc/librdkafka/wiki/Using-SASL-with-librdkafka)).
+Use this if your Kafka requires a username and password (SASL/PLAIN).
 
-**Kafka side: add a SASL listener**
-
-Add a listener that uses SASL/PLAIN for NGINX to connect to, and keep your other listeners as they are. The example below uses a listener named `SASLHOST` on port `29094` with the user `akto` and the password `akto-secret`.
-
-For the Kafka image used in Akto's docker-compose setup (replace `...` with your existing values; the listener name in the variable names must not contain underscores):
-
-```yaml
-    ports:
-      - "29094:29094"
-    environment:
-      KAFKA_LISTENERS: "...,SASLHOST://0.0.0.0:29094"
-      KAFKA_ADVERTISED_LISTENERS: "...,SASLHOST://<KAFKA_HOST>:29094"
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "...,SASLHOST:SASL_PLAINTEXT"
-      KAFKA_LISTENER_NAME_SASLHOST_SASL_ENABLED_MECHANISMS: PLAIN
-      KAFKA_LISTENER_NAME_SASLHOST_PLAIN_SASL_JAAS_CONFIG: 'org.apache.kafka.common.security.plain.PlainLoginModule required user_akto="akto-secret";'
-```
-
-The same listener in a standard Kafka `server.properties` (the listener name is lowercase in the last two keys):
-
-```properties
-listeners=PLAINTEXT://0.0.0.0:9092,SASLHOST://0.0.0.0:29094
-advertised.listeners=PLAINTEXT://<KAFKA_HOST>:9092,SASLHOST://<KAFKA_HOST>:29094
-listener.security.protocol.map=PLAINTEXT:PLAINTEXT,SASLHOST:SASL_PLAINTEXT
-listener.name.saslhost.sasl.enabled.mechanisms=PLAIN
-listener.name.saslhost.plain.sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required user_akto="akto-secret";
-```
-
-`<KAFKA_HOST>` must be a hostname or IP address that the NGINX machine can reach (not `localhost`), because Kafka tells clients to reconnect to the advertised address. Restart Kafka after changing listeners.
-
-**NGINX side**
-
-1. Create `/etc/nginx/kafka.env` with your editor (so the password does not end up in your shell history) containing the credentials, then restrict it:
+1. Create `/etc/nginx/kafka.env` with the credentials and restrict access:
 
 ```
-KAFKA_SASL_USERNAME=akto
-KAFKA_SASL_PASSWORD=akto-secret
+KAFKA_SASL_USERNAME=<KAFKA_USERNAME>
+KAFKA_SASL_PASSWORD=<KAFKA_PASSWORD>
 ```
 
 ```bash
@@ -133,24 +102,56 @@ printf '[Service]\nEnvironmentFile=/etc/nginx/kafka.env\n' > /etc/systemd/system
 systemctl daemon-reload
 ```
 
-3. Add these two lines to the top of `/etc/nginx/nginx.conf`, next to the `load_module` lines:
+3. Update `/etc/nginx/nginx.conf` as in the sample below, with the address of your Kafka SASL listener in `kafka_log_kafka_brokers`. The `location` block stays in `/etc/nginx/conf.d/default.conf` as in step 5 above.
 
 ```lua
+load_module /usr/lib/nginx/modules/ngx_http_js_module.so;
+load_module /usr/lib/nginx/modules/ngx_http_kafka_log_module.so;
+
 env KAFKA_SASL_USERNAME;
 env KAFKA_SASL_PASSWORD;
+
+user  nginx;
+worker_processes  auto;
+
+error_log  /var/log/nginx/error.log notice;
+pid        /run/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    keepalive_timeout  65;
+
+    subrequest_output_buffer_size 8k;
+    js_path "/etc/nginx/njs/";
+    js_var $responseBo "{}";
+    js_import main2 from api_log.js;
+
+    kafka_log_enable on;
+    kafka_log_kafka_brokers "<KAFKA_HOST>:<SASL_PORT>";
+    kafka_log_kafka_buffer_max_messages 100000;
+    kafka_log_rdkafka_property security.protocol SASL_PLAINTEXT;
+    kafka_log_rdkafka_property sasl.mechanism PLAIN;
+    kafka_log_rdkafka_property_env sasl.username KAFKA_SASL_USERNAME;
+    kafka_log_rdkafka_property_env sasl.password KAFKA_SASL_PASSWORD;
+
+    include /etc/nginx/conf.d/*.conf;
+}
 ```
 
-4. In the `http` section of `/etc/nginx/nginx.conf`, replace the `kafka_log_kafka_brokers` line with the SASL listener and add the four properties below. The username and password are read from the environment variables, so they are not written in `nginx.conf`:
-
-```lua
-kafka_log_kafka_brokers <KAFKA_HOST>:29094;
-kafka_log_rdkafka_property security.protocol SASL_PLAINTEXT;
-kafka_log_rdkafka_property sasl.mechanism PLAIN;
-kafka_log_rdkafka_property_env sasl.username KAFKA_SASL_USERNAME;
-kafka_log_rdkafka_property_env sasl.password KAFKA_SASL_PASSWORD;
-```
-
-5. Check the configuration, restart NGINX, and make sure worker processes are running:
+4. Check the configuration, restart NGINX, and make sure worker processes are running:
 
 ```bash
 export $(cat /etc/nginx/kafka.env) && nginx -t
@@ -158,12 +159,8 @@ systemctl restart nginx
 ps -eo pid,command | grep "[n]ginx: worker"
 ```
 
-Notes:
-
-* `kafka_log_rdkafka_property_env <property> <VARIABLE>` sets a librdkafka property from an environment variable. If the variable is missing or empty, NGINX refuses to start and the error names the variable. If you prefer, `kafka_log_rdkafka_property <property> <value>` puts the value directly in `nginx.conf`.
 * Restart NGINX (not reload) after you change the credentials.
-* With wrong credentials, requests are still served but nothing reaches Kafka, and `/var/log/nginx/error.log` shows `SASL authentication error`.
-* If NGINX is not started by systemd (for example in a container), skip step 2 and pass the two variables to the NGINX process with your platform's own mechanism. Keep the `env` lines from step 3.
+* To put the credentials directly in `nginx.conf` instead, skip steps 1 and 2, remove the two `env` lines, and use `kafka_log_rdkafka_property sasl.username <KAFKA_USERNAME>;` and `kafka_log_rdkafka_property sasl.password <KAFKA_PASSWORD>;` in place of the two `kafka_log_rdkafka_property_env` lines.
 
 </details>
 
