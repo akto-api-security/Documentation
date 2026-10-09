@@ -10,10 +10,6 @@ Set up and configure Akto Traffic Processor. The steps are mentioned [here](http
 
 ## Step 2: Add NGINX module
 
-{% hint style="info" %}
-This methods is recommended when you have end to end TLS and SSL termination happens at NGINX.
-{% endhint %}
-
 The Akto nginx module uses the dynamic module functionality supported by nginx. This requires nginx to be build from source for which the exact steps can be slightly varied depending on the linux flavour, the core process though, remains the same.
 
 <mark style="background-color:purple;">Note: For</mark> <mark style="background-color:purple;"></mark><mark style="background-color:purple;">`AKTO_NLB_IP`</mark> <mark style="background-color:purple;"></mark><mark style="background-color:purple;">in below configurations, use the value of the</mark> <mark style="background-color:purple;"></mark><mark style="background-color:purple;">`mini-runtime`</mark> <mark style="background-color:purple;"></mark><mark style="background-color:purple;">service we deployed in step 1.</mark>
