@@ -39,6 +39,10 @@ helm repo update
 
 Replace `<token>` with the **Database Abstractor Token** copied from [#copy-the-jwt-token](./#copy-the-jwt-token "mention"), and the provider placeholders with your own credentials. The scanning module supports **Anthropic**, **Azure OpenAI**, **Google Vertex AI**, and **AWS Bedrock** as the LLM backing the red teaming engine.
 
+{% hint style="info" %}
+To manage the LLM from the Akto dashboard instead, leave out the `testing.agentTesting.env.llm.*` values and follow [#configure-the-llm-from-the-akto-dashboard](./#configure-the-llm-from-the-akto-dashboard "mention").
+{% endhint %}
+
 {% tabs %}
 {% tab title="Anthropic" %}
 {% code overflow="wrap" %}
@@ -344,6 +348,10 @@ Install the [docker](https://github.com/akto-api-security/infra/blob/feature/qui
     USE_SESSION_MANAGEMENT=true
     ```
 
+{% hint style="info" %}
+To manage the LLM from the Akto dashboard instead, add only the common configuration above, skip the provider block, and follow [#configure-the-llm-from-the-akto-dashboard](./#configure-the-llm-from-the-akto-dashboard "mention").
+{% endhint %}
+
 {% tabs %}
 {% tab title="Anthropic" %}
 ```dotenv
@@ -514,6 +522,84 @@ For the reference,the original template is [here](https://github.com/akto-api-se
     ```
 {% endstep %}
 {% endstepper %}
+
+## Configure the LLM from the Akto dashboard
+
+Instead of setting LLM credentials when you install the scanning module, you can choose the model red teaming uses in the Akto dashboard. The module fetches it from Akto, so you can change the provider, model or key later without reinstalling.
+
+{% stepper %}
+{% step %}
+**Add the model in Akto**
+
+1. In the Akto dashboard, go to **Settings** → **Integrations** → **Agents**.
+2. Choose the provider and fill in its fields (see the table below).
+3. Set **Name** to `red-teaming`. Red teaming uses only the model with this name.
+4. Save the model.
+{% endstep %}
+
+{% step %}
+**Install the scanning module**
+
+Install with [#setup-with-helm-chart](./#setup-with-helm-chart "mention") or [#setup-linux-vm](./#setup-linux-vm "mention"). The LLM provider values are optional: when a `red-teaming` model exists, it replaces whatever provider was set at install time.
+
+The module reads the model through its utility server. The default configuration already points there (`http://localhost:8001` in the Helm chart, `AKTO_UTILITY_SERVER=http://akto-api-security-testing:8001` on the VM), so leave it unchanged.
+{% endstep %}
+
+{% step %}
+**Check that the model is in use**
+
+Look for an `AktoModelConfig` line in the `agent-testing` container logs:
+
+{% tabs %}
+{% tab title="Helm" %}
+```bash
+kubectl logs deploy/akto-mini-testing -c agent-testing | grep AktoModelConfig
+```
+{% endtab %}
+
+{% tab title="Linux VM" %}
+```bash
+docker logs agent-testing 2>&1 | grep AktoModelConfig
+```
+{% endtab %}
+{% endtabs %}
+
+```
+[AktoModelConfig] using Akto model "red-teaming" (ANTHROPIC claude-sonnet-4-6)
+```
+{% endstep %}
+{% endstepper %}
+
+**Fields per provider**
+
+| Provider | Required | Optional | Notes |
+|---|---|---|---|
+| Anthropic | API Key | Model, Fast model | Without a model, the default Claude models are used. |
+| AWS Bedrock | AWS Region | Bedrock API Key, Model, Fast model | Without an API key, the module uses its own AWS credentials (for example an IAM role), as in the install-time setup. The models must be enabled for that region. |
+| Google Vertex AI | Service account JSON, GCP Project ID, Location, Endpoint ID | Dedicated endpoint domain, Model, Fast model | Paste the whole service account key file into **Service account JSON**. |
+| Azure OpenAI | API Key, Azure OpenAI Endpoint, Model | Fast model | Set **Model** to your deployment name. A `https://<resource>.openai.azure.com` endpoint gets `/openai/v1` added automatically; any other endpoint must already end in `/openai/v1`. |
+| OpenAI | API Key, Model | Fast model | |
+| Gemini | API Key, Model | Fast model | |
+| Cloudflare | API Key (API token), Cloudflare Account ID, Model | Fast model | |
+| Ollama | OLLAMA Server Endpoint, Model | API Key, Fast model | The Ollama server must be reachable from the scanning module. |
+| Databricks | API Key, Databricks Model Serving Endpoint, Model | Fast model | For the endpoint, use the workspace's base URL, `https://<workspace-host>/serving-endpoints`, and set **Model** to the serving endpoint name. A full `.../invocations` URL does not work for red teaming. |
+
+GitHub Copilot models can't be used for red teaming.
+
+**How the models are used**
+
+* **Model** serves the analysis role (validation, remediation, prompt optimisation). **Fast model** serves the fast role (request rewriting and field extraction); when it's empty, **Model** is used.
+* On Anthropic, AWS Bedrock and Google Vertex AI, the agent loop keeps its install-time or default agent model, which must stay a Claude model. On the other providers, **Model** also runs the agent loop.
+
+**Changes and fallback**
+
+* The module reads the model at startup and checks for changes at most every 5 minutes. Restart the module to apply a change immediately.
+* To return to the install-time configuration, delete or rename the `red-teaming` model.
+* If Akto can't be reached, or the `red-teaming` model is missing a required field, the module keeps the configuration already in use and logs the reason with `AktoModelConfig`.
+
+{% hint style="warning" %}
+If you skip the LLM values at install time, add the `red-teaming` model before running scans. With neither in place, the module has no LLM to use, and the `agent-testing` logs show `LLM provider not configured from env` at startup.
+{% endhint %}
 
 ## Get Support for your Akto setup
 
