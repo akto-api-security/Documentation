@@ -18,6 +18,49 @@ There could be multiple reasons why you'd want to install probing module within 
 2. Go to **Connectors** in the left nav.
 3. Open the **Setup Guardrail** card and copy your token (also referred to as the database abstractor token in later steps).
 
+## Configure the LLM in Akto
+
+The red teaming engine needs an LLM. You choose it in the Akto dashboard, and the scanning module fetches it from Akto, so you don't pass any LLM credentials when you install the module. You can change the provider, model or key later without reinstalling; restart the module to apply the change.
+
+1. In the Akto dashboard, go to **Settings** → **Integrations** → **Agents**.
+2. Choose the provider and fill in its fields (see the table below).
+3. Set **Name** to `red-teaming`. Red teaming uses only the model with this name.
+4. Save the model.
+
+**Fields per provider**
+
+| Provider | Required | Optional | Notes |
+|---|---|---|---|
+| Anthropic | API Key | Model, Fast model | Without a model, the default Claude models are used. |
+| AWS Bedrock | AWS Region | Bedrock API Key, Model, Fast model | Without an API key, the module uses its own AWS credentials, such as an IAM role (IRSA or Pod Identity on EKS, an instance profile on a VM). The models must be enabled for that region in the Bedrock console; they are off by default on a new AWS account. |
+| Google Vertex AI | Service account JSON, GCP Project ID, Location, Endpoint ID | Dedicated endpoint domain, Model, Fast model | Paste the whole service account key file into **Service account JSON**. It is used for calls to your Vertex AI endpoint; the agent loop needs separate Google credentials (see below). |
+| Azure OpenAI | API Key, Azure OpenAI Endpoint, Model | Fast model | Set **Model** to your deployment name. A `https://<resource>.openai.azure.com` endpoint gets `/openai/v1` added automatically; any other endpoint must already end in `/openai/v1`. |
+| OpenAI | API Key, Model | Fast model | |
+| Gemini | API Key, Model | Fast model | |
+| Cloudflare | API Key (API token), Cloudflare Account ID, Model | Fast model | |
+| Ollama | OLLAMA Server Endpoint, Model | API Key, Fast model | The Ollama server must be reachable from the scanning module. |
+| Databricks | API Key, Databricks Model Serving Endpoint, Model | Fast model | For the endpoint, use the workspace's base URL, `https://<workspace-host>/serving-endpoints`, and set **Model** to the serving endpoint name. A full `.../invocations` URL does not work for red teaming. |
+
+GitHub Copilot models can't be used for red teaming.
+
+**How the models are used**
+
+* **Model** serves the analysis role (validation, remediation, prompt optimisation). **Fast model** serves the fast role (request rewriting and field extraction); when it's empty, **Model** is used.
+* The agent loop runs on the Claude Agent SDK, so it needs **Anthropic**, **AWS Bedrock** or **Google Vertex AI**, where it uses the default Claude agent model. With OpenAI, Azure OpenAI, Gemini, Cloudflare, Ollama or Databricks, **Model** and **Fast model** serve only the analysis and fast roles, and red teaming steps that use the agent loop don't work.
+* On Google Vertex AI, the agent loop runs Claude on Vertex AI with the module's own Google credentials, not the service account JSON saved in Akto. Give the module credentials for that project, for example GKE Workload Identity, and enable the Claude models in the project.
+
+**Changes and fallback**
+
+* Add the `red-teaming` model before you install the module. The module reads it at startup.
+* After you add, change or delete the model, restart the module so every part of it uses the new configuration:
+  * Helm: `kubectl rollout restart deploy/akto-mini-testing`
+  * Linux VM: `docker restart agent-testing`
+* If Akto can't be reached, or the `red-teaming` model is missing a required field, the module keeps the configuration already in use and logs the reason with `AktoModelConfig`.
+
+{% hint style="warning" %}
+Add the `red-teaming` model before running scans. Without it, the module has no LLM to use, and the `agent-testing` logs show `LLM provider not configured from env` at startup.
+{% endhint %}
+
 You then have to use a Linux VM or a Helm chart to install Akto AI Red Teaming module in your cloud.
 
 ## Setup with Helm Chart
@@ -37,254 +80,60 @@ helm repo update
 {% step %}
 **Install the Chart**
 
-Replace `<token>` with the **Database Abstractor Token** copied from [#copy-the-jwt-token](./#copy-the-jwt-token "mention"), and the provider placeholders with your own credentials. The scanning module supports **Anthropic**, **Azure OpenAI**, **Google Vertex AI**, and **AWS Bedrock** as the LLM backing the red teaming engine.
+Replace `<token>` with the **Database Abstractor Token** copied from [#copy-the-jwt-token](./#copy-the-jwt-token "mention"):
+
+{% code overflow="wrap" %}
+```bash
+helm install akto-mini-testing akto/akto-mini-testing \
+  --set testing.agentTesting.enabled=true \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<token>"
+```
+{% endcode %}
+
+The LLM comes from the `red-teaming` model you added in [#configure-the-llm-in-akto](./#configure-the-llm-in-akto "mention").
 
 {% hint style="info" %}
-To manage the LLM from the Akto dashboard instead, leave out the `testing.agentTesting.env.llm.*` values and follow [#configure-the-llm-from-the-akto-dashboard](./#configure-the-llm-from-the-akto-dashboard "mention").
-{% endhint %}
+**AWS Bedrock without an API key**
 
-{% tabs %}
-{% tab title="Anthropic" %}
-{% code overflow="wrap" %}
-```bash
-helm install akto-mini-testing akto/akto-mini-testing \
-  --set testing.agentTesting.enabled=true \
-  --set testing.agentTesting.env.llm.provider=anthropic \
-  --set testing.agentTesting.env.llm.anthropic.apiKey="<anthropic-api-key>" \
-  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<token>"
-```
-{% endcode %}
-
-{% hint style="warning" %}
-**Anthropic API Key Required**
-
-You **must** replace `<anthropic-api-key>` with your actual Anthropic API key.
-{% endhint %}
-{% endtab %}
-
-{% tab title="Azure OpenAI" %}
-{% code overflow="wrap" %}
-```bash
-helm install akto-mini-testing akto/akto-mini-testing \
-  --set testing.agentTesting.enabled=true \
-  --set testing.agentTesting.env.llm.provider=azure \
-  --set testing.agentTesting.env.llm.azure.endpoint="<azure-openai-endpoint>" \
-  --set testing.agentTesting.env.llm.azure.model="<azure-openai-model>" \
-  --set testing.agentTesting.env.llm.azure.apiKey="<azure-openai-api-key>" \
-  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<token>"
-```
-{% endcode %}
-
-{% hint style="warning" %}
-**Azure OpenAI Credentials Required**
-
-The endpoint must include its `/openai/v1` suffix, for example `https://your-resource.services.ai.azure.com/openai/v1`.
-{% endhint %}
-{% endtab %}
-
-{% tab title="Google Vertex AI" %}
-{% code overflow="wrap" %}
-```bash
-helm install akto-mini-testing akto/akto-mini-testing \
-  --set testing.agentTesting.enabled=true \
-  --set testing.agentTesting.env.llm.provider=vertex \
-  --set testing.agentTesting.env.llm.vertex.projectId="<gcp-project-id>" \
-  --set testing.agentTesting.env.llm.vertex.location="<gcp-region>" \
-  --set testing.agentTesting.env.llm.vertex.endpointId="<vertex-endpoint-id>" \
-  --set testing.agentTesting.env.llm.vertex.endpointDomain="<vertex-endpoint-domain>" \
-  --set-file testing.agentTesting.env.llm.vertex.credentialsJson=./gcp-key.json \
-  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<token>"
-```
-{% endcode %}
-
-{% hint style="warning" %}
-**Vertex AI Credentials Required**
-
-Use `--set-file` for the service account JSON — passing it with `--set` breaks on the commas and braces inside the file.
-{% endhint %}
-{% endtab %}
-
-{% tab title="AWS Bedrock" %}
-{% code overflow="wrap" %}
-```bash
-helm install akto-mini-testing akto/akto-mini-testing \
-  --set testing.agentTesting.enabled=true \
-  --set testing.agentTesting.env.llm.provider=bedrock \
-  --set testing.agentTesting.env.llm.bedrock.awsRegion="<aws-region>" \
-  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<token>"
-```
-{% endcode %}
-
-{% hint style="warning" %}
-**Bedrock Credentials**
-
-`awsRegion` is required. Bedrock takes no API key — on EKS the pod gets credentials from an IAM role via IRSA or Pod Identity. Where no role is available, pass a bearer token instead with `--set testing.agentTesting.env.llm.bedrock.bearerToken="<token>"`.
-
-The models the engine resolves to must be enabled for that region in the Bedrock console; they are off by default on a new AWS account.
-{% endhint %}
-{% endtab %}
-{% endtabs %}
-
-**Choosing models (optional)**
-
-The engine uses three model roles. Every provider ships with working defaults, so none of this is required.
-
-| Role | Used for |
-|---|---|
-| `analysisModelId` | validation, remediation, prompt optimisation |
-| `fastModelId` | request rewriting and field extraction; also the agent fallback |
-| `agentModelId` | the red-teaming agent loop itself |
-
-Set them per provider, for example on Bedrock:
-
-{% code overflow="wrap" %}
-```bash
-  --set testing.agentTesting.env.llm.bedrock.analysisModelId="<model-id>" \
-  --set testing.agentTesting.env.llm.bedrock.fastModelId="<model-id>" \
-  --set testing.agentTesting.env.llm.bedrock.agentModelId="<model-id>"
-```
-{% endcode %}
-
-The same three exist for the other providers:
-
-| Provider | Values |
-|---|---|
-| Anthropic | `llm.anthropic.analysisModelId`, `llm.anthropic.fastModelId`, `llm.anthropic.agentModelId` |
-| Google Vertex AI | `llm.vertex.analysisModelId`, `llm.vertex.fastModelId`, `llm.vertex.agentModelId` |
-| AWS Bedrock | `llm.bedrock.analysisModelId`, `llm.bedrock.fastModelId`, `llm.bedrock.agentModelId` |
-| Azure OpenAI | `llm.azure.model` only — one deployment serves all three roles |
-
-{% hint style="warning" %}
-On Bedrock and Vertex AI the default models are Claude models that must be enabled for your region first — on Bedrock they are off by default on a new AWS account. If they are not available, set `analysisModelId` and `fastModelId` to models you do have; leaving them unset gives you a working agent with broken validation and remediation.
-
-Keep `agentModelId` on a Claude model on those two providers. The agent loop runs through the Claude Agent SDK, unlike the other roles, which use the provider's generic API.
+On EKS, give the pod an IAM role through IRSA or Pod Identity so it can call Bedrock. The role's credentials are used when the `red-teaming` model has no Bedrock API key.
 {% endhint %}
 {% endstep %}
 
 {% step %}
-**Keep credentials in Kubernetes Secrets (recommended)**
+**Keep the token in a Kubernetes Secret (recommended)**
 
-Passing a credential inline puts it in your shell history, and the chart writes it into a Secret it manages. To use a Secret you create yourself, set `existingSecret` and `existingSecretKey` instead of the inline value.
-
-The database abstractor token is the same in every case:
+Passing the token inline puts it in your shell history. To read it from a Secret you create yourself instead:
 
 ```bash
 kubectl create secret generic akto-db-token --from-literal=token="<token>"
 ```
 
-{% tabs %}
-{% tab title="Anthropic" %}
-```bash
-kubectl create secret generic akto-llm-creds \
-  --from-literal=anthropicApiKey="<anthropic-api-key>"
-```
-
 {% code overflow="wrap" %}
 ```bash
 helm install akto-mini-testing akto/akto-mini-testing \
   --set testing.agentTesting.enabled=true \
-  --set testing.agentTesting.env.llm.provider=anthropic \
-  --set testing.agentTesting.env.llm.anthropic.existingSecret=akto-llm-creds \
-  --set testing.agentTesting.env.llm.anthropic.existingSecretKey=anthropicApiKey \
-  --set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true \
-  --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.existingSecret=akto-db-token
-```
-{% endcode %}
-{% endtab %}
-
-{% tab title="Azure OpenAI" %}
-```bash
-kubectl create secret generic akto-llm-creds \
-  --from-literal=azureOpenAiApiKey="<azure-openai-api-key>"
-```
-
-{% code overflow="wrap" %}
-```bash
-helm install akto-mini-testing akto/akto-mini-testing \
-  --set testing.agentTesting.enabled=true \
-  --set testing.agentTesting.env.llm.provider=azure \
-  --set testing.agentTesting.env.llm.azure.endpoint="<azure-openai-endpoint>" \
-  --set testing.agentTesting.env.llm.azure.model="<azure-openai-model>" \
-  --set testing.agentTesting.env.llm.azure.existingSecret=akto-llm-creds \
-  --set testing.agentTesting.env.llm.azure.existingSecretKey=azureOpenAiApiKey \
   --set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true \
   --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.existingSecret=akto-db-token
 ```
 {% endcode %}
 
-Only the API key is a secret — the endpoint and model stay plain values.
-{% endtab %}
+The secret must be of type `Opaque` with its value under a key named `token`.
+{% endstep %}
 
-{% tab title="Google Vertex AI" %}
-```bash
-kubectl create secret generic akto-llm-creds \
-  --from-file=googleCredentialsJson=./gcp-key.json
-```
-
-{% code overflow="wrap" %}
-```bash
-helm install akto-mini-testing akto/akto-mini-testing \
-  --set testing.agentTesting.enabled=true \
-  --set testing.agentTesting.env.llm.provider=vertex \
-  --set testing.agentTesting.env.llm.vertex.projectId="<gcp-project-id>" \
-  --set testing.agentTesting.env.llm.vertex.location="<gcp-region>" \
-  --set testing.agentTesting.env.llm.vertex.endpointId="<vertex-endpoint-id>" \
-  --set testing.agentTesting.env.llm.vertex.endpointDomain="<vertex-endpoint-domain>" \
-  --set testing.agentTesting.env.llm.vertex.existingSecret=akto-llm-creds \
-  --set testing.agentTesting.env.llm.vertex.existingSecretKey=googleCredentialsJson \
-  --set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true \
-  --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.existingSecret=akto-db-token
-```
-{% endcode %}
-
-The secret holds the whole service account JSON, which avoids `--set-file` on every install.
-{% endtab %}
-
-{% tab title="AWS Bedrock" %}
-{% hint style="info" %}
-On EKS, prefer an IAM role over a secret — IRSA or Pod Identity gives the pod short-lived credentials and there is nothing to store or rotate. In that case set only `awsRegion` and skip this step entirely.
-{% endhint %}
-
-Where no IAM role is available:
+{% step %}
+**Check that the model is in use**
 
 ```bash
-kubectl create secret generic akto-llm-creds \
-  --from-literal=awsBearerTokenBedrock="<bedrock-bearer-token>"
+kubectl logs deploy/akto-mini-testing -c agent-testing | grep AktoModelConfig
 ```
 
-{% code overflow="wrap" %}
-```bash
-helm install akto-mini-testing akto/akto-mini-testing \
-  --set testing.agentTesting.enabled=true \
-  --set testing.agentTesting.env.llm.provider=bedrock \
-  --set testing.agentTesting.env.llm.bedrock.awsRegion="<aws-region>" \
-  --set testing.agentTesting.env.llm.bedrock.existingSecret=akto-llm-creds \
-  --set testing.agentTesting.env.llm.bedrock.existingSecretKey=awsBearerTokenBedrock \
-  --set testing.aktoApiSecurityTesting.env.useSecretsForDatabaseAbstractorToken=true \
-  --set testing.aktoApiSecurityTesting.env.databaseAbstractorTokenSecrets.existingSecret=akto-db-token
+You should see a line like:
+
 ```
-{% endcode %}
-
-Region and model ids are not secrets. Override the defaults if needed, with plain values:
-
-{% code overflow="wrap" %}
-```bash
-  --set testing.agentTesting.env.llm.bedrock.inferenceProfilePrefix="<us|eu|apac|global>" \
-  --set testing.agentTesting.env.llm.bedrock.agentModelId="<bedrock-agent-model-id>"
+[AktoModelConfig] using Akto model "red-teaming" (ANTHROPIC claude-sonnet-4-6)
 ```
-{% endcode %}
-{% endtab %}
-{% endtabs %}
-
-The database abstractor token secret must be of type `Opaque` with its value under a key named `token`.
 {% endstep %}
 {% endstepper %}
-
-{% hint style="info" %}
-**Upgrading from an earlier chart**
-
-`testing.agentTesting.env.anthropicApiKey`, `useSecretsForAnthropicApiKey`, and `anthropicApiKeySecrets` still work and need no changes. They are deprecated in favour of `llm.anthropic.*`, which routes the key through a Secret rather than writing it into the Deployment spec.
-{% endhint %}
 
 ## Setup Linux VM
 
@@ -337,7 +186,7 @@ Install the [docker](https://github.com/akto-api-security/infra/blob/feature/qui
     ```bash
     nano docker-agentic-testing.env
     ```
-2.  Add the following common configuration, then append the block for your chosen LLM provider below. The scanning module supports **Anthropic**, **Azure OpenAI**, **Google Vertex AI**, and **AWS Bedrock** as the LLM backing the red teaming engine.
+2.  Add the following configuration:
 
     ```dotenv
     NODE_ENV=dev
@@ -348,91 +197,12 @@ Install the [docker](https://github.com/akto-api-security/infra/blob/feature/qui
     USE_SESSION_MANAGEMENT=true
     ```
 
+The LLM comes from the `red-teaming` model you added in [#configure-the-llm-in-akto](./#configure-the-llm-in-akto "mention"). `AKTO_UTILITY_SERVER` is how the module fetches it, so keep it as shown.
+
 {% hint style="info" %}
-To manage the LLM from the Akto dashboard instead, add only the common configuration above, skip the provider block, and follow [#configure-the-llm-from-the-akto-dashboard](./#configure-the-llm-from-the-akto-dashboard "mention").
-{% endhint %}
+**AWS Bedrock without an API key**
 
-{% tabs %}
-{% tab title="Anthropic" %}
-```dotenv
-LLM_PROVIDER=anthropic
-ANTHROPIC_API_KEY=<anthropic-api-key>
-```
-
-{% hint style="warning" %}
-**Anthropic API Key Required**
-
-You **must** replace your actual **Anthropic API Key** in the env file.
-{% endhint %}
-{% endtab %}
-
-{% tab title="Azure OpenAI" %}
-```dotenv
-LLM_PROVIDER=azure
-AZURE_OPENAI_ENDPOINT=<azure-openai-endpoint>
-AZURE_OPENAI_API_KEY=<azure-openai-api-key>
-AZURE_OPENAI_MODEL=<azure-openai-model>
-```
-
-{% hint style="warning" %}
-**Azure OpenAI Credentials Required**
-
-You **must** replace `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`, and `AZURE_OPENAI_MODEL` with your actual Azure OpenAI deployment details.
-{% endhint %}
-{% endtab %}
-
-{% tab title="Google Vertex AI" %}
-```dotenv
-LLM_PROVIDER=vertex
-VERTEX_PROJECT_ID=<gcp-project-id>
-VERTEX_LOCATION=<gcp-region>
-VERTEX_ENDPOINT_ID=<vertex-endpoint-id>
-VERTEX_ENDPOINT_DOMAIN=<vertex-endpoint-domain>
-GOOGLE_CREDENTIALS_JSON=<google-service-account-credentials-json>
-```
-
-{% hint style="warning" %}
-**Vertex AI Credentials Required**
-
-You **must** replace `VERTEX_PROJECT_ID`, `VERTEX_LOCATION`, `VERTEX_ENDPOINT_ID`, `VERTEX_ENDPOINT_DOMAIN`, and `GOOGLE_CREDENTIALS_JSON` with your actual Vertex AI project and service account details.
-{% endhint %}
-{% endtab %}
-
-{% tab title="AWS Bedrock" %}
-```dotenv
-LLM_PROVIDER=bedrock
-AWS_REGION=<aws-region>
-```
-
-{% hint style="warning" %}
-**Bedrock Credentials**
-
-`AWS_REGION` is required. Bedrock takes no API key — attach an IAM role to the VM (instance profile) and the container picks up its credentials. On IMDSv2 the instance metadata hop limit must be at least `2`, or the container cannot reach it. Where no role is available, add a bearer token instead:
-
-```dotenv
-AWS_BEARER_TOKEN_BEDROCK=<bedrock-bearer-token>
-```
-
-The models the engine resolves to must be enabled for that region in the Bedrock console; they are off by default on a new AWS account.
-{% endhint %}
-{% endtab %}
-{% endtabs %}
-
-**Choosing models (optional)**
-
-The engine uses three model roles — the same ones described in the Helm setup above. Every provider ships with working defaults, so none of this is required. To override, add the variables for your provider to the env file:
-
-| Provider | Analysis model | Fast model | Agent model |
-|---|---|---|---|
-| Anthropic | `ANTHROPIC_SONNET_MODEL` | `ANTHROPIC_HAIKU_MODEL` | `ANTHROPIC_AGENT_MODEL_ID` |
-| Google Vertex AI | `VERTEX_CLAUDE_SONNET_MODEL_ID` | `VERTEX_CLAUDE_HAIKU_MODEL_ID` | `VERTEX_CLAUDE_AGENT_MODEL_ID` |
-| AWS Bedrock | `BEDROCK_SONNET_MODEL_ID` | `BEDROCK_HAIKU_MODEL_ID` | `BEDROCK_AGENT_MODEL_ID` |
-| Azure OpenAI | `AZURE_OPENAI_MODEL` serves all three roles | | |
-
-On Bedrock you can also set `BEDROCK_INFERENCE_PROFILE_PREFIX` (`us`, `eu`, `apac` or `global`) to pick the cross-region inference profile.
-
-{% hint style="warning" %}
-The same caveat as Helm applies: on Bedrock and Vertex AI, keep the agent model on a Claude model, and if the default Claude models are not enabled for your region, set the analysis and fast models to ones you do have.
+Attach an IAM role to the VM (instance profile) so the container can call Bedrock. On IMDSv2 the instance metadata hop limit must be at least `2`, or the container cannot reach it.
 {% endhint %}
 
 You can also reference the original template is [here](https://github.com/akto-api-security/infra/blob/feature/quick-setup/docker-agentic-testing.env).
@@ -521,48 +291,15 @@ For the reference,the original template is [here](https://github.com/akto-api-se
     systemctl enable /usr/lib/systemd/system/docker.service
     ```
 {% endstep %}
-{% endstepper %}
-
-## Configure the LLM from the Akto dashboard
-
-Instead of setting LLM credentials when you install the scanning module, you can choose the model red teaming uses in the Akto dashboard. The module fetches it from Akto, so you can change the provider, model or key later without reinstalling.
-
-{% stepper %}
-{% step %}
-**Add the model in Akto**
-
-1. In the Akto dashboard, go to **Settings** → **Integrations** → **Agents**.
-2. Choose the provider and fill in its fields (see the table below).
-3. Set **Name** to `red-teaming`. Red teaming uses only the model with this name.
-4. Save the model.
-{% endstep %}
-
-{% step %}
-**Install the scanning module**
-
-Install with [#setup-with-helm-chart](./#setup-with-helm-chart "mention") or [#setup-linux-vm](./#setup-linux-vm "mention"). The LLM provider values are optional: when a `red-teaming` model exists, it replaces whatever provider was set at install time.
-
-The module reads the model through its utility server. The default configuration already points there (`http://localhost:8001` in the Helm chart, `AKTO_UTILITY_SERVER=http://akto-api-security-testing:8001` on the VM), so leave it unchanged.
-{% endstep %}
 
 {% step %}
 **Check that the model is in use**
 
-Look for an `AktoModelConfig` line in the `agent-testing` container logs:
-
-{% tabs %}
-{% tab title="Helm" %}
-```bash
-kubectl logs deploy/akto-mini-testing -c agent-testing | grep AktoModelConfig
-```
-{% endtab %}
-
-{% tab title="Linux VM" %}
 ```bash
 docker logs agent-testing 2>&1 | grep AktoModelConfig
 ```
-{% endtab %}
-{% endtabs %}
+
+You should see a line like:
 
 ```
 [AktoModelConfig] using Akto model "red-teaming" (ANTHROPIC claude-sonnet-4-6)
@@ -570,35 +307,10 @@ docker logs agent-testing 2>&1 | grep AktoModelConfig
 {% endstep %}
 {% endstepper %}
 
-**Fields per provider**
+{% hint style="info" %}
+**Existing installs**
 
-| Provider | Required | Optional | Notes |
-|---|---|---|---|
-| Anthropic | API Key | Model, Fast model | Without a model, the default Claude models are used. |
-| AWS Bedrock | AWS Region | Bedrock API Key, Model, Fast model | Without an API key, the module uses its own AWS credentials (for example an IAM role), as in the install-time setup. The models must be enabled for that region. |
-| Google Vertex AI | Service account JSON, GCP Project ID, Location, Endpoint ID | Dedicated endpoint domain, Model, Fast model | Paste the whole service account key file into **Service account JSON**. |
-| Azure OpenAI | API Key, Azure OpenAI Endpoint, Model | Fast model | Set **Model** to your deployment name. A `https://<resource>.openai.azure.com` endpoint gets `/openai/v1` added automatically; any other endpoint must already end in `/openai/v1`. |
-| OpenAI | API Key, Model | Fast model | |
-| Gemini | API Key, Model | Fast model | |
-| Cloudflare | API Key (API token), Cloudflare Account ID, Model | Fast model | |
-| Ollama | OLLAMA Server Endpoint, Model | API Key, Fast model | The Ollama server must be reachable from the scanning module. |
-| Databricks | API Key, Databricks Model Serving Endpoint, Model | Fast model | For the endpoint, use the workspace's base URL, `https://<workspace-host>/serving-endpoints`, and set **Model** to the serving endpoint name. A full `.../invocations` URL does not work for red teaming. |
-
-GitHub Copilot models can't be used for red teaming.
-
-**How the models are used**
-
-* **Model** serves the analysis role (validation, remediation, prompt optimisation). **Fast model** serves the fast role (request rewriting and field extraction); when it's empty, **Model** is used.
-* On Anthropic, AWS Bedrock and Google Vertex AI, the agent loop keeps its install-time or default agent model, which must stay a Claude model. On the other providers, **Model** also runs the agent loop.
-
-**Changes and fallback**
-
-* The module reads the model at startup and checks for changes at most every 5 minutes. Restart the module to apply a change immediately.
-* To return to the install-time configuration, delete or rename the `red-teaming` model.
-* If Akto can't be reached, or the `red-teaming` model is missing a required field, the module keeps the configuration already in use and logs the reason with `AktoModelConfig`.
-
-{% hint style="warning" %}
-If you skip the LLM values at install time, add the `red-teaming` model before running scans. With neither in place, the module has no LLM to use, and the `agent-testing` logs show `LLM provider not configured from env` at startup.
+Installs that already pass LLM credentials at install time keep working and need no changes. Once you add a `red-teaming` model in Akto and restart the module, that model is used instead.
 {% endhint %}
 
 ## Get Support for your Akto setup
