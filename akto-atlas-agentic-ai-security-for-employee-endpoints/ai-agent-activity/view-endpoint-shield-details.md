@@ -24,6 +24,13 @@ The Agent List displays all endpoints where the shield is active. Each row conta
 
 You can select any Agent ID to view deeper information.
 
+## Take Bulk Actions
+
+Select multiple endpoints in the Agent List to apply an action to all of them at once.
+
+* **Enable or disable the system proxy**: Turn the [Akto System Proxy](../endpoints-discovery-agents/akto-system-proxy.md) on or off across the selected endpoints.
+* **Turn on automatic updates**: Enable automatic updates for the shield on the selected endpoints.
+
 ## Agent Details Drilldown
 
 When you click an **Agent ID**, you see two tabs that help you understand what is running on that endpoint.

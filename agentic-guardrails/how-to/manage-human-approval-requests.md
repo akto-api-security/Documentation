@@ -2,19 +2,21 @@
 
 ## Overview
 
-**Human Approval** is a Rule Behaviour option for guardrail policies. The first time the policy is triggered, Akto blocks the attempt and sends it to a reviewer instead of blocking every future attempt or only alerting after the fact. The reviewer then approves the specific actor, always or for a fixed number of days, to allow future attempts through.
+**Human Approval** is a Rule Behaviour option for guardrail policies. The first time the policy is triggered, Akto blocks the attempt and sends it to a reviewer instead of blocking every future attempt or only alerting after the fact. The request is routed to the approvers you designate, who approve or deny it. Approving the specific actor, always or for a fixed number of days, allows future attempts through. Every decision is recorded in the approval history.
 
 ## How It Works
 
 1. You create or edit a guardrail policy and set **Rule Behaviour** to **Human Approval**.
 2. The next time that policy's condition is triggered, Akto **blocks the attempt**, the same as a Block rule would.
 3. The event is logged to the **Needs Approval** tab in **Guardrail Activity**, instead of **Active**.
-4. A reviewer opens the event and selects **Approve**.
-5. In the confirmation dialog, the reviewer chooses how long the approval lasts: **Always**, or a specific **number of days**.
-6. For that duration, Akto stops enforcing that policy against the approved actor. Once the window expires, enforcement resumes and the next attempt is blocked and logged to **Needs Approval** again.
+4. The request is routed to the **designated approvers** configured for the policy.
+5. An approver opens the event and chooses **Approve** or **Deny**.
+6. On **Approve**, the approver chooses how long the approval lasts: **Always**, or a specific **number of days**. For that duration, Akto stops enforcing that policy against the approved actor. Once the window expires, enforcement resumes and the next attempt is blocked and logged to **Needs Approval** again.
+7. On **Deny**, enforcement stays in place and the actor's attempts keep being blocked.
+8. Each decision is added to the approval history, so you can see who approved or denied a request and when.
 
 {% hint style="info" %}
-There is no separate reject action. If an event is left un-approved in the **Needs Approval** tab, the policy simply keeps blocking that actor's attempts, and each new attempt is logged as its own event.
+If an event is left undecided in the **Needs Approval** tab, the policy keeps blocking that actor's attempts, and each new attempt is logged as its own event.
 {% endhint %}
 
 ## Set a Policy's Rule Behaviour to Human Approval
@@ -74,7 +76,7 @@ Review the event's columns for context:
 {% endstep %}
 
 {% step %}
-Select **Approve** in the **Action** column for the event.
+Select **Approve** or **Deny** in the **Action** column for the event. Only the designated approvers for the policy can act on the request.
 {% endstep %}
 
 {% step %}
@@ -94,6 +96,10 @@ Under **Approve for**, choose:
 Select **Approve** to confirm.
 {% endstep %}
 {% endstepper %}
+
+## Track Approval History
+
+Every approve and deny decision is recorded, so you can audit who handled each request, what they decided, and when. Use the approval history to review past decisions and confirm that approvals are being granted for an appropriate duration.
 
 {% hint style="warning" %}
 Approving a request does not retroactively unblock the attempt that triggered it. The original attempt was already blocked. Approval only changes enforcement for that actor going forward, for the duration you set.

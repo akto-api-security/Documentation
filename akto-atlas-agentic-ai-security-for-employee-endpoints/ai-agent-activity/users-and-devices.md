@@ -36,6 +36,10 @@ The detail view shows:
 
 Expand any endpoint row to see the individual agentic assets (e.g. MCP servers) nested under it.
 
+## See the User Email for Each AI Agent
+
+Agentic AI Discovery shows the user email associated with each AI agent, so you can tell exactly who is running an agent without mapping a username or device ID yourself. The same email can be used to [target guardrail policies to specific users](../../agentic-guardrails/how-to/create-guardrail-policies.md).
+
 ## Tag Users and Devices
 
 You can add custom tags (key-value pairs) to users and devices to attach organizational context, such as department, team, or environment. This makes it easier to filter and investigate activity later.

@@ -47,8 +47,11 @@ In the top-right corner, click **More Actions**.
 {% endstep %}
 
 {% step %}
-Select **Export** to download a JSON file containing all guardrail activity records.
+Select **Export** and choose the format. Akto supports:
+
+* **JSON**: a file containing all guardrail activity records.
+* **CSV**: a spreadsheet-friendly file of guardrail activity for analysis and reporting.
 {% endstep %}
 {% endstepper %}
 
-The exported JSON file provides a full dataset that you can use for investigations, pattern analysis, or system integrations.
+The exported file provides a full dataset that you can use for investigations, pattern analysis, reporting, or system integrations. Guardrail Activity CSV export is available in both Akto Atlas and Akto Argus.

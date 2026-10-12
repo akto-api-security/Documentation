@@ -349,6 +349,12 @@ Prevent users with personal or consumer email accounts from accessing the AI age
 
 * Enable **personal account blocking** to restrict access to organisation-managed accounts only.
 
+**Block public sharing**
+
+Block chats and artifacts from being shared through public links, so conversations and generated content stay inside your organisation.
+
+* Enable **public sharing blocking** to stop users from creating public links to chats and artifacts in supported AI tools.
+
 {% hint style="info" %}
 Personal account blocking is enforced through the [browser extension](../../akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/chrome/extension-usage-behaviour.md), and currently supports the following browser LLMs: **chatgpt.com**, **gemini.google.com**, **claude.ai**, **copilot.microsoft.com**, and **grok.com**. Requires Akto browser extension v1.0.69 or later; it is currently supported only through the browser extension, with AI Endpoint Shield Agent support coming soon.
 {% endhint %}
@@ -396,17 +402,25 @@ Choose which assets the guardrail is deployed across:
   * Use the **are** field to search and select the matching values.
   * Select **Add condition** to layer additional conditions, or **Clear all** to reset the configuration.
 
+**Include or exclude specific assets**
+
+In both Akto Atlas and Akto Argus, each condition can either **include** or **exclude** its matches, so you can apply a policy broadly and carve out exceptions.
+
+* Include or exclude specific **agents**, **MCP servers**, **LLMs**, **devices**, and **users**.
+* Combine include and exclude conditions in the same policy, for example apply to all agents except a trusted internal agent.
+
 {% hint style="info" %}
 See how many MCP servers and agent servers a policy touches before you deploy it. **Apply to All** now shows the full scope up front.
 {% endhint %}
 
 **Akto Atlas: Device Tags & Users**
 
-Choose which users the guardrail applies to:
+Choose which users and devices the guardrail applies to:
 
-* **Apply to all** (Recommended): Applies the guardrail to all users in your organisation, for example `101 Users`.
-* **Select Device Tags & Users**: Target specific users using the same condition builder.
-  * Under **Where my**, choose an attribute such as **Groups**.
+* **Apply to all** (Recommended): Applies the guardrail to all users in your organisation, for example `136 Users`.
+* **Select Device Tags & Users**: Choose specific device tags or users using the same condition builder.
+  * Under **Where my**, choose an attribute such as **Groups**, a specific **user**, or a specific **device**.
+  * To target users by **email address**, select the user's email as the value.
   * Use the **are** field to search and select the matching values.
   * Select **Add condition** to layer additional conditions, or **Clear all** to reset the configuration.
   * The number of matching users updates as you build the condition, for example `Applies to 1 user with the current selection.`
@@ -429,13 +443,22 @@ Akto Argus shows a single **Coverage** section instead of separate Agentic Asset
 Some agentic assets may show as disabled in **Advance Configuration**. **Block** rule behaviour requires the target server to run in inline (sync) mode.
 {% endhint %}
 
+**Akto Atlas: Work & Personal Accounts (Beta)**
+
+Apply the policy based on the account used to sign in to AI tools:
+
+* **All accounts** (Recommended): Applies to both work and personal accounts.
+* **Personal accounts only**: Applies to personal accounts only. Work accounts are excluded.
+
+Use **Personal accounts only** to enforce stricter guardrails on usage outside your organisation-managed identities without affecting work accounts.
+
 **Rule Behaviour**
 
 Choose how Akto responds when a guardrail condition is triggered:
 
 * **Block**: Stops the request or response when the condition is met.
 * **Alert**: Generates an alert for review without blocking content.
-* **Human Approval**: Blocks the triggering attempt and sends it to the **Needs Approval** tab in Guardrail Activity for a reviewer to approve. See [Manage Human Approval Requests](manage-human-approval-requests.md) for the full workflow.
+* **Human Approval**: Blocks the triggering attempt and routes it to your designated approvers through the **Needs Approval** tab in Guardrail Activity, where they approve or deny it. See [Manage Human Approval Requests](manage-human-approval-requests.md) for the full workflow.
 
 **Application Settings**
 

@@ -25,7 +25,8 @@ Most enforcement happens through the two places employees interact with AI the m
 * **Unsafe prompts and jailbreaks** - detect prompt injection, jailbreak patterns, and policy-violating instructions on the endpoint.
 * **Risky MCP tool calls** - restrict destructive shell commands, file system access, and unvetted MCP tools from executing on the device.
 * **Shadow AI usage** - enforce guardrails on AI tools and MCP servers that fall outside your approved list.
-* **Personal account usage** - detect sign-ins to AI tools using personal email domains and restrict access to organization-approved accounts only.
+* **Personal account usage** - detect sign-ins to AI tools using personal email domains and restrict access to organization-approved accounts only. You can also apply guardrails to personal and unidentified accounts while excluding work accounts.
+* **Public sharing** - block chats and artifacts from being shared through public links.
 * **Enterprise license compliance** - block prompts and responses that would breach your LLM provider's acceptable-use policy (CSAM, weapons, terrorism, hate speech, and more), protecting your organization's enterprise license.
 
 Atlas ships with 20+ built-in guardrail policies covering input and output threats. See [**Agent Guard**](../agentic-guardrails/concepts/agent-guard.md) for the full list of scanners and what each one detects.
@@ -43,6 +44,10 @@ Guardrails run inside the same Atlas components that you deploy for discovery: b
 ## What You Can Do
 
 * Map skills and tools to guardrail policies and enforce them per user, device, or collection.
+* Scope policies to specific users by email address or to specific devices, and include or exclude agents, MCP servers, LLMs, devices, and users.
+* Route guardrail threats to designated approvers with [human-in-the-loop approvals](../agentic-guardrails/how-to/manage-human-approval-requests.md).
+* See guardrail enforcement status directly in session [traces](ai-agent-activity/traces.md), and restrict prompt access in traces to admins.
+* Bring employee coding agents and AI applications routed through [LiteLLM](../akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/litellm.md) into Atlas.
 * Track endpoint-level guardrail effectiveness through the AI Security Posture dashboard.
 * Review every blocked or allowed event with full endpoint, user, and device context.
 

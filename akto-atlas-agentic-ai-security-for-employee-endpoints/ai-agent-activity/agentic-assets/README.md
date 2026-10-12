@@ -46,6 +46,8 @@ Use the tabs above the table to filter by asset type. Each tab shows you a live 
 | Sensitive data    | Indicates whether sensitive data was detected on this asset                       |
 | Last traffic seen | Time of most recent observed interaction                                          |
 
+For AI Agents, the user email associated with each agent is also shown, so you can see who is running it.
+
 {% hint style="success" %}
 **Search and Filtering**
 

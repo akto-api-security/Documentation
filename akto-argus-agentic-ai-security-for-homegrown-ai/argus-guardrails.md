@@ -63,6 +63,9 @@ sequenceDiagram
 * Define and enforce guardrail policies that control what your agents and MCP tools can do at runtime.
 * Investigate threat actors, successful exploits, and guardrail activity from a centralized dashboard.
 * Tie guardrail events into your remediation and ticketing workflows.
+* Route guardrail threats to designated approvers with [human-in-the-loop approvals](../agentic-guardrails/how-to/manage-human-approval-requests.md): approvers approve or deny violations, and the approval history is tracked.
+* Include or exclude specific agents and MCP servers from a policy's coverage.
+* Export guardrail activity as CSV for analysis and reporting.
 
 ## Learn More
 

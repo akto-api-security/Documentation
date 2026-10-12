@@ -66,6 +66,18 @@ Use **Search traces** to filter by keyword, and the **Columns** and **Filters** 
 {% endtab %}
 {% endtabs %}
 
+## Guardrail Enforcement Status
+
+Session traces show whether a guardrail acted on the session, so you can see enforcement outcomes next to the activity itself without switching to Guardrail Activity. Use this to confirm which sessions and traces were blocked, redacted, or flagged by your policies.
+
+## Restrict Prompt Access to Admins
+
+Prompts in traces can contain sensitive information, so you can restrict who is able to view them.
+
+* When prompt access is restricted, only admins can view prompts in traces.
+* Revealing a prompt requires a confirmation step.
+* Every prompt access is recorded in the audit log.
+
 ## Trace Detail
 
 Click on a trace from the Traces tab to drill into that single request/response exchange.

@@ -10,6 +10,8 @@ LiteLLM is a unified interface for calling 100+ LLM APIs in a consistent format.
 
 <figure><img src="../../../.gitbook/assets/litellm-akto-architecture.png" alt="AI apps and coding agents send traffic through the LiteLLM Proxy to model providers and MCP servers; the proxy calls Akto for pre-call validation and post-call ingestion"><figcaption><p>Akto guardrails on a LiteLLM Proxy</p></figcaption></figure>
 
+You can also bring employee coding agents and AI applications routed through LiteLLM into **Akto Atlas**, alongside the homegrown AI traffic in Argus. See [Argus or Atlas](litellm.md#argus-or-atlas) for how traffic is routed.
+
 There are two ways to connect Akto with LiteLLM:
 
 * [**Native Guardrail**](litellm.md#option-1-native-guardrail)**:** LiteLLM's built-in Akto guardrail, set up in the LiteLLM Admin UI. Nothing to deploy, and each guardrail chooses which Akto policies to enforce and whether traffic goes to Argus or Atlas.
