@@ -50,12 +50,18 @@ Recommended for new installations. Compared to the template above, v2:
 * Uses current AWS Lambda runtimes (Node.js 24, Python 3.13) and AWS SDK v3, replacing the deprecated Node.js 16 and Python 3.9.
 * Stores `DatabaseAbstractorToken` in AWS Secrets Manager. It is hidden in the CloudFormation console and not written into the EC2 launch template.
 * Uses least-privilege IAM permissions, scoped to the resources the stack creates.
+* Supports multiple subnets across Availability Zones for higher availability.
+* Runs on Amazon Linux 2023, replacing Amazon Linux 2, which has reached end of life.
+* Uses gp3 EBS volumes instead of gp2, for better performance at lower cost.
+* Enables AWS Systems Manager (SSM) on the instance, so you can connect with Session Manager or install agents with Run Command.
 
 1. To install using CloudFormation, run the Cloudformation template [here](https://raw.githubusercontent.com/akto-api-security/infra/feature/quick-setup/templates/mini-runtime-v2.yml).
 
 i) Please make sure you install it in a private subnet from your application VPC.
 
 ii) This private subnet should also have network connectivity (typically via NAT).
+
+iii) `SubnetId` accepts one or more subnets. To spread Akto across Availability Zones, select one private subnet per Availability Zone, all from the same VPC.
 
 2. You can use `https://cyborg.akto.io` as `DatabaseAbstractorUrl` . For `DatabaseAbstractorToken` you can copy it from the helm install command in the above screenshot.
 3. Once complete, go to the **Output** section of CloudFormation Stack and copy `AktoNLBIP`.
