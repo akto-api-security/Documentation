@@ -61,7 +61,7 @@ i) Please make sure you install it in a private subnet from your application VPC
 
 ii) This private subnet should also have network connectivity (typically via NAT).
 
-iii) `SubnetId` accepts one or more subnets. To spread Akto across Availability Zones, select one private subnet per Availability Zone, all from the same VPC.
+iii) `SubnetId` accepts one or more subnets. Multi-AZ is optional: with a single subnet, the setup works the same as a single-AZ install. To spread Akto across Availability Zones, select one private subnet per Availability Zone, all from the same VPC.
 
 2. You can use `https://cyborg.akto.io` as `DatabaseAbstractorUrl` . For `DatabaseAbstractorToken` you can copy it from the helm install command in the above screenshot.
 3. Once complete, go to the **Output** section of CloudFormation Stack and copy `AktoNLBIP`.
