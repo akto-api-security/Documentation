@@ -90,6 +90,114 @@ Every field listed below must be included in the request body, even the ones wit
 The `host` value inside `requestHeaders` determines which collection this interaction appears under in the Akto dashboard. Use a consistent, descriptive hostname (e.g. `"my-agent.internal"`) to group traffic from the same agent together.
 {% endhint %}
 
+## Response and Guardrail Modes
+
+### Response Format
+
+The guardrail verdict is returned under `data.guardrailsResult`:
+
+```json
+{
+  "success": true,
+  "message": "Request processed successfully",
+  "latencyMs": 1840,
+  "data": {
+    "success": true,
+    "message": "Request processed successfully",
+    "guardrailsResult": {
+      "Allowed": false,
+      "Modified": false,
+      "ModifiedPayload": "",
+      "Reason": "[Block] Blocked due to prompt injection",
+      "behaviour": "block",
+      "Metadata": {
+        "policy_name": "Prompt Injection Policy",
+        "rule_violated": "PromptInjection",
+        "severity": "HIGH"
+      }
+    }
+  }
+}
+```
+
+<table><thead><tr><th width="200">Field</th><th width="120">Type</th><th>Description</th></tr></thead><tbody><tr><td><code>Allowed</code></td><td>boolean</td><td><code>true</code> when no guardrail was violated. <code>false</code> when a policy was violated, <strong>regardless of its mode</strong>. Always read it together with <code>behaviour</code></td></tr><tr><td><code>behaviour</code></td><td>string</td><td>The <strong>Rule Behaviour</strong> of the violated policy: <code>block</code>, <code>alert</code>, <code>human_approval</code>, or <code>warn</code> (legacy). Omitted when nothing was violated</td></tr><tr><td><code>Modified</code></td><td>boolean</td><td><code>true</code> when a policy masked or redacted part of the payload</td></tr><tr><td><code>ModifiedPayload</code></td><td>string</td><td>The masked payload. Forward this instead of the original when <code>Modified</code> is <code>true</code></td></tr><tr><td><code>Reason</code></td><td>string</td><td>Explanation of the verdict, prefixed with the mode, e.g. <code>[Block]</code>, <code>[Alert only]</code>, <code>[Approval required]</code></td></tr><tr><td><code>Metadata</code></td><td>object</td><td>The violated policy (<code>policy_name</code>), rule (<code>rule_violated</code>), <code>severity</code>, and violation details</td></tr></tbody></table>
+
+{% hint style="warning" %}
+**Field casing**
+
+`Allowed`, `Modified`, `ModifiedPayload`, `Reason`, and `Metadata` are **PascalCase**, while `behaviour` is **lowercase**. Human Approval responses (below) use lowercase `allowed`. Read both casings to be safe.
+{% endhint %}
+
+When both `guardrails=true` and `response_guardrails=true` are set, `guardrailsResult` also carries `requestResult` and `responseResult` with the verdict for each side. The top-level `Allowed` is `false` if either side was violated, so read `behaviour` from the side that was violated.
+
+### Guardrail Modes
+
+Each guardrail policy has a **Rule Behaviour** that decides what happens when it is violated. Set it in the policy's **Scope** section. See [Create Guardrail Policies](../how-to/create-guardrail-policies.md).
+
+Akto does not sit inline in your traffic when you use this API. It returns the verdict, and **your application enforces it**. Use `behaviour` to decide what to do:
+
+<table><thead><tr><th width="160">Mode</th><th width="170"><code>behaviour</code></th><th width="110"><code>Allowed</code></th><th>What your application should do</th></tr></thead><tbody><tr><td><strong>Block</strong></td><td><code>block</code></td><td><code>false</code></td><td>Stop the request or response. Return an error or a safe message to the user</td></tr><tr><td><strong>Alert</strong></td><td><code>alert</code></td><td><code>false</code></td><td><strong>Let it through.</strong> Akto records the violation in Guardrail Activity for review</td></tr><tr><td><strong>Human Approval</strong></td><td><code>human_approval</code></td><td><code>false</code></td><td>Hold the request and poll for the approver's decision (see below)</td></tr><tr><td><strong>Mask / Redact</strong></td><td><code>alert</code> (with <code>Modified: true</code>)</td><td><code>true</code></td><td>Forward <code>ModifiedPayload</code> instead of the original payload</td></tr><tr><td>No violation</td><td><em>omitted</em></td><td><code>true</code></td><td>Let it through</td></tr></tbody></table>
+
+{% hint style="danger" %}
+**Do not rely on `Allowed` alone.**
+
+In **Alert** mode `Allowed` is still `false`, because a policy *was* violated. If you block on `Allowed == false`, alert-mode policies will block traffic. Block only when `behaviour` is `block` (or any value other than `alert`).
+{% endhint %}
+
+If several policies are violated, the strictest mode is returned: **Block** > **Human Approval** > **Alert**. A missing or unknown `behaviour` on a violation should be treated as **Block**.
+
+**Sample enforcement logic**
+
+```python
+result = resp.json()["data"]["guardrailsResult"]
+allowed = result.get("Allowed", result.get("allowed", True))
+behaviour = (result.get("behaviour") or "").lower()
+payload = original_payload
+
+if result.get("Modified"):
+    payload = result["ModifiedPayload"]        # Mask / Redact: forward masked payload
+if allowed or behaviour == "alert":
+    forward(payload)                           # No violation, or Alert mode
+elif behaviour == "human_approval":
+    wait_for_approval(result["activityId"])    # Human Approval: poll (see below)
+else:
+    reject(result.get("Reason"))               # Block (default)
+```
+
+### Human Approval Mode
+
+When a policy set to **Human Approval** is violated, the attempt is sent to your approvers in the **Needs Approval** tab of Guardrail Activity. The response carries an `activityId` and a `status`:
+
+```json
+{
+  "success": true,
+  "message": "Request processed successfully",
+  "data": {
+    "guardrailsResult": {
+      "allowed": false,
+      "behaviour": "human_approval",
+      "status": "pending",
+      "activityId": "<ACTIVITY_ID>",
+      "reason": "[Approval required] Held for approval due to ...",
+      "modified": false
+    }
+  }
+}
+```
+
+Poll for the decision by calling the same endpoint with only the `activityId`. Akto looks up the decision and does not re-run the guardrails:
+
+```bash
+curl --location --request POST 'https://<GUARDRAILS_SERVICE_URL>/api/http-proxy' \
+  --header 'authorization: <YOUR_AKTO_API_TOKEN>' \
+  --header 'Content-Type: application/json' \
+  --data '{"activityId": "<ACTIVITY_ID>"}'
+```
+
+<table><thead><tr><th width="160"><code>status</code></th><th width="120"><code>allowed</code></th><th>Meaning</th></tr></thead><tbody><tr><td><code>pending</code></td><td><code>false</code></td><td>No decision yet. Keep holding the request and poll again</td></tr><tr><td><code>approved</code></td><td><code>true</code></td><td>An approver allowed it. Forward the request</td></tr><tr><td><code>blocked</code></td><td><code>false</code></td><td>An approver denied it. Reject the request</td></tr></tbody></table>
+
+Poll every few seconds, and set a timeout after which your application treats the request as blocked. See [Manage Human Approval Requests](../how-to/manage-human-approval-requests.md) for the approver workflow.
+
 ## File / Media Validation API
 
 Use this endpoint when the payload is a file (image, video, audio, PDF, etc.) rather than a JSON body. The endpoint accepts a `multipart/form-data` request and evaluates the file against your configured guardrail policies.
