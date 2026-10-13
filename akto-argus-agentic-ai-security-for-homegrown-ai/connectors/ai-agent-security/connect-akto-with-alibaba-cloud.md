@@ -114,10 +114,15 @@ Before running the deployment, gather this information:
    * Navigate to: **AKTO Argus** → **Connectors** → **Setup Guardrails**
    * Copy the API key from there
 3. **Traffic mode** (required, default `logs`): `logs`, `inline` or `both`. See [Choose a Traffic Mode](#choose-a-traffic-mode).
-4. **Template URL**: for the current version (**v2.16**) in Singapore (`ap-southeast-1`):
+4. **Template URL**: for the current version (**v2.16**), use the one for the region you deploy in.
+   * **Singapore** (`ap-southeast-1`):
 
-   <pre data-overflow="wrap"><code>https://akto-alibaba-collector-code-ap-southeast-1.oss-ap-southeast-1.aliyuncs.com/unified_alibaba/v2.16/akto-alibaba-collector.yaml
-   </code></pre>
+     <pre data-overflow="wrap"><code>https://akto-alibaba-collector-code-ap-southeast-1.oss-ap-southeast-1.aliyuncs.com/unified_alibaba/v2.16/akto-alibaba-collector.yaml
+     </code></pre>
+   * **US (Virginia)** (`us-east-1`):
+
+     <pre data-overflow="wrap"><code>https://akto-alibaba-code-us-east-1.oss-us-east-1.aliyuncs.com/unified_alibaba/v2.16/akto-alibaba-collector.yaml
+     </code></pre>
 
    For another region, ask the AKTO team for the URL. You do not need to come back for newer versions: the connector updates itself to AKTO's latest release.
 
@@ -136,14 +141,23 @@ The following are **optional**. Leave them blank to use automatic detection:
 
 Alibaba Cloud accepts custom plugin files only when they are uploaded through its console, so you download AKTO's plugin file and upload it once. You can do this before or after creating the stack.
 
-1. **Download the plugin file** `akto-guardrails.wasm` (about 5.8 MB) for the current version (**v2.16**). Open the link in a browser, or run the `curl` command below:
+1. **Download the plugin file** `akto-guardrails.wasm` (about 5.8 MB) for the current version (**v2.16**), from the same region as your template URL. Open the link in a browser, or run the `curl` command below:
+   * **Singapore** (`ap-southeast-1`):
 
-   <pre data-overflow="wrap"><code>https://akto-alibaba-collector-code-ap-southeast-1.oss-ap-southeast-1.aliyuncs.com/unified_alibaba/v2.16/akto-guardrails.wasm
-   </code></pre>
+     <pre data-overflow="wrap"><code>https://akto-alibaba-collector-code-ap-southeast-1.oss-ap-southeast-1.aliyuncs.com/unified_alibaba/v2.16/akto-guardrails.wasm
+     </code></pre>
 
-   ```bash
-   curl -o akto-guardrails.wasm https://akto-alibaba-collector-code-ap-southeast-1.oss-ap-southeast-1.aliyuncs.com/unified_alibaba/v2.16/akto-guardrails.wasm
-   ```
+     ```bash
+     curl -o akto-guardrails.wasm https://akto-alibaba-collector-code-ap-southeast-1.oss-ap-southeast-1.aliyuncs.com/unified_alibaba/v2.16/akto-guardrails.wasm
+     ```
+   * **US (Virginia)** (`us-east-1`):
+
+     <pre data-overflow="wrap"><code>https://akto-alibaba-code-us-east-1.oss-us-east-1.aliyuncs.com/unified_alibaba/v2.16/akto-guardrails.wasm
+     </code></pre>
+
+     ```bash
+     curl -o akto-guardrails.wasm https://akto-alibaba-code-us-east-1.oss-us-east-1.aliyuncs.com/unified_alibaba/v2.16/akto-guardrails.wasm
+     ```
 
    Use the same version as the template URL. For another region, ask the AKTO team for the link.
 2. In the Alibaba Cloud console, select the **region** you deploy in. Then open **AI Gateway** → **Plug-in** (in the left menu, not inside an instance) → **Publish Plug-in**.
