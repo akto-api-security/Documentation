@@ -180,13 +180,8 @@ flowchart LR
 | **Blocked answer** | The answer is not shown to the user |
 | **Masked content** | The masked version is passed on instead of the original |
 | **Monitor-only policies** | Policies set to warn or alert are recorded in Akto but do not block |
-| **If Akto cannot be reached** | Messages are allowed, so a problem on the Akto side never stops your agents |
 | **Added wait** | Each message and answer waits for Akto's verdict, at most 5 seconds |
 
-### What is not covered
-
-* **Individual tool calls** inside a conversation turn are not checked one by one; the message and the final answer are.
-* **External agents** called as collaborators are protected through the Orchestrate agent that calls them.
 
 ### Prerequisites
 
