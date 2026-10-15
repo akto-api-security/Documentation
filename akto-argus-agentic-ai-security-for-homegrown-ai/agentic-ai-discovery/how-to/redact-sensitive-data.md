@@ -27,9 +27,13 @@ Akto detects sensitive values in requests and responses and replaces each one wi
 
 ## Guardrail Activity
 
-In **Guardrail Activity**, open an event to view its **Request** and **Response**. Detected sensitive values are shown as `[REDACTED]`. This applies to all users, including admins.
+In **Guardrail Activity**, the **Evidence** column shows the flagged content with sensitive values redacted. Open an event to view its **Request** and **Response**, where detected values are also redacted. This applies to all users, including admins.
+
+Redacted values appear as `[REDACTED]`, or as a labeled marker such as `[SSN_REDACTED]` when Akto identifies the type of data.
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (251).png" alt="" width="563"><figcaption></figcaption></figure></div>
+
+<!-- Screenshot: Guardrail Activity event detail, Request/Response with redacted values -->
 
 ## Traces
 
@@ -37,6 +41,10 @@ In **Traces**, what you see depends on your role:
 
 * **Admin**: full, unredacted data
 * **All other users**: redacted data, with sensitive values shown as `[REDACTED]`
+
+<!-- Screenshot: Traces view as admin (full data) -->
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/redact-traces-non-admin.png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ## Important Notes
 
