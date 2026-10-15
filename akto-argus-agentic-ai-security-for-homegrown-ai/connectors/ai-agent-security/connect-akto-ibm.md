@@ -190,7 +190,7 @@ flowchart LR
 * An **Orchestrate API key** of a user with the **Admin** role (Orchestrate → profile menu → **Settings** → **API details**), and the **Service instance URL** shown on the same page.
 * For the installer: **Python 3.11 to 3.14** on the computer you run it from ([python.org/downloads](https://www.python.org/downloads/)).
 
-### Method 1: Installer (all Orchestrate plans)
+### Installer (all Orchestrate plans)
 
 The installer adds the AKTO plug-in to the agents you choose. You do not need to install anything else: it prepares IBM's tools by itself, in a folder of its own.
 
@@ -270,19 +270,6 @@ If an agent's draft has other changes that were never deployed, the installer as
 {% endstep %}
 {% endstepper %}
 
-### Method 2: Orchestrate UI (Premium plans)
-
-On Orchestrate plans with **dedicated deployment** (Premium), the AKTO plug-in can be added to agents from the Orchestrate UI, as a control. Contact the Akto team to set up the AKTO plug-in for your instance, then:
-
-1. In Orchestrate, go to **Controls** → **Create Control**.
-2. Select **Code plugin** → **Next**.
-3. Name the control (for example `akto-guardrails`), choose **Use existing Python toolkit** and select the **AKTO guardrails** toolkit.
-4. In **Assign Assets**, select the agents to protect.
-5. **Review** → **Create**.
-
-{% hint style="info" %}
-On other plans, Orchestrate does not offer adding code plug-ins from the UI; use the installer (Method 1).
-{% endhint %}
 
 ### Check that it works
 
