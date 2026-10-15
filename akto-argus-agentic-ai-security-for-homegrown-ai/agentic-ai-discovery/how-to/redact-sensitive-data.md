@@ -12,10 +12,10 @@ Agent prompts and responses often contain PII and credentials. Automatic redacti
 
 ## Where Redaction Applies
 
-| Where                  | Who sees redacted data                        |
-| ---------------------- | --------------------------------------------- |
-| **Guardrail Activity** | Everyone. Data is always redacted.            |
-| **Traces**             | Everyone except admins. Admins see full data. |
+| Where                  | What you see                                                                     |
+| ---------------------- | -------------------------------------------------------------------------------- |
+| **Guardrail Activity** | Data is always redacted, for everyone.                                           |
+| **Traces**             | Admins see the full prompt, unredacted. Other users cannot open prompts.         |
 
 ## How Redaction Works
 
@@ -37,10 +37,10 @@ Redacted values appear as `[REDACTED]`, or as a labeled marker such as `[SSN_RED
 
 ## Traces
 
-In **Traces**, what you see depends on your role:
+Prompts in **Traces** can contain sensitive data, so access depends on your role:
 
-* **Admin**: full, unredacted data
-* **All other users**: redacted data, with sensitive values shown as `[REDACTED]`
+* **Admin**: you can open a trace and see the full prompt, without redaction.
+* **All other users**: you cannot open prompts. Traces show a lock icon, and opening one shows "Please contact your administrator to get access."
 
 <!-- Screenshot: Traces view as admin (full data) -->
 
@@ -49,5 +49,5 @@ In **Traces**, what you see depends on your role:
 ## Important Notes
 
 * Redaction is automatic. You do not need to configure it.
-* Admins can see full data in **Traces**, so give the admin role only to people who are allowed to view sensitive data.
-* The same admin sees `[REDACTED]` in **Guardrail Activity** and full data in **Traces**.
+* Admins can see full prompts in **Traces**, so give the admin role only to people who are allowed to view sensitive data.
+* The same admin sees `[REDACTED]` in **Guardrail Activity** and the full prompt in **Traces**.
