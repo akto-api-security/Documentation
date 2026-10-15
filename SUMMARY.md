@@ -100,6 +100,7 @@
     * [Dify](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/dify.md)
     * [Glean](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/glean.md)
     * [Hugging Face](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/connect-akto-with-huggingface.md)
+    * [IBM watsonx Orchestrate](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/connect-akto-ibm.md)
     * [LangChain](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/langchain.md)
     * [LangGraph](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/langgraph.md)
     * [LiteLLM](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/litellm.md)
