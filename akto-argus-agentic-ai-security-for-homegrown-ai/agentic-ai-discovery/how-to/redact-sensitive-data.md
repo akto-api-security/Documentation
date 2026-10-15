@@ -1,46 +1,47 @@
 ---
-description: Protect sensitive data by redacting it from the Akto dashboard and logs.
+description: Sensitive data in agent traffic is redacted automatically. No configuration needed.
 ---
 
 # Redact Sensitive Data
 
-Redact sensitive data to comply with privacy regulations and prevent unauthorized access. Critical for agent systems handling PII and credentials.
+Akto redacts sensitive data in agent and MCP traffic automatically. There are no settings to enable and no redaction levels to choose.
 
-## Redaction Levels
+Agent prompts and responses often contain PII and credentials. Automatic redaction lets your team review agent activity without exposing that data.
 
-1. **By Data Type**: Redact all instances of a data type (e.g., all API keys)
-2. **By Collection**: Redact entire agent/MCP collection
-3. **Global**: Redact all data across all agents
+## Where Redaction Applies
 
-## Important Note
-
-{% hint style="warning" %}
-Redacting data affects AI Red Teaming. Without stored values, agent requests can't be replayed and scanned.
-{% endhint %}
+| Where | Who sees redacted data |
+| --- | --- |
+| **Guardrail Activity** | Everyone. Data is always redacted. |
+| **Traces** | Everyone except admins. Admins see full data. |
 
 ## How Redaction Works
 
-Values are replaced with `*****`:
-```json
-{"agent_prompt": "*****", "llm_response": "*****"}
+Akto detects sensitive values in requests and responses and replaces each one with `[REDACTED]`. Only the sensitive values are replaced. The rest of the content stays readable, so you can still follow what the agent did.
+
+```
+... delta3 echo4 foxtrot5 golf6 [REDACTED] papa15 alpha16 bravo17 ...
 ```
 
-## Redact by Data Type
+## Guardrail Activity
 
-1. Go to **Agentic Discovery > Sensitive Data**
-2. Select data type
-3. Click **Edit**
-4. Set **Redact this data type** to **True**
+In **Guardrail Activity**, open an event to view its **Request** and **Response**. Detected sensitive values are shown as `[REDACTED]`. This applies to all users, including admins.
 
-## Redact by Collection
+<!-- Screenshot: Guardrail Activity event with redacted Request/Response -->
 
-1. Open the agent/MCP collection
-2. Click **More options**
-3. Select **Redact**
-4. Click **Enable**
+## Traces
 
-## Redact All Data
+In **Traces**, what you see depends on your role:
 
-1. Go to **Settings > About**
-2. Click **Redact data**
-3. Confirm (affects all collections)
+- **Admin**: full, unredacted data
+- **All other users**: redacted data, with sensitive values shown as `[REDACTED]`
+
+<!-- Screenshot: Traces view as admin (full data) -->
+
+<!-- Screenshot: Traces view as non-admin user (redacted data) -->
+
+## Important Notes
+
+- Redaction is automatic. You do not need to configure it.
+- Admins can see full data in **Traces**, so give the admin role only to people who are allowed to view sensitive data.
+- The same admin sees `[REDACTED]` in **Guardrail Activity** and full data in **Traces**.
