@@ -1,8 +1,10 @@
 ---
-description: Sensitive data in agent traffic is redacted automatically. No configuration needed.
+description: >-
+  Sensitive data in agent traffic is redacted automatically. No configuration
+  needed.
 ---
 
-# Redact Sensitive Data
+# Redact sensitive data
 
 Akto redacts sensitive data in agent and MCP traffic automatically. There are no settings to enable and no redaction levels to choose.
 
@@ -10,10 +12,10 @@ Agent prompts and responses often contain PII and credentials. Automatic redacti
 
 ## Where Redaction Applies
 
-| Where | Who sees redacted data |
-| --- | --- |
-| **Guardrail Activity** | Everyone. Data is always redacted. |
-| **Traces** | Everyone except admins. Admins see full data. |
+| Where                  | Who sees redacted data                        |
+| ---------------------- | --------------------------------------------- |
+| **Guardrail Activity** | Everyone. Data is always redacted.            |
+| **Traces**             | Everyone except admins. Admins see full data. |
 
 ## How Redaction Works
 
@@ -27,21 +29,17 @@ Akto detects sensitive values in requests and responses and replaces each one wi
 
 In **Guardrail Activity**, open an event to view its **Request** and **Response**. Detected sensitive values are shown as `[REDACTED]`. This applies to all users, including admins.
 
-<!-- Screenshot: Guardrail Activity event with redacted Request/Response -->
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (251).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
 ## Traces
 
 In **Traces**, what you see depends on your role:
 
-- **Admin**: full, unredacted data
-- **All other users**: redacted data, with sensitive values shown as `[REDACTED]`
-
-<!-- Screenshot: Traces view as admin (full data) -->
-
-<!-- Screenshot: Traces view as non-admin user (redacted data) -->
+* **Admin**: full, unredacted data
+* **All other users**: redacted data, with sensitive values shown as `[REDACTED]`
 
 ## Important Notes
 
-- Redaction is automatic. You do not need to configure it.
-- Admins can see full data in **Traces**, so give the admin role only to people who are allowed to view sensitive data.
-- The same admin sees `[REDACTED]` in **Guardrail Activity** and full data in **Traces**.
+* Redaction is automatic. You do not need to configure it.
+* Admins can see full data in **Traces**, so give the admin role only to people who are allowed to view sensitive data.
+* The same admin sees `[REDACTED]` in **Guardrail Activity** and full data in **Traces**.
