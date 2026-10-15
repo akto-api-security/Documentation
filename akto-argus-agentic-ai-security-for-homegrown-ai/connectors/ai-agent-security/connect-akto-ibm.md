@@ -153,6 +153,160 @@ Akto starts right away and then repeats every **5 minutes**:
 | Controls or connections are missing | Use a user with the **Admin** role in Orchestrate |
 | New conversations appear late | Conversations are read every 5 minutes. Allow up to 10 minutes |
 
+## Real-time Blocking
+
+Real-time blocking adds the **AKTO plug-in** to your Orchestrate agents. On every conversation turn:
+
+* the **user's message** is checked by your AKTO guardrail policies **before the agent processes it**;
+* the **agent's answer** is checked **before the user sees it**.
+
+A message or answer that violates a policy is **blocked**. If a policy masks content (for example personal data), the agent or the user receives the masked version. Every checked exchange is also recorded in Akto.
+
+```mermaid
+flowchart LR
+    U[User] --> P1[AKTO plug-in<br/>checks the message]
+    P1 -- allowed --> A[Orchestrate agent]
+    A --> P2[AKTO plug-in<br/>checks the answer]
+    P2 -- allowed --> U
+    P1 -. blocked .-> X[Blocked by Akto policy]
+    P2 -. blocked .-> X
+```
+
+### How it behaves
+
+| | |
+|---|---|
+| **Blocked message** | The agent does not process it, and Orchestrate reports the block in the chat |
+| **Blocked answer** | The answer is not shown to the user |
+| **Masked content** | The masked version is passed on instead of the original |
+| **Monitor-only policies** | Policies set to warn or alert are recorded in Akto but do not block |
+| **If Akto cannot be reached** | Messages are allowed, so a problem on the Akto side never stops your agents |
+| **Added wait** | Each message and answer waits for Akto's verdict, at most 5 seconds |
+
+### What is not covered
+
+* **Individual tool calls** inside a conversation turn are not checked one by one; the message and the final answer are.
+* **External agents** called as collaborators are protected through the Orchestrate agent that calls them.
+
+### Prerequisites
+
+* Your **AKTO guardrail policies** set up in the Akto dashboard.
+* Your **AKTO guardrails host** and **AKTO API key** (**AKTO Argus** → **Connectors** → **Setup Guardrails**).
+* An **Orchestrate API key** of a user with the **Admin** role (Orchestrate → profile menu → **Settings** → **API details**), and the **Service instance URL** shown on the same page.
+* For the installer: **Python 3.11 to 3.14** on the computer you run it from ([python.org/downloads](https://www.python.org/downloads/)).
+
+### Method 1: Installer (all Orchestrate plans)
+
+The installer adds the AKTO plug-in to the agents you choose. You do not need to install anything else: it prepares IBM's tools by itself, in a folder of its own.
+
+{% stepper %}
+{% step %}
+**Download the AKTO plug-in package**
+
+Download the package [akto-watsonx-1.0.0.zip](https://akto-watsonx-connector.s3.us-east-1.amazonaws.com/ibm_watsonx/1.0.0/akto-watsonx-1.0.0.zip) and unzip it. Its checksum is published next to it as [akto-watsonx-1.0.0.zip.sha256](https://akto-watsonx-connector.s3.us-east-1.amazonaws.com/ibm_watsonx/1.0.0/akto-watsonx-1.0.0.zip.sha256). The folder contains the installer, the plug-in and a checksum file; the installer checks the files before using them.
+{% endstep %}
+
+{% step %}
+**Run the installer**
+
+Unzipping creates a folder named `akto-watsonx-1.0.0`. For example, if you downloaded it to your **Downloads** folder:
+
+```
+Downloads/
+└── akto-watsonx-1.0.0/
+    ├── akto_watsonx_setup.py     the installer
+    ├── akto_guard.py             the AKTO plug-in
+    ├── requirements.txt
+    ├── SHA256SUMS
+    └── README.md
+```
+
+Open a terminal and go to that folder. Use the path where you unzipped it:
+
+```bash
+cd ~/Downloads/akto-watsonx-1.0.0
+```
+
+{% hint style="info" %}
+On macOS, you can also type `cd ` (with a space) in the terminal and drag the `akto-watsonx-1.0.0` folder from Finder into the terminal window, then press **Enter**.
+{% endhint %}
+
+Then run the installer from that folder:
+
+```bash
+python3 akto_watsonx_setup.py install \
+  --instance-url "<Service instance URL>" \
+  --akto-host "<AKTO guardrails host>" \
+  --agents all --deploy
+```
+
+**Choose which agents to protect** with `--agents`:
+
+| To protect | Use |
+|---|---|
+| One agent | `--agents "Customer Support Agent"` |
+| Several agents | `--agents "Customer Support Agent, Billing Agent"` |
+| All agents | `--agents all` |
+
+* Use the agent's name as shown in Orchestrate (its display name or its internal name; upper and lower case do not matter).
+* `--agents all` covers every agent that exists when you run the installer. **Agents created later are not added automatically**: run the installer again with the new agent's name (or with `all`). Agents that already have the plug-in are left as they are.
+* External agents cannot have plug-ins in Orchestrate; they are protected through the Orchestrate agent that calls them.
+
+`--deploy` also updates your **live** agents. Without it, only the **draft** agents are protected, so you can test in the agent's preview first. Agents that are not live (draft only) are never deployed by the installer.
+
+When asked, paste your Orchestrate API key and your AKTO API key. Nothing is shown while you paste.
+{% endstep %}
+
+{% step %}
+**Check the summary**
+
+The installer ends with the list of your agents and whether each one is protected in draft and live:
+
+```
+==> AKTO plug-in status
+    installed in Orchestrate: v1.0.0
+
+    Agent                                      Draft          Live
+    Customer Support Agent                     protected      protected
+    Billing Agent                              protected      protected
+```
+
+If an agent's draft has other changes that were never deployed, the installer asks before deploying it, because deploying would publish those changes too.
+{% endstep %}
+{% endstepper %}
+
+### Method 2: Orchestrate UI (Premium plans)
+
+On Orchestrate plans with **dedicated deployment** (Premium), the AKTO plug-in can be added to agents from the Orchestrate UI, as a control. Contact the Akto team to set up the AKTO plug-in for your instance, then:
+
+1. In Orchestrate, go to **Controls** → **Create Control**.
+2. Select **Code plugin** → **Next**.
+3. Name the control (for example `akto-guardrails`), choose **Use existing Python toolkit** and select the **AKTO guardrails** toolkit.
+4. In **Assign Assets**, select the agents to protect.
+5. **Review** → **Create**.
+
+{% hint style="info" %}
+On other plans, Orchestrate does not offer adding code plug-ins from the UI; use the installer (Method 1).
+{% endhint %}
+
+### Check that it works
+
+1. Open one of the protected agents in Orchestrate and send an ordinary message: the agent answers as usual.
+2. Send a message that one of your AKTO guardrail policies blocks: the agent does not answer it.
+3. In Akto, the blocked message appears under the agent, in **Agentic AI Discovery** → **Traces**.
+
+### Update or remove the plug-in
+
+Go to the unzipped folder first (for example `cd ~/Downloads/akto-watsonx-1.0.0`), then run:
+
+| To | Run |
+|---|---|
+| See which agents are protected | `python3 akto_watsonx_setup.py status --instance-url "<URL>"` |
+| Install a newer version (from a newer package) | `python3 akto_watsonx_setup.py upgrade --instance-url "<URL>" --deploy` |
+| Remove the plug-in | `python3 akto_watsonx_setup.py uninstall --instance-url "<URL>" --agents all --deploy` |
+
+Removing it from all agents also removes the AKTO plug-in and its settings from your Orchestrate instance.
+
 ## Get Support for your Akto setup
 
 There are multiple ways to request support from Akto. We are 24X7 available on the following:
