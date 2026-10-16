@@ -48,50 +48,24 @@ flowchart LR
 
 {% stepper %}
 {% step %}
-### Clone the repository
-
-```bash
-git clone https://github.com/akto-api-security/akto-ai-egress.git
-cd akto-ai-egress
-```
-{% endstep %}
-
-{% step %}
 ### Set environment variables
 
 ```bash
 export AKTO_URL=https://akto.example.com   # your Akto instance base URL
 export APP_NAME=my-ai-agent                # identifies your app in Akto guardrails
-export ANTHROPIC_API_KEY=sk-ant-...        # (only needed for the bundled example agent)
 ```
 
 | Variable   | Required | Description                                                                                                 |
 | ---------- | -------- | ----------------------------------------------------------------------------------------------------------- |
 | `AKTO_URL` | Yes      | Base URL of your Akto instance (e.g. `https://akto.example.com`). The proxy appends `/api/http-proxy`.      |
 | `APP_NAME` | Yes      | Name of your application. Sent as the `host` header to Akto so traffic is grouped per app in the dashboard. |
-| `AI_HOSTS` | No       | Comma-separated hosts to intercept and run guardrails on. `*` matches any run of characters. See [Supported AI Providers](#supported-ai-providers) for the default list. |{% endstep %}
-
-{% step %}
-### Start the proxy
-
-```bash
-docker compose up --build
-```
-
-The included `docker-compose.yml` starts two containers:
-
-| Container           | Role                                                               |
-| ------------------- | ------------------------------------------------------------------ |
-| `akto-egress-proxy` | mitmproxy on port `8087`, runs `akto_guardrails.py` addon          |
-| `anthropic-agent`   | Example Anthropic agent, pre-configured to route through the proxy |
-
-On first run, mitmproxy auto-generates its CA certificate inside the `mitmproxy-data/` volume. The example agent container already mounts and trusts this cert.
+| `AI_HOSTS` | No       | Comma-separated hosts to intercept and run guardrails on. `*` matches any run of characters. See [Supported AI Providers](#supported-ai-providers) for the default list. |
 {% endstep %}
 
 {% step %}
-### Connect your own agent
+### Create `docker-compose.yml`
 
-To route your existing agent through the proxy instead of the bundled example, add it to `docker-compose.yml` with the proxy env vars, the CA cert mount, and the CA bundle env vars:
+The proxy is published as a prebuilt image that bundles the `akto_guardrails.py` addon. Create a `docker-compose.yml` with the proxy and your agent. Replace `your-ai-agent:latest` with your agent's image:
 
 ```yaml
 services:
@@ -102,16 +76,15 @@ services:
     environment:
       HTTP_PROXY: http://akto-egress-proxy:8087
       HTTPS_PROXY: http://akto-egress-proxy:8087
-      SSL_CERT_FILE: /etc/ssl/certs/ca-certificates.crt       
-      REQUESTS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt  
-      AWS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt       
+      SSL_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
+      REQUESTS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt
+      AWS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt
     volumes:
       - ./mitmproxy-data/mitmproxy-ca-cert.pem:/usr/local/share/ca-certificates/mitmproxy-ca-cert.crt:ro
 
   akto-egress-proxy:
-    image: akto-egress-proxy
-    build:
-      context: ./akto-egress-proxy
+    image: public.ecr.aws/aktosecurity/akto-egress-proxy:latest
+    container_name: akto-egress-proxy
     command:
       - mitmdump
       - --listen-host
@@ -128,13 +101,35 @@ services:
       AI_HOSTS: ${AI_HOSTS:-}
     volumes:
       - ./mitmproxy-data:/home/mitmproxy/.mitmproxy
-      - ./akto-egress-proxy:/addons:ro
+```
+{% endstep %}
+
+{% step %}
+### Start the proxy
+
+Start the proxy on its own first. On first run, it generates its CA certificate at `./mitmproxy-data/mitmproxy-ca-cert.pem`:
+
+```bash
+docker compose up -d akto-egress-proxy
+ls ./mitmproxy-data/mitmproxy-ca-cert.pem
+```
+
+{% hint style="warning" %}
+Start the proxy before your agent. If the agent starts first, the cert file doesn't exist yet, so Docker creates an empty directory at that path and the agent can't trust the proxy. If this happens, run `docker compose down`, delete `./mitmproxy-data`, and start again from this step.
+{% endhint %}
+{% endstep %}
+
+{% step %}
+### Start your agent
+
+```bash
+docker compose up -d
 ```
 
 {% hint style="info" %}
 **CA Certificate**
 
-`mitmproxy-data/mitmproxy-ca-cert.pem` is created on first run (Step 3). Your agent container must trust it, or intercepted calls fail with `CERTIFICATE_VERIFY_FAILED`:
+Your agent container must trust `mitmproxy-data/mitmproxy-ca-cert.pem`, or intercepted calls fail with `CERTIFICATE_VERIFY_FAILED`:
 
 1. Mount it into `/usr/local/share/ca-certificates/` as shown above.
 2. Run `update-ca-certificates` to add it to `/etc/ssl/certs/ca-certificates.crt`.
