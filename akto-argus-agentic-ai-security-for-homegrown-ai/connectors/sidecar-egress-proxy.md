@@ -48,50 +48,24 @@ flowchart LR
 
 {% stepper %}
 {% step %}
-### Clone the repository
-
-```bash
-git clone https://github.com/akto-api-security/akto-ai-egress.git
-cd akto-ai-egress
-```
-{% endstep %}
-
-{% step %}
 ### Set environment variables
 
 ```bash
 export AKTO_URL=https://akto.example.com   # your Akto instance base URL
 export APP_NAME=my-ai-agent                # identifies your app in Akto guardrails
-export ANTHROPIC_API_KEY=sk-ant-...        # (only needed for the bundled example agent)
 ```
 
 | Variable   | Required | Description                                                                                                 |
 | ---------- | -------- | ----------------------------------------------------------------------------------------------------------- |
 | `AKTO_URL` | Yes      | Base URL of your Akto instance (e.g. `https://akto.example.com`). The proxy appends `/api/http-proxy`.      |
 | `APP_NAME` | Yes      | Name of your application. Sent as the `host` header to Akto so traffic is grouped per app in the dashboard. |
+| `AI_HOSTS` | No       | Comma-separated hosts to intercept and run guardrails on. `*` matches any run of characters. See [Supported AI Providers](#supported-ai-providers) for the default list. |
 {% endstep %}
 
 {% step %}
-### Start the proxy
+### Create `docker-compose.yml`
 
-```bash
-docker compose up --build
-```
-
-The included `docker-compose.yml` starts two containers:
-
-| Container           | Role                                                               |
-| ------------------- | ------------------------------------------------------------------ |
-| `akto-egress-proxy` | mitmproxy on port `8087`, runs `akto_guardrails.py` addon          |
-| `anthropic-agent`   | Example Anthropic agent, pre-configured to route through the proxy |
-
-On first run, mitmproxy auto-generates its CA certificate inside the `mitmproxy-data/` volume. The example agent container already mounts and trusts this cert.
-{% endstep %}
-
-{% step %}
-### Connect your own agent
-
-To route your existing agent through the proxy instead of the bundled example, add it to `docker-compose.yml` with the proxy env vars and the CA cert mount:
+The proxy is published as a prebuilt image that bundles the `akto_guardrails.py` addon. Create a `docker-compose.yml` with the proxy and your agent. Replace `your-ai-agent:latest` with your agent's image:
 
 ```yaml
 services:
@@ -102,13 +76,15 @@ services:
     environment:
       HTTP_PROXY: http://akto-egress-proxy:8087
       HTTPS_PROXY: http://akto-egress-proxy:8087
+      SSL_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
+      REQUESTS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt
+      AWS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt
     volumes:
       - ./mitmproxy-data/mitmproxy-ca-cert.pem:/usr/local/share/ca-certificates/mitmproxy-ca-cert.crt:ro
 
   akto-egress-proxy:
-    image: akto-egress-proxy
-    build:
-      context: ./akto-egress-proxy
+    image: public.ecr.aws/aktosecurity/akto-egress-proxy:latest
+    container_name: akto-egress-proxy
     command:
       - mitmdump
       - --listen-host
@@ -116,19 +92,52 @@ services:
       - --listen-port
       - "8087"
       - --ignore-hosts
-      - "^(?!.*((^|\\.)anthropic\\.com$|(^|\\.)openai\\.com$|(^|\\.)chatgpt\\.com$|(^|\\.)amazonaws\\.com$)).*$"
+      - ^(?!((api\.openai\.com|api\.anthropic\.com|chatgpt\.com|bedrock-runtime\.[^:]*\.amazonaws\.com|bedrock-agent-runtime\.[^:]*\.amazonaws\.com):\d+$$))(?!(\d+\.\d+\.\d+\.\d+|\[?[0-9a-f:]+\]?):\d+$$).*
       - -s
       - /addons/akto_guardrails.py
     environment:
       AKTO_URL: ${AKTO_URL}
       APP_NAME: ${APP_NAME:-}
+      AI_HOSTS: ${AI_HOSTS:-}
     volumes:
       - ./mitmproxy-data:/home/mitmproxy/.mitmproxy
-      - ./akto-egress-proxy:/addons:ro
+```
+{% endstep %}
+
+{% step %}
+### Start the proxy
+
+Start the proxy on its own first. On first run, it generates its CA certificate at `./mitmproxy-data/mitmproxy-ca-cert.pem`:
+
+```bash
+docker compose up -d akto-egress-proxy
+ls ./mitmproxy-data/mitmproxy-ca-cert.pem
+```
+
+{% hint style="warning" %}
+Start the proxy before your agent. If the agent starts first, the cert file doesn't exist yet, so Docker creates an empty directory at that path and the agent can't trust the proxy. If this happens, run `docker compose down`, delete `./mitmproxy-data`, and start again from this step.
+{% endhint %}
+{% endstep %}
+
+{% step %}
+### Start your agent
+
+```bash
+docker compose up -d
 ```
 
 {% hint style="info" %}
-**CA Certificate** The `mitmproxy-data/mitmproxy-ca-cert.pem` file is created automatically on first run (Step 3). Mount it into your agent container as a trusted CA so HTTPS interception works without certificate errors.
+**CA Certificate**
+
+Your agent container must trust `mitmproxy-data/mitmproxy-ca-cert.pem`, or intercepted calls fail with `CERTIFICATE_VERIFY_FAILED`:
+
+1. Mount it into `/usr/local/share/ca-certificates/` as shown above.
+2. Run `update-ca-certificates` to add it to `/etc/ssl/certs/ca-certificates.crt`.
+3. Point Python clients at that bundle with `SSL_CERT_FILE`, `REQUESTS_CA_BUNDLE` and `AWS_CA_BUNDLE` — they ignore the system store by default.
+
+Point those variables at the **combined** bundle, not at `mitmproxy-ca-cert.pem` alone: they replace the trust store entirely, so a file holding only the mitmproxy cert breaks every call the proxy does not intercept.
+
+Node.js uses `NODE_EXTRA_CA_CERTS` (which adds rather than replaces, so the cert alone is fine). Go, curl and Ruby read the system bundle, so steps 1–2 suffice. Java needs `keytool`.
 {% endhint %}
 {% endstep %}
 
@@ -141,20 +150,31 @@ Confirm the proxy is intercepting traffic by checking its logs:
 docker logs -f akto-egress-proxy
 ```
 
-You should see `[AKTO] URL: <your-akto-url>/api/http-proxy` on startup, and `evaluating request` / `evaluating response` log lines when your agent makes LLM calls.
+You should see `[AKTO] URL: <your-akto-url>/api/http-proxy` and `[AKTO] AI hosts: [...]` on startup, and `evaluating request` / `evaluating response` log lines when your agent makes LLM calls.
 {% endstep %}
 {% endstepper %}
 
 ## Supported AI Providers
 
-The proxy selectively intercepts traffic only to these hosts; all other traffic passes through unmodified:
+By default, the proxy intercepts traffic only to these hosts; all other traffic passes through unmodified:
 
 * `api.openai.com`
 * `api.anthropic.com`
 * `chatgpt.com`
-* `*.amazonaws.com` (Amazon Bedrock)
+* `bedrock-runtime.*.amazonaws.com` (Amazon Bedrock)
+* `bedrock-agent-runtime.*.amazonaws.com` (Amazon Bedrock Agents and Knowledge Bases)
 
-You can extend this list by editing the `--ignore-hosts` regex in the `docker-compose.yml` to include additional AI provider hostnames.
+Other AWS traffic, such as S3 or STS, passes through without inspection.
+
+A host is intercepted only if it is in both the `AI_HOSTS` list and the `--ignore-hosts` regex in `docker-compose.yml`. To add a provider, update both.
+
+1. Set `AI_HOSTS` to a comma-separated list of hosts. The value replaces the default list, so include every host you want intercepted:
+
+   ```bash
+   export AI_HOSTS="api.openai.com,api.anthropic.com,bedrock-runtime.*.amazonaws.com,api.mistral.ai"
+   ```
+
+2. Add the host to the first group in the `--ignore-hosts` regex, for example `|api\.mistral\.ai`.
 
 {% hint style="info" %}
 **All outbound traffic is routed through the proxy container**
