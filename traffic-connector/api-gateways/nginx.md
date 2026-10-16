@@ -22,23 +22,51 @@ The Akto nginx module uses the dynamic module functionality supported by nginx. 
 
 <summary>Ubuntu / Debian based</summary>
 
-1. Record all API calls using `nginx-module-njs`. (njs is a standard NGINX module built and shipped in every release of NGINX). You can install it by running <mark style="color:purple;">`apt install nginx-module-njs`</mark>
-2. The data is sent to Akto installed in your VPC using [nginx-kafka-log-module](https://github.com/kaltura/nginx-kafka-log-module). You can install it by using nginx dynamic modules functionality as described [here](https://www.nginx.com/blog/compiling-dynamic-modules-nginx-plus/)
-3. Download the [js file](https://raw.githubusercontent.com/akto-api-security/nginx-middleware/master/api_log.js) and save as `/etc/nginx/njs/api_log.js`
-4. In your NGINX conf file - `/etc/nginx/nginx.conf` , add the following:
+1. Install the [njs module](https://nginx.org/en/docs/njs/install.html) (njs is a standard NGINX module built and shipped in every release of NGINX):
+
+```bash
+apt install nginx-module-njs
+```
+
+2. Install [nginx-kafka-log-module](https://github.com/akto-api-security/nginx-kafka-log-module).
+
+**Installation methods**
+
+The script builds the module for your installed NGINX version.
+
+OS: Ubuntu, Platform: x86\_64
+
+```bash
+git clone https://github.com/akto-api-security/nginx-kafka-log-module.git
+cd nginx-kafka-log-module
+scripts/build-linux.sh --install-deps --install
+```
+
+**Other Linux and platforms**
+
+Build the module as described [here](https://www.f5.com/company/blog/nginx/compiling-dynamic-modules-nginx-plus.html).
+
+3. Save the njs file:
+
+```bash
+wget -P /etc/nginx/njs https://raw.githubusercontent.com/akto-api-security/nginx-middleware/master/api_log.js
+```
+
+4. In `/etc/nginx/nginx.conf`, add at the top:
 
 ```lua
 load_module /usr/lib/nginx/modules/ngx_http_js_module.so;
 load_module /usr/lib/nginx/modules/ngx_http_kafka_log_module.so;
 ```
 
-add the following lines in `http` section of `/etc/nginx/nginx.conf`:
+and in the `http` section:
 
 ```lua
 subrequest_output_buffer_size 8k;
 js_path "/etc/nginx/njs/";
 js_var $responseBo "{}";
 js_import main2 from api_log.js;
+kafka_log_enable on;
 kafka_log_kafka_brokers <AKTO_NLB_IP>:9092;
 kafka_log_kafka_buffer_max_messages 100000;
 ```
@@ -55,7 +83,102 @@ server {
 }
 ```
 
-6\. Restart NGINX by `nginx -s reload`. This will start logging all the request-response logs to akto.
+6\. Restart NGINX and check that a worker is running:
+
+```bash
+nginx -t
+systemctl restart nginx
+ps -eo pid,command | grep "[n]ginx: worker"
+```
+
+At least one `nginx: worker` line must be listed. NGINX now logs all request-response data to Akto.
+
+</details>
+
+<details>
+
+<summary>Optional: Kafka with SASL authentication (Ubuntu / Debian based)</summary>
+
+Use this if your Kafka requires a username and password (SASL/PLAIN).
+
+1. Create `/etc/nginx/kafka.env` with the credentials and restrict access:
+
+```
+KAFKA_SASL_USERNAME=<KAFKA_USERNAME>
+KAFKA_SASL_PASSWORD=<KAFKA_PASSWORD>
+```
+
+```bash
+chmod 600 /etc/nginx/kafka.env
+```
+
+2. Tell systemd to load this file for NGINX:
+
+```bash
+mkdir -p /etc/systemd/system/nginx.service.d
+printf '[Service]\nEnvironmentFile=/etc/nginx/kafka.env\n' > /etc/systemd/system/nginx.service.d/kafka-env.conf
+systemctl daemon-reload
+```
+
+3. Update `/etc/nginx/nginx.conf` as in the sample below, with the address of your Kafka SASL listener in `kafka_log_kafka_brokers`. The `location` block stays in `/etc/nginx/conf.d/default.conf` as in step 5 above.
+
+```lua
+load_module /usr/lib/nginx/modules/ngx_http_js_module.so;
+load_module /usr/lib/nginx/modules/ngx_http_kafka_log_module.so;
+
+env KAFKA_SASL_USERNAME;
+env KAFKA_SASL_PASSWORD;
+
+user  nginx;
+worker_processes  auto;
+
+error_log  /var/log/nginx/error.log notice;
+pid        /run/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    keepalive_timeout  65;
+
+    subrequest_output_buffer_size 8k;
+    js_path "/etc/nginx/njs/";
+    js_var $responseBo "{}";
+    js_import main2 from api_log.js;
+
+    kafka_log_enable on;
+    kafka_log_kafka_brokers "<KAFKA_HOST>:<SASL_PORT>";
+    kafka_log_kafka_buffer_max_messages 100000;
+    kafka_log_rdkafka_property security.protocol SASL_PLAINTEXT;
+    kafka_log_rdkafka_property sasl.mechanism PLAIN;
+    kafka_log_rdkafka_property_env sasl.username KAFKA_SASL_USERNAME;
+    kafka_log_rdkafka_property_env sasl.password KAFKA_SASL_PASSWORD;
+
+    include /etc/nginx/conf.d/*.conf;
+}
+```
+
+4. Check the configuration, restart NGINX, and make sure worker processes are running:
+
+```bash
+export $(cat /etc/nginx/kafka.env) && nginx -t
+systemctl restart nginx
+ps -eo pid,command | grep "[n]ginx: worker"
+```
+
+* Restart NGINX (not reload) after you change the credentials.
+* To put the credentials directly in `nginx.conf` instead, skip steps 1 and 2, remove the two `env` lines, and use `kafka_log_rdkafka_property sasl.username <KAFKA_USERNAME>;` and `kafka_log_rdkafka_property sasl.password <KAFKA_PASSWORD>;` in place of the two `kafka_log_rdkafka_property_env` lines.
 
 </details>
 
@@ -100,7 +223,7 @@ tar -zxvf nginx-1.26.0.tar.gz
 
 4. Install nginx-module-njs using `yum install nginx-module-njs` ( In case of any problem, please refer to the [official nginx docs to install nginx-module-njs](https://nginx.org/en/docs/njs/install.html) )
 5. We will send data to Akto traffic processor using [nginx-kafka-log-module](https://github.com/kaltura/nginx-kafka-log-module). To clone it run: `git clone https://github.com/kaltura/nginx-kafka-log-module.git`
-6. We can install nginx-kafka-log-module using the steps below. For the official nginx docs to install nginx dynamic modules refer [this](https://www.nginx.com/blog/compiling-dynamic-modules-nginx-plus/).
+6. We can install nginx-kafka-log-module using the steps below. For the official nginx docs to install nginx dynamic modules refer [this](https://www.f5.com/company/blog/nginx/compiling-dynamic-modules-nginx-plus.html).
 
 ```bash
 # Enable EPEL repository if not already enabled
@@ -196,7 +319,7 @@ tar -zxvf nginx-1.26.0.tar.gz
 
 4. Install nginx-module-njs using `yum install nginx-module-njs` ( In case of any problem, please refer to the [official nginx docs to install nginx-module-njs](https://nginx.org/en/docs/njs/install.html) )
 5. We will send data to Akto traffic processor using [nginx-kafka-log-module](https://github.com/kaltura/nginx-kafka-log-module). To clone it run: `git clone https://github.com/kaltura/nginx-kafka-log-module.git`
-6.  We can install nginx-kafka-log-module using the steps below. For the official nginx docs to install nginx dynamic modules refer [this](https://www.nginx.com/blog/compiling-dynamic-modules-nginx-plus/).
+6.  We can install nginx-kafka-log-module using the steps below. For the official nginx docs to install nginx dynamic modules refer [this](https://www.f5.com/company/blog/nginx/compiling-dynamic-modules-nginx-plus.html).
 
     i. To set up the yum repository for Amazon Linux 2023 for confluent, create the file named `/etc/yum.repos.d/confluent.repo` with the following content.
 
