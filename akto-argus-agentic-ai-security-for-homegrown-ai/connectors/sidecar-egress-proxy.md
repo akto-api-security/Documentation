@@ -38,6 +38,10 @@ flowchart LR
 
 ## Deployment
 
+The proxy is published as a prebuilt image, `public.ecr.aws/aktosecurity/akto-egress-proxy:latest`, which bundles the `akto_guardrails.py` addon. Deploy it next to your agent with [Docker Compose](#deploy-with-docker-compose) or on [Kubernetes](#deploy-on-kubernetes).
+
+## Deploy with Docker Compose
+
 {% hint style="info" %}
 **Prerequisites**
 
@@ -65,7 +69,7 @@ export APP_NAME=my-ai-agent                # identifies your app in Akto guardra
 {% step %}
 ### Create `docker-compose.yml`
 
-The proxy is published as a prebuilt image that bundles the `akto_guardrails.py` addon. Create a `docker-compose.yml` with the proxy and your agent. Replace `your-ai-agent:latest` with your agent's image:
+Create a `docker-compose.yml` with the proxy and your agent. Replace `your-ai-agent:latest` with your agent's image:
 
 ```yaml
 services:
@@ -154,6 +158,184 @@ You should see `[AKTO] URL: <your-akto-url>/api/http-proxy` and `[AKTO] AI hosts
 {% endstep %}
 {% endstepper %}
 
+## Deploy on Kubernetes
+
+On Kubernetes, the proxy runs as a sidecar in your agent's pod and listens on `127.0.0.1:8087`, so only containers in that pod can use it. Certificates are supplied through volume mounts:
+
+* **CA key and certificate**: stored in a Secret and mounted into the proxy. Every pod and replica signs with the same CA, so restarts and rescheduling don't change it.
+* **Public CA certificate**: stored in a ConfigMap. An init container combines it with the system CAs into a bundle that the agent reads. The agent doesn't need root or `update-ca-certificates`.
+
+{% stepper %}
+{% step %}
+### Create a CA certificate
+
+The proxy needs a CA certificate and key to sign intercepted connections. To use an existing CA, skip to the next step. It must be a signing CA (`CA:TRUE`, `keyCertSign`) with an unencrypted key.
+
+```bash
+openssl req -x509 -newkey rsa:2048 -nodes -days 3650 \
+  -keyout ca.key -out ca.crt -subj "/CN=Akto Egress Proxy CA" \
+  -addext "basicConstraints=critical,CA:TRUE" \
+  -addext "keyUsage=critical,keyCertSign,cRLSign"
+cat ca.key ca.crt > mitmproxy-ca.pem
+```
+
+`mitmproxy-ca.pem` holds the private key and certificate, and only the proxy gets it. `ca.crt` is the public certificate that your agent trusts.
+{% endstep %}
+
+{% step %}
+### Create the Secret and ConfigMap
+
+Create them in the namespace your agent runs in:
+
+```bash
+export NS=my-namespace
+kubectl -n $NS create secret generic akto-egress-ca --from-file=mitmproxy-ca.pem=mitmproxy-ca.pem
+kubectl -n $NS create configmap akto-egress-ca-cert --from-file=mitmproxy-ca-cert.pem=ca.crt
+```
+
+| Resource              | Contains                       | Mounted into               |
+| --------------------- | ------------------------------ | -------------------------- |
+| `akto-egress-ca`      | CA private key and certificate | Proxy only                 |
+| `akto-egress-ca-cert` | Public CA certificate          | `ca-bundle` init container |
+{% endstep %}
+
+{% step %}
+### Add the proxy sidecar to your Deployment
+
+Add the two init containers, the agent environment variables, and the volumes to your agent's Deployment. Replace `your-agent`, `your-ai-agent:latest`, `AKTO_URL` and `APP_NAME` with your own values:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: your-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: your-agent
+  template:
+    metadata:
+      labels:
+        app: your-agent
+    spec:
+      initContainers:
+        # Builds a CA bundle of the system CAs plus the proxy CA.
+        - name: ca-bundle
+          image: public.ecr.aws/aktosecurity/akto-egress-proxy:latest
+          command: ["sh", "-c", "cat /etc/ssl/certs/ca-certificates.crt /akto-ca/mitmproxy-ca-cert.pem > /ca-bundle/ca-certificates.crt"]
+          volumeMounts:
+            - name: akto-ca-cert
+              mountPath: /akto-ca
+              readOnly: true
+            - name: ca-bundle
+              mountPath: /ca-bundle
+        # Native sidecar: starts before the agent and keeps running.
+        - name: akto-egress-proxy
+          image: public.ecr.aws/aktosecurity/akto-egress-proxy:latest
+          restartPolicy: Always
+          args:
+            - mitmdump
+            - --listen-host
+            - 127.0.0.1
+            - --listen-port
+            - "8087"
+            - --ignore-hosts
+            - '^(?!((api\.openai\.com|api\.anthropic\.com|chatgpt\.com|bedrock-runtime\.[^:]*\.amazonaws\.com|bedrock-agent-runtime\.[^:]*\.amazonaws\.com):\d+$))(?!(\d+\.\d+\.\d+\.\d+|\[?[0-9a-f:]+\]?):\d+$).*'
+            - -s
+            - /addons/akto_guardrails.py
+          env:
+            - name: AKTO_URL
+              value: https://akto.example.com
+            - name: APP_NAME
+              value: my-ai-agent
+            - name: AI_HOSTS
+              value: ""
+          volumeMounts:
+            # mitmproxy writes mitmproxy-dhparam.pem here, so it must be writable.
+            - name: mitmproxy-confdir
+              mountPath: /home/mitmproxy/.mitmproxy
+            - name: akto-ca
+              mountPath: /home/mitmproxy/.mitmproxy/mitmproxy-ca.pem
+              subPath: mitmproxy-ca.pem
+              readOnly: true
+      containers:
+        - name: agent
+          image: your-ai-agent:latest
+          env:
+            - name: HTTP_PROXY
+              value: http://127.0.0.1:8087
+            - name: HTTPS_PROXY
+              value: http://127.0.0.1:8087
+            - name: SSL_CERT_FILE
+              value: /ca-bundle/ca-certificates.crt
+            - name: REQUESTS_CA_BUNDLE
+              value: /ca-bundle/ca-certificates.crt
+            - name: AWS_CA_BUNDLE
+              value: /ca-bundle/ca-certificates.crt
+          volumeMounts:
+            - name: ca-bundle
+              mountPath: /ca-bundle
+              readOnly: true
+      volumes:
+        - name: akto-ca
+          secret:
+            secretName: akto-egress-ca
+            defaultMode: 0400
+        - name: akto-ca-cert
+          configMap:
+            name: akto-egress-ca-cert
+        - name: ca-bundle
+          emptyDir: {}
+        - name: mitmproxy-confdir
+          emptyDir: {}
+```
+
+Apply it:
+
+```bash
+kubectl -n $NS apply -f deployment.yaml
+kubectl -n $NS rollout status deploy/your-agent
+```
+
+{% hint style="info" %}
+**How the manifest works**
+
+* **Proxy directory is an `emptyDir`.** mitmproxy writes `mitmproxy-dhparam.pem` to `/home/mitmproxy/.mitmproxy` on startup. Secret mounts are read-only, so mounting the Secret over the whole directory makes the proxy crash. Only `mitmproxy-ca.pem` is mounted from the Secret, with `subPath`.
+* **Non-Python runtimes**: Node.js reads `NODE_EXTRA_CA_CERTS`, so point it at `/ca-bundle/ca-certificates.crt`. Go, curl and Ruby read `SSL_CERT_FILE`.
+* **Regex escaping**: write the `--ignore-hosts` regex with single `$`. The `$$` form is only for `docker-compose.yml`.
+{% endhint %}
+{% endstep %}
+
+{% step %}
+### Verify
+
+Check the proxy's logs:
+
+```bash
+kubectl -n $NS logs -f deploy/your-agent -c akto-egress-proxy
+```
+
+You should see `[AKTO] URL: <your-akto-url>/api/http-proxy` on startup, and `evaluating request` / `evaluating response` when your agent makes LLM calls. A request blocked by a guardrail shows `<< 403 Forbidden`, and the agent receives a `403` response.
+
+To check the agent's own output:
+
+```bash
+kubectl -n $NS logs deploy/your-agent -c agent
+```
+{% endstep %}
+{% endstepper %}
+
+### Rotate the CA
+
+Update the Secret and ConfigMap, then restart the Deployment. Mounts that use `subPath` don't pick up Secret changes, and the agent's bundle is only built at pod start:
+
+```bash
+kubectl -n $NS create secret generic akto-egress-ca --from-file=mitmproxy-ca.pem=mitmproxy-ca.pem --dry-run=client -o yaml | kubectl -n $NS apply -f -
+kubectl -n $NS create configmap akto-egress-ca-cert --from-file=mitmproxy-ca-cert.pem=ca.crt --dry-run=client -o yaml | kubectl -n $NS apply -f -
+kubectl -n $NS rollout restart deploy/your-agent
+```
+
 ## Supported AI Providers
 
 By default, the proxy intercepts traffic only to these hosts; all other traffic passes through unmodified:
@@ -166,9 +348,9 @@ By default, the proxy intercepts traffic only to these hosts; all other traffic 
 
 Other AWS traffic, such as S3 or STS, passes through without inspection.
 
-A host is intercepted only if it is in both the `AI_HOSTS` list and the `--ignore-hosts` regex in `docker-compose.yml`. To add a provider, update both.
+A host is intercepted only if it is in both the `AI_HOSTS` list and the proxy's `--ignore-hosts` regex, which is in `docker-compose.yml` or your Kubernetes Deployment. To add a provider, update both.
 
-1. Set `AI_HOSTS` to a comma-separated list of hosts. The value replaces the default list, so include every host you want intercepted:
+1. Set `AI_HOSTS` to a comma-separated list of hosts, either as an environment variable for Docker Compose or in the proxy container's `env` on Kubernetes. The value replaces the default list, so include every host you want intercepted:
 
    ```bash
    export AI_HOSTS="api.openai.com,api.anthropic.com,bedrock-runtime.*.amazonaws.com,api.mistral.ai"
