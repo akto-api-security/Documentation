@@ -134,19 +134,15 @@ services:
 {% hint style="info" %}
 **CA Certificate**
 
-The `mitmproxy-data/mitmproxy-ca-cert.pem` file is created automatically on first run (Step 3). Your agent container must trust it, or every intercepted call fails with `CERTIFICATE_VERIFY_FAILED`:
+`mitmproxy-data/mitmproxy-ca-cert.pem` is created on first run (Step 3). Your agent container must trust it, or intercepted calls fail with `CERTIFICATE_VERIFY_FAILED`:
 
-1. Mount the cert into `/usr/local/share/ca-certificates/` as shown above.
-2. Run `update-ca-certificates` when the container starts or in its Dockerfile. This adds the cert to the system bundle at `/etc/ssl/certs/ca-certificates.crt`. The image needs the `ca-certificates` package.
-3. Point your HTTP clients at that bundle. Python clients (`requests`, `httpx`, `boto3`) ignore the system bundle by default, so set `SSL_CERT_FILE`, `REQUESTS_CA_BUNDLE`, and `AWS_CA_BUNDLE` as shown above.
+1. Mount it into `/usr/local/share/ca-certificates/` as shown above.
+2. Run `update-ca-certificates` to add it to `/etc/ssl/certs/ca-certificates.crt`.
+3. Point Python clients at that bundle with `SSL_CERT_FILE`, `REQUESTS_CA_BUNDLE` and `AWS_CA_BUNDLE` — they ignore the system store by default.
 
-Point these variables at the combined system bundle, not at `mitmproxy-ca-cert.pem` alone. They replace the client's trust store, so a file with only the mitmproxy cert breaks every call that the proxy doesn't intercept.
+Point those variables at the **combined** bundle, not at `mitmproxy-ca-cert.pem` alone: they replace the trust store entirely, so a file holding only the mitmproxy cert breaks every call the proxy does not intercept.
 
-For other runtimes:
-
-* **Node.js**: set `NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/mitmproxy-ca-cert.crt`. This adds to Node's trust store, so the mitmproxy cert alone is correct here.
-* **Go, curl, Ruby**: read the system bundle, so steps 1 and 2 are enough.
-* **Java**: import the cert into the JVM truststore with `keytool`.
+Node.js uses `NODE_EXTRA_CA_CERTS` (which adds rather than replaces, so the cert alone is fine). Go, curl and Ruby read the system bundle, so steps 1–2 suffice. Java needs `keytool`.
 {% endhint %}
 {% endstep %}
 
@@ -184,17 +180,6 @@ A host is intercepted only if it is in both the `AI_HOSTS` list and the `--ignor
    ```
 
 2. Add the host to the first group in the `--ignore-hosts` regex, for example `|api\.mistral\.ai`.
-
-{% hint style="warning" %}
-**Writing the `--ignore-hosts` regex**
-
-mitmproxy matches the regex against `host:port` strings for both the hostname and the resolved IP address, for example `api.anthropic.com:443` and `160.79.104.10:443`. A connection is skipped if any of these strings match. Keep these two parts of the default regex when you edit it:
-
-* End host patterns with `:\d+$`, not `$`. A pattern ending in `com$` never matches `api.anthropic.com:443`, so every host is skipped.
-* Keep the second lookahead, which stops bare IP addresses from matching. Without it, the resolved IP always matches and every host is skipped.
-
-In `docker-compose.yml`, write `$` as `$$` so Compose doesn't treat it as a variable.
-{% endhint %}
 
 {% hint style="info" %}
 **All outbound traffic is routed through the proxy container**
