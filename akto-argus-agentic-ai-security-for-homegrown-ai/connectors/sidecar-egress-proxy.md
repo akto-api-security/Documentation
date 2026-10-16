@@ -102,9 +102,9 @@ services:
     environment:
       HTTP_PROXY: http://akto-egress-proxy:8087
       HTTPS_PROXY: http://akto-egress-proxy:8087
-      SSL_CERT_FILE: /etc/ssl/certs/ca-certificates.crt       # httpx (OpenAI / Anthropic SDKs)
-      REQUESTS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt  # requests
-      AWS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt       # boto3 (Amazon Bedrock)
+      SSL_CERT_FILE: /etc/ssl/certs/ca-certificates.crt       
+      REQUESTS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt  
+      AWS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt       
     volumes:
       - ./mitmproxy-data/mitmproxy-ca-cert.pem:/usr/local/share/ca-certificates/mitmproxy-ca-cert.crt:ro
 
