@@ -165,15 +165,6 @@ On Kubernetes, the proxy runs as a sidecar in your agent's pod and listens on `1
 * **CA key and certificate**: stored in a Secret and mounted into the proxy. Every pod and replica signs with the same CA, so restarts and rescheduling don't change it.
 * **Public CA certificate**: stored in a ConfigMap. An init container combines it with the system CAs into a bundle that the agent reads. The agent doesn't need root or `update-ca-certificates`.
 
-{% hint style="info" %}
-**Prerequisites**
-
-* Kubernetes 1.29 or later, for native sidecar containers
-* `kubectl` access to the cluster and the namespace your agent runs in
-* Nodes that can pull from `public.ecr.aws` and reach your AI providers
-* An Akto instance reachable from the cluster, with your `AKTO_URL`
-{% endhint %}
-
 {% stepper %}
 {% step %}
 ### Create a CA certificate
@@ -276,8 +267,6 @@ spec:
               value: http://127.0.0.1:8087
             - name: HTTPS_PROXY
               value: http://127.0.0.1:8087
-            - name: NO_PROXY
-              value: localhost,127.0.0.1,.svc,.cluster.local
             - name: SSL_CERT_FILE
               value: /ca-bundle/ca-certificates.crt
             - name: REQUESTS_CA_BUNDLE
@@ -313,7 +302,6 @@ kubectl -n $NS rollout status deploy/your-agent
 **How the manifest works**
 
 * **Proxy directory is an `emptyDir`.** mitmproxy writes `mitmproxy-dhparam.pem` to `/home/mitmproxy/.mitmproxy` on startup. Secret mounts are read-only, so mounting the Secret over the whole directory makes the proxy crash. Only `mitmproxy-ca.pem` is mounted from the Secret, with `subPath`.
-* **`NO_PROXY`** keeps in-cluster traffic off the proxy. Add other internal hosts your agent calls.
 * **Non-Python runtimes**: Node.js reads `NODE_EXTRA_CA_CERTS`, so point it at `/ca-bundle/ca-certificates.crt`. Go, curl and Ruby read `SSL_CERT_FILE`.
 * **Regex escaping**: write the `--ignore-hosts` regex with single `$`. The `$$` form is only for `docker-compose.yml`.
 {% endhint %}
@@ -348,16 +336,6 @@ kubectl -n $NS create configmap akto-egress-ca-cert --from-file=mitmproxy-ca-cer
 kubectl -n $NS rollout restart deploy/your-agent
 ```
 
-### Troubleshooting
-
-| Symptom | Cause | Fix |
-| --- | --- | --- |
-| `Init:CrashLoopBackOff`; the proxy logs `Read-only file system: ... mitmproxy-dhparam.pem` | The Secret is mounted over the whole `/home/mitmproxy/.mitmproxy` directory | Use the `emptyDir` plus `subPath` mounts shown above |
-| `CERTIFICATE_VERIFY_FAILED` in the agent | The bundle variables aren't set, or the ConfigMap certificate doesn't match the Secret | Set `SSL_CERT_FILE`, `REQUESTS_CA_BUNDLE` and `AWS_CA_BUNDLE`, and recreate both from the same CA |
-| `unknown field "restartPolicy"` | The cluster is older than 1.29 | Move `akto-egress-proxy` from `initContainers` to `containers`. The agent may then start before the proxy is ready, so retry early calls. |
-| `ImagePullBackOff` | Nodes can't reach `public.ecr.aws` | Allow outbound access, for example through a NAT gateway |
-| `[AKTO] URL: None` in the proxy logs | `AKTO_URL` isn't set on the proxy container | Set it in the Deployment's `env` and apply again |
-
 ## Supported AI Providers
 
 By default, the proxy intercepts traffic only to these hosts; all other traffic passes through unmodified:
@@ -383,7 +361,7 @@ A host is intercepted only if it is in both the `AI_HOSTS` list and the proxy's 
 {% hint style="info" %}
 **All outbound traffic is routed through the proxy container**
 
-Because `HTTP_PROXY` / `HTTPS_PROXY` are set on the agent container, every outbound request not listed in `NO_PROXY` — not just AI API calls — is sent through the mitmproxy process as a network hop. Mitmproxy only performs SSL interception and guardrail evaluation on the AI provider hosts listed above; all other traffic is tunnelled through without inspection.
+Because `HTTP_PROXY` / `HTTPS_PROXY` are set on the agent container, every outbound request — not just AI API calls — is sent through the mitmproxy process as a network hop. Mitmproxy only performs SSL interception and guardrail evaluation on the AI provider hosts listed above; all other traffic is tunnelled through without inspection.
 {% endhint %}
 
 ## How Guardrails Work
