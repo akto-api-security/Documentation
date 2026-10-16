@@ -192,7 +192,7 @@ cat ca.key ca.crt > mitmproxy-ca.pem
 {% endstep %}
 
 {% step %}
-### Create the Secret and ConfigMaps
+### Create the Secret and ConfigMap
 
 Create them in the namespace your agent runs in:
 
@@ -200,22 +200,18 @@ Create them in the namespace your agent runs in:
 export NS=my-namespace
 kubectl -n $NS create secret generic akto-egress-ca --from-file=mitmproxy-ca.pem=mitmproxy-ca.pem
 kubectl -n $NS create configmap akto-egress-ca-cert --from-file=mitmproxy-ca-cert.pem=ca.crt
-kubectl -n $NS create configmap akto-egress-config \
-  --from-literal=AKTO_URL=https://akto.example.com \
-  --from-literal=APP_NAME=my-ai-agent
 ```
 
-| Resource              | Contains                                    | Mounted into           |
-| --------------------- | ------------------------------------------- | ---------------------- |
-| `akto-egress-ca`      | CA private key and certificate              | Proxy only             |
-| `akto-egress-ca-cert` | Public CA certificate                       | `ca-bundle` init container |
-| `akto-egress-config`  | `AKTO_URL`, `APP_NAME`, optional `AI_HOSTS` | Proxy                  |
+| Resource              | Contains                       | Mounted into               |
+| --------------------- | ------------------------------ | -------------------------- |
+| `akto-egress-ca`      | CA private key and certificate | Proxy only                 |
+| `akto-egress-ca-cert` | Public CA certificate          | `ca-bundle` init container |
 {% endstep %}
 
 {% step %}
 ### Add the proxy sidecar to your Deployment
 
-Add the two init containers, the agent environment variables, and the volumes to your agent's Deployment. Replace `your-agent` and `your-ai-agent:latest` with your own values:
+Add the two init containers, the agent environment variables, and the volumes to your agent's Deployment. Replace `your-agent`, `your-ai-agent:latest`, `AKTO_URL` and `APP_NAME` with your own values:
 
 ```yaml
 apiVersion: apps/v1
@@ -257,17 +253,13 @@ spec:
             - '^(?!((api\.openai\.com|api\.anthropic\.com|chatgpt\.com|bedrock-runtime\.[^:]*\.amazonaws\.com|bedrock-agent-runtime\.[^:]*\.amazonaws\.com):\d+$))(?!(\d+\.\d+\.\d+\.\d+|\[?[0-9a-f:]+\]?):\d+$).*'
             - -s
             - /addons/akto_guardrails.py
-          envFrom:
-            - configMapRef:
-                name: akto-egress-config
           env:
-            - name: PYTHONUNBUFFERED
-              value: "1"
-          startupProbe:
-            exec:
-              command: ["python", "-c", "import socket; socket.create_connection(('127.0.0.1', 8087), 1)"]
-            periodSeconds: 2
-            failureThreshold: 30
+            - name: AKTO_URL
+              value: https://akto.example.com
+            - name: APP_NAME
+              value: my-ai-agent
+            - name: AI_HOSTS
+              value: ""
           volumeMounts:
             # mitmproxy writes mitmproxy-dhparam.pem here, so it must be writable.
             - name: mitmproxy-confdir
@@ -285,7 +277,7 @@ spec:
             - name: HTTPS_PROXY
               value: http://127.0.0.1:8087
             - name: NO_PROXY
-              value: localhost,127.0.0.1,169.254.169.254,169.254.170.23,.svc,.cluster.local
+              value: localhost,127.0.0.1,.svc,.cluster.local
             - name: SSL_CERT_FILE
               value: /ca-bundle/ca-certificates.crt
             - name: REQUESTS_CA_BUNDLE
@@ -321,8 +313,7 @@ kubectl -n $NS rollout status deploy/your-agent
 **How the manifest works**
 
 * **Proxy directory is an `emptyDir`.** mitmproxy writes `mitmproxy-dhparam.pem` to `/home/mitmproxy/.mitmproxy` on startup. Secret mounts are read-only, so mounting the Secret over the whole directory makes the proxy crash. Only `mitmproxy-ca.pem` is mounted from the Secret, with `subPath`.
-* **`startupProbe`** holds the agent back until the proxy accepts connections.
-* **`NO_PROXY`** keeps in-cluster traffic and the AWS credential endpoints (`169.254.169.254` for instance metadata, `169.254.170.23` for EKS Pod Identity) off the proxy. Add other internal hosts your agent calls.
+* **`NO_PROXY`** keeps in-cluster traffic off the proxy. Add other internal hosts your agent calls.
 * **Non-Python runtimes**: Node.js reads `NODE_EXTRA_CA_CERTS`, so point it at `/ca-bundle/ca-certificates.crt`. Go, curl and Ruby read `SSL_CERT_FILE`.
 * **Regex escaping**: write the `--ignore-hosts` regex with single `$`. The `$$` form is only for `docker-compose.yml`.
 {% endhint %}
@@ -347,12 +338,6 @@ kubectl -n $NS logs deploy/your-agent -c agent
 {% endstep %}
 {% endstepper %}
 
-{% hint style="info" %}
-**Calling Amazon Bedrock with an IAM role**
-
-Agents on EKS can use EKS Pod Identity or IRSA instead of access keys. Credential requests go to `169.254.170.23` (Pod Identity) or STS, which the proxy doesn't intercept, so no extra configuration is needed beyond `NO_PROXY` above. Grant the role `bedrock:InvokeModel` and `bedrock:InvokeModelWithResponseStream` on the models and inference profiles your agent uses.
-{% endhint %}
-
 ### Rotate the CA
 
 Update the Secret and ConfigMap, then restart the Deployment. Mounts that use `subPath` don't pick up Secret changes, and the agent's bundle is only built at pod start:
@@ -371,7 +356,7 @@ kubectl -n $NS rollout restart deploy/your-agent
 | `CERTIFICATE_VERIFY_FAILED` in the agent | The bundle variables aren't set, or the ConfigMap certificate doesn't match the Secret | Set `SSL_CERT_FILE`, `REQUESTS_CA_BUNDLE` and `AWS_CA_BUNDLE`, and recreate both from the same CA |
 | `unknown field "restartPolicy"` | The cluster is older than 1.29 | Move `akto-egress-proxy` from `initContainers` to `containers`. The agent may then start before the proxy is ready, so retry early calls. |
 | `ImagePullBackOff` | Nodes can't reach `public.ecr.aws` | Allow outbound access, for example through a NAT gateway |
-| `[AKTO] URL: None` in the proxy logs | `AKTO_URL` isn't set in `akto-egress-config` | Update the ConfigMap and restart the Deployment |
+| `[AKTO] URL: None` in the proxy logs | `AKTO_URL` isn't set on the proxy container | Set it in the Deployment's `env` and apply again |
 
 ## Supported AI Providers
 
@@ -387,7 +372,7 @@ Other AWS traffic, such as S3 or STS, passes through without inspection.
 
 A host is intercepted only if it is in both the `AI_HOSTS` list and the proxy's `--ignore-hosts` regex, which is in `docker-compose.yml` or your Kubernetes Deployment. To add a provider, update both.
 
-1. Set `AI_HOSTS` to a comma-separated list of hosts, either as an environment variable for Docker Compose or in the `akto-egress-config` ConfigMap on Kubernetes. The value replaces the default list, so include every host you want intercepted:
+1. Set `AI_HOSTS` to a comma-separated list of hosts, either as an environment variable for Docker Compose or in the proxy container's `env` on Kubernetes. The value replaces the default list, so include every host you want intercepted:
 
    ```bash
    export AI_HOSTS="api.openai.com,api.anthropic.com,bedrock-runtime.*.amazonaws.com,api.mistral.ai"
