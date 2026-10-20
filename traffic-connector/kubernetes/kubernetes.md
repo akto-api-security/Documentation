@@ -54,6 +54,9 @@ spec:
             value: "gcp"
           - name: AKTO_KAFKA_BROKER_MAL
             value: "<AKTO_NLB_IP>:9092"
+          # Optional: tag the collections created from this cluster's traffic
+          - name: AKTO_INJECT_TAGS
+            value: "SOURCE=<CLUSTER_NAME>"
 ```
 
 2. Replace `{NAMESPACE}` with your app namespace and `{APP_NAME}` with the name of your app. If you have installed on _AWS_ -
@@ -94,6 +97,10 @@ Data remains strictly within your VPC. Akto doesn't take data out of your VPC at
 **Does adding DaemonSet have any impact on performance or latency?**
 
 Zero impact on latency. The DaemonSet doesn't sit like a proxy. It simply intercepts traffic - very similar to tcpdump. It is very lightweight. We have benchmarked it against traffic as high as 20M API requests/min. It consumes very low resources (CPU & RAM).
+
+## Automated tags
+
+To see which cluster each API collection came from, set `AKTO_INJECT_TAGS` on the collector, as in the config above. Use `key=value` pairs separated by `;`, for example `SOURCE=cluster-a;team=payments`. Each pair shows up as a tag on the collections created from this collector's traffic. Use a different value for each cluster. Learn more in [Automated Tags](../../api-inventory/how-to/set-tags.md#automated-tags).
 
 ## Troubleshooting Guide
 

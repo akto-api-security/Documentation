@@ -67,6 +67,9 @@ spec:
             value: "100"
           - name: AKTO_KAFKA_BROKER_MAL
             value: "<AKTO_NLB_IP>:9092"
+          # Optional: tag the collections created from this cluster's traffic
+          - name: AKTO_INJECT_TAGS
+            value: "SOURCE=<CLUSTER_NAME>"
           - name: NODE_NAME
             valueFrom:
               fieldRef:
@@ -150,6 +153,15 @@ You can add and configure the env variables below to control the daemonset. Here
 You can check your `API inventory` on Akto dashboard to see endpoints being discovered.
 {% endstep %}
 {% endstepper %}
+
+## Automated tags
+
+Use automated tags to see where each API collection came from. There are two options, and you can use both.
+
+* **Tag by source (collector):** set `AKTO_INJECT_TAGS` on this collector, as in the config above. Use `key=value` pairs separated by `;`, for example `SOURCE=cluster-a;team=payments`. Each pair becomes a tag on the collections created from this collector's traffic. Use a different value for each cluster.
+* **Tag by environment (mini-runtime):** set the `VPC_ID` environment variable on the mini-runtime that receives this collector's traffic. Its value becomes the `env` tag on those collections.
+
+Learn more in [Automated Tags](../../api-inventory/how-to/set-tags.md#automated-tags).
 
 ## Frequently Asked Questions (FAQs)
 
