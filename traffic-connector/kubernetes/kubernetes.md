@@ -54,9 +54,6 @@ spec:
             value: "gcp"
           - name: AKTO_KAFKA_BROKER_MAL
             value: "<AKTO_NLB_IP>:9092"
-          # Optional: tag the collections created from this cluster's traffic
-          - name: AKTO_INJECT_TAGS
-            value: "SOURCE=<CLUSTER_NAME>"
 ```
 
 2. Replace `{NAMESPACE}` with your app namespace and `{APP_NAME}` with the name of your app. If you have installed on _AWS_ -
@@ -100,7 +97,18 @@ Zero impact on latency. The DaemonSet doesn't sit like a proxy. It simply interc
 
 ## Automated tags
 
-To see which cluster each API collection came from, set `AKTO_INJECT_TAGS` on the collector, as in the config above. Use `key=value` pairs separated by `;`, for example `SOURCE=cluster-a;team=payments`. Each pair shows up as a tag on the collections created from this collector's traffic. Use a different value for each cluster. Learn more in [Automated Tags](../../api-inventory/how-to/set-tags.md#automated-tags).
+To see which cluster each API collection came from, set `AKTO_INJECT_TAGS` on the collector. Use `key=value` pairs separated by `;`, for example `SOURCE=cluster-a;team=payments`. Each pair shows up as a tag on the collections created from this collector's traffic. Use a different value for each cluster. Learn more in [Automated Tags](../../api-inventory/how-to/set-tags.md#automated-tags).
+
+{% hint style="info" %}
+To tag by source, add this to the `env` section of the collector config above:
+
+```yaml
+- name: AKTO_INJECT_TAGS
+  value: "SOURCE=<CLUSTER_NAME>"
+```
+
+For all options and examples, see [Automated Tags](../../api-inventory/how-to/set-tags.md#automated-tags).
+{% endhint %}
 
 ## Troubleshooting Guide
 
