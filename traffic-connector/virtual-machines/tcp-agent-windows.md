@@ -2,7 +2,7 @@
 
 ## Introduction
 
-You can use Akto traffic collector on Windows servers to collect and send traffic to Akto. It runs as a Windows service and needs no Docker or Npcap. Your APIs from this traffic will show up in Akto dashboard.
+You can use Akto traffic collector on Windows servers to collect and send traffic to Akto. It runs as a Windows service on x64 and ARM64 machines and needs no Docker or Npcap. Your APIs from this traffic will show up in Akto dashboard.
 
 ## Adding Akto traffic processor
 
@@ -10,13 +10,13 @@ You can use Akto traffic collector on Windows servers to collect and send traffi
 
 ## Adding Akto traffic collector service
 
-1. Open PowerShell as Administrator, then download and extract the collector. You can also download [akto-traffic-mirroring-windows-amd64.zip](https://github.com/akto-api-security/mirroring-api-logging/releases/latest/download/akto-traffic-mirroring-windows-amd64.zip) in a browser and copy it to the server.
+1. Open PowerShell as Administrator, then download and extract the collector. You can also download [akto-traffic-mirroring-windows.zip](https://github.com/akto-api-security/mirroring-api-logging/releases/latest/download/akto-traffic-mirroring-windows.zip) in a browser and copy it to the server.
 
 ```powershell
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-WebRequest "https://github.com/akto-api-security/mirroring-api-logging/releases/latest/download/akto-traffic-mirroring-windows-amd64.zip" -OutFile akto-traffic-mirroring-windows-amd64.zip -UseBasicParsing
-Expand-Archive akto-traffic-mirroring-windows-amd64.zip -DestinationPath C:\akto-setup -Force
-cd C:\akto-setup\akto-traffic-mirroring-windows-amd64
+Invoke-WebRequest "https://github.com/akto-api-security/mirroring-api-logging/releases/latest/download/akto-traffic-mirroring-windows.zip" -OutFile akto-traffic-mirroring-windows.zip -UseBasicParsing
+Expand-Archive akto-traffic-mirroring-windows.zip -DestinationPath C:\akto-setup -Force
+cd C:\akto-setup\akto-traffic-mirroring-windows
 Get-ChildItem | Unblock-File
 Set-ExecutionPolicy -Scope Process Bypass -Force
 ```
