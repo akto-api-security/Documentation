@@ -227,6 +227,7 @@
     * [Install testing module as a StatefulSet](api-security-testing/how-to/install-testing-module-in-your-cloud/install-testing-module-as-a-statefulset.md)
     * [Ephemeral Storage for Hybrid Runtime](api-security-testing/how-to/install-testing-module-in-your-cloud/ephemeral-storage-for-hybrid-runtime.md)
     * [gRPC Testing in Hybrid Testing Module](api-security-testing/how-to/install-testing-module-in-your-cloud/grpc-testing-in-hybrid-testing-module.md)
+    * [Autoscale the Testing Module](api-security-testing/how-to/install-testing-module-in-your-cloud/autoscaling-testing-module.md)
   * [Set Up Smart Automated Testing](api-security-testing/how-to/set-up-smart-automated-testing.md)
   * [Create Custom Test Suites](api-security-testing/how-to/create-custom-test-suites.md)
   * [Recalculate Issue Counts](api-security-testing/how-to/recalculate-issue-counts.md)

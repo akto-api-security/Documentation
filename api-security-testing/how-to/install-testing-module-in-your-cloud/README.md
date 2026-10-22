@@ -56,6 +56,8 @@ helm install akto-mini-testing akto/akto-mini-testing -n <your-namespace> --set 
 
 If you don't need autoscaling, skip this section.
 
+For the full guide, including both autoscaling modes, settings and troubleshooting, see [Autoscale the Testing Module](autoscaling-testing-module.md).
+
 Autoscaling enables parallel test runs via multiple Kubernetes pods that scale based on workload.
 
 The steps below use Prometheus and KEDA. If you can't install those in your cluster, see [Autoscaling without Prometheus or KEDA](#autoscaling-without-prometheus-or-keda-orchestrator-mode).
