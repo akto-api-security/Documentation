@@ -12,7 +12,7 @@ LiteLLM is a unified interface for calling 100+ LLM APIs in a consistent format.
 
 There are two ways to connect Akto with LiteLLM:
 
-* [**Native Guardrail**](litellm.md#option-1-native-guardrail)**:** LiteLLM's built-in Akto guardrail, set up in the LiteLLM Admin UI. Nothing to deploy, and each guardrail chooses which Akto policies to enforce and whether traffic goes to Argus or Atlas. From LiteLLM `v1.106.0` (stable, upcoming) and the `v1.106.0-dev.2` pre-release, it also checks responses, streams and MCP tool calls (see [LiteLLM Version](litellm.md#litellm-version)).
+* [**Native Guardrail**](litellm.md#option-1-native-guardrail)**:** LiteLLM's built-in Akto guardrail, set up in the LiteLLM Admin UI. Nothing to deploy, and each guardrail chooses which Akto policies to enforce and whether traffic goes to Argus or Atlas. From LiteLLM `v1.106.0`, it also checks responses, streams and MCP tool calls (see [LiteLLM Version](litellm.md#litellm-version)).
 * [**Custom Hook**](litellm.md#option-2-custom-hook)**:** Akto's `custom_hooks.py` callback, loaded from `config.yaml`. Use this if you need per-agent collections, session tracking, or an async (log-only) mode. It checks requests, responses, streams and MCP tool calls.
 
 ## Option 1: Native Guardrail
@@ -21,13 +21,13 @@ LiteLLM ships an Akto guardrail that calls Akto directly from the LiteLLM proxy.
 
 ### LiteLLM Version
 
-Akto's updated guardrail is available in the LiteLLM `v1.106.0-dev.2` pre-release and later, and in stable releases from `v1.106.0` (upcoming). Stable `v1.104.x` and `v1.105.x` releases don't include it and use the `akto_vxlan_id` directive. On this page, "`v1.106.0` and later" covers both. Check the version of your proxy, then follow the matching setup:
+Akto's updated guardrail is available from LiteLLM `v1.106.0`, and in the `v1.106.0-dev.2` pre-release and later pre-releases. Earlier versions, including `v1.104.x` and `v1.105.x`, don't include it and use the `akto_vxlan_id` directive. Check the version of your proxy, then follow the matching setup:
 
 ```bash
 curl -s http://<your-litellm-host>/health/readiness | jq -r .litellm_version
 ```
 
-<table><thead><tr><th width="190">LiteLLM version</th><th width="200">Setup</th><th>What the guardrail does</th></tr></thead><tbody><tr><td><code>v1.106.0-dev.2</code> pre-release and later, and stable <code>v1.106.0</code> (upcoming) and later</td><td><a href="litellm.md#steps-to-connect-on-newer-versions">Steps to Connect on Newer Versions</a></td><td>Picks the context source with <code>context_source</code> and the policies with <code>akto_metadata</code>. Blocks or masks requests, responses (including streams), MCP tool calls and MCP tool results.</td></tr><tr><td>Stable <code>v1.104.x</code>, <code>v1.105.x</code> and earlier, including the <code>v1.105.0</code> release candidates</td><td><a href="litellm.md#steps-to-connect-on-older-versions">Steps to Connect on Older Versions</a></td><td>Picks the context source and the policies with the <code>akto_vxlan_id</code> directive. Blocks requests only; responses are recorded but never blocked, and MCP tool calls are not checked.</td></tr></tbody></table>
+<table><thead><tr><th width="190">LiteLLM version</th><th width="200">Setup</th><th>What the guardrail does</th></tr></thead><tbody><tr><td><code>v1.106.0</code> and later, including the <code>v1.106.0-dev.2</code> pre-release</td><td><a href="litellm.md#steps-to-connect-on-newer-versions">Steps to Connect on Newer Versions</a></td><td>Picks the context source with <code>context_source</code> and the policies with <code>akto_metadata</code>. Blocks or masks requests, responses (including streams), MCP tool calls and MCP tool results.</td></tr><tr><td>Stable <code>v1.104.x</code>, <code>v1.105.x</code> and earlier, including the <code>v1.105.0</code> release candidates</td><td><a href="litellm.md#steps-to-connect-on-older-versions">Steps to Connect on Older Versions</a></td><td>Picks the context source and the policies with the <code>akto_vxlan_id</code> directive. Blocks requests only; responses are recorded but never blocked, and MCP tool calls are not checked.</td></tr></tbody></table>
 
 {% hint style="info" %}
 The `akto_vxlan_id` directive keeps working on `v1.106.0` and later, so existing guardrails don't break on upgrade. Move them to `context_source` and `akto_metadata` when convenient.
