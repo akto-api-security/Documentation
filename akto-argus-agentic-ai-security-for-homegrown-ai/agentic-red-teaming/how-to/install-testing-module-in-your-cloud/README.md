@@ -63,6 +63,8 @@ Add the `red-teaming` model before running scans. Without it, the module has no 
 
 You then have to use a Linux VM or a Helm chart to install Akto AI Red Teaming module in your cloud.
 
+To run several scans in parallel on Kubernetes, see [Autoscale the Scanning Module](autoscaling-testing-module.md).
+
 ## Setup with Helm Chart
 
 {% stepper %}

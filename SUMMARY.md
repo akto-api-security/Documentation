@@ -286,6 +286,7 @@
     * [Install Scanning module in your Cloud](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/install-testing-module-in-your-cloud/README.md)
       * [Ephemeral Storage for Hybrid Runtime](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/install-testing-module-in-your-cloud/ephemeral-storage-for-hybrid-runtime.md)
       * [gRPC Scanning in Hybrid Scanning Module](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/install-testing-module-in-your-cloud/grpc-testing-in-hybrid-testing-module.md)
+      * [Autoscale the Scanning Module](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/install-testing-module-in-your-cloud/autoscaling-testing-module.md)
     * [Create Custom Scan Suites](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/create-custom-test-suites.md)
     * [Recalculate Issue Counts](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/recalculate-issue-counts.md)
     * [Scanning Module Selector in Akto](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/testing-module-selector-in-akto.md)
