@@ -139,7 +139,7 @@ You should see a line like:
 
 If you don't need autoscaling, skip this section.
 
-Autoscaling enables parallel scans via multiple Kubernetes pods that scale based on workload. Every pod, including the red teaming (`agent-testing`) container, scales together. New pods get the LLM from the `red-teaming` model you added in [Configure the LLM in Akto](#configure-the-llm-in-akto), so you don't pass LLM credentials to the chart.
+Autoscaling enables parallel scans via multiple Kubernetes pods that scale based on workload.
 
 The steps below use Prometheus and KEDA. If you can't install those in your cluster, see [Autoscaling without Prometheus or KEDA](#autoscaling-without-prometheus-or-keda-orchestrator-mode).
 
@@ -343,7 +343,6 @@ Optional, under `testing.autoScaling.orchestrator`:
 #### Check it
 
 - **In the Akto dashboard:** go to **Settings → Logs** and choose **Mini Testing Orchestrator**. It shows each scale up and down, held scaling with a hint, errors, and a status summary every 5 minutes.
-- On an older Akto release, this view and the Module Info heartbeat are not available. The events show in the module's testing logs instead, and `heartbeat` should stay `false`.
 - **In the cluster:**
 
   ```bash
