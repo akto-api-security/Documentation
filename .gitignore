@@ -2,3 +2,5 @@
 .vscode/
 temp/
 .DS_Store
+# Internal docs URL checker script and its logs
+scripts/
