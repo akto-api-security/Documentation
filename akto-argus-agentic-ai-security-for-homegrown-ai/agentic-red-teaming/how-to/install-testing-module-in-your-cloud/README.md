@@ -135,6 +135,76 @@ You should see a line like:
 {% endstep %}
 {% endstepper %}
 
+### Setup Autoscaling for Scanning Module Pods
+
+If you don't need autoscaling, skip this section.
+
+Autoscaling enables parallel scans via multiple Kubernetes pods that scale based on workload.
+
+#### How it works
+
+When autoscaling is on, the chart runs `mini-testing-orchestrator`, one small Deployment in the release namespace. It needs no CRDs, no cluster-wide RBAC and no metrics stack, only a Role in that namespace.
+
+The orchestrator checks each mini-testing pod for whether it is running a scan:
+- **Scale up:** while every pod is busy, it adds a pod (`scaleUpStep` per check), up to `maxReplicas`.
+- **Scale down:** pods that have been idle for `scaleDownDelay` are told to stop taking scans, then removed. A pod running a scan is never removed. While any scan is running, one idle pod is kept ready for the next one.
+- **If something goes wrong:** the replica count never drops below `minReplicas`. If the orchestrator stops, the mini-testing pods keep running and scanning at their current count.
+
+#### Install
+
+```bash
+helm upgrade --install akto-mini-testing akto/akto-mini-testing -n <your-namespace> \
+  --set testing.aktoApiSecurityTesting.env.databaseAbstractorToken="<your-database-abstractor-token>" \
+  --set testing.agentTesting.enabled=true \
+  --set testing.autoScaling.enabled=true \
+  --set testing.autoScaling.mode=orchestrator \
+  --set testing.autoScaling.minReplicas=1 \
+  --set testing.autoScaling.maxReplicas=10
+```
+
+In this mode:
+- The mini-testing pods use the `local` image tag (`testing.autoScaling.orchestrator.testingImageTag`), because the orchestrator needs a recent mini-testing release.
+- The orchestrator image is `public.ecr.aws/aktosecurity/akto-mini-testing-orchestrator:1.0.0`.
+
+#### Settings
+
+Optional, under `testing.autoScaling.orchestrator`:
+
+| Value | Default | Meaning |
+|---|---|---|
+| `pollInterval` | `15s` | How often pods are checked |
+| `scaleDownDelay` | `5m` | How long a pod must be idle before it is removed |
+| `scaleUpStep` | `1` | Pods added per check while all pods are busy |
+| `notReadyGrace` | `10m` | A pod not ready for longer than this is treated as broken and can be removed, so one crashlooping pod can't keep extra pods running |
+| `stuckAfter` | `10m` | Scaling that stays held for longer than this (for example, a pod not answering, or every pod busy at `maxReplicas`) is reported, with a hint |
+| `reportToAkto` | `true` | Send scaling events, held-scaling warnings and errors to the Akto dashboard, using the module's token |
+| `heartbeat` | `false` | Show the orchestrator under **Settings → Module Info**, with its last heartbeat and current scaling state |
+| `testingImageTag` | `local` | mini-testing image tag used in this mode. Set it to `""` to use `testing.aktoApiSecurityTesting.image.tag` instead. |
+| `image.tag` | `1.0.0` | Orchestrator image tag |
+| `controlToken.existingSecret` | `""` | Secret holding the token the mini-testing pods require from the orchestrator. If empty, the chart generates one and keeps it across upgrades. Set this when deploying with Argo CD or another tool that can't run Helm `lookup`. |
+
+#### Check it
+
+- **In the Akto dashboard:** go to **Settings → Logs** and choose **Mini Testing Orchestrator**. It shows each scale up and down, held scaling with a hint, errors, and a status summary every 5 minutes.
+- **In the cluster:**
+
+  ```bash
+  kubectl logs deploy/akto-mini-testing-orchestrator -n <your-namespace> -f
+  kubectl get deploy akto-mini-testing -n <your-namespace> -w
+  ```
+
+#### Uninstalling
+
+**IMPORTANT:** Always uninstall Helm releases BEFORE deleting the namespace.
+
+```bash
+# 1. Uninstall the mini-testing chart (this also removes the orchestrator)
+helm uninstall akto-mini-testing -n <your-namespace>
+
+# 2. Now safe to delete the namespace
+kubectl delete namespace <your-namespace>
+```
+
 ## Setup Linux VM
 
 {% stepper %}
