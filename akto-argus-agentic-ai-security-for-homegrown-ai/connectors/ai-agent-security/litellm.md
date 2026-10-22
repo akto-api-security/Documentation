@@ -13,7 +13,7 @@ LiteLLM is a unified interface for calling 100+ LLM APIs in a consistent format.
 There are two ways to connect Akto with LiteLLM:
 
 * [**Native Guardrail**](litellm.md#option-1-native-guardrail)**:** LiteLLM's built-in Akto guardrail, set up in the LiteLLM Admin UI. Nothing to deploy, and each guardrail chooses which Akto policies to enforce and whether traffic goes to Argus or Atlas. From LiteLLM `v1.106.0` (stable, upcoming) and the `v1.106.0-dev.2` pre-release, it also checks responses, streams and MCP tool calls (see [LiteLLM Version](litellm.md#litellm-version)).
-* [**Custom Hook**](litellm.md#option-2-custom-hook)**:** Akto's `custom_hooks.py` callback, loaded from `config.yaml`. Use this if you need per-agent collections, session tracking, or an async (log-only) mode.
+* [**Custom Hook**](litellm.md#option-2-custom-hook)**:** Akto's `custom_hooks.py` callback, loaded from `config.yaml`. Use this if you need per-agent collections, session tracking, or an async (log-only) mode. It checks requests, responses, streams and MCP tool calls.
 
 ## Option 1: Native Guardrail
 
@@ -582,7 +582,7 @@ policy_attachments:
 
 ## Option 2: Custom Hook
 
-Akto's custom hook (`custom_hooks.py`) is a LiteLLM callback that sends each request to Akto for validation and ingests the request and response. It supports per-agent collections, session-based guardrails, and a sync (block) or async (log-only) mode.
+Akto's custom hook (`custom_hooks.py`) is a LiteLLM callback that checks each request, the model's response (including streamed responses) and MCP tool calls against Akto guardrail policies, and records the traffic in Akto. It supports per-agent collections, session-based guardrails, and a sync (block) or async (log-only) mode. See [What the Hook Checks](litellm.md#what-the-hook-checks).
 
 ### Prerequisites
 
@@ -628,19 +628,53 @@ SYNC_MODE=true              # true = block violations, false = async logging onl
 
 # Optional: timeout (in seconds) for calls to the Data Ingestion Service
 TIMEOUT=5                   # default 5
+
+# Optional: Argus or Atlas
+AKTO_CONTEXT_SOURCE=AGENTIC # AGENTIC = Argus (default), ENDPOINT = Atlas
+
+# Optional: policies to enforce (empty enforces all policies in scope)
+AKTO_METADATA={"policy_name": "block employee pii"}
+
+# Optional: response guardrails
+RESPONSE_GUARDRAILS=true         # check responses, streams and MCP tool results, default true
+STREAM_RESPONSE_GUARDRAILS=true  # check streamed responses, default true
+STREAMING_SAMPLING_RATE=5        # check a stream every N chunks, default 5
 ```
 
 The connector reads these variables (`custom_hooks.py`):
 
-<table><thead><tr><th width="155.671875">Variable</th><th width="79.64453125">Required</th><th width="162.125">Default</th><th>Description</th></tr></thead><tbody><tr><td><code>DATA_INGESTION_SERVICE_URL</code></td><td>Yes</td><td></td><td>Akto Data Ingestion Service endpoint the hook sends traffic and validation requests to.</td></tr><tr><td><code>AKTO_API_TOKEN</code></td><td>Yes</td><td>empty</td><td>Token sent in the <code>Authorization</code> header to the Data Ingestion Service. See <a href="../others/hybrid-saas.md#getting-api-token">Getting API Token</a>.</td></tr><tr><td><code>LITELLM_URL</code></td><td>Yes</td><td><code>http://localhost:4000</code></td><td>This proxy's URL; its host is used as the default collection name when no agent identity is present.</td></tr><tr><td><code>SYNC_MODE</code></td><td>No</td><td><code>true</code></td><td><code>true</code> blocks violations before the LLM call; <code>false</code> validates asynchronously (log only).</td></tr><tr><td><code>TIMEOUT</code></td><td>No</td><td><code>5</code></td><td>Timeout in seconds for HTTP calls to the Data Ingestion Service.</td></tr></tbody></table>
+<table><thead><tr><th width="155.671875">Variable</th><th width="79.64453125">Required</th><th width="162.125">Default</th><th>Description</th></tr></thead><tbody><tr><td><code>DATA_INGESTION_SERVICE_URL</code></td><td>Yes</td><td></td><td>Akto Data Ingestion Service endpoint the hook sends traffic and validation requests to.</td></tr><tr><td><code>AKTO_API_TOKEN</code></td><td>Yes</td><td>empty</td><td>Token sent in the <code>Authorization</code> header to the Data Ingestion Service. See <a href="../others/hybrid-saas.md#getting-api-token">Getting API Token</a>.</td></tr><tr><td><code>LITELLM_URL</code></td><td>Yes</td><td><code>http://localhost:4000</code></td><td>This proxy's URL; its host is used as the default collection name when no agent identity is present.</td></tr><tr><td><code>SYNC_MODE</code></td><td>No</td><td><code>true</code></td><td><code>true</code> blocks or masks violations; <code>false</code> checks in the background and only reports them.</td></tr><tr><td><code>TIMEOUT</code></td><td>No</td><td><code>5</code></td><td>Timeout in seconds for each call to the Data Ingestion Service. See <a href="litellm.md#when-akto-is-unreachable">When Akto Is Unreachable</a>.</td></tr><tr><td><code>AKTO_CONTEXT_SOURCE</code></td><td>No</td><td><code>AGENTIC</code></td><td><code>ENDPOINT</code> sends the traffic to <strong>Atlas</strong>; <code>AGENTIC</code> keeps it in <strong>Argus</strong>. See <a href="litellm.md#argus-or-atlas">Argus or Atlas</a>.</td></tr><tr><td><code>AKTO_METADATA</code></td><td>No</td><td>empty</td><td>JSON object with <code>policy_name</code>: the Akto guardrail policies to enforce, comma-separated in one string. Empty enforces all policies in scope. Works like the native guardrail's <code>akto_metadata</code>; see <a href="litellm.md#how-named-policies-are-enforced">How Named Policies Are Enforced</a>.</td></tr><tr><td><code>RESPONSE_GUARDRAILS</code></td><td>No</td><td><code>true</code></td><td>Check the model's responses, streamed responses and MCP tool results. <code>false</code> checks requests only.</td></tr><tr><td><code>STREAM_RESPONSE_GUARDRAILS</code></td><td>No</td><td><code>true</code></td><td>Check streamed responses. <code>false</code> passes streams unchecked while other responses are still checked. Has no effect when <code>RESPONSE_GUARDRAILS=false</code>.</td></tr><tr><td><code>STREAMING_SAMPLING_RATE</code></td><td>No</td><td><code>5</code></td><td>Check a streamed response every this many chunks, and again when it ends. See <a href="litellm.md#how-streams-are-checked">How Streams Are Checked</a>.</td></tr></tbody></table>
+
+<details>
+
+<summary><strong>Advanced settings</strong></summary>
+
+These rarely need changing.
+
+| Variable                          | Default        | Description                                                                                                                                                                                   |
+| --------------------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `VALIDATE_LAST_USER_MESSAGE_ONLY` | `auto`         | Which part of a request is sent for the verdict. `auto` sends only the newest user turn when the request is larger than `GUARDRAIL_NARROW_THRESHOLD_BYTES`; `true` always does; `all_user` sends every user turn; `false` sends the whole request. The full request is always recorded. |
+| `GUARDRAIL_NARROW_THRESHOLD_BYTES` | `8000`        | Request size above which `auto` sends only the newest user turn.                                                                                                                              |
+| `STRIP_HARNESS_CONTEXT`           | `true`         | Remove coding agents' `<system-reminder>` blocks from the text sent for the verdict, when only the newest user turn is sent.                                                                  |
+| `VERDICT_FLATTEN_CONTENT`         | `true`         | Send content blocks (for example from `/v1/messages`) to Akto as plain text, so they are read.                                                                                                |
+| `VERDICT_DROP_BODY_KEYS`          | `stream,tools` | Request fields left out of the text sent for the verdict.                                                                                                                                     |
+| `QUARANTINE_BLOCKED_HISTORY`      | `true`         | Remove a blocked turn from the conversation history the client resends, so the model never sees it. Needs a session ID.                                                                       |
+| `QUARANTINE_MAX_SESSIONS`         | `500`          | Sessions whose blocked turns are remembered (in memory).                                                                                                                                      |
+| `QUARANTINE_MAX_PER_SESSION`      | `50`           | Blocked turns remembered per session.                                                                                                                                                         |
+| `MCP_INGEST_PATH`                 | `/mcp`         | Path MCP tool calls are recorded under in Akto.                                                                                                                                               |
+| `NON_MCP_TOOL_PATH_PREFIX`        | `/tool`        | Path prefix non-MCP tool calls are recorded under, for example `/tool/save_note`.                                                                                                             |
+| `CALL_HEADERS_CACHE_TTL_SECONDS`  | `900`          | How long a request's headers are kept to attach them to its tool calls.                                                                                                                       |
+| `LOG_VERDICT_TEXT`                | `false`        | Log the text sent for each verdict. Writes prompt content to the LiteLLM log; use only for debugging.                                                                                         |
+
+</details>
 
 {% hint style="warning" %}
 ## **Note**
 
 `SYNC_MODE` determines behavior:
 
-* `SYNC_MODE=true`: Requests are validated before being sent to the LLM. Violations block the request immediately.
-* `SYNC_MODE=false`: Requests proceed immediately. Validation occurs in the background.
+* `SYNC_MODE=true`: Requests are checked before the model call, and responses and MCP tool results before they reach the client. Violations are blocked or masked.
+* `SYNC_MODE=false`: Nothing waits for Akto and nothing is blocked. Requests and responses are checked in the background and violations are reported in the Akto dashboard.
 {% endhint %}
 {% endstep %}
 
@@ -698,6 +732,13 @@ services:
       - DATA_INGESTION_SERVICE_URL=${DATA_INGESTION_SERVICE_URL}
       - AKTO_API_TOKEN=${AKTO_API_TOKEN}
       - SYNC_MODE=${SYNC_MODE}
+      # Optional
+      - TIMEOUT=${TIMEOUT}
+      - AKTO_CONTEXT_SOURCE=${AKTO_CONTEXT_SOURCE}
+      - AKTO_METADATA=${AKTO_METADATA}
+      - RESPONSE_GUARDRAILS=${RESPONSE_GUARDRAILS}
+      - STREAM_RESPONSE_GUARDRAILS=${STREAM_RESPONSE_GUARDRAILS}
+      - STREAMING_SAMPLING_RATE=${STREAMING_SAMPLING_RATE}
     # ... rest of config ...
 ```
 {% endtab %}
@@ -751,6 +792,59 @@ curl -X POST http://localhost:4000/chat/completions \
 * Confirm that requests from LiteLLM are appearing
 {% endstep %}
 {% endstepper %}
+
+### What the Hook Checks
+
+With `SYNC_MODE=true`, the hook checks the following on `/v1/chat/completions`, `/v1/messages` and `/v1/responses`, and on MCP servers behind LiteLLM:
+
+| Traffic                                | When it's checked                                               | On a violation                                                                     |
+| -------------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Requests                               | Before the model call                                           | Blocked with `403`, or masked before the request reaches the model                |
+| Responses                              | Before the response reaches the client                          | Blocked with `403`, or masked                                                      |
+| Streamed responses                     | While they stream (see [How Streams Are Checked](litellm.md#how-streams-are-checked)) | The stream stops with an error                                    |
+| Tool calls in a response               | With the response                                               | The response is blocked                                                            |
+| MCP tool calls (LiteLLM's MCP gateway) | Before the tool runs                                            | Blocked                                                                            |
+| MCP tool results                       | Before the result is returned                                   | Masked, or replaced with the block message                                         |
+
+Requests, responses and tool calls are recorded in Akto with their verdicts, and each block is recorded once as a `403`.
+
+#### Policy Behaviour
+
+The hook follows the behaviour set on the Akto policy, like the native guardrail:
+
+* **Block** (or no behaviour set): the request, response or tool call is blocked.
+* **Alert**, **Warn** and **Approval**: traffic is allowed and the violation is recorded in the Akto dashboard.
+* **Redaction:** Akto's masked text replaces the original, and the rest of the request or response is kept. Masking that can't be applied blocks instead, for example on a response that has already started streaming or on MCP tool call arguments.
+
+#### Response Guardrail Settings
+
+| Variable                     | Default | Effect                                                                                                                                         |
+| ---------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `RESPONSE_GUARDRAILS`        | `true`  | Checks responses, streamed responses, tool calls in responses and MCP tool results. `false` checks requests only; responses are still recorded. |
+| `STREAM_RESPONSE_GUARDRAILS` | `true`  | Checks streamed responses. `false` passes streams unchecked while other responses are still checked. Ignored when `RESPONSE_GUARDRAILS=false`. |
+| `STREAMING_SAMPLING_RATE`    | `5`     | Checks a streamed response every this many chunks, and again when it ends. Lower values check more often.                                      |
+
+With `SYNC_MODE=false`, `RESPONSE_GUARDRAILS` only decides whether responses are checked for reporting; nothing is blocked.
+
+#### How Streams Are Checked
+
+Streamed chunks are held until Akto has checked the text in them, so unchecked text never reaches the client. Every `STREAMING_SAMPLING_RATE` chunks (default `5`) the text so far is checked while the stream keeps arriving, and the full response is checked again when the stream ends; the last chunk waits for that check. Tool call arguments are checked as they stream too.
+
+A streamed response can't be masked after it is sent, so a masking verdict on a stream blocks it instead.
+
+#### When Akto Is Unreachable
+
+The hook fails open: if Akto can't be reached, times out or returns an error, the request continues unchecked. Each call to Akto waits at most `TIMEOUT` seconds, and a request waits for at most two checks in a row (request and response), or three for a streamed response or an MCP tool call. With `TIMEOUT=5`, a request waits at most 10 to 15 seconds while Akto is down.
+
+#### Headers
+
+The request's headers are sent to Akto with each record, except credentials: `Authorization`, `Cookie`, `x-api-key`, `x-litellm-api-key`, `api-key`, `x-mcp-auth`, and any header whose name contains `authorization` (for example `x-mcp-<server>-authorization`).
+
+{% hint style="info" %}
+## **MCP tool results before LiteLLM `v1.96.0`**
+
+Before LiteLLM `v1.96.0`, `/mcp-rest/tools/call` doesn't pass tool results to callbacks, so the hook can't check those results, and in async mode those calls aren't recorded. With `SYNC_MODE=true`, their arguments are still checked. Tool calls through LiteLLM's MCP endpoint (`/<server>/mcp`, used by Claude Code and other MCP clients) are fully checked on every version.
+{% endhint %}
 
 ### Per-Agent Collections
 
@@ -820,25 +914,28 @@ Session tracking is optional. Requests without an `x-session-id` header are proc
 
 ```
 1. Client → LiteLLM Proxy
-2. Hook intercepts the request (pre-call hook)
-3. Request is sent to the Akto Data Ingestion Service API
-4. Data Ingestion Service validates against policies
-   ├─ If BLOCKED: Error returned to the client (LLM is not called)
-   └─ If ALLOWED: Continue to step 5
-5. Request is forwarded to the LLM provider
-6. LLM response is received
-7. Hook intercepts the response (post-call hook)
-8. Response is sent to the Akto Data Ingestion Service API for display in the dashboard
+2. Hook sends the request to Akto for a verdict (pre-call hook)
+   ├─ If BLOCKED: 403 returned to the client (the model is not called)
+   ├─ If MASKED: the masked request continues to step 3
+   └─ If ALLOWED: continue to step 3
+3. Request is forwarded to the LLM provider
+4. Hook sends the response to Akto for a verdict (streams: while they stream)
+   ├─ If BLOCKED: 403 returned to the client (a stream stops with an error)
+   ├─ If MASKED: the masked response is returned
+   └─ If ALLOWED: the response is returned
+5. The request, response and verdicts are recorded in Akto
+
+MCP tool calls follow the same flow: the arguments are checked before the tool runs, and the result before it is returned.
 ```
 
 #### Request Flow (SYNC\_MODE=false)
 
 ```
 1. Client → LiteLLM Proxy
-2. Hook initiates a background validation task (non-blocking)
-3. Request is immediately forwarded to the LLM provider
-4. Response is returned to the client
-5. Validation completes in the background (violations are logged only)
+2. Request is forwarded to the LLM provider without waiting for Akto
+3. Response is returned to the client
+4. Hook sends the request and response to Akto in the background
+5. Akto checks both and records them; violations are reported, nothing is blocked
 ```
 
 ## AI Usage
