@@ -58,8 +58,9 @@ MODEL="${MODEL:-qwen3guard}"
 GPU_DEVICE="${GPU_DEVICE:-0}"
 HOST_PORT="${HOST_PORT:-80}"
 MAX_MODEL_LEN="${MAX_MODEL_LEN:-32768}"
-MAX_NUM_SEQS="${MAX_NUM_SEQS:-16}"
+MAX_NUM_SEQS="${MAX_NUM_SEQS:-64}"
 GPU_MEMORY_UTILIZATION="${GPU_MEMORY_UTILIZATION:-0.90}"
+VLLM_IMAGE="${VLLM_IMAGE:-vllm/vllm-openai:latest}"
 STARTUP_TIMEOUT_SEC="${STARTUP_TIMEOUT_SEC:-1800}"
 
 log() { echo "[deploy-vllm] $*"; }
@@ -70,28 +71,24 @@ case "$MODEL" in
     HF_MODEL="Qwen/Qwen3Guard-Gen-8B"
     SERVED_NAME="qwen3guard-gen-8b"
     CONTAINER_NAME="qwen3guard-8b"
-    DEFAULT_IMAGE="vllm/vllm-openai:latest"
-    MM_ARGS=()
+    MODEL_ARGS=(--quantization fp8 --max-num-batched-tokens 16384)
     ;;
   gemma4-e2b)
     HF_MODEL="google/gemma-4-E2B-it"
     SERVED_NAME="gemma-4-e2b-it"
     CONTAINER_NAME="gemma4-e2b"
-    DEFAULT_IMAGE="vllm/vllm-openai:gemma4-0505-cu129"
-    MM_ARGS=(--limit-mm-per-prompt '{"image":0,"audio":0}')
+    MODEL_ARGS=(--limit-mm-per-prompt '{"image":0,"audio":0}')
     ;;
   gemma4-26b-a4b)
     HF_MODEL="google/gemma-4-26B-A4B-it"
     SERVED_NAME="gemma-4-26b-a4b-it"
     CONTAINER_NAME="gemma4-26b-a4b"
-    DEFAULT_IMAGE="vllm/vllm-openai:gemma4-0505-cu129"
-    MM_ARGS=(--limit-mm-per-prompt '{"image":0}')
+    MODEL_ARGS=(--quantization fp8 --limit-mm-per-prompt '{"image":0}')
     ;;
   *)
     fail "Unknown MODEL '$MODEL'. Use qwen3guard, gemma4-e2b, or gemma4-26b-a4b."
     ;;
 esac
-VLLM_IMAGE="${VLLM_IMAGE:-$DEFAULT_IMAGE}"
 
 [[ $EUID -eq 0 ]] || fail "Run this script with sudo."
 [[ -n "${HF_TOKEN:-}" ]] || fail "HF_TOKEN is not set. Export it and run with: sudo --preserve-env=HF_TOKEN,VLLM_API_KEY ..."
@@ -166,7 +163,8 @@ docker run -d \
   --max-model-len "$MAX_MODEL_LEN" \
   --max-num-seqs "$MAX_NUM_SEQS" \
   --gpu-memory-utilization "$GPU_MEMORY_UTILIZATION" \
-  "${MM_ARGS[@]}" \
+  "${MODEL_ARGS[@]}" \
+  --enable-per-request-metrics \
   --host 0.0.0.0 \
   --port 8000 >/dev/null
 
@@ -211,9 +209,9 @@ You can override these optional variables the same way as `MODEL`:
 | `GPU_DEVICE` | `0` | Index of the GPU to run the model on |
 | `HOST_PORT` | `80` | Host port that exposes the API |
 | `MAX_MODEL_LEN` | `32768` | Value for `--max-model-len` |
-| `MAX_NUM_SEQS` | `16` | Value for `--max-num-seqs` |
+| `MAX_NUM_SEQS` | `64` | Value for `--max-num-seqs` |
 | `GPU_MEMORY_UTILIZATION` | `0.90` | Value for `--gpu-memory-utilization` |
-| `VLLM_IMAGE` | Per model, as in the commands below | vLLM Docker image |
+| `VLLM_IMAGE` | `vllm/vllm-openai:latest` | vLLM Docker image |
 | `STARTUP_TIMEOUT_SEC` | `1800` | How long to wait for the server to become healthy |
 
 For example, to run Gemma 4 E2B on the second GPU and port 8002:
@@ -264,7 +262,7 @@ Treat both values as secrets. Do not commit them to source control or paste them
 {% step %}
 ### Start the vLLM container
 
-Run the command for the model you want to deploy. All three commands use the same flags. Only the model, the served name, the multimodal limits, and the container name differ.
+Run the command for the model you want to deploy. All three commands use the latest vLLM image and the same base flags. Only the model, the served name, the model-specific flags, and the container name differ: Qwen3Guard and Gemma 4 26B A4B run in FP8, Qwen3Guard has a larger prefill batch, and the Gemma models set multimodal limits.
 
 {% tabs %}
 {% tab title="Qwen3Guard 8B" %}
@@ -283,15 +281,18 @@ docker run -d \
   --model Qwen/Qwen3Guard-Gen-8B \
   --served-model-name qwen3guard-gen-8b \
   --dtype bfloat16 \
+  --quantization fp8 \
   --tensor-parallel-size 1 \
   --max-model-len 32768 \
-  --max-num-seqs 16 \
+  --max-num-seqs 64 \
+  --max-num-batched-tokens 16384 \
   --gpu-memory-utilization 0.90 \
+  --enable-per-request-metrics \
   --host 0.0.0.0 \
   --port 8000
 ```
 
-Qwen3Guard is text-only, so the command omits `--limit-mm-per-prompt`.
+`--quantization fp8` converts the weights to FP8 when the model loads, so the same Hugging Face checkpoint is used and nothing extra is downloaded. On an H100 this raises prompt throughput by about 1.5 times compared with bfloat16. `--max-num-batched-tokens 16384` lets vLLM process several long prompts in one step, which matters because Qwen3Guard reads the whole request but writes only a few tokens. Qwen3Guard is text-only, so the command omits `--limit-mm-per-prompt`.
 {% endtab %}
 
 {% tab title="Gemma 4 E2B IT" %}
@@ -306,15 +307,16 @@ docker run -d \
   -e VLLM_API_KEY \
   -v huggingface-cache:/root/.cache/huggingface \
   -v vllm-cache:/root/.cache/vllm \
-  vllm/vllm-openai:gemma4-0505-cu129 \
+  vllm/vllm-openai:latest \
   --model google/gemma-4-E2B-it \
   --served-model-name gemma-4-e2b-it \
   --dtype bfloat16 \
   --tensor-parallel-size 1 \
   --max-model-len 32768 \
-  --max-num-seqs 16 \
+  --max-num-seqs 64 \
   --gpu-memory-utilization 0.90 \
   --limit-mm-per-prompt '{"image":0,"audio":0}' \
+  --enable-per-request-metrics \
   --host 0.0.0.0 \
   --port 8000
 ```
@@ -332,20 +334,22 @@ docker run -d \
   -e VLLM_API_KEY \
   -v huggingface-cache:/root/.cache/huggingface \
   -v vllm-cache:/root/.cache/vllm \
-  vllm/vllm-openai:gemma4-0505-cu129 \
+  vllm/vllm-openai:latest \
   --model google/gemma-4-26B-A4B-it \
   --served-model-name gemma-4-26b-a4b-it \
   --dtype bfloat16 \
+  --quantization fp8 \
   --tensor-parallel-size 1 \
   --max-model-len 32768 \
-  --max-num-seqs 16 \
+  --max-num-seqs 64 \
   --gpu-memory-utilization 0.90 \
   --limit-mm-per-prompt '{"image":0}' \
+  --enable-per-request-metrics \
   --host 0.0.0.0 \
   --port 8000
 ```
 
-In bfloat16, the weights use about 52 GB. With `--gpu-memory-utilization 0.90`, about 20 GB of the H100 remains for the KV cache.
+With `--quantization fp8`, the weights use about 26 GB instead of about 52 GB in bfloat16, which leaves about twice as much KV cache on the H100. In Akto's tests at 20 requests per second, FP8 lowered the p95 time a request waits in the queue from about 3.8 seconds to about 0.4 seconds.
 {% endtab %}
 {% endtabs %}
 
@@ -431,7 +435,10 @@ All containers can share the `huggingface-cache` and `vllm-cache` volumes.
 | Flag | Default in this guide | When to change it |
 | --- | --- | --- |
 | `--max-model-len` | `32768` | Keep the same value on every model. Lower it only if vLLM does not start because of KV cache size. |
-| `--max-num-seqs` | `16` | The maximum number of requests processed in parallel. Raise it for higher throughput if the logs show free KV cache. Lower it if you see preemption warnings. |
+| `--max-num-seqs` | `64` | The maximum number of requests processed in parallel. Lower it if you see preemption warnings. |
+| `--max-num-batched-tokens` | `16384` for Qwen3Guard, vLLM default for Gemma | How many prompt tokens vLLM processes in one step. A larger value raises Qwen3Guard throughput. Keep the default for Gemma 4 26B A4B: in Akto's tests a larger value doubled its per-request time without raising throughput. |
+| `--quantization fp8` | Qwen3Guard and Gemma 4 26B A4B | Runs the model in FP8 on the H100. Raises throughput and frees memory for the KV cache. |
+| `--enable-per-request-metrics` | On | Adds a `metrics` object with queue time, time to first token, and generation time to every response. Akto's Agent Guard logs these values. Do not combine it with `--disable-log-stats`. |
 | `--gpu-memory-utilization` | `0.90` | Lower it only when you share the GPU with another process or model. |
 | `--shm-size` | `16g` | Shared memory for PyTorch workers. Keep it at `16g` or higher. |
 | `--restart unless-stopped` | — | Restarts the container after a crash or host reboot. |
@@ -441,7 +448,7 @@ All containers can share the `huggingface-cache` and `vllm-cache` volumes.
 * **Restrict network access.** Allow inbound traffic on the exposed port only from Akto's egress IPs or your internal network. Do not expose vLLM to the public internet without a firewall rule.
 * **Terminate TLS.** The container serves plain HTTP. Put a load balancer or reverse proxy (NGINX, AWS ALB, and similar) with a TLS certificate in front of it. This keeps the API key and scanned content encrypted in transit.
 * **Rotate the API key.** To rotate the key, set a new `VLLM_API_KEY`, recreate the container, and share the new key with Akto.
-* **Pin the image version.** In production, replace `latest` with a specific vLLM release tag so that upgrades happen only when you choose.
+* **Use the latest vLLM image.** Every model in this guide runs on `vllm/vllm-openai:latest`. Newer vLLM releases include performance fixes for these models, so pull the image again (`docker pull vllm/vllm-openai:latest`) and recreate the containers when you update.
 
 ## Troubleshooting
 
