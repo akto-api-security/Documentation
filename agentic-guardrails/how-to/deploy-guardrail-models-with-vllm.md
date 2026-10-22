@@ -57,7 +57,7 @@ set -euo pipefail
 MODEL="${MODEL:-qwen3guard}"
 GPU_DEVICE="${GPU_DEVICE:-0}"
 HOST_PORT="${HOST_PORT:-80}"
-MAX_MODEL_LEN="${MAX_MODEL_LEN:-8192}"
+MAX_MODEL_LEN="${MAX_MODEL_LEN:-32768}"
 MAX_NUM_SEQS="${MAX_NUM_SEQS:-16}"
 GPU_MEMORY_UTILIZATION="${GPU_MEMORY_UTILIZATION:-0.90}"
 STARTUP_TIMEOUT_SEC="${STARTUP_TIMEOUT_SEC:-1800}"
@@ -210,7 +210,7 @@ You can override these optional variables the same way as `MODEL`:
 | --- | --- | --- |
 | `GPU_DEVICE` | `0` | Index of the GPU to run the model on |
 | `HOST_PORT` | `80` | Host port that exposes the API |
-| `MAX_MODEL_LEN` | `8192` | Value for `--max-model-len` |
+| `MAX_MODEL_LEN` | `32768` | Value for `--max-model-len` |
 | `MAX_NUM_SEQS` | `16` | Value for `--max-num-seqs` |
 | `GPU_MEMORY_UTILIZATION` | `0.90` | Value for `--gpu-memory-utilization` |
 | `VLLM_IMAGE` | Per model, as in the commands below | vLLM Docker image |
@@ -284,7 +284,7 @@ docker run -d \
   --served-model-name qwen3guard-gen-8b \
   --dtype bfloat16 \
   --tensor-parallel-size 1 \
-  --max-model-len 8192 \
+  --max-model-len 32768 \
   --max-num-seqs 16 \
   --gpu-memory-utilization 0.90 \
   --host 0.0.0.0 \
@@ -311,7 +311,7 @@ docker run -d \
   --served-model-name gemma-4-e2b-it \
   --dtype bfloat16 \
   --tensor-parallel-size 1 \
-  --max-model-len 8192 \
+  --max-model-len 32768 \
   --max-num-seqs 16 \
   --gpu-memory-utilization 0.90 \
   --limit-mm-per-prompt '{"image":0,"audio":0}' \
@@ -337,7 +337,7 @@ docker run -d \
   --served-model-name gemma-4-26b-a4b-it \
   --dtype bfloat16 \
   --tensor-parallel-size 1 \
-  --max-model-len 8192 \
+  --max-model-len 32768 \
   --max-num-seqs 16 \
   --gpu-memory-utilization 0.90 \
   --limit-mm-per-prompt '{"image":0}' \
@@ -430,7 +430,7 @@ All containers can share the `huggingface-cache` and `vllm-cache` volumes.
 
 | Flag | Default in this guide | When to change it |
 | --- | --- | --- |
-| `--max-model-len` | `8192` | Raise it if Akto scans prompts or responses longer than about 6,000 tokens. Longer contexts use more KV cache and reduce concurrency. |
+| `--max-model-len` | `32768` | Keep the same value on every model. Lower it only if vLLM does not start because of KV cache size. |
 | `--max-num-seqs` | `16` | The maximum number of requests processed in parallel. Raise it for higher throughput if the logs show free KV cache. Lower it if you see preemption warnings. |
 | `--gpu-memory-utilization` | `0.90` | Lower it only when you share the GPU with another process or model. |
 | `--shm-size` | `16g` | Shared memory for PyTorch workers. Keep it at `16g` or higher. |
@@ -452,4 +452,6 @@ All containers can share the `huggingface-cache` and `vllm-cache` volumes.
 | `could not select device driver "" with capabilities: [[gpu]]` | The NVIDIA Container Toolkit is not installed or configured. Run `sudo nvidia-ctk runtime configure --runtime=docker` and restart Docker. |
 | `401 Unauthorized` from vLLM | The `Authorization: Bearer <key>` header is missing or does not match `VLLM_API_KEY`. |
 | `404` with a message that the model does not exist | The `model` field in the request does not match `--served-model-name`. |
+| `400` with `This model's maximum context length is ... tokens` | The request is longer than `--max-model-len`. Raise the limit on every model. |
+| `max seq len ... is larger than the maximum number of tokens that can be stored in KV cache` at startup | The KV cache cannot hold one request of `--max-model-len` tokens. Run the model on its own GPU, raise `--gpu-memory-utilization`, or lower `--max-model-len`. |
 | Slow first request after a restart | CUDA graph capture and warm-up. Later requests are fast. |
