@@ -164,8 +164,8 @@ Set the following environment variables in your shell or `.env` file:
 # Required: Akto Data Ingestion Service URL — contact the Akto support team to get the URL for your account
 AKTO_DATA_INGESTION_URL=https://<account_id>-guardrails.akto.io
 
-# Required: Unique identifier for this LangGraph application in Akto
-PROJECT_NAME=my-langgraph-agent
+# Required: Akto API token, sent as the Authorization header
+AKTO_API_TOKEN=<your-akto-api-token>
 
 # Optional: Operation mode (default: "true")
 AKTO_SYNC_MODE=true        # true = block violations, false = async log-only
@@ -175,7 +175,7 @@ AKTO_TIMEOUT=5
 
 # Optional: Logging
 LOG_LEVEL=INFO             # Logging level (default: "INFO")
-LOG_PAYLOADS=false         # Log full payloads — privacy-sensitive (default: "false")
+LOG_PAYLOADS=false         # Log full payloads (default: "true")
 ```
 
 {% hint style="warning" %}
@@ -229,13 +229,14 @@ Then verify in the Akto dashboard:
 | Variable                  | Required | Default             | Description                                            |
 | ------------------------- | -------- | ------------------- | ------------------------------------------------------ |
 | `AKTO_DATA_INGESTION_URL` | Yes      |                     | Akto service base URL                                  |
-| `PROJECT_NAME`            | Yes      |                     | Unique identifier for this LangGraph application in Akto |
+| `AKTO_API_TOKEN`          | Yes      |                     | Akto API token sent as the `Authorization` header       |
 | `AKTO_SYNC_MODE`          | No       | `true`              | `true` to block on violation, `false` for log-only     |
 | `AKTO_TIMEOUT`            | No       | `5`                 | HTTP timeout in seconds                                |
 | `LOG_LEVEL`               | No       | `INFO`              | Logging level                                          |
-| `LOG_PAYLOADS`            | No       | `false`             | Log full request/response payloads (privacy-sensitive) |
+| `LOG_PAYLOADS`            | No       | `true`              | Log full request/response payloads                     |
 | `LANGCHAIN_API_HOST`      | No       | `api.langchain.com` | Host header used in the proxy payload                  |
 | `LANGCHAIN_API_PATH`      | No       | `/langchain/chat`   | Path used in the proxy payload                         |
+| `AKTO_INSTANCE_IP`        | No       | auto-detected       | Host IP reported to Akto; overrides auto-detection     |
 
 #### Handling Blocked Requests
 
