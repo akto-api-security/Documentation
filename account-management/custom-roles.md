@@ -68,7 +68,7 @@ To pick collections by hand, click **Choose collections** and select the ones th
 {% endstep %}
 
 {% step %}
-To include collections automatically, add a rule under **Also include collections matching**:
+To include collections automatically, add a rule under **Also include collections matching**. Under **Match by**, pick one of these options:
 
 * **Host name**: enter a regular expression, for example `^team-a-.*\.example\.com$`. Use `^` and `$` to match the whole host name.
 * **Tag**: enter a `key=value` pair.
