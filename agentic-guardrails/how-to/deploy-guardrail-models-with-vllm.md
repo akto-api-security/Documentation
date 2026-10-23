@@ -57,7 +57,6 @@ set -euo pipefail
 MODEL="${MODEL:-qwen3guard}"
 GPU_DEVICE="${GPU_DEVICE:-0}"
 HOST_PORT="${HOST_PORT:-80}"
-MAX_MODEL_LEN="${MAX_MODEL_LEN:-32768}"
 MAX_NUM_SEQS="${MAX_NUM_SEQS:-64}"
 GPU_MEMORY_UTILIZATION="${GPU_MEMORY_UTILIZATION:-0.90}"
 VLLM_IMAGE="${VLLM_IMAGE:-vllm/vllm-openai:latest}"
@@ -160,7 +159,6 @@ docker run -d \
   --served-model-name "$SERVED_NAME" \
   --dtype bfloat16 \
   --tensor-parallel-size 1 \
-  --max-model-len "$MAX_MODEL_LEN" \
   --max-num-seqs "$MAX_NUM_SEQS" \
   --gpu-memory-utilization "$GPU_MEMORY_UTILIZATION" \
   "${MODEL_ARGS[@]}" \
@@ -208,7 +206,6 @@ You can override these optional variables the same way as `MODEL`:
 | --- | --- | --- |
 | `GPU_DEVICE` | `0` | Index of the GPU to run the model on |
 | `HOST_PORT` | `80` | Host port that exposes the API |
-| `MAX_MODEL_LEN` | `32768` | Value for `--max-model-len` |
 | `MAX_NUM_SEQS` | `64` | Value for `--max-num-seqs` |
 | `GPU_MEMORY_UTILIZATION` | `0.90` | Value for `--gpu-memory-utilization` |
 | `VLLM_IMAGE` | `vllm/vllm-openai:latest` | vLLM Docker image |
@@ -283,7 +280,6 @@ docker run -d \
   --dtype bfloat16 \
   --quantization fp8 \
   --tensor-parallel-size 1 \
-  --max-model-len 32768 \
   --max-num-seqs 64 \
   --max-num-batched-tokens 16384 \
   --gpu-memory-utilization 0.90 \
@@ -312,7 +308,6 @@ docker run -d \
   --served-model-name gemma-4-e2b-it \
   --dtype bfloat16 \
   --tensor-parallel-size 1 \
-  --max-model-len 32768 \
   --max-num-seqs 64 \
   --gpu-memory-utilization 0.90 \
   --limit-mm-per-prompt '{"image":0,"audio":0}' \
@@ -340,7 +335,6 @@ docker run -d \
   --dtype bfloat16 \
   --quantization fp8 \
   --tensor-parallel-size 1 \
-  --max-model-len 32768 \
   --max-num-seqs 64 \
   --gpu-memory-utilization 0.90 \
   --limit-mm-per-prompt '{"image":0}' \
@@ -434,7 +428,6 @@ All containers can share the `huggingface-cache` and `vllm-cache` volumes.
 
 | Flag | Default in this guide | When to change it |
 | --- | --- | --- |
-| `--max-model-len` | `32768` | Keep the same value on every model. Lower it only if vLLM does not start because of KV cache size. |
 | `--max-num-seqs` | `64` | The maximum number of requests processed in parallel. Lower it if you see preemption warnings. |
 | `--max-num-batched-tokens` | `16384` for Qwen3Guard, vLLM default for Gemma | How many prompt tokens vLLM processes in one step. A larger value raises Qwen3Guard throughput. Keep the default for Gemma 4 26B A4B: in Akto's tests a larger value doubled its per-request time without raising throughput. |
 | `--quantization fp8` | Qwen3Guard and Gemma 4 26B A4B | Runs the model in FP8 on the H100. Raises throughput and frees memory for the KV cache. |
@@ -455,10 +448,10 @@ All containers can share the `huggingface-cache` and `vllm-cache` volumes.
 | Symptom | Likely cause and fix |
 | --- | --- |
 | `401` or `403` from Hugging Face when the container starts | The token is missing or invalid, or the Gemma license has not been accepted for the account that owns the token. |
-| `CUDA out of memory` at startup | Another process is using the GPU. Check `nvidia-smi`, or lower `--gpu-memory-utilization` or `--max-model-len`. |
+| `CUDA out of memory` at startup | Another process is using the GPU. Check `nvidia-smi`, or lower `--gpu-memory-utilization`. |
 | `could not select device driver "" with capabilities: [[gpu]]` | The NVIDIA Container Toolkit is not installed or configured. Run `sudo nvidia-ctk runtime configure --runtime=docker` and restart Docker. |
 | `401 Unauthorized` from vLLM | The `Authorization: Bearer <key>` header is missing or does not match `VLLM_API_KEY`. |
 | `404` with a message that the model does not exist | The `model` field in the request does not match `--served-model-name`. |
-| `400` with `This model's maximum context length is ... tokens` | The request is longer than `--max-model-len`. Raise the limit on every model. |
-| `max seq len ... is larger than the maximum number of tokens that can be stored in KV cache` at startup | The KV cache cannot hold one request of `--max-model-len` tokens. Run the model on its own GPU, raise `--gpu-memory-utilization`, or lower `--max-model-len`. |
+| `400` with `This model's maximum context length is ... tokens` | The request is longer than the model's maximum context length. |
+| `max seq len ... is larger than the maximum number of tokens that can be stored in KV cache` at startup | The KV cache cannot hold one request of the model's maximum context length. Run the model on its own GPU or raise `--gpu-memory-utilization`. |
 | Slow first request after a restart | CUDA graph capture and warm-up. Later requests are fast. |
