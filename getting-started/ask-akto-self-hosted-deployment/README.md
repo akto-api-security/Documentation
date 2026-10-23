@@ -169,6 +169,13 @@ Once deployed, **Ask Akto** can be accessed through the API Security Dashboard:
 2. Access the **Ask Akto** feature section
 3. Start conversing with the agent.
 
+## Limitations
+
+- **Write actions are limited.** Ask Akto can only triage issues, start test runs, create guardrail policies (Argus and Atlas), and regenerate Argus posture. It can't delete or edit other content, and every action needs your confirmation first.
+- **Results are paginated.** Large lists and responses return in chunks. Ask for more and Ask Akto fetches the next page.
+- **Answers are scoped to your dashboard category.** Tools and write actions depend on whether you're in API Security, DAST, Argus, or Atlas.
+- **Broad requests may not complete.** Very large or multi-part questions can hit response limits. Narrow the question or split it into smaller ones.
+
 ## Support
 
 If you need help with the deployment:
