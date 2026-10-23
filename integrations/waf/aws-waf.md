@@ -5,7 +5,24 @@ Block threat actors detected by Akto using your AWS WAF. Akto adds the IPs you b
 ### Prerequisites
 
 * A regional AWS WAF Web ACL attached to your Application Load Balancer or API Gateway.
-* An AWS access key with these permissions: `wafv2:ListIPSets`, `wafv2:CreateIPSet`, `wafv2:GetIPSet`, `wafv2:UpdateIPSet`.
+* An AWS access key for an IAM user with this policy:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Action": [
+      "wafv2:GetIPSet",
+      "wafv2:UpdateIPSet",
+      "wafv2:ListIPSets",
+      "wafv2:CreateIPSet",
+      "wafv2:DeleteIPSet"
+    ],
+    "Resource": "*"
+  }]
+}
+```
 
 ### Set up the integration
 
