@@ -8,7 +8,7 @@ Custom roles let you create a role that fits your team instead of using one of t
 {% step %}
 Go to **Settings** > **Roles** and click **Create role**.
 
-<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (253).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -18,7 +18,6 @@ Enter a **Role name**, for example `PAYMENTS-TEAM-SECURITY-ENGINEER`. Use letter
 {% step %}
 Under **Start from**, pick the built-in role to base it on: **Admin**, **Security Engineer**, **Developer**, **Guest**, **Threat Engineer** or **Threat Viewer**. The new role starts with that role's permissions.
 {% endstep %}
-
 {% endstepper %}
 
 ## Change the permissions
@@ -26,6 +25,8 @@ Under **Start from**, pick the built-in role to base it on: **Admin**, **Securit
 {% stepper %}
 {% step %}
 Open the role and go to **Permissions**.
+
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (254).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -62,6 +63,8 @@ Open the role and go to **Collections**.
 
 {% step %}
 To pick collections by hand, click **Choose collections** and select the ones this role should see.
+
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/image (255).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -86,6 +89,8 @@ To give a role access to all collections again, remove every chosen collection a
 
 If a role is limited to specific collections, you can let its users invite people and assign them roles, but only the roles you choose.
 
+For example, a `SECURITY_ENGINEER_TEAM_1` role limited to Team 1's collections can invite users as `GUEST_TEAM_1` or `DEVELOPER_TEAM_1` if you tick those roles. Users who see all collections ignore this list and follow the usual role levels.
+
 {% hint style="warning" %}
 **Invite Users and Change Their Roles** must be set to **Read and write** for this role. Without write access, **Invite Permissions** does not work and users with this role cannot invite people or assign roles.
 {% endhint %}
@@ -98,7 +103,11 @@ Set **Invite Users and Change Their Roles** to **Read and write** under **Permis
 {% step %}
 Go to **Invite Permissions** and tick the roles this role can give. Users with this role can add users and assign them only the roles selected here.
 
+<figure><img src="../.gitbook/assets/image (256).png" alt="" width="563"><figcaption></figcaption></figure>
+
+{% hint style="info" %}
 Only roles limited to collections are listed, and roles based on **Admin** are never listed.
+{% endhint %}
 {% endstep %}
 
 {% step %}
@@ -106,11 +115,11 @@ Click **Save**.
 {% endstep %}
 {% endstepper %}
 
-{% hint style="info" %}
-If no other role is limited to collections yet, **Invite Permissions** shows **No other roles are limited to collections yet (roles based on Admin don't count), so there is nothing to select.** Create and [limit another role to collections](#limit-the-collections-a-role-can-see) first, then come back.
-{% endhint %}
+{% hint style="warning" %}
+If no other role is limited to collections yet, **Invite Permissions** shows **No other roles are limited to collections yet (roles based on Admin don't count), so there is nothing to select.**&#x20;
 
-For example, a `SECURITY_ENGINEER_TEAM_1` role limited to Team 1's collections can invite users as `GUEST_TEAM_1` or `DEVELOPER_TEAM_1` if you tick those roles. Users who see all collections ignore this list and follow the usual role levels.
+Create and [limit another role to collections](custom-roles.md#limit-the-collections-a-role-can-see) first, then come back.
+{% endhint %}
 
 ## Assign a role to users
 
@@ -161,7 +170,6 @@ Check **Start from**, which shows the built-in role the copy is based on.
 Click **Create copy**.
 {% endstep %}
 {% endstepper %}
-
 
 ## Get Support for your Akto setup
 
