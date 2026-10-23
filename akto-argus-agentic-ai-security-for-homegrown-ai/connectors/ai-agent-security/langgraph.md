@@ -164,7 +164,7 @@ Set the following environment variables in your shell or `.env` file:
 # Required: Akto Data Ingestion Service URL — contact the Akto support team to get the URL for your account
 AKTO_DATA_INGESTION_URL=https://<account_id>-guardrails.akto.io
 
-# Optional: Akto API token, sent as the Authorization header — required if authentication is enabled for your account
+# Required: Akto API token, sent as the Authorization header
 AKTO_API_TOKEN=<your-akto-api-token>
 
 # Optional: Operation mode (default: "true")
@@ -229,7 +229,7 @@ Then verify in the Akto dashboard:
 | Variable                  | Required | Default             | Description                                            |
 | ------------------------- | -------- | ------------------- | ------------------------------------------------------ |
 | `AKTO_DATA_INGESTION_URL` | Yes      |                     | Akto service base URL                                  |
-| `AKTO_API_TOKEN`          | No       |                     | Akto API token sent as the `Authorization` header; required if authentication is enabled |
+| `AKTO_API_TOKEN`          | Yes      |                     | Akto API token sent as the `Authorization` header       |
 | `AKTO_SYNC_MODE`          | No       | `true`              | `true` to block on violation, `false` for log-only     |
 | `AKTO_TIMEOUT`            | No       | `5`                 | HTTP timeout in seconds                                |
 | `LOG_LEVEL`               | No       | `INFO`              | Logging level                                          |
