@@ -175,7 +175,7 @@ AKTO_TIMEOUT=5
 
 # Optional: Logging
 LOG_LEVEL=INFO             # Logging level (default: "INFO")
-LOG_PAYLOADS=false         # Log full payloads — privacy-sensitive (default: "true")
+LOG_PAYLOADS=false         # Log full payloads (default: "true")
 ```
 
 {% hint style="warning" %}
@@ -233,7 +233,7 @@ Then verify in the Akto dashboard:
 | `AKTO_SYNC_MODE`          | No       | `true`              | `true` to block on violation, `false` for log-only     |
 | `AKTO_TIMEOUT`            | No       | `5`                 | HTTP timeout in seconds                                |
 | `LOG_LEVEL`               | No       | `INFO`              | Logging level                                          |
-| `LOG_PAYLOADS`            | No       | `true`              | Log full request/response payloads (privacy-sensitive) |
+| `LOG_PAYLOADS`            | No       | `true`              | Log full request/response payloads                     |
 | `LANGCHAIN_API_HOST`      | No       | `api.langchain.com` | Host header used in the proxy payload                  |
 | `LANGCHAIN_API_PATH`      | No       | `/langchain/chat`   | Path used in the proxy payload                         |
 | `AKTO_INSTANCE_IP`        | No       | auto-detected       | Host IP reported to Akto; overrides auto-detection     |
