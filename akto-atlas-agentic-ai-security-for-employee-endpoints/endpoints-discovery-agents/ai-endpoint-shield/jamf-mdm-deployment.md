@@ -13,7 +13,7 @@ AI Endpoint Shield is deployed to macOS devices from **Jamf Pro** with a single 
 1. Fetches the version manifest (`latest.json`) from the URL you provide
 2. Compares the installed version against the manifest and exits early if the device is already current
 3. Downloads the signed and notarized `.pkg` and installs it
-4. Writes `config.env` (token and feature flags) into the console user's home directory
+4. Writes `config.env` (token and feature flags) into the console user's home directory — with a client-specific installer (`$8 AKTO_BAKED_CREDENTIALS=true`) the agent sets it up from the credentials embedded in the pkg instead
 5. Lets the pkg's embedded `postinstall` handle file placement, LaunchAgent setup, and hook installation
 
 **No package upload to Jamf is required** — the script downloads the pkg itself, so a new Akto release reaches your fleet without touching the Jamf policy.
@@ -67,19 +67,25 @@ Before the install policy runs, you can stage an `identity.json` file on the dev
 
 | Script | Purpose | Parameters |
 | ------ | ------- | ---------- |
-| `install.sh` | Install or update AI Endpoint Shield | `$4`–`$7`, below |
+| `install.sh` | Install or update AI Endpoint Shield | `$4`–`$8`, below |
 | `uninstall.sh` | Remove the agent, LaunchAgents, config, and MCP server wrapping | None |
 
 Both run as **root** and auto-detect the logged-in user.
 
 ### install.sh Jamf parameters
 
+Akto provides one of two installers:
+
+* **Client-specific installer** — your `AKTO_API_TOKEN` and `AKTO_API_BASE_URL` are **already embedded**. Set `$8 AKTO_BAKED_CREDENTIALS` to `true` and leave `$4` and `$5` empty — nothing sensitive lives in Jamf.
+* **Universal installer** — shared across all clients. Pass the token and base URL in `$4` and `$5`, and leave `$8` empty.
+
 | Parameter | Name | Value |
 | --------- | ---- | ----- |
-| `$4` | `AKTO_API_TOKEN` | Your token — use a **Jamf encrypted parameter** |
-| `$5` | `AKTO_API_BASE_URL` | `https://<account_id>-guardrails.akto.io` |
+| `$4` | `AKTO_API_TOKEN` | **Universal installer only** — your token, as a **Jamf encrypted parameter**. Leave empty for a client-specific installer |
+| `$5` | `AKTO_API_BASE_URL` | **Universal installer only** — `https://<account_id>-guardrails.akto.io`. Leave empty for a client-specific installer |
 | `$6` | `MANIFEST_URL` | Provided by Akto — enables auto-update |
 | `$7` | `PKG_URL` | Direct pkg URL — fallback if `MANIFEST_URL` is not set |
+| `$8` | `AKTO_BAKED_CREDENTIALS` | `true` for a **client-specific installer**. Leave empty for the universal installer |
 
 Jamf reserves `$1`–`$3` (mount point, computer name, username); `install.sh` ignores them and detects the console user itself.
 
@@ -101,6 +107,7 @@ Navigate to **Settings** → **Computer Management** → **Scripts** → **+ New
   * Parameter 5: `AKTO_API_BASE_URL`
   * Parameter 6: `MANIFEST_URL`
   * Parameter 7: `PKG_URL`
+  * Parameter 8: `AKTO_BAKED_CREDENTIALS`
 
 Paste the contents of `install.sh` (provided by Akto) as the script body.
 {% endstep %}
@@ -172,12 +179,13 @@ Leave empty. The script downloads and installs the pkg itself — do **not** add
 
 Add **Akto Endpoint Shield - Install** with **Priority: Before**, and fill in the parameters:
 
-| Parameter | Label | Value |
-| --------- | ----- | ----- |
-| `$4` | `AKTO_API_TOKEN` | `<your-token>` (encrypted parameter) |
-| `$5` | `AKTO_API_BASE_URL` | `https://<account_id>-guardrails.akto.io` |
-| `$6` | `MANIFEST_URL` | Provided by Akto |
-| `$7` | `PKG_URL` | Leave empty — the manifest provides the URL |
+| Parameter | Label | Client-specific installer | Universal installer |
+| --------- | ----- | ------------------------- | ------------------- |
+| `$4` | `AKTO_API_TOKEN` | Leave empty | `<your-token>` (encrypted parameter) |
+| `$5` | `AKTO_API_BASE_URL` | Leave empty | `https://<account_id>-guardrails.akto.io` |
+| `$6` | `MANIFEST_URL` | Provided by Akto | Provided by Akto |
+| `$7` | `PKG_URL` | Leave empty — the manifest provides the URL | Leave empty — the manifest provides the URL |
+| `$8` | `AKTO_BAKED_CREDENTIALS` | `true` | Leave empty |
 
 Which MCP clients to protect and which hooks to install are managed from the **Akto dashboard** after install — no Jamf policy change needed.
 {% endstep %}
@@ -268,6 +276,7 @@ tail -50 ~/.akto-endpoint-shield/logs/install.log
 | ------- | ------------ | ---------- |
 | `No console user logged in` | Script ran before login | Ensure the trigger is **Login** |
 | `Neither PKG_URL, PKG_PATH, nor MANIFEST_URL is set` | All three sources empty | Set `$6 MANIFEST_URL` in the policy parameters |
+| `AKTO_API_TOKEN is not set` | `$4` is empty and `$8` is not `true` | Client-specific installer: set `$8 AKTO_BAKED_CREDENTIALS` to `true`. Universal installer: set `$4` and `$5` |
 | `Already at latest version — nothing to do` | Manifest version matches the installed version | Expected. Set `FORCE_REINSTALL=true` to override |
 | Services show `-` instead of a PID | Token missing or invalid | Run `check-config`; check `~/.akto-endpoint-shield/logs/install.log` |
 | Services loaded but never start, no logs | macOS 13+ background item not approved | See [Background item approval](#background-item-approval-macos-13) |
@@ -313,7 +322,7 @@ tail -f /var/log/jamf.log
 
 ## Security notes
 
-* The token is passed via a Jamf **encrypted parameter** and written to `~/.akto-endpoint-shield/config/` with permissions 600.
+* With a **client-specific installer** the token is embedded in the pkg and never passes through Jamf. With the **universal installer** it is passed via a Jamf **encrypted parameter**. Either way it is written to `~/.akto-endpoint-shield/config/` with permissions 600.
 * Binaries run as the user — there are no system-level daemons, and all user data stays under `~/.akto-endpoint-shield/`.
 * Limit Jamf policy editing to your security team, and rotate the token on your usual schedule; the install script updates the on-disk config on its next run.
 
