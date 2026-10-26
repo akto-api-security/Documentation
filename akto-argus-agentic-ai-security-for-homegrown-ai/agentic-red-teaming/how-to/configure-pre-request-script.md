@@ -32,8 +32,6 @@ Enter your JavaScript in the **pre-request** or **post-request** script text are
 
 {% step %}
 Click **Save** to apply your changes.
-
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 {% endstep %}
 {% endstepper %}
 
