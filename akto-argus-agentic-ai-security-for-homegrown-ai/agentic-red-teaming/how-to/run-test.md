@@ -37,9 +37,9 @@ If your agent or MCP server needs no authentication, you can leave **Select Scan
 
 ### Configure pre and post scripts (optional)
 
-Use scripts when the requests Akto sends need custom logic around them, for example to add a dynamic header before a probe is sent. Scripts are configured under **User Config**, not in the Configure scan window, and they apply to the scans you run afterwards.
+Use scripts when your agent needs more than one request per probe. A pre script runs a setup call first (for example, creating a conversation) and passes its result into the prompt request. A post script runs a follow-up call after the prompt request. Scripts are configured under **User Config**, not in the Configure scan window, and they apply to the scans you run afterwards.
 
-See [Configure Pre-request Script](configure-pre-request-script.md).
+See [Configure Pre and Post Request Scripts](configure-pre-request-script.md).
 
 ## Run the scan
 
