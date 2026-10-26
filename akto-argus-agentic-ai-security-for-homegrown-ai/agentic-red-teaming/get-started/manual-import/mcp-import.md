@@ -1,12 +1,12 @@
 # MCP Import
 
-Akto now supports direct import of **MCPs** (tools, resources, and prompts) into **MCP Inventory** via **Quick Start**. With just your SSE endpoint URL, you can auto-discover all active MCP tools, resources, and prompts — no manual setup required.
+## Overview
 
-<figure><img src="../../../../.gitbook/assets/image (138).png" alt=""><figcaption></figcaption></figure>
+Akto now supports direct import of **MCPs** (tools, resources, and prompts) into **MCP Inventory** via **Connectors**. With just your SSE endpoint URL, you can auto-discover all active MCP tools, resources, and prompts; no manual setup required.
 
-***
+<figure><img src="../../../../.gitbook/assets/image (96).png" alt="" width="563"><figcaption></figcaption></figure>
 
-### 🔧 What You Need
+## What You Need
 
 * **MCP SSE Endpoint URL** (e.g., ends with `/sse`)
 *   **(Optional) Authorization headers** – only if your MCP server requires them:
@@ -19,57 +19,110 @@ Akto now supports direct import of **MCPs** (tools, resources, and prompts) into
 {% hint style="warning" %}
 **If your MCP server requires authentication, set up the scan role correctly first**
 
-Most failed MCP imports happen because the scan role used for authentication is not configured correctly. If the server needs a token that expires or is issued per login, a pasted header value stops working and the import fails. Use an **automated auth** scan role so Akto fetches a fresh token for the import:
+Most failed MCP imports happen because the scan role used for authentication is not configured correctly. If the server needs a token that expires or is issued per login, a pasted header value stops working and the import fails. Use an **automated auth** scan role so Akto fetches a fresh token for the import.
+{% endhint %}
 
-1. Create the role following [Create a Scan Role](../../how-to/create-a-test-role.md#adding-auth-token-for-role) (see **Automated Auth token generation**).
-2. Configure the **call details** (URL, method, headers and body) exactly as your token endpoint expects.
-3. **Execute the call** and confirm the server returns a token. Do not save the role if the call fails.
-4. **Extract the token** from the correct place in the response (the right header or body parameter, for example `Authorization`).
-5. Select that scan role when you import the MCP server.
+## Set Up the Scan Role (Authenticated Servers Only)
 
+Skip this section if your MCP server is not secured.
+
+{% stepper %}
+{% step %}
+**Create the scan role**
+
+Create a scan role by following [Create a Scan Role](../../how-to/create-a-test-role.md#adding-auth-token-for-role) and choose **Automated Auth token generation**.
+{% endstep %}
+
+{% step %}
+**Configure the call details**
+
+Enter the URL, method, headers and body exactly as your token endpoint expects.
+{% endstep %}
+
+{% step %}
+**Execute the call**
+
+Run the call and confirm the server returns a token.
+
+{% hint style="info" %}
+Do not save the role if the call fails. Fix the call details first.
+{% endhint %}
+{% endstep %}
+
+{% step %}
+**Extract the token**
+
+Extract the token from the correct place in the response (the right header or body parameter, for example `Authorization`).
+{% endstep %}
+
+{% step %}
+**Use the scan role for the import**
+
+Use that scan role for authentication when you import the MCP server in the steps below.
+{% endstep %}
+{% endstepper %}
+
+{% hint style="info" %}
 If the import still fails, re-run the call in the role and check that the extracted token is the one your MCP server expects.
 {% endhint %}
 
-***
+## Steps to Import
 
-### ✅ Steps to Import
+{% stepper %}
+{% step %}
+_Open_ **Akto Argus Dashboard** _→ Go to Connectors._
+{% endstep %}
 
-1. **Open Akto Dashboard** → Go to _Quick Start_
-2. **Select**: _Import from MCP_
-3. **Fill in SSE Details**
-   * SSE Endpoint URL: e.g., `https://mcp.example.com/sse`
-   *   _(Optional)_ Add Auth Headers:
+{% step %}
+Select **MCP Import.**
+{% endstep %}
 
-       ```
-       Header Key: Authorization
-       Header Value: Bearer your-token
-       ```
-   * If your MCP server is not secured, leave auth fields blank.
-4. **Click Import**
+{% step %}
+**Fill in MCP Initialize URL**
 
-Akto will then:
+*   SSE Endpoint URL: e.g., `https://mcp.example.com/sse`
 
-* Start listening to the SSE stream
-* Scan events like `tool_call`, `resource_call`, and `prompt_response`
-* Auto-register all observed MCP endpoints
+    <figure><img src="../../../../.gitbook/assets/image (98).png" alt="" width="188"><figcaption></figcaption></figure>
+* If your MCP server is secured, choose the `This site requires login?` tick box.
+{% endstep %}
 
-**Example With Authorization**
+{% step %}
+**Fill in the Authentication Credentials (Optional)**
+
+Enter the following details:
+
+*   _(Optional)_ Add Auth Headers:
+
+    ```
+    Header Key: Authorization
+    Header Value: Bearer your-token
+    ```
+
+<figure><img src="../../../../.gitbook/assets/image (101).png" alt="" width="188"><figcaption></figcaption></figure>
+
+{% hint style="info" %}
+**Example With Authorisation**
 
 ```
 SSE Endpoint URL: https://mcp.example.com/sse
 Header Key: Authorization
 Header Value: Bearer abc123
 ```
+{% endhint %}
+{% endstep %}
 
-**Without Authorization**
+{% step %}
+**Click Import**
 
-```
-SSE Endpoint URL: https://mcp.example.com/sse
-```
+Akto will then:
 
-***
+* Start listening to the SSE stream
+* Scan events like `tool_call`, `resource_call`, and `prompt_response`
+* Auto-register all observed MCP endpoints
+{% endstep %}
+{% endstepper %}
 
-### 🔍 What Gets Imported?
+## What Gets Imported?
 
 Akto will detect and add:
 
@@ -79,16 +132,14 @@ Akto will detect and add:
 
 These will appear in **MCP Inventory**, ready for monitoring and scanning.
 
-***
-
-### 🔒 Security
+{% hint style="success" %}
+**Security**
 
 * Auth headers (if any) are used **only once** during import and are **not stored**
 * Akto uses **read-only access** to your SSE stream
+{% endhint %}
 
-***
-
-### Get Support for your Akto setup
+#### Get Support for your Akto setup
 
 There are multiple ways to request support from Akto. We are 24X7 available on the following:
 

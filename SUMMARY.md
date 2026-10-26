@@ -86,7 +86,6 @@
 
 * [Overview](akto-argus-agentic-ai-security-for-homegrown-ai/overview.md)
 * [Connectors](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/README.md)
-  * [MCP Import](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/mcp-import.md)
   * [Sidecar Egress Proxy](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/sidecar-egress-proxy.md)
   * [AI Agent Security](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/README.md)
     * [Alibaba Cloud](akto-argus-agentic-ai-security-for-homegrown-ai/connectors/ai-agent-security/connect-akto-with-alibaba-cloud.md)
