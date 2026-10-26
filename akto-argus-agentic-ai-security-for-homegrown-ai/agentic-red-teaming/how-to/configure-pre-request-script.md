@@ -87,35 +87,50 @@ sequenceDiagram
 ```javascript
 // PRE_REQUEST: create a conversation, then put its id into the request body
 // Applies only to: https://agent.example.com/api/chat
+//
+// What this script does, for every probe request:
+//   1. Checks the request URL. If it is not the chat request, it does nothing.
+//   2. Calls the "create conversation" endpoint and reads the new conversation id.
+//   3. Writes that id into the probe request body, so the prompt is sent inside a valid conversation.
 
-var method;
-var headers;
-var url;
-var payload;
-var queryParams;
+// Variables Akto provides to the script. Declare the ones you use.
+// Changing a variable (for example `payload`) changes the request Akto sends.
+var method;       // HTTP method of the probe request
+var headers;      // headers of the probe request
+var url;          // URL of the probe request
+var payload;      // body of the probe request
+var queryParams;  // query parameters of the probe request
 var parsedPayloadTemp;
 var cachedUrl;
 
 var executeOncePerConversation = false;
 
-// ---------------- config ----------------
+// ---------------- config: change these values for your agent ----------------
+// Matches only the request that carries the probe prompt (here: .../api/chat).
+// The pattern also allows an optional trailing slash and query string.
 var TARGET_URL_REGEX = /\/api\/chat\/?(?:[?#]|$)/i;
 
+// The endpoint that creates a conversation, and the body it expects.
 var CREATE_CONVERSATION_URL = "https://agent.example.com/api/conversations";
 var CREATE_CONVERSATION_BODY = {
     "user_id": "akto-scan-user"
 };
-var HTTP_TIMEOUT_MS = 15000;
-// -----------------------------------------
 
+// How long to wait for the create call before giving up, in milliseconds.
+var HTTP_TIMEOUT_MS = 15000;
+// ------------------------------------------------------------------------------
+
+// Returns true if this request is the one the script should act on.
 function isTargetUrl(requestUrl) {
     return requestUrl != null && TARGET_URL_REGEX.test(String(requestUrl));
 }
 
+// Returns true for null, undefined, or empty/whitespace-only values.
 function isBlank(value) {
     return value == null || String(value).trim().length === 0;
 }
 
+// Reads a Java input stream (an HTTP response body) into a string, line by line.
 function readStream(stream) {
     var text = "";
     if (stream != null) {
@@ -131,6 +146,8 @@ function readStream(stream) {
     return text;
 }
 
+// Sends a POST request with a JSON body and returns { code, text }:
+// the HTTP status code and the response body as a string.
 function postApiCall(targetUrl, jsonData) {
     var URL = Java.type("java.net.URL");
     var BufferedWriter = Java.type("java.io.BufferedWriter");
@@ -146,6 +163,7 @@ function postApiCall(targetUrl, jsonData) {
     // connection.setRequestProperty("Authorization", "Bearer <token>");
     connection.setDoOutput(true);
 
+    // Write the JSON body.
     var outputStream = connection.getOutputStream();
     var writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
     writer.write(JSON.stringify(jsonData));
@@ -153,11 +171,15 @@ function postApiCall(targetUrl, jsonData) {
     writer.close();
     outputStream.close();
 
+    // Read the response. Error responses (400 and above) come from the error stream.
     var code = connection.getResponseCode();
     var stream = code >= 400 ? connection.getErrorStream() : connection.getInputStream();
     return { code: Number(code), text: readStream(stream) };
 }
 
+// Calls the create endpoint and returns the new conversation id, or null on failure.
+// Expected response shape: { "data": { "id": "..." }, "status": "success" }
+// If your agent returns the id somewhere else, change the line that reads parsed.data.id.
 function createConversationId() {
     var res = postApiCall(CREATE_CONVERSATION_URL, CREATE_CONVERSATION_BODY);
     if (res.code >= 400) {
@@ -169,14 +191,18 @@ function createConversationId() {
     return isBlank(id) ? null : String(id);
 }
 
+// Sets the "id" field of the probe request body to the new conversation id.
+// If your agent expects the id in a different field, change obj.id.
 function replaceIdInPayload(newId) {
     var obj = typeof payload === "string" ? JSON.parse(payload) : JSON.parse(JSON.stringify(payload));
     obj.id = newId;
-    payload = JSON.stringify(obj);
+    payload = JSON.stringify(obj);   // assigning to payload changes the body Akto sends
 }
 
+// Main flow. print(...) writes to the scan logs, which helps when debugging.
 try {
     if (!isTargetUrl(url)) {
+        // Not the chat request: leave it untouched.
         print("pre-script: url does not match TARGET_URL_REGEX, skipping:", url);
     } else if (isBlank(payload)) {
         print("pre-script: empty payload, nothing to replace");
@@ -186,6 +212,7 @@ try {
             replaceIdInPayload(conversationId);
             print("pre-script: payload.id replaced with", conversationId);
         }
+        // If the create call failed, the request is sent unchanged.
     }
 } catch (e) {
     print("pre-script error:", e);
@@ -262,32 +289,48 @@ sequenceDiagram
 ```javascript
 // POST_REQUEST: poll for the final response, then replace the body with it
 // Applies only to: https://agent.example.com/api/ask
+//
+// What this script does, for every probe request:
+//   1. Checks the request URL. If it is not the prompt request, it does nothing.
+//   2. Reads the job id from the response of the prompt request.
+//   3. Polls the job status endpoint until the job finishes or the wait time runs out.
+//   4. Replaces the response body with the agent's final text, so Akto evaluates the real answer.
 
-var statusCode;
-var headers;
-var body;
-var url;
-var payload;
+// Variables Akto provides to the script. Declare the ones you use.
+var statusCode;  // HTTP status code of the prompt request's response
+var headers;     // headers available to the script (copied onto the polling request below)
+var body;        // response body of the prompt request. Assign a new value to replace it.
+var url;         // URL of the prompt request
+var payload;     // body of the prompt request
 
-// ---------------- config ----------------
+// ---------------- config: change these values for your agent ----------------
+// Matches only the request that carries the probe prompt (here: .../api/ask).
 var SUBMIT_URL_REGEX = /\/api\/ask\/?(?:[?#]|$)/i;
+
+// The status endpoint. The job id is appended to this prefix.
 var POLL_URL_PREFIX = "https://agent.example.com/api/ask/";
+
+// Status values that mean the job is finished (including failure states).
 var TERMINAL_STATUSES = ["succeeded", "failed", "cancelled", "error"];
 
-var POLL_INTERVAL_MS = 500;
-var MAX_WAIT_MS = 60000;
-var CONNECT_TIMEOUT_MS = 10000;
-var READ_TIMEOUT_MS = 15000;
+var POLL_INTERVAL_MS = 500;     // pause between polls
+var MAX_WAIT_MS = 60000;        // give up after this long and return a timeout message
+var CONNECT_TIMEOUT_MS = 10000; // how long to wait to connect
+var READ_TIMEOUT_MS = 15000;    // how long a single poll can wait for a reply
 
-// headers never copied onto the polling request
+// Headers that are not copied onto the polling request, because the HTTP client
+// sets them itself or they describe the original request body.
 var SKIP_HEADERS = ["host", "content-length", "content-type", "connection",
     "transfer-encoding", "accept-encoding", "expect", "upgrade", "via"];
-// -----------------------------------------
+// ------------------------------------------------------------------------------
 
+// Returns true for null, undefined, or empty/whitespace-only values.
 function isBlank(value) {
     return value == null || String(value).trim().length === 0;
 }
 
+// Builds the headers for the polling request by copying the headers Akto gave the script,
+// so the poll is authenticated the same way (for example, same session cookie or token).
 function buildPollHeaders() {
     var out = {};
     if (headers != null) {
@@ -296,6 +339,7 @@ function buildPollHeaders() {
             var e = it.next();
             var name = String(e.getKey());
             var value = e.getValue();
+            // A header can have several values. Join them into one string.
             if (value instanceof java.util.Collection) {
                 var parts = [];
                 var vi = value.iterator();
@@ -311,6 +355,8 @@ function buildPollHeaders() {
     return out;
 }
 
+// Sends a GET request and returns { code, text }:
+// the HTTP status code and the response body as a string.
 function httpGet(target, requestHeaders) {
     var conn = new java.net.URL(target).openConnection();
     conn.setRequestMethod("GET");
@@ -319,6 +365,7 @@ function httpGet(target, requestHeaders) {
     for (var name in requestHeaders) {
         conn.setRequestProperty(name, String(requestHeaders[name]));
     }
+    // Error responses (400 and above) come from the error stream.
     var code = conn.getResponseCode();
     var stream = code >= 400 ? conn.getErrorStream() : conn.getInputStream();
     var text = "";
@@ -331,6 +378,10 @@ function httpGet(target, requestHeaders) {
     return { code: Number(code), text: text };
 }
 
+// Polls the job status endpoint until the job reaches a finished status or MAX_WAIT_MS passes.
+// Returns the text that should become the new response body.
+// Expected response shape when finished: { "status": "succeeded", "response": { "text": "..." } }
+// If your agent returns the answer somewhere else, change the line that reads parsed.response.text.
 function pollUntilDone(pollUrl, pollHeaders) {
     var started = java.lang.System.currentTimeMillis();
     var attempts = 0;
@@ -338,13 +389,18 @@ function pollUntilDone(pollUrl, pollHeaders) {
     while (java.lang.System.currentTimeMillis() - started < MAX_WAIT_MS) {
         attempts++;
         var res = httpGet(pollUrl, pollHeaders);
+
+        // A client error (for example 401 or 404) will not fix itself, so stop polling.
         if (res.code >= 300 && res.code < 500) {
             return "poll failed: http " + res.code;
         }
+
         var parsed = null;
         try { parsed = JSON.parse(res.text); } catch (e) {
             print("post-script: attempt", attempts, "non-JSON, http=", res.code);
         }
+
+        // Finished: return the final text (or the status if there is no text).
         if (parsed != null && TERMINAL_STATUSES.indexOf(String(parsed.status).toLowerCase()) >= 0) {
             print("post-script: done after", attempts, "attempt(s), status=", parsed.status);
             if (parsed.response != null && !isBlank(parsed.response.text)) {
@@ -352,22 +408,28 @@ function pollUntilDone(pollUrl, pollHeaders) {
             }
             return "status=" + parsed.status;
         }
+
+        // Not finished yet: wait, then poll again.
         java.lang.Thread.sleep(POLL_INTERVAL_MS);
     }
     return "timed out after " + MAX_WAIT_MS + "ms";
 }
 
+// Main flow. print(...) writes to the scan logs, which helps when debugging.
 try {
     if (!SUBMIT_URL_REGEX.test(String(url))) {
+        // Not the prompt request: leave the response untouched.
         print("post-script: url does not match SUBMIT_URL_REGEX, skipping:", url);
     } else if (isBlank(body)) {
         print("post-script: empty body");
     } else {
+        // The prompt request's response is the "job accepted" message, e.g. { "job_id": "...", "status": "queued" }.
         var submitted = JSON.parse(String(body));
         if (isBlank(submitted.job_id)) {
             print("post-script: no job_id in response");
         } else {
             var pollUrl = POLL_URL_PREFIX + String(submitted.job_id);
+            // Replace the response body with the agent's final answer.
             body = pollUntilDone(pollUrl, buildPollHeaders());
         }
     }
