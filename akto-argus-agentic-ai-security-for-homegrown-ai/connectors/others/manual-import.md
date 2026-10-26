@@ -23,7 +23,7 @@ Import AI agents from AWS Bedrock, Azure AI Foundry, Databricks, Google Vertex A
 
 Import MCP servers by connecting to their SSE endpoints. Akto will automatically discover all tools, resources, and prompts for probing.
 
-→ [Import MCP Servers](../../agentic-red-teaming/get-started/manual-import/mcp-import.md)
+→ [Import MCP Servers](../mcp-import.md)
 
 ### Import AI Models
 

@@ -21,7 +21,7 @@ Probe agents from AWS Bedrock, Azure AI Foundry, Databricks, Google Vertex AI, I
 #### Import MCP Servers
 Probe Model Context Protocol tools, resources, and prompts by connecting to SSE endpoints.
 
-→ [Import MCP Servers](../../akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/mcp-import.md)
+→ [Import MCP Servers](../../akto-argus-agentic-ai-security-for-homegrown-ai/connectors/mcp-import.md)
 
 #### Import AI Models
 Probe large language models and custom AI implementations for security vulnerabilities.

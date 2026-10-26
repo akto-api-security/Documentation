@@ -16,6 +16,56 @@ Akto now supports direct import of **MCPs** (tools, resources, and prompts) into
     Header Value: Bearer <your-token>
     ```
 
+{% hint style="warning" %}
+**If your MCP server requires authentication, set up the scan role correctly first**
+
+Most failed MCP imports happen because the scan role used for authentication is not configured correctly. If the server needs a token that expires or is issued per login, a pasted header value stops working and the import fails. Use an **automated auth** scan role so Akto fetches a fresh token for the import.
+{% endhint %}
+
+## Set Up the Scan Role (Authenticated Servers Only)
+
+Skip this section if your MCP server is not secured.
+
+{% stepper %}
+{% step %}
+**Create the scan role**
+
+Create a scan role by following [Create a Scan Role](../agentic-red-teaming/how-to/create-a-test-role.md#adding-auth-token-for-role) and choose **Automated Auth token generation**.
+{% endstep %}
+
+{% step %}
+**Configure the call details**
+
+Enter the URL, method, headers and body exactly as your token endpoint expects.
+{% endstep %}
+
+{% step %}
+**Execute the call**
+
+Run the call and confirm the server returns a token.
+
+{% hint style="info" %}
+Do not save the role if the call fails. Fix the call details first.
+{% endhint %}
+{% endstep %}
+
+{% step %}
+**Extract the token**
+
+Extract the token from the correct place in the response (the right header or body parameter, for example `Authorization`).
+{% endstep %}
+
+{% step %}
+**Use the scan role for the import**
+
+Use that scan role for authentication when you import the MCP server in the steps below.
+{% endstep %}
+{% endstepper %}
+
+{% hint style="info" %}
+If the import still fails, re-run the call in the role and check that the extracted token is the one your MCP server expects.
+{% endhint %}
+
 ## Steps to Import
 
 {% stepper %}
@@ -56,7 +106,7 @@ Enter the following details:
 ```
 SSE Endpoint URL: https://mcp.example.com/sse
 Header Key: Authorization
-Head
+Header Value: Bearer abc123
 ```
 {% endhint %}
 {% endstep %}

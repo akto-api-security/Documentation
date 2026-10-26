@@ -263,7 +263,6 @@
     * [Red team existing Agentic Asset](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/red-team-existing-agentic-asset.md)
     * [Manual Import](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/README.md)
       * [AI Agent Import](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/ai-agent-import.md)
-      * [MCP Import](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/mcp-import.md)
       * [AI Model Import](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/get-started/manual-import/ai-model-import.md)
   * [Concepts](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/README.md)
     * [MCP Red Teaming](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/concepts/mcp-red-teaming.md)
