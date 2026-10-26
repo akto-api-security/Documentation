@@ -4,7 +4,7 @@
 
 Akto now supports direct import of **MCPs** (tools, resources, and prompts) into **MCP Inventory** via **Connectors**. With just your SSE endpoint URL, you can auto-discover all active MCP tools, resources, and prompts; no manual setup required.
 
-<figure><img src="../../.gitbook/assets/image (96).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (96).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ## What You Need
 
@@ -30,7 +30,7 @@ Skip this section if your MCP server is not secured.
 {% step %}
 **Create the scan role**
 
-Create a scan role by following [Create a Scan Role](../agentic-red-teaming/how-to/create-a-test-role.md#adding-auth-token-for-role) and choose **Automated Auth token generation**.
+Create a scan role by following [Create a Scan Role](../../how-to/create-a-test-role.md#adding-auth-token-for-role) and choose **Automated Auth token generation**.
 {% endstep %}
 
 {% step %}
@@ -82,7 +82,7 @@ Select **MCP Import.**
 
 *   SSE Endpoint URL: e.g., `https://mcp.example.com/sse`
 
-    <figure><img src="../../.gitbook/assets/image (98).png" alt="" width="188"><figcaption></figcaption></figure>
+    <figure><img src="../../../../.gitbook/assets/image (98).png" alt="" width="188"><figcaption></figcaption></figure>
 * If your MCP server is secured, choose the `This site requires login?` tick box.
 {% endstep %}
 
@@ -98,7 +98,7 @@ Enter the following details:
     Header Value: Bearer your-token
     ```
 
-<figure><img src="../../.gitbook/assets/image (101).png" alt="" width="188"><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (101).png" alt="" width="188"><figcaption></figcaption></figure>
 
 {% hint style="info" %}
 **Example With Authorisation**

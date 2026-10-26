@@ -21,7 +21,7 @@ flowchart LR
 A scan can only run on an asset that exists in a collection. If you have not imported yours yet, do that first:
 
 * [AI Agent Import](../get-started/manual-import/ai-agent-import.md)
-* [MCP Import](../../connectors/mcp-import.md)
+* [MCP Import](../get-started/manual-import/mcp-import.md)
 
 Once imported, the asset appears under **Agentic AI Discovery > Collections**.
 
