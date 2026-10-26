@@ -168,7 +168,7 @@ A single stack enables execution logging on your stages, configures the account-
       --template-body file://akto-cross-account-role.yml \
       --parameters ParameterKey=ServiceAccountId,ParameterValue=<aws-account-id-given-by-akto> \
                    ParameterKey=ExternalId,ParameterValue=<external-id-from-akto> \
-      --capabilities CAPABILITY_NAMED_IAM
+      --capabilities CAPABILITY_IAM
     ```
 
 3.  Copy the `RoleArn` from the outputs:
@@ -186,7 +186,7 @@ A single stack enables execution logging on your stages, configures the account-
 Akto sets up the infrastructure that discovers and monitors your APIs. Send your Akto representative the following details:
 
 1. **Role ARN** — the `RoleArn` copied above.\
-   Example: `arn:aws:iam::123456789012:role/akto/AktoApiGatewayLoggingRole-us-east-2`
+   Example: `arn:aws:iam::123456789012:role/akto/AktoApiGatewayLoggingCrossAccountRole-us-east-2`
 2. **AWS region** — the region your APIs run in.\
    Example: `us-east-2`
 
