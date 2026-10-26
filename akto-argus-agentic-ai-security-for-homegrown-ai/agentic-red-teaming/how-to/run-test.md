@@ -1,89 +1,123 @@
+---
+description: Run a security scan on an imported agent or MCP server, from prerequisites to results.
+---
+
 # Run Scan
 
-Running security probes in Akto involves assessing agent components to evaluate their security posture. You can run probes instantly or schedule them for later, making it useful for planning probing sessions or implementing regular security validation.
+A scan runs security probes against an agent or MCP server you have imported into Akto. Complete the prerequisites below first, then configure and run the scan.
 
-## Running Probes on Agent Components
+```mermaid
+flowchart LR
+    A[Import agent<br/>or MCP server] --> B[Set scan role]
+    B --> C[Configure pre and<br/>post scripts<br/>optional]
+    C --> D[Configure scan<br/>and run]
+    D --> E[View results]
+```
+
+## Prerequisites
+
+### Import the agent or MCP server
+
+A scan can only run on an asset that exists in a collection. If you have not imported yours yet, do that first:
+
+* [AI Agent Import](../get-started/manual-import/ai-agent-import.md)
+* [MCP Import](../get-started/manual-import/mcp-import.md)
+
+Once imported, the asset appears under **Agentic AI Discovery > Collections**.
+
+### Set the scan role
+
+The scan role holds the authentication Akto uses when it sends probe requests to your agent or MCP server (hard-coded token, token from traffic, automated token generation, TLS or digest auth). It is also what lets you probe from the point of view of different privilege levels.
+
+Create the role before you run the scan so you can select it in the **Select Scan Role** field. See [Create a Scan Role](create-a-test-role.md) for setup, and [Scan Roles](../concepts/test-role.md) for the concept.
+
+{% hint style="info" %}
+If your agent or MCP server needs no authentication, you can leave **Select Scan Role** empty.
+{% endhint %}
+
+### Configure pre and post scripts (optional)
+
+Use scripts when the requests Akto sends need custom logic around them, for example to add a dynamic header before a probe is sent. Scripts are configured under **User Config**, not in the Configure scan window, and they apply to the scans you run afterwards.
+
+See [Configure Pre-request Script](configure-pre-request-script.md).
+
+## Run the scan
 
 {% stepper %}
 {% step %}
-Navigate to **Agentic AI Discovery > Collections**
+**Open the Configure scan window**
+
+1. Go to **Agentic AI Discovery > Collections**.
+2. Open the collection that contains your agent or MCP server.
+3. Click **Run scan**.
 {% endstep %}
 
 {% step %}
-Select the collection containing the agent components you want to probe
-{% endstep %}
+**Choose what to test**
 
-{% step %}
-Choose specific agent components or select all components in the collection
-{% endstep %}
-
-{% step %}
-Click **Run Scan** to open the **Configure scan** window
-
-<figure><img src="../../../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure>
-{% endstep %}
-
-{% step %}
-(Optional) Edit the **Name** field to identify this scan run.&#x20;
-
-Akto auto-generates a name based on the target and selected tests, but you can rename it or click **Clear selection** to reset the test selection.
-{% endstep %}
-
-{% step %}
-Select **Test Categories** and **Tests** to run.
-
-The window shows two panels:
-
-* **Test Categories** (left): broad groupings such as Model Context Protocol (MCP) Security, MCP - Broken Authentication, MCP - Denial of Service, MCP - Indirect Prompt Injection, MCP - Input Validation, and MCP - Malicious Code Execution. Each category shows how many tests within it are selected (e.g., `43 out of 43 selected`).
-* **Tests** (right): the individual tests inside the selected categories, each with its own checkbox. Tests you or your org have created show a **Custom** tag. Use the checkbox at the top to select/deselect all, or use **More filters** and the search icon to narrow the list.
-
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (2).png" alt="" width="563"><figcaption></figcaption></figure></div>
+* **Name**: Akto fills this in from the target and the selected probes. Rename it so you can find the run later in the results. Click **Clear selection** to reset the probe selection and start from nothing.
+* **Test Categories** (left panel): groups of probes such as Model Context Protocol (MCP) Security, MCP - Indirect Prompt Injection, Agentic Supply Chain, Agent Goal Hijack, and Cascading Failures. Each category shows how many of its probes are selected. Click a category to see its probes.
+* **Tests** (right panel): the individual probes in the selected category. Use the checkbox at the top to select or deselect all, **More filters** and the search icon to narrow the list. Probes you or your org created carry a **Custom** tag.
+* **Probes selected** (bottom of the window): live count of probes in the current selection.
 
 {% hint style="success" %}
-**Estimated Usage** at the bottom of the panel shows the projected token consumption for the current selection, updating live as you add or remove tests. Use this to evaluate expected LLM consumption before starting the scan.
+A larger selection takes longer and consumes more tokens. For a first scan, pick the categories that match what your asset does (for an MCP server, start with the MCP categories) instead of selecting everything.
 {% endhint %}
 {% endstep %}
 
 {% step %}
-Configure the scan execution parameters.
+**Set the run options**
 
-<details>
+| Field                        | What it does                                                                                       | How to set it                                                                                                                                                                         |
+| ---------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Run Type**                 | Runs the scan **Once** or on a recurring schedule.                                                 | Use **Once** for a first scan or an ad hoc check. Use a recurring option for regular validation. The footer button label follows this choice (for example **Run once now**).          |
+| **Select date**              | Day the scan starts.                                                                               | Defaults to today. Change it only to schedule for later.                                                                                                                              |
+| **Select Time**              | Time the scan starts.                                                                              | **Now** starts immediately. Pick a time to run off-hours.                                                                                                                             |
+| **Scan run time**            | Maximum duration of the scan. The scan stops automatically when it expires.                        | Default is 30 minutes. Large selections (thousands of probes) may not finish in 30 minutes, so increase it, or reduce the selection.                                                  |
+| **Select Scan Role**         | Scan role whose authentication is used for probe requests.                                         | Pick the role you set up in step 2. **No test role selected** means requests go out without role-based auth.                                                                          |
+| **Max Concurrent Requests**  | Number of probe requests sent in parallel.                                                         | Leave on **Default** unless needed. Higher values finish faster but put more load on your agent. Lower it if the target is rate limited or is a production system.                    |
+| **Max Agent Tokens**         | Upper limit on tokens the agent can consume during the scan.                                       | **No limit** places no cap. Set a limit if your agent calls a paid LLM and you want to bound cost.                                                                                    |
+| **Select Testing Module(s)** | Which module (engine) executes the scan.                                                           | Leave the default module unless you run your own, for example one inside your cloud. See [Scanning Module Selector in Akto](testing-module-selector-in-akto.md).                      |
 
-<summary>Scan Execution Parameters</summary>
+{% hint style="info" %}
+Not sure which module to pick? Leave the default selected and Akto uses the active scanning module automatically.
+{% endhint %}
 
-<table><thead><tr><th width="181.08203125">Parameter</th><th>Description</th></tr></thead><tbody><tr><td><strong>Run Type</strong></td><td>Defines how the scan runs. You can run the scan <strong>once</strong> or configure scheduled execution.</td></tr><tr><td><strong>Select Date</strong></td><td>Defines the date when the scan execution starts.</td></tr><tr><td><strong>Select Time</strong></td><td>Defines the time when the scan execution begins.</td></tr><tr><td><strong>Scan Run Time</strong></td><td>Defines the maximum duration allowed for the scan execution. The scan stops automatically when the configured duration expires.</td></tr><tr><td><strong>Select Scan Role</strong></td><td>Associates a predefined scan role that defines permissions and execution behavior for the scan.</td></tr><tr><td><strong>Max Concurrent Requests</strong></td><td>Controls the number of parallel probe requests executed during the scan. Higher concurrency increases scan speed but also increases request load.</td></tr><tr><td><strong>Max Agent Tokens</strong></td><td>Defines the maximum number of tokens that the agent can consume during the scan. The <strong>No limit</strong> option allows unrestricted token usage.</td></tr><tr><td><strong>Select Testing Module(s)</strong></td><td>Chooses which probing module(s) execute the scan. See <a href="testing-module-selector-in-akto.md">Scanning Module Selector in Akto</a>.</td></tr></tbody></table>
-
-</details>
-
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (227).png" alt="" width="563"><figcaption></figcaption></figure></div>
-
-
+{% hint style="warning" %}
+Probes send adversarial requests to your agent, and each one can trigger LLM calls and tool executions. When scanning a production agent, start with a low **Max Concurrent Requests** and a **Max Agent Tokens** limit.
+{% endhint %}
 {% endstep %}
 
 {% step %}
-(Optional) Turn on post-scan actions:
+**Choose post-scan options (optional)**
 
-* **Send slack alert post test completion**: sends a notification to the selected **Slack Channel** once the scan finishes.
-* **Send MS Teams alert post test completion**: sends a Microsoft Teams notification once the scan finishes.
-* **Auto-create tickets**: automatically opens tickets for issues found by the scan.
-* **Use different target for scanning**: lets you point this scan at a target other than the one associated with the collection.
-* **Mark issues as fixed if they don't show up again**: automatically closes previously reported issues that no longer reproduce in this scan run.
+* **Slack integration to send alerts post completion**: sends a notification to a Slack channel when the scan finishes. If the checkbox is greyed out, click **Enable** to connect the integration first.
+* **Microsoft Teams integration to send alerts post completion**: same, for Microsoft Teams. Click **Enable** to connect it if it is greyed out.
+* **Auto-create tickets**: opens tickets for issues the scan finds. See [Auto-Create Jira Tickets](auto-create-jira-tickets.md).
+* **Use different target for scanning**: sends this scan to a target other than the one associated with the collection, for example a staging copy of the agent.
+* **Mark issues as fixed if they don't show up again**: closes previously reported issues that no longer reproduce in this run. Enabled by default.
 * **Smart Automated Testing**: lets Akto adapt test execution automatically instead of running the fixed selection as-is.
-
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (226).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
-(Optional) Click **Show advance configurations** to add custom headers or conditions to the scan's requests.&#x20;
+**Add advanced configurations (optional)**
 
-* Choose **Add Header**, enter a key/value pair, and use **Add condition** to chain multiple headers with **AND**/**OR** logic.&#x20;
+Click **Show advance configurations** to add custom headers or conditions to the scan's requests.
 
-<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (228).png" alt="" width="563"><figcaption></figcaption></figure></div>
+* Choose **Add Header**, enter a key and value, and use **Add condition** to chain multiple headers with **AND** or **OR** logic.
 
-This is useful for authentication tokens or agent-specific request requirements.
+This is useful for agent-specific request requirements, such as a tenant or account header.
 {% endstep %}
 
 {% step %}
-Click **Run once now** (the button label follows the selected **Run Type**, e.g. **Schedule scan** for scheduled runs) to start the security scan.
+**Start the scan**
+
+Click **Run once now** (the label follows the selected **Run Type**, for example **Schedule scan** for scheduled runs).
+
+Results appear under **AI Red Teaming > Results**. To end a scan early, see [Stop Scan](stop-tests.md).
+
+{% hint style="success" %}
+After the run, open the scan under **AI Red Teaming > Results** to review findings, or use **Edit Scan settings** there to adjust and re-run. See [Edit Probe Settings](edit-test-settings.md).
+{% endhint %}
 {% endstep %}
 {% endstepper %}
