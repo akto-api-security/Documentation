@@ -44,7 +44,7 @@ Use whichever you prefer — both produce the same role.
 
 #### Using CloudFormation
 
-1. Download [akto-cross-account-role-scoped.yml](https://github.com/akto-api-security/infra/blob/feature/quick-setup/api-gateway-customer-onboarding/akto-cross-account-role-scoped.yml) — click **Raw**, then save the file.
+1. Download [akto-cross-account-role-scoped.yml](https://raw.githubusercontent.com/akto-api-security/infra/feature/quick-setup/api-gateway-customer-onboarding/akto-cross-account-role-scoped.yml) and save the file.
 2. Go to **CloudFormation** > **Create stack** > **With new resources (standard)**.
 3. Choose **Upload a template file**, select the saved file, and click **Next**.
 4.  Name the stack and fill in the parameters:
@@ -133,7 +133,7 @@ A single stack enables execution logging on your stages, configures the account-
 
 ### Option A: AWS Console
 
-1. Open [akto-cross-account-role.yml](https://github.com/akto-api-security/infra/blob/feature/quick-setup/api-gateway-customer-onboarding/akto-cross-account-role.yml), click **Raw**, and save the file.
+1. Download [akto-cross-account-role.yml](https://raw.githubusercontent.com/akto-api-security/infra/feature/quick-setup/api-gateway-customer-onboarding/akto-cross-account-role.yml) and save the file.
 2. Go to **CloudFormation** in the AWS Console and click **Create stack** > **With new resources (standard)**.
 3. Choose **Upload a template file**, select the saved file, and click **Next**.
 4.  Enter a stack name (e.g. `akto-api-gateway-connector`) and fill in the parameters:
@@ -212,7 +212,7 @@ The connector sends data to a Kafka broker. Follow [CloudFormation template (v2)
 
 **AWS Console**
 
-1. Download [api-gateway-connector-service-acc-setup.yml](https://github.com/akto-api-security/infra/blob/feature/quick-setup/api-gateway-customer-onboarding/api-gateway-connector-service-acc-setup.yml) — click **Raw**, then save the file.
+1. Download [api-gateway-connector-service-acc-setup.yml](https://raw.githubusercontent.com/akto-api-security/infra/feature/quick-setup/api-gateway-customer-onboarding/api-gateway-connector-service-acc-setup.yml) and save the file.
 2. Go to **CloudFormation** > **Create stack** > **With new resources (standard)**.
 3. Choose **Upload a template file**, select the saved file, and click **Next**.
 4.  Name the stack and fill in the parameters:
