@@ -8,13 +8,19 @@ Akto now supports direct import of **MCPs** (tools, resources, and prompts) into
 
 ## What You Need
 
-* **MCP SSE Endpoint URL** (e.g., ends with `/sse`)
+* **MCP SSE Endpoint URL** (e.g., ends with `/sse`), reachable from Akto
 *   **(Optional) Authorization headers** – only if your MCP server requires them:
 
     ```
     Header Key: Authorization
     Header Value: Bearer <your-token>
     ```
+
+{% hint style="warning" %}
+**The MCP server must be accessible from Akto**
+
+Akto connects to your SSE endpoint to discover tools, resources and prompts, so the import only succeeds if Akto can reach the server. If the endpoint is on a private network, behind a firewall or WAF, or restricted by an IP allowlist, Akto cannot reach it and the import fails. Make sure the server is reachable from Akto before you import.
+{% endhint %}
 
 {% hint style="warning" %}
 **If your MCP server requires authentication, set up the scan role correctly first**
