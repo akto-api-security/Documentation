@@ -47,7 +47,7 @@ Use whichever you prefer — both produce the same role.
 3. Choose **Upload a template file**, select the saved file, and click **Next**.
 4.  Name the stack and fill in the parameters:
 
-    * `AktoAWSAccountId` — the AWS Account ID given to you by Akto.
+    * `ServiceAccountId` — the AWS Account ID given to you by Akto.
     * `ExternalId` — the External ID issued to you by Akto.
 5. Click through, acknowledge IAM resource creation, and submit.
 6. On **CREATE\_COMPLETE**, copy the `RoleArn` from the **Outputs** tab.
@@ -64,7 +64,7 @@ Use whichever you prefer — both produce the same role.
         {
           "Effect": "Allow",
           "Principal": {
-            "AWS": "arn:aws:iam::<AKTO_AWS_ACCOUNT_ID>:root"
+            "AWS": "arn:aws:iam::<SERVICE_ACCOUNT_ID>:root"
           },
           "Action": "sts:AssumeRole",
           "Condition": {
@@ -145,7 +145,7 @@ A single stack enables execution logging on your stages, configures the account-
 3. Choose **Upload a template file**, select the saved file, and click **Next**.
 4.  Enter a stack name (e.g. `akto-api-gateway-connector`) and fill in the parameters:
 
-    * `AktoAWSAccountId` — the AWS Account ID given to you by Akto.
+    * `ServiceAccountId` — the AWS Account ID given to you by Akto.
     * `ExternalId` — the External ID issued to you by Akto.
     * `RestApiIds` _(optional)_ — comma-separated REST API IDs to enable logging on. Leave blank to enable logging for all APIs.
     * `Version` — leave as default.
@@ -166,7 +166,7 @@ A single stack enables execution logging on your stages, configures the account-
     aws cloudformation create-stack \
       --stack-name akto-api-gateway-connector \
       --template-body file://akto-cross-account-role.yml \
-      --parameters ParameterKey=AktoAWSAccountId,ParameterValue=<aws-account-id-given-by-akto> \
+      --parameters ParameterKey=ServiceAccountId,ParameterValue=<aws-account-id-given-by-akto> \
                    ParameterKey=ExternalId,ParameterValue=<external-id-from-akto> \
       --capabilities CAPABILITY_NAMED_IAM
     ```
