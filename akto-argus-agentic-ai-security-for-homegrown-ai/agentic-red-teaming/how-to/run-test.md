@@ -81,10 +81,19 @@ A larger selection takes longer and consumes more tokens. For a first scan, pick
 | **Select Scan Role**         | Scan role whose authentication is used for probe requests.                                         | Pick the role you set up in the prerequisites. **No test role selected** means requests go out without role-based auth.                                                                          |
 | **Max Concurrent Requests**  | Number of probe requests sent in parallel.                                                         | Leave on **Default** unless needed. Higher values finish faster but put more load on your agent. Lower it if the target is rate limited or is a production system.                    |
 | **Max Agent Tokens**         | Upper limit on tokens the agent can consume during the scan.                                       | **No limit** places no cap. Set a limit if your agent calls a paid LLM and you want to bound cost.                                                                                    |
-| **Select Testing Module(s)** | Which module (engine) executes the scan.                                                           | Leave the default module unless you run your own, for example one inside your cloud. See [Scanning Module Selector in Akto](testing-module-selector-in-akto.md).                      |
+| **Select Testing Module(s)** | Which module (engine) executes the scan.                                                           | Leave the default module for publicly reachable targets. For internal agents or MCP servers, select the module deployed in your own environment (see the warning below). See [Scanning Module Selector in Akto](testing-module-selector-in-akto.md).                      |
+
+{% hint style="warning" %}
+**Internal agents and MCP servers**
+
+If your agent or MCP server is internal (not reachable from the public internet, or behind a firewall, WAF or private network), run the scan using the scanning module deployed inside your own environment. 
+In **Select Testing Module(s)**, choose your internally deployed module. The default Akto-hosted module cannot reach internal targets, so the scan would fail to connect.
+
+See [Install Scanning module in your Cloud](install-testing-module-in-your-cloud/README.md) to deploy one, and [Scanning Module Selector in Akto](testing-module-selector-in-akto.md) to select it.
+{% endhint %}
 
 {% hint style="info" %}
-Not sure which module to pick? Leave the default selected and Akto uses the active scanning module automatically.
+If your target is publicly reachable and you are not sure which module to pick, leave the default selected and Akto uses the active scanning module automatically.
 {% endhint %}
 
 {% hint style="warning" %}
