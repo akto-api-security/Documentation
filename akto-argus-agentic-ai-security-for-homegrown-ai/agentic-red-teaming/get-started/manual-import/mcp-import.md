@@ -16,6 +16,20 @@ Akto now supports direct import of **MCPs** (tools, resources, and prompts) into
     Header Value: Bearer <your-token>
     ```
 
+{% hint style="warning" %}
+**If your MCP server requires authentication, set up the scan role correctly first**
+
+Most failed MCP imports happen because the scan role used for authentication is not configured correctly. If the server needs a token that expires or is issued per login, a pasted header value stops working and the import fails. Use an **automated auth** scan role so Akto fetches a fresh token for the import:
+
+1. Create the role following [Create a Scan Role](../../how-to/create-a-test-role.md#adding-auth-token-for-role) (see **Automated Auth token generation**).
+2. Configure the **call details** (URL, method, headers and body) exactly as your token endpoint expects.
+3. **Execute the call** and confirm the server returns a token. Do not save the role if the call fails.
+4. **Extract the token** from the correct place in the response (the right header or body parameter, for example `Authorization`).
+5. Select that scan role when you import the MCP server.
+
+If the import still fails, re-run the call in the role and check that the extracted token is the one your MCP server expects.
+{% endhint %}
+
 ***
 
 ### ✅ Steps to Import
