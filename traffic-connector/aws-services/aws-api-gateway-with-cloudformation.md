@@ -204,7 +204,7 @@ A central connector is a single EC2 instance that assumes one cross-account role
 
 The connector sends data to a Kafka broker. Follow [CloudFormation template (v2)](https://docs.akto.io/getting-started/quick-start-with-akto-cloud/hybrid-saas#cloudformation-template-v2) to set one up, then copy the `AktoNLBIP` value from its Outputs — you'll need it below.
 
-> Skip this if you already have a Traffic Processor running. If you do, make sure the connector's subnet (Step 2) can reach it, and that its security group allows inbound access from the connector — by default it only opens to its own VPC's address range, so if the connector runs in a different VPC, add the connector's VPC/subnet CIDR as well.
+> Already have one running? Skip this, but deploy the connector in the same subnet as the Traffic Processor.
 
 #### Step 2: Deploy the connector stack
 
