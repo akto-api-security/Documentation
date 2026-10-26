@@ -15,6 +15,55 @@ Look at where your agent expects the prompt in its two-request flow:
 | Request 1 sets things up (creates a conversation or session). Request 2 carries the prompt.             | **Pre script**   | The script makes request 1 first, then puts the returned value (such as an id) into the prompt request. |
 | Request 1 carries the prompt. Request 2 is needed afterwards (for example, to retrieve the response).   | **Post script**  | The script makes the follow-up call after the prompt request has been sent, then returns the final response to Akto. |
 
+{% hint style="info" %}
+If your agent accepts the prompt in one standalone request, you do not need either script. The scripts are only for multi-request flows or for adjusting requests dynamically.
+{% endhint %}
+
+## Add a script
+
+{% stepper %}
+{% step %}
+Go to **User Config**.
+{% endstep %}
+
+{% step %}
+Enter your JavaScript in the **pre-request** or **post-request** script text area (for example, "Enter pre-request javascript here..."). Each script type has its own section below with the variables it can use and an example.
+{% endstep %}
+
+{% step %}
+Click **Save** to apply your changes.
+
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+{% endstep %}
+{% endstepper %}
+
+{% hint style="warning" %}
+The script runs for every probe request, so limit it to the requests it is meant for. Check `url` at the start of the script and skip the rest if it does not match, as the example below does.
+{% endhint %}
+
+## Pre-request script
+
+The pre-request script runs **before** the probe request is sent. Use it to make a setup call and put the result into the probe request, or to change the request itself. Assign a new value to a variable to change what Akto sends. For example, assigning a new value to `payload` changes the request body.
+
+### Pre-request script variables
+
+| Variable      | Description                                       |
+| ------------- | ------------------------------------------------- |
+| `method`      | The HTTP method of the request (e.g., GET, POST). |
+| `headers`     | The headers of the request.                       |
+| `url`         | The URL of the request.                           |
+| `payload`     | The body of the request.                          |
+| `queryParams` | The query parameters of the request.              |
+
+### Example: create a conversation, then send the prompt
+
+This pre script is for an agent that works in two requests:
+
+1. `POST https://agent.example.com/api/conversations` creates a conversation and returns `{ "data": { "id": "..." }, "status": "success" }`.
+2. `POST https://agent.example.com/api/chat` sends the prompt, and the body must contain that conversation `id`.
+
+The script runs only for the chat request. It calls the create endpoint, reads the id from the response, and writes it into the probe request body.
+
 ```mermaid
 sequenceDiagram
     autonumber
@@ -30,53 +79,6 @@ sequenceDiagram
     Akto->>Agent: Request 2: send probe prompt with id
     Agent-->>Akto: Agent response
 ```
-
-{% hint style="info" %}
-If your agent accepts the prompt in one standalone request, you do not need either script. The scripts are only for multi-request flows or for adjusting requests dynamically.
-{% endhint %}
-
-## Set up a script
-
-{% stepper %}
-{% step %}
-Go to **User Config**.
-{% endstep %}
-
-{% step %}
-In the script text area (for example, "Enter pre-request javascript here..."), enter your JavaScript.
-
-The script has access to these predefined variables:
-
-| Variable      | Description                         |
-| ------------- | ----------------------------------- |
-| `method`      | The HTTP method of the request (e.g., GET, POST). |
-| `headers`     | The headers of the request.         |
-| `url`         | The URL of the request.             |
-| `payload`     | The body of the request.            |
-| `queryParams` | The query parameters of the request. |
-
-Change a variable inside the script to change what Akto sends. For example, assigning a new value to `payload` changes the request body.
-{% endstep %}
-
-{% step %}
-Click **Save** to apply your changes.
-
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
-{% endstep %}
-{% endstepper %}
-
-{% hint style="warning" %}
-The script runs for every probe request, so limit it to the requests it is meant for. Check `url` at the start of the script and skip the rest if it does not match, as the example below does.
-{% endhint %}
-
-## Example: create a conversation, then send the prompt
-
-This pre script is for an agent that works in two requests:
-
-1. `POST https://agent.example.com/api/conversations` creates a conversation and returns `{ "data": { "id": "..." }, "status": "success" }`.
-2. `POST https://agent.example.com/api/chat` sends the prompt, and the body must contain that conversation `id`.
-
-The script runs only for the chat request. It calls the create endpoint, reads the id from the response, and writes it into the probe request body.
 
 <details>
 
@@ -192,7 +194,7 @@ try {
 
 </details>
 
-### Adapt the example to your agent
+#### Adapt the example to your agent
 
 Change only the values in the `config` block:
 
@@ -209,7 +211,22 @@ If the id has a different name or location, update `createConversationId` (where
 Use `print(...)` to log what the script is doing, as the example does. If a probe fails, these messages show whether the script skipped the request, the create call failed, or the id was replaced.
 {% endhint %}
 
-## Example: poll for the final response
+
+## Post-request script
+
+The post-request script runs **after** the probe request has been sent and the response is received. Use it when the response to the probe is not the final answer, for example when the agent returns a job id and you need a follow-up call to retrieve the real response. Assign a new value to `body` to change the response Akto evaluates.
+
+### Post-request script variables
+
+| Variable    | Description                                                                                           |
+| ----------- | ----------------------------------------------------------------------------------------------------- |
+| `statusCode` | The HTTP status code of the prompt request's response.                                               |
+| `body`      | The response body of the prompt request. Assign a new value to replace the response Akto evaluates.   |
+| `headers`   | The headers available to the script. The example copies them onto the polling request (for example, a session cookie or auth header). |
+| `url`       | The URL of the prompt request.                                                                        |
+| `payload`   | The body of the prompt request.                                                                       |
+
+### Example: poll for the final response
 
 Some agents answer a prompt asynchronously. The prompt request only returns a job id, and the real answer is available from a second endpoint once the job finishes. Without a post script, Akto would evaluate the "job accepted" message instead of the agent's answer.
 
@@ -237,16 +254,6 @@ sequenceDiagram
     Note over Post: Replace body with the final text
     Post-->>Akto: Final agent response
 ```
-
-### Post script variables
-
-| Variable    | Description                                                                                           |
-| ----------- | ----------------------------------------------------------------------------------------------------- |
-| `statusCode` | The HTTP status code of the prompt request's response.                                               |
-| `body`      | The response body of the prompt request. Assign a new value to replace the response Akto evaluates.   |
-| `headers`   | The headers available to the script. The example copies them onto the polling request (for example, a session cookie or auth header). |
-| `url`       | The URL of the prompt request.                                                                        |
-| `payload`   | The body of the prompt request.                                                                       |
 
 <details>
 
@@ -372,7 +379,7 @@ try {
 
 </details>
 
-### Adapt the example to your agent
+#### Adapt the example to your agent
 
 | Setting                           | What to change                                                                                   |
 | --------------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -402,3 +409,4 @@ You can use both scripts together. For example, a pre script creates the convers
 * Be cautious when modifying core request properties, as it may affect the intended behavior of your scans.
 * For complex operations, break your code into functions for readability and maintenance.
 * Keep credentials out of the script where possible. Prefer a [scan role](create-a-test-role.md) for authentication.
+
