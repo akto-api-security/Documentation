@@ -37,9 +37,9 @@ If your agent or MCP server needs no authentication, you can leave **Select Scan
 
 ### Configure pre and post scripts (optional)
 
-Use scripts when the requests Akto sends need custom logic around them, for example to add a dynamic header before a probe is sent. Scripts are configured under **User Config**, not in the Configure scan window, and they apply to the scans you run afterwards.
+Use scripts when your agent needs more than one request per probe. A pre script runs a setup call first (for example, creating a conversation) and passes its result into the prompt request. A post script runs a follow-up call after the prompt request. Scripts are configured under **User Config**, not in the Configure scan window, and they apply to the scans you run afterwards.
 
-See [Configure Pre-request Script](configure-pre-request-script.md).
+See [Configure Pre and Post Request Scripts](configure-pre-request-script.md).
 
 ## Run the scan
 
@@ -50,6 +50,8 @@ See [Configure Pre-request Script](configure-pre-request-script.md).
 1. Go to **Agentic AI Discovery > Collections**.
 2. Open the collection that contains your agent or MCP server.
 3. Click **Run scan**.
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -63,6 +65,8 @@ See [Configure Pre-request Script](configure-pre-request-script.md).
 {% hint style="success" %}
 A larger selection takes longer and consumes more tokens. For a first scan, pick the categories that match what your asset does (for an MCP server, start with the MCP categories) instead of selecting everything.
 {% endhint %}
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (2).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -74,7 +78,7 @@ A larger selection takes longer and consumes more tokens. For a first scan, pick
 | **Select date**              | Day the scan starts.                                                                               | Defaults to today. Change it only to schedule for later.                                                                                                                              |
 | **Select Time**              | Time the scan starts.                                                                              | **Now** starts immediately. Pick a time to run off-hours.                                                                                                                             |
 | **Scan run time**            | Maximum duration of the scan. The scan stops automatically when it expires.                        | Default is 30 minutes. Large selections (thousands of probes) may not finish in 30 minutes, so increase it, or reduce the selection.                                                  |
-| **Select Scan Role**         | Scan role whose authentication is used for probe requests.                                         | Pick the role you set up in step 2. **No test role selected** means requests go out without role-based auth.                                                                          |
+| **Select Scan Role**         | Scan role whose authentication is used for probe requests.                                         | Pick the role you set up in the prerequisites. **No test role selected** means requests go out without role-based auth.                                                                          |
 | **Max Concurrent Requests**  | Number of probe requests sent in parallel.                                                         | Leave on **Default** unless needed. Higher values finish faster but put more load on your agent. Lower it if the target is rate limited or is a production system.                    |
 | **Max Agent Tokens**         | Upper limit on tokens the agent can consume during the scan.                                       | **No limit** places no cap. Set a limit if your agent calls a paid LLM and you want to bound cost.                                                                                    |
 | **Select Testing Module(s)** | Which module (engine) executes the scan.                                                           | Leave the default module unless you run your own, for example one inside your cloud. See [Scanning Module Selector in Akto](testing-module-selector-in-akto.md).                      |
@@ -86,6 +90,8 @@ Not sure which module to pick? Leave the default selected and Akto uses the acti
 {% hint style="warning" %}
 Probes send adversarial requests to your agent, and each one can trigger LLM calls and tool executions. When scanning a production agent, start with a low **Max Concurrent Requests** and a **Max Agent Tokens** limit.
 {% endhint %}
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (227).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -97,6 +103,8 @@ Probes send adversarial requests to your agent, and each one can trigger LLM cal
 * **Use different target for scanning**: sends this scan to a target other than the one associated with the collection, for example a staging copy of the agent.
 * **Mark issues as fixed if they don't show up again**: closes previously reported issues that no longer reproduce in this run. Enabled by default.
 * **Smart Automated Testing**: lets Akto adapt test execution automatically instead of running the fixed selection as-is.
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (226).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -107,6 +115,8 @@ Click **Show advance configurations** to add custom headers or conditions to the
 * Choose **Add Header**, enter a key and value, and use **Add condition** to chain multiple headers with **AND** or **OR** logic.
 
 This is useful for agent-specific request requirements, such as a tenant or account header.
+
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (228).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
