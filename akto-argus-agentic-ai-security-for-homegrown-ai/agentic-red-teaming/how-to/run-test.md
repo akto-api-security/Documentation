@@ -55,7 +55,7 @@ See [Configure Pre and Post Request Scripts](configure-pre-request-script.md).
 {% endstep %}
 
 {% step %}
-**Choose what to test**
+**Choose what to scan**
 
 * **Name**: Akto fills this in from the target and the selected probes. Rename it so you can find the run later in the results. Click **Clear selection** to reset the probe selection and start from nothing.
 * **Test Categories** (left panel): groups of probes such as Model Context Protocol (MCP) Security, MCP - Indirect Prompt Injection, Agentic Supply Chain, Agent Goal Hijack, and Cascading Failures. Each category shows how many of its probes are selected. Click a category to see its probes.
@@ -102,7 +102,7 @@ Probes send adversarial requests to your agent, and each one can trigger LLM cal
 * **Auto-create tickets**: opens tickets for issues the scan finds. See [Auto-Create Jira Tickets](auto-create-jira-tickets.md).
 * **Use different target for scanning**: sends this scan to a target other than the one associated with the collection, for example a staging copy of the agent.
 * **Mark issues as fixed if they don't show up again**: closes previously reported issues that no longer reproduce in this run. Enabled by default.
-* **Smart Automated Testing**: lets Akto adapt test execution automatically instead of running the fixed selection as-is.
+* **Smart Automated Testing**: lets Akto adapt scan execution automatically instead of running the fixed selection as-is.
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (226).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
