@@ -302,7 +302,7 @@
     * [Configure global rate limit](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/configure-global-rate-limit.md)
     * [Rescan Specific Issues Resolved](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/rescan-specific-issues-resolved.md)
     * [Global Scan Template Configuration](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/global-test-template-configuration.md)
-    * [Configure Pre-request Script](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/configure-pre-request-script.md)
+    * [Configure Pre and Post Request Scripts](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/configure-pre-request-script.md)
     * [Set Up JSON Recording for Auth Tokens](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/set-up-json-recording-for-auth-tokens.md)
     * [Create a Scan Role](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/create-a-test-role.md)
     * [Edit Auth Flow in Scan Roles](akto-argus-agentic-ai-security-for-homegrown-ai/agentic-red-teaming/how-to/edit-auth-flow-in-test-roles.md)
