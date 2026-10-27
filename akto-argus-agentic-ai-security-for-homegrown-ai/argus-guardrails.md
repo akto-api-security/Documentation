@@ -16,17 +16,17 @@ Argus routes traffic through the **Akto MCP Gateway** or **Akto AI Agent Gateway
 
 ## What Argus Guardrails Cover
 
-* **Prompt injection and jailbreaks** — detect and block adversarial prompts attempting to override agent instructions or escalate privileges.
-* **Sensitive data leakage** — scan agent responses for PII, secrets, and regulated data, and redact or block before they reach the caller.
-* **Unauthorized tool use** — restrict which MCP tools and actions an agent can invoke at runtime, even when its planner attempts to call them.
-* **Schema violations and probing** — detect agent requests that deviate from expected MCP or tool schemas, an early signal of abuse attempts.
-* **Rate abuse and successful exploits** — apply dynamic rate limits and surface attack chains that succeeded against your agents.
+* **Prompt injection and jailbreaks**: detect and block adversarial prompts attempting to override agent instructions or escalate privileges.
+* **Sensitive data leakage**: scan agent responses for PII, secrets, and regulated data, and redact or block before they reach the caller.
+* **Unauthorized tool use**: restrict which MCP tools and actions an agent can invoke at runtime, even when its planner attempts to call them.
+* **Schema violations and probing**: detect agent requests that deviate from expected MCP or tool schemas, an early signal of abuse attempts.
+* **Rate abuse and successful exploits**: apply dynamic rate limits and surface attack chains that succeeded against your agents.
 
 Argus ships with 20+ built-in guardrail policies covering input and output threats. See [**Agent Guard**](../agentic-guardrails/concepts/agent-guard.md) for the full list of scanners and what each one detects.
 
 ## How It Works
 
-Argus connectors — agent frameworks, API gateways, service meshes, or cloud platforms — run alongside your AI agents in production. When an agent makes a tool call or LLM request, the connector hands the payload off to the Akto Guardrail Engine, which evaluates it against your input policies and returns the verdict. The connector then forwards the approved request to the AI tool or MCP server, captures the response, and sends it back through the engine for output guardrail checks before delivering it to the agent. Every decision flows into the Akto dashboard for monitoring, threat analysis, and remediation.
+Argus connectors (agent frameworks, API gateways, service meshes, or cloud platforms) run alongside your AI agents in production. When an agent makes a tool call or LLM request, the connector hands the payload off to the Akto Guardrail Engine, which evaluates it against your input policies and returns the verdict. The connector then forwards the approved request to the AI tool or MCP server, captures the response, and sends it back through the engine for output guardrail checks before delivering it to the agent. Every decision flows into the Akto dashboard for monitoring, threat analysis, and remediation.
 
 ```mermaid
 sequenceDiagram

@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Human Approval** is a Rule Behaviour option for guardrail policies. The first time the policy is triggered, Akto blocks the attempt and sends it to a reviewer instead of blocking every future attempt or only alerting after the fact. The request is routed to the approvers you designate, who approve or deny it. Approving the specific actor, always or for a fixed number of days, allows future attempts through. Every decision is recorded in the approval history.
+**Human Approval** is a Rule Behaviour option for guardrail policies. When the policy is triggered, Akto blocks the attempt and sends it to a reviewer instead of only alerting after the fact or blocking permanently. The request is routed to the approvers you designate, who approve or deny it. Approving the specific actor, always or for a fixed number of days, allows future attempts through. Every decision is recorded in the approval history.
 
 ## How It Works
 

@@ -44,12 +44,12 @@ The list can grow as Akto adds support for more frameworks. Check the **Presets*
 
 * **Faster setup** for a known compliance or security requirement.
 * **Fewer gaps**, since the preset already covers control categories the framework typically expects.
-* **Fully editable** — a preset is a starting point, not a fixed template.
+* **Fully editable**: a preset is a starting point, not a fixed template.
 
 ## Related Concepts
 
-* [Guardrail Policy](threat-policy.md) — what a guardrail policy enforces
-* [Create Guardrail Policies](../how-to/create-guardrail-policies.md) — the form presets pre-fill
-* [Manage Guardrail Policies](../how-to/manage-guardrail-policies.md) — editing, disabling, and deleting policies
-* [Threat Dashboard](threat-dashboard.md) — filter detections by compliance framework
-* [Guardrail Activity Detailed View](../how-to/guardrail-activity-detailed-view.md) — see which frameworks a detection maps to
+* [Guardrail Policy](threat-policy.md): what a guardrail policy enforces
+* [Create Guardrail Policies](../how-to/create-guardrail-policies.md): the form presets pre-fill
+* [Manage Guardrail Policies](../how-to/manage-guardrail-policies.md): editing, disabling, and deleting policies
+* [Threat Dashboard](threat-dashboard.md): filter detections by compliance framework
+* [Guardrail Activity Detailed View](../how-to/guardrail-activity-detailed-view.md): see which frameworks a detection maps to

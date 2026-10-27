@@ -23,7 +23,7 @@ A **misconfiguration** is a setting in an AI coding agent's config file that wea
 * **OpenAI Codex CLI**: `config.toml`
 * **GitHub Copilot CLI**: `settings.json`
 
-Each file has its own permission, sandbox, and hook settings, but Akto checks all three the same way: does this setting skip approval, give excessive permissions, weaken the sandbox, or turn off monitoring?
+Each file has its own permission, sandbox, and hook settings, but Akto checks all of them the same way: does this setting skip approval, give excessive permissions, weaken the sandbox, or turn off monitoring?
 
 ## Example: Claude Code `settings.json`
 
