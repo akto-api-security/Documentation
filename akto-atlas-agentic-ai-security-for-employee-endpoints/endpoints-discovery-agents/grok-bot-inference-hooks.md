@@ -15,7 +15,7 @@ Grok Bot runs its model calls on a per-user cloud VM, so an endpoint agent or pr
 ## How It Works
 
 1. A user sends a prompt in Grok Bot.
-2. Cursor sends an HTTPS `POST` containing the conversation so far to Akto's verdict endpoint, signed per the [Standard Webhooks](https://www.standardwebhooks.com/) spec so Atlas can verify it came from Cursor, and carrying an `Authorization` header with your Akto token so Atlas can identify your account.
+2. Cursor sends an HTTPS `POST` containing the conversation so far to Akto's verdict endpoint, signed per the [Standard Webhooks](https://www.standardwebhooks.com/) spec, and carrying an `Authorization` header with your Akto token so Atlas can identify your account.
 3. Atlas evaluates the conversation against your configured Guardrail policies and returns a verdict within your team's verdict timeout (5 seconds by default).
 4. On `allow`, inference proceeds normally. On `deny`, Cursor blocks the request and shows the user a policy message built from Atlas's per-request reason, when the enforcement mode allows blocking. The decision is logged to your Akto dashboard either way.
 
