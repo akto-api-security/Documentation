@@ -12,8 +12,19 @@ Configure controls to restrict which hosts, paths, and account types can interac
 
 Block outbound traffic by host or path pattern to prevent agents from reaching unauthorised external services or endpoints.
 
-* Enter a host or path pattern in the **Host or path pattern** field.
-* Select **Add** to include the pattern in the blocked list.
+{% stepper %}
+{% step %}
+**Enter a pattern**
+
+Enter a host or path pattern in the **Host or path pattern** field.
+{% endstep %}
+
+{% step %}
+**Add it to the list**
+
+Select **Add** to include the pattern in the blocked list.
+{% endstep %}
+{% endstepper %}
 
 The **Blocked patterns** list displays all configured entries. You can review and remove patterns from this list at any time.
 
@@ -45,10 +56,25 @@ Configure phrases that this policy's own detectors should treat as safe and skip
 
 **Ignore Phrases**
 
-* Enter a phrase in the **Ignore phrases** field (e.g. your product name or sample test data). Phrases are matched as a whole word by default.
-* Enable **Regex** to match the entry as a regular expression instead of literal text.
-* Enable **Case sensitive** to match the phrase's casing exactly.
-* Select **Add phrase** to include it in the ignored list.
+{% stepper %}
+{% step %}
+**Enter a phrase**
+
+Enter a phrase in the **Ignore phrases** field (e.g. your product name or sample test data). Phrases are matched as a whole word by default.
+{% endstep %}
+
+{% step %}
+**Set matching options (optional)**
+
+Enable **Regex** to match the entry as a regular expression instead of literal text. Enable **Case sensitive** to match the phrase's casing exactly.
+{% endstep %}
+
+{% step %}
+**Add the phrase**
+
+Select **Add phrase** to include it in the ignored list.
+{% endstep %}
+{% endstepper %}
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (220).png" alt="" width="563"><figcaption></figcaption></figure></div>
 

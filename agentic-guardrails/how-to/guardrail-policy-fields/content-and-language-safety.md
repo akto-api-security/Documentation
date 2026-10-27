@@ -21,11 +21,33 @@ Configure content moderation and policy-based control:
 
 Denied topics block specific concepts in user inputs or model responses.
 
-* Select **Add Denied Topic** to open the topic configuration form.
-* Provide a **topic name**, **definition**, and optional **sample phrases**.
-* Use **+ Add** to include additional topics.
-* Select **Save Topic** after completing topic configuration.
-* Alternatively, select **Add Akto Default Topics** to instantly add Akto's predefined denied topics, grouped by category:
+{% stepper %}
+{% step %}
+**Open the topic form**
+
+Select **Add Denied Topic** to open the topic configuration form.
+{% endstep %}
+
+{% step %}
+**Describe the topic**
+
+Provide a **topic name**, **definition**, and optional **sample phrases**.
+{% endstep %}
+
+{% step %}
+**Add more topics (optional)**
+
+Use **+ Add** to include additional topics.
+{% endstep %}
+
+{% step %}
+**Save the topic**
+
+Select **Save Topic** after completing topic configuration.
+{% endstep %}
+{% endstepper %}
+
+Alternatively, select **Add Akto Default Topics** to instantly add Akto's predefined denied topics, grouped by category:
   * **Safety-critical**: Weapons & Firearms, Explosives & Bombs, Self-harm & Suicide, Illegal Drugs.
   * **Professional advice**: Medical / Health Advice, Financial / Investment Advice, Legal Advice.
 
