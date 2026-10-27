@@ -4,7 +4,7 @@ Configure content moderation, policy-based controls, and language-level abuse de
 
 This page is part of the [Create Guardrail Policies](../create-guardrail-policies.md) form reference.
 
-## Content & Policy Guardrails
+## Content and Policy Guardrails
 
 Configure content moderation and policy-based control:
 

@@ -27,21 +27,22 @@ The guardrail policies list displays existing policies and provides access to po
 ### Fill the Configuration Form
 
 The configuration form is organised into 13 sections, each targeting a specific enforcement layer. Only **Policy Details** is required. Open the matching page for the fields in each section.
-| # | Form section | What it controls | Details |
+
+| # | Form section | What it controls | Page |
 |---|---|---|---|
-| 1 | Policy Details (mandatory) | Name, description, severity, blocked message | [Policy Details and Scope](guardrail-policy-fields/policy-details-and-scope.md) |
-| 2 | Content & Policy Guardrails | Prompt injection, context poisoning, denied topics, harmful categories, intent | [Content and Language Safety](guardrail-policy-fields/content-and-language-safety.md) |
-| 3 | Language Safety and Abuse | Gibberish, sentiment, profanity | [Content and Language Safety](guardrail-policy-fields/content-and-language-safety.md) |
-| 4 | Sensitive Information | PII, regex, secrets, anonymisation | [Sensitive Data and Code Detection](guardrail-policy-fields/sensitive-data-and-code.md) |
-| 5 | Advanced Code Detection | Code detection, ban code | [Sensitive Data and Code Detection](guardrail-policy-fields/sensitive-data-and-code.md) |
-| 6 | Custom Guardrails | LLM prompt rule, LLM redaction, external model | [Custom, Usage, and Anomaly Guardrails](guardrail-policy-fields/custom-usage-and-anomaly.md) |
-| 7 | Usage Based | Token limit | [Custom, Usage, and Anomaly Guardrails](guardrail-policy-fields/custom-usage-and-anomaly.md) |
-| 8 | Anomaly Detection | Statistical, structural, behavioral anomalies | [Custom, Usage, and Anomaly Guardrails](guardrail-policy-fields/custom-usage-and-anomaly.md) |
-| 9 | Enterprise License Compliance | Provider acceptable-use categories | [Tool and Enterprise License Guardrails](guardrail-policy-fields/tool-and-enterprise.md) |
-| 10 | Tool Guardrails | Tool misuse, malicious tool, name/description mismatch | [Tool and Enterprise License Guardrails](guardrail-policy-fields/tool-and-enterprise.md) |
-| 11 | Access Restrictions | Block host/path, personal accounts, public sharing | [Access Restrictions and Exceptions](guardrail-policy-fields/access-restrictions-and-exceptions.md) |
-| 12 | Exceptions | Ignore phrases | [Access Restrictions and Exceptions](guardrail-policy-fields/access-restrictions-and-exceptions.md) |
-| 13 | Scope | Assets, users, devices, rule behaviour, request/response | [Policy Details and Scope](guardrail-policy-fields/policy-details-and-scope.md) |
+| 1 | [Policy Details (mandatory)](guardrail-policy-fields/policy-details-and-scope.md#provide-guardrail-policy-details-mandatory) | Name, description, severity, blocked message | [Policy Details and Scope](guardrail-policy-fields/policy-details-and-scope.md#provide-guardrail-policy-details-mandatory) |
+| 2 | [Content and Policy Guardrails](guardrail-policy-fields/content-and-language-safety.md#content-and-policy-guardrails) | Prompt injection, context poisoning, denied topics, harmful categories, intent | [Content and Language Safety](guardrail-policy-fields/content-and-language-safety.md#content-and-policy-guardrails) |
+| 3 | [Language Safety and Abuse](guardrail-policy-fields/content-and-language-safety.md#language-safety-and-abuse-guardrails) | Gibberish, sentiment, profanity | [Content and Language Safety](guardrail-policy-fields/content-and-language-safety.md#language-safety-and-abuse-guardrails) |
+| 4 | [Sensitive Information](guardrail-policy-fields/sensitive-data-and-code.md#sensitive-information-guardrails) | PII, regex, secrets, anonymisation | [Sensitive Data and Code Detection](guardrail-policy-fields/sensitive-data-and-code.md#sensitive-information-guardrails) |
+| 5 | [Advanced Code Detection](guardrail-policy-fields/sensitive-data-and-code.md#advanced-code-detection-filters) | Code detection, ban code | [Sensitive Data and Code Detection](guardrail-policy-fields/sensitive-data-and-code.md#advanced-code-detection-filters) |
+| 6 | [Custom Guardrails](guardrail-policy-fields/custom-usage-and-anomaly.md#custom-guardrails) | LLM prompt rule, LLM redaction, external model | [Custom, Usage, and Anomaly Guardrails](guardrail-policy-fields/custom-usage-and-anomaly.md#custom-guardrails) |
+| 7 | [Usage Based](guardrail-policy-fields/custom-usage-and-anomaly.md#usage-based-guardrails) | Token limit | [Custom, Usage, and Anomaly Guardrails](guardrail-policy-fields/custom-usage-and-anomaly.md#usage-based-guardrails) |
+| 8 | [Anomaly Detection](guardrail-policy-fields/custom-usage-and-anomaly.md#anomaly-detection) | Statistical, structural, behavioral anomalies | [Custom, Usage, and Anomaly Guardrails](guardrail-policy-fields/custom-usage-and-anomaly.md#anomaly-detection) |
+| 9 | [Enterprise License Compliance](guardrail-policy-fields/tool-and-enterprise.md#enterprise-license-compliance-guardrails) | Provider acceptable-use categories | [Tool and Enterprise License Guardrails](guardrail-policy-fields/tool-and-enterprise.md#enterprise-license-compliance-guardrails) |
+| 10 | [Tool Guardrails](guardrail-policy-fields/tool-and-enterprise.md#tool-guardrails) | Tool misuse, malicious tool, name/description mismatch | [Tool and Enterprise License Guardrails](guardrail-policy-fields/tool-and-enterprise.md#tool-guardrails) |
+| 11 | [Access Restrictions](guardrail-policy-fields/access-restrictions-and-exceptions.md#access-restrictions) | Block host/path, personal accounts, public sharing | [Access Restrictions and Exceptions](guardrail-policy-fields/access-restrictions-and-exceptions.md#access-restrictions) |
+| 12 | [Exceptions](guardrail-policy-fields/access-restrictions-and-exceptions.md#exceptions) | Ignore phrases | [Access Restrictions and Exceptions](guardrail-policy-fields/access-restrictions-and-exceptions.md#exceptions) |
+| 13 | [Scope](guardrail-policy-fields/policy-details-and-scope.md#scope) | Assets, users, devices, rule behaviour, request/response | [Policy Details and Scope](guardrail-policy-fields/policy-details-and-scope.md#scope) |
 
 ### Save the Guardrail Policy
 
