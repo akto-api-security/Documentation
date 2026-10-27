@@ -48,7 +48,7 @@ These pull activity data straight from the vendor's own API, no device agent req
 
 * [Anthropic Connector](anthropic-connector.md) - pulls compliance activity from Claude.ai, Claude Console, and the Claude API via Anthropic's Compliance API.
 * [Claude Inference Hooks](claude-inference-hooks.md) - use Atlas as the security server behind Anthropic's Inference Hooks, to allow or deny Claude prompts inline before inference runs.
-* [Grok Bot Inference Hooks](grok-bot-inference-hooks.md) - use Atlas as the security server behind Grok Bot's Inference Hooks, to allow or deny Grok Bot prompts inline before inference runs.
+* [Grok Bot Inference Hooks (Beta)](grok-bot-inference-hooks.md) - use Atlas as the security server behind Grok Bot's Inference Hooks, to allow or deny Grok Bot prompts inline before inference runs.
 * [OpenAI Connector](openai-connector.md) - pulls audit log and org activity data from ChatGPT and OpenAI via the OpenAI Admin API.
 * [GitHub Copilot Enterprise](github-copilot-enterprise.md) - agent discovery, centralized guardrails, and enterprise-wide policy enforcement for Copilot.
 * [Copilot Studio](../connectors/ai-agent-security/microsoft-copilot-studio.md), [Copilot Studio (Multi Environment)](../connectors/ai-agent-security/microsoft-copilot-studio-multi-environment.md), and [Copilot Studio (Threat Detection)](../connectors/ai-agent-security/microsoft-copilot-studio-threat-detection.md) - secure agents built in Microsoft Copilot Studio, across single or multiple Power Platform environments.
