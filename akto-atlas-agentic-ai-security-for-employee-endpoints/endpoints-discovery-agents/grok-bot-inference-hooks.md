@@ -2,7 +2,7 @@
 description: Use Akto Atlas as the AI security server behind Grok Bot Inference Hooks to allow or deny Grok Bot prompts inline, before inference runs.
 ---
 
-# Grok Bot Inference Hooks
+# Grok Bot Inference Hooks (Beta)
 
 ## Overview
 

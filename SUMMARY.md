@@ -57,7 +57,7 @@
   * [Agentic Shield](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/agentic-shield.md)
   * [Anthropic Connector](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/anthropic-connector.md)
   * [Claude Inference Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/claude-inference-hooks.md)
-  * [Grok Bot Inference Hooks](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/grok-bot-inference-hooks.md)
+  * [Grok Bot Inference Hooks (Beta)](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/grok-bot-inference-hooks.md)
   * [OpenAI Connector](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/openai-connector.md)
   * [Claude Cowork Connector](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/claude-cowork-connector.md)
   * [Copilot Studio](akto-atlas-agentic-ai-security-for-employee-endpoints/connectors/ai-agent-security/microsoft-copilot-studio.md)
