@@ -56,7 +56,7 @@ Configure content moderation and policy-based control:
 **Prompt Injection Attack Filter**
 
 * Enable the prompt attack filter to detect jailbreaks and manipulation attempts.
-* Adjust detection strength using the horizontal slider..
+* Adjust detection strength using the horizontal slider.
 
 **Context Poisoning Attacks**
 
@@ -118,7 +118,7 @@ Identify nonsensical or meaningless inputs that may disrupt agent processing or 
 
 **Sentiment Detection**
 
-You can just enable sentiment detection to evaluates inputs for negative, toxic, or inappropriate sentimentand configure a confidence threshold.
+You can just enable sentiment detection to evaluate inputs for negative, toxic, or inappropriate sentiment and configure a confidence threshold.
 
 **Profanity**
 
@@ -316,7 +316,7 @@ Block tools that exhibit unsafe or exploitative characteristics.
 
 **Detect Tool Name and Description Mismatch**
 
-Detect cases where tool behavior does not align with declared metada
+Detect cases where tool behavior does not align with declared metadata.
 
 * Enable mismatch detection to identify inconsistencies between tool name and description.
 
@@ -381,7 +381,7 @@ Configure phrases that this policy's own detectors should treat as safe and skip
 The **Ignored phrases** list displays a count of configured entries and lets you remove any phrase at any time.
 
 {% hint style="info" %}
-Ignore phrases only affect this policy's own detectors — other guardrail policies evaluated on the same traffic still see the real text.
+Ignore phrases only affect this policy's own detectors, so other guardrail policies evaluated on the same traffic still see the real text.
 {% endhint %}
 
 </details>
@@ -480,7 +480,7 @@ For Browser LLMs (**chatgpt.com**, **gemini.google.com**, **claude.ai**, **copil
 {% hint style="warning" %}
 **Guardrail Deployment Scope Behaviour**
 
-By default, a newly created guardrail policy applies to **all** agentic assets — all **Agents**, **MCP Servers**, and **LLMs**.\
+By default, a newly created guardrail policy applies to **all** agentic assets: all **Agents**, **MCP Servers**, and **LLMs**.\
 To restrict enforcement, select **Select Agentic Assets** in the **Scope** section and choose the specific assets to target.
 {% endhint %}
 
@@ -494,7 +494,7 @@ Guardrail policies include OWASP-aligned risk tags. You can click each tag in th
 
 After completing the required and optional configurations:
 
-* Click on **Create Policy** to save the policy and applies enforcement to the selected scope.
+* Click on **Create Policy** to save the policy and apply enforcement to the selected scope.
 
 ## Test guardrail behaviour in the playground
 

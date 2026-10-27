@@ -434,7 +434,7 @@ All containers can share the `huggingface-cache` and `vllm-cache` volumes.
 | `--enable-per-request-metrics` | On | Adds a `metrics` object with queue time, time to first token, and generation time to every response. Akto's Agent Guard logs these values. Do not combine it with `--disable-log-stats`. |
 | `--gpu-memory-utilization` | `0.90` | Lower it only when you share the GPU with another process or model. |
 | `--shm-size` | `16g` | Shared memory for PyTorch workers. Keep it at `16g` or higher. |
-| `--restart unless-stopped` | — | Restarts the container after a crash or host reboot. |
+| `--restart unless-stopped` | N/A | Restarts the container after a crash or host reboot. |
 
 ## Security Recommendations
 

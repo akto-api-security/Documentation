@@ -459,8 +459,6 @@ Input scanners analyse user messages before they reach your AI models. These sca
 * Detected Intent: Sensitive Data Exfiltration
 * Enforced Output: "Request blocked: disallowed intent detected"
 
-Here are the **two separate scanner entries**, aligned with your format and naming:
-
 ***
 
 ### 16. Tool Guardrails
@@ -1546,7 +1544,7 @@ Akto's Agent Guard delivers comprehensive AI security through specialized scanne
 ## Next Steps
 
 * [Configure and monitor your guardrails in real-time](../how-to/create-guardrail-policies.md)
-* [**Result**:](guardrail-activity.md) Enterprise-grade AI security with minimal performance impact and maximum protection.
+* **Result**: Enterprise-grade AI security with minimal performance impact and maximum protection.
 
 #### **Need Help?**
 
