@@ -52,6 +52,8 @@ Select one or more skills using the checkboxes, then click **Block \<N> selected
 {% tab title="LLMs" %}
 The **LLMs** tab lists the LLM services your employees reach, shown by domain (for example chatgpt.com, claude.ai, perplexity.ai).
 
+<div data-with-frame="true"><figure><img src="../../.gitbook/assets/audit-data-llms.png" alt="LLMs tab in Audit Data with four LLMs selected" width="563"><figcaption>Select LLMs and block them from the action bar.</figcaption></figure></div>
+
 Each row shows when the LLM was last detected, its most recent activity, its current decision (for example **Allowed**), and who last updated the decision.
 
 To block LLMs, select one or more rows using the checkboxes, then click **Block \<N> selected LLMs** from the action bar at the bottom of the table. Guardrails then stop prompts sent to the selected LLMs for the people you choose, as described in [Block for Specific Teams, Devices, or Users](audit-data-akto-atlas.md#block-for-specific-teams-devices-or-users).
