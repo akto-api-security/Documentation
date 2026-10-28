@@ -111,6 +111,19 @@ Follow the full step-by-step guide here:
 
 * [NinjaOne Deployment (Windows)](ninjaone-deployment.md)
 
+## Enterprise Deployment Using Jamf Pro (macOS)
+
+You can deploy and force-install the Akto Security Chrome extension to Jamf-managed Macs using a Configuration Profile with Application & Custom Settings payloads.
+
+Akto provides two required values:
+
+* Extension ID
+* Update XML URL
+
+Follow the full step-by-step guide here:
+
+* [Jamf Deployment (macOS)](jamf-deployment.md)
+
 ## Deployment using ZIP File
 
 ### Prerequisites
