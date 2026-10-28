@@ -85,6 +85,8 @@ The keys land in the extension's managed-policy schema at:
 HKLM\SOFTWARE\Policies\Google\Chrome\3rdparty\extensions\mjcadlphjmoinphffggcpineljpageie\policy
 ```
 
+On macOS, the same keys are read from the preference domain `com.google.Chrome.extensions.mjcadlphjmoinphffggcpineljpageie`. For Jamf Pro, see the identity payload step in [Jamf Deployment (macOS)](browser-extensions/chrome/jamf-deployment.md).
+
 How you get values into that policy depends on your deployment tool. Below is the Microsoft Intune method.
 
 <details>
