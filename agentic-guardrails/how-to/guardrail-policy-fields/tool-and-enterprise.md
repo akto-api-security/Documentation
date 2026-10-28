@@ -2,7 +2,7 @@
 
 Configure tool-level protections and enterprise license compliance categories for a guardrail policy.
 
-This page is part of the [Create Guardrail Policies](../create-guardrail-policies.md) form reference.
+This page covers part of the [Create Guardrail Policies](../create-guardrail-policies.md) form.
 
 ## Enterprise License Compliance Guardrails
 

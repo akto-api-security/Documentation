@@ -2,7 +2,7 @@
 
 Define the identity, messaging, and deployment scope of a guardrail policy. These are the sections that decide what a policy is called, what users see when it blocks, and where it applies.
 
-This page is part of the [Create Guardrail Policies](../create-guardrail-policies.md) form reference.
+This page covers part of the [Create Guardrail Policies](../create-guardrail-policies.md) form.
 
 ## Provide Guardrail Policy Details (Mandatory)
 

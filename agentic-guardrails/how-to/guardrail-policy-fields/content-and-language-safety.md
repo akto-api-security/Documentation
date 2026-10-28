@@ -2,7 +2,7 @@
 
 Configure content moderation, policy-based controls, and language-level abuse detection for a guardrail policy.
 
-This page is part of the [Create Guardrail Policies](../create-guardrail-policies.md) form reference.
+This page covers part of the [Create Guardrail Policies](../create-guardrail-policies.md) form.
 
 ## Content and Policy Guardrails
 

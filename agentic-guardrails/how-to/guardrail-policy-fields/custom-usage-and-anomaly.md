@@ -2,7 +2,7 @@
 
 Configure custom LLM-based rules, usage limits, and anomaly detection for a guardrail policy.
 
-This page is part of the [Create Guardrail Policies](../create-guardrail-policies.md) form reference.
+This page covers part of the [Create Guardrail Policies](../create-guardrail-policies.md) form.
 
 ## Custom Guardrails
 
