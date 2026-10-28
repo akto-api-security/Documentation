@@ -2,11 +2,13 @@
 
 Guardrails for custom LLM or external-model rules, input quality and size limits, and LLM provider acceptable-use compliance.
 
-Part of the [Agent Guard](../agent-guard.md) scanner reference. Each entry notes whether it runs on **input** (user prompts and tool requests), **output** (model and tool responses), or both.
+Part of [Agent Guard](../agent-guard.md). Each entry notes whether it runs on **input** (user prompts and tool requests), **output** (model and tool responses), or both.
 
 ## LLM Prompt Rule Guardrail
 
 **Direction**: Input and output
+
+**Configure in**: [Custom Guardrails](../../how-to/guardrail-policy-fields/custom-usage-and-anomaly.md#custom-guardrails)
 
 **Purpose:** Evaluates inputs against custom rules defined using LLM prompts.
 
@@ -58,6 +60,8 @@ On the output side, example transformation:
 
 **Direction**: Input and output
 
+**Configure in**: [Custom Guardrails](../../how-to/guardrail-policy-fields/custom-usage-and-anomaly.md#custom-guardrails)
+
 **Purpose:** Evaluates inputs using external model endpoints configured with custom security or validation criteria.
 
 **What it Does:**
@@ -108,6 +112,8 @@ On the output side, example transformation:
 
 **Direction**: Input and output
 
+**Configure in**: [Enterprise License Compliance](../../how-to/guardrail-policy-fields/tool-and-enterprise.md#enterprise-license-compliance-guardrails)
+
 **Purpose:** Blocks prompts that would breach your LLM provider's acceptable-use policy, protecting your organization's enterprise license standing.
 
 **What it Catches:**
@@ -148,6 +154,8 @@ On the output side, example detection:
 
 **Direction**: Input
 
+**Configure in**: [Language Safety and Abuse](../../how-to/guardrail-policy-fields/content-and-language-safety.md#language-safety-and-abuse-guardrails)
+
 **Purpose**: Filters nonsensical, random, or meaningless text.
 
 **What it Catches**:
@@ -174,6 +182,8 @@ On the output side, example detection:
 ## TokenLimit Guardrail
 
 **Direction**: Input
+
+**Configure in**: [Usage Based](../../how-to/guardrail-policy-fields/custom-usage-and-anomaly.md#usage-based-guardrails)
 
 **Purpose**: Enforces maximum length limits on user messages.
 

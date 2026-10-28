@@ -2,7 +2,7 @@
 
 Configure controls to detect, block, or anonymise sensitive data, and to detect programming code in prompts and responses.
 
-This page is part of the [Create Guardrail Policies](../create-guardrail-policies.md) form reference.
+This page covers part of the [Create Guardrail Policies](../create-guardrail-policies.md) form.
 
 ## Sensitive Information Guardrails
 

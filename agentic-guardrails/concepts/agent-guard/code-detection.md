@@ -2,11 +2,13 @@
 
 Guardrails that detect programming code, or specific programming languages, in prompts and responses.
 
-Part of the [Agent Guard](../agent-guard.md) scanner reference. Each entry notes whether it runs on **input** (user prompts and tool requests), **output** (model and tool responses), or both.
+Part of [Agent Guard](../agent-guard.md). Each entry notes whether it runs on **input** (user prompts and tool requests), **output** (model and tool responses), or both.
 
 ## BanCode Guardrail
 
 **Direction**: Input and output
+
+**Configure in**: [Advanced Code Detection](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#advanced-code-detection-filters)
 
 **Purpose**: Detects code snippets, scripts, or programming commands in user messages.
 
@@ -43,6 +45,8 @@ On the output side, example detection:
 ## Code Guardrail
 
 **Direction**: Input and output
+
+**Configure in**: [Advanced Code Detection](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#advanced-code-detection-filters)
 
 **Purpose**: Detects and identifies programming language used in messages.
 

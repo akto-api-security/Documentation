@@ -2,11 +2,13 @@
 
 Guardrails that enforce which topics, terms, competitors, and languages are allowed.
 
-Part of the [Agent Guard](../agent-guard.md) scanner reference. Each entry notes whether it runs on **input** (user prompts and tool requests), **output** (model and tool responses), or both.
+Part of [Agent Guard](../agent-guard.md). Each entry notes whether it runs on **input** (user prompts and tool requests), **output** (model and tool responses), or both.
 
 ## BanTopics Guardrail
 
 **Direction**: Input and output
+
+**Configure in**: [Content and Policy Guardrails](../../how-to/guardrail-policy-fields/content-and-language-safety.md#content-and-policy-guardrails)
 
 **Purpose**: Identifies messages discussing prohibited subjects or sensitive topics.
 

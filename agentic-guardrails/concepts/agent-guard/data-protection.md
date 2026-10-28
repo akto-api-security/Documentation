@@ -2,11 +2,13 @@
 
 Guardrails that detect, mask, or block credentials, personal data, and other sensitive content, plus malicious links in responses.
 
-Part of the [Agent Guard](../agent-guard.md) scanner reference. Each entry notes whether it runs on **input** (user prompts and tool requests), **output** (model and tool responses), or both.
+Part of [Agent Guard](../agent-guard.md). Each entry notes whether it runs on **input** (user prompts and tool requests), **output** (model and tool responses), or both.
 
 ## Secrets Guardrail
 
 **Direction**: Input
+
+**Configure in**: [Sensitive Information](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#sensitive-information-guardrails)
 
 **Purpose**: Detects exposed credentials, API keys, tokens, and passwords in user messages.
 
@@ -35,6 +37,8 @@ Part of the [Agent Guard](../agent-guard.md) scanner reference. Each entry notes
 ## Anonymize and Deanonymize Guardrail
 
 **Direction**: Input and output
+
+**Configure in**: [Sensitive Information](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#sensitive-information-guardrails)
 
 **Purpose**: Automatically removes or masks personally identifiable information (PII).
 
@@ -71,6 +75,8 @@ On the output side, example transformation:
 
 **Direction**: Output
 
+**Configure in**: [Sensitive Information](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#sensitive-information-guardrails)
+
 **Purpose**: Detects personally identifiable information (PII) and sensitive data in AI outputs.
 
 **What it Catches**:
@@ -104,6 +110,8 @@ On the output side, example transformation:
 
 **Direction**: Input
 
+**Configure in**: [Sensitive Information](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#sensitive-information-guardrails)
+
 **Purpose:** Detects and filters sensitive information using custom regex patterns.
 
 **What it Does:**
@@ -136,6 +144,8 @@ On the output side, example transformation:
 ## LLM Based Redaction Guardrail
 
 **Direction**: Input and output
+
+**Configure in**: [Custom Guardrails](../../how-to/guardrail-policy-fields/custom-usage-and-anomaly.md#custom-guardrails)
 
 **Purpose:** Masks sensitive content in user prompts using a plain-language redaction instruction, instead of blocking the request outright.
 
@@ -177,6 +187,8 @@ On the output side, example transformation:
 ## Personal Account Guardrail
 
 **Direction**: Input
+
+**Configure in**: [Access Restrictions](../../how-to/guardrail-policy-fields/access-restrictions-and-exceptions.md#access-restrictions)
 
 **Purpose:** Detects and blocks access from users authenticated using personal accounts instead of organization-approved accounts.
 

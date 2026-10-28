@@ -2,11 +2,13 @@
 
 Guardrails that detect prompt injection, context manipulation, abnormal behaviour, unsafe intent, and untrusted tools or destinations.
 
-Part of the [Agent Guard](../agent-guard.md) scanner reference. Each entry notes whether it runs on **input** (user prompts and tool requests), **output** (model and tool responses), or both.
+Part of [Agent Guard](../agent-guard.md). Each entry notes whether it runs on **input** (user prompts and tool requests), **output** (model and tool responses), or both.
 
 ## PromptInjection Guardrail
 
 **Direction**: Input
+
+**Configure in**: [Content and Policy Guardrails](../../how-to/guardrail-policy-fields/content-and-language-safety.md#content-and-policy-guardrails)
 
 **Purpose**: Detects attempts to manipulate AI system instructions or bypass security controls.
 
@@ -38,6 +40,8 @@ Part of the [Agent Guard](../agent-guard.md) scanner reference. Each entry notes
 
 **Direction**: Input
 
+**Configure in**: [Content and Policy Guardrails](../../how-to/guardrail-policy-fields/content-and-language-safety.md#content-and-policy-guardrails)
+
 **Purpose:** Detects and blocks attempts to poison agent memory, context, or conversation state.
 
 **What it Does:**
@@ -68,6 +72,8 @@ Part of the [Agent Guard](../agent-guard.md) scanner reference. Each entry notes
 ## Behavioural Anomaly Guardrail
 
 **Direction**: Input and output
+
+**Configure in**: [Anomaly Detection](../../how-to/guardrail-policy-fields/custom-usage-and-anomaly.md#anomaly-detection)
 
 **Purpose:** Identifies abnormal or suspicious input patterns based on historical interaction behavior.
 
@@ -105,6 +111,8 @@ On the output side, example transformation:
 
 **Direction**: Input and output
 
+**Configure in**: [Content and Policy Guardrails](../../how-to/guardrail-policy-fields/content-and-language-safety.md#content-and-policy-guardrails)
+
 **Purpose:** Enforces policies based on the inferred intent of incoming requests.
 
 **What it Does:**
@@ -140,6 +148,8 @@ On the output side, example transformation:
 ## Tool Guardrails
 
 **Direction**: Input and output
+
+**Configure in**: [Tool Guardrails](../../how-to/guardrail-policy-fields/tool-and-enterprise.md#tool-guardrails)
 
 **Purpose:** Detects and blocks malicious or untrusted tools before execution.
 
@@ -186,6 +196,8 @@ On the output side, example transformation:
 ## Block Host/Path Guardrail
 
 **Direction**: Input
+
+**Configure in**: [Access Restrictions](../../how-to/guardrail-policy-fields/access-restrictions-and-exceptions.md#access-restrictions)
 
 **Purpose:** Prevents agents from making outbound requests to unauthorised hosts or paths.
 

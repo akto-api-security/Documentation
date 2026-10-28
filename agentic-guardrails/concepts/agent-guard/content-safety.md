@@ -2,11 +2,13 @@
 
 Guardrails that moderate toxic, abusive, biased, off-topic, or over-cautious content.
 
-Part of the [Agent Guard](../agent-guard.md) scanner reference. Each entry notes whether it runs on **input** (user prompts and tool requests), **output** (model and tool responses), or both.
+Part of [Agent Guard](../agent-guard.md). Each entry notes whether it runs on **input** (user prompts and tool requests), **output** (model and tool responses), or both.
 
 ## Toxicity Guardrail
 
 **Direction**: Input and output
+
+**Configure in**: [Content and Policy Guardrails](../../how-to/guardrail-policy-fields/content-and-language-safety.md#content-and-policy-guardrails)
 
 **Purpose**: Identifies offensive, abusive, or harmful language in user inputs.
 
@@ -48,6 +50,8 @@ On the output side, example detection:
 
 **Direction**: Input and output
 
+**Configure in**: [Language Safety and Abuse](../../how-to/guardrail-policy-fields/content-and-language-safety.md#language-safety-and-abuse-guardrails)
+
 **Purpose:** Detects and redacts offensive, abusive, or inappropriate language from inputs and outputs.
 
 **What it Does:**
@@ -78,6 +82,8 @@ On the output side, example detection:
 ## Sentiment Guardrail
 
 **Direction**: Input and output
+
+**Configure in**: [Language Safety and Abuse](../../how-to/guardrail-policy-fields/content-and-language-safety.md#language-safety-and-abuse-guardrails)
 
 **Purpose**: Analyzes emotional tone and sentiment in user messages.
 
