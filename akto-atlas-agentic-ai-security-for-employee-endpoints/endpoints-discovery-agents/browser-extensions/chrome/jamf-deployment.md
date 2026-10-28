@@ -148,20 +148,51 @@ Jamf Pro replaces these variables with each computer's inventory values:
 
 ## Validate Deployment
 
-1. In Jamf Pro, open the profile and check **Logs** to confirm it was installed on the target computers.
-2. On a target Mac, confirm the profile is listed in **System Settings → Privacy & Security → Profiles**.
-3. In Terminal, confirm both managed preference domains are present:
+{% stepper %}
+{% step %}
+**Check the profile in Jamf Pro**
+
+Open the profile and check **Logs** to confirm it was installed on the target computers.
+{% endstep %}
+
+{% step %}
+**Check the profile on a target Mac**
+
+Confirm the profile is listed in **System Settings → Privacy & Security → Profiles**.
+{% endstep %}
+
+{% step %}
+**Check the managed preference domains**
+
+In Terminal, confirm both managed preference domains are present:
 
 ```bash
 defaults read "/Library/Managed Preferences/com.google.Chrome"
 defaults read "/Library/Managed Preferences/com.google.Chrome.extensions.mjcadlphjmoinphffggcpineljpageie"
 ```
+{% endstep %}
 
-4. In Chrome, open `chrome://policy`, click **Reload policies**, and verify:
-   * `ExtensionInstallForcelist` shows status **OK**.
-   * The extension's section shows real values for `email`, `username`, and `deviceName`, not `$EMAIL` or other unexpanded variables.
-5. Open `chrome://extensions` and confirm **Akto Security** is listed as installed by your organisation.
-6. Confirm activity is visible in Akto after users browse monitored domains.
+{% step %}
+**Verify policies in Chrome**
+
+Open `chrome://policy`, click **Reload policies**, and verify:
+
+* `ExtensionInstallForcelist` shows status **OK**.
+* The extension's section shows real values for `email`, `username`, and `deviceName`, not `$EMAIL` or other unexpanded variables.
+{% endstep %}
+
+{% step %}
+**Confirm the extension is installed**
+
+Open `chrome://extensions` and confirm **Akto Security** is listed as installed by your organisation.
+{% endstep %}
+
+{% step %}
+**Confirm activity in Akto**
+
+Confirm activity is visible in Akto after users browse monitored domains.
+{% endstep %}
+{% endstepper %}
 
 ## Troubleshooting
 
