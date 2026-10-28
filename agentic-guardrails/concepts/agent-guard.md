@@ -38,7 +38,11 @@ Each guardrail specializes in detecting specific threat categories, from credent
 
 Each guardrail entry includes its purpose, detection capabilities, risk prevention benefits, use cases, and example detections, and where to configure it in the policy form. Select a guardrail to open its entry, or use the category pages in the sidebar.
 
-| Guardrail | What it does | Direction | Category |
+{% hint style="info" %}
+**Applies to** shows where a guardrail applies by default: user prompts and tool requests (input), model and tool responses (output), or both. In a policy, you choose whether it applies to requests, responses, or both under **Application Settings**. See [Policy Details and Scope](../how-to/guardrail-policy-fields/policy-details-and-scope.md).
+{% endhint %}
+
+| Guardrail | What it does | Applies to | Category |
 |---|---|---|---|
 | [PromptInjection](agent-guard/prompt-and-agent-attacks.md#promptinjection-guardrail) | Detects attempts to manipulate AI system instructions or bypass security controls | Input | Prompt and Agent Attacks |
 | [Context Poisoning](agent-guard/prompt-and-agent-attacks.md#context-poisoning-guardrail) | Detects and blocks attempts to poison agent memory, context, or conversation state | Input | Prompt and Agent Attacks |
