@@ -11,7 +11,7 @@ Akto provides the required values:
 * **Extension ID**
 * **Update XML URL**
 
-{% hint style="info" %}
+{% hint style="warning" %}
 Use the values exactly as shared by Akto Support. Do not modify the extension ID or update URL format.
 {% endhint %}
 
@@ -43,7 +43,7 @@ Chrome on macOS only force-installs extensions hosted outside the Chrome Web Sto
    * **Name:** for example, `Akto Browser Extension - Config`
    * **Level:** `Computer Level`
 
-<div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/jamf-chrome-step-1-profile-general.png" alt="General settings of a new Jamf Pro configuration profile" width="563"><figcaption>Name the profile and set the level to Computer Level.</figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/jamf-chrome-step-1-profile-general.png" alt="General settings of a new Jamf Pro configuration profile" width="563"><figcaption><p>Name the profile and set the level to Computer Level.</p></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -82,7 +82,7 @@ mjcadlphjmoinphffggcpineljpageie;https://akto-chrome-ext.s3.ap-south-1.amazonaws
 The `<?xml ...?>` line must be the very first line of the property list, with no leading spaces or blank lines.
 {% endhint %}
 
-<div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/jamf-chrome-step-2-force-install-payload.png" alt="Jamf Pro Upload payload for the com.google.Chrome preference domain" width="563"><figcaption>Add the Akto extension ID and update XML URL under the com.google.Chrome domain.</figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/jamf-chrome-step-2-force-install-payload.png" alt="Jamf Pro Upload payload for the com.google.Chrome preference domain" width="563"><figcaption><p>Add the Akto extension ID and update XML URL under the com.google.Chrome domain.</p></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
@@ -122,17 +122,17 @@ com.google.Chrome.extensions.mjcadlphjmoinphffggcpineljpageie
 
 Jamf Pro replaces these variables with each computer's inventory values:
 
-| Variable | Source in Jamf Pro |
-| --- | --- |
-| `$EMAIL` | Computer record → **Inventory → User and Location → Email Address** |
-| `$USERNAME` | Computer record → **Inventory → User and Location → Username** |
-| `$SERIALNUMBER` | Hardware inventory (populated automatically) |
+| Variable        | Source in Jamf Pro                                                  |
+| --------------- | ------------------------------------------------------------------- |
+| `$EMAIL`        | Computer record → **Inventory → User and Location → Email Address** |
+| `$USERNAME`     | Computer record → **Inventory → User and Location → Username**      |
+| `$SERIALNUMBER` | Hardware inventory (populated automatically)                        |
 
 {% hint style="warning" %}
 `$EMAIL` and `$USERNAME` are only filled in when **User and Location** is populated for the computer, for example through a Cloud Identity Provider or LDAP integration, enrollment authentication, or `sudo jamf recon -endUsername <user> -email <email>`. Leave `deviceName` as `$SERIALNUMBER`: it is stable and unique, unlike the computer name.
 {% endhint %}
 
-<div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/jamf-chrome-step-3-identity-payload.png" alt="Jamf Pro Upload payload for the extension's managed preference domain" width="563"><figcaption>Push email, username, and device name to the extension's managed preference domain.</figcaption></figure></div>
+<div data-with-frame="true"><figure><img src="../../../../.gitbook/assets/jamf-chrome-step-3-identity-payload.png" alt="Jamf Pro Upload payload for the extension&#x27;s managed preference domain" width="563"><figcaption><p>Push email, username, and device name to the extension's managed preference domain.</p></figcaption></figure></div>
 {% endstep %}
 
 {% step %}
