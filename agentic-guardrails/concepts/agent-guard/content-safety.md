@@ -6,13 +6,13 @@ Part of [Agent Guard](../agent-guard.md). Each entry notes whether it runs on **
 
 ## Toxicity Guardrail
 
-**Direction**: Input and output
+Identifies offensive, abusive, or harmful language in user inputs.
 
-**Configure in**: [Content and Policy Guardrails](../../how-to/guardrail-policy-fields/content-and-language-safety.md#content-and-policy-guardrails)
+| Direction | Configure in |
+|---|---|
+| Input and output | [Content and Policy Guardrails](../../how-to/guardrail-policy-fields/content-and-language-safety.md#content-and-policy-guardrails) |
 
-**Purpose**: Identifies offensive, abusive, or harmful language in user inputs.
-
-**What it Catches**:
+**What it catches**
 
 * Profanity and vulgar language
 * Personal attacks and insults
@@ -20,109 +20,125 @@ Part of [Agent Guard](../agent-guard.md). Each entry notes whether it runs on **
 * Threatening language
 * Sexually explicit content
 
-**Risk Prevention**: Maintains a safe, professional environment by filtering toxic communication before it reaches AI systems or other users.
+{% hint style="info" %}
+**Risk prevention**: Maintains a safe, professional environment by filtering toxic communication before it reaches AI systems or other users.
+{% endhint %}
 
-**Use Cases**:
+**Use cases**
 
 * Content moderation in chat applications
 * Professional communication enforcement
 * Community guideline compliance
 
-**Example Detection**:
+**Example**
 
-* ✅ Blocks: "You are stupid and worthless!"
-* ✅ Blocks: Messages with profanity or hate speech
-* ✅ Allows: "This is disappointing" (negative but not toxic)
-
-**Performance**: ONNX-optimized for \~500ms response time after initial model load.
-
-**On outputs**: Identifies offensive, harmful, or inappropriate content in AI-generated responses.
-
-On the output side, example detection:
-
-* ✅ Blocks: AI responses containing insults or profanity
-* ✅ Prevents aggressive or harmful suggestions
-* ✅ Maintains professional tone
+| Input | Result |
+|---|---|
+| "You are stupid and worthless!" | Blocked |
+| Messages with profanity or hate speech | Blocked |
+| "This is disappointing" (negative but not toxic) | Allowed |
 
 **Performance**: ONNX-optimized for real-time toxicity detection.
 
+**On outputs**: Identifies offensive, harmful, or inappropriate content in AI-generated responses.
+
+**Output example**
+
+| Input | Result |
+|---|---|
+| AI responses containing insults or profanity | Blocked |
+
+* Prevents aggressive or harmful suggestions
+* Maintains professional tone
+
 ## Profanity Guardrail
 
-**Direction**: Input and output
+Detects and redacts offensive, abusive, or inappropriate language from inputs and outputs.
 
-**Configure in**: [Language Safety and Abuse](../../how-to/guardrail-policy-fields/content-and-language-safety.md#language-safety-and-abuse-guardrails)
+| Direction | Configure in |
+|---|---|
+| Input and output | [Language Safety and Abuse](../../how-to/guardrail-policy-fields/content-and-language-safety.md#language-safety-and-abuse-guardrails) |
 
-**Purpose:** Detects and redacts offensive, abusive, or inappropriate language from inputs and outputs.
-
-**What it Does:**
+**What it does**
 
 * Identifies profanity and abusive language
 * Redacts offensive words or phrases
 * Supports custom word and phrase filtering
 * Applies filtering across user inputs and model responses
 
-**Risk Prevention:** Prevents harmful, offensive, or non-compliant language from being processed or generated.
+{% hint style="info" %}
+**Risk prevention**: Prevents harmful, offensive, or non-compliant language from being processed or generated.
+{% endhint %}
 
-**Use Cases:**
+**Use cases**
 
 * Content moderation for user interactions
 * Blocking abusive or toxic language
 * Enforcing brand-safe communication
 * Filtering organization-specific restricted words
 
-**Example Transformation:**
+**Example**
 
-* Input:\
-  "You are a stupid idiot"
-* Configured Custom Word:\
-  "idiot"
-* Filtered Output:\
-  "You are a stupid \[REDACTED]"
+| Stage | Example |
+|---|---|
+| Input | "You are a stupid idiot" |
+| Configured Custom Word | "idiot" |
+| Filtered Output | "You are a stupid \[REDACTED]" |
 
 ## Sentiment Guardrail
 
-**Direction**: Input and output
+Analyzes emotional tone and sentiment in user messages.
 
-**Configure in**: [Language Safety and Abuse](../../how-to/guardrail-policy-fields/content-and-language-safety.md#language-safety-and-abuse-guardrails)
+| Direction | Configure in |
+|---|---|
+| Input and output | [Language Safety and Abuse](../../how-to/guardrail-policy-fields/content-and-language-safety.md#language-safety-and-abuse-guardrails) |
 
-**Purpose**: Analyzes emotional tone and sentiment in user messages.
-
-**What it Catches**:
+**What it catches**
 
 * Extremely negative sentiment
 * Positive sentiment (if threshold set)
 * Neutral sentiment
 * Emotional intensity
 
-**Risk Prevention**: Identifies highly emotional or negative inputs that may require special handling or escalation.
+{% hint style="info" %}
+**Risk prevention**: Identifies highly emotional or negative inputs that may require special handling or escalation.
+{% endhint %}
 
-**Use Cases**:
+**Use cases**
 
 * Customer satisfaction monitoring
 * Escalation triggering for angry customers
 * Sentiment-based routing
 
-**Example Detection**:
+**Example**
 
-* ✅ Flags: "I absolutely hate this! Worst experience ever!"
-* ✅ Configurable threshold for negative/positive detection
-* ✅ Risk scoring based on sentiment intensity
+| Input | Result |
+|---|---|
+| "I absolutely hate this! Worst experience ever!" | Flagged |
+
+* Configurable threshold for negative/positive detection
+* Risk scoring based on sentiment intensity
 
 **On outputs**: Analyzes emotional tone in AI-generated responses.
 
-On the output side, example detection:
+**Output example**
 
-* ✅ Flags: Overly negative AI responses
-* ✅ Configurable sentiment thresholds
-* ✅ Tone analysis and scoring
+| Input | Result |
+|---|---|
+| Overly negative AI responses | Flagged |
+
+* Configurable sentiment thresholds
+* Tone analysis and scoring
 
 ## Bias Guardrail
 
-**Direction**: Output
+Detects discriminatory, biased, or unfair content in AI responses.
 
-**Purpose**: Detects discriminatory, biased, or unfair content in AI responses.
+| Direction |
+|---|
+| Output |
 
-**What it Catches**:
+**What it catches**
 
 * Gender bias
 * Racial/ethnic bias
@@ -131,76 +147,93 @@ On the output side, example detection:
 * Stereotyping
 * Unfair generalizations
 
-**Risk Prevention**: Ensures AI outputs are fair, inclusive, and non-discriminatory, protecting brand reputation and compliance.
+{% hint style="info" %}
+**Risk prevention**: Ensures AI outputs are fair, inclusive, and non-discriminatory, protecting brand reputation and compliance.
+{% endhint %}
 
-**Use Cases**:
+**Use cases**
 
 * Fairness enforcement
 * HR application safety
 * Inclusive AI systems
 
-**Example Detection**:
+**Example**
 
-* ✅ Blocks: "Women are naturally better at nursing"
-* ✅ Blocks: Gender stereotypes in career recommendations
-* ✅ Flags: Racially insensitive generalizations
+| Input | Result |
+|---|---|
+| "Women are naturally better at nursing" | Blocked |
+| Gender stereotypes in career recommendations | Blocked |
+| Racially insensitive generalizations | Flagged |
 
 **Performance**: ONNX-optimized machine learning model.
 
 ## Relevance Guardrail
 
-**Direction**: Output
+Ensures AI responses are relevant and on-topic to user queries.
 
-**Purpose**: Ensures AI responses are relevant and on-topic to user queries.
+| Direction |
+|---|
+| Output |
 
-**What it Catches**:
+**What it catches**
 
 * Off-topic responses
 * Irrelevant information
 * Context drift
 * Hallucinated tangents
 
-**Risk Prevention**: Maintains response quality by detecting when AI strays from the user's actual question.
+{% hint style="info" %}
+**Risk prevention**: Maintains response quality by detecting when AI strays from the user's actual question.
+{% endhint %}
 
-**Use Cases**:
+**Use cases**
 
 * Quality assurance
 * Hallucination detection
 * Response validation
 
-**Example Detection**:
+**Example**
 
-* ✅ User asks: "What is the capital of France?"
-* ✅ Good response: "The capital of France is Paris"
-* ✅ Blocks: "Bananas are yellow and monkeys like them" (irrelevant)
+| Stage | Example |
+|---|---|
+| User asks | "What is the capital of France?" |
+| Good response | "The capital of France is Paris" |
+| Blocked response | "Bananas are yellow and monkeys like them" (irrelevant) |
 
 **Performance**: ONNX-optimized for quick relevance checking.
 
 ## NoRefusal Guardrail
 
-**Direction**: Output
+Detects when AI inappropriately refuses to answer legitimate queries.
 
-**Purpose**: Detects when AI inappropriately refuses to answer legitimate queries.
+| Direction |
+|---|
+| Output |
 
-**What it Catches**:
+**What it catches**
 
 * "I can't help with that" responses
 * Unnecessary refusals
 * Over-cautious denials
 * False safety triggers
 
-**Risk Prevention**: Improves user experience by identifying when AI is too restrictive or incorrectly refuses valid requests.
+{% hint style="info" %}
+**Risk prevention**: Improves user experience by identifying when AI is too restrictive or incorrectly refuses valid requests.
+{% endhint %}
 
-**Use Cases**:
+**Use cases**
 
 * User experience optimization
 * False positive detection
 * AI behavior monitoring
 
-**Example Detection**:
+**Example**
 
-* ✅ Flags: "I cannot assist with that request" (when request was legitimate)
-* ✅ Identifies over-cautious AI behavior
-* ✅ Helps tune AI safety boundaries
+| Input | Result |
+|---|---|
+| "I cannot assist with that request" (when request was legitimate) | Flagged |
+
+* Identifies over-cautious AI behavior
+* Helps tune AI safety boundaries
 
 **Performance**: ONNX-optimized for fast refusal detection.

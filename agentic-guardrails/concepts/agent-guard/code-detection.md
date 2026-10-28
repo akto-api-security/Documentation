@@ -6,13 +6,13 @@ Part of [Agent Guard](../agent-guard.md). Each entry notes whether it runs on **
 
 ## BanCode Guardrail
 
-**Direction**: Input and output
+Detects code snippets, scripts, or programming commands in user messages.
 
-**Configure in**: [Advanced Code Detection](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#advanced-code-detection-filters)
+| Direction | Configure in |
+|---|---|
+| Input and output | [Advanced Code Detection](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#advanced-code-detection-filters) |
 
-**Purpose**: Detects code snippets, scripts, or programming commands in user messages.
-
-**What it Catches**:
+**What it catches**
 
 * Programming code (Python, JavaScript, Java, etc.)
 * Shell commands
@@ -20,60 +20,75 @@ Part of [Agent Guard](../agent-guard.md). Each entry notes whether it runs on **
 * Script blocks
 * Executable instructions
 
-**Risk Prevention**: Prevents code injection attempts and enforces no-code policies in specific contexts.
+{% hint style="info" %}
+**Risk prevention**: Prevents code injection attempts and enforces no-code policies in specific contexts.
+{% endhint %}
 
-**Use Cases**:
+**Use cases**
 
 * Block malicious scripts in non-technical channels
 * Prevent code execution attempts
 * Enforce communication policies
 
-**Example Detection**:
+**Example**
 
-* ✅ Blocks: "import os; os.system('rm -rf /')"
-* ✅ Blocks: "SELECT \* FROM users WHERE admin=1"
-* ✅ Allows: "I need help with coding" (mentions code but isn't code)
+| Input | Result |
+|---|---|
+| "import os; os.system('rm -rf /')" | Blocked |
+| "SELECT \* FROM users WHERE admin=1" | Blocked |
+| "I need help with coding" (mentions code but isn't code) | Allowed |
 
 **On outputs**: Detects code snippets or scripts in AI-generated responses.
 
-On the output side, example detection:
+**Output example**
 
-* ✅ Blocks: "Here's the solution: `rm -rf /`"
-* ✅ Prevents malicious script generation
-* ✅ Enforces code-free responses when required
+| Input | Result |
+|---|---|
+| "Here's the solution: `rm -rf /`" | Blocked |
+
+* Prevents malicious script generation
+* Enforces code-free responses when required
 
 ## Code Guardrail
 
-**Direction**: Input and output
+Detects and identifies programming language used in messages.
 
-**Configure in**: [Advanced Code Detection](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#advanced-code-detection-filters)
+| Direction | Configure in |
+|---|---|
+| Input and output | [Advanced Code Detection](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#advanced-code-detection-filters) |
 
-**Purpose**: Detects and identifies programming language used in messages.
-
-**What it Catches**:
+**What it catches**
 
 * Specific programming languages (Python, Java, JavaScript, etc.)
 * Code syntax patterns
 * Language-specific constructs
 
-**Risk Prevention**: Allows selective code detection - useful when you want to identify specific languages while allowing others.
+{% hint style="info" %}
+**Risk prevention**: Allows selective code detection - useful when you want to identify specific languages while allowing others.
+{% endhint %}
 
-**Use Cases**:
+**Use cases**
 
 * Language-specific policy enforcement
 * Code category identification
 * Technical support routing
 
-**Example Detection**:
+**Example**
 
-* ✅ Detects: "def calculate\_sum(a, b): return a + b" (Python)
-* ✅ Detects: "public class User {}" (Java)
-* ✅ Configuration: Specify which languages to detect
+| Input | Result |
+|---|---|
+| "def calculate\_sum(a, b): return a + b" (Python) | Detected |
+| "public class User {}" (Java) | Detected |
+
+* Configuration: Specify which languages to detect
 
 **On outputs**: Identifies programming languages in AI-generated responses.
 
-On the output side, example detection:
+**Output example**
 
-* ✅ Detects: Python, Java, JavaScript code
-* ✅ Configuration: Specify which languages to flag
-* ✅ Accurate language identification
+| Input | Result |
+|---|---|
+| Python, Java, JavaScript code | Detected |
+
+* Configuration: Specify which languages to flag
+* Accurate language identification

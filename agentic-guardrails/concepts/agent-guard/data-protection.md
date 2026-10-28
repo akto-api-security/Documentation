@@ -6,13 +6,13 @@ Part of [Agent Guard](../agent-guard.md). Each entry notes whether it runs on **
 
 ## Secrets Guardrail
 
-**Direction**: Input
+Detects exposed credentials, API keys, tokens, and passwords in user messages.
 
-**Configure in**: [Sensitive Information](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#sensitive-information-guardrails)
+| Direction | Configure in |
+|---|---|
+| Input | [Sensitive Information](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#sensitive-information-guardrails) |
 
-**Purpose**: Detects exposed credentials, API keys, tokens, and passwords in user messages.
-
-**What it Catches**:
+**What it catches**
 
 * API keys (AWS, OpenAI, Stripe, etc.)
 * Authentication tokens (Bearer, JWT, OAuth)
@@ -20,29 +20,33 @@ Part of [Agent Guard](../agent-guard.md). Each entry notes whether it runs on **
 * Private keys and certificates
 * Password strings
 
-**Risk Prevention**: Prevents users from accidentally or intentionally exposing sensitive credentials that could be logged, stored, or processed by AI systems.
+{% hint style="info" %}
+**Risk prevention**: Prevents users from accidentally or intentionally exposing sensitive credentials that could be logged, stored, or processed by AI systems.
+{% endhint %}
 
-**Use Cases**:
+**Use cases**
 
 * Prevent credential leakage in support chat
 * Block API key exposure in developer queries
 * Protect authentication tokens in logs
 
-**Example Detection**:
+**Example**
 
-* ✅ Blocks: "My API key is sk-proj-abc123def456"
-* ✅ Blocks: "Password: P@ssw0rd123!"
-* ✅ Blocks: "AWS\_SECRET\_KEY=abcd1234efgh5678"
+| Input | Result |
+|---|---|
+| "My API key is sk-proj-abc123def456" | Blocked |
+| "Password: P@ssw0rd123!" | Blocked |
+| "AWS\_SECRET\_KEY=abcd1234efgh5678" | Blocked |
 
 ## Anonymize and Deanonymize Guardrail
 
-**Direction**: Input and output
+Automatically removes or masks personally identifiable information (PII).
 
-**Configure in**: [Sensitive Information](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#sensitive-information-guardrails)
+| Direction | Configure in |
+|---|---|
+| Input and output | [Sensitive Information](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#sensitive-information-guardrails) |
 
-**Purpose**: Automatically removes or masks personally identifiable information (PII).
-
-**What it Detects & Masks**:
+**What it detects and masks**
 
 * Names and personal identifiers
 * Email addresses
@@ -51,35 +55,41 @@ Part of [Agent Guard](../agent-guard.md). Each entry notes whether it runs on **
 * Credit card numbers
 * Addresses
 
-**Risk Prevention**: Protects user privacy by anonymizing PII before processing, enabling safe data handling.
+{% hint style="info" %}
+**Risk prevention**: Protects user privacy by anonymizing PII before processing, enabling safe data handling.
+{% endhint %}
 
-**Use Cases**:
+**Use cases**
 
 * GDPR compliance
 * Privacy-first AI applications
 * Safe data logging and storage
 
-**Example Transformation**:
+**Example**
 
-* Input: "Contact John at [john@email.com](mailto:john@email.com)"
-* Output: "Contact \[NAME] at \[EMAIL]"
+| Stage | Example |
+|---|---|
+| Input | "Contact John at [john@email.com](mailto:john@email.com)" |
+| Output | "Contact \[NAME] at \[EMAIL]" |
 
 **On outputs**: Restores previously anonymized data when safe and authorized.
 
-On the output side, example transformation:
+**Output example**
 
-* Anonymized: "Contact \[NAME] at \[EMAIL]"
-* Deanonymized: "Contact John at [john@email.com](mailto:john@email.com)" (when authorized)
+| Stage | Example |
+|---|---|
+| Anonymized | "Contact \[NAME] at \[EMAIL]" |
+| Deanonymized | "Contact John at [john@email.com](mailto:john@email.com)" (when authorized) |
 
 ## Sensitive Guardrail
 
-**Direction**: Output
+Detects personally identifiable information (PII) and sensitive data in AI outputs.
 
-**Configure in**: [Sensitive Information](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#sensitive-information-guardrails)
+| Direction | Configure in |
+|---|---|
+| Output | [Sensitive Information](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#sensitive-information-guardrails) |
 
-**Purpose**: Detects personally identifiable information (PII) and sensitive data in AI outputs.
-
-**What it Catches**:
+**What it catches**
 
 * Email addresses
 * Phone numbers
@@ -90,134 +100,138 @@ On the output side, example transformation:
 * Medical information
 * Financial data
 
-**Risk Prevention**: Prevents AI models from inadvertently exposing sensitive or private information in responses.
+{% hint style="info" %}
+**Risk prevention**: Prevents AI models from inadvertently exposing sensitive or private information in responses.
+{% endhint %}
 
-**Use Cases**:
+**Use cases**
 
 * Data loss prevention (DLP)
 * GDPR/CCPA compliance
 * Privacy protection
 
-**Example Detection**:
+**Example**
 
-* ✅ Blocks: "Contact John Doe at [john.doe@company.com](mailto:john.doe@company.com) or 555-123-4567"
-* ✅ Blocks: Responses containing SSN: 123-45-6789
-* ✅ Flags: Any PII exposure in AI-generated content
+| Input | Result |
+|---|---|
+| "Contact John Doe at [john.doe@company.com](mailto:john.doe@company.com) or 555-123-4567" | Blocked |
+| Responses containing SSN: 123-45-6789 | Blocked |
+| Any PII exposure in AI-generated content | Flagged |
 
 **Performance**: ONNX-optimized for fast detection.
 
 ## Regex Pattern Guardrail
 
-**Direction**: Input
+Detects and filters sensitive information using custom regex patterns.
 
-**Configure in**: [Sensitive Information](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#sensitive-information-guardrails)
+| Direction | Configure in |
+|---|---|
+| Input | [Sensitive Information](../../how-to/guardrail-policy-fields/sensitive-data-and-code.md#sensitive-information-guardrails) |
 
-**Purpose:** Detects and filters sensitive information using custom regex patterns.
-
-**What it Does:**
+**What it does**
 
 * Matches content against configured regex patterns
 * Detects custom sensitive data formats
 * Filters or blocks matching inputs and outputs
 * Supports organization-specific pattern definitions
 
-**Risk Prevention:** Prevents exposure of sensitive information that follows identifiable patterns or formats.
+{% hint style="info" %}
+**Risk prevention**: Prevents exposure of sensitive information that follows identifiable patterns or formats.
+{% endhint %}
 
-**Use Cases:**
+**Use cases**
 
 * Detecting custom identifiers or tokens
 * Filtering internal reference numbers
 * Preventing exposure of account or employee IDs
 * Enforcing organization-specific data protection rules
 
-**Example Transformation:**
+**Example**
 
-* Configured Regex Pattern:\
-  `\d{3}-\d{2}-\d{4}`
-* Input:\
-  "Customer SSN: 123-45-6789"
-* Detected Match:\
-  `123-45-6789`
-* Enforced Output:\
-  "Customer SSN: \[REDACTED]"
+| Stage | Example |
+|---|---|
+| Configured Regex Pattern | `\d{3}-\d{2}-\d{4}` |
+| Input | "Customer SSN: 123-45-6789" |
+| Detected Match | `123-45-6789` |
+| Enforced Output | "Customer SSN: \[REDACTED]" |
 
 ## LLM Based Redaction Guardrail
 
-**Direction**: Input and output
+Masks sensitive content in user prompts using a plain-language redaction instruction, instead of blocking the request outright.
 
-**Configure in**: [Custom Guardrails](../../how-to/guardrail-policy-fields/custom-usage-and-anomaly.md#custom-guardrails)
+| Direction | Configure in |
+|---|---|
+| Input and output | [Custom Guardrails](../../how-to/guardrail-policy-fields/custom-usage-and-anomaly.md#custom-guardrails) |
 
-**Purpose:** Masks sensitive content in user prompts using a plain-language redaction instruction, instead of blocking the request outright.
-
-**What it Does:**
+**What it does**
 
 * Evaluates prompts against a custom redaction instruction written in plain language
 * Uses an LLM to identify content matching that instruction
 * Replaces matching text in place with a redacted value
 * Allows the request through after redaction, rather than blocking it
 
-**Risk Prevention:** Prevents sensitive data described in your own words, beyond fixed PII types or regex patterns, from reaching AI models or third-party tools, while still letting the underlying request complete.
+{% hint style="info" %}
+**Risk prevention**: Prevents sensitive data described in your own words, beyond fixed PII types or regex patterns, from reaching AI models or third-party tools, while still letting the underlying request complete.
+{% endhint %}
 
-**Use Cases:**
+**Use cases**
 
 * Masking business-specific identifiers that don't fit a standard PII category, such as internal case numbers or deal codes
 * Redacting customer names and addresses before a prompt reaches an external AI tool
 * Layering with the Anonymize or Regex Pattern guardrails for categories that need a free-text description
 
-**Example Transformation:**
+**Example**
 
-* Redaction Instruction:\
-  "Redact customer full names and home addresses"
-* Input:\
-  "Ship the order to John Carter at 42 Baker Street"
-* Enforced Output:\
-  "Ship the order to \[REDACTED] at \[REDACTED]"
+| Stage | Example |
+|---|---|
+| Redaction Instruction | "Redact customer full names and home addresses" |
+| Input | "Ship the order to John Carter at 42 Baker Street" |
+| Enforced Output | "Ship the order to \[REDACTED] at \[REDACTED]" |
 
 **On outputs**: Masks sensitive content in AI-generated responses using a plain-language redaction instruction, instead of blocking the response outright.
 
-On the output side, example transformation:
+**Output example**
 
-* Redaction Instruction:\
-  "Redact customer full names and home addresses"
-* Generated Output:\
-  "The order was shipped to John Carter at 42 Baker Street"
-* Enforced Output:\
-  "The order was shipped to \[REDACTED] at \[REDACTED]"
+| Stage | Example |
+|---|---|
+| Redaction Instruction | "Redact customer full names and home addresses" |
+| Generated Output | "The order was shipped to John Carter at 42 Baker Street" |
+| Enforced Output | "The order was shipped to \[REDACTED] at \[REDACTED]" |
 
 ## Personal Account Guardrail
 
-**Direction**: Input
+Detects and blocks access from users authenticated using personal accounts instead of organization-approved accounts.
 
-**Configure in**: [Access Restrictions](../../how-to/guardrail-policy-fields/access-restrictions-and-exceptions.md#access-restrictions)
+| Direction | Configure in |
+|---|---|
+| Input | [Access Restrictions](../../how-to/guardrail-policy-fields/access-restrictions-and-exceptions.md#access-restrictions) |
 
-**Purpose:** Detects and blocks access from users authenticated using personal accounts instead of organization-approved accounts.
-
-**What it Does:**
+**What it does**
 
 * Identifies personal email domains during authentication
 * Validates user accounts against approved organization domains
 * Detects sign-ins using non-corporate accounts
 * Restricts access for unauthorized personal accounts
 
-**Risk Prevention:** Prevents unauthorized access, data leakage, and policy violations caused by usage of unmanaged personal accounts.
+{% hint style="info" %}
+**Risk prevention**: Prevents unauthorized access, data leakage, and policy violations caused by usage of unmanaged personal accounts.
+{% endhint %}
 
-**Use Cases:**
+**Use cases**
 
 * Enforcing enterprise-only account access
 * Blocking Gmail or personal email sign-ins
 * Restricting access to organization-managed users
 * Preventing unauthorized external access
 
-**Example Transformation:**
+**Example**
 
-* User Sign-In:\
-  `john.doe@gmail.com`
-* Allowed Domain:\
-  `@company.com`
-* Detected Issue:\
-  Personal account detected
-* Enforced Output:\
-  "Access blocked: personal accounts are not allowed"
+| Stage | Example |
+|---|---|
+| User Sign-In | `john.doe@gmail.com` |
+| Allowed Domain | `@company.com` |
+| Detected Issue | Personal account detected |
+| Enforced Output | "Access blocked: personal accounts are not allowed" |
 
 {% hint style="info" %}
 Requires the Akto browser extension v1.0.69 or later. Currently supported only through the browser extension; AI Endpoint Shield Agent support is coming soon.
@@ -225,11 +239,13 @@ Requires the Akto browser extension v1.0.69 or later. Currently supported only t
 
 ## MaliciousURLs Guardrail
 
-**Direction**: Output
+Identifies suspicious, malicious, or inappropriate URLs in AI responses.
 
-**Purpose**: Identifies suspicious, malicious, or inappropriate URLs in AI responses.
+| Direction |
+|---|
+| Output |
 
-**What it Catches**:
+**What it catches**
 
 * Phishing links
 * Malware distribution sites
@@ -237,18 +253,23 @@ Requires the Akto browser extension v1.0.69 or later. Currently supported only t
 * Unverified URLs
 * Known bad actors
 
-**Risk Prevention**: Protects users from clicking dangerous links that AI models might generate or reference.
+{% hint style="info" %}
+**Risk prevention**: Protects users from clicking dangerous links that AI models might generate or reference.
+{% endhint %}
 
-**Use Cases**:
+**Use cases**
 
 * Phishing prevention
 * Link safety verification
 * Brand protection
 
-**Example Detection**:
+**Example**
 
-* ✅ Blocks: "Visit [http://suspicious-phishing-site.xyz](http://suspicious-phishing-site.xyz)"
-* ✅ Verifies URL reputation
-* ✅ Protects against social engineering
+| Input | Result |
+|---|---|
+| "Visit [http://suspicious-phishing-site.xyz](http://suspicious-phishing-site.xyz)" | Blocked |
+
+* Verifies URL reputation
+* Protects against social engineering
 
 **Performance**: ONNX-optimized for real-time URL analysis.

@@ -71,49 +71,10 @@ Each guardrail entry includes its purpose, detection capabilities, risk preventi
 | [Gibberish](agent-guard/custom-and-compliance.md#gibberish-guardrail) | Filters nonsensical, random, or meaningless text | Input | Custom, Usage, and Compliance |
 | [TokenLimit](agent-guard/custom-and-compliance.md#tokenlimit-guardrail) | Enforces maximum length limits on user messages | Input | Custom, Usage, and Compliance |
 
-## Configuration Best Practices
-
-### Guardrail Selection
-
-**High-Risk Applications** (Banking, Healthcare):
-
-```
-Input: Secrets + PromptInjection + Toxicity
-Output: Sensitive + MaliciousURLs + Bias
-```
-
-**Customer Support Chatbots**:
-
-```
-Input: Toxicity + Sentiment + Gibberish
-Output: Toxicity + Relevance + Sensitive
-```
-
-**Developer Tools**:
-
-```
-Input: Secrets + PromptInjection
-Output: Sensitive + Code (selective)
-```
-
-**Content Moderation**:
-
-```
-Input: Toxicity + BanTopics + BanSubstrings
-Output: Toxicity + Bias + BanTopics
-```
-
-### Threshold Tuning
-
-* **Strict Mode**: Lower thresholds (0.3-0.5) for maximum safety
-* **Balanced Mode**: Medium thresholds (0.5-0.7) for production
-* **Permissive Mode**: Higher thresholds (0.7-0.9) for internal tools
-
 ## Getting Started
 
-* **Identify your use case**: Review the configuration examples above to find patterns matching your application.
+* **Identify your use case**: Review the guardrails above to find the ones matching your application.
 * **Select core guardrails**: Start with 3-5 guardrails covering your primary risks (for example Secrets, PromptInjection, and Toxicity).
-* **Configure thresholds**: Begin with balanced mode (0.5-0.7) and tune based on your false positive tolerance.
 * **Deploy incrementally**: Set the policy's Rule Behaviour to **Alert** first, then switch to **Block** once detections look right.
 * **Monitor and optimize**: Track detection patterns in [Guardrail Activity](guardrail-activity.md) and adjust guardrail combinations over time.
 

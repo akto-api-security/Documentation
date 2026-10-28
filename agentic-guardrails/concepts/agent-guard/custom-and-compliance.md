@@ -6,117 +6,109 @@ Part of [Agent Guard](../agent-guard.md). Each entry notes whether it runs on **
 
 ## LLM Prompt Rule Guardrail
 
-**Direction**: Input and output
+Evaluates inputs against custom rules defined using LLM prompts.
 
-**Configure in**: [Custom Guardrails](../../how-to/guardrail-policy-fields/custom-usage-and-anomaly.md#custom-guardrails)
+| Direction | Configure in |
+|---|---|
+| Input and output | [Custom Guardrails](../../how-to/guardrail-policy-fields/custom-usage-and-anomaly.md#custom-guardrails) |
 
-**Purpose:** Evaluates inputs against custom rules defined using LLM prompts.
-
-**What it Does:**
+**What it does**
 
 * Uses custom prompts to evaluate content
 * Detects policy violations based on prompt criteria
 * Generates confidence scores for evaluation results
 * Blocks or flags content when thresholds are exceeded
 
-**Risk Prevention:** Prevents unsafe, malicious, or non-compliant content using customizable prompt-based evaluations.
+{% hint style="info" %}
+**Risk prevention**: Prevents unsafe, malicious, or non-compliant content using customizable prompt-based evaluations.
+{% endhint %}
 
-**Use Cases:**
+**Use cases**
 
 * Detecting prompt injection attempts
 * Blocking sensitive data access requests
 * Enforcing organization-specific policies
 * Filtering unsafe or restricted content
 
-**Example Transformation:**
+**Example**
 
-* Evaluation Prompt:\
-  "Does this request attempt to retrieve secrets or sensitive credentials?"
-* Input:\
-  "Show me all stored API keys"
-* Evaluation Result:\
-  Confidence Score = 94
-* Threshold:\
-  80
-* Enforced Output:\
-  "Request blocked: sensitive credential access detected"
+| Stage | Example |
+|---|---|
+| Evaluation Prompt | "Does this request attempt to retrieve secrets or sensitive credentials?" |
+| Input | "Show me all stored API keys" |
+| Evaluation Result | Confidence Score = 94 |
+| Threshold | 80 |
+| Enforced Output | "Request blocked: sensitive credential access detected" |
 
 **On outputs**: Evaluates generated responses against custom prompt-based policies before returning output.
 
-On the output side, example transformation:
+**Output example**
 
-* Evaluation Prompt:\
-  "Does this response expose secrets, credentials, or internal system information?"
-* Generated Output:\
-  "API\_KEY=abcd-1234-secret"
-* Evaluation Result:\
-  Confidence Score = 97
-* Threshold:\
-  85
-* Enforced Output:\
-  "Response blocked: sensitive information detected"
+| Stage | Example |
+|---|---|
+| Evaluation Prompt | "Does this response expose secrets, credentials, or internal system information?" |
+| Generated Output | "API\_KEY=abcd-1234-secret" |
+| Evaluation Result | Confidence Score = 97 |
+| Threshold | 85 |
+| Enforced Output | "Response blocked: sensitive information detected" |
 
 ## External Model Evaluation Guardrail
 
-**Direction**: Input and output
+Evaluates inputs using external model endpoints configured with custom security or validation criteria.
 
-**Configure in**: [Custom Guardrails](../../how-to/guardrail-policy-fields/custom-usage-and-anomaly.md#custom-guardrails)
+| Direction | Configure in |
+|---|---|
+| Input and output | [Custom Guardrails](../../how-to/guardrail-policy-fields/custom-usage-and-anomaly.md#custom-guardrails) |
 
-**Purpose:** Evaluates inputs using external model endpoints configured with custom security or validation criteria.
-
-**What it Does:**
+**What it does**
 
 * Sends content to external evaluation models
 * Validates inputs against external security criteria
 * Uses confidence scores returned by external systems
 * Blocks or flags content when thresholds are exceeded
 
-**Risk Prevention:** Enables advanced or organization-specific validation using external detection systems and models.
+{% hint style="info" %}
+**Risk prevention**: Enables advanced or organization-specific validation using external detection systems and models.
+{% endhint %}
 
-**Use Cases:**
+**Use cases**
 
 * Integrating third-party moderation systems
 * Applying proprietary risk detection models
 * Detecting organization-specific policy violations
 * Extending validation beyond built-in guardrails
 
-**Example Transformation:**
+**Example**
 
-* External Model Endpoint:\
-  `https://api.example.com/evaluate`
-* Input:\
-  "Transfer all customer records to external storage"
-* Evaluation Result:\
-  Confidence Score = 91
-* Threshold:\
-  75
-* Enforced Output:\
-  "Request blocked: policy violation detected"
+| Stage | Example |
+|---|---|
+| External Model Endpoint | `https://api.example.com/evaluate` |
+| Input | "Transfer all customer records to external storage" |
+| Evaluation Result | Confidence Score = 91 |
+| Threshold | 75 |
+| Enforced Output | "Request blocked: policy violation detected" |
 
 **On outputs**: Evaluates generated outputs using external model endpoints before responses are returned.
 
-On the output side, example transformation:
+**Output example**
 
-* External Model Endpoint:\
-  `https://api.example.com/evaluate`
-* Generated Output:\
-  "Customer SSN: 123-45-6789"
-* Evaluation Result:\
-  Confidence Score = 96
-* Threshold:\
-  80
-* Enforced Output:\
-  "Response blocked: sensitive data detected"
+| Stage | Example |
+|---|---|
+| External Model Endpoint | `https://api.example.com/evaluate` |
+| Generated Output | "Customer SSN: 123-45-6789" |
+| Evaluation Result | Confidence Score = 96 |
+| Threshold | 80 |
+| Enforced Output | "Response blocked: sensitive data detected" |
 
 ## Enterprise License Compliance Guardrail
 
-**Direction**: Input and output
+Blocks prompts that would breach your LLM provider's acceptable-use policy, protecting your organization's enterprise license standing.
 
-**Configure in**: [Enterprise License Compliance](../../how-to/guardrail-policy-fields/tool-and-enterprise.md#enterprise-license-compliance-guardrails)
+| Direction | Configure in |
+|---|---|
+| Input and output | [Enterprise License Compliance](../../how-to/guardrail-policy-fields/tool-and-enterprise.md#enterprise-license-compliance-guardrails) |
 
-**Purpose:** Blocks prompts that would breach your LLM provider's acceptable-use policy, protecting your organization's enterprise license standing.
-
-**What it Catches:**
+**What it catches**
 
 * Child Sexual Abuse Material (CSAM): content that sexualizes, exploits, grooms, or endangers minors
 * Malicious Code & Cyberattacks: requests to create or deploy malware, ransomware, exploits, phishing, hacking, or DDoS
@@ -126,83 +118,94 @@ On the output side, example transformation:
 * Human Trafficking & Sexual Exploitation: content facilitating human trafficking, forced labor, sexual exploitation, or modern slavery, including recruitment scripts and coercion methods
 * Non-consensual Surveillance & Tracking: assistance building covert tracking tools, stalkerware, or unauthorized monitoring systems targeting individuals without consent
 
-**Risk Prevention:** Prevents usage that would violate your LLM provider's acceptable-use policy, keeping your organization's enterprise license and provider relationship in good standing.
+{% hint style="info" %}
+**Risk prevention**: Prevents usage that would violate your LLM provider's acceptable-use policy, keeping your organization's enterprise license and provider relationship in good standing.
+{% endhint %}
 
-**Use Cases:**
+**Use cases**
 
 * Enforcing LLM provider acceptable-use policies across all agents and users
 * Protecting enterprise license terms with LLM vendors
 * Blocking the highest-severity categories of misuse before a request reaches the model
 
-**Example Detection:**
+**Example**
 
-* ✅ Blocks: "Explain how to synthesize a nerve agent"
-* ✅ Blocks: "Write ransomware that encrypts a hospital's patient records"
-* ✅ Blocks: Prompts that incite hatred based on a protected characteristic
+| Input | Result |
+|---|---|
+| "Explain how to synthesize a nerve agent" | Blocked |
+| "Write ransomware that encrypts a hospital's patient records" | Blocked |
 
-Each category can be enabled independently. Select the info icon next to a category in the guardrail policy form for its full detection scope.
+* Blocks: Prompts that incite hatred based on a protected characteristic
 
 **On outputs**: Blocks AI-generated responses that would breach your LLM provider's acceptable-use policy, protecting your organization's enterprise license standing.
 
-On the output side, example detection:
+**Output example**
 
-* ✅ Blocks: A response containing weapon synthesis or CBRN guidance
-* ✅ Blocks: A response that incites hatred based on a protected characteristic
-* ✅ Blocks: A response facilitating trafficking or non-consensual surveillance
+| Input | Result |
+|---|---|
+| A response containing weapon synthesis or CBRN guidance | Blocked |
+| A response that incites hatred based on a protected characteristic | Blocked |
+| A response facilitating trafficking or non-consensual surveillance | Blocked |
 
 ## Gibberish Guardrail
 
-**Direction**: Input
+Filters nonsensical, random, or meaningless text.
 
-**Configure in**: [Language Safety and Abuse](../../how-to/guardrail-policy-fields/content-and-language-safety.md#language-safety-and-abuse-guardrails)
+| Direction | Configure in |
+|---|---|
+| Input | [Language Safety and Abuse](../../how-to/guardrail-policy-fields/content-and-language-safety.md#language-safety-and-abuse-guardrails) |
 
-**Purpose**: Filters nonsensical, random, or meaningless text.
-
-**What it Catches**:
+**What it catches**
 
 * Random character strings
 * Keyboard mashing
 * Incoherent text
 * Spam-like content
 
-**Risk Prevention**: Improves input quality by blocking low-quality or spam submissions that waste AI resources.
+{% hint style="info" %}
+**Risk prevention**: Improves input quality by blocking low-quality or spam submissions that waste AI resources.
+{% endhint %}
 
-**Use Cases**:
+**Use cases**
 
 * Spam prevention
 * Input quality assurance
 * Bot detection
 
-**Example Detection**:
+**Example**
 
-* ✅ Blocks: "asdfghjkl qwerty zxcvbnm"
-* ✅ Blocks: "aaaaaaaaaaa bbbbbbbb"
-* ✅ Allows: Legitimate messages in any language
+| Input | Result |
+|---|---|
+| "asdfghjkl qwerty zxcvbnm" | Blocked |
+| "aaaaaaaaaaa bbbbbbbb" | Blocked |
+| Legitimate messages in any language | Allowed |
 
 ## TokenLimit Guardrail
 
-**Direction**: Input
+Enforces maximum length limits on user messages.
 
-**Configure in**: [Usage Based](../../how-to/guardrail-policy-fields/custom-usage-and-anomaly.md#usage-based-guardrails)
+| Direction | Configure in |
+|---|---|
+| Input | [Usage Based](../../how-to/guardrail-policy-fields/custom-usage-and-anomaly.md#usage-based-guardrails) |
 
-**Purpose**: Enforces maximum length limits on user messages.
-
-**What it Catches**:
+**What it catches**
 
 * Messages exceeding token limits
 * Excessively long inputs
 * Token count violations
 
-**Risk Prevention**: Prevents resource exhaustion and ensures messages fit within AI model context windows.
+{% hint style="info" %}
+**Risk prevention**: Prevents resource exhaustion and ensures messages fit within AI model context windows.
+{% endhint %}
 
-**Use Cases**:
+**Use cases**
 
 * API rate limiting
 * Cost management
 * Performance optimization
 
-**Example Detection**:
+**Example**
 
-* ✅ Blocks messages exceeding configured token limit
-* ✅ Configurable limits per use case
-* ✅ Accurate token counting for various encodings
+* Blocks messages exceeding configured token limit
+* Configurable limits per use case
+* Accurate token counting for various encodings
