@@ -379,6 +379,7 @@
     * [Code Detection](agentic-guardrails/concepts/agent-guard/code-detection.md)
     * [Custom, Usage, and Compliance](agentic-guardrails/concepts/agent-guard/custom-and-compliance.md)
   * [Session-Based Guardrails](agentic-guardrails/concepts/session-guardrails.md)
+  * [Guardrail Latency](agentic-guardrails/concepts/guardrail-latency.md)
   * [Schema Conformance](agentic-guardrails/concepts/schema-conformance.md)
   * [Guardrail Actors](agentic-guardrails/concepts/threat-actors.md)
   * [Threat Dashboard](agentic-guardrails/concepts/threat-dashboard.md)
