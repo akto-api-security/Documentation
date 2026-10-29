@@ -13,11 +13,9 @@ AWS API Gateway is a fully managed service from AWS that helps developers create
 Complete every step in the AWS region where your APIs are deployed.
 {% endhint %}
 
-### Values to decide before a self-hosted setup
-
-Self-hosted setup reuses three values across Part 1 and Part 2. Deciding the values first keeps every cross-account role and the connector consistent. Akto-hosted setup receives the account ID and External ID from your Akto representative, so no decision is needed.
-
-<table><thead><tr><th width="201.5">Value</th><th>What to decide</th><th>Where you use it</th></tr></thead><tbody><tr><td><strong>Central account</strong></td><td>The AWS account where you deploy the central connector.</td><td>Part 1: <code>ServiceAccountId</code> for every cross-account role. Part 2: the account where you deploy the connector stack.</td></tr><tr><td><strong>External ID</strong></td><td>A value of 16 or more characters, shared by every cross-account role.</td><td>Part 1: <code>ExternalId</code>. Part 2, Step 2: <code>CrossAccountExternalId</code>.</td></tr><tr><td><strong>Region</strong></td><td>The AWS region where you deploy the central connector. Every cross-account role uses the same region.</td><td>Part 1: the AWS Console region for every role. Part 2, Step 2: the AWS Console region for the connector stack.</td></tr></tbody></table>
+{% hint style="info" %}
+Logging is enabled for REST APIs only. Akto discovers HTTP and WebSocket API specs, but does not monitor their traffic.
+{% endhint %}
 
 ## Part 1: Grant access to your API Gateway logs
 
@@ -27,7 +25,7 @@ Akto reads the execution logs that API Gateway writes to CloudWatch. The steps i
 
 `ServiceAccountId` and `ExternalId` depend on who runs the connector.
 
-<table><thead><tr><th width="201.5">Value</th><th>Akto-hosted</th><th>Self-hosted</th></tr></thead><tbody><tr><td><code>ServiceAccountId</code></td><td>The AWS account ID provided by your Akto representative.</td><td>The AWS account ID where you deploy the central connector. Use the same account for every cross-account role.</td></tr><tr><td><code>ExternalId</code></td><td>The External ID provided by your Akto representative.</td><td>A value you choose (16 or more characters). Use the same value for every cross-account role, and reuse it as <code>CrossAccountExternalId</code> in Part 2.</td></tr><tr><td>Region</td><td>The region where your APIs run.</td><td>The region where you deploy the central connector. Every cross-account role uses this region.</td></tr></tbody></table>
+<table><thead><tr><th width="201.5">Value</th><th>Akto-hosted</th><th>Self-hosted</th></tr></thead><tbody><tr><td><code>ServiceAccountId</code></td><td>The AWS account ID provided by your Akto representative.</td><td>The AWS account ID where you deploy the central connector. Use the same account for every cross-account role. Part 2 deploys the connector stack in this account.</td></tr><tr><td><code>ExternalId</code></td><td>The External ID provided by your Akto representative.</td><td>A value you choose (16 or more characters). Use the same value for every cross-account role, and reuse it as <code>CrossAccountExternalId</code> in Part 2, Step 2.</td></tr><tr><td>Region</td><td>The region where your APIs run.</td><td>The region where you deploy the central connector. Every cross-account role uses this region, and Part 2, Step 2 deploys the connector stack in the same region.</td></tr></tbody></table>
 
 {% hint style="warning" %}
 The self-hosted connector reads each account's logs and specs only in the region where the connector is deployed. APIs in a different region need their own central connector there. Repeat Part 1 once per AWS account you connect.
@@ -61,6 +59,10 @@ Scroll down to the `Logs and tracing` section and click on `Edit`.
 Set the log level to `Error and info logs`, turn on `Data tracing`, and save.
 {% endstep %}
 {% endstepper %}
+
+{% hint style="info" %}
+For APIs or stages created later, enable logging on the new stage yourself.
+{% endhint %}
 
 Akto reads these execution logs, which API Gateway writes to a log group named `API-Gateway-Execution-Logs_<api-id>/<stage-name>`. Access logging is not required.
 
@@ -226,6 +228,14 @@ Once the stack reaches **CREATE\_COMPLETE**, open the **Outputs** tab and copy t
 {% endstep %}
 {% endstepper %}
 
+{% hint style="info" %}
+To pick up APIs or stages created later, update the stack with a new `Version` value (e.g. `1.0.1`). CloudFormation re-runs the setup only when a parameter changes.
+{% endhint %}
+
+{% hint style="warning" %}
+Deleting the stack does not disable logging or remove the CloudWatch role the stack created.
+{% endhint %}
+
 You now have a Role ARN and the region it covers. Continue to [Part 2: Set up the connector](#part-2-set-up-the-connector).
 {% endtab %}
 {% endtabs %}
@@ -297,15 +307,6 @@ The `CrossAccountRoleArns` parameter only scopes which role ARNs the connector i
 Add the same Role ARN(s) under the AWS Role ARNs setting in your Akto dashboard for this account. The dashboard list, not the CloudFormation parameter, tells the connector which accounts to monitor. Without the list, the connector stays up but reads no logs.
 {% endtab %}
 {% endtabs %}
-
-## Setup notes
-
-1. Logging is enabled for REST APIs only. Akto discovers HTTP and WebSocket API specs, but does not monitor their traffic.
-2. If `RestApiIds` is left empty, the stack applies to all REST APIs. Set it to scope the setup to specific APIs.
-3. To pick up APIs or stages created later, update the stack with a new `Version` value (e.g. `1.0.1`), because CloudFormation re-runs the setup only when a parameter changes. With the manual setup, enable logging on the new stage yourself.
-4. Deleting the stack does not disable logging or remove the CloudWatch role it created.
-5. For the self-hosted central connector, a Role ARN is only monitored once the Role ARN is both in the `CrossAccountRoleArns` parameter and added in the Akto dashboard. The parameter alone controls only which roles the connector instance is allowed to assume.
-6. The self-hosted central connector is single-region: the connector reads only accounts whose cross-account role was deployed in the same region as the connector itself.
 
 ## Get Support for your Akto setup
 
