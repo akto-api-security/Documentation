@@ -205,7 +205,7 @@ kubectl -n $NS create configmap akto-egress-ca-cert --from-file=mitmproxy-ca-cer
 {% step %}
 ### Add the proxy sidecar to your Deployment
 
-Add the two init containers, the agent environment variables, and the volumes to your agent's Deployment. Replace `your-agent`, `your-ai-agent:latest`, `AKTO_URL`, `APP_NAME` and `AKTO_TAGS` with your own values:
+Add the two init containers, the agent environment variables, and the volumes to your agent's Deployment. Replace `your-agent`, `your-ai-agent:latest`, `AKTO_URL`, `APP_NAME` and `AKTO_TAGS` with your own values. The proxy variables are described in [Set environment variables](#set-environment-variables); `AI_HOSTS` and `AKTO_TAGS` are optional and can be left empty:
 
 ```yaml
 apiVersion: apps/v1
