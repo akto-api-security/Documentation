@@ -36,11 +36,11 @@ p95 stays under 120 ms for benign traffic and under 160 ms for malicious traffic
 
 When PII redaction is enabled, Akto finds and masks each sensitive value before returning the prompt, so latency grows with the number of values redacted in the prompt.
 
-As a rough guide, a prompt with one redacted value (a Social Security number) measured over 100 sequential requests:
+As a rough guide, a prompt with one redacted value (a person's name) measured over 100 sequential requests:
 
 | Redacted values | p50 | p95 |
 | --- | --- | --- |
-| 1 | 180 ms | 189 ms |
+| 1 | 116 ms | 125 ms |
 
 Prompts with more redacted values take longer.
 
