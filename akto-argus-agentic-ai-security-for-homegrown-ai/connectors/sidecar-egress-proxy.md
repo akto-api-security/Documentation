@@ -57,6 +57,7 @@ The proxy is published as a prebuilt image, `public.ecr.aws/aktosecurity/akto-eg
 ```bash
 export AKTO_URL=https://akto.example.com   # your Akto instance base URL
 export APP_NAME=my-ai-agent                # identifies your app in Akto guardrails
+export AKTO_TAGS=env=prod,team=payments    # optional tags attached to traffic in Akto
 ```
 
 | Variable   | Required | Description                                                                                                 |
@@ -64,6 +65,7 @@ export APP_NAME=my-ai-agent                # identifies your app in Akto guardra
 | `AKTO_URL` | Yes      | Base URL of your Akto instance (e.g. `https://akto.example.com`). The proxy appends `/api/http-proxy`.      |
 | `APP_NAME` | Yes      | Name of your application. Sent as the `host` header to Akto so traffic is grouped per app in the dashboard. |
 | `AI_HOSTS` | No       | Comma-separated hosts to intercept and run guardrails on. `*` matches any run of characters. See [Supported AI Providers](#supported-ai-providers) for the default list. |
+| `AKTO_TAGS` | No       | Comma-separated `key=value` pairs attached as tags to all traffic the proxy sends to Akto (e.g. `env=prod,team=payments`). The built-in `gen-ai` and `source` tags are always sent and cannot be overridden. Entries without `=` are ignored. |
 {% endstep %}
 
 {% step %}
@@ -103,6 +105,7 @@ services:
       AKTO_URL: ${AKTO_URL}
       APP_NAME: ${APP_NAME:-}
       AI_HOSTS: ${AI_HOSTS:-}
+      AKTO_TAGS: ${AKTO_TAGS:-}
     volumes:
       - ./mitmproxy-data:/home/mitmproxy/.mitmproxy
 ```
@@ -154,7 +157,7 @@ Confirm the proxy is intercepting traffic by checking its logs:
 docker logs -f akto-egress-proxy
 ```
 
-You should see `[AKTO] URL: <your-akto-url>/api/http-proxy` and `[AKTO] AI hosts: [...]` on startup, and `evaluating request` / `evaluating response` log lines when your agent makes LLM calls.
+You should see `[AKTO] URL: <your-akto-url>/api/http-proxy`, `[AKTO] AI hosts: [...]` and `[AKTO] tags: {...}` on startup, and `evaluating request` / `evaluating response` log lines when your agent makes LLM calls.
 {% endstep %}
 {% endstepper %}
 
@@ -202,7 +205,7 @@ kubectl -n $NS create configmap akto-egress-ca-cert --from-file=mitmproxy-ca-cer
 {% step %}
 ### Add the proxy sidecar to your Deployment
 
-Add the two init containers, the agent environment variables, and the volumes to your agent's Deployment. Replace `your-agent`, `your-ai-agent:latest`, `AKTO_URL` and `APP_NAME` with your own values:
+Add the two init containers, the agent environment variables, and the volumes to your agent's Deployment. Replace `your-agent`, `your-ai-agent:latest`, `AKTO_URL`, `APP_NAME` and `AKTO_TAGS` with your own values:
 
 ```yaml
 apiVersion: apps/v1
@@ -251,6 +254,8 @@ spec:
               value: my-ai-agent
             - name: AI_HOSTS
               value: ""
+            - name: AKTO_TAGS
+              value: env=prod,team=payments
           volumeMounts:
             # mitmproxy writes mitmproxy-dhparam.pem here, so it must be writable.
             - name: mitmproxy-confdir
@@ -316,7 +321,7 @@ Check the proxy's logs:
 kubectl -n $NS logs -f deploy/your-agent -c akto-egress-proxy
 ```
 
-You should see `[AKTO] URL: <your-akto-url>/api/http-proxy` on startup, and `evaluating request` / `evaluating response` when your agent makes LLM calls. A request blocked by a guardrail shows `<< 403 Forbidden`, and the agent receives a `403` response.
+You should see `[AKTO] URL: <your-akto-url>/api/http-proxy` and `[AKTO] tags: {...}` on startup, and `evaluating request` / `evaluating response` when your agent makes LLM calls. A request blocked by a guardrail shows `<< 403 Forbidden`, and the agent receives a `403` response.
 
 To check the agent's own output:
 
@@ -388,7 +393,7 @@ Policies are scoped per app using the `APP_NAME` identifier set in your environm
 
 ## Monitoring
 
-All intercepted traffic is ingested into Akto (`ingest_data=true`) and visible in the dashboard under your `APP_NAME`:
+All intercepted traffic is ingested into Akto (`ingest_data=true`) and visible in the dashboard under your `APP_NAME`, tagged with any `AKTO_TAGS` you set:
 
 * [Guardrail Activity](https://github.com/akto-api-security/Documentation/blob/agentic_security/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/concepts/guardrail-activity.md) — view all guardrail events, decisions, and flagged payloads
 * [Guardrail Activity — Detailed View](https://github.com/akto-api-security/Documentation/blob/agentic_security/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/how-to/guardrail-activity-detailed-view.md) — inspect individual blocked or modified requests
