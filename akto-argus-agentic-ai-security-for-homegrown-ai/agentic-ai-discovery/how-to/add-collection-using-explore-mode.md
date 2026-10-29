@@ -29,3 +29,7 @@ Click the button at the top right to save the filtered components as a group.
 Go back to **Agentic AI Discovery** > **Collections** and open the **Groups** tab to find the new group.
 {% endstep %}
 {% endstepper %}
+
+{% hint style="info" %}
+For now, you can add components to a particular custom group.
+{% endhint %}
