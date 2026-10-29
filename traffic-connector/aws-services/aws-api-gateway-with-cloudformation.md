@@ -2,7 +2,7 @@
 
 AWS API Gateway is a fully managed service from AWS that helps developers create, publish, monitor, and secure APIs at scale. Akto reads your API Gateway execution logs through a read-only cross-account IAM role, created with CloudFormation or manually. The connector that reads those logs runs in one of two places:
 
-<table><thead><tr><th width="201.5">Setup</th><th>Description</th></tr></thead><tbody><tr><td><a href="#part-2-set-up-the-connector"><strong>Akto-hosted (default)</strong></a></td><td>Akto runs the connector. You grant access to your logs and share the role details with Akto.</td></tr><tr><td><a href="#part-2-set-up-the-connector"><strong>Self-hosted</strong></a></td><td>You run the connector in an AWS account of your choosing. Choose self-hosted to keep the connector inside your own environment, or to connect more than one AWS account through a single connector.</td></tr></tbody></table>
+<table><thead><tr><th width="201.5">Setup</th><th>Description</th></tr></thead><tbody><tr><td><a href="#part-2-set-up-the-connector"><strong>Self-hosted (Recommended)</strong></a></td><td>You run the connector in an AWS account of your choosing. Choose self-hosted to keep the connector inside your own environment, or to connect more than one AWS account through a single connector.</td></tr><tr><td><a href="#part-2-set-up-the-connector"><strong>Akto-hosted</strong></a></td><td>Akto runs the connector. You grant access to your logs and share the role details with Akto.</td></tr></tbody></table>
 
 ## Prerequisites
 
@@ -25,7 +25,7 @@ Akto reads the execution logs that API Gateway writes to CloudWatch. The steps i
 
 `ServiceAccountId` and `ExternalId` depend on who runs the connector.
 
-<table><thead><tr><th width="201.5">Value</th><th>Akto-hosted</th><th>Self-hosted</th></tr></thead><tbody><tr><td><code>ServiceAccountId</code></td><td>The AWS account ID provided by your Akto representative.</td><td>The AWS account ID where you deploy the central connector. Use the same account for every cross-account role. Part 2 deploys the connector stack in this account.</td></tr><tr><td><code>ExternalId</code></td><td>The External ID provided by your Akto representative.</td><td>A value you choose (16 or more characters). Use the same value for every cross-account role, and reuse it as <code>CrossAccountExternalId</code> in Part 2, Step 2.</td></tr><tr><td>Region</td><td>The region where your APIs run.</td><td>The region where you deploy the central connector. Every cross-account role uses this region, and Part 2, Step 2 deploys the connector stack in the same region.</td></tr></tbody></table>
+<table><thead><tr><th width="201.5">Value</th><th>Self-hosted</th><th>Akto-hosted</th></tr></thead><tbody><tr><td><code>ServiceAccountId</code></td><td>The AWS account ID where you deploy the central connector. Use the same account for every cross-account role. Part 2 deploys the connector stack in this account.</td><td>The AWS account ID provided by your Akto representative.</td></tr><tr><td><code>ExternalId</code></td><td>A value you choose (16 or more characters). Use the same value for every cross-account role, and reuse it as <code>CrossAccountExternalId</code> in Part 2, Step 2.</td><td>The External ID provided by your Akto representative.</td></tr><tr><td>Region</td><td>The region where you deploy the central connector. Every cross-account role uses this region, and Part 2, Step 2 deploys the connector stack in the same region.</td><td>The region where your APIs run.</td></tr></tbody></table>
 
 {% hint style="warning" %}
 The self-hosted connector reads each account's logs and specs only in the region where the connector is deployed. APIs in a different region need their own central connector there. Repeat Part 1 once per AWS account you connect.
@@ -33,12 +33,54 @@ The self-hosted connector reads each account's logs and specs only in the region
 
 ### Choose a setup method
 
-<table><thead><tr><th width="201.5">Method</th><th>Description</th></tr></thead><tbody><tr><td><strong>Option 1: Manual setup</strong></td><td>You enable logging on your stages, then create the cross-account role. Choose manual setup to review and control every change made in your account.</td></tr><tr><td><strong>Option 2: Automated setup</strong></td><td>A single CloudFormation stack enables logging and creates the role.</td></tr></tbody></table>
+<table><thead><tr><th width="201.5">Method</th><th>Description</th></tr></thead><tbody><tr><td><strong>Option 1: Automated setup (Recommended)</strong></td><td>A single CloudFormation stack enables logging and creates the role.</td></tr><tr><td><strong>Option 2: Manual setup</strong></td><td>You enable logging on your stages, then create the cross-account role. Choose manual setup to review and control every change made in your account.</td></tr></tbody></table>
 
 {% tabs %}
-{% tab title="Option 1: Manual setup" %}
+{% tab title="Option 1: Automated setup (Recommended)" %}
+A single stack enables execution logging on your stages, configures the account-level CloudWatch role if one isn't already set, and creates the cross-account role.
 
-### 1.1 Enable API Gateway logging
+{% stepper %}
+{% step %}
+Download [akto-cross-account-role.yml](https://raw.githubusercontent.com/akto-api-security/infra/feature/quick-setup/api-gateway-customer-onboarding/akto-cross-account-role.yml) and save the file.
+{% endstep %}
+
+{% step %}
+Go to **CloudFormation** in the AWS Console and click **Create stack** > **With new resources (standard)**.
+{% endstep %}
+
+{% step %}
+Choose **Upload a template file**, select the saved file, and click **Next**.
+{% endstep %}
+
+{% step %}
+Enter a stack name (e.g. `akto-api-gateway-connector`) and fill in the parameters:
+
+<table><thead><tr><th width="201.5">Parameter</th><th>Value</th></tr></thead><tbody><tr><td><code>ServiceAccountId</code></td><td>The AWS account ID that runs the connector. See <a href="#values-by-hosting-model">Values by hosting model</a>.</td></tr><tr><td><code>ExternalId</code></td><td>The External ID the role requires on every AssumeRole call. See <a href="#values-by-hosting-model">Values by hosting model</a>.</td></tr><tr><td><code>RestApiIds</code></td><td>Optional. Comma-separated REST API IDs to enable logging on. Leave blank to enable logging for all APIs.</td></tr><tr><td><code>Version</code></td><td>Leave as default.</td></tr></tbody></table>
+{% endstep %}
+
+{% step %}
+Click **Next**, check the box acknowledging IAM resource creation, and click **Submit**.
+{% endstep %}
+
+{% step %}
+Once the stack reaches **CREATE\_COMPLETE**, open the **Outputs** tab and copy the `RoleArn` value.
+{% endstep %}
+{% endstepper %}
+
+{% hint style="info" %}
+To pick up APIs or stages created later, update the stack with a new `Version` value (e.g. `1.0.1`). CloudFormation re-runs the setup only when a parameter changes.
+{% endhint %}
+
+{% hint style="warning" %}
+Deleting the stack does not disable logging or remove the CloudWatch role the stack created.
+{% endhint %}
+
+You now have a Role ARN and the region it covers. Continue to [Part 2: Set up the connector](#part-2-set-up-the-connector).
+{% endtab %}
+
+{% tab title="Option 2: Manual setup" %}
+
+### 2.1 Enable API Gateway logging
 
 Repeat the following steps for every stage you want Akto to monitor.
 
@@ -70,7 +112,7 @@ Akto reads these execution logs, which API Gateway writes to a log group named `
 If the account has not used API Gateway logging before, AWS also needs an account-level CloudWatch role. Check **API Gateway > Settings > CloudWatch log role ARN**. If the field is empty, create a role that API Gateway can assume with the `AmazonAPIGatewayPushToCloudWatchLogs` managed policy attached, and set the role ARN there.
 {% endhint %}
 
-### 1.2 Create the cross-account role
+### 2.2 Create the cross-account role
 
 Both methods produce the same role.
 
@@ -196,48 +238,6 @@ Open the role and copy its ARN.
 
 You now have a Role ARN and the region it covers. Continue to [Part 2: Set up the connector](#part-2-set-up-the-connector).
 {% endtab %}
-
-{% tab title="Option 2: Automated setup" %}
-A single stack enables execution logging on your stages, configures the account-level CloudWatch role if one isn't already set, and creates the cross-account role.
-
-{% stepper %}
-{% step %}
-Download [akto-cross-account-role.yml](https://raw.githubusercontent.com/akto-api-security/infra/feature/quick-setup/api-gateway-customer-onboarding/akto-cross-account-role.yml) and save the file.
-{% endstep %}
-
-{% step %}
-Go to **CloudFormation** in the AWS Console and click **Create stack** > **With new resources (standard)**.
-{% endstep %}
-
-{% step %}
-Choose **Upload a template file**, select the saved file, and click **Next**.
-{% endstep %}
-
-{% step %}
-Enter a stack name (e.g. `akto-api-gateway-connector`) and fill in the parameters:
-
-<table><thead><tr><th width="201.5">Parameter</th><th>Value</th></tr></thead><tbody><tr><td><code>ServiceAccountId</code></td><td>The AWS account ID that runs the connector. See <a href="#values-by-hosting-model">Values by hosting model</a>.</td></tr><tr><td><code>ExternalId</code></td><td>The External ID the role requires on every AssumeRole call. See <a href="#values-by-hosting-model">Values by hosting model</a>.</td></tr><tr><td><code>RestApiIds</code></td><td>Optional. comma-separated REST API IDs to enable logging on. Leave blank to enable logging for all APIs.</td></tr><tr><td><code>Version</code></td><td>Leave as default.</td></tr></tbody></table>
-{% endstep %}
-
-{% step %}
-Click **Next**, check the box acknowledging IAM resource creation, and click **Submit**.
-{% endstep %}
-
-{% step %}
-Once the stack reaches **CREATE\_COMPLETE**, open the **Outputs** tab and copy the `RoleArn` value.
-{% endstep %}
-{% endstepper %}
-
-{% hint style="info" %}
-To pick up APIs or stages created later, update the stack with a new `Version` value (e.g. `1.0.1`). CloudFormation re-runs the setup only when a parameter changes.
-{% endhint %}
-
-{% hint style="warning" %}
-Deleting the stack does not disable logging or remove the CloudWatch role the stack created.
-{% endhint %}
-
-You now have a Role ARN and the region it covers. Continue to [Part 2: Set up the connector](#part-2-set-up-the-connector).
-{% endtab %}
 {% endtabs %}
 
 ## Part 2: Set up the connector
@@ -245,15 +245,7 @@ You now have a Role ARN and the region it covers. Continue to [Part 2: Set up th
 Choose the tab that matches your hosting model.
 
 {% tabs %}
-{% tab title="Akto-hosted" %}
-Akto sets up the infrastructure that discovers and monitors your APIs. Send your Akto representative the following details for every account you connected in Part 1:
-
-<table><thead><tr><th width="201.5">Detail</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><strong>Role ARN</strong></td><td>The <code>RoleArn</code> copied in Part 1.</td><td><code>arn:aws:iam::123456789012:role/akto/AktoApiGatewayLoggingRole-us-east-2</code></td></tr><tr><td><strong>AWS region</strong></td><td>The region your APIs run in.</td><td><code>us-east-2</code></td></tr></tbody></table>
-
-Your AWS account is connected once Akto confirms the setup. Nothing further to deploy on your side.
-{% endtab %}
-
-{% tab title="Self-hosted" %}
+{% tab title="Self-hosted (Recommended)" %}
 A central connector is a single EC2 instance that assumes one cross-account role per AWS account you connect and reads from all of them. Deploy the connector once, in the central account.
 
 #### Step 1: Set up the Akto Traffic Processor
@@ -286,7 +278,7 @@ Choose **Upload a template file**, select the saved file, and click **Next**.
 {% step %}
 Name the stack and fill in the parameters:
 
-<table><thead><tr><th width="201.5">Parameter</th><th>Value</th></tr></thead><tbody><tr><td><code>VpcId</code>, <code>SubnetId</code></td><td>The VPC and subnet the connector instance should run in.</td></tr><tr><td><code>KeyPair</code></td><td>Optional. leave blank to use SSM only.</td></tr><tr><td><code>InstanceType</code></td><td>Defaults to <code>c5.large</code>.</td></tr><tr><td><code>AktoKafkaBrokerMal</code></td><td>The <code>AktoNLBIP</code> value from Step 1, including the port, e.g. <code>akto-N-.....amazonaws.com:9092</code>.</td></tr><tr><td><code>DatabaseAbstractorToken</code></td><td>From the Akto dashboard.</td></tr><tr><td><code>CrossAccountRoleArns</code></td><td>Comma-separated Role ARN(s), one per account you connected above. Deploy each role in the connector's region.</td></tr><tr><td><code>CrossAccountExternalId</code></td><td>The same External ID used for every one of those roles.</td></tr><tr><td><code>LogGroupPrefix</code></td><td>Optional. leave at the default unless your API Gateway logs use a custom log group name.</td></tr></tbody></table>
+<table><thead><tr><th width="201.5">Parameter</th><th>Value</th></tr></thead><tbody><tr><td><code>VpcId</code>, <code>SubnetId</code></td><td>The VPC and subnet the connector instance should run in.</td></tr><tr><td><code>KeyPair</code></td><td>Optional. Leave blank to use SSM only.</td></tr><tr><td><code>InstanceType</code></td><td>Defaults to <code>c5.large</code>.</td></tr><tr><td><code>AktoKafkaBrokerMal</code></td><td>The <code>AktoNLBIP</code> value from Step 1, including the port, e.g. <code>akto-N-.....amazonaws.com:9092</code>.</td></tr><tr><td><code>DatabaseAbstractorToken</code></td><td>From the Akto dashboard.</td></tr><tr><td><code>CrossAccountRoleArns</code></td><td>Comma-separated Role ARN(s), one per account you connected above. Deploy each role in the connector's region.</td></tr><tr><td><code>CrossAccountExternalId</code></td><td>The same External ID used for every one of those roles.</td></tr><tr><td><code>LogGroupPrefix</code></td><td>Optional. Leave at the default unless your API Gateway logs use a custom log group name.</td></tr></tbody></table>
 {% endstep %}
 
 {% step %}
@@ -305,6 +297,14 @@ The `CrossAccountRoleArns` parameter only scopes which role ARNs the connector i
 #### Step 3: Add the role ARNs in the Akto dashboard
 
 Add the same Role ARN(s) under the AWS Role ARNs setting in your Akto dashboard for this account. The dashboard list, not the CloudFormation parameter, tells the connector which accounts to monitor. Without the list, the connector stays up but reads no logs.
+{% endtab %}
+
+{% tab title="Akto-hosted" %}
+Akto sets up the infrastructure that discovers and monitors your APIs. Send your Akto representative the following details for every account you connected in Part 1:
+
+<table><thead><tr><th width="201.5">Detail</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><strong>Role ARN</strong></td><td>The <code>RoleArn</code> copied in Part 1.</td><td><code>arn:aws:iam::123456789012:role/akto/AktoApiGatewayLoggingRole-us-east-2</code></td></tr><tr><td><strong>AWS region</strong></td><td>The region your APIs run in.</td><td><code>us-east-2</code></td></tr></tbody></table>
+
+Your AWS account is connected once Akto confirms the setup. Nothing further to deploy on your side.
 {% endtab %}
 {% endtabs %}
 
