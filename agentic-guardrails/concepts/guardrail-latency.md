@@ -41,6 +41,7 @@ As a rough guide, each prompt below was measured over 100 sequential requests:
 | Redacted values | p50 | p95 |
 | --- | --- | --- |
 | 1 | 116 ms | 127 ms |
+| 5 | 330 ms | 411 ms |
 | 14 | 1,056 ms | 1,089 ms |
 
 Prompts with more redacted values take longer.
