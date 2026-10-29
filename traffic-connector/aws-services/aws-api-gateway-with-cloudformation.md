@@ -5,8 +5,6 @@ AWS API Gateway is a fully managed service from AWS that helps developers create
 * **Akto-hosted (default)**: Akto runs the connector. You grant access to your logs and share the role details with Akto.
 * **Self-hosted**: you run the connector in an AWS account of your choosing. Choose self-hosted to keep the connector inside your own environment, or to connect more than one AWS account through a single connector.
 
-***
-
 ## Prerequisites
 
 * One or more REST APIs deployed in AWS API Gateway.
@@ -15,8 +13,6 @@ AWS API Gateway is a fully managed service from AWS that helps developers create
 {% hint style="info" %}
 Complete every step in the AWS region where your APIs are deployed.
 {% endhint %}
-
-***
 
 ## Akto-hosted setup
 
@@ -237,8 +233,6 @@ Akto sets up the infrastructure that discovers and monitors your APIs. Send your
 
 Your AWS account is connected once Akto confirms the setup. Nothing further to deploy on your side.
 
-***
-
 ## Self-hosted setup
 
 You run the connector. A central connector is a single EC2 instance that assumes one cross-account role per AWS account you connect and reads from all of them.
@@ -314,8 +308,6 @@ The `CrossAccountRoleArns` parameter only scopes which role ARNs the connector i
 
 Add the same Role ARN(s) under the AWS Role ARNs setting in your Akto dashboard for this account. The dashboard list, not the CloudFormation parameter, tells the connector which accounts to monitor. Without the list, the connector stays up but reads no logs.
 
-***
-
 ## Setup notes
 
 1. Logging is enabled for REST APIs only. Akto discovers HTTP and WebSocket API specs, but does not monitor their traffic.
@@ -324,10 +316,6 @@ Add the same Role ARN(s) under the AWS Role ARNs setting in your Akto dashboard 
 4. Deleting the stack does not disable logging or remove the CloudWatch role it created.
 5. For the self-hosted central connector, a Role ARN is only monitored once the Role ARN is both in the `CrossAccountRoleArns` parameter and added in the Akto dashboard. The parameter alone controls only which roles the connector instance is allowed to assume.
 6. The self-hosted central connector is single-region: the connector reads only accounts whose cross-account role was deployed in the same region as the connector itself.
-
-***
-
-***
 
 ## Get Support for your Akto setup
 
