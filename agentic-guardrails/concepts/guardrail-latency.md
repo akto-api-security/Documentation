@@ -2,7 +2,7 @@
 
 ## Overview
 
-Akto guardrails check a request before it reaches your model or tool, so a blocking guardrail adds its evaluation time to every request. This page lists the measured latency of the Prompt Injection guardrail, explains what makes latency go up or down, and describes how to measure it in your own environment.
+Akto guardrails check a request before it reaches your model or tool, so a blocking guardrail adds its evaluation time to every request. This page lists the measured latency of the Prompt Injection guardrail and explains what makes latency go up or down.
 
 {% hint style="info" %}
 **Latency depends on the prompt.** Most benign prompts are cleared quickly. Prompts that look suspicious get a deeper check before Akto returns a verdict, so malicious traffic has a higher latency than benign traffic.
@@ -53,23 +53,6 @@ p95 stays under 120 ms for benign traffic and under 160 ms for malicious traffic
 | **Load per deployment** | Latency stays flat until a deployment nears its capacity. Past that point, requests queue and tail latency (p99) grows quickly. |
 | **Network** | Time between your application and the Akto guardrail endpoint is added on top of the figures above. Keep the guardrails close to your application, for example in the same region or cluster. |
 | **Repeated prompts** | A prompt Akto has recently checked can return faster. Use distinct prompts when you benchmark, otherwise the results look better than real traffic. |
-
-## Measure Latency in Your Environment
-
-Results depend on your traffic and infrastructure, so validate latency against your own deployment before you go to production:
-
-1. **Use production-like traffic.** Replay real traffic, or a representative sample of it, against the final deployed setup. Synthetic one-line prompts are shorter than real conversations and understate latency.
-2. **Test benign and malicious traffic separately.** They have different latency profiles, so report a p95 for each class.
-3. **Send traffic at a fixed rate.** Use an open-loop load generator so a slow response does not hold back the next request, and step the rate up until p95 or the error rate stops meeting your target.
-4. **Record the following** for each run:
-   * Test duration
-   * Sustained and peak requests per second
-   * Maximum and sustained concurrency
-   * p50, p95 and p99 latency
-   * Error rate
-   * Token throughput (tokens per second)
-5. **Measure network time separately.** Measure the round-trip time from your load generator to the guardrail endpoint. Subtract it from your results so you can tell guardrail time apart from network time.
-6. **Re-run after changes.** Repeat the test after any policy, guardrail or infrastructure change, and compare the results with your previous baseline.
 
 ## Related Pages
 
