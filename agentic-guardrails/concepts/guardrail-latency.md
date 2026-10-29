@@ -12,17 +12,6 @@ Akto guardrails check a request before it reaches your model or tool, so a block
 
 The numbers below come from a load test of the Prompt Injection guardrail running on a single self-hosted deployment.
 
-### Test Setup
-
-| Parameter | Value |
-| --- | --- |
-| Traffic | Replayed, production-like multi-turn conversations, about 2,300 tokens per request |
-| What is scanned | The latest user message of each request |
-| Load pattern | Open loop: requests are sent at a fixed rate whether or not earlier ones have finished |
-| Measurement window | 60 seconds per rate step |
-| Traffic classes | Benign and malicious, tested separately |
-| What is measured | Guardrail evaluation time on the server, including queueing. Network time between your application and Akto is not included. |
-
 ### Benign Traffic
 
 | Sustained load | p50 | p95 | p99 | Error rate | Token throughput |
