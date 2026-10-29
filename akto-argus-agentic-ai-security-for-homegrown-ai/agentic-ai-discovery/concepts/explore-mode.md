@@ -1,83 +1,100 @@
 ---
-description: Efficiently browse, filter, and organize agent components and MCP endpoints using Explore Mode.
+description: Browse and filter agent components and MCP endpoints in your inventory, and save the results as a collection.
 ---
 
 # Explore Mode
 
-Explore Mode allows users to efficiently browse and filter agent components and MCP endpoints from their existing inventory, and create collections based on the filtered results. It's a powerful tool for discovering and organizing your agentic systems.
+Explore Mode lets you browse and filter the agentic components in your inventory, then save the filtered results as a collection. You can use it to find specific components across hosts and to group them for targeted AI Red Teaming.
 
-## Key Features
+## Where to find Explore Mode
 
-### Filtering Agent Components
+In the Akto dashboard, go to **Agentic AI Discovery** > **Collections** and click **Explore mode** at the top right of the **Agentic Collections** page.
 
-Explore Mode provides several filtering options to help users narrow down their agent and MCP endpoint search:
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/explore-mode-entry-point.png" alt="Agentic Collections page with the Explore mode button highlighted at the top right" width="563"><figcaption>Click <strong>Explore mode</strong> on the <strong>Collections</strong> page to open it.</figcaption></figure></div>
 
-- **Collection**: Select from available agent or MCP collections
-- **Component Type**: Filter by Agent, MCP Server, Tool, Resource
-- **Endpoint**: Search for particular component endpoints
-- **Method**: Filter by HTTP method (GET, POST, etc.) or protocol type
-- **Path matches regex**: Use regular expressions to filter component paths
-- **Host name matches regex**: Filter by host names using regex
-- **Framework**: Filter by detected framework (LangChain, LlamaIndex, CrewAI, etc.)
-- **LLM Provider**: Filter by AI provider (OpenAI, Anthropic, Google, etc.)
+## Filtering agentic components
 
-### Viewing Results
+Explore Mode opens with the prompt **Select filters to see Agentic components** and shows no results until you run a search. Each filter is a condition in a row, and rows are combined with **AND**.
 
-After applying filters, the interface displays:
+{% stepper %}
+{% step %}
+Open the filter type dropdown, which shows **Agentic Component list** by default, and select the attribute to filter on.
 
-1. **Summary**: e.g., "Listing 45 agent components out of total 191 components"
-2. **Results Table** with the following information:
-   - Component type (Agent, MCP Server, Tool, etc.)
-   - Component path/endpoint
-   - Risk score
-   - Hostname
-   - Access Type (Private, Public, Third-party)
-   - Auth type (JWT, unauthenticated, custom headers)
-   - Sensitive params
-   - Framework detected
-   - Source location
-   - Last seen date
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/explore-mode-filter-options.png" alt="Explore Mode filter type dropdown listing Agentic Component list, Method, Path matches regex, Host name matches regex, Collection Tags, Agentic Component Tags, Auth Type, and Agentic Component Access Type" width="563"><figcaption>Select a filter type from the dropdown.</figcaption></figure></div>
+{% endstep %}
 
-## Use Cases
+{% step %}
+Set the filter value. For the default filter type, use **Select Agentic collection** to limit results to a collection, then **Select Agentic Component** to pick specific components.
+{% endstep %}
 
-### Discovering Shadow Agents
+{% step %}
+Click **Add condition** to add more filters. Click the trash icon to remove one condition, or **Clear all** to remove every condition.
+{% endstep %}
 
-Filter for components with:
-- No documentation
-- High risk scores
-- Recent discovery dates
-- No standard authentication
+{% step %}
+Click **Explore Agentic components** to run the search.
+{% endstep %}
+{% endstepper %}
 
-### Finding High-Risk MCP Servers
+### Available filter types
 
-Filter for MCP components with:
-- Public access type
-- Sensitive data handling
-- Write permissions
-- No authentication
+| Filter type | What it matches |
+| --- | --- |
+| **Agentic Component list** | Specific components, optionally within an Agentic collection |
+| **Method** | HTTP method of the component endpoint |
+| **Path matches regex** | Component paths that match a regular expression |
+| **Host name matches regex** | Host names that match a regular expression |
+| **Collection Tags** | Collections carrying the selected tag, for example `mcp-server=MCP Server` |
+| **Agentic Component Tags** | Components carrying the selected tags |
+| **Auth Type** | Authentication type of the component |
+| **Agentic Component Access Type** | Access type of the component |
 
-### Organizing by Framework
+## Reading the results
 
-Create collections for specific agent frameworks:
-- All LangChain agents
-- All LlamaIndex query engines
-- All CrewAI multi-agent systems
+After you click **Explore Agentic components**, the page shows **Listing total N Agentic components** and a results table.
 
-### Compliance Auditing
+<div data-with-frame="true"><figure><img src="../../../.gitbook/assets/explore-mode-filtered-results.png" alt="Explore Mode with a Collection Tags condition applied, showing 171 Agentic components in a results table and the save button at the top right" width="563"><figcaption>Review the filtered components, then click the button at the top right to save them as a group.</figcaption></figure></div>
 
-Filter for components that:
-- Handle PII or regulated data
-- Are publicly accessible
-- Lack proper authentication
-- Have elevated risk scores
+The table includes these columns:
 
-## Creating Collections from Explore Mode
+* **Agentic Components**: Component type (for example TOOL, RESOURCE) or HTTP method, with the component path
+* **Risk score**
+* **Issues**
+* **Hostname**
+* **Access Type**
+* **Auth type**
+* **Sensitive params**
 
-Once you've filtered your results, you can:
+### Quick views
 
-1. Click **Create Collection** from filtered results
-2. Name your collection descriptively
-3. The collection is created with all filtered components
-4. Use this collection for targeted AI Red Teaming
+Tabs above the table narrow the results to a category, each with a count:
 
-Explore Mode streamlines the process of discovering and organizing agent components within your inventory, enabling more efficient agentic system management and security workflows.
+* **All**
+* **New**
+* **Sensitive**
+* **High risk**
+* **No auth**
+* **Shadow**
+* **Zombie**
+
+## Use cases
+
+### Discovering shadow agents
+
+Open the **Shadow** tab, or add an **Auth Type** condition and click **Explore Agentic components**, to surface components that run outside standard authentication. For more on how Akto classifies them, see [Shadow agents](shadow-agents.md).
+
+### Finding unauthenticated or high-risk MCP servers
+
+Open the **No auth** or **High risk** tab, then add **Agentic Component Access Type** to focus on publicly reachable components.
+
+### Grouping components by host or path
+
+Add **Host name matches regex** or **Path matches regex** conditions to collect components that share a host or path pattern, such as every endpoint of one framework or service.
+
+### Reviewing stale components
+
+Open the **Zombie** tab to list components that are no longer in active use. For more detail, see [Zombie agents](zombie-agents.md).
+
+## Saving filtered results as a group
+
+Click the button at the top right of Explore Mode to save a group from the components in the filtered results. The group appears in the **Groups** tab on the **Collections** page. You can then select the group as a target for [AI Red Teaming](../../agentic-red-teaming/README.md). For the full procedure, see [Add collection using Explore Mode](../how-to/add-collection-using-explore-mode.md).
