@@ -131,8 +131,6 @@ You now have a Role ARN and the region it covers. See [Part 2](#part-2-deploy-th
 
 A single stack enables execution logging on your stages, configures the account-level CloudWatch role if one isn't already set, and creates the cross-account role.
 
-### Option A: AWS Console
-
 1. Download [akto-cross-account-role.yml](https://raw.githubusercontent.com/akto-api-security/infra/feature/quick-setup/api-gateway-customer-onboarding/akto-cross-account-role.yml) and save the file.
 2. Go to **CloudFormation** in the AWS Console and click **Create stack** > **With new resources (standard)**.
 3. Choose **Upload a template file**, select the saved file, and click **Next**.
@@ -144,33 +142,6 @@ A single stack enables execution logging on your stages, configures the account-
     * `Version` — leave as default.
 5. Click **Next**, check the box acknowledging IAM resource creation, and click **Submit**.
 6. Once the stack reaches **CREATE\_COMPLETE**, open the **Outputs** tab and copy the `RoleArn` value.
-
-### Option B: AWS CLI
-
-1.  Download the template:
-
-    ```sh
-    curl -o akto-cross-account-role.yml \
-      https://raw.githubusercontent.com/akto-api-security/infra/feature/quick-setup/api-gateway-customer-onboarding/akto-cross-account-role.yml
-    ```
-2.  Create the stack:
-
-    ```sh
-    aws cloudformation create-stack \
-      --stack-name akto-api-gateway-connector \
-      --template-body file://akto-cross-account-role.yml \
-      --parameters ParameterKey=ServiceAccountId,ParameterValue=<aws-account-id-given-by-akto> \
-                   ParameterKey=ExternalId,ParameterValue=<external-id-from-akto> \
-      --capabilities CAPABILITY_IAM
-    ```
-
-3.  Copy the `RoleArn` from the outputs:
-
-    ```sh
-    aws cloudformation describe-stacks \
-      --stack-name akto-api-gateway-connector \
-      --query 'Stacks[0].Outputs'
-    ```
 
 You now have a Role ARN and the region it covers. See [Part 2](#part-2-deploy-the-connector) to decide who reads them.
 
@@ -206,11 +177,9 @@ The connector sends data to a Kafka broker. Follow [CloudFormation template (v2)
 
 > Already have one running? Skip this, but deploy the connector in the same subnet as the Traffic Processor.
 
-#### Step 2: Deploy the connector stack
+#### Step 2: Deploy the Akto API Gateway Log Reader
 
-> Deploy this stack in the same AWS region as the cross-account roles above — switch regions using the selector in the top-right of the AWS Console, or pass `--region` to the CLI.
-
-**AWS Console**
+> Deploy this stack in the same AWS region as the cross-account roles above — switch regions using the selector in the top-right of the AWS Console.
 
 1. Download [api-gateway-connector-service-acc-setup.yml](https://raw.githubusercontent.com/akto-api-security/infra/feature/quick-setup/api-gateway-customer-onboarding/api-gateway-connector-service-acc-setup.yml) and save the file.
 2. Go to **CloudFormation** > **Create stack** > **With new resources (standard)**.
@@ -227,29 +196,6 @@ The connector sends data to a Kafka broker. Follow [CloudFormation template (v2)
     * `LogGroupPrefix` _(optional)_ — leave at the default unless your API Gateway logs use a custom log group name.
 5. Click **Next**, check the box acknowledging IAM resource creation, and click **Submit**.
 6. Once the stack reaches **CREATE\_COMPLETE**, open the **Outputs** tab.
-
-**AWS CLI**
-
-1.  Download the template:
-
-    ```sh
-    curl -o api-gateway-connector-service-acc-setup.yml \
-      https://raw.githubusercontent.com/akto-api-security/infra/feature/quick-setup/api-gateway-customer-onboarding/api-gateway-connector-service-acc-setup.yml
-    ```
-2.  Create the stack:
-
-    ```sh
-    aws cloudformation create-stack \
-      --stack-name akto-api-gateway-central-connector \
-      --template-body file://api-gateway-connector-service-acc-setup.yml \
-      --parameters ParameterKey=VpcId,ParameterValue=<vpc-id> \
-                   ParameterKey=SubnetId,ParameterValue=<subnet-id> \
-                   ParameterKey=AktoKafkaBrokerMal,ParameterValue=<akto-nlb-dns>:9092 \
-                   ParameterKey=DatabaseAbstractorToken,ParameterValue=<token-from-akto-dashboard> \
-                   ParameterKey=CrossAccountRoleArns,ParameterValue="<role-arn-1>,<role-arn-2>" \
-                   ParameterKey=CrossAccountExternalId,ParameterValue=<external-id> \
-      --capabilities CAPABILITY_IAM
-    ```
 
 > This only scopes which role ARNs the connector instance is _allowed_ to assume — it doesn't yet start monitoring them. That's Step 3.
 
