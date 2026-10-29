@@ -28,7 +28,7 @@ flowchart LR
 
 1. Your agent makes an LLM API call (e.g., `POST https://api.anthropic.com/v1/messages`)
 2. The call is transparently routed through the Egress Proxy via `HTTP_PROXY` / `HTTPS_PROXY`
-3. The proxy intercepts the request and sends the message payload to Akto's guardrails endpoint
+3. The proxy intercepts the request and sends the message payload to Akto's guardrails endpoint (`POST <AKTO_URL>/api/http-proxy`, see [How the proxy calls Akto](#how-the-proxy-calls-akto))
 4. Akto evaluates the prompt against configured guardrails:
    * **Blocked**: Proxy returns a `403` error immediately; the LLM is never called
    * **Modified**: Proxy rewrites the request body before forwarding
@@ -57,6 +57,7 @@ The proxy is published as a prebuilt image, `public.ecr.aws/aktosecurity/akto-eg
 ```bash
 export AKTO_URL=https://akto.example.com   # your Akto instance base URL
 export APP_NAME=my-ai-agent                # identifies your app in Akto guardrails
+export AKTO_TOKEN=<data-ingestion-token>   # required when data-ingestion authentication is on
 export AKTO_TAGS=env=prod,team=payments    # optional tags attached to traffic in Akto
 ```
 
@@ -64,6 +65,7 @@ export AKTO_TAGS=env=prod,team=payments    # optional tags attached to traffic i
 | ---------- | -------- | ----------------------------------------------------------------------------------------------------------- |
 | `AKTO_URL` | Yes      | Base URL of your Akto instance (e.g. `https://akto.example.com`). The proxy appends `/api/http-proxy`.      |
 | `APP_NAME` | Yes      | Name of your application. Sent as the `host` header to Akto so traffic is grouped per app in the dashboard. |
+| `AKTO_TOKEN` | When data-ingestion authentication is on | Token sent in the `Authorization` header on every call to Akto. Use the bare JWT, with no `Bearer ` prefix. See [Authentication](#authentication). |
 | `AI_HOSTS` | No       | Comma-separated hosts to intercept and run guardrails on. `*` matches any run of characters. See [Supported AI Providers](#supported-ai-providers) for the default list. |
 | `AKTO_TAGS` | No       | Comma-separated `key=value` pairs attached as tags to all traffic the proxy sends to Akto (e.g. `env=prod,team=payments`). The built-in `gen-ai` and `source` tags are always sent and cannot be overridden. Entries without `=` are ignored. |
 {% endstep %}
@@ -104,6 +106,7 @@ services:
     environment:
       AKTO_URL: ${AKTO_URL}
       APP_NAME: ${APP_NAME:-}
+      AKTO_TOKEN: ${AKTO_TOKEN:-}
       AI_HOSTS: ${AI_HOSTS:-}
       AKTO_TAGS: ${AKTO_TAGS:-}
     volumes:
@@ -117,9 +120,12 @@ services:
 Start the proxy on its own first. On first run, it generates its CA certificate at `./mitmproxy-data/mitmproxy-ca-cert.pem`:
 
 ```bash
+docker compose pull akto-egress-proxy
 docker compose up -d akto-egress-proxy
 ls ./mitmproxy-data/mitmproxy-ca-cert.pem
 ```
+
+`docker compose pull` makes sure you run the current `latest` image. A cached image from before the proxy sent `POST` and `AKTO_TOKEN` fails behind CloudFront (see [Troubleshooting](#troubleshooting)).
 
 {% hint style="warning" %}
 Start the proxy before your agent. If the agent starts first, the cert file doesn't exist yet, so Docker creates an empty directory at that path and the agent can't trust the proxy. If this happens, run `docker compose down`, delete `./mitmproxy-data`, and start again from this step.
@@ -158,6 +164,8 @@ docker logs -f akto-egress-proxy
 ```
 
 You should see `[AKTO] URL: <your-akto-url>/api/http-proxy`, `[AKTO] AI hosts: [...]` and `[AKTO] tags: {...}` on startup, and `evaluating request` / `evaluating response` log lines when your agent makes LLM calls.
+
+If a line `[AKTO] request guardrails call failed, allowing request: <error>` follows, the proxy could not reach Akto and let the call through without guardrails. See [Troubleshooting](#troubleshooting).
 {% endstep %}
 {% endstepper %}
 
@@ -196,16 +204,23 @@ kubectl -n $NS create secret generic akto-egress-ca --from-file=mitmproxy-ca.pem
 kubectl -n $NS create configmap akto-egress-ca-cert --from-file=mitmproxy-ca-cert.pem=ca.crt
 ```
 
+If data-ingestion authentication is on, also store the token:
+
+```bash
+kubectl -n $NS create secret generic akto-egress-token --from-literal=token=<data-ingestion-token>
+```
+
 | Resource              | Contains                       | Mounted into               |
 | --------------------- | ------------------------------ | -------------------------- |
 | `akto-egress-ca`      | CA private key and certificate | Proxy only                 |
 | `akto-egress-ca-cert` | Public CA certificate          | `ca-bundle` init container |
+| `akto-egress-token`   | Data-ingestion token (optional) | Proxy only                |
 {% endstep %}
 
 {% step %}
 ### Add the proxy sidecar to your Deployment
 
-Add the two init containers, the agent environment variables, and the volumes to your agent's Deployment. Replace `your-agent`, `your-ai-agent:latest`, `AKTO_URL`, `APP_NAME` and `AKTO_TAGS` with your own values. The proxy variables are described in [Set environment variables](#set-environment-variables); `AI_HOSTS` and `AKTO_TAGS` are optional and can be left empty:
+Add the two init containers, the agent environment variables, and the volumes to your agent's Deployment. Replace `your-agent`, `your-ai-agent:latest`, `AKTO_URL`, `APP_NAME` and `AKTO_TAGS` with your own values. The proxy variables are described in [Set environment variables](#set-environment-variables); `AI_HOSTS` and `AKTO_TAGS` are optional and can be left empty. If data-ingestion authentication is off, remove the `AKTO_TOKEN` entry:
 
 ```yaml
 apiVersion: apps/v1
@@ -236,6 +251,7 @@ spec:
         # Native sidecar: starts before the agent and keeps running.
         - name: akto-egress-proxy
           image: public.ecr.aws/aktosecurity/akto-egress-proxy:latest
+          imagePullPolicy: Always
           restartPolicy: Always
           args:
             - mitmdump
@@ -252,6 +268,11 @@ spec:
               value: https://akto.example.com
             - name: APP_NAME
               value: my-ai-agent
+            - name: AKTO_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: akto-egress-token
+                  key: token
             - name: AI_HOSTS
               value: ""
             - name: AKTO_TAGS
@@ -321,7 +342,7 @@ Check the proxy's logs:
 kubectl -n $NS logs -f deploy/your-agent -c akto-egress-proxy
 ```
 
-You should see `[AKTO] URL: <your-akto-url>/api/http-proxy` and `[AKTO] tags: {...}` on startup, and `evaluating request` / `evaluating response` when your agent makes LLM calls. A request blocked by a guardrail shows `<< 403 Forbidden`, and the agent receives a `403` response.
+You should see `[AKTO] URL: <your-akto-url>/api/http-proxy` and `[AKTO] tags: {...}` on startup, and `evaluating request` / `evaluating response` when your agent makes LLM calls. A request blocked by a guardrail shows `<< 403 Forbidden`, and the agent receives a `403` response. A `[AKTO] ... guardrails call failed` line means the proxy could not reach Akto; see [Troubleshooting](#troubleshooting).
 
 To check the agent's own output:
 
@@ -380,6 +401,73 @@ The proxy evaluates both the outbound request (prompt sent to the LLM) and the i
 | `Allowed: true`                        | Request or response forwarded unchanged                                                                                                   |
 | `Modified: true`                       | Payload replaced with `ModifiedPayload` before forwarding                                                                                 |
 | `Allowed: false` or `behaviour: block` | Returns `403` with `{"error": "<reason>"}` and header `X-Akto-Guardrails-Decision: blocked`; the LLM is never called on a blocked request |
+
+## How the proxy calls Akto
+
+For every intercepted AI call, the proxy makes two calls to Akto: one before forwarding the request to the provider, and one after the provider responds.
+
+| Call     | Method and URL                                                             |
+| -------- | -------------------------------------------------------------------------- |
+| Request  | `POST <AKTO_URL>/api/http-proxy?guardrails=true&ingest_data=true`          |
+| Response | `POST <AKTO_URL>/api/http-proxy?response_guardrails=true&ingest_data=true` |
+
+Each call sends these headers:
+
+| Header          | Value                                                        |
+| --------------- | ------------------------------------------------------------ |
+| `Content-Type`  | `application/json`                                           |
+| `Authorization` | The value of `AKTO_TOKEN`. Not sent if `AKTO_TOKEN` is empty |
+
+The body is JSON. The main fields are:
+
+| Field | Value |
+| ----- | ----- |
+| `path`, `method` | Path and method of the call to the AI provider |
+| `requestHeaders` | Only the provider request's `content-type`, plus `host` set to `APP_NAME`. Provider API keys and other request headers are never sent to Akto |
+| `requestPayload` | `{"messages": [...]}` from the provider request body, or `{"raw": <body>}` when there is no `messages` field |
+| `responseHeaders`, `responsePayload`, `statusCode` | Provider response headers, body and status. Empty on the request call |
+| `ip` | First entry of the agent's `X-Forwarded-For` header if present, otherwise the agent's connection IP. The proxy removes `X-Forwarded-For` before forwarding to the provider |
+| `destIp` | IP address of the AI provider |
+| `akto_account_id`, `akto_vxlan_id` | `1000000` and `0` |
+| `contextSource`, `tag` | `AGENTIC`, marking the traffic as Gen AI |
+
+Each call times out after 15 seconds.
+
+{% hint style="warning" %}
+**CloudFront, WAFs and load balancers in front of Akto**
+
+Whatever sits in front of data-ingestion must allow `POST` with a JSON body on `/api/http-proxy` and pass the `Authorization` header through unchanged. On CloudFront, the allowed methods must include `POST`, and the origin request policy must forward `Authorization`.
+{% endhint %}
+
+### Authentication
+
+When data-ingestion runs with authentication on (`dataIngestion.env.authenticate: "true"` in the `akto-regional-setup` Helm chart, or `AKTO_DI_AUTHENTICATE=true` on the service), every call without a valid token returns `401`. Set `AKTO_TOKEN` on the proxy:
+
+* **Which token**: the database-abstractor token of your Akto account, the same JWT your regional setup stores under `databaseAbstractorToken` in its key-vault secret. The token must be for the account data-ingestion serves; a token for another account returns `401`.
+* **Format**: the bare JWT, for example `eyJhbGciOi...`. Do not add a `Bearer ` prefix. Data-ingestion reads the header as-is, so `Bearer eyJ...` returns `401`.
+
+When authentication is off, leave `AKTO_TOKEN` unset.
+
+### When Akto is unreachable
+
+The proxy **fails open**. If the call to Akto fails (network error, timeout, or a non-2xx status such as `401` or `403`), the proxy forwards the AI call unchanged, without guardrails or ingestion, and logs:
+
+```
+[AKTO] request guardrails call failed, allowing request: <error>
+[AKTO] response guardrails call failed, allowing response: <error>
+```
+
+The agent never sees these errors, so check the proxy logs when traffic does not show up in Akto.
+
+## Troubleshooting
+
+| Symptom | Cause | Fix |
+| ------- | ----- | --- |
+| Proxy logs `guardrails call failed, allowing request: 403 Client Error ...` | An older proxy image sent guardrail calls as `GET` with a body, which CloudFront rejects. Or CloudFront does not allow `POST` | Pull the latest image (`docker compose pull`, or `imagePullPolicy: Always` on Kubernetes). Allow `POST` on CloudFront |
+| Proxy logs `guardrails call failed, allowing request: 401 Client Error ...` | Authentication is on and `AKTO_TOKEN` is missing, has a `Bearer ` prefix, is for another account, or was revoked | Set `AKTO_TOKEN` to the bare database-abstractor JWT for your account |
+| Proxy logs `guardrails call failed, allowing request: ... Read timed out` | Akto did not answer within 15 seconds | Check that data-ingestion and guardrails are healthy and reachable from the proxy |
+| No `evaluating request` lines | The host is not intercepted | Add it to both `AI_HOSTS` and `--ignore-hosts` (see [Supported AI Providers](#supported-ai-providers)) |
+| Agent fails with `CERTIFICATE_VERIFY_FAILED` | The agent does not trust the proxy CA | See the CA certificate notes under [Start your agent](#start-your-agent) or [Deploy on Kubernetes](#deploy-on-kubernetes) |
 
 ## Guardrail Configuration
 
