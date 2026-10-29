@@ -2,7 +2,7 @@
 
 ## Overview
 
-Akto guardrails check a request before it reaches your model or tool, so a blocking guardrail adds its evaluation time to every request. This page lists the measured latency of the Prompt Injection guardrail and explains what makes latency go up or down.
+Akto guardrails check a request before it reaches your model or tool, so a blocking guardrail adds its evaluation time to every request. This page lists measured guardrail latency and explains what makes latency go up or down.
 
 {% hint style="info" %}
 **Latency depends on the prompt.** Most benign prompts are cleared quickly. Prompts that look suspicious get a deeper check before Akto returns a verdict, so malicious traffic has a higher latency than benign traffic.
@@ -10,7 +10,7 @@ Akto guardrails check a request before it reaches your model or tool, so a block
 
 ## Measured Latency
 
-The numbers below come from a load test of the Prompt Injection guardrail running on a single self-hosted deployment.
+The numbers below come from a load test of Akto guardrails running on a single self-hosted deployment.
 
 ### Benign Traffic
 
