@@ -14,21 +14,21 @@ The numbers below come from a load test of Akto guardrails running on a single s
 
 ### Benign Traffic
 
-| Sustained load | p50 | p95 | Error rate | Token throughput |
-| --- | --- | --- | --- | --- |
-| 15 req/s | 18 ms | 92 ms | 0% | 34,800 tokens/s |
-| 30 req/s | 24 ms | 76 ms | 0% | 67,300 tokens/s |
-| 40 req/s | 29 ms | 79 ms | 0.04% | 91,900 tokens/s |
-| 50 req/s | 25 ms | 91 ms | 0% | 113,400 tokens/s |
-| 60 req/s | 27 ms | 118 ms | 0% | 137,400 tokens/s |
+| Sustained load | p50 | p95 | Token throughput |
+| --- | --- | --- | --- |
+| 15 req/s | 18 ms | 92 ms | 34,800 tokens/s |
+| 30 req/s | 24 ms | 76 ms | 67,300 tokens/s |
+| 40 req/s | 29 ms | 79 ms | 91,900 tokens/s |
+| 50 req/s | 25 ms | 91 ms | 113,400 tokens/s |
+| 60 req/s | 27 ms | 118 ms | 137,400 tokens/s |
 
 ### Malicious Traffic
 
-| Sustained load | p50 | p95 | Error rate | Token throughput |
-| --- | --- | --- | --- | --- |
-| 15 req/s | 66 ms | 144 ms | 0% | 34,300 tokens/s |
-| 30 req/s | 64 ms | 147 ms | 0% | 67,600 tokens/s |
-| 45 req/s | 71 ms | 154 ms | 0% | 102,800 tokens/s |
+| Sustained load | p50 | p95 | Token throughput |
+| --- | --- | --- | --- |
+| 15 req/s | 66 ms | 144 ms | 34,300 tokens/s |
+| 30 req/s | 64 ms | 147 ms | 67,600 tokens/s |
+| 45 req/s | 71 ms | 154 ms | 102,800 tokens/s |
 
 p95 stays under 120 ms for benign traffic and under 160 ms for malicious traffic across the tested range. The p95 for benign traffic starts to rise at 60 req/s, which shows a single deployment is nearing its capacity. To serve more traffic at the same latency, add more deployments.
 
