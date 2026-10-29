@@ -2,8 +2,8 @@
 
 AWS API Gateway is a fully managed service from AWS that helps developers create, publish, monitor, and secure APIs at scale. Akto reads your API Gateway execution logs through a read-only cross-account IAM role, created with CloudFormation or manually. The connector that reads those logs runs in one of two places:
 
-* **Akto-hosted (default)**: Akto runs the connector. You grant access to your logs and share the role details with Akto.
-* **Self-hosted**: you run the connector in an AWS account of your choosing. Choose self-hosted to keep the connector inside your own environment, or to connect more than one AWS account through a single connector.
+* [**Akto-hosted (default)**](#akto-hosted-setup): Akto runs the connector. You grant access to your logs and share the role details with Akto.
+* [**Self-hosted**](#self-hosted-setup): you run the connector in an AWS account of your choosing. Choose self-hosted to keep the connector inside your own environment, or to connect more than one AWS account through a single connector.
 
 ## Prerequisites
 
