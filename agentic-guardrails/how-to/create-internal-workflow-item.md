@@ -10,7 +10,7 @@ When you review a guardrail activity in Akto, you may need to involve internal t
 
 Before creating Jira tickets from Akto, ensure that your Jira account is integrated with Akto.
 
-If not yet configured, complete the setup here: **Set up Jira Integration**
+If not yet configured, complete the setup here: [**Set up Jira Integration**](../../integrations/jira-integration.md)
 
 ### **Steps**
 
@@ -44,7 +44,7 @@ If your team uses internal workflows within Akto, you can log and assign tasks u
 
 ### **Prerequisite**
 
-Before creating Jira tickets from Akto, ensure that your Azure DevOps Board is integrated with Akto. Follow for [**Integrations Setup**](../../integrations/azure-devops-boards-integration.md)
+Before creating work items from Akto, ensure that your Azure DevOps Board is integrated with Akto. Follow for [**Integrations Setup**](../../integrations/azure-devops-boards-integration.md)
 
 ### **Steps**
 

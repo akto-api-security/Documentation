@@ -28,7 +28,7 @@ Shows the trend of messages classified as **flagged** versus **safe** over time,
 
 ### 5. Guardrail Detection Latency
 
-Displays the **95th percentile detection latency** for guardrail evaluation. It represents the upper bound of guardrail processing time experienced by most requests.
+Displays the **95th percentile detection latency** for guardrail evaluation. 95% of requests are evaluated at or below this time.
 
 ## Guardrail Activity List
 

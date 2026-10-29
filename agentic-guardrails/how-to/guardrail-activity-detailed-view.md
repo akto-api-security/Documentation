@@ -33,7 +33,7 @@ Use filters to quickly narrow down relevant guardrail activities. The search box
 
 ## Detailed View
 
-The detailed view provides complete context required for investigation and remediation. The page displays severity along with all relevant metadata and is organised into three tabs:
+The detailed view provides complete context required for investigation and remediation. The page displays severity along with all relevant metadata and is organised into five tabs:
 
 {% tabs %}
 {% tab title="Overview" %}

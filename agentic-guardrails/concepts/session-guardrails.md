@@ -95,6 +95,6 @@ If you want session-based guardrails enabled for your agents, please contact the
 
 ## Related Concepts
 
-- [Agent Guard](agent-guard.md) — Complete reference of all guardrail types and their capabilities
-- [Guardrail Activity](guardrail-activity.md) — Monitoring and analyzing guardrail detections across sessions
-- [Create Guardrail Policies](../how-to/create-guardrail-policies.md) — Learn how to configure and deploy guardrail policies for your agents
+- [Agent Guard](agent-guard.md): Complete reference of all guardrail types and their capabilities
+- [Guardrail Activity](guardrail-activity.md): Monitoring and analyzing guardrail detections across sessions
+- [Create Guardrail Policies](../how-to/create-guardrail-policies.md): Learn how to configure and deploy guardrail policies for your agents

@@ -58,6 +58,7 @@ The proxy is published as a prebuilt image, `public.ecr.aws/aktosecurity/akto-eg
 export AKTO_URL=https://akto.example.com   # your Akto instance base URL
 export APP_NAME=my-ai-agent                # identifies your app in Akto guardrails
 export AKTO_TOKEN=<data-ingestion-token>   # required when data-ingestion authentication is on
+export AKTO_TAGS=env=prod,team=payments    # optional tags attached to traffic in Akto
 ```
 
 | Variable   | Required | Description                                                                                                 |
@@ -66,6 +67,7 @@ export AKTO_TOKEN=<data-ingestion-token>   # required when data-ingestion authen
 | `APP_NAME` | Yes      | Name of your application. Sent as the `host` header to Akto so traffic is grouped per app in the dashboard. |
 | `AKTO_TOKEN` | When data-ingestion authentication is on | Token sent in the `Authorization` header on every call to Akto. Use the bare JWT, with no `Bearer ` prefix. See [Authentication](#authentication). |
 | `AI_HOSTS` | No       | Comma-separated hosts to intercept and run guardrails on. `*` matches any run of characters. See [Supported AI Providers](#supported-ai-providers) for the default list. |
+| `AKTO_TAGS` | No       | Comma-separated `key=value` pairs attached as tags to all traffic the proxy sends to Akto (e.g. `env=prod,team=payments`). The built-in `gen-ai` and `source` tags are always sent and cannot be overridden. Entries without `=` are ignored. |
 {% endstep %}
 
 {% step %}
@@ -106,6 +108,7 @@ services:
       APP_NAME: ${APP_NAME:-}
       AKTO_TOKEN: ${AKTO_TOKEN:-}
       AI_HOSTS: ${AI_HOSTS:-}
+      AKTO_TAGS: ${AKTO_TAGS:-}
     volumes:
       - ./mitmproxy-data:/home/mitmproxy/.mitmproxy
 ```
@@ -160,7 +163,7 @@ Confirm the proxy is intercepting traffic by checking its logs:
 docker logs -f akto-egress-proxy
 ```
 
-You should see `[AKTO] URL: <your-akto-url>/api/http-proxy` and `[AKTO] AI hosts: [...]` on startup, and `evaluating request` / `evaluating response` log lines when your agent makes LLM calls.
+You should see `[AKTO] URL: <your-akto-url>/api/http-proxy`, `[AKTO] AI hosts: [...]` and `[AKTO] tags: {...}` on startup, and `evaluating request` / `evaluating response` log lines when your agent makes LLM calls.
 
 If a line `[AKTO] request guardrails call failed, allowing request: <error>` follows, the proxy could not reach Akto and let the call through without guardrails. See [Troubleshooting](#troubleshooting).
 {% endstep %}
@@ -217,7 +220,7 @@ kubectl -n $NS create secret generic akto-egress-token --from-literal=token=<dat
 {% step %}
 ### Add the proxy sidecar to your Deployment
 
-Add the two init containers, the agent environment variables, and the volumes to your agent's Deployment. Replace `your-agent`, `your-ai-agent:latest`, `AKTO_URL` and `APP_NAME` with your own values. If data-ingestion authentication is off, remove the `AKTO_TOKEN` entry:
+Add the two init containers, the agent environment variables, and the volumes to your agent's Deployment. Replace `your-agent`, `your-ai-agent:latest`, `AKTO_URL`, `APP_NAME` and `AKTO_TAGS` with your own values. The proxy variables are described in [Set environment variables](#set-environment-variables); `AI_HOSTS` and `AKTO_TAGS` are optional and can be left empty. If data-ingestion authentication is off, remove the `AKTO_TOKEN` entry:
 
 ```yaml
 apiVersion: apps/v1
@@ -272,6 +275,8 @@ spec:
                   key: token
             - name: AI_HOSTS
               value: ""
+            - name: AKTO_TAGS
+              value: env=prod,team=payments
           volumeMounts:
             # mitmproxy writes mitmproxy-dhparam.pem here, so it must be writable.
             - name: mitmproxy-confdir
@@ -337,7 +342,7 @@ Check the proxy's logs:
 kubectl -n $NS logs -f deploy/your-agent -c akto-egress-proxy
 ```
 
-You should see `[AKTO] URL: <your-akto-url>/api/http-proxy` on startup, and `evaluating request` / `evaluating response` when your agent makes LLM calls. A request blocked by a guardrail shows `<< 403 Forbidden`, and the agent receives a `403` response. A `[AKTO] ... guardrails call failed` line means the proxy could not reach Akto; see [Troubleshooting](#troubleshooting).
+You should see `[AKTO] URL: <your-akto-url>/api/http-proxy` and `[AKTO] tags: {...}` on startup, and `evaluating request` / `evaluating response` when your agent makes LLM calls. A request blocked by a guardrail shows `<< 403 Forbidden`, and the agent receives a `403` response. A `[AKTO] ... guardrails call failed` line means the proxy could not reach Akto; see [Troubleshooting](#troubleshooting).
 
 To check the agent's own output:
 
@@ -476,7 +481,7 @@ Policies are scoped per app using the `APP_NAME` identifier set in your environm
 
 ## Monitoring
 
-All intercepted traffic is ingested into Akto (`ingest_data=true`) and visible in the dashboard under your `APP_NAME`:
+All intercepted traffic is ingested into Akto (`ingest_data=true`) and visible in the dashboard under your `APP_NAME`, tagged with any `AKTO_TAGS` you set:
 
 * [Guardrail Activity](https://github.com/akto-api-security/Documentation/blob/agentic_security/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/concepts/guardrail-activity.md) — view all guardrail events, decisions, and flagged payloads
 * [Guardrail Activity — Detailed View](https://github.com/akto-api-security/Documentation/blob/agentic_security/akto-argus-agentic-ai-security-for-homegrown-ai/connectors/how-to/guardrail-activity-detailed-view.md) — inspect individual blocked or modified requests
