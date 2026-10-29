@@ -16,21 +16,21 @@ The numbers below come from a load test of Akto guardrails running on a single s
 
 | Sustained load | p50 | p95 | Token throughput |
 | --- | --- | --- | --- |
-| 15 req/s | 18 ms | 92 ms | 34,800 tokens/s |
-| 30 req/s | 24 ms | 76 ms | 67,300 tokens/s |
-| 40 req/s | 29 ms | 79 ms | 91,900 tokens/s |
-| 50 req/s | 25 ms | 91 ms | 113,400 tokens/s |
-| 60 req/s | 27 ms | 118 ms | 137,400 tokens/s |
+| 15 req/s | 18 ms | 140 ms | 34,800 tokens/s |
+| 30 req/s | 24 ms | 157 ms | 67,300 tokens/s |
+| 40 req/s | 29 ms | 134 ms | 91,900 tokens/s |
+| 50 req/s | 25 ms | 297 ms | 113,400 tokens/s |
+| 60 req/s | 27 ms | 488 ms | 137,400 tokens/s |
 
 ### Malicious Traffic
 
 | Sustained load | p50 | p95 | Token throughput |
 | --- | --- | --- | --- |
-| 15 req/s | 66 ms | 144 ms | 34,300 tokens/s |
-| 30 req/s | 64 ms | 147 ms | 67,600 tokens/s |
-| 45 req/s | 71 ms | 154 ms | 102,800 tokens/s |
+| 15 req/s | 66 ms | 282 ms | 34,300 tokens/s |
+| 30 req/s | 64 ms | 216 ms | 67,600 tokens/s |
+| 45 req/s | 71 ms | 299 ms | 102,800 tokens/s |
 
-p95 stays under 120 ms for benign traffic and under 160 ms for malicious traffic across the tested range. The p95 for benign traffic starts to rise at 60 req/s, which shows a single deployment is nearing its capacity. To serve more traffic at the same latency, add more deployments.
+p95 stays under 160 ms for benign traffic up to 40 req/s and under 300 ms for malicious traffic across the tested range. The p95 for benign traffic starts to rise at 50 req/s and above, which shows a single deployment is nearing its capacity. To serve more traffic at the same latency, add more deployments.
 
 ### PII Redaction
 
@@ -40,7 +40,7 @@ As a rough guide, a prompt with one redacted value (a person's name) measured ov
 
 | Redacted values | p50 | p95 |
 | --- | --- | --- |
-| 1 | 116 ms | 125 ms |
+| 1 | 116 ms | 127 ms |
 
 Prompts with more redacted values take longer.
 
