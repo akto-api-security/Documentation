@@ -57,7 +57,6 @@ set -euo pipefail
 MODEL="${MODEL:-qwen3guard}"
 GPU_DEVICE="${GPU_DEVICE:-0}"
 HOST_PORT="${HOST_PORT:-80}"
-MAX_NUM_SEQS="${MAX_NUM_SEQS:-64}"
 GPU_MEMORY_UTILIZATION="${GPU_MEMORY_UTILIZATION:-0.90}"
 VLLM_IMAGE="${VLLM_IMAGE:-vllm/vllm-openai:latest}"
 STARTUP_TIMEOUT_SEC="${STARTUP_TIMEOUT_SEC:-1800}"
@@ -65,6 +64,7 @@ STARTUP_TIMEOUT_SEC="${STARTUP_TIMEOUT_SEC:-1800}"
 log() { echo "[deploy-vllm] $*"; }
 fail() { echo "[deploy-vllm] ERROR: $*" >&2; exit 1; }
 
+DEFAULT_MAX_NUM_SEQS=64
 case "$MODEL" in
   qwen3guard)
     HF_MODEL="Qwen/Qwen3Guard-Gen-8B"
@@ -82,12 +82,14 @@ case "$MODEL" in
     HF_MODEL="google/gemma-4-26B-A4B-it"
     SERVED_NAME="gemma-4-26b-a4b-it"
     CONTAINER_NAME="gemma4-26b-a4b"
-    MODEL_ARGS=(--quantization fp8 --limit-mm-per-prompt '{"image":0}')
+    DEFAULT_MAX_NUM_SEQS=128
+    MODEL_ARGS=(--quantization fp8 --max-num-batched-tokens 32768 --limit-mm-per-prompt '{"image":0}')
     ;;
   *)
     fail "Unknown MODEL '$MODEL'. Use qwen3guard, gemma4-e2b, or gemma4-26b-a4b."
     ;;
 esac
+MAX_NUM_SEQS="${MAX_NUM_SEQS:-$DEFAULT_MAX_NUM_SEQS}"
 
 [[ $EUID -eq 0 ]] || fail "Run this script with sudo."
 [[ -n "${HF_TOKEN:-}" ]] || fail "HF_TOKEN is not set. Export it and run with: sudo --preserve-env=HF_TOKEN,VLLM_API_KEY ..."
@@ -206,7 +208,7 @@ You can override these optional variables the same way as `MODEL`:
 | --- | --- | --- |
 | `GPU_DEVICE` | `0` | Index of the GPU to run the model on |
 | `HOST_PORT` | `80` | Host port that exposes the API |
-| `MAX_NUM_SEQS` | `64` | Value for `--max-num-seqs` |
+| `MAX_NUM_SEQS` | `64` (`128` for `gemma4-26b-a4b`) | Value for `--max-num-seqs` |
 | `GPU_MEMORY_UTILIZATION` | `0.90` | Value for `--gpu-memory-utilization` |
 | `VLLM_IMAGE` | `vllm/vllm-openai:latest` | vLLM Docker image |
 | `STARTUP_TIMEOUT_SEC` | `1800` | How long to wait for the server to become healthy |
@@ -259,7 +261,7 @@ Treat both values as secrets. Do not commit them to source control or paste them
 {% step %}
 ### Start the vLLM container
 
-Run the command for the model you want to deploy. All three commands use the latest vLLM image and the same base flags. Only the model, the served name, the model-specific flags, and the container name differ: Qwen3Guard and Gemma 4 26B A4B run in FP8, Qwen3Guard has a larger prefill batch, and the Gemma models set multimodal limits.
+Run the command for the model you want to deploy. All three commands use the latest vLLM image and the same base flags. Only the model, the served name, the model-specific flags, and the container name differ: Qwen3Guard and Gemma 4 26B A4B run in FP8, Qwen3Guard and Gemma 4 26B A4B have a larger prefill batch, Gemma 4 26B A4B runs more requests in parallel, and the Gemma models set multimodal limits.
 
 {% tabs %}
 {% tab title="Qwen3Guard 8B" %}
@@ -335,7 +337,8 @@ docker run -d \
   --dtype bfloat16 \
   --quantization fp8 \
   --tensor-parallel-size 1 \
-  --max-num-seqs 64 \
+  --max-num-seqs 128 \
+  --max-num-batched-tokens 32768 \
   --gpu-memory-utilization 0.90 \
   --limit-mm-per-prompt '{"image":0}' \
   --enable-per-request-metrics \
@@ -344,6 +347,8 @@ docker run -d \
 ```
 
 With `--quantization fp8`, the weights use about 26 GB instead of about 52 GB in bfloat16, which leaves about twice as much KV cache on the H100. In Akto's tests at 20 requests per second, FP8 lowered the p95 time a request waits in the queue from about 3.8 seconds to about 0.4 seconds.
+
+`--max-num-batched-tokens 32768` lets vLLM prefill several long scan prompts in one step. With the vLLM default of 8192, each step fits only about two 4,000-token prompts, so only 8 to 10 requests ran at once even with `--max-num-seqs 64`. The larger value, together with `--max-num-seqs 128`, let about 35 requests run at once and raised peak prompt throughput by about 10%.
 {% endtab %}
 {% endtabs %}
 
@@ -428,8 +433,8 @@ All containers can share the `huggingface-cache` and `vllm-cache` volumes.
 
 | Flag | Default in this guide | When to change it |
 | --- | --- | --- |
-| `--max-num-seqs` | `64` | The maximum number of requests processed in parallel. Lower it if you see preemption warnings. |
-| `--max-num-batched-tokens` | `16384` for Qwen3Guard, vLLM default for Gemma | How many prompt tokens vLLM processes in one step. A larger value raises Qwen3Guard throughput. Keep the default for Gemma 4 26B A4B: in Akto's tests a larger value doubled its per-request time without raising throughput. |
+| `--max-num-seqs` | `64`, `128` for Gemma 4 26B A4B | The maximum number of requests processed in parallel. Lower it if you see preemption warnings. |
+| `--max-num-batched-tokens` | `16384` for Qwen3Guard, `32768` for Gemma 4 26B A4B, vLLM default for Gemma 4 E2B | How many prompt tokens vLLM processes in one step. A larger value lets more long prompts run at once. In Akto's tests it raised Qwen3Guard throughput and raised Gemma 4 26B A4B peak prompt throughput by about 10%. |
 | `--quantization fp8` | Qwen3Guard and Gemma 4 26B A4B | Runs the model in FP8 on the H100. Raises throughput and frees memory for the KV cache. |
 | `--enable-per-request-metrics` | On | Adds a `metrics` object with queue time, time to first token, and generation time to every response. Akto's Agent Guard logs these values. Do not combine it with `--disable-log-stats`. |
 | `--gpu-memory-utilization` | `0.90` | Lower it only when you share the GPU with another process or model. |
