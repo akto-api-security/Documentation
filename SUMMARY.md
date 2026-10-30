@@ -6,12 +6,6 @@
   * [Akto MCP Server](readme/akto-mcp-server.md)
 * [What is AI Agent Security?](what-is-ai-agent-security.md)
 
-## Ask Akto
-
-* [Self-Hosted Deployment](ask-akto/self-hosted-deployment.md)
-* [Run with GitHub Copilot](ask-akto/github-copilot-integration.md)
-* [Access the Public Akto MCP Server](ask-akto/public-mcp-server.md)
-
 ## Akto Atlas: Agentic AI Security for Employee Endpoints
 
 * [Overview](akto-atlas-agentic-ai-security-for-employee-endpoints/overview.md)
@@ -413,6 +407,12 @@
   * [Export Visualisation and Report](agentic-guardrails/how-to/export-visualisation-and-report.md)
   * [Export Activity to Custom Webhook](agentic-guardrails/how-to/export-activity-to-custom-webhook.md)
   * [Deploy Guardrail Models with vLLM](agentic-guardrails/how-to/deploy-guardrail-models-with-vllm.md)
+
+## Ask Akto
+
+* [Deploy Ask Akto](ask-akto/self-hosted-deployment.md)
+* [Run with GitHub Copilot](ask-akto/github-copilot-integration.md)
+* [Access the Public Akto MCP Server](ask-akto/public-mcp-server.md)
 
 ## Integrations
 

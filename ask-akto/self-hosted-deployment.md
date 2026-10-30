@@ -1,4 +1,4 @@
-# Self-Hosted Deployment
+# Deploy Ask Akto
 
 ## **Overview**
 
@@ -17,7 +17,7 @@
 
 * Docker and Docker Compose installed
 * Anthropic API Key
-* Akto Agentic AI Security Dashboard running (self-hosted instance)
+* Akto Agentic AI Security Dashboard running in your own environment
 
 ## Deployment Setup
 
