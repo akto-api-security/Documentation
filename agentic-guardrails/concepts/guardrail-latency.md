@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Guardrail Latency
 
 ## Overview
