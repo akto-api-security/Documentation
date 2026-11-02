@@ -1,12 +1,4 @@
----
-description: >-
-  Sensitive data in agent traffic is redacted automatically. No configuration
-  needed.
----
-
 # Redact sensitive data
-
-Akto redacts sensitive data in agent and MCP traffic automatically. There are no settings to enable and no redaction levels to choose.
 
 Agent prompts and responses often contain PII and credentials. Automatic redaction lets your team review agent activity without exposing that data.
 
@@ -15,7 +7,7 @@ Agent prompts and responses often contain PII and credentials. Automatic redacti
 | Where                  | What you see                                                                     |
 | ---------------------- | -------------------------------------------------------------------------------- |
 | **Guardrail Activity** | Data is always redacted, for everyone.                                           |
-| **Traces**             | Admins see the full prompt, unredacted. Other users cannot open prompts.         |
+| **Traces**             | Admins see the full prompt, unredacted. Other users cannot open prompts. Redaction is available here on request. |
 
 ## How Redaction Works
 
