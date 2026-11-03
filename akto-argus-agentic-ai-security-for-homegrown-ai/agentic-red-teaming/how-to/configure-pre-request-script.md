@@ -16,7 +16,7 @@ Look at where your agent expects the prompt in its two-request flow:
 | Request 1 carries the prompt. Request 2 is needed afterwards (for example, to retrieve the response).   | **Post script**  | The script makes the follow-up call after the prompt request has been sent, then returns the final response to Akto. |
 
 {% hint style="info" %}
-If your agent accepts the prompt in one standalone request, you do not need either script. The scripts are only for multi-request flows or for adjusting requests dynamically.
+Pre and post request scripts are part of red teaming. Configure them based on your agent's flow. If your agent accepts the prompt in one standalone request and returns the final response in the same call, you do not need either script. Multi-request flows, and requests you adjust dynamically, need them.
 {% endhint %}
 
 ## Add a script

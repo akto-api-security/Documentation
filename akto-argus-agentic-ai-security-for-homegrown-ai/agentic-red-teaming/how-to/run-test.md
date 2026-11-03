@@ -9,9 +9,11 @@ A scan runs security probes against an agent or MCP server you have imported int
 ```mermaid
 flowchart LR
     A[Import agent<br/>or MCP server] --> B[Set scan role]
-    B --> C[Configure pre and<br/>post scripts<br/>optional]
-    C --> D[Configure scan<br/>and run]
-    D --> E[View results]
+    B --> C[Configure pre and<br/>post scripts<br/>per agent flow]
+    C --> D[Choose the scanner<br/>that reaches<br/>your target]
+    D --> E[Run a small<br/>set of probes]
+    E --> F[Run the base<br/>subset]
+    F --> G[View results]
 ```
 
 ## Prerequisites
@@ -35,11 +37,31 @@ Create the role before you run the scan so you can select it in the **Select Sca
 If your agent or MCP server needs no authentication, you can leave **Select Scan Role** empty.
 {% endhint %}
 
-### Configure pre and post scripts (optional)
+{% hint style="info" %}
+**MCP servers: `MCP_AUTHENTICATION_ROLE`**
 
-Use scripts when your agent needs more than one request per probe. A pre script runs a setup call first (for example, creating a conversation) and passes its result into the prompt request. A post script runs a follow-up call after the prompt request. Scripts are configured under **User Config**, not in the Configure scan window, and they apply to the scans you run afterwards.
+* `MCP_AUTHENTICATION_ROLE` is the only default scan role for an MCP server. **Select Scan Role** selects it by default when you scan an MCP server.
+* The role takes only two headers: `authorization` and `sseCallBackUrl`.
+* If you have multiple MCP servers, update the values of `MCP_AUTHENTICATION_ROLE` before you run the scan on each server. You do not create a role per server.
+* If you do not update the values, the scan can fail.
+
+See [Set Up the Default Scan Role for MCP Scans](../get-started/manual-import/mcp-import.md#set-up-the-default-scan-role-for-mcp-scans) for the header values.
+{% endhint %}
+
+### Configure pre and post scripts
+
+Pre and post request scripts are part of red teaming. Configure them based on your agent's flow. A pre script runs a setup call first (for example, creating a conversation) and passes its result into the prompt request. A post script runs a follow-up call after the prompt request (for example, polling for the final response). Scripts are configured under **User Config**, not in the Configure scan window, and they apply to the scans you run afterwards.
 
 See [Configure Pre and Post Request Scripts](configure-pre-request-script.md).
+
+### Choose the scanner that can reach your target
+
+Your agent or MCP server is either internal (not reachable from the public internet, or behind a firewall, WAF or private network) or external (publicly reachable). The scanner you select in **Select Testing Module(s)** must be able to reach the target.
+
+| Target       | Who sets up the scanner and model                                                                                                                                                         |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Internal** | You deploy the scanning module in your own system ([Install Scanning module in your Cloud](install-testing-module-in-your-cloud/README.md)), and set up your own model under **Settings > Integrations > Agent configuration**, with **Name** set to `red-teaming`. |
+| **External** | Akto provides the model key and runs the testing modules in the Akto cloud. You leave the default module selected.                                                                        |
 
 ## Run the scan
 
@@ -78,7 +100,7 @@ A larger selection takes longer and consumes more tokens. For a first scan, pick
 | **Select date**              | Day the scan starts.                                                                               | Defaults to today. Change it only to schedule for later.                                                                                                                              |
 | **Select Time**              | Time the scan starts.                                                                              | **Now** starts immediately. Pick a time to run off-hours.                                                                                                                             |
 | **Scan run time**            | Maximum duration of the scan. The scan stops automatically when it expires.                        | Default is 30 minutes. Large selections (thousands of probes) may not finish in 30 minutes, so increase it, or reduce the selection.                                                  |
-| **Select Scan Role**         | Scan role whose authentication is used for probe requests.                                         | Pick the role you set up in the prerequisites. **No test role selected** means requests go out without role-based auth.                                                                          |
+| **Select Scan Role**         | Scan role whose authentication is used for probe requests.                                         | Pick the role you set up in the prerequisites. For an MCP server, `MCP_AUTHENTICATION_ROLE` is selected by default. **No test role selected** means requests go out without role-based auth.      |
 | **Max Concurrent Requests**  | Number of probe requests sent in parallel.                                                         | Leave on **Default** unless needed. Higher values finish faster but put more load on your agent. Lower it if the target is rate limited or is a production system.                    |
 | **Max Agent Tokens**         | Upper limit on tokens the agent can consume during the scan.                                       | **No limit** places no cap. Set a limit if your agent calls a paid LLM and you want to bound cost.                                                                                    |
 | **Select Testing Module(s)** | Which module (engine) executes the scan.                                                           | Leave the default module for publicly reachable targets. For internal agents or MCP servers, select the module deployed in your own environment (see the warning below). See [Scanning Module Selector in Akto](testing-module-selector-in-akto.md).                      |
@@ -86,14 +108,9 @@ A larger selection takes longer and consumes more tokens. For a first scan, pick
 {% hint style="warning" %}
 **Internal agents and MCP servers**
 
-If your agent or MCP server is internal (not reachable from the public internet, or behind a firewall, WAF or private network), run the scan using the scanning module deployed inside your own environment. 
-In **Select Testing Module(s)**, choose your internally deployed module. The default Akto-hosted module cannot reach internal targets, so the scan would fail to connect.
+For an internal target, choose your internally deployed module in **Select Testing Module(s)**. The default Akto-hosted module cannot reach internal targets, so the scan would fail to connect. See [Choose the scanner that can reach your target](#choose-the-scanner-that-can-reach-your-target) for setup, and [Scanning Module Selector in Akto](testing-module-selector-in-akto.md) to select the module.
 
-See [Install Scanning module in your Cloud](install-testing-module-in-your-cloud/README.md) to deploy one, and [Scanning Module Selector in Akto](testing-module-selector-in-akto.md) to select it.
-{% endhint %}
-
-{% hint style="info" %}
-If your target is publicly reachable and you are not sure which module to pick, leave the default selected and Akto uses the active scanning module automatically.
+For an external target, leave the default module selected and Akto uses the active scanning module automatically.
 {% endhint %}
 
 {% hint style="warning" %}
@@ -107,10 +124,10 @@ Probes send adversarial requests to your agent, and each one can trigger LLM cal
 **Choose post-scan options (optional)**
 
 * **Slack integration to send alerts post completion**: sends a notification to a Slack channel when the scan finishes. If the checkbox is greyed out, click **Enable** to connect the integration first.
-* **Microsoft Teams integration to send alerts post completion**: same, for Microsoft Teams. Click **Enable** to connect it if it is greyed out.
+* **Microsoft Teams integration to send alerts post completion**: sends a notification to a Microsoft Teams channel when the scan finishes. If the checkbox is greyed out, click **Enable** to connect the integration first.
 * **Auto-create tickets**: opens tickets for issues the scan finds. See [Auto-Create Jira Tickets](auto-create-jira-tickets.md).
-* **Use different target for scanning**: sends this scan to a target other than the one associated with the collection, for example a staging copy of the agent.
-* **Mark issues as fixed if they don't show up again**: closes previously reported issues that no longer reproduce in this run. Enabled by default.
+* **Use different target for scanning**: sends the scan to a target other than the one associated with the collection, for example a staging copy of the agent.
+* **Mark issues as fixed if they don't show up again**: closes previously reported issues that no longer reproduce in the run. Enabled by default.
 * **Smart Automated Testing**: lets Akto adapt scan execution automatically instead of running the fixed selection as-is.
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (226).png" alt="" width="563"><figcaption></figcaption></figure></div>
@@ -123,7 +140,7 @@ Click **Show advance configurations** to add custom headers or conditions to the
 
 * Choose **Add Header**, enter a key and value, and use **Add condition** to chain multiple headers with **AND** or **OR** logic.
 
-This is useful for agent-specific request requirements, such as a tenant or account header.
+Custom headers suit agent-specific request requirements, such as a tenant or account header.
 
 <div data-with-frame="true"><figure><img src="../../../.gitbook/assets/image (228).png" alt="" width="563"><figcaption></figcaption></figure></div>
 {% endstep %}
@@ -140,3 +157,27 @@ After the run, open the scan under **AI Red Teaming > Results** to review findin
 {% endhint %}
 {% endstep %}
 {% endstepper %}
+
+## Recommended scan order
+
+{% stepper %}
+{% step %}
+**Run a small set of probes**
+
+Select a few probes, set **Run Type** to **Once** and **Select Time** to **Now**, and run the scan. Open the scan under **AI Red Teaming > Results** and confirm the run succeeds. If the run fails, check the errors and fix the configuration using [Fix a failed scan](#fix-a-failed-scan).
+{% endstep %}
+
+{% step %}
+**Run the base subset of probes**
+
+Select the base categories for your target (for an MCP server, the MCP categories) and run the scan. Selecting **All** probes takes a long time to complete and consumes more tokens. If the selection is large, raise **Scan run time** from the 30-minute default.
+{% endstep %}
+{% endstepper %}
+
+## Fix a failed scan
+
+| Symptom                                 | Where to fix                                                                                                                                  |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| The scan cannot connect to your target  | **Select Testing Module(s)**: an internal target needs the scanning module deployed in your own system.                                       |
+| Authentication errors                   | The scan role: its headers and token. For an MCP server, update the `authorization` and `sseCallBackUrl` values of `MCP_AUTHENTICATION_ROLE`. |
+| Wrong or empty responses                | The import (request body and headers) and the [pre and post request scripts](configure-pre-request-script.md).                                |

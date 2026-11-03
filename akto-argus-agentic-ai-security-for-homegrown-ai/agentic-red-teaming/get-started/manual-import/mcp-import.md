@@ -32,6 +32,10 @@ Most failed MCP imports happen because the scan role used for authentication is 
 
 Skip this section if your MCP server is not secured.
 
+{% hint style="info" %}
+The scan you run later on an MCP server uses a separate default role. See [Set Up the Default Scan Role for MCP Scans](#set-up-the-default-scan-role-for-mcp-scans).
+{% endhint %}
+
 {% stepper %}
 {% step %}
 **Create the scan role**
@@ -125,6 +129,44 @@ Akto will then:
 * Start listening to the SSE stream
 * Scan events like `tool_call`, `resource_call`, and `prompt_response`
 * Auto-register all observed MCP endpoints
+{% endstep %}
+{% endstepper %}
+
+## Set Up the Default Scan Role for MCP Scans
+
+When you run a scan on an MCP server, [Run Scan](../../how-to/run-test.md) selects the scan role named `MCP_AUTHENTICATION_ROLE` by default. The role applies to MCP servers only. An AI agent uses its own scan role.
+
+{% hint style="info" %}
+**What to know about `MCP_AUTHENTICATION_ROLE`**
+
+* `MCP_AUTHENTICATION_ROLE` is the only default scan role for an MCP server.
+* The role takes only two headers: `authorization` and `sseCallBackUrl`.
+* If you have multiple MCP servers, update the values of this role only, then run the scan on each server. You do not create a role per server.
+* If you do not update the values before a scan, the scan can fail.
+{% endhint %}
+
+{% stepper %}
+{% step %}
+**Create the role**
+
+Go to **AI Red Teaming > Scan Roles**, click **Create New Scan Role**, and name the role exactly `MCP_AUTHENTICATION_ROLE`.
+{% endstep %}
+
+{% step %}
+**Add the two headers**
+
+Click **Add Auth** and add two rows, each of type **Header** (use **+** to add a row and the trash icon to remove one):
+
+| Type   | Key              | Value                               |
+| ------ | ---------------- | ----------------------------------- |
+| Header | `authorization`  | `Bearer <your-mcp-access-token>`    |
+| Header | `sseCallBackUrl` | `https://<your-mcp-callback-host>/` |
+{% endstep %}
+
+{% step %}
+**Save and update before each scan**
+
+Click **Save** and confirm the auth is created. Before you run a scan on another MCP server, update both values to that server's token and callback URL, and save again.
 {% endstep %}
 {% endstepper %}
 

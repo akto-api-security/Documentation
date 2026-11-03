@@ -9,8 +9,11 @@ Akto lets you seamlessly import **AI agents** such as **AWS Bedrock, Azure AI Fo
 ### 🔧 What You Need
 
 * **AI Endpoint URL** (e.g., `https://api.example.com/ai-agent`)
-* **(Optional) Custom Request Body** – for agents requiring specific input JSON
+* **(Optional) Custom Request Body** – for agents requiring specific input JSON. Enter the complete JSON your agent expects, with the same fields and structure as a working call, including the field that carries the user message
+* **Mandatory headers** – the exact name and value of every header your agent requires, for example `Authorization: Bearer <token>`, `access-token: <value>`, `x-api-key: <key>`, or a tenant, account or API version header
 * **(Optional) Scan Role for Authentication** – for agents with role-based access
+
+Know how your agent responds before you import: a normal chat request (one request, one response), a streamable agent (the response is streamed back), or a polling agent (the request starts a job and you fetch the result by polling). The response type is not an option in the import form. It decides whether you need [pre and post request scripts](../../how-to/configure-pre-request-script.md), which are part of red teaming.
 
 <figure><img src="../../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
