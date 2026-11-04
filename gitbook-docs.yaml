@@ -1,0 +1,11 @@
+version: 1
+site:
+  title: Akto API Security
+  structure:
+    - type: space
+      key: space-docs
+      title: Akto API Security
+      path: docs
+      default: true
+      content:
+        directory: ./
