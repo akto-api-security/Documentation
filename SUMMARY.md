@@ -13,6 +13,7 @@
   * [Browser Extensions](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/README.md)
     * [Chrome](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/chrome/README.md)
       * [Intune Deployment (Windows)](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/chrome/intune-deployment.md)
+      * [Managed Configuration (Identity)](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/chrome/managed-configuration.md)
       * [NinjaOne Deployment (Windows)](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/chrome/ninjaone-deployment.md)
       * [Jamf Deployment (macOS)](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/chrome/jamf-deployment.md)
       * [Extension Usage Behaviour](akto-atlas-agentic-ai-security-for-employee-endpoints/endpoints-discovery-agents/browser-extensions/chrome/extension-usage-behaviour.md)
