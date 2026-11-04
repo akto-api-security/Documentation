@@ -1,0 +1,11 @@
+version: 1
+site:
+  title: Akto Agentic AI Security
+  structure:
+    - type: space
+      key: space-docs
+      title: Akto Documentation
+      path: docs
+      default: true
+      content:
+        directory: ./
