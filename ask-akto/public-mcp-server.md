@@ -102,8 +102,8 @@ Add the following configuration in your MCP client:
   "type": "http",
   "url": "https://mcp.akto.io/mcp",
   "headers": {
-    "Authorization": "Bearer <YOUR_AKTO_API_KEY>",
-    "x-context-source": "Agentic"
+    "x-app-key": "<YOUR_AKTO_API_KEY>",
+    "x-app-id": "agentic"
   }
 }
 ```
@@ -112,11 +112,11 @@ Replace `<YOUR_AKTO_API_KEY>` with the token generated in the previous step.
 {% endstep %}
 {% endstepper %}
 
-The API key can be sent as `Authorization: Bearer <API_KEY>` or `X-API-Key: <API_KEY>`. The `x-mcp-api-key` header is deprecated but still supported.
+The API key can also be sent as `Authorization: Bearer <API_KEY>` or `X-API-Key: <API_KEY>`. The `x-mcp-api-key` header is deprecated but still supported.
 
-## The `x-context-source` Header
+## The `x-app-id` Header
 
-When you connect with an API key, the `x-context-source` header tells the MCP server which Akto product's data to serve:
+When you connect with an API key, the `x-app-id` header tells the MCP server which Akto product's data to serve:
 
 | Value      | Product                                                 |
 | ---------- | -------------------------------------------------------- |
@@ -126,12 +126,14 @@ When you connect with an API key, the `x-context-source` header tells the MCP se
 | `DAST`     | Akto DAST                                               |
 
 {% hint style="info" %}
-* If `x-context-source` is **not provided**, the server defaults to **API** context.
-* If `x-context-source` is set to anything other than the four values above, the request is rejected with an error.
+* The value is not case sensitive.
+* If `x-app-id` is **not provided**, the server defaults to **API** context.
+* If `x-app-id` is set to anything other than the four values above, the request is rejected with an error.
+* `x-context-source` is the earlier name for this header and still works. If both are sent, `x-app-id` is used.
 * When you sign in with Akto, you select the product on the consent page, so this header is not used.
 {% endhint %}
 
-Most MCP clients apply a fixed `headers` block for the life of a server connection, so you can't switch `x-context-source` per question. If your work spans multiple contexts (e.g. both Agentic and Endpoint), add multiple named server entries pointing at the same URL and API key, each with a different `x-context-source`, and enable whichever matches what you're currently working on:
+Most MCP clients apply a fixed `headers` block for the life of a server connection, so you can't switch `x-app-id` per question. If your work spans multiple contexts (e.g. both Agentic and Endpoint), add multiple named server entries pointing at the same URL and API key, each with a different `x-app-id`, and enable whichever matches what you're currently working on:
 
 <details>
 
@@ -146,16 +148,16 @@ The wrapper key below (`mcpServers`) may be named `servers` instead, depending o
       "type": "http",
       "url": "https://mcp.akto.io/mcp",
       "headers": {
-        "Authorization": "Bearer <YOUR_AKTO_API_KEY>",
-        "x-context-source": "Agentic"
+        "x-app-key": "<YOUR_AKTO_API_KEY>",
+        "x-app-id": "agentic"
       }
     },
     "akto-mcp-server-atlas": {
       "type": "http",
       "url": "https://mcp.akto.io/mcp",
       "headers": {
-        "Authorization": "Bearer <YOUR_AKTO_API_KEY>",
-        "x-context-source": "Endpoint"
+        "x-app-key": "<YOUR_AKTO_API_KEY>",
+        "x-app-id": "endpoint"
       }
     }
   }
@@ -179,7 +181,7 @@ Admins can control which apps can connect with **Sign in with Akto** in **Settin
 * **Connection fails immediately / handshake never completes**: your client may depend on the streaming (`GET`/SSE) half of Streamable HTTP, which this server doesn't implement yet. See the note above.
 * **Claude asks you to authenticate again**: run `/mcp` and choose **Authenticate** to sign in again.
 * **401 error with an API key**: the key is missing or invalid. Double-check the token you generated.
-* **400 error**: `x-context-source` is set to a value other than `API`, `Agentic`, `Endpoint`, or `DAST`. Fix the value, or omit the header to default to `API`.
+* **400 error**: `x-app-id` is set to a value other than `API`, `Agentic`, `Endpoint`, or `DAST`. Fix the value, or omit the header to default to `API`.
 
 ## Support
 
