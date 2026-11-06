@@ -55,6 +55,42 @@ You can use either a CloudFormation template, Terraform template, a Helm chart, 
 5. The next step is to install a traffic connector.
    1. You can use the above copied `akto_nlb_dns` as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `akto-N-.....amazonaws.com:9092`)
 
+#### Terraform (Baked AMI)
+
+Use this if you want to restrict outbound (egress) traffic. The standard template downloads scripts and Docker images at boot from GitHub, Docker Hub and Amazon ECR Public (CloudFront), whose IPs change often and can't be reliably allowlisted. The baked AMI has everything pre-installed, so nothing is downloaded at boot, and egress can be limited to:
+
+* Akto: `52.189.76.62/32`, `13.86.5.76/32`, `130.131.179.40/32`
+* Secrets Manager, through a VPC endpoint (the template can create it)
+* Your VPC CIDR (added automatically)
+
+1. Send your AWS account ID and region(s) to Akto. We will share the AMI with you.
+   1. Optional: copy the AMI into your own account, so your deployment doesn't depend on ours:
+
+      ```bash
+      aws ec2 copy-image --region <region> --source-region <region> \
+        --source-image-id <shared-ami-id> --name akto-mini-runtime --encrypted
+      ```
+2. Use the Terraform script [here](https://github.com/akto-api-security/infra/blob/quick-setup-1.0.0/templates/terraform-aws/mini-runtime-baked-ami/mini-runtime.tf). Use a private subnet from your application VPC.
+3. Create a `mini-runtime.tfvars` file with the values from the [Terraform](#terraform) section above, plus:
+
+   ```hcl
+   ami_id                         = "<ami-id>"
+   egress_cidr_blocks             = ["52.189.76.62/32", "13.86.5.76/32", "130.131.179.40/32"]
+   create_secretsmanager_endpoint = true   # set to false if your VPC already has a Secrets Manager endpoint
+   ```
+
+   The Secrets Manager endpoint is needed only if you use `database_abstractor_token_secret_arn`. The instance reads the token from Secrets Manager at boot. With restricted egress, the public Secrets Manager address is blocked, and AWS doesn't publish its IPs. The endpoint gives Secrets Manager a private IP inside your VPC, which is already allowed.
+4. Run `terraform init` and `terraform apply -var-file=mini-runtime.tfvars`, then use `akto_nlb_dns` as `AKTO_KAFKA_BROKER_MAL` (inclusive of port `9092`) in your traffic connectors.
+
+{% hint style="warning" %}
+**Limitations**
+
+1. We share the AMI per region. Please send your account ID and region(s). You can copy it into your own account so you don't depend on ours.
+2. No auto-updates. Akto and OS updates need a new AMI and a redeploy with the new `ami_id`.
+3. The Secrets Manager endpoint uses private DNS, so it applies to the whole VPC. A VPC can have only one, so skip creating it if your VPC already has one.
+4. If the Akto backend IPs change, the egress list needs updating.
+{% endhint %}
+
 #### CloudFormation template
 
 1. To install using CloudFormation, run the Cloudformation template [here](https://raw.githubusercontent.com/akto-api-security/infra/feature/quick-setup/templates/mini-runtime.yml).
