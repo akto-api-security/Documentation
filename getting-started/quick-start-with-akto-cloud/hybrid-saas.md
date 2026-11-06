@@ -22,13 +22,38 @@ You can use either a CloudFormation template, Terraform template, a Helm chart, 
 
 #### Terraform
 
-1. To install using Terraform, use the Terraform script [here](https://github.com/akto-api-security/infra/blob/mini_runtime_tf_script/templates/mini-runtime.tf).
+1. To install using Terraform, use the Terraform script [here](https://github.com/akto-api-security/infra/blob/quick-setup-1.0.0/templates/terraform-aws/mini-runtime-v2/mini-runtime.tf).
    1. Please make sure you install it in a private subnet from your application VPC.
    2. This private subnet should also have network connectivity (typically via NAT).
-2. You can use `https://cyborg.akto.io` as `DatabaseAbstractorUrl` . For `DatabaseAbstractorToken` you can copy it from the helm install command in the above screenshot.
-3. Once complete, copy `akto_nlb_dns` from the output.
-4. The next step is to install a traffic connector.
-   1. You can use the above copied `AktoNLBIP` as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `akto-N-.....amazonaws.com:9092`)
+2. Create a `mini-runtime.tfvars` file with the following values:
+
+   ```hcl
+   region                  = "<aws-region>"
+   key_pair                = "<ec2-key-pair-name>"
+   subnet_id               = "<private-subnet-id>"
+   database_abstractor_url = "https://cyborg.akto.io"
+   cidr_blocks             = ["<cidr-that-sends-traffic-to-akto>"]
+
+   # Token: use ONE of the two options below
+   database_abstractor_token_secret_arn = "<secrets-manager-secret-arn>"   # recommended
+   # database_abstractor_token          = "<database-abstractor-token>"
+
+   # Optional: prefix for resource names (max 9 characters). Needed only to install more than once in the same account.
+   # environment = "<prefix>"
+   ```
+
+   1. You can copy the Database Abstractor token from the helm install command in the above screenshot.
+   2. Recommended: store the token in AWS Secrets Manager (as plain text, in the same region) and pass its ARN in `database_abstractor_token_secret_arn`. Alternatively, pass the token directly in `database_abstractor_token`.
+   3. `cidr_blocks` are the networks that send traffic to Akto.
+3. Run:
+
+   ```bash
+   terraform init
+   terraform apply -var-file=mini-runtime.tfvars
+   ```
+4. Once complete, copy `akto_nlb_dns` from the output.
+5. The next step is to install a traffic connector.
+   1. You can use the above copied `akto_nlb_dns` as `AKTO_KAFKA_BROKER_MAL` in your traffic connectors. Note that `AKTO_KAFKA_BROKER_MAL` is inclusive of port (eg `akto-N-.....amazonaws.com:9092`)
 
 #### CloudFormation template
 
