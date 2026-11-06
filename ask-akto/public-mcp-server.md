@@ -4,6 +4,8 @@
 
 Akto hosts a public **MCP (Model Context Protocol) server** that lets any MCP-compatible client (Claude, Cursor, etc.) connect directly to your Akto data, without deploying or self-hosting an MCP server yourself.
 
+The server URL is `https://mcp.akto.io/mcp`. You can connect by signing in to Akto (Claude), or with an Akto API key.
+
 {% hint style="warning" %}
 **Akto's MCP server is HTTP-only; `stdio` is not supported.** Configure it as an `http`-type server entry pointing at `https://mcp.akto.io/mcp`, as shown below.
 
@@ -12,10 +14,46 @@ It also supports only the request/response half of MCP's Streamable HTTP transpo
 
 ## Prerequisites
 
-* An Akto account with access to **Settings**
+* An Akto account with access to the product you want to use
 * An MCP-compatible client (Claude, Cursor, etc.)
 
-## Configuration
+## Connect with Claude
+
+The connection has the same permissions as your role in the account you sign in to.
+
+### Claude Code
+
+Run this command in your terminal. The name after `add` is a label of your choice, for example `akto-argus` or `akto-atlas`:
+
+```bash
+claude mcp add --transport http akto-atlas https://mcp.akto.io/mcp
+```
+
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/mcp-claude-code-add-command.png" alt="Terminal output after adding the akto-atlas MCP server with claude mcp add" width="563"><figcaption></figcaption></figure></div>
+
+Then run `/mcp` in Claude Code, select the server, and choose **Authenticate**.
+
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/mcp-claude-code-authenticate.png" alt="The akto-atlas MCP server in Claude Code showing Needs authentication with the Authenticate option" width="563"><figcaption></figcaption></figure></div>
+
+Sign in to Akto, select the **Product**, and click **Allow access**.
+
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/mcp-consent-page.png" alt="Akto consent page asking to authorize Claude Code, with a Product dropdown and Deny and Allow access buttons" width="563"><figcaption></figcaption></figure></div>
+
+Claude Code confirms the connection, and you can start asking questions about your Akto data.
+
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/mcp-claude-code-connected.png" alt="Claude Code showing Authentication successful and listing collections through akto-atlas" width="563"><figcaption></figcaption></figure></div>
+
+### Claude (claude.ai and Desktop)
+
+1. Go to **Settings → Connectors → Add custom connector**
+2. Enter `https://mcp.akto.io/mcp` and click **Connect**
+3. Sign in to Akto, select the **Product**, and click **Allow access**
+
+{% hint style="info" %}
+Each connection is tied to one product. To use more than one product, add the server once per product under different names, for example `akto-argus` and `akto-atlas`.
+{% endhint %}
+
+## Connect with an API key
 
 {% stepper %}
 {% step %}
@@ -23,7 +61,7 @@ It also supports only the request/response half of MCP's Streamable HTTP transpo
 
 1. In your Akto dashboard, go to **Settings → Integrations → Automation → Akto API Token**
 2. Click **Generate** to create a new token
-3. Copy the token; you'll use it as the `x-mcp-api-key` value in the next step
+3. Copy the token; you'll use it in the next step
 {% endstep %}
 
 {% step %}
@@ -36,7 +74,7 @@ Add the following configuration in your MCP client:
   "type": "http",
   "url": "https://mcp.akto.io/mcp",
   "headers": {
-    "x-mcp-api-key": "<YOUR_AKTO_API_KEY>",
+    "Authorization": "Bearer <YOUR_AKTO_API_KEY>",
     "x-context-source": "Agentic"
   }
 }
@@ -46,9 +84,11 @@ Replace `<YOUR_AKTO_API_KEY>` with the token generated in the previous step.
 {% endstep %}
 {% endstepper %}
 
+The API key can be sent as `Authorization: Bearer <API_KEY>` or `X-API-Key: <API_KEY>`. The `x-mcp-api-key` header is deprecated but still supported.
+
 ## The `x-context-source` Header
 
-The `x-context-source` header tells the MCP server which Akto product's data to serve:
+When you connect with an API key, the `x-context-source` header tells the MCP server which Akto product's data to serve:
 
 | Value      | Product                                                 |
 | ---------- | -------------------------------------------------------- |
@@ -60,6 +100,7 @@ The `x-context-source` header tells the MCP server which Akto product's data to 
 {% hint style="info" %}
 * If `x-context-source` is **not provided**, the server defaults to **API** context.
 * If `x-context-source` is set to anything other than the four values above, the request is rejected with an error.
+* When you sign in with Akto, you select the product on the consent page, so this header is not used.
 {% endhint %}
 
 Most MCP clients apply a fixed `headers` block for the life of a server connection, so you can't switch `x-context-source` per question. If your work spans multiple contexts (e.g. both Agentic and Endpoint), add multiple named server entries pointing at the same URL and API key, each with a different `x-context-source`, and enable whichever matches what you're currently working on:
@@ -77,7 +118,7 @@ The wrapper key below (`mcpServers`) may be named `servers` instead, depending o
       "type": "http",
       "url": "https://mcp.akto.io/mcp",
       "headers": {
-        "x-mcp-api-key": "<YOUR_AKTO_API_KEY>",
+        "Authorization": "Bearer <YOUR_AKTO_API_KEY>",
         "x-context-source": "Agentic"
       }
     },
@@ -85,7 +126,7 @@ The wrapper key below (`mcpServers`) may be named `servers` instead, depending o
       "type": "http",
       "url": "https://mcp.akto.io/mcp",
       "headers": {
-        "x-mcp-api-key": "<YOUR_AKTO_API_KEY>",
+        "Authorization": "Bearer <YOUR_AKTO_API_KEY>",
         "x-context-source": "Endpoint"
       }
     }
@@ -95,11 +136,21 @@ The wrapper key below (`mcpServers`) may be named `servers` instead, depending o
 
 </details>
 
+## Manage which apps can connect
+
+Admins can control which apps can connect with **Sign in with Akto** in **Settings → MCP clients**:
+
+* **Only allow known MCP clients**: when on, users can't approve apps that Akto doesn't recognize
+* **Allowed redirect URLs**: apps using these URLs connect without the unverified-app warning
+
+<div data-with-frame="true"><figure><img src="../.gitbook/assets/mcp-clients-settings.png" alt="Settings, MCP clients page with the Only allow known MCP clients option and the Allowed redirect URLs list" width="563"><figcaption></figcaption></figure></div>
+
 ## Troubleshooting
 
 * **Check the server is reachable**: `GET https://mcp.akto.io/health` returns a liveness response and doesn't require any headers.
 * **Connection fails immediately / handshake never completes**: your client may depend on the streaming (`GET`/SSE) half of Streamable HTTP, which this server doesn't implement yet. See the note above.
-* **401 error**: `x-mcp-api-key` is missing or invalid. Double-check the token generated in Step 1.
+* **Claude asks you to authenticate again**: run `/mcp` and choose **Authenticate** to sign in again.
+* **401 error with an API key**: the key is missing or invalid. Double-check the token you generated.
 * **400 error**: `x-context-source` is set to a value other than `API`, `Agentic`, `Endpoint`, or `DAST`. Fix the value, or omit the header to default to `API`.
 
 ## Support
