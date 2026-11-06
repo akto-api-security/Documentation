@@ -23,6 +23,10 @@ The connection has the same permissions as your role in the account you sign in 
 
 ### Claude Code
 
+{% stepper %}
+{% step %}
+**Add the server**
+
 Run this command in your terminal. The name after `add` is a label of your choice, for example `akto-argus` or `akto-atlas`:
 
 ```bash
@@ -30,24 +34,48 @@ claude mcp add --transport http akto-atlas https://mcp.akto.io/mcp
 ```
 
 <div data-with-frame="true"><figure><img src="../.gitbook/assets/mcp-claude-code-add-command.png" alt="Terminal output after adding the akto-atlas MCP server with claude mcp add" width="563"><figcaption></figcaption></figure></div>
+{% endstep %}
 
-Then run `/mcp` in Claude Code, select the server, and choose **Authenticate**.
+{% step %}
+**Authenticate**
+
+Run `/mcp` in Claude Code, select the server, and choose **Authenticate**.
 
 <div data-with-frame="true"><figure><img src="../.gitbook/assets/mcp-claude-code-authenticate.png" alt="The akto-atlas MCP server in Claude Code showing Needs authentication with the Authenticate option" width="563"><figcaption></figcaption></figure></div>
+{% endstep %}
+
+{% step %}
+**Allow access**
 
 Sign in to Akto, select the **Product**, and click **Allow access**.
 
 <div data-with-frame="true"><figure><img src="../.gitbook/assets/mcp-consent-page.png" alt="Akto consent page asking to authorize Claude Code, with a Product dropdown and Deny and Allow access buttons" width="563"><figcaption></figcaption></figure></div>
+{% endstep %}
+
+{% step %}
+**Start asking questions**
 
 Claude Code confirms the connection, and you can start asking questions about your Akto data.
 
 <div data-with-frame="true"><figure><img src="../.gitbook/assets/mcp-claude-code-connected.png" alt="Claude Code showing Authentication successful and listing collections through akto-atlas" width="563"><figcaption></figcaption></figure></div>
+{% endstep %}
+{% endstepper %}
 
 ### Claude (claude.ai and Desktop)
 
-1. Go to **Settings → Connectors → Add custom connector**
-2. Enter `https://mcp.akto.io/mcp` and click **Connect**
-3. Sign in to Akto, select the **Product**, and click **Allow access**
+{% stepper %}
+{% step %}
+**Add the connector**
+
+Go to **Settings → Connectors → Add custom connector**, enter `https://mcp.akto.io/mcp` and click **Connect**.
+{% endstep %}
+
+{% step %}
+**Allow access**
+
+Sign in to Akto, select the **Product**, and click **Allow access**.
+{% endstep %}
+{% endstepper %}
 
 {% hint style="info" %}
 Each connection is tied to one product. To use more than one product, add the server once per product under different names, for example `akto-argus` and `akto-atlas`.
