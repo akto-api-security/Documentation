@@ -87,7 +87,7 @@ Use this if you want to restrict outbound (egress) traffic. The standard templat
 
 1. We share the AMI per region. Please send your account ID and region(s). You can copy it into your own account so you don't depend on ours.
 2. No auto-updates. Akto and OS updates need a new AMI and a redeploy with the new `ami_id`.
-3. The Secrets Manager endpoint uses private DNS, so it applies to the whole VPC. A VPC can have only one, so skip creating it if your VPC already has one.
+3. The Secrets Manager endpoint uses private DNS, so it applies to the whole VPC. A VPC can have only one, so skip creating it if your VPC already has one. In that case, make sure your endpoint has private DNS enabled, its security group allows HTTPS (443) from the Akto subnet, its endpoint policy allows `secretsmanager:GetSecretValue` on the token secret, and its IPs are covered by your VPC's primary CIDR or `egress_cidr_blocks` (e.g. if it is in a secondary CIDR or a shared VPC).
 4. If the Akto backend IPs change, the egress list needs updating.
 {% endhint %}
 
