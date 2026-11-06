@@ -61,7 +61,7 @@ Use this if you want to restrict outbound (egress) traffic. The standard templat
 
 * Akto: `52.189.76.62/32`, `13.86.5.76/32`, `130.131.179.40/32`
 * Secrets Manager, through a VPC endpoint (the template can create it)
-* Your VPC CIDR (added automatically)
+* Your VPC's primary CIDR (added automatically)
 
 1. Send your AWS account ID and region(s) to Akto. We will share the AMI with you.
    1. Optional: copy the AMI into your own account, so your deployment doesn't depend on ours:
@@ -70,16 +70,16 @@ Use this if you want to restrict outbound (egress) traffic. The standard templat
       aws ec2 copy-image --region <region> --source-region <region> \
         --source-image-id <shared-ami-id> --name akto-mini-runtime --encrypted
       ```
-2. Use the Terraform script [here](https://github.com/akto-api-security/infra/blob/quick-setup-1.0.0/templates/terraform-aws/mini-runtime-baked-ami/mini-runtime.tf). Use a private subnet from your application VPC.
+2. Use the Terraform script [here](https://github.com/akto-api-security/infra/blob/quick-setup-1.0.0/templates/terraform-aws/mini-runtime-baked-ami/mini-runtime.tf). Use a private subnet from your application VPC, with internet access (typically via NAT) to reach the Akto IPs.
 3. Create a `mini-runtime.tfvars` file with the values from the [Terraform](#terraform) section above, plus:
 
    ```hcl
-   ami_id                         = "<ami-id>"
+   ami_id                         = "<ami-id>"   # the shared AMI, or your copy
    egress_cidr_blocks             = ["52.189.76.62/32", "13.86.5.76/32", "130.131.179.40/32"]
    create_secretsmanager_endpoint = true   # set to false if your VPC already has a Secrets Manager endpoint
    ```
 
-   The Secrets Manager endpoint is needed only if you use `database_abstractor_token_secret_arn`. The instance reads the token from Secrets Manager at boot. With restricted egress, the public Secrets Manager address is blocked, and AWS doesn't publish its IPs. The endpoint gives Secrets Manager a private IP inside your VPC, which is already allowed.
+   The Secrets Manager endpoint is needed only if you use `database_abstractor_token_secret_arn`. The instance reads the token from Secrets Manager at boot. With restricted egress, the public Secrets Manager address is blocked, and AWS doesn't publish its IPs. The endpoint gives Secrets Manager a private IP inside your VPC, which is already allowed. The VPC must have DNS hostnames and DNS resolution enabled.
 4. Run `terraform init` and `terraform apply -var-file=mini-runtime.tfvars`, then use `akto_nlb_dns` as `AKTO_KAFKA_BROKER_MAL` (inclusive of port `9092`) in your traffic connectors.
 
 {% hint style="warning" %}
