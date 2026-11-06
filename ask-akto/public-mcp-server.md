@@ -112,7 +112,7 @@ Replace `<YOUR_AKTO_API_KEY>` with the token generated in the previous step.
 {% endstep %}
 {% endstepper %}
 
-The API key can also be sent as `Authorization: Bearer <API_KEY>` or `X-API-Key: <API_KEY>`. The `x-mcp-api-key` header is deprecated but still supported.
+The API key can also be sent as `Authorization: Bearer <API_KEY>`. The `x-mcp-api-key` header is deprecated but still supported.
 
 ## The `x-app-id` Header
 
